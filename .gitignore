@@ -1,3 +1,77 @@
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# Qt-es
+object_script.*.Release
+object_script.*.Debug
+*_plugin_import.cpp
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+*build-*
+*.qm
+*.prl
+
+# Qt unit tests
+target_wrapper.*
+
+# QtCreator
+*.autosave
+
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+
+# QtCreator CMake
+CMakeLists.txt.user*
+
+# QtCreator 4.8< compilation database
+compile_commands.json
+
+# QtCreator local machine specific files for imported projects
+*creator.user*
+
+*_qmlcache.qrc
+UNUSED
+.qmlls.ini
+quickshell/.qmlls.ini
+
+CLAUDE-activeContext.md
+CLAUDE-temp.md
+AGENTS-activeContext.md
+AGENTS-temp.md
+
+# Auto-generated theme files
+*.generated.*
+niri-colors.generated.kdl
+ghostty-colors.generated.conf
+
+# Notepad files (should be in ~/.local/state/DankMaterialShell/)
+untitled-*.txt
+file:*
+notepad-files/
+
+result
+
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
@@ -25,8 +99,19 @@ go.work
 go.work.sum
 
 # env file
-.env
+.env*
 
 # Editor/IDE
 # .idea/
 # .vscode/
+vim/
+
+bin/
+
+# direnv
+.envrc
+.direnv/
+quickshell/dms-plugins
+__pycache__
+
+core/dankcal

@@ -1,0 +1,111 @@
+version: "2"
+
+linters:
+  enable:
+    - revive
+
+  settings:
+    staticcheck:
+      checks:
+        # golangci-lint defaults
+        - all
+        - -ST1000
+        - -ST1003
+        - -ST1016
+        - -ST1020
+        - -ST1021
+        - -ST1022
+        # style/quickfix noise in adapted middleware + log wrappers
+        - -ST1006
+        - -ST1011
+        - -QF1007
+        - -QF1008
+    revive:
+      rules:
+        - name: use-any
+          severity: error
+    errcheck:
+      check-type-assertions: false
+      check-blank: false
+      exclude-functions:
+        # Cleanup/destroy operations
+        - (io.Closer).Close
+        - (*os.File).Close
+        - (net.Conn).Close
+        - (*net.Conn).Close
+        # Signal handling
+        - (*os.Process).Signal
+        - (*os.Process).Kill
+        - syscall.Kill
+        # Encoding to network connections (if conn is bad, nothing we can do)
+        - (*encoding/json.Encoder).Encode
+        - (net.Conn).Write
+        # Command execution where failure is expected/ignored
+        - (*os/exec.Cmd).Run
+        - (*os/exec.Cmd).Start
+        # Flush operations
+        - (*bufio.Writer).Flush
+        # Scanning user input
+        - fmt.Scanln
+        - fmt.Scanf
+        # Parse operations where default value is acceptable
+        - fmt.Sscanf
+        # Flag operations
+        - (*github.com/spf13/pflag.FlagSet).MarkHidden
+        # Binary encoding to buffer (can't fail for basic types)
+        - binary.Write
+        # File operations in cleanup paths
+        - os.Rename
+        - os.Remove
+        - os.RemoveAll
+        - (*os.File).WriteString
+        # Stdout/stderr writes (can't meaningfully handle failure)
+        - fmt.Fprintln
+        - fmt.Fprintf
+        - fmt.Fprint
+        # Writing to pipes (if pipe is bad, nothing we can do)
+        - (*io.PipeWriter).Write
+        - (*os.File).Write
+
+  exclusions:
+    rules:
+      # Exclude generated Ent code from all linters
+      - path: ent/
+        linters:
+          - errcheck
+          - govet
+          - unused
+          - ineffassign
+          - staticcheck
+          - gosimple
+          - revive
+      # Exclude generated mocks from all linters
+      - path: internal/mocks/
+        linters:
+          - errcheck
+          - govet
+          - unused
+          - ineffassign
+          - staticcheck
+          - gosimple
+          - revive
+      - path: _test\.go
+        linters:
+          - errcheck
+          - govet
+          - unused
+          - ineffassign
+          - staticcheck
+          - gosimple
+      # Best-effort response writes in adapted chi/huma middleware
+      - path: api/middleware/
+        linters:
+          - errcheck
+      # Exclude cleanup/teardown method calls from errcheck
+      - linters:
+          - errcheck
+        text: "Error return value of `.+\\.(Destroy|Release|Stop|Close|Roundtrip|Store)` is not checked"
+      # binary.Write/Read to bytes.Buffer can't fail
+      - linters:
+          - errcheck
+        text: "Error return value of `binary\\.(Write|Read)` is not checked"

@@ -1,0 +1,91 @@
+pragma Singleton
+pragma ComponentBehavior: Bound
+
+import QtQuick
+import Quickshell
+import Quickshell.Io
+import qs.Common
+
+Singleton {
+    id: root
+
+    readonly property string configDir: {
+        const xdg = Quickshell.env("XDG_CONFIG_HOME");
+        const base = (xdg && xdg !== "") ? xdg : Quickshell.env("HOME") + "/.config";
+        return base + "/dankcal";
+    }
+    readonly property string settingsPath: configDir + "/ui-settings.json"
+
+    // "auto" | "light" | "dark"
+    property alias themeMode: adapter.themeMode
+    // -1 = locale default, otherwise 0 (Sunday) … 6 (Saturday)
+    property alias firstDayOfWeek: adapter.firstDayOfWeek
+    // "auto" | "12h" | "24h"
+    property alias timeFormat: adapter.timeFormat
+    property alias showWeekNumbers: adapter.showWeekNumbers
+    property alias defaultEventDurationMinutes: adapter.defaultEventDurationMinutes
+    // -1 = no reminder
+    property alias defaultReminderMinutes: adapter.defaultReminderMinutes
+    property alias remindersEnabled: adapter.remindersEnabled
+    property alias reminderSound: adapter.reminderSound
+    property alias allDayReminders: adapter.allDayReminders
+
+    readonly property var locale: Qt.locale()
+    // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
+    readonly property int localeFirstDayOfWeek: locale.firstDayOfWeek % 7
+    readonly property bool localeUses24Hour: {
+        // Qt emits AM/PM as AP/ap/Ap/A/a depending on locale data; anything
+        // a-ish outside quoted literals means a 12-hour clock.
+        const fmt = locale.timeFormat(Locale.ShortFormat).replace(/'[^']*'/g, "");
+        return !/[aA]/.test(fmt);
+    }
+
+    readonly property int effectiveFirstDayOfWeek: (firstDayOfWeek >= 0 && firstDayOfWeek <= 6) ? firstDayOfWeek : localeFirstDayOfWeek
+    readonly property bool use24HourTime: {
+        switch (timeFormat) {
+        case "12h":
+            return false;
+        case "24h":
+            return true;
+        default:
+            return localeUses24Hour;
+        }
+    }
+
+    function formatTime(d) {
+        return Qt.formatTime(d, use24HourTime ? "HH:mm" : "h:mm AP");
+    }
+
+    function dayName(jsDay, format) {
+        return locale.dayName(jsDay, format !== undefined ? format : Locale.ShortFormat);
+    }
+
+    function monthName(jsMonth, format) {
+        return locale.monthName(jsMonth + 1, format !== undefined ? format : Locale.LongFormat);
+    }
+
+    Component.onCompleted: Paths.mkdir(configDir)
+
+    FileView {
+        id: settingsFile
+        path: root.settingsPath
+        watchChanges: true
+        printErrors: false
+
+        onFileChanged: reload()
+        onAdapterUpdated: writeAdapter()
+
+        JsonAdapter {
+            id: adapter
+            property string themeMode: "auto"
+            property int firstDayOfWeek: -1
+            property string timeFormat: "auto"
+            property bool showWeekNumbers: false
+            property int defaultEventDurationMinutes: 30
+            property int defaultReminderMinutes: 10
+            property bool remindersEnabled: true
+            property bool reminderSound: true
+            property bool allDayReminders: false
+        }
+    }
+}

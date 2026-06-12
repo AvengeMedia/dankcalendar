@@ -1,0 +1,12 @@
+with-expecter: true
+dir: "internal/mocks"
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "mocks"
+filename: "mock_{{.InterfaceName | snakecase}}.go"
+
+packages:
+  github.com/AvengeMedia/dankcalendar/core/internal/calendar:
+    interfaces:
+      Provider:
+      ProviderFactory:
+      SecretStore:

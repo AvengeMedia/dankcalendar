@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Dank Calendar
+GenericName=Calendar
+Comment=Local, Google, Microsoft, and CalDAV calendars for the dank desktop
+Exec=dankcal show
+Icon=dankcal
+Terminal=false
+Categories=Office;Calendar;Qt;
+Keywords=calendar;events;agenda;schedule;caldav;
+StartupNotify=true
+StartupWMClass=com.danklinux.dankcal
+SingleMainWindow=true

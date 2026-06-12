@@ -1,0 +1,1745 @@
+[
+  {
+    "term": "%1 AM",
+    "translation": "",
+    "context": "morning hour label in time gutter",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 PM",
+    "translation": "",
+    "context": "afternoon hour label in time gutter",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 · All day",
+    "translation": "",
+    "context": "event details time label for all-day events",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1h",
+    "translation": "",
+    "context": "event duration in hours on agenda card, %1 is hours",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1h%2m",
+    "translation": "",
+    "context": "event duration on agenda card, %1 is hours and %2 is minutes",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1m",
+    "translation": "",
+    "context": "event duration in minutes on agenda card, %1 is minutes",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "(untitled)",
+    "translation": "",
+    "context": "event details fallback title when event has no title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "+%1 more",
+    "translation": "",
+    "context": "overflow label in month grid day cell, %1 is the number of hidden events",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1 hour",
+    "translation": "",
+    "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1 hour before",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1.5 hours",
+    "translation": "",
+    "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "10 minutes before",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "12-hour",
+    "translation": "",
+    "context": "locale time format name in time format description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "12h",
+    "translation": "",
+    "context": "time format button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "15 minutes",
+    "translation": "",
+    "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "15 minutes before",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "2 hours",
+    "translation": "",
+    "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "24-hour",
+    "translation": "",
+    "context": "locale time format name in time format description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "24h",
+    "translation": "",
+    "context": "time format button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "30 minutes",
+    "translation": "",
+    "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "30 minutes before",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "45 minutes",
+    "translation": "",
+    "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "5 minutes before",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>",
+    "translation": "",
+    "context": "about page license footer link, %2 is the license url",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "A file with this name already exists. Do you want to overwrite it?",
+    "translation": "",
+    "context": "file browser overwrite dialog message",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "A folder of .ics files on this machine.",
+    "translation": "",
+    "context": "local provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "API",
+    "translation": "",
+    "context": "about page daemon api version column label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "About",
+    "translation": "",
+    "context": "about page project section header | settings sidebar tab label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Account connected",
+    "translation": "",
+    "context": "wizard success step heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Accounts",
+    "translation": "",
+    "context": "accounts settings section header | settings sidebar tab label | sidebar section header for the account list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Add",
+    "translation": "",
+    "context": "button to add local calendar account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Add account",
+    "translation": "",
+    "context": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Add description",
+    "translation": "",
+    "context": "event form placeholder for description text area",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Add title",
+    "translation": "",
+    "context": "event form placeholder for title input",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Adding…",
+    "translation": "",
+    "context": "add button while local account is created",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Agenda",
+    "translation": "",
+    "context": "header title when the agenda view is active | view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "All credentials are stored in your system keyring when available.",
+    "translation": "",
+    "context": "subtitle under provider selection heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "All day",
+    "translation": "",
+    "context": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close",
+    "translation": "",
+    "context": "file browser keyboard shortcuts hint line",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Always use the dark theme.",
+    "translation": "",
+    "context": "theme mode setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Always use the light theme.",
+    "translation": "",
+    "context": "theme mode setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "App-specific password",
+    "translation": "",
+    "context": "icloud password field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Appearance",
+    "translation": "",
+    "context": "appearance settings section header | settings sidebar tab label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Apple ID",
+    "translation": "",
+    "context": "icloud username field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Apple iCloud calendars via app-specific password.",
+    "translation": "",
+    "context": "icloud provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
+    "translation": "",
+    "context": "browser step body while waiting for oauth",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Ascending",
+    "translation": "",
+    "context": "file browser sort order option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "At start",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Attendees",
+    "translation": "",
+    "context": "event details section label for attendee list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Audible alert when an event fires.",
+    "translation": "",
+    "context": "reminder sound toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Authorization failed",
+    "translation": "",
+    "context": "browser step heading on oauth error",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Authorize in your browser",
+    "translation": "",
+    "context": "browser authorization step heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Auto",
+    "translation": "",
+    "context": "theme mode button group option | time format button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Auto follows your locale (%1).",
+    "translation": "",
+    "context": "time format setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Back",
+    "translation": "",
+    "context": "back button in account setup wizard",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Backend",
+    "translation": "",
+    "context": "about page daemon section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Backend not connected.",
+    "translation": "",
+    "context": "accounts settings section subtitle | calendars page empty state",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Begin setup",
+    "translation": "",
+    "context": "button to start oauth setup guide",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Calendar",
+    "translation": "",
+    "context": "main window title | main window title bar text",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Calendar Settings",
+    "translation": "",
+    "context": "settings window title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Calendar name",
+    "translation": "",
+    "context": "rename calendar dialog placeholder for name input",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Calendars",
+    "translation": "",
+    "context": "calendars settings section header | settings sidebar tab label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cancel",
+    "translation": "",
+    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | rename calendar dialog button to cancel",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Capabilities",
+    "translation": "",
+    "context": "about page daemon capabilities label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Choose a provider",
+    "translation": "",
+    "context": "heading for provider selection list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Choose calendar directory",
+    "translation": "",
+    "context": "folder picker title for local calendar directory",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Click anywhere to close",
+    "translation": "",
+    "context": "hint to dismiss enlarged setup screenshot",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Client ID",
+    "translation": "",
+    "context": "oauth client id field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Client Secret",
+    "translation": "",
+    "context": "oauth client secret field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Color source",
+    "translation": "",
+    "context": "color source setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Colors are shared with DankMaterialShell when available.",
+    "translation": "",
+    "context": "appearance settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Coming soon",
+    "translation": "",
+    "context": "badge on unimplemented provider card",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Confirm",
+    "translation": "",
+    "context": "confirm dialog default confirm button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Confirm delete",
+    "translation": "",
+    "context": "event details button to confirm deleting the event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connect",
+    "translation": "",
+    "context": "account setup button to start provider sign-in",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connect %1",
+    "translation": "",
+    "context": "account add header when a provider is selected",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connect any CalDAV-compatible server.",
+    "translation": "",
+    "context": "caldav provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connected",
+    "translation": "",
+    "context": "about page daemon status value | account status in account list | success step status heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connected calendar providers.",
+    "translation": "",
+    "context": "accounts settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connecting…",
+    "translation": "",
+    "context": "connect button while caldav connection verifies",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Continue",
+    "translation": "",
+    "context": "guide step next button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Copy path",
+    "translation": "",
+    "context": "file browser item context menu action",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Could not read that file.",
+    "translation": "",
+    "context": "error when credentials file cannot be read",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Create event",
+    "translation": "",
+    "context": "sidebar button to create a new event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Credentials stay on this machine",
+    "translation": "",
+    "context": "security note heading in oauth intro",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "DMS dynamic",
+    "translation": "",
+    "context": "color source status value",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "DMS dynamic colors detected when available.",
+    "translation": "",
+    "context": "color source setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Daemon offline",
+    "translation": "",
+    "context": "sidebar placeholder when the daemon is not connected",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.",
+    "translation": "",
+    "context": "about page project description with embedded links",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dank Linux Discord",
+    "translation": "",
+    "context": "about page community icon tooltip",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dark",
+    "translation": "",
+    "context": "theme mode button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Day",
+    "translation": "",
+    "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Default event duration",
+    "translation": "",
+    "context": "default event duration setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Default reminder",
+    "translation": "",
+    "context": "default reminder setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Defaults follow your locale unless overridden.",
+    "translation": "",
+    "context": "general settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete",
+    "translation": "",
+    "context": "confirm button for deleting a calendar | delete calendar confirmation button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete \"%1\"?",
+    "translation": "",
+    "context": "confirm dialog title for deleting a calendar, %1 is the calendar name | delete calendar confirmation title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete…",
+    "translation": "",
+    "context": "calendar context menu action to delete a calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Descending",
+    "translation": "",
+    "context": "file browser sort order option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Description",
+    "translation": "",
+    "context": "event details section label for description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Desktop",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Desktop notifications for upcoming events.",
+    "translation": "",
+    "context": "reminders toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Directory",
+    "translation": "",
+    "context": "local calendar directory field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Display ISO week numbers in month view.",
+    "translation": "",
+    "context": "week numbers setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Display name (optional)",
+    "translation": "",
+    "context": "optional account display name field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Docs",
+    "translation": "",
+    "context": "about page resource button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Documents",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Done",
+    "translation": "",
+    "context": "button to close modal after account added",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Downloads",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Edit event",
+    "translation": "",
+    "context": "event modal header when editing | event modal window title when editing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enable reminders",
+    "translation": "",
+    "context": "reminders toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enlarge",
+    "translation": "",
+    "context": "hint on setup screenshot thumbnail",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enter client ID",
+    "translation": "",
+    "context": "last guide step button to microsoft credentials",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enter filename...",
+    "translation": "",
+    "context": "file browser save filename input placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enter your CalDAV server details. The connection is verified before the account is saved.",
+    "translation": "",
+    "context": "caldav sign-in form instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enter your client ID",
+    "translation": "",
+    "context": "microsoft credentials step heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Event",
+    "translation": "",
+    "context": "event modal window title when viewing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Event details",
+    "translation": "",
+    "context": "event modal header when viewing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "F1/I: Toggle • F10: Help",
+    "translation": "",
+    "context": "file browser info panel keyboard shortcut hint",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "File Already Exists",
+    "translation": "",
+    "context": "file browser overwrite dialog title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "File Information",
+    "translation": "",
+    "context": "file browser info panel header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Files - %1",
+    "translation": "",
+    "context": "file browser window title, %1 is the picker purpose",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "First day shown in week and month views.",
+    "translation": "",
+    "context": "week start setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Following the system color scheme (currently %1).",
+    "translation": "",
+    "context": "theme mode setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "General",
+    "translation": "",
+    "context": "general settings section header | settings sidebar tab label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Generate app-specific password",
+    "translation": "",
+    "context": "button to open apple app password page",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "GitHub",
+    "translation": "",
+    "context": "about page resource button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.",
+    "translation": "",
+    "context": "google oauth setup intro text",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Hide",
+    "translation": "",
+    "context": "calendar context menu action to hide a calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Home",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Import client_secret.json",
+    "translation": "",
+    "context": "button to import google oauth client json",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.",
+    "translation": "",
+    "context": "google credentials step instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Initial reminder set on new events.",
+    "translation": "",
+    "context": "default reminder setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Keep typing",
+    "translation": "",
+    "context": "search status title when query is too short",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Ko-fi",
+    "translation": "",
+    "context": "about page resource button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Launch Dank Calendar in the background when you log in.",
+    "translation": "",
+    "context": "autostart setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Length used when creating events.",
+    "translation": "",
+    "context": "default event duration setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Light",
+    "translation": "",
+    "context": "theme mode button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Loading setup instructions…",
+    "translation": "",
+    "context": "placeholder while setup guide steps load",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Local",
+    "translation": "",
+    "context": "local provider name in account add modal | local provider name in account list | provider label for local accounts in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Local calendar",
+    "translation": "",
+    "context": "fallback tooltip for a calendar without an account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Local calendars",
+    "translation": "",
+    "context": "local account display name field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Location",
+    "translation": "",
+    "context": "event form placeholder for location input",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
+    "translation": "",
+    "context": "hint about microsoft server_error during oauth",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.",
+    "translation": "",
+    "context": "microsoft oauth setup intro text",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Modified",
+    "translation": "",
+    "context": "file browser sort criterion option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Month",
+    "translation": "",
+    "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Move to Trash",
+    "translation": "",
+    "context": "file browser item context menu action",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Music",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "My calendars",
+    "translation": "",
+    "context": "sidebar section header for the calendar list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "My server",
+    "translation": "",
+    "context": "caldav display name field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Name",
+    "translation": "",
+    "context": "file browser sort criterion option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "New event",
+    "translation": "",
+    "context": "event modal header when creating | event modal window title when creating",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.",
+    "translation": "",
+    "context": "error when credentials json lacks an oauth client",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No accounts yet. Click \"Add account\" to connect one.",
+    "translation": "",
+    "context": "accounts page empty state",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No calendars yet",
+    "translation": "",
+    "context": "sidebar placeholder when the calendar list is empty",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No calendars yet. Add an account first.",
+    "translation": "",
+    "context": "calendars page empty state",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No matching events",
+    "translation": "",
+    "context": "search status title when no results found",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No writable calendar available",
+    "translation": "",
+    "context": "event form error when no calendar allows creating events",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "None",
+    "translation": "",
+    "context": "default reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Not authorized — remove this account and add it again",
+    "translation": "",
+    "context": "account status in account list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Nothing scheduled in the next %1 days",
+    "translation": "",
+    "context": "agenda empty state, %1 is the number of days ahead",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Notifications",
+    "translation": "",
+    "context": "notifications settings section header | settings sidebar tab label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Offline",
+    "translation": "",
+    "context": "about page daemon status value",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Open",
+    "translation": "",
+    "context": "fallback label for guide step link button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Open Calendar",
+    "translation": "",
+    "context": "tray menu item to show the main window",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Open browser again",
+    "translation": "",
+    "context": "button to reopen oauth url in browser",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Order",
+    "translation": "",
+    "context": "file browser sort menu section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Outlook, Office 365 and Exchange Online calendars.",
+    "translation": "",
+    "context": "microsoft provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Overwrite",
+    "translation": "",
+    "context": "file browser overwrite dialog confirm button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Part of the Dank Linux suite.",
+    "translation": "",
+    "context": "app tagline on about page",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Password",
+    "translation": "",
+    "context": "caldav password field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste credentials",
+    "translation": "",
+    "context": "last guide step button to google credentials",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste the Application (client) ID from your app registration's Overview page.",
+    "translation": "",
+    "context": "microsoft credentials step instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste your credentials",
+    "translation": "",
+    "context": "google credentials step heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Pictures",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Play sound",
+    "translation": "",
+    "context": "reminder sound toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
+    "translation": "",
+    "context": "local calendar directory form instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Quick Access",
+    "translation": "",
+    "context": "file browser sidebar section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Quit",
+    "translation": "",
+    "context": "tray menu item to quit the application",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Reminders and desktop alerts.",
+    "translation": "",
+    "context": "notifications settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Remove",
+    "translation": "",
+    "context": "confirm button for removing an account | remove account confirmation button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Remove \"%1\"?",
+    "translation": "",
+    "context": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
+    "translation": "",
+    "context": "confirm dialog body for removing an account | remove account confirmation message",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
+    "translation": "",
+    "context": "confirm dialog body for deleting a calendar | delete calendar confirmation message",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Remove…",
+    "translation": "",
+    "context": "account context menu action to remove the account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Rename calendar",
+    "translation": "",
+    "context": "rename calendar dialog header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Rename…",
+    "translation": "",
+    "context": "calendar context menu action to rename a calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Save",
+    "translation": "",
+    "context": "event details button to save changes | file browser save button | rename calendar dialog button to save name",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Saving...",
+    "translation": "",
+    "context": "event details save button while saving",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Search events",
+    "translation": "",
+    "context": "search modal input placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Search failed",
+    "translation": "",
+    "context": "search status title when search errors",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Searching",
+    "translation": "",
+    "context": "search status title while search is running",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Select File",
+    "translation": "",
+    "context": "default file browser window title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Select client_secret.json",
+    "translation": "",
+    "context": "file picker title for google client json",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Select file",
+    "translation": "",
+    "context": "default title for file picker in account add modal",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Server URL",
+    "translation": "",
+    "context": "caldav server url field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Settings",
+    "translation": "",
+    "context": "settings window header title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show",
+    "translation": "",
+    "context": "calendar context menu action to show a hidden calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show all-day reminders",
+    "translation": "",
+    "context": "all-day reminders toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show week numbers",
+    "translation": "",
+    "context": "week numbers setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sign in with %1",
+    "translation": "",
+    "context": "oauth wizard intro step heading",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
+    "translation": "",
+    "context": "icloud sign-in form instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sign in with your Google account.",
+    "translation": "",
+    "context": "google provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Size",
+    "translation": "",
+    "context": "file browser sort criterion option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sort By",
+    "translation": "",
+    "context": "file browser sort menu section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Start at login",
+    "translation": "",
+    "context": "autostart setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Start week on",
+    "translation": "",
+    "context": "week start setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Starting…",
+    "translation": "",
+    "context": "connect button while oauth flow starts",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Status",
+    "translation": "",
+    "context": "about page daemon status column label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Step %1",
+    "translation": "",
+    "context": "setup guide step heading without title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Step %1: %2",
+    "translation": "",
+    "context": "setup guide step heading with title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Stock palette",
+    "translation": "",
+    "context": "color source status value",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Surface all-day events at the start of the day.",
+    "translation": "",
+    "context": "all-day reminders toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sync now",
+    "translation": "",
+    "context": "account context menu action to sync the account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Synced as \"%1\". The name only changes in Dank Calendar.",
+    "translation": "",
+    "context": "rename calendar dialog note showing provider name",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "System default (%1)",
+    "translation": "",
+    "context": "week start dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "System preference unavailable — using dark.",
+    "translation": "",
+    "context": "theme mode setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select",
+    "translation": "",
+    "context": "file browser keyboard shortcuts hint line",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "That file is not valid JSON.",
+    "translation": "",
+    "context": "error when imported credentials file is not json",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Theme",
+    "translation": "",
+    "context": "theme mode setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Time format",
+    "translation": "",
+    "context": "time format setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Title is required",
+    "translation": "",
+    "context": "event form validation error for missing title",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Today",
+    "translation": "",
+    "context": "agenda section header for the current day | header button that jumps to the current date | search result date label for current day",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Tomorrow",
+    "translation": "",
+    "context": "agenda section header for the next day | search result date label for next day",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Try a different search.",
+    "translation": "",
+    "context": "search status hint when no results found",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Try again",
+    "translation": "",
+    "context": "button to retry oauth after failure",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Type",
+    "translation": "",
+    "context": "file browser sort criterion option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Type at least 2 characters to search events.",
+    "translation": "",
+    "context": "search status hint when query is too short",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Use synced name",
+    "translation": "",
+    "context": "rename calendar dialog button to revert to provider name",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Use this folder",
+    "translation": "",
+    "context": "file browser folder selection confirm button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Username",
+    "translation": "",
+    "context": "caldav username field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Version",
+    "translation": "",
+    "context": "about page daemon version column label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Videos",
+    "translation": "",
+    "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Visibility, names, and removal per calendar.",
+    "translation": "",
+    "context": "calendars settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Waiting for browser…",
+    "translation": "",
+    "context": "browser step heading while waiting for oauth",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Waiting for the dankcal daemon...",
+    "translation": "",
+    "context": "agenda placeholder while the daemon is not connected",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Week",
+    "translation": "",
+    "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Yesterday",
+    "translation": "",
+    "context": "search result date label for previous day",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Your calendars will sync in the background. You can manage this account from Settings → Accounts.",
+    "translation": "",
+    "context": "success step body about background sync",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.",
+    "translation": "",
+    "context": "security note body in oauth intro",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "all day",
+    "translation": "",
+    "context": "suffix on all-day event chip in day view",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "dark",
+    "translation": "",
+    "context": "current scheme name in theme mode description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "light",
+    "translation": "",
+    "context": "current scheme name in theme mode description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "password",
+    "translation": "",
+    "context": "caldav password field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "read-only",
+    "translation": "",
+    "context": "read-only suffix in calendar list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "synced as \"%1\"",
+    "translation": "",
+    "context": "renamed calendar provider name suffix in calendar list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "username",
+    "translation": "",
+    "context": "caldav username field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "· %1 invited · %2 accepted",
+    "translation": "",
+    "context": "event details attendee count summary",
+    "reference": "",
+    "comment": ""
+  }
+]

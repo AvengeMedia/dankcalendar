@@ -1,0 +1,244 @@
+package repo_test
+
+import (
+	"context"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/require"
+
+	"github.com/AvengeMedia/dankcalendar/core/ent/account"
+	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/repo"
+)
+
+func newTestRepo(t *testing.T) (*repo.Repo, context.Context) {
+	t.Helper()
+	ctx := context.Background()
+	client, err := repo.OpenMemory(ctx)
+	require.NoError(t, err)
+
+	r := repo.New(client)
+	t.Cleanup(func() { _ = r.Close() })
+	return r, ctx
+}
+
+func TestAccountLifecycle(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	created, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "personal",
+		Kind:        account.KindLocal,
+		DisplayName: "Personal",
+		Settings:    map[string]any{"root": "/tmp/personal"},
+	})
+	require.NoError(t, err)
+	require.Equal(t, "personal", created.ID)
+
+	got, err := r.GetAccount(ctx, "personal")
+	require.NoError(t, err)
+	require.Equal(t, "Personal", got.DisplayName)
+	require.Equal(t, "/tmp/personal", got.Settings["root"])
+
+	all, err := r.ListAccounts(ctx)
+	require.NoError(t, err)
+	require.Len(t, all, 1)
+
+	require.NoError(t, r.DeleteAccount(ctx, "personal"))
+
+	_, err = r.GetAccount(ctx, "personal")
+	require.True(t, repo.IsNotFound(err))
+}
+
+func TestUpsertCalendarAndEvents(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	_, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "personal",
+		Kind:        account.KindLocal,
+		DisplayName: "Personal",
+	})
+	require.NoError(t, err)
+
+	cal, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "personal",
+		RemoteID:  "file:work.ics",
+		Name:      "Work",
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, cal.ID)
+
+	again, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "personal",
+		RemoteID:  "file:work.ics",
+		Name:      "Work (renamed)",
+	})
+	require.NoError(t, err)
+	require.Equal(t, cal.ID, again.ID)
+	require.Equal(t, "Work (renamed)", again.Name)
+
+	now := time.Now().UTC().Truncate(time.Second)
+	created, err := r.UpsertEvent(ctx, repo.UpsertEventInput{
+		CalendarID: cal.ID,
+		UID:        "evt-1",
+		Summary:    "Standup",
+		Start:      now,
+		End:        now.Add(30 * time.Minute),
+		Status:     event.StatusConfirmed,
+	})
+	require.NoError(t, err)
+	require.Equal(t, "Standup", created.Summary)
+
+	from := now.Add(-time.Hour)
+	to := now.Add(2 * time.Hour)
+	events, total, err := r.ListEvents(ctx, repo.ListEventsParams{
+		Filter: repo.EventFilter{
+			CalendarIDs: []string{cal.ID},
+			From:        &from,
+			To:          &to,
+		},
+	})
+	require.NoError(t, err)
+	require.Equal(t, 1, total)
+	require.Len(t, events, 1)
+	require.Equal(t, "Standup", events[0].Summary)
+}
+
+func TestCalendarNameOverrideSurvivesSync(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	_, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "personal",
+		Kind:        account.KindLocal,
+		DisplayName: "Personal",
+	})
+	require.NoError(t, err)
+
+	cal, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "personal",
+		RemoteID:  "file:work.ics",
+		Name:      "Work",
+	})
+	require.NoError(t, err)
+
+	require.NoError(t, r.SetCalendarNameOverride(ctx, cal.ID, "Job stuff"))
+
+	synced, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "personal",
+		RemoteID:  "file:work.ics",
+		Name:      "Work (provider rename)",
+	})
+	require.NoError(t, err)
+	require.Equal(t, "Work (provider rename)", synced.Name)
+	require.Equal(t, "Job stuff", synced.NameOverride)
+
+	require.NoError(t, r.SetCalendarNameOverride(ctx, cal.ID, ""))
+	cleared, err := r.GetCalendar(ctx, cal.ID)
+	require.NoError(t, err)
+	require.Empty(t, cleared.NameOverride)
+}
+
+func TestSecrets(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	_, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "google",
+		Kind:        account.KindGoogle,
+		DisplayName: "Google",
+	})
+	require.NoError(t, err)
+
+	require.NoError(t, r.SetSecret(ctx, "google", "google.token", []byte("first")))
+
+	value, err := r.GetSecret(ctx, "google", "google.token")
+	require.NoError(t, err)
+	require.Equal(t, []byte("first"), value)
+
+	require.NoError(t, r.SetSecret(ctx, "google", "google.token", []byte("second")))
+
+	value, err = r.GetSecret(ctx, "google", "google.token")
+	require.NoError(t, err)
+	require.Equal(t, []byte("second"), value)
+
+	require.NoError(t, r.DeleteSecret(ctx, "google", "google.token"))
+
+	_, err = r.GetSecret(ctx, "google", "google.token")
+	require.True(t, repo.IsNotFound(err))
+}
+
+func TestDeleteAccountCascades(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	_, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "acc",
+		Kind:        account.KindLocal,
+		DisplayName: "Acc",
+	})
+	require.NoError(t, err)
+
+	cal, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "acc",
+		RemoteID:  "dir:main",
+		Name:      "Main",
+	})
+	require.NoError(t, err)
+
+	_, err = r.UpsertEvent(ctx, repo.UpsertEventInput{
+		CalendarID: cal.ID,
+		UID:        "ev-1",
+		Summary:    "Event",
+		Start:      time.Now(),
+		End:        time.Now().Add(time.Hour),
+	})
+	require.NoError(t, err)
+
+	secrets := repo.NewSecretStore(r)
+	require.NoError(t, secrets.Set(ctx, "acc", "test.token", []byte("tok")))
+
+	require.NoError(t, r.DeleteAccount(ctx, "acc"))
+
+	_, err = r.GetAccount(ctx, "acc")
+	require.True(t, repo.IsNotFound(err))
+
+	cals, err := r.ListCalendars(ctx)
+	require.NoError(t, err)
+	require.Empty(t, cals)
+
+	events, total, err := r.ListEvents(ctx, repo.ListEventsParams{})
+	require.NoError(t, err)
+	require.Zero(t, total)
+	require.Empty(t, events)
+}
+
+func TestDeleteCalendarCascades(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	_, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "acc",
+		Kind:        account.KindLocal,
+		DisplayName: "Acc",
+	})
+	require.NoError(t, err)
+
+	cal, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "acc",
+		RemoteID:  "dir:main",
+		Name:      "Main",
+	})
+	require.NoError(t, err)
+
+	_, err = r.UpsertEvent(ctx, repo.UpsertEventInput{
+		CalendarID: cal.ID,
+		UID:        "ev-1",
+		Summary:    "Event",
+		Start:      time.Now(),
+		End:        time.Now().Add(time.Hour),
+	})
+	require.NoError(t, err)
+
+	require.NoError(t, r.DeleteCalendar(ctx, cal.ID))
+
+	_, total, err := r.ListEvents(ctx, repo.ListEventsParams{})
+	require.NoError(t, err)
+	require.Zero(t, total)
+}

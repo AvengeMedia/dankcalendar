@@ -1,0 +1,433 @@
+package google
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/http"
+	"strings"
+	"time"
+
+	"golang.org/x/oauth2"
+	"google.golang.org/api/calendar/v3"
+	"google.golang.org/api/googleapi"
+	"google.golang.org/api/option"
+
+	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+)
+
+const maxPageSize = 2500
+
+type Provider struct {
+	account cal.Account
+	secrets cal.SecretStore
+	svc     *calendar.Service
+	cfg     *oauth2.Config
+}
+
+func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Provider, error) {
+	appBytes, err := secrets.Get(ctx, account.ID, SecretKeyApp)
+	if err != nil {
+		return nil, fmt.Errorf("missing google app credentials for account %q: %w", account.ID, err)
+	}
+
+	var creds oauth.GoogleAppCredentials
+	if err := json.Unmarshal(appBytes, &creds); err != nil {
+		return nil, fmt.Errorf("decode google app credentials: %w", err)
+	}
+
+	tokenBytes, err := secrets.Get(ctx, account.ID, SecretKeyToken)
+	if err != nil {
+		return nil, fmt.Errorf("account %q is not authorized; run `dankcal account google login %s`", account.ID, account.ID)
+	}
+
+	tok, err := oauth.UnmarshalToken(tokenBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := oauth.GoogleConfig(creds, "")
+	tokenSource := persistingTokenSource{
+		base:      cfg.TokenSource(ctx, tok),
+		secrets:   secrets,
+		accountID: account.ID,
+	}
+
+	svc, err := calendar.NewService(ctx, option.WithTokenSource(&tokenSource))
+	if err != nil {
+		return nil, fmt.Errorf("init google calendar service: %w", err)
+	}
+
+	return &Provider{account: account, secrets: secrets, svc: svc, cfg: cfg}, nil
+}
+
+func (p *Provider) Kind() cal.AccountKind { return cal.AccountGoogle }
+func (p *Provider) Account() cal.Account  { return p.account }
+
+func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
+	res, err := p.svc.CalendarList.List().Context(ctx).Do()
+	if err != nil {
+		return nil, fmt.Errorf("list google calendars: %w", err)
+	}
+
+	out := make([]cal.Calendar, 0, len(res.Items))
+	for _, item := range res.Items {
+		out = append(out, cal.Calendar{
+			AccountID:   p.account.ID,
+			RemoteID:    item.Id,
+			Name:        item.Summary,
+			Description: item.Description,
+			Color:       item.BackgroundColor,
+			TimeZone:    item.TimeZone,
+			ReadOnly:    item.AccessRole == "reader" || item.AccessRole == "freeBusyReader",
+		})
+	}
+	return out, nil
+}
+
+func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {
+	changes, nextToken, err := p.syncPages(ctx, c, cursor.Token)
+	if err != nil {
+		var apiErr *googleapi.Error
+		if cursor.Token == "" || !errors.As(err, &apiErr) || apiErr.Code != http.StatusGone {
+			return nil, err
+		}
+		// Sync token expired; restart with a full listing.
+		cursor.Token = ""
+		if changes, nextToken, err = p.syncPages(ctx, c, ""); err != nil {
+			return nil, err
+		}
+	}
+
+	return &cal.SyncResult{
+		Cursor:       cal.SyncCursor{CalendarID: cursor.CalendarID, Token: nextToken},
+		Changes:      changes,
+		More:         false,
+		FullSnapshot: cursor.Token == "",
+	}, nil
+}
+
+func (p *Provider) syncPages(ctx context.Context, c cal.Calendar, syncToken string) ([]cal.EventChange, string, error) {
+	var (
+		changes   []cal.EventChange
+		pageToken string
+	)
+
+	for {
+		call := p.svc.Events.List(c.RemoteID).
+			Context(ctx).
+			SingleEvents(false).
+			ShowDeleted(true).
+			MaxResults(maxPageSize)
+		if syncToken != "" {
+			call = call.SyncToken(syncToken)
+		}
+		if pageToken != "" {
+			call = call.PageToken(pageToken)
+		}
+
+		res, err := call.Do()
+		if err != nil {
+			return nil, "", fmt.Errorf("sync google events: %w", err)
+		}
+
+		for _, item := range res.Items {
+			switch {
+			case item.Status != "cancelled":
+				changes = append(changes, cal.EventChange{Type: cal.ChangeUpsert, Event: fromGoogleEvent(c, item)})
+			case item.RecurringEventId != "":
+				// Cancelled instances of a series are kept as exception rows
+				// so expansion can suppress the occurrences they remove.
+				changes = append(changes, cal.EventChange{Type: cal.ChangeUpsert, Event: fromGoogleEvent(c, item)})
+			case syncToken != "":
+				changes = append(changes, cal.EventChange{Type: cal.ChangeDelete, RemoteID: item.Id})
+			}
+		}
+
+		if res.NextPageToken == "" {
+			return changes, res.NextSyncToken, nil
+		}
+		pageToken = res.NextPageToken
+	}
+}
+
+func (p *Provider) ListEvents(ctx context.Context, c cal.Calendar, opts cal.ListEventsOptions) ([]cal.Event, error) {
+	limit := int64(opts.Limit)
+	if limit <= 0 {
+		limit = maxPageSize
+	}
+
+	call := p.svc.Events.List(c.RemoteID).
+		Context(ctx).
+		SingleEvents(true).
+		OrderBy("startTime").
+		MaxResults(limit)
+	if !opts.Start.IsZero() {
+		call = call.TimeMin(opts.Start.Format(time.RFC3339))
+	}
+	if !opts.End.IsZero() {
+		call = call.TimeMax(opts.End.Format(time.RFC3339))
+	}
+	if opts.Query != "" {
+		call = call.Q(opts.Query)
+	}
+
+	res, err := call.Do()
+	if err != nil {
+		return nil, fmt.Errorf("list google events: %w", err)
+	}
+
+	out := make([]cal.Event, 0, len(res.Items))
+	for _, item := range res.Items {
+		out = append(out, *fromGoogleEvent(c, item))
+	}
+	return out, nil
+}
+
+func (p *Provider) CreateEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
+	created, err := p.svc.Events.Insert(c.RemoteID, toGoogleEvent(ev)).Context(ctx).Do()
+	if err != nil {
+		return nil, fmt.Errorf("create google event: %w", err)
+	}
+	return fromGoogleEvent(c, created), nil
+}
+
+func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
+	if ev.RemoteID == "" {
+		return nil, errors.New("update google event: missing remote id")
+	}
+
+	updated, err := p.svc.Events.Update(c.RemoteID, ev.RemoteID, toGoogleEvent(ev)).Context(ctx).Do()
+	if err != nil {
+		return nil, fmt.Errorf("update google event: %w", err)
+	}
+	return fromGoogleEvent(c, updated), nil
+}
+
+func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event) error {
+	if ev.RemoteID == "" {
+		return errors.New("delete google event: missing remote id")
+	}
+
+	err := p.svc.Events.Delete(c.RemoteID, ev.RemoteID).Context(ctx).Do()
+	if err == nil {
+		return nil
+	}
+
+	var apiErr *googleapi.Error
+	if errors.As(err, &apiErr) && (apiErr.Code == http.StatusNotFound || apiErr.Code == http.StatusGone) {
+		return nil
+	}
+	return fmt.Errorf("delete google event: %w", err)
+}
+
+// fromGoogleEvent uses item.Id (not ICalUID) for both UID and RemoteID:
+// recurrence exceptions share an ICalUID and would collide on the
+// (calendar, uid) unique index.
+func fromGoogleEvent(c cal.Calendar, item *calendar.Event) *cal.Event {
+	ev := &cal.Event{
+		CalendarID:   c.ID,
+		UID:          item.Id,
+		RemoteID:     item.Id,
+		Etag:         item.Etag,
+		Summary:      item.Summary,
+		Description:  item.Description,
+		Location:     item.Location,
+		URL:          item.HtmlLink,
+		Status:       fromGoogleStatus(item.Status),
+		Recurrence:   fromGoogleRecurrence(item.Recurrence),
+		RecurringID:  item.RecurringEventId,
+		Attendees:    fromGoogleAttendees(item.Attendees),
+		Transparency: item.Transparency,
+		Visibility:   item.Visibility,
+	}
+
+	ev.Start, ev.AllDay, ev.StartTimeZone = fromGoogleTime(item.Start)
+	ev.End, _, ev.EndTimeZone = fromGoogleTime(item.End)
+	ev.OriginalStart, _, _ = fromGoogleTime(item.OriginalStartTime)
+
+	if item.Organizer != nil {
+		ev.Organizer = &cal.Attendee{
+			Email:       item.Organizer.Email,
+			DisplayName: item.Organizer.DisplayName,
+			Organizer:   true,
+		}
+	}
+
+	if item.Reminders != nil {
+		for _, o := range item.Reminders.Overrides {
+			ev.Reminders = append(ev.Reminders, cal.Reminder{Method: o.Method, Minutes: int(o.Minutes)})
+		}
+	}
+
+	ev.Created, _ = time.Parse(time.RFC3339, item.Created)
+	ev.Updated, _ = time.Parse(time.RFC3339, item.Updated)
+	return ev
+}
+
+func fromGoogleStatus(s string) cal.EventStatus {
+	switch s {
+	case "tentative":
+		return cal.EventTentative
+	case "cancelled":
+		return cal.EventCancelled
+	default:
+		return cal.EventConfirmed
+	}
+}
+
+func fromGoogleTime(t *calendar.EventDateTime) (time.Time, bool, string) {
+	switch {
+	case t == nil:
+		return time.Time{}, false, ""
+	case t.Date != "":
+		parsed, _ := time.ParseInLocation("2006-01-02", t.Date, time.UTC)
+		return parsed, true, t.TimeZone
+	default:
+		parsed, _ := time.Parse(time.RFC3339, t.DateTime)
+		return parsed, false, t.TimeZone
+	}
+}
+
+func fromGoogleRecurrence(lines []string) *cal.Recurrence {
+	if len(lines) == 0 {
+		return nil
+	}
+
+	rec := &cal.Recurrence{}
+	for _, line := range lines {
+		name, value, found := strings.Cut(line, ":")
+		if !found {
+			continue
+		}
+		// RDATE/EXDATE may carry params (e.g. ;TZID=), so match the
+		// property name before any parameters.
+		prop, _, _ := strings.Cut(name, ";")
+		switch strings.ToUpper(prop) {
+		case "RRULE":
+			rec.RRule = append(rec.RRule, value)
+		case "RDATE":
+			rec.RDate = append(rec.RDate, value)
+		case "EXDATE":
+			rec.ExDate = append(rec.ExDate, value)
+		}
+	}
+
+	if len(rec.RRule) == 0 && len(rec.RDate) == 0 && len(rec.ExDate) == 0 {
+		return nil
+	}
+	return rec
+}
+
+func fromGoogleAttendees(items []*calendar.EventAttendee) []cal.Attendee {
+	if len(items) == 0 {
+		return nil
+	}
+
+	out := make([]cal.Attendee, 0, len(items))
+	for _, a := range items {
+		out = append(out, cal.Attendee{
+			Email:       a.Email,
+			DisplayName: a.DisplayName,
+			Status:      a.ResponseStatus,
+			Optional:    a.Optional,
+			Organizer:   a.Organizer,
+		})
+	}
+	return out
+}
+
+func toGoogleEvent(ev *cal.Event) *calendar.Event {
+	out := &calendar.Event{
+		Summary:     ev.Summary,
+		Description: ev.Description,
+		Location:    ev.Location,
+		Status:      string(ev.Status),
+	}
+
+	if ev.AllDay {
+		out.Start = &calendar.EventDateTime{Date: ev.Start.Format("2006-01-02")}
+		end := ev.End
+		// Google all-day end dates are exclusive.
+		if end.IsZero() || end.Format("2006-01-02") == ev.Start.Format("2006-01-02") {
+			end = ev.Start.AddDate(0, 0, 1)
+		}
+		out.End = &calendar.EventDateTime{Date: end.Format("2006-01-02")}
+	} else {
+		out.Start = toGoogleDateTime(ev.Start, ev.StartTimeZone)
+		out.End = toGoogleDateTime(ev.End, ev.EndTimeZone)
+	}
+
+	if ev.Recurrence != nil {
+		for _, r := range ev.Recurrence.RRule {
+			out.Recurrence = append(out.Recurrence, "RRULE:"+r)
+		}
+		for _, r := range ev.Recurrence.RDate {
+			out.Recurrence = append(out.Recurrence, "RDATE:"+r)
+		}
+		for _, r := range ev.Recurrence.ExDate {
+			out.Recurrence = append(out.Recurrence, "EXDATE:"+r)
+		}
+	}
+
+	for _, a := range ev.Attendees {
+		out.Attendees = append(out.Attendees, &calendar.EventAttendee{
+			Email:          a.Email,
+			DisplayName:    a.DisplayName,
+			ResponseStatus: a.Status,
+			Optional:       a.Optional,
+			Organizer:      a.Organizer,
+		})
+	}
+
+	if len(ev.Reminders) > 0 {
+		overrides := make([]*calendar.EventReminder, 0, len(ev.Reminders))
+		for _, r := range ev.Reminders {
+			overrides = append(overrides, &calendar.EventReminder{Method: r.Method, Minutes: int64(r.Minutes)})
+		}
+		out.Reminders = &calendar.EventReminders{
+			Overrides: overrides,
+			// UseDefault is false, which JSON-omits unless forced.
+			ForceSendFields: []string{"UseDefault"},
+		}
+	}
+
+	return out
+}
+
+func toGoogleDateTime(t time.Time, tz string) *calendar.EventDateTime {
+	dt := &calendar.EventDateTime{}
+	if tz != "" {
+		if loc, err := time.LoadLocation(tz); err == nil {
+			t = t.In(loc)
+		}
+		dt.TimeZone = tz
+	}
+	dt.DateTime = t.Format(time.RFC3339)
+	return dt
+}
+
+func (p *Provider) Close() error { return nil }
+
+type persistingTokenSource struct {
+	base      oauth2.TokenSource
+	secrets   cal.SecretStore
+	accountID string
+}
+
+func (s *persistingTokenSource) Token() (*oauth2.Token, error) {
+	tok, err := s.base.Token()
+	if err != nil {
+		return nil, err
+	}
+	data, err := oauth.MarshalToken(tok)
+	if err != nil {
+		return tok, nil
+	}
+	if err := s.secrets.Set(context.Background(), s.accountID, SecretKeyToken, data); err != nil {
+		return tok, nil
+	}
+	return tok, nil
+}

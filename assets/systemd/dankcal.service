@@ -1,0 +1,15 @@
+[Unit]
+Description=Dank Calendar
+Documentation=https://github.com/AvengeMedia/dankcalendar
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dankcal run --session --hidden
+Restart=on-failure
+RestartSec=2
+Slice=app.slice
+
+[Install]
+WantedBy=graphical-session.target
