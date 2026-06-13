@@ -8,6 +8,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/schema"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
 )
@@ -134,6 +135,20 @@ func init() {
 			return nil
 		}
 	}()
+	reminderstateFields := schema.ReminderState{}.Fields()
+	_ = reminderstateFields
+	// reminderstateDescCalendarID is the schema descriptor for calendar_id field.
+	reminderstateDescCalendarID := reminderstateFields[0].Descriptor()
+	// reminderstate.CalendarIDValidator is a validator for the "calendar_id" field. It is called by the builders before save.
+	reminderstate.CalendarIDValidator = reminderstateDescCalendarID.Validators[0].(func(string) error)
+	// reminderstateDescUID is the schema descriptor for uid field.
+	reminderstateDescUID := reminderstateFields[1].Descriptor()
+	// reminderstate.UIDValidator is a validator for the "uid" field. It is called by the builders before save.
+	reminderstate.UIDValidator = reminderstateDescUID.Validators[0].(func(string) error)
+	// reminderstateDescFiredAt is the schema descriptor for fired_at field.
+	reminderstateDescFiredAt := reminderstateFields[4].Descriptor()
+	// reminderstate.DefaultFiredAt holds the default value on creation for the fired_at field.
+	reminderstate.DefaultFiredAt = reminderstateDescFiredAt.Default.(func() time.Time)
 	secretFields := schema.Secret{}.Fields()
 	_ = secretFields
 	// secretDescKey is the schema descriptor for key field.

@@ -262,6 +262,14 @@ func eventFromParams(base calendar.Event, p map[string]any) (calendar.Event, err
 		}
 	}
 
+	if raw, ok := p["reminders"]; ok {
+		rems, err := remindersFromParam(raw)
+		if err != nil {
+			return base, err
+		}
+		base.Reminders = rems
+	}
+
 	for key, dst := range map[string]*time.Time{"start": &base.Start, "end": &base.End} {
 		raw := ParamString(p, key)
 		if raw == "" {
@@ -278,6 +286,48 @@ func eventFromParams(base calendar.Event, p map[string]any) (calendar.Event, err
 		return base, errors.New("end must not be before start")
 	}
 	return base, nil
+}
+
+// remindersFromParam parses the wire form: an array of {method?, minutes}
+// objects. An empty array clears the event's reminders.
+func remindersFromParam(raw any) ([]calendar.Reminder, error) {
+	switch v := raw.(type) {
+	case nil:
+		return nil, nil
+	case []any:
+		out := make([]calendar.Reminder, 0, len(v))
+		for _, item := range v {
+			entry, ok := item.(map[string]any)
+			if !ok {
+				return nil, errors.New("reminders entries must be objects")
+			}
+			minutes, ok := reminderMinutes(entry["minutes"])
+			if !ok {
+				return nil, errors.New("reminder minutes must be a number")
+			}
+			method, _ := entry["method"].(string)
+			if method == "" {
+				method = "popup"
+			}
+			out = append(out, calendar.Reminder{Method: method, Minutes: minutes})
+		}
+		return out, nil
+	default:
+		return nil, errors.New("reminders must be an array")
+	}
+}
+
+func reminderMinutes(raw any) (int, bool) {
+	switch v := raw.(type) {
+	case int:
+		return v, true
+	case int64:
+		return int(v), true
+	case float64:
+		return int(v), true
+	default:
+		return 0, false
+	}
 }
 
 func domainEventFromEnt(e *ent.Event) calendar.Event {
@@ -297,6 +347,7 @@ func domainEventFromEnt(e *ent.Event) calendar.Event {
 		StartTimeZone: e.StartTz,
 		EndTimeZone:   e.EndTz,
 		RecurringID:   e.RecurringID,
+		Reminders:     calendar.RemindersFromMaps(e.Reminders),
 	}
 }
 

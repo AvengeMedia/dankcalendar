@@ -15,6 +15,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
 )
 
@@ -76,10 +77,11 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			account.Table:  account.ValidColumn,
-			calendar.Table: calendar.ValidColumn,
-			event.Table:    event.ValidColumn,
-			secret.Table:   secret.ValidColumn,
+			account.Table:       account.ValidColumn,
+			calendar.Table:      calendar.ValidColumn,
+			event.Table:         event.ValidColumn,
+			reminderstate.Table: reminderstate.ValidColumn,
+			secret.Table:        secret.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

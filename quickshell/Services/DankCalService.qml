@@ -450,7 +450,8 @@ Singleton {
             "status": e.status || "confirmed",
             "recurringId": e.recurringId || "",
             "attendees": e.attendees || [],
-            "organizer": e.organizer || null
+            "organizer": e.organizer || null,
+            "reminders": e.reminders || []
         };
     }
 
@@ -698,6 +699,15 @@ Singleton {
                 accountRemoved(accountId);
                 refreshAccounts();
             }
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function sendTestReminder(callback) {
+        sendRequest("reminders.test", null, response => {
+            if (response.error)
+                lastError = response.error;
             if (callback)
                 callback(response);
         });

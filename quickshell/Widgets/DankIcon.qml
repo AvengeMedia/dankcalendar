@@ -15,12 +15,17 @@ Item {
     implicitWidth: Math.round(size)
     implicitHeight: Math.round(size)
 
+    FontLoader {
+        id: materialSymbolsFont
+        source: Qt.resolvedUrl("../assets/fonts/material-design-icons/variablefont/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf")
+    }
+
     Text {
         id: icon
 
         anchors.fill: parent
 
-        font.family: "Material Symbols Rounded"
+        font.family: materialSymbolsFont.name
         font.pixelSize: Theme.fontSizeMedium
         font.weight: root.weight
         color: Theme.surfaceText

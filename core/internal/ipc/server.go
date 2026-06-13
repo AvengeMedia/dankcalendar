@@ -110,7 +110,7 @@ func (s *Server) handleConnection(ctx context.Context, conn net.Conn) {
 
 	caps := Capabilities{
 		APIVersion:   APIVersion,
-		Capabilities: []string{"accounts", "calendars", "events", "subscribe", "ui", "system"},
+		Capabilities: []string{"accounts", "calendars", "events", "reminders", "subscribe", "ui", "system"},
 	}
 	encoder := json.NewEncoder(conn)
 	if err := encoder.Encode(caps); err != nil {

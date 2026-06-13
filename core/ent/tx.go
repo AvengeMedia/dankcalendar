@@ -20,6 +20,8 @@ type Tx struct {
 	Calendar *CalendarClient
 	// Event is the client for interacting with the Event builders.
 	Event *EventClient
+	// ReminderState is the client for interacting with the ReminderState builders.
+	ReminderState *ReminderStateClient
 	// Secret is the client for interacting with the Secret builders.
 	Secret *SecretClient
 
@@ -156,6 +158,7 @@ func (tx *Tx) init() {
 	tx.Account = NewAccountClient(tx.config)
 	tx.Calendar = NewCalendarClient(tx.config)
 	tx.Event = NewEventClient(tx.config)
+	tx.ReminderState = NewReminderStateClient(tx.config)
 	tx.Secret = NewSecretClient(tx.config)
 }
 

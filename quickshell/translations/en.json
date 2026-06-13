@@ -14,14 +14,26 @@
   {
     "term": "%1 · All day",
     "context": "%1 · All day",
-    "reference": "Modals/EventDetailsModal.qml:238",
+    "reference": "Modals/EventDetailsModal.qml:343",
     "comment": "event details time label for all-day events"
+  },
+  {
+    "term": "%1d before",
+    "context": "%1d before",
+    "reference": "Modals/EventDetailsModal.qml:169",
+    "comment": "event details short reminder offset in days"
   },
   {
     "term": "%1h",
     "context": "%1h",
     "reference": "Modules/views/AgendaView.qml:47",
     "comment": "event duration in hours on agenda card, %1 is hours"
+  },
+  {
+    "term": "%1h before",
+    "context": "%1h before",
+    "reference": "Modals/EventDetailsModal.qml:171",
+    "comment": "event details short reminder offset in hours"
   },
   {
     "term": "%1h%2m",
@@ -36,9 +48,21 @@
     "comment": "event duration in minutes on agenda card, %1 is minutes"
   },
   {
+    "term": "%1m before",
+    "context": "%1m before",
+    "reference": "Modals/EventDetailsModal.qml:172",
+    "comment": "event details short reminder offset in minutes"
+  },
+  {
+    "term": "%1w before",
+    "context": "%1w before",
+    "reference": "Modals/EventDetailsModal.qml:167",
+    "comment": "event details short reminder offset in weeks"
+  },
+  {
     "term": "(untitled)",
     "context": "(untitled)",
-    "reference": "Modals/EventDetailsModal.qml:435",
+    "reference": "Modals/EventDetailsModal.qml:540",
     "comment": "event details fallback title when event has no title"
   },
   {
@@ -46,6 +70,12 @@
     "context": "+%1 more",
     "reference": "Modules/views/MonthView.qml:276",
     "comment": "overflow label in month grid day cell, %1 is the number of hidden events"
+  },
+  {
+    "term": "1 day before",
+    "context": "1 day before",
+    "reference": "Modals/EventDetailsModal.qml:62, Modals/SettingsContent.qml:116",
+    "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
     "term": "1 hour",
@@ -56,8 +86,14 @@
   {
     "term": "1 hour before",
     "context": "1 hour before",
-    "reference": "Modals/SettingsContent.qml:86",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:54, Modals/SettingsContent.qml:86",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
+  },
+  {
+    "term": "1 week before",
+    "context": "1 week before",
+    "reference": "Modals/EventDetailsModal.qml:70, Modals/SettingsContent.qml:124",
+    "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
     "term": "1.5 hours",
@@ -66,34 +102,46 @@
     "comment": "default event duration option"
   },
   {
+    "term": "10 minutes",
+    "context": "10 minutes",
+    "reference": "Modals/SettingsContent.qml:97",
+    "comment": "snooze duration dropdown option"
+  },
+  {
     "term": "10 minutes before",
     "context": "10 minutes before",
-    "reference": "Modals/SettingsContent.qml:74",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:42, Modals/SettingsContent.qml:74",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "12-hour",
     "context": "12-hour",
-    "reference": "Modals/SettingsContent.qml:251",
+    "reference": "Modals/SettingsContent.qml:303",
     "comment": "locale time format name in time format description"
   },
   {
     "term": "12h",
     "context": "12h",
-    "reference": "Modals/SettingsContent.qml:257",
+    "reference": "Modals/SettingsContent.qml:309",
     "comment": "time format button group option"
   },
   {
     "term": "15 minutes",
     "context": "15 minutes",
-    "reference": "Modals/SettingsContent.qml:35",
-    "comment": "default event duration option"
+    "reference": "Modals/SettingsContent.qml:35, Modals/SettingsContent.qml:101",
+    "comment": "default event duration option | snooze duration dropdown option"
   },
   {
     "term": "15 minutes before",
     "context": "15 minutes before",
-    "reference": "Modals/SettingsContent.qml:78",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:46, Modals/SettingsContent.qml:78",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
+  },
+  {
+    "term": "2 days before",
+    "context": "2 days before",
+    "reference": "Modals/EventDetailsModal.qml:66, Modals/SettingsContent.qml:120",
+    "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
     "term": "2 hours",
@@ -102,28 +150,34 @@
     "comment": "default event duration option"
   },
   {
+    "term": "2 hours before",
+    "context": "2 hours before",
+    "reference": "Modals/EventDetailsModal.qml:58",
+    "comment": "event reminder dropdown option"
+  },
+  {
     "term": "24-hour",
     "context": "24-hour",
-    "reference": "Modals/SettingsContent.qml:251",
+    "reference": "Modals/SettingsContent.qml:303",
     "comment": "locale time format name in time format description"
   },
   {
     "term": "24h",
     "context": "24h",
-    "reference": "Modals/SettingsContent.qml:257",
+    "reference": "Modals/SettingsContent.qml:309",
     "comment": "time format button group option"
   },
   {
     "term": "30 minutes",
     "context": "30 minutes",
-    "reference": "Modals/SettingsContent.qml:39",
-    "comment": "default event duration option"
+    "reference": "Modals/SettingsContent.qml:39, Modals/SettingsContent.qml:105",
+    "comment": "default event duration option | snooze duration dropdown option"
   },
   {
     "term": "30 minutes before",
     "context": "30 minutes before",
-    "reference": "Modals/SettingsContent.qml:82",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:50, Modals/SettingsContent.qml:82",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "45 minutes",
@@ -132,10 +186,16 @@
     "comment": "default event duration option"
   },
   {
+    "term": "5 minutes",
+    "context": "5 minutes",
+    "reference": "Modals/SettingsContent.qml:93",
+    "comment": "snooze duration dropdown option"
+  },
+  {
     "term": "5 minutes before",
     "context": "5 minutes before",
-    "reference": "Modals/SettingsContent.qml:70",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:38, Modals/SettingsContent.qml:70",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>",
@@ -176,7 +236,7 @@
   {
     "term": "Accounts",
     "context": "Accounts",
-    "reference": "Modules/CalendarSidebar.qml:286, Modals/SettingsSidebar.qml:27, Modals/SettingsContent.qml:610",
+    "reference": "Modules/CalendarSidebar.qml:286, Modals/SettingsSidebar.qml:27, Modals/SettingsContent.qml:662",
     "comment": "accounts settings section header | settings sidebar tab label | sidebar section header for the account list"
   },
   {
@@ -188,19 +248,19 @@
   {
     "term": "Add account",
     "context": "Add account",
-    "reference": "Modules/CalendarSidebar.qml:400, Modals/AccountAddModal.qml:196, Modals/AccountAddModal.qml:285, Modals/SettingsContent.qml:718",
+    "reference": "Modules/CalendarSidebar.qml:400, Modals/AccountAddModal.qml:196, Modals/AccountAddModal.qml:285, Modals/SettingsContent.qml:770",
     "comment": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account"
   },
   {
     "term": "Add description",
     "context": "Add description",
-    "reference": "Modals/EventDetailsModal.qml:810",
+    "reference": "Modals/EventDetailsModal.qml:962",
     "comment": "event form placeholder for description text area"
   },
   {
     "term": "Add title",
     "context": "Add title",
-    "reference": "Modals/EventDetailsModal.qml:686",
+    "reference": "Modals/EventDetailsModal.qml:797",
     "comment": "event form placeholder for title input"
   },
   {
@@ -224,8 +284,14 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:715, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:49, Modules/views/MonthView.qml:31",
+    "reference": "Modals/EventDetailsModal.qml:826, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:49, Modules/views/MonthView.qml:31",
     "comment": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
+  },
+  {
+    "term": "All-day reminder time",
+    "context": "All-day reminder time",
+    "reference": "Modals/SettingsContent.qml:863",
+    "comment": "all-day reminder time setting label"
   },
   {
     "term": "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close",
@@ -236,13 +302,13 @@
   {
     "term": "Always use the dark theme.",
     "context": "Always use the dark theme.",
-    "reference": "Modals/SettingsContent.qml:356",
+    "reference": "Modals/SettingsContent.qml:408",
     "comment": "theme mode setting description"
   },
   {
     "term": "Always use the light theme.",
     "context": "Always use the light theme.",
-    "reference": "Modals/SettingsContent.qml:354",
+    "reference": "Modals/SettingsContent.qml:406",
     "comment": "theme mode setting description"
   },
   {
@@ -254,7 +320,7 @@
   {
     "term": "Appearance",
     "context": "Appearance",
-    "reference": "Modals/SettingsSidebar.qml:19, Modals/SettingsContent.qml:341",
+    "reference": "Modals/SettingsSidebar.qml:19, Modals/SettingsContent.qml:393",
     "comment": "appearance settings section header | settings sidebar tab label"
   },
   {
@@ -284,20 +350,14 @@
   {
     "term": "At start",
     "context": "At start",
-    "reference": "Modals/SettingsContent.qml:66",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:34, Modals/EventDetailsModal.qml:165, Modals/SettingsContent.qml:66",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "Attendees",
     "context": "Attendees",
-    "reference": "Modals/EventDetailsModal.qml:506",
+    "reference": "Modals/EventDetailsModal.qml:617",
     "comment": "event details section label for attendee list"
-  },
-  {
-    "term": "Audible alert when an event fires.",
-    "context": "Audible alert when an event fires.",
-    "reference": "Modals/SettingsContent.qml:773",
-    "comment": "reminder sound toggle description"
   },
   {
     "term": "Authorization failed",
@@ -314,13 +374,13 @@
   {
     "term": "Auto",
     "context": "Auto",
-    "reference": "Modals/SettingsContent.qml:257, Modals/SettingsContent.qml:366",
+    "reference": "Modals/SettingsContent.qml:309, Modals/SettingsContent.qml:418",
     "comment": "theme mode button group option | time format button group option"
   },
   {
     "term": "Auto follows your locale (%1).",
     "context": "Auto follows your locale (%1).",
-    "reference": "Modals/SettingsContent.qml:251",
+    "reference": "Modals/SettingsContent.qml:303",
     "comment": "time format setting description"
   },
   {
@@ -338,8 +398,8 @@
   {
     "term": "Backend not connected.",
     "context": "Backend not connected.",
-    "reference": "Modals/SettingsContent.qml:439, Modals/SettingsContent.qml:611",
-    "comment": "accounts settings section subtitle | calendars page empty state"
+    "reference": "Modals/SettingsContent.qml:491, Modals/SettingsContent.qml:663, Modals/SettingsContent.qml:888",
+    "comment": "accounts settings section subtitle | calendars page empty state | test notification setting description when backend is unavailable"
   },
   {
     "term": "Begin setup",
@@ -350,7 +410,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "shell.qml:127, shell.qml:218",
+    "reference": "Modules/CalendarWindow.qml:80, Modules/CalendarWindow.qml:146",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -368,13 +428,13 @@
   {
     "term": "Calendars",
     "context": "Calendars",
-    "reference": "Modals/SettingsSidebar.qml:23, Modals/SettingsContent.qml:429",
+    "reference": "Modals/SettingsSidebar.qml:23, Modals/SettingsContent.qml:481",
     "comment": "calendars settings section header | settings sidebar tab label"
   },
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/ConfirmDialog.qml:68, Modals/EventDetailsModal.qml:395, Modals/RenameCalendarDialog.qml:93, Modals/AccountAddModal.qml:967, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
+    "reference": "Modals/ConfirmDialog.qml:68, Modals/EventDetailsModal.qml:500, Modals/RenameCalendarDialog.qml:93, Modals/AccountAddModal.qml:967, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
     "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | rename calendar dialog button to cancel"
   },
   {
@@ -416,13 +476,13 @@
   {
     "term": "Color source",
     "context": "Color source",
-    "reference": "Modals/SettingsContent.qml:396",
+    "reference": "Modals/SettingsContent.qml:448",
     "comment": "color source setting label"
   },
   {
     "term": "Colors are shared with DankMaterialShell when available.",
     "context": "Colors are shared with DankMaterialShell when available.",
-    "reference": "Modals/SettingsContent.qml:342",
+    "reference": "Modals/SettingsContent.qml:394",
     "comment": "appearance settings section subtitle"
   },
   {
@@ -440,7 +500,7 @@
   {
     "term": "Confirm delete",
     "context": "Confirm delete",
-    "reference": "Modals/EventDetailsModal.qml:327",
+    "reference": "Modals/EventDetailsModal.qml:432",
     "comment": "event details button to confirm deleting the event"
   },
   {
@@ -464,13 +524,13 @@
   {
     "term": "Connected",
     "context": "Connected",
-    "reference": "Modals/AccountAddModal.qml:1009, Modals/SettingsContent.qml:683, Modals/SettingsAboutPage.qml:365",
+    "reference": "Modals/AccountAddModal.qml:1009, Modals/SettingsContent.qml:735, Modals/SettingsAboutPage.qml:365",
     "comment": "about page daemon status value | account status in account list | success step status heading"
   },
   {
     "term": "Connected calendar providers.",
     "context": "Connected calendar providers.",
-    "reference": "Modals/SettingsContent.qml:611",
+    "reference": "Modals/SettingsContent.qml:663",
     "comment": "accounts settings section subtitle"
   },
   {
@@ -512,13 +572,13 @@
   {
     "term": "DMS dynamic",
     "context": "DMS dynamic",
-    "reference": "Modals/SettingsContent.qml:401",
+    "reference": "Modals/SettingsContent.qml:453",
     "comment": "color source status value"
   },
   {
     "term": "DMS dynamic colors detected when available.",
     "context": "DMS dynamic colors detected when available.",
-    "reference": "Modals/SettingsContent.qml:397",
+    "reference": "Modals/SettingsContent.qml:449",
     "comment": "color source setting description"
   },
   {
@@ -542,7 +602,7 @@
   {
     "term": "Dark",
     "context": "Dark",
-    "reference": "Modals/SettingsContent.qml:366",
+    "reference": "Modals/SettingsContent.qml:418",
     "comment": "theme mode button group option"
   },
   {
@@ -554,31 +614,31 @@
   {
     "term": "Default event duration",
     "context": "Default event duration",
-    "reference": "Modals/SettingsContent.qml:298",
+    "reference": "Modals/SettingsContent.qml:350",
     "comment": "default event duration setting label"
   },
   {
     "term": "Default reminder",
     "context": "Default reminder",
-    "reference": "Modals/SettingsContent.qml:311",
+    "reference": "Modals/SettingsContent.qml:363",
     "comment": "default reminder setting label"
   },
   {
     "term": "Defaults follow your locale unless overridden.",
     "context": "Defaults follow your locale unless overridden.",
-    "reference": "Modals/SettingsContent.qml:217",
+    "reference": "Modals/SettingsContent.qml:269",
     "comment": "general settings section subtitle"
   },
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modules/CalendarSidebar.qml:450, Modals/SettingsContent.qml:520",
+    "reference": "Modules/CalendarSidebar.qml:450, Modals/SettingsContent.qml:572",
     "comment": "confirm button for deleting a calendar | delete calendar confirmation button"
   },
   {
     "term": "Delete \"%1\"?",
     "context": "Delete \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:448, Modals/SettingsContent.qml:518",
+    "reference": "Modules/CalendarSidebar.qml:448, Modals/SettingsContent.qml:570",
     "comment": "confirm dialog title for deleting a calendar, %1 is the calendar name | delete calendar confirmation title"
   },
   {
@@ -596,7 +656,7 @@
   {
     "term": "Description",
     "context": "Description",
-    "reference": "Modals/EventDetailsModal.qml:635",
+    "reference": "Modals/EventDetailsModal.qml:746",
     "comment": "event details section label for description"
   },
   {
@@ -608,7 +668,7 @@
   {
     "term": "Desktop notifications for upcoming events.",
     "context": "Desktop notifications for upcoming events.",
-    "reference": "Modals/SettingsContent.qml:762",
+    "reference": "Modals/SettingsContent.qml:814",
     "comment": "reminders toggle description"
   },
   {
@@ -620,7 +680,7 @@
   {
     "term": "Display ISO week numbers in month view.",
     "context": "Display ISO week numbers in month view.",
-    "reference": "Modals/SettingsContent.qml:288",
+    "reference": "Modals/SettingsContent.qml:340",
     "comment": "week numbers setting description"
   },
   {
@@ -656,13 +716,13 @@
   {
     "term": "Edit event",
     "context": "Edit event",
-    "reference": "Modals/EventDetailsModal.qml:254, Modals/EventDetailsModal.qml:303",
+    "reference": "Modals/EventDetailsModal.qml:359, Modals/EventDetailsModal.qml:408",
     "comment": "event modal header when editing | event modal window title when editing"
   },
   {
     "term": "Enable reminders",
     "context": "Enable reminders",
-    "reference": "Modals/SettingsContent.qml:761",
+    "reference": "Modals/SettingsContent.qml:813",
     "comment": "reminders toggle label"
   },
   {
@@ -698,13 +758,13 @@
   {
     "term": "Event",
     "context": "Event",
-    "reference": "Modals/EventDetailsModal.qml:254",
+    "reference": "Modals/EventDetailsModal.qml:359",
     "comment": "event modal window title when viewing"
   },
   {
     "term": "Event details",
     "context": "Event details",
-    "reference": "Modals/EventDetailsModal.qml:303",
+    "reference": "Modals/EventDetailsModal.qml:408",
     "comment": "event modal header when viewing"
   },
   {
@@ -734,19 +794,19 @@
   {
     "term": "First day shown in week and month views.",
     "context": "First day shown in week and month views.",
-    "reference": "Modals/SettingsContent.qml:238",
+    "reference": "Modals/SettingsContent.qml:290",
     "comment": "week start setting description"
   },
   {
     "term": "Following the system color scheme (currently %1).",
     "context": "Following the system color scheme (currently %1).",
-    "reference": "Modals/SettingsContent.qml:358",
+    "reference": "Modals/SettingsContent.qml:410",
     "comment": "theme mode setting description"
   },
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:216",
+    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:268",
     "comment": "general settings section header | settings sidebar tab label"
   },
   {
@@ -780,6 +840,12 @@
     "comment": "file browser quick access location"
   },
   {
+    "term": "How long the snooze button postpones a reminder.",
+    "context": "How long the snooze button postpones a reminder.",
+    "reference": "Modals/SettingsContent.qml:837",
+    "comment": "snooze duration setting description"
+  },
+  {
     "term": "Import client_secret.json",
     "context": "Import client_secret.json",
     "reference": "Modals/AccountAddModal.qml:812",
@@ -794,7 +860,7 @@
   {
     "term": "Initial reminder set on new events.",
     "context": "Initial reminder set on new events.",
-    "reference": "Modals/SettingsContent.qml:312",
+    "reference": "Modals/SettingsContent.qml:364",
     "comment": "default reminder setting description"
   },
   {
@@ -802,6 +868,12 @@
     "context": "Keep typing",
     "reference": "Modals/SearchModal.qml:94",
     "comment": "search status title when query is too short"
+  },
+  {
+    "term": "Keep until dismissed",
+    "context": "Keep until dismissed",
+    "reference": "Modals/SettingsContent.qml:824",
+    "comment": "persistent reminders toggle label"
   },
   {
     "term": "Ko-fi",
@@ -812,19 +884,19 @@
   {
     "term": "Launch Dank Calendar in the background when you log in.",
     "context": "Launch Dank Calendar in the background when you log in.",
-    "reference": "Modals/SettingsContent.qml:226",
+    "reference": "Modals/SettingsContent.qml:278",
     "comment": "autostart setting description"
   },
   {
     "term": "Length used when creating events.",
     "context": "Length used when creating events.",
-    "reference": "Modals/SettingsContent.qml:299",
+    "reference": "Modals/SettingsContent.qml:351",
     "comment": "default event duration setting description"
   },
   {
     "term": "Light",
     "context": "Light",
-    "reference": "Modals/SettingsContent.qml:366",
+    "reference": "Modals/SettingsContent.qml:418",
     "comment": "theme mode button group option"
   },
   {
@@ -836,7 +908,7 @@
   {
     "term": "Local",
     "context": "Local",
-    "reference": "Modules/CalendarSidebar.qml:51, Modals/AccountAddModal.qml:109, Modals/AccountAddModal.qml:434, Modals/SettingsContent.qml:591",
+    "reference": "Modules/CalendarSidebar.qml:51, Modals/AccountAddModal.qml:109, Modals/AccountAddModal.qml:434, Modals/SettingsContent.qml:643",
     "comment": "local provider name in account add modal | local provider name in account list | provider label for local accounts in sidebar"
   },
   {
@@ -854,7 +926,7 @@
   {
     "term": "Location",
     "context": "Location",
-    "reference": "Modals/EventDetailsModal.qml:758",
+    "reference": "Modals/EventDetailsModal.qml:869",
     "comment": "event form placeholder for location input"
   },
   {
@@ -914,7 +986,7 @@
   {
     "term": "New event",
     "context": "New event",
-    "reference": "Modals/EventDetailsModal.qml:254, Modals/EventDetailsModal.qml:303",
+    "reference": "Modals/EventDetailsModal.qml:359, Modals/EventDetailsModal.qml:408",
     "comment": "event modal header when creating | event modal window title when creating"
   },
   {
@@ -926,7 +998,7 @@
   {
     "term": "No accounts yet. Click \"Add account\" to connect one.",
     "context": "No accounts yet. Click \"Add account\" to connect one.",
-    "reference": "Modals/SettingsContent.qml:620",
+    "reference": "Modals/SettingsContent.qml:672",
     "comment": "accounts page empty state"
   },
   {
@@ -938,7 +1010,7 @@
   {
     "term": "No calendars yet. Add an account first.",
     "context": "No calendars yet. Add an account first.",
-    "reference": "Modals/SettingsContent.qml:439",
+    "reference": "Modals/SettingsContent.qml:491",
     "comment": "calendars page empty state"
   },
   {
@@ -950,19 +1022,19 @@
   {
     "term": "No writable calendar available",
     "context": "No writable calendar available",
-    "reference": "Modals/EventDetailsModal.qml:120",
+    "reference": "Modals/EventDetailsModal.qml:215",
     "comment": "event form error when no calendar allows creating events"
   },
   {
     "term": "None",
     "context": "None",
-    "reference": "Modals/SettingsContent.qml:62",
-    "comment": "default reminder dropdown option"
+    "reference": "Modals/EventDetailsModal.qml:30, Modals/SettingsContent.qml:62",
+    "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "Not authorized — remove this account and add it again",
     "context": "Not authorized — remove this account and add it again",
-    "reference": "Modals/SettingsContent.qml:683",
+    "reference": "Modals/SettingsContent.qml:735",
     "comment": "account status in account list"
   },
   {
@@ -974,14 +1046,26 @@
   {
     "term": "Notifications",
     "context": "Notifications",
-    "reference": "Modals/SettingsSidebar.qml:31, Modals/SettingsContent.qml:752",
+    "reference": "Modals/SettingsSidebar.qml:31, Modals/SettingsContent.qml:804",
     "comment": "notifications settings section header | settings sidebar tab label"
+  },
+  {
+    "term": "Notify for all-day events without their own reminders.",
+    "context": "Notify for all-day events without their own reminders.",
+    "reference": "Modals/SettingsContent.qml:852",
+    "comment": "all-day reminders toggle description"
   },
   {
     "term": "Offline",
     "context": "Offline",
     "reference": "Modals/SettingsAboutPage.qml:365",
     "comment": "about page daemon status value"
+  },
+  {
+    "term": "On the day",
+    "context": "On the day",
+    "reference": "Modals/SettingsContent.qml:112",
+    "comment": "all-day reminder day dropdown option"
   },
   {
     "term": "Open",
@@ -1056,12 +1140,6 @@
     "comment": "file browser quick access location"
   },
   {
-    "term": "Play sound",
-    "context": "Play sound",
-    "reference": "Modals/SettingsContent.qml:772",
-    "comment": "reminder sound toggle label"
-  },
-  {
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "context": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "reference": "Modals/AccountAddModal.qml:1198",
@@ -1082,31 +1160,37 @@
   {
     "term": "Reminders and desktop alerts.",
     "context": "Reminders and desktop alerts.",
-    "reference": "Modals/SettingsContent.qml:753",
+    "reference": "Modals/SettingsContent.qml:805",
     "comment": "notifications settings section subtitle"
+  },
+  {
+    "term": "Reminders stay on screen until you act on them.",
+    "context": "Reminders stay on screen until you act on them.",
+    "reference": "Modals/SettingsContent.qml:825",
+    "comment": "persistent reminders toggle description"
   },
   {
     "term": "Remove",
     "context": "Remove",
-    "reference": "Modules/CalendarSidebar.qml:497, Modals/SettingsContent.qml:707",
+    "reference": "Modules/CalendarSidebar.qml:497, Modals/SettingsContent.qml:759",
     "comment": "confirm button for removing an account | remove account confirmation button"
   },
   {
     "term": "Remove \"%1\"?",
     "context": "Remove \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:495, Modals/SettingsContent.qml:705",
+    "reference": "Modules/CalendarSidebar.qml:495, Modals/SettingsContent.qml:757",
     "comment": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title"
   },
   {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "context": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
-    "reference": "Modules/CalendarSidebar.qml:496, Modals/SettingsContent.qml:706",
+    "reference": "Modules/CalendarSidebar.qml:496, Modals/SettingsContent.qml:758",
     "comment": "confirm dialog body for removing an account | remove account confirmation message"
   },
   {
     "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
     "context": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
-    "reference": "Modules/CalendarSidebar.qml:449, Modals/SettingsContent.qml:519",
+    "reference": "Modules/CalendarSidebar.qml:449, Modals/SettingsContent.qml:571",
     "comment": "confirm dialog body for deleting a calendar | delete calendar confirmation message"
   },
   {
@@ -1130,13 +1214,13 @@
   {
     "term": "Save",
     "context": "Save",
-    "reference": "Modals/EventDetailsModal.qml:409, Modals/RenameCalendarDialog.qml:100, Modals/FileBrowser/FileBrowserSaveRow.qml:59",
+    "reference": "Modals/EventDetailsModal.qml:514, Modals/RenameCalendarDialog.qml:100, Modals/FileBrowser/FileBrowserSaveRow.qml:59",
     "comment": "event details button to save changes | file browser save button | rename calendar dialog button to save name"
   },
   {
     "term": "Saving...",
     "context": "Saving...",
-    "reference": "Modals/EventDetailsModal.qml:409",
+    "reference": "Modals/EventDetailsModal.qml:514",
     "comment": "event details save button while saving"
   },
   {
@@ -1176,6 +1260,12 @@
     "comment": "default title for file picker in account add modal"
   },
   {
+    "term": "Send test",
+    "context": "Send test",
+    "reference": "Modals/SettingsContent.qml:892",
+    "comment": "test notification button"
+  },
+  {
     "term": "Server URL",
     "context": "Server URL",
     "reference": "Modals/AccountAddModal.qml:1093",
@@ -1196,13 +1286,13 @@
   {
     "term": "Show all-day reminders",
     "context": "Show all-day reminders",
-    "reference": "Modals/SettingsContent.qml:784",
+    "reference": "Modals/SettingsContent.qml:851",
     "comment": "all-day reminders toggle label"
   },
   {
     "term": "Show week numbers",
     "context": "Show week numbers",
-    "reference": "Modals/SettingsContent.qml:287",
+    "reference": "Modals/SettingsContent.qml:339",
     "comment": "week numbers setting label"
   },
   {
@@ -1230,6 +1320,12 @@
     "comment": "file browser sort criterion option"
   },
   {
+    "term": "Snooze duration",
+    "context": "Snooze duration",
+    "reference": "Modals/SettingsContent.qml:836",
+    "comment": "snooze duration setting label"
+  },
+  {
     "term": "Sort By",
     "context": "Sort By",
     "reference": "Modals/FileBrowser/FileBrowserSortMenu.qml:32",
@@ -1238,13 +1334,13 @@
   {
     "term": "Start at login",
     "context": "Start at login",
-    "reference": "Modals/SettingsContent.qml:225",
+    "reference": "Modals/SettingsContent.qml:277",
     "comment": "autostart setting label"
   },
   {
     "term": "Start week on",
     "context": "Start week on",
-    "reference": "Modals/SettingsContent.qml:237",
+    "reference": "Modals/SettingsContent.qml:289",
     "comment": "week start setting label"
   },
   {
@@ -1274,14 +1370,8 @@
   {
     "term": "Stock palette",
     "context": "Stock palette",
-    "reference": "Modals/SettingsContent.qml:401",
+    "reference": "Modals/SettingsContent.qml:453",
     "comment": "color source status value"
-  },
-  {
-    "term": "Surface all-day events at the start of the day.",
-    "context": "Surface all-day events at the start of the day.",
-    "reference": "Modals/SettingsContent.qml:785",
-    "comment": "all-day reminders toggle description"
   },
   {
     "term": "Sync now",
@@ -1304,7 +1394,7 @@
   {
     "term": "System preference unavailable — using dark.",
     "context": "System preference unavailable — using dark.",
-    "reference": "Modals/SettingsContent.qml:358",
+    "reference": "Modals/SettingsContent.qml:410",
     "comment": "theme mode setting description"
   },
   {
@@ -1312,6 +1402,12 @@
     "context": "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select",
     "reference": "Modals/FileBrowser/KeyboardHints.qml:26",
     "comment": "file browser keyboard shortcuts hint line"
+  },
+  {
+    "term": "Test notification",
+    "context": "Test notification",
+    "reference": "Modals/SettingsContent.qml:887",
+    "comment": "test notification setting label"
   },
   {
     "term": "That file is not valid JSON.",
@@ -1322,19 +1418,19 @@
   {
     "term": "Theme",
     "context": "Theme",
-    "reference": "Modals/SettingsContent.qml:350",
+    "reference": "Modals/SettingsContent.qml:402",
     "comment": "theme mode setting label"
   },
   {
     "term": "Time format",
     "context": "Time format",
-    "reference": "Modals/SettingsContent.qml:250",
+    "reference": "Modals/SettingsContent.qml:302",
     "comment": "time format setting label"
   },
   {
     "term": "Title is required",
     "context": "Title is required",
-    "reference": "Modals/EventDetailsModal.qml:114",
+    "reference": "Modals/EventDetailsModal.qml:209",
     "comment": "event form validation error for missing title"
   },
   {
@@ -1392,6 +1488,12 @@
     "comment": "caldav username field label"
   },
   {
+    "term": "Verify desktop notifications are working.",
+    "context": "Verify desktop notifications are working.",
+    "reference": "Modals/SettingsContent.qml:888",
+    "comment": "test notification setting description"
+  },
+  {
     "term": "Version",
     "context": "Version",
     "reference": "Modals/SettingsAboutPage.qml:302",
@@ -1406,7 +1508,7 @@
   {
     "term": "Visibility, names, and removal per calendar.",
     "context": "Visibility, names, and removal per calendar.",
-    "reference": "Modals/SettingsContent.qml:430",
+    "reference": "Modals/SettingsContent.qml:482",
     "comment": "calendars settings section subtitle"
   },
   {
@@ -1426,6 +1528,12 @@
     "context": "Week",
     "reference": "Modules/CalendarSidebar.qml:96",
     "comment": "view switcher option in sidebar"
+  },
+  {
+    "term": "When all-day event reminders fire.",
+    "context": "When all-day event reminders fire.",
+    "reference": "Modals/SettingsContent.qml:864",
+    "comment": "all-day reminder time setting description"
   },
   {
     "term": "Yesterday",
@@ -1454,13 +1562,13 @@
   {
     "term": "dark",
     "context": "dark",
-    "reference": "Modals/SettingsContent.qml:358",
+    "reference": "Modals/SettingsContent.qml:410",
     "comment": "current scheme name in theme mode description"
   },
   {
     "term": "light",
     "context": "light",
-    "reference": "Modals/SettingsContent.qml:358",
+    "reference": "Modals/SettingsContent.qml:410",
     "comment": "current scheme name in theme mode description"
   },
   {
@@ -1472,13 +1580,13 @@
   {
     "term": "read-only",
     "context": "read-only",
-    "reference": "Modals/SettingsContent.qml:492",
+    "reference": "Modals/SettingsContent.qml:544",
     "comment": "read-only suffix in calendar list"
   },
   {
     "term": "synced as \"%1\"",
     "context": "synced as \"%1\"",
-    "reference": "Modals/SettingsContent.qml:490",
+    "reference": "Modals/SettingsContent.qml:542",
     "comment": "renamed calendar provider name suffix in calendar list"
   },
   {
@@ -1490,7 +1598,7 @@
   {
     "term": "· %1 invited · %2 accepted",
     "context": "· %1 invited · %2 accepted",
-    "reference": "Modals/EventDetailsModal.qml:251",
+    "reference": "Modals/EventDetailsModal.qml:356",
     "comment": "event details attendee count summary"
   }
 ]

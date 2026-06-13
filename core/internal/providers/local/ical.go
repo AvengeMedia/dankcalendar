@@ -125,6 +125,7 @@ func convertEvent(cal calendar.Calendar, ev *ics.VEvent) (calendar.Event, error)
 	}
 
 	applyLocalRecurrence(ev, &out)
+	applyAlarms(ev, &out)
 	return out, nil
 }
 

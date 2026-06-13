@@ -25,12 +25,14 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
 	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
+	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
+	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
 	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -46,6 +48,8 @@ type daemonServices struct {
 	httpSrv    *http.Server
 	httpAddr   string
 	syncEngine *sync.Engine
+	reminders  *reminders.Engine
+	notifier   *notify.Client
 	repo       *repo.Repo
 	registry   *calendar.Registry
 	secrets    calendar.SecretStore
@@ -68,6 +72,12 @@ func (s *daemonServices) close() {
 	}
 	if s.syncEngine != nil {
 		s.syncEngine.Stop()
+	}
+	if s.reminders != nil {
+		s.reminders.Stop()
+	}
+	if s.notifier != nil {
+		s.notifier.Close()
 	}
 	if s.httpSrv != nil {
 		shutdownHTTP(s.httpSrv)
@@ -113,6 +123,21 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	bus := ipc.NewEventBus()
 	syncEngine.SetNotifier(bus.Publish)
 
+	notifier, err := notify.New()
+	if err != nil {
+		log.Warnf("desktop notifications unavailable: %v", err)
+		notifier = nil
+	}
+	var sender reminders.Sender
+	if notifier != nil {
+		sender = notifier
+	}
+	remindersEngine := reminders.NewEngine(r, sender, 30*time.Second)
+	remindersEngine.SetPublisher(bus.Publish)
+	if notifier != nil {
+		notifier.SetHandlers(remindersEngine.HandleAction, remindersEngine.HandleClosed)
+	}
+
 	httpSrv, httpAddr, httpErrCh, err := startHTTP(ctx, cfg, r, registry, secrets, broker)
 	if err != nil {
 		r.Close()
@@ -120,15 +145,16 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	}
 
 	deps := ipc.Deps{
-		Repo:     r,
-		Registry: registry,
-		Secrets:  secrets,
-		Broker:   broker,
-		Flows:    flows,
-		HTTPAddr: httpAddr,
-		Sync:     syncEngine,
-		Bus:      bus,
-		Version:  Version,
+		Repo:      r,
+		Registry:  registry,
+		Secrets:   secrets,
+		Broker:    broker,
+		Flows:     flows,
+		HTTPAddr:  httpAddr,
+		Sync:      syncEngine,
+		Reminders: remindersEngine,
+		Bus:       bus,
+		Version:   Version,
 	}
 	ipcSrv, ipcErrCh, err := startIPC(ctx, deps)
 	if err != nil {
@@ -138,12 +164,15 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	}
 
 	syncEngine.Start(ctx)
+	remindersEngine.Start(ctx)
 
 	return &daemonServices{
 		ipc:        ipcSrv,
 		httpSrv:    httpSrv,
 		httpAddr:   httpAddr,
 		syncEngine: syncEngine,
+		reminders:  remindersEngine,
+		notifier:   notifier,
 		repo:       r,
 		registry:   registry,
 		secrets:    secrets,

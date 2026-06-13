@@ -88,6 +88,58 @@ Item {
         }
     ]
 
+    readonly property var snoozeOptions: [
+        {
+            label: I18n.tr("5 minutes", "snooze duration dropdown option"),
+            value: 5
+        },
+        {
+            label: I18n.tr("10 minutes", "snooze duration dropdown option"),
+            value: 10
+        },
+        {
+            label: I18n.tr("15 minutes", "snooze duration dropdown option"),
+            value: 15
+        },
+        {
+            label: I18n.tr("30 minutes", "snooze duration dropdown option"),
+            value: 30
+        }
+    ]
+
+    readonly property var allDayDayOptions: [
+        {
+            label: I18n.tr("On the day", "all-day reminder day dropdown option"),
+            value: 0
+        },
+        {
+            label: I18n.tr("1 day before", "all-day reminder day dropdown option"),
+            value: 1
+        },
+        {
+            label: I18n.tr("2 days before", "all-day reminder day dropdown option"),
+            value: 2
+        },
+        {
+            label: I18n.tr("1 week before", "all-day reminder day dropdown option"),
+            value: 7
+        }
+    ]
+
+    function minutesFromClock(text) {
+        const parts = (text || "").split(":");
+        if (parts.length !== 2)
+            return 540;
+        const total = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+        return isNaN(total) ? 540 : total;
+    }
+
+    function clockFromMinutes(minutes) {
+        const h = Math.floor(minutes / 60);
+        const m = minutes % 60;
+        return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m;
+    }
+
     function optionLabels(options) {
         return options.map(o => o.label);
     }
@@ -769,26 +821,80 @@ Item {
                     }
 
                     SettingsRow {
-                        label: I18n.tr("Play sound", "reminder sound toggle label")
-                        description: I18n.tr("Audible alert when an event fires.", "reminder sound toggle description")
+                        label: I18n.tr("Keep until dismissed", "persistent reminders toggle label")
+                        description: I18n.tr("Reminders stay on screen until you act on them.", "persistent reminders toggle description")
 
                         DankToggle {
                             anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.reminderSound
+                            checked: SettingsData.reminderPersist
                             toggleEnabled: SettingsData.remindersEnabled
-                            onToggled: checked => SettingsData.reminderSound = checked
+                            onToggled: checked => SettingsData.reminderPersist = checked
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Snooze duration", "snooze duration setting label")
+                        description: I18n.tr("How long the snooze button postpones a reminder.", "snooze duration setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 150
+                            enabled: SettingsData.remindersEnabled
+                            opacity: enabled ? 1 : 0.5
+                            options: root.optionLabels(root.snoozeOptions)
+                            currentValue: root.labelForValue(root.snoozeOptions, SettingsData.snoozeMinutes)
+                            onValueChanged: value => SettingsData.snoozeMinutes = root.valueForLabel(root.snoozeOptions, value)
                         }
                     }
 
                     SettingsRow {
                         label: I18n.tr("Show all-day reminders", "all-day reminders toggle label")
-                        description: I18n.tr("Surface all-day events at the start of the day.", "all-day reminders toggle description")
+                        description: I18n.tr("Notify for all-day events without their own reminders.", "all-day reminders toggle description")
 
                         DankToggle {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: SettingsData.allDayReminders
                             toggleEnabled: SettingsData.remindersEnabled
                             onToggled: checked => SettingsData.allDayReminders = checked
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("All-day reminder time", "all-day reminder time setting label")
+                        description: I18n.tr("When all-day event reminders fire.", "all-day reminder time setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 160
+                            enabled: SettingsData.remindersEnabled && SettingsData.allDayReminders
+                            opacity: enabled ? 1 : 0.5
+                            options: root.optionLabels(root.allDayDayOptions)
+                            currentValue: root.labelForValue(root.allDayDayOptions, SettingsData.allDayReminderDaysBefore)
+                            onValueChanged: value => SettingsData.allDayReminderDaysBefore = root.valueForLabel(root.allDayDayOptions, value)
+                        }
+
+                        DankTimePicker {
+                            anchors.verticalCenter: parent.verticalCenter
+                            enabled: SettingsData.remindersEnabled && SettingsData.allDayReminders
+                            opacity: enabled ? 1 : 0.5
+                            use24Hour: SettingsData.use24HourTime
+                            minutes: root.minutesFromClock(SettingsData.allDayReminderTime)
+                            onTimeSelected: value => SettingsData.allDayReminderTime = root.clockFromMinutes(value)
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Test notification", "test notification setting label")
+                        description: DankCalService.connected ? I18n.tr("Verify desktop notifications are working.", "test notification setting description") : I18n.tr("Backend not connected.", "test notification setting description when backend is unavailable")
+
+                        DankButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: I18n.tr("Send test", "test notification button")
+                            buttonHeight: 36
+                            enabled: DankCalService.connected
+                            backgroundColor: Theme.primary
+                            textColor: Theme.primaryText
+                            onClicked: DankCalService.sendTestReminder()
                         }
                     }
                 }

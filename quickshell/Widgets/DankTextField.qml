@@ -6,7 +6,7 @@ Rectangle {
     id: root
 
     property alias text: input.text
-    property alias placeholderText: input.placeholderText
+    property string placeholderText: ""
     property alias echoMode: input.echoMode
     property alias readOnly: input.readOnly
     property string label: ""
@@ -54,7 +54,6 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             background: null
             color: Theme.surfaceText
-            placeholderTextColor: Theme.surfaceVariantText
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSizeMedium
             selectionColor: Theme.primarySelected
@@ -65,6 +64,19 @@ Rectangle {
             }
             Keys.onRightPressed: event => {
                 event.accepted = root.ignoreLeftRightKeys;
+            }
+
+            Text {
+                anchors.fill: parent
+                anchors.leftMargin: input.leftPadding
+                anchors.rightMargin: input.rightPadding
+                visible: input.displayText.length === 0
+                text: root.placeholderText
+                color: Theme.surfaceVariantText
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.fontSizeMedium
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
             }
         }
     }

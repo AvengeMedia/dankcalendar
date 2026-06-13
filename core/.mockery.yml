@@ -10,3 +10,6 @@ packages:
       Provider:
       ProviderFactory:
       SecretStore:
+  github.com/AvengeMedia/dankcalendar/core/internal/reminders:
+    interfaces:
+      Sender:

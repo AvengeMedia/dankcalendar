@@ -170,6 +170,9 @@ func mapEvent(e *ent.Event) map[string]any {
 	if len(e.Recurrence) > 0 {
 		entry["recurrence"] = e.Recurrence
 	}
+	if len(e.Reminders) > 0 {
+		entry["reminders"] = e.Reminders
+	}
 	return entry
 }
 

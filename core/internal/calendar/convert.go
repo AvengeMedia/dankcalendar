@@ -42,6 +42,31 @@ func RemindersToMaps(reminders []Reminder) []map[string]any {
 	return out
 }
 
+// RemindersFromMaps reverses RemindersToMaps after a JSON column round trip,
+// where minutes may come back as float64.
+func RemindersFromMaps(maps []map[string]any) []Reminder {
+	if len(maps) == 0 {
+		return nil
+	}
+	out := make([]Reminder, 0, len(maps))
+	for _, m := range maps {
+		method, _ := m["method"].(string)
+		var minutes int
+		switch v := m["minutes"].(type) {
+		case int:
+			minutes = v
+		case int64:
+			minutes = int(v)
+		case float64:
+			minutes = int(v)
+		default:
+			continue
+		}
+		out = append(out, Reminder{Method: method, Minutes: minutes})
+	}
+	return out
+}
+
 func (r *Recurrence) ToMap() map[string]any {
 	if r == nil {
 		return nil

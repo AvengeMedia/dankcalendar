@@ -27,8 +27,12 @@ Singleton {
     // -1 = no reminder
     property alias defaultReminderMinutes: adapter.defaultReminderMinutes
     property alias remindersEnabled: adapter.remindersEnabled
-    property alias reminderSound: adapter.reminderSound
+    property alias reminderPersist: adapter.reminderPersist
     property alias allDayReminders: adapter.allDayReminders
+    // "HH:mm" local wall-clock time the all-day reminder fires
+    property alias allDayReminderTime: adapter.allDayReminderTime
+    property alias allDayReminderDaysBefore: adapter.allDayReminderDaysBefore
+    property alias snoozeMinutes: adapter.snoozeMinutes
 
     readonly property var locale: Qt.locale()
     // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
@@ -51,6 +55,9 @@ Singleton {
             return localeUses24Hour;
         }
     }
+    // The daemon formats notification times from ui-settings.json but cannot
+    // resolve "auto" against the Qt locale, so persist the resolved value.
+    onUse24HourTimeChanged: adapter.use24HourClock = use24HourTime
 
     function formatTime(d) {
         return Qt.formatTime(d, use24HourTime ? "HH:mm" : "h:mm AP");
@@ -64,7 +71,10 @@ Singleton {
         return locale.monthName(jsMonth + 1, format !== undefined ? format : Locale.LongFormat);
     }
 
-    Component.onCompleted: Paths.mkdir(configDir)
+    Component.onCompleted: {
+        Paths.mkdir(configDir);
+        adapter.use24HourClock = use24HourTime;
+    }
 
     FileView {
         id: settingsFile
@@ -80,12 +90,16 @@ Singleton {
             property string themeMode: "auto"
             property int firstDayOfWeek: -1
             property string timeFormat: "auto"
+            property bool use24HourClock: true
             property bool showWeekNumbers: false
             property int defaultEventDurationMinutes: 30
             property int defaultReminderMinutes: 10
             property bool remindersEnabled: true
-            property bool reminderSound: true
+            property bool reminderPersist: true
             property bool allDayReminders: false
+            property string allDayReminderTime: "09:00"
+            property int allDayReminderDaysBefore: 0
+            property int snoozeMinutes: 5
         }
     }
 }

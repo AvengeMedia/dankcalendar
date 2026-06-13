@@ -23,6 +23,54 @@ FloatingWindow {
     property string formDescription: ""
     property bool formAllDay: false
     property int formCalendarIndex: 0
+    property int formReminderMinutes: -1
+
+    readonly property var reminderOptions: [
+        {
+            label: I18n.tr("None", "event reminder dropdown option"),
+            value: -1
+        },
+        {
+            label: I18n.tr("At start", "event reminder dropdown option"),
+            value: 0
+        },
+        {
+            label: I18n.tr("5 minutes before", "event reminder dropdown option"),
+            value: 5
+        },
+        {
+            label: I18n.tr("10 minutes before", "event reminder dropdown option"),
+            value: 10
+        },
+        {
+            label: I18n.tr("15 minutes before", "event reminder dropdown option"),
+            value: 15
+        },
+        {
+            label: I18n.tr("30 minutes before", "event reminder dropdown option"),
+            value: 30
+        },
+        {
+            label: I18n.tr("1 hour before", "event reminder dropdown option"),
+            value: 60
+        },
+        {
+            label: I18n.tr("2 hours before", "event reminder dropdown option"),
+            value: 120
+        },
+        {
+            label: I18n.tr("1 day before", "event reminder dropdown option"),
+            value: 1440
+        },
+        {
+            label: I18n.tr("2 days before", "event reminder dropdown option"),
+            value: 2880
+        },
+        {
+            label: I18n.tr("1 week before", "event reminder dropdown option"),
+            value: 10080
+        }
+    ]
     readonly property bool descriptionIsHtml: /<[a-z][^>]*>/i.test(event.description || "")
 
     function show(eventData) {
@@ -45,7 +93,13 @@ FloatingWindow {
             "start": base,
             "end": end,
             "allDay": false,
-            "attendees": []
+            "attendees": [],
+            "reminders": SettingsData.defaultReminderMinutes >= 0 ? [
+                {
+                    "method": "popup",
+                    "minutes": SettingsData.defaultReminderMinutes
+                }
+            ] : []
         };
         createMode = true;
         confirmDelete = false;
@@ -88,6 +142,47 @@ FloatingWindow {
                 break;
             }
         }
+
+        formReminderMinutes = -1;
+        const reminders = event.reminders || [];
+        for (let i = 0; i < reminders.length; i++) {
+            if (_isPopup(reminders[i])) {
+                formReminderMinutes = reminders[i].minutes;
+                break;
+            }
+        }
+    }
+
+    function _isPopup(reminder) {
+        const method = reminder.method || "popup";
+        return method === "popup" || method === "display";
+    }
+
+    function reminderText(minutes) {
+        if (minutes < 0)
+            return "";
+        if (minutes === 0)
+            return I18n.tr("At start", "event reminder dropdown option");
+        if (minutes % 10080 === 0)
+            return I18n.tr("%1w before", "event details short reminder offset in weeks").arg(minutes / 10080);
+        if (minutes % 1440 === 0)
+            return I18n.tr("%1d before", "event details short reminder offset in days").arg(minutes / 1440);
+        if (minutes % 60 === 0)
+            return I18n.tr("%1h before", "event details short reminder offset in hours").arg(minutes / 60);
+        return I18n.tr("%1m before", "event details short reminder offset in minutes").arg(minutes);
+    }
+
+    function reminderSummary() {
+        const labels = (event.reminders || []).filter(r => _isPopup(r)).map(r => reminderText(r.minutes));
+        return labels.join(" · ");
+    }
+
+    function reminderOptionLabel(minutes) {
+        for (let i = 0; i < reminderOptions.length; i++) {
+            if (reminderOptions[i].value === minutes)
+                return reminderOptions[i].label;
+        }
+        return reminderText(minutes);
     }
 
     function _formRange() {
@@ -122,13 +217,23 @@ FloatingWindow {
         }
         const cal = writable[Math.min(formCalendarIndex, writable.length - 1)];
 
+        // Non-popup reminders (e.g. email) are kept as-is; the dropdown only
+        // manages the popup reminder.
+        const reminders = (event.reminders || []).filter(r => !_isPopup(r));
+        if (formReminderMinutes >= 0)
+            reminders.push({
+                "method": "popup",
+                "minutes": formReminderMinutes
+            });
+
         const fields = {
             "summary": formTitle.trim(),
             "description": formDescription,
             "location": formLocation.trim(),
             "start": range.start.toISOString(),
             "end": range.end.toISOString(),
-            "allDay": formAllDay
+            "allDay": formAllDay,
+            "reminders": reminders
         };
 
         saving = true;
@@ -472,6 +577,12 @@ FloatingWindow {
                 }
 
                 MetaRow {
+                    iconName: "notifications"
+                    primary: eventModal.reminderSummary()
+                    visible: primary !== ""
+                }
+
+                MetaRow {
                     iconName: "link"
                     primary: eventModal.event.url || ""
                     link: true
@@ -790,6 +901,32 @@ FloatingWindow {
                 }
             }
 
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+
+                DankIcon {
+                    name: "notifications"
+                    size: Theme.iconSize - 6
+                    color: Theme.surfaceVariantText
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                DankDropdown {
+                    width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                    options: eventModal.reminderOptions.map(o => o.label)
+                    currentValue: eventModal.reminderOptionLabel(eventModal.formReminderMinutes)
+                    onValueChanged: value => {
+                        for (let i = 0; i < eventModal.reminderOptions.length; i++) {
+                            if (eventModal.reminderOptions[i].label === value) {
+                                eventModal.formReminderMinutes = eventModal.reminderOptions[i].value;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
             StyledRect {
                 width: parent.width
                 height: 150
@@ -807,8 +944,6 @@ FloatingWindow {
                     TextArea.flickable: TextArea {
                         id: descArea
 
-                        placeholderText: I18n.tr("Add description", "event form placeholder for description text area")
-                        placeholderTextColor: Theme.surfaceVariantText
                         wrapMode: TextEdit.Wrap
                         background: null
                         color: Theme.surfaceText
@@ -818,6 +953,18 @@ FloatingWindow {
                         font.pixelSize: Theme.fontSizeMedium
                         text: eventModal.formDescription
                         onTextChanged: eventModal.formDescription = text
+
+                        Text {
+                            anchors.fill: parent
+                            anchors.leftMargin: descArea.leftPadding
+                            anchors.topMargin: descArea.topPadding
+                            visible: descArea.length === 0 && descArea.preeditText.length === 0
+                            text: I18n.tr("Add description", "event form placeholder for description text area")
+                            color: Theme.surfaceVariantText
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.fontSizeMedium
+                            wrapMode: Text.Wrap
+                        }
                     }
                 }
             }

@@ -254,6 +254,7 @@ func buildVEvent(uid string, ev *calendar.Event) *ics.VEvent {
 			out.AddRrule(rule)
 		}
 	}
+	addAlarms(out, ev.Reminders)
 	return out
 }
 

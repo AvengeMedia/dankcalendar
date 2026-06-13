@@ -8,19 +8,9 @@ Item {
     property int size: Theme.fontSizeMedium
     property alias color: icon.color
 
-    readonly property string nerdFontFamily: {
-        const families = Qt.fontFamilies();
-        const candidates = ["FiraCode Nerd Font", "Symbols Nerd Font Mono", "Symbols Nerd Font"];
-        for (const candidate of candidates) {
-            if (families.indexOf(candidate) !== -1)
-                return candidate;
-        }
-        return "";
-    }
-
     width: size
     height: size
-    visible: text.length > 0 && nerdFontFamily !== ""
+    visible: text.length > 0
 
     // This is for file browser, particularly - might want another map later for app IDs
     readonly property var iconMap: ({
@@ -155,12 +145,17 @@ Item {
         return ext || "";
     }
 
+    FontLoader {
+        id: firaCodeFont
+        source: Qt.resolvedUrl("../assets/fonts/nerd-fonts/FiraCodeNerdFont-Regular.ttf")
+    }
+
     StyledText {
         id: icon
 
         anchors.centerIn: parent
 
-        font.family: root.nerdFontFamily !== "" ? root.nerdFontFamily : Theme.fontFamily
+        font.family: firaCodeFont.name
         font.pixelSize: root.size
         color: Theme.surfaceText
         text: root.text

@@ -21,9 +21,23 @@
     "comment": ""
   },
   {
+    "term": "%1d before",
+    "translation": "",
+    "context": "event details short reminder offset in days",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "%1h",
     "translation": "",
     "context": "event duration in hours on agenda card, %1 is hours",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1h before",
+    "translation": "",
+    "context": "event details short reminder offset in hours",
     "reference": "",
     "comment": ""
   },
@@ -42,6 +56,20 @@
     "comment": ""
   },
   {
+    "term": "%1m before",
+    "translation": "",
+    "context": "event details short reminder offset in minutes",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1w before",
+    "translation": "",
+    "context": "event details short reminder offset in weeks",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "(untitled)",
     "translation": "",
     "context": "event details fallback title when event has no title",
@@ -56,6 +84,13 @@
     "comment": ""
   },
   {
+    "term": "1 day before",
+    "translation": "",
+    "context": "all-day reminder day dropdown option | event reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "1 hour",
     "translation": "",
     "context": "default event duration option",
@@ -65,7 +100,14 @@
   {
     "term": "1 hour before",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1 week before",
+    "translation": "",
+    "context": "all-day reminder day dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -77,9 +119,16 @@
     "comment": ""
   },
   {
+    "term": "10 minutes",
+    "translation": "",
+    "context": "snooze duration dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "10 minutes before",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -100,14 +149,21 @@
   {
     "term": "15 minutes",
     "translation": "",
-    "context": "default event duration option",
+    "context": "default event duration option | snooze duration dropdown option",
     "reference": "",
     "comment": ""
   },
   {
     "term": "15 minutes before",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "2 days before",
+    "translation": "",
+    "context": "all-day reminder day dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -115,6 +171,13 @@
     "term": "2 hours",
     "translation": "",
     "context": "default event duration option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "2 hours before",
+    "translation": "",
+    "context": "event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -135,14 +198,14 @@
   {
     "term": "30 minutes",
     "translation": "",
-    "context": "default event duration option",
+    "context": "default event duration option | snooze duration dropdown option",
     "reference": "",
     "comment": ""
   },
   {
     "term": "30 minutes before",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -154,9 +217,16 @@
     "comment": ""
   },
   {
+    "term": "5 minutes",
+    "translation": "",
+    "context": "snooze duration dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "5 minutes before",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -266,6 +336,13 @@
     "comment": ""
   },
   {
+    "term": "All-day reminder time",
+    "translation": "",
+    "context": "all-day reminder time setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close",
     "translation": "",
     "context": "file browser keyboard shortcuts hint line",
@@ -331,7 +408,7 @@
   {
     "term": "At start",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -339,13 +416,6 @@
     "term": "Attendees",
     "translation": "",
     "context": "event details section label for attendee list",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Audible alert when an event fires.",
-    "translation": "",
-    "context": "reminder sound toggle description",
     "reference": "",
     "comment": ""
   },
@@ -394,7 +464,7 @@
   {
     "term": "Backend not connected.",
     "translation": "",
-    "context": "accounts settings section subtitle | calendars page empty state",
+    "context": "accounts settings section subtitle | calendars page empty state | test notification setting description when backend is unavailable",
     "reference": "",
     "comment": ""
   },
@@ -910,6 +980,13 @@
     "comment": ""
   },
   {
+    "term": "How long the snooze button postpones a reminder.",
+    "translation": "",
+    "context": "snooze duration setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Import client_secret.json",
     "translation": "",
     "context": "button to import google oauth client json",
@@ -934,6 +1011,13 @@
     "term": "Keep typing",
     "translation": "",
     "context": "search status title when query is too short",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Keep until dismissed",
+    "translation": "",
+    "context": "persistent reminders toggle label",
     "reference": "",
     "comment": ""
   },
@@ -1115,7 +1199,7 @@
   {
     "term": "None",
     "translation": "",
-    "context": "default reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1141,9 +1225,23 @@
     "comment": ""
   },
   {
+    "term": "Notify for all-day events without their own reminders.",
+    "translation": "",
+    "context": "all-day reminders toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Offline",
     "translation": "",
     "context": "about page daemon status value",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "On the day",
+    "translation": "",
+    "context": "all-day reminder day dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1232,13 +1330,6 @@
     "comment": ""
   },
   {
-    "term": "Play sound",
-    "translation": "",
-    "context": "reminder sound toggle label",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "translation": "",
     "context": "local calendar directory form instructions",
@@ -1263,6 +1354,13 @@
     "term": "Reminders and desktop alerts.",
     "translation": "",
     "context": "notifications settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Reminders stay on screen until you act on them.",
+    "translation": "",
+    "context": "persistent reminders toggle description",
     "reference": "",
     "comment": ""
   },
@@ -1372,6 +1470,13 @@
     "comment": ""
   },
   {
+    "term": "Send test",
+    "translation": "",
+    "context": "test notification button",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Server URL",
     "translation": "",
     "context": "caldav server url field label",
@@ -1435,6 +1540,13 @@
     "comment": ""
   },
   {
+    "term": "Snooze duration",
+    "translation": "",
+    "context": "snooze duration setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Sort By",
     "translation": "",
     "context": "file browser sort menu section header",
@@ -1491,13 +1603,6 @@
     "comment": ""
   },
   {
-    "term": "Surface all-day events at the start of the day.",
-    "translation": "",
-    "context": "all-day reminders toggle description",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Sync now",
     "translation": "",
     "context": "account context menu action to sync the account",
@@ -1529,6 +1634,13 @@
     "term": "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select",
     "translation": "",
     "context": "file browser keyboard shortcuts hint line",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Test notification",
+    "translation": "",
+    "context": "test notification setting label",
     "reference": "",
     "comment": ""
   },
@@ -1624,6 +1736,13 @@
     "comment": ""
   },
   {
+    "term": "Verify desktop notifications are working.",
+    "translation": "",
+    "context": "test notification setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Version",
     "translation": "",
     "context": "about page daemon version column label",
@@ -1662,6 +1781,13 @@
     "term": "Week",
     "translation": "",
     "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "When all-day event reminders fire.",
+    "translation": "",
+    "context": "all-day reminder time setting description",
     "reference": "",
     "comment": ""
   },

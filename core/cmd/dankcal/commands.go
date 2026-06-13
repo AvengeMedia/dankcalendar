@@ -48,4 +48,5 @@ func init() {
 	rootCmd.AddCommand(ipcCmd)
 	rootCmd.AddCommand(accountCmd)
 	rootCmd.AddCommand(syncCmd)
+	rootCmd.AddCommand(remindersCmd)
 }
