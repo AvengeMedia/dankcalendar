@@ -327,22 +327,49 @@ FloatingWindow {
     }
 
     Rectangle {
+        id: previewOverlay
         anchors.fill: parent
         z: 100
         visible: accountModal.expandedScreenshot !== ""
-        color: Qt.rgba(0, 0, 0, 0.78)
+        color: Qt.rgba(0, 0, 0, 0.85)
+
+        property bool zoomed: false
+
+        onVisibleChanged: zoomed = false
 
         MouseArea {
             anchors.fill: parent
             onClicked: accountModal.expandedScreenshot = ""
         }
 
-        Image {
+        Flickable {
+            id: previewFlick
             anchors.fill: parent
-            anchors.margins: Theme.spacingL
-            source: accountModal.expandedScreenshot
-            fillMode: Image.PreserveAspectFit
-            asynchronous: true
+            anchors.topMargin: 52
+            anchors.bottomMargin: 36
+            anchors.leftMargin: Theme.spacingL
+            anchors.rightMargin: Theme.spacingL
+            clip: true
+            contentWidth: previewImage.width
+            contentHeight: previewImage.height
+            flickableDirection: Flickable.HorizontalAndVerticalFlick
+            interactive: previewOverlay.zoomed
+
+            Image {
+                id: previewImage
+                source: accountModal.expandedScreenshot
+                asynchronous: true
+                fillMode: Image.PreserveAspectFit
+                sourceSize.width: 2048
+                width: previewOverlay.zoomed ? Math.max(previewFlick.width, implicitWidth) : previewFlick.width
+                height: previewOverlay.zoomed ? Math.max(previewFlick.height, implicitHeight) : previewFlick.height
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: previewOverlay.zoomed ? Qt.OpenHandCursor : Qt.ZoomInCursor
+                    onClicked: previewOverlay.zoomed = !previewOverlay.zoomed
+                }
+            }
         }
 
         DankActionButton {
@@ -359,15 +386,22 @@ FloatingWindow {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.spacingS
             anchors.horizontalCenter: parent.horizontalCenter
-            text: I18n.tr("Click anywhere to close", "hint to dismiss enlarged setup screenshot")
+            text: previewOverlay.zoomed ? I18n.tr("Drag to pan · click to fit", "hint while a setup screenshot is zoomed") : I18n.tr("Click to zoom · Esc to close", "hint while a setup screenshot is fit to the window")
             font.pixelSize: Theme.fontSizeSmall
             color: Qt.rgba(1, 1, 1, 0.7)
+        }
+
+        Shortcut {
+            sequence: "Escape"
+            enabled: previewOverlay.visible
+            onActivated: accountModal.expandedScreenshot = ""
         }
     }
 
     FloatingWindowControls {
         id: windowControls
         targetWindow: accountModal
+        z: 101
     }
 
     Component {

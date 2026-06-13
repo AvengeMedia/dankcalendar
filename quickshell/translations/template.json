@@ -532,9 +532,9 @@
     "comment": ""
   },
   {
-    "term": "Click anywhere to close",
+    "term": "Click to zoom · Esc to close",
     "translation": "",
-    "context": "hint to dismiss enlarged setup screenshot",
+    "context": "hint while a setup screenshot is fit to the window",
     "reference": "",
     "comment": ""
   },
@@ -829,6 +829,13 @@
     "term": "Downloads",
     "translation": "",
     "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Drag to pan · click to fit",
+    "translation": "",
+    "context": "hint while a setup screenshot is zoomed",
     "reference": "",
     "comment": ""
   },
