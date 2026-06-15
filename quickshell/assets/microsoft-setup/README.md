@@ -8,18 +8,12 @@ frame stays hidden).
 
 Expected filenames:
 
-| Step | Wizard title                     | Filename                       |
-| ---- | -------------------------------- | ------------------------------ |
-| 1    | Make sure you have a directory   | `00-azure-ad-missing-error.png` |
-| 2    | Start a new app registration     | `01-new-registration.png`      |
-| 3    | Fill the form and register       | `01-register-form.png`         |
-| 4    | Copy the Application (client) ID | `03-client-id.png`             |
-
-Step 1 captures the "…not contained within any directory. The ability to create
-applications outside of a directory has been deprecated" warning Microsoft shows
-on App registrations for accounts without a Microsoft Entra directory — the most
-common reason setup fails. The fix is to create a free directory (sign up for
-Azure, or the Microsoft 365 Developer Program).
+| Step | Wizard title                     | Filename                  |
+| ---- | -------------------------------- | ------------------------- |
+| 1    | Get an Azure directory           | (no screenshot)           |
+| 2    | Start a new app registration     | `01-new-registration.png` |
+| 3    | Fill the form and register       | `01-register-form.png`    |
+| 4    | Copy the Application (client) ID | `03-client-id.png`        |
 
 (`01-new-app.png` is an unused near-duplicate of the form capture.)
 
