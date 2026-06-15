@@ -24,11 +24,37 @@ text: I18n.tr("Create event", "sidebar button to create a new event")
 ## Extracting
 
 ```sh
-python3 extract_translations.py
+make i18n-extract          # or: python3 extract_translations.py
 ```
 
 Regenerates `en.json` (POEditor source upload) and `template.json` (empty
 template for translators). Run it after adding or changing strings.
+
+`make i18n-local` does the same but prints which terms were added/removed.
+
+## POEditor sync
+
+This repo has its own POEditor project, separate from DankMaterialShell. Set
+your own credentials (distinct env var names so the two projects don't clash):
+
+```sh
+export DCAL_POEDITOR_API_TOKEN=...   # POEditor account API token
+export DCAL_POEDITOR_PROJECT_ID=...  # this project's numeric id
+```
+
+Then:
+
+```sh
+make i18n-test    # extract + validate, no network
+make i18n-sync    # upload en.json terms, download translations, stage changes
+make i18n-check   # fail if local i18n is out of sync (for CI / pre-commit)
+```
+
+`i18n-sync` uploads new/changed source terms to POEditor, downloads each
+configured locale into `poexports/`, and `git add`s the results. The language
+list lives in `scripts/i18nsync.py` (`LANGUAGES`) and is empty until a locale
+has translations — add `"<poeditor-code>": "<locale>.json"` entries as they
+come online.
 
 ## Translated exports
 
@@ -44,6 +70,4 @@ objects, e.g.:
 ```
 
 `Common/I18n.qml` picks the file matching the system locale (full tag first,
-then language code) and falls back to the built-in English strings. There is
-no POEditor project for this repo yet; once one exists, exports go straight
-into `poexports/`.
+then language code) and falls back to the built-in English strings.

@@ -23,7 +23,7 @@ SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
 DESKTOP_ID=com.danklinux.dankcalendar
 
-.PHONY: all build dev run clean test fmt vet i18n-extract install install-bin install-shell install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
+.PHONY: all build dev run clean test fmt vet i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-shell install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
 
 all: build
 
@@ -50,6 +50,21 @@ vet:
 
 i18n-extract:
 	@python3 $(SHELL_DIR)/translations/extract_translations.py
+
+i18n-local:
+	@python3 $(SHELL_DIR)/scripts/i18nsync.py local
+
+i18n-test:
+	@python3 $(SHELL_DIR)/scripts/i18nsync.py test
+
+i18n-push:
+	@python3 $(SHELL_DIR)/scripts/i18nsync.py push
+
+i18n-sync:
+	@python3 $(SHELL_DIR)/scripts/i18nsync.py sync
+
+i18n-check:
+	@python3 $(SHELL_DIR)/scripts/i18nsync.py check
 
 install-bin:
 	@test -f $(BUILD_DIR)/$(BINARY_NAME) || { echo "$(BUILD_DIR)/$(BINARY_NAME) not found; run 'make' first"; exit 1; }
@@ -112,6 +127,11 @@ help:
 	@echo "  run                - Build and run against the in-repo quickshell config"
 	@echo "  clean / test / fmt / vet"
 	@echo "  i18n-extract       - Regenerate translations/en.json from I18n.tr() calls"
+	@echo "  i18n-local         - Re-extract and show added/removed terms (no POEditor)"
+	@echo "  i18n-test          - Extract and validate, no POEditor calls"
+	@echo "  i18n-push          - Force-upload all source terms (use for first upload; needs DCAL_POEDITOR_* env)"
+	@echo "  i18n-sync          - Upload changed source terms + download translations (needs DCAL_POEDITOR_* env)"
+	@echo "  i18n-check         - Fail if local i18n is out of sync with POEditor"
 	@echo ""
 	@echo "Install (PREFIX=$(PREFIX)):"
 	@echo "  install            - Binary, shell files, icon, desktop entry"
