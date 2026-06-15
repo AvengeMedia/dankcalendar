@@ -33,6 +33,8 @@ Singleton {
     property alias allDayReminderTime: adapter.allDayReminderTime
     property alias allDayReminderDaysBefore: adapter.allDayReminderDaysBefore
     property alias snoozeMinutes: adapter.snoozeMinutes
+    // "minimize" = hide to tray, "quit" = stop the daemon and child
+    property alias closeBehavior: adapter.closeBehavior
 
     readonly property var locale: Qt.locale()
     // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
@@ -79,11 +81,35 @@ Singleton {
     FileView {
         id: settingsFile
         path: root.settingsPath
+        // Persistence guards mirror DMS Common/SettingsData.qml: block the
+        // initial load so the adapter is populated up front, gate writes on
+        // _loaded so the load itself never serializes a half-default adapter
+        // back over the saved file, and ignore our own writes via _selfWrite so
+        // a write does not trigger a reload storm.
+        blockLoading: true
+        blockWrites: true
+        atomicWrites: true
         watchChanges: true
         printErrors: false
 
-        onFileChanged: reload()
-        onAdapterUpdated: writeAdapter()
+        property bool _loaded: false
+        property bool _selfWrite: false
+
+        onLoaded: _loaded = true
+        onLoadFailed: _loaded = true
+        onFileChanged: {
+            if (_selfWrite) {
+                _selfWrite = false;
+                return;
+            }
+            reload();
+        }
+        onAdapterUpdated: {
+            if (!_loaded)
+                return;
+            _selfWrite = true;
+            writeAdapter();
+        }
 
         JsonAdapter {
             id: adapter
@@ -100,6 +126,7 @@ Singleton {
             property string allDayReminderTime: "09:00"
             property int allDayReminderDaysBefore: 0
             property int snoozeMinutes: 5
+            property string closeBehavior: "minimize"
         }
     }
 }

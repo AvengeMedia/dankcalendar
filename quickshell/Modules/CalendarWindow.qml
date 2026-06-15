@@ -326,7 +326,16 @@ FloatingWindow {
                         iconName: "close"
                         iconSize: Theme.iconSize - 4
                         iconColor: Theme.surfaceText
-                        onClicked: window.hideRequested()
+                        onClicked: {
+                            switch (SettingsData.closeBehavior) {
+                            case "quit":
+                                DankCalService.quit();
+                                break;
+                            default:
+                                window.hideRequested();
+                                break;
+                            }
+                        }
                     }
                 }
             }

@@ -286,6 +286,24 @@ Item {
                     }
 
                     SettingsRow {
+                        label: I18n.tr("Close behavior", "close behavior setting label")
+                        description: I18n.tr("What the window's close button does.", "close behavior setting description")
+
+                        DankButtonGroup {
+                            anchors.verticalCenter: parent.verticalCenter
+                            buttonHeight: 36
+                            minButtonWidth: 90
+                            model: [I18n.tr("Minimize", "close behavior button group option to hide to tray"), I18n.tr("Quit", "close behavior button group option to quit the app")]
+                            currentIndex: SettingsData.closeBehavior === "quit" ? 1 : 0
+                            onSelectionChanged: (index, selected) => {
+                                if (!selected)
+                                    return;
+                                SettingsData.closeBehavior = index === 1 ? "quit" : "minimize";
+                            }
+                        }
+                    }
+
+                    SettingsRow {
                         label: I18n.tr("Start week on", "week start setting label")
                         description: I18n.tr("First day shown in week and month views.", "week start setting description")
 

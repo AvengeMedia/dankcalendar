@@ -567,6 +567,13 @@
     "comment": ""
   },
   {
+    "term": "Close behavior",
+    "translation": "",
+    "context": "close behavior setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Color source",
     "translation": "",
     "context": "color source setting label",
@@ -1141,6 +1148,13 @@
     "comment": ""
   },
   {
+    "term": "Minimize",
+    "translation": "",
+    "context": "close behavior button group option to hide to tray",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Modified",
     "translation": "",
     "context": "file browser sort criterion option",
@@ -1465,7 +1479,7 @@
   {
     "term": "Quit",
     "translation": "",
-    "context": "tray menu item to quit the application",
+    "context": "close behavior button group option to quit the app | tray menu item to quit the application",
     "reference": "",
     "comment": ""
   },
@@ -1970,6 +1984,13 @@
     "term": "Week view",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "What the window's close button does.",
+    "translation": "",
+    "context": "close behavior setting description",
     "reference": "",
     "comment": ""
   },
