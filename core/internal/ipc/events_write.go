@@ -9,6 +9,7 @@ import (
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
@@ -181,6 +182,71 @@ func handleCalendarRename(ctx context.Context, w *ConnWriter, req Request, deps 
 		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
 	}
 	Respond(w, req.ID, map[string]any{"calendarId": id, "name": name})
+}
+
+func handleCalendarSetReminders(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	id := ParamString(req.Params, "calendarId")
+	if id == "" {
+		RespondError(w, req.ID, "calendarId is required")
+		return
+	}
+
+	// A missing or empty overrides object clears all overrides, reverting
+	// the calendar to the global reminder settings.
+	override := reminderOverrideFromParam(req.Params["overrides"])
+	if err := deps.Repo.SetCalendarReminders(ctx, id, override); err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	if deps.Bus != nil {
+		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
+	}
+	Respond(w, req.ID, map[string]any{"calendarId": id})
+}
+
+// reminderOverrideFromParam reads the override object: only the keys present
+// become overrides, everything else inherits the global value.
+func reminderOverrideFromParam(raw any) *settings.ReminderOverride {
+	o := &settings.ReminderOverride{}
+	m, ok := raw.(map[string]any)
+	if !ok {
+		return o
+	}
+	if v, ok := m["enabled"].(bool); ok {
+		o.Enabled = &v
+	}
+	if v, ok := m["persist"].(bool); ok {
+		o.Persist = &v
+	}
+	if v, ok := m["allDay"].(bool); ok {
+		o.AllDay = &v
+	}
+	if v, ok := m["allDayTime"].(string); ok {
+		o.AllDayTime = &v
+	}
+	if v, ok := intFromParam(m["allDayDaysBefore"]); ok {
+		o.AllDayDaysBefore = &v
+	}
+	if v, ok := intFromParam(m["defaultReminderMinutes"]); ok {
+		o.DefaultReminderMinutes = &v
+	}
+	if v, ok := intFromParam(m["snoozeMinutes"]); ok {
+		o.SnoozeMinutes = &v
+	}
+	return o
+}
+
+func intFromParam(raw any) (int, bool) {
+	switch v := raw.(type) {
+	case float64:
+		return int(v), true
+	case int:
+		return v, true
+	case int64:
+		return int(v), true
+	}
+	return 0, false
 }
 
 func handleCalendarDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

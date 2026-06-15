@@ -23,6 +23,8 @@ func HandleCalendars(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 		handleCalendarSetHidden(ctx, w, req, deps)
 	case "calendars.rename":
 		handleCalendarRename(ctx, w, req, deps)
+	case "calendars.setReminders":
+		handleCalendarSetReminders(ctx, w, req, deps)
 	case "calendars.delete":
 		handleCalendarDelete(ctx, w, req, deps)
 	default:
@@ -126,6 +128,7 @@ func mapCalendars(items []*ent.Calendar) []map[string]any {
 			"timeZone":     c.TimeZone,
 			"readOnly":     c.ReadOnly,
 			"hidden":       c.Hidden,
+			"reminders":    c.ReminderOverrides,
 			"updatedAt":    c.UpdatedAt,
 		}
 		if acc := c.Edges.Account; acc != nil {

@@ -524,7 +524,7 @@ Item {
 
                                 Column {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    width: parent.width - 18 - 128 - Theme.spacingM * 2
+                                    width: parent.width - 18 - 168 - Theme.spacingM * 2
 
                                     StyledText {
                                         text: calendarRow.modelData.name
@@ -562,6 +562,12 @@ Item {
                                     }
 
                                     DankActionButton {
+                                        iconName: !!calendarRow.modelData.reminders ? "notifications_active" : "notifications"
+                                        iconColor: !!calendarRow.modelData.reminders ? Theme.primary : Theme.surfaceText
+                                        onClicked: calendarRemindersDialog.show(calendarRow.modelData)
+                                    }
+
+                                    DankActionButton {
                                         iconName: "delete_outline"
                                         iconColor: Theme.error
                                         onClicked: {
@@ -589,6 +595,10 @@ Item {
 
             RenameCalendarDialog {
                 id: calendarRenameDialog
+            }
+
+            CalendarRemindersDialog {
+                id: calendarRemindersDialog
             }
 
             ConfirmDialog {

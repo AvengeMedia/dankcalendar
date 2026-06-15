@@ -29,6 +29,69 @@ type UISettings struct {
 	SnoozeMinutes            int    `json:"snoozeMinutes"`
 }
 
+// ReminderOverride holds per-calendar reminder settings. Every field is a
+// pointer: nil means "inherit the global value". It is stored on the calendar
+// row and owned locally, never touched by provider sync.
+type ReminderOverride struct {
+	Enabled                *bool   `json:"enabled,omitempty"`
+	Persist                *bool   `json:"persist,omitempty"`
+	AllDay                 *bool   `json:"allDay,omitempty"`
+	AllDayTime             *string `json:"allDayTime,omitempty"`
+	AllDayDaysBefore       *int    `json:"allDayDaysBefore,omitempty"`
+	DefaultReminderMinutes *int    `json:"defaultReminderMinutes,omitempty"`
+	SnoozeMinutes          *int    `json:"snoozeMinutes,omitempty"`
+}
+
+// IsEmpty reports whether no field is overridden, in which case the override
+// can be cleared and the calendar falls back to global settings entirely.
+func (o *ReminderOverride) IsEmpty() bool {
+	if o == nil {
+		return true
+	}
+	switch {
+	case o.Enabled != nil,
+		o.Persist != nil,
+		o.AllDay != nil,
+		o.AllDayTime != nil,
+		o.AllDayDaysBefore != nil,
+		o.DefaultReminderMinutes != nil,
+		o.SnoozeMinutes != nil:
+		return false
+	}
+	return true
+}
+
+// Resolve returns base with the overridden fields applied. The global
+// RemindersEnabled stays the master switch: a calendar override can mute (set
+// false) but never force reminders on when base is already off.
+func (o *ReminderOverride) Resolve(base UISettings) UISettings {
+	if o == nil {
+		return base
+	}
+	if o.Enabled != nil && base.RemindersEnabled {
+		base.RemindersEnabled = *o.Enabled
+	}
+	if o.Persist != nil {
+		base.ReminderPersist = *o.Persist
+	}
+	if o.AllDay != nil {
+		base.AllDayReminders = *o.AllDay
+	}
+	if o.AllDayTime != nil {
+		base.AllDayReminderTime = *o.AllDayTime
+	}
+	if o.AllDayDaysBefore != nil {
+		base.AllDayReminderDaysBefore = *o.AllDayDaysBefore
+	}
+	if o.DefaultReminderMinutes != nil {
+		base.DefaultReminderMinutes = *o.DefaultReminderMinutes
+	}
+	if o.SnoozeMinutes != nil && *o.SnoozeMinutes > 0 {
+		base.SnoozeMinutes = *o.SnoozeMinutes
+	}
+	return base
+}
+
 func Defaults() UISettings {
 	return UISettings{
 		Use24HourClock:           true,

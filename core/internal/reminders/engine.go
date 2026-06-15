@@ -166,7 +166,7 @@ func (e *Engine) Tick(ctx context.Context) error {
 	}
 
 	now := e.now()
-	events, err := e.candidates(ctx, now)
+	events, resolved, err := e.candidates(ctx, now, s)
 	if err != nil {
 		return err
 	}
@@ -181,7 +181,11 @@ func (e *Engine) Tick(ctx context.Context) error {
 		if calID == "" {
 			continue
 		}
-		for _, tr := range triggersFor(ev, s, e.loc) {
+		cs := resolvedFor(resolved, calID, s)
+		if !cs.RemindersEnabled {
+			continue
+		}
+		for _, tr := range triggersFor(ev, cs, e.loc) {
 			key := stateKey{calendarID: calID, uid: ev.UID, start: ev.Start.UTC(), minutes: tr.minutes}
 			st, seen := states[key]
 			switch {
@@ -196,7 +200,7 @@ func (e *Engine) Tick(ctx context.Context) error {
 			case !ev.End.After(now):
 				continue
 			}
-			e.fire(ctx, ev, key, s, now)
+			e.fire(ctx, ev, key, cs, now)
 		}
 	}
 	return nil
@@ -208,7 +212,7 @@ func (e *Engine) Upcoming(ctx context.Context, limit int) ([]Upcoming, error) {
 	s := e.settings()
 	now := e.now()
 
-	events, err := e.candidates(ctx, now)
+	events, resolved, err := e.candidates(ctx, now, s)
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +227,11 @@ func (e *Engine) Upcoming(ctx context.Context, limit int) ([]Upcoming, error) {
 		if calID == "" {
 			continue
 		}
-		for _, tr := range triggersFor(ev, s, e.loc) {
+		cs := resolvedFor(resolved, calID, s)
+		if !cs.RemindersEnabled {
+			continue
+		}
+		for _, tr := range triggersFor(ev, cs, e.loc) {
 			key := stateKey{calendarID: calID, uid: ev.UID, start: ev.Start.UTC(), minutes: tr.minutes}
 			entry := Upcoming{
 				EventID:    ev.ID,
@@ -284,6 +292,9 @@ func (e *Engine) HandleAction(id uint32, action string) {
 	switch action {
 	case "snooze":
 		s := e.settings()
+		if cal, err := e.repo.GetCalendar(ctx, key.calendarID); err == nil {
+			s = cal.ReminderOverrides.Resolve(s)
+		}
 		until := e.now().Add(time.Duration(s.SnoozeMinutes) * time.Minute)
 		if err := e.repo.SnoozeReminder(ctx, key.calendarID, key.uid, key.start, key.minutes, until); err != nil {
 			log.Warnf("reminders: snooze: %v", err)
@@ -306,16 +317,18 @@ func (e *Engine) HandleClosed(id uint32) {
 // candidates returns non-cancelled occurrences from visible calendars that
 // have not ended, expanded over the lookahead window. The window starts in
 // the recent past so occurrences that just began still expand.
-func (e *Engine) candidates(ctx context.Context, now time.Time) ([]*ent.Event, error) {
+func (e *Engine) candidates(ctx context.Context, now time.Time, base settings.UISettings) ([]*ent.Event, map[string]settings.UISettings, error) {
 	cals, err := e.repo.ListCalendars(ctx)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	hidden := make(map[string]struct{})
+	resolved := make(map[string]settings.UISettings, len(cals))
 	for _, c := range cals {
 		if c.Hidden {
 			hidden[c.ID] = struct{}{}
 		}
+		resolved[c.ID] = c.ReminderOverrides.Resolve(base)
 	}
 
 	from := now.Add(-(allDayLate + 2*time.Hour))
@@ -324,7 +337,7 @@ func (e *Engine) candidates(ctx context.Context, now time.Time) ([]*ent.Event, e
 		Filter: repo.EventFilter{From: &from, To: &to, IncludeRecurring: true},
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	out := events[:0]
@@ -337,7 +350,16 @@ func (e *Engine) candidates(ctx context.Context, now time.Time) ([]*ent.Event, e
 		}
 		out = append(out, ev)
 	}
-	return out, nil
+	return out, resolved, nil
+}
+
+// resolvedFor returns the calendar's resolved settings, falling back to the
+// global base when the calendar is unknown.
+func resolvedFor(resolved map[string]settings.UISettings, calID string, base settings.UISettings) settings.UISettings {
+	if cs, ok := resolved[calID]; ok {
+		return cs
+	}
+	return base
 }
 
 func (e *Engine) stateMap(ctx context.Context, now time.Time) (map[stateKey]*ent.ReminderState, error) {

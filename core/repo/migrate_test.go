@@ -48,7 +48,14 @@ func TestMigrateBaselinesLegacyDatabase(t *testing.T) {
 		settings json NULL, created_at datetime NOT NULL, updated_at datetime NOT NULL,
 		PRIMARY KEY (id));
 		INSERT INTO accounts (id, kind, display_name, created_at, updated_at)
-		VALUES ('a@b.com','google','A','2026-01-01','2026-01-01');`)
+		VALUES ('a@b.com','google','A','2026-01-01','2026-01-01');
+		CREATE TABLE calendars (
+		id text NOT NULL, remote_id text NOT NULL, name text NOT NULL,
+		name_override text NULL, description text NULL, color text NULL,
+		time_zone text NULL, read_only bool NOT NULL DEFAULT (false),
+		hidden bool NOT NULL DEFAULT (false), sync_token text NULL,
+		created_at datetime NOT NULL, updated_at datetime NOT NULL,
+		account_calendars text NOT NULL, PRIMARY KEY (id));`)
 	if err != nil {
 		t.Fatal(err)
 	}

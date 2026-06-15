@@ -91,3 +91,51 @@ func TestAllDayClock(t *testing.T) {
 		})
 	}
 }
+
+func TestReminderOverrideResolve(t *testing.T) {
+	ptrBool := func(b bool) *bool { return &b }
+	ptrInt := func(i int) *int { return &i }
+	ptrStr := func(s string) *string { return &s }
+
+	t.Run("nil override returns base unchanged", func(t *testing.T) {
+		base := Defaults()
+		var o *ReminderOverride
+		assert.Equal(t, base, o.Resolve(base))
+	})
+
+	t.Run("only set fields win", func(t *testing.T) {
+		base := Defaults()
+		o := &ReminderOverride{DefaultReminderMinutes: ptrInt(30), AllDayTime: ptrStr("07:30")}
+		got := o.Resolve(base)
+		assert.Equal(t, 30, got.DefaultReminderMinutes)
+		assert.Equal(t, "07:30", got.AllDayReminderTime)
+		assert.Equal(t, base.SnoozeMinutes, got.SnoozeMinutes)
+		assert.Equal(t, base.ReminderPersist, got.ReminderPersist)
+	})
+
+	t.Run("override can mute an enabled calendar", func(t *testing.T) {
+		base := Defaults()
+		o := &ReminderOverride{Enabled: ptrBool(false)}
+		assert.False(t, o.Resolve(base).RemindersEnabled)
+	})
+
+	t.Run("override cannot force on when global is off", func(t *testing.T) {
+		base := Defaults()
+		base.RemindersEnabled = false
+		o := &ReminderOverride{Enabled: ptrBool(true)}
+		assert.False(t, o.Resolve(base).RemindersEnabled)
+	})
+
+	t.Run("non-positive snooze override is ignored", func(t *testing.T) {
+		base := Defaults()
+		o := &ReminderOverride{SnoozeMinutes: ptrInt(0)}
+		assert.Equal(t, base.SnoozeMinutes, o.Resolve(base).SnoozeMinutes)
+	})
+
+	t.Run("IsEmpty", func(t *testing.T) {
+		var nilOverride *ReminderOverride
+		assert.True(t, nilOverride.IsEmpty())
+		assert.True(t, (&ReminderOverride{}).IsEmpty())
+		assert.False(t, (&ReminderOverride{Enabled: ptrBool(false)}).IsEmpty())
+	})
+}

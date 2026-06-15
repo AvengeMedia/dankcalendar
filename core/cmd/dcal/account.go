@@ -179,6 +179,9 @@ var accountSetupCmd = &cobra.Command{
 		for i, s := range steps {
 			fmt.Printf("%d. %s\n", i+1, s.Title)
 			fmt.Printf("   %s\n", s.Description)
+			if s.Note != "" {
+				fmt.Printf("   Note: %s\n", s.Note)
+			}
 			if s.URL != "" {
 				fmt.Printf("   %s\n", s.URL)
 			}

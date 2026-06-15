@@ -74,11 +74,11 @@ func init() {
 	// calendar.DefaultHidden holds the default value on creation for the hidden field.
 	calendar.DefaultHidden = calendarDescHidden.Default.(bool)
 	// calendarDescCreatedAt is the schema descriptor for created_at field.
-	calendarDescCreatedAt := calendarFields[10].Descriptor()
+	calendarDescCreatedAt := calendarFields[11].Descriptor()
 	// calendar.DefaultCreatedAt holds the default value on creation for the created_at field.
 	calendar.DefaultCreatedAt = calendarDescCreatedAt.Default.(func() time.Time)
 	// calendarDescUpdatedAt is the schema descriptor for updated_at field.
-	calendarDescUpdatedAt := calendarFields[11].Descriptor()
+	calendarDescUpdatedAt := calendarFields[12].Descriptor()
 	// calendar.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	calendar.DefaultUpdatedAt = calendarDescUpdatedAt.Default.(func() time.Time)
 	// calendar.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.

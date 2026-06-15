@@ -350,6 +350,13 @@
     "comment": ""
   },
   {
+    "term": "All-day reminder timing",
+    "translation": "",
+    "context": "per-calendar all-day timing override label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close",
     "translation": "",
     "context": "file browser keyboard shortcuts hint line",
@@ -513,7 +520,7 @@
   {
     "term": "Cancel",
     "translation": "",
-    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | rename calendar dialog button to cancel",
+    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel",
     "reference": "",
     "comment": ""
   },
@@ -737,7 +744,7 @@
   {
     "term": "Default reminder",
     "translation": "",
-    "context": "default reminder setting label",
+    "context": "default reminder setting label | per-calendar default reminder override label",
     "reference": "",
     "comment": ""
   },
@@ -863,7 +870,7 @@
   {
     "term": "Enable reminders",
     "translation": "",
-    "context": "reminders toggle label",
+    "context": "per-calendar enable reminders override label | reminders toggle label",
     "reference": "",
     "comment": ""
   },
@@ -1045,7 +1052,7 @@
   {
     "term": "Keep until dismissed",
     "translation": "",
-    "context": "persistent reminders toggle label",
+    "context": "per-calendar persist override label | persistent reminders toggle label",
     "reference": "",
     "comment": ""
   },
@@ -1358,6 +1365,20 @@
     "comment": ""
   },
   {
+    "term": "Override",
+    "translation": "",
+    "context": "per-calendar reminder override toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.",
+    "translation": "",
+    "context": "per-calendar reminders dialog subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Overwrite",
     "translation": "",
     "context": "file browser overwrite dialog confirm button",
@@ -1463,6 +1484,20 @@
     "comment": ""
   },
   {
+    "term": "Reminders are disabled globally, so nothing fires until you re-enable them.",
+    "translation": "",
+    "context": "per-calendar reminders dialog note when global reminders are off",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Reminders for \"%1\"",
+    "translation": "",
+    "context": "per-calendar reminders dialog header",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Reminders stay on screen until you act on them.",
     "translation": "",
     "context": "persistent reminders toggle description",
@@ -1519,9 +1554,16 @@
     "comment": ""
   },
   {
+    "term": "Reset to global",
+    "translation": "",
+    "context": "per-calendar reminders dialog button to clear overrides",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Save",
     "translation": "",
-    "context": "event details button to save changes | file browser save button | rename calendar dialog button to save name",
+    "context": "event details button to save changes | file browser save button | per-calendar reminders dialog button to save | rename calendar dialog button to save name",
     "reference": "",
     "comment": ""
   },
@@ -1612,7 +1654,7 @@
   {
     "term": "Show all-day reminders",
     "translation": "",
-    "context": "all-day reminders toggle label",
+    "context": "all-day reminders toggle label | per-calendar all-day reminders override label",
     "reference": "",
     "comment": ""
   },
@@ -1661,7 +1703,7 @@
   {
     "term": "Snooze duration",
     "translation": "",
-    "context": "snooze duration setting label",
+    "context": "per-calendar snooze override label | snooze duration setting label",
     "reference": "",
     "comment": ""
   },

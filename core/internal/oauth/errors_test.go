@@ -8,6 +8,38 @@ import (
 	"golang.org/x/oauth2"
 )
 
+func TestFormatCallbackError(t *testing.T) {
+	cases := []struct {
+		name string
+		code string
+		desc string
+		want string
+	}{
+		{"code only", "server_error", "", "oauth error: server_error"},
+		{
+			"code and description",
+			"server_error",
+			"AADSTS90013: Invalid input received from the user.",
+			"oauth error: server_error: AADSTS90013: Invalid input received from the user.",
+		},
+		{
+			"plus-encoded multiline description collapsed",
+			"invalid_request",
+			"AADSTS900144:+The+request+body+must+contain\r\nthe+parameter.",
+			"oauth error: invalid_request: AADSTS900144: The request body must contain the parameter.",
+		},
+		{"description only", "", "something went wrong", "oauth error: something went wrong"},
+		{"empty", "", "", "oauth error: authorization was denied"},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := FormatCallbackError(tc.code, tc.desc); got != tc.want {
+				t.Fatalf("FormatCallbackError(%q, %q) = %q, want %q", tc.code, tc.desc, got, tc.want)
+			}
+		})
+	}
+}
+
 func TestIsInvalidGrant(t *testing.T) {
 	cases := []struct {
 		name string

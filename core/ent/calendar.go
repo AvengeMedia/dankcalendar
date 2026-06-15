@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -11,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
 // Calendar is the model entity for the Calendar schema.
@@ -34,6 +36,8 @@ type Calendar struct {
 	ReadOnly bool `json:"read_only,omitempty"`
 	// Hidden holds the value of the "hidden" field.
 	Hidden bool `json:"hidden,omitempty"`
+	// ReminderOverrides holds the value of the "reminder_overrides" field.
+	ReminderOverrides *settings.ReminderOverride `json:"reminder_overrides,omitempty"`
 	// SyncToken holds the value of the "sync_token" field.
 	SyncToken string `json:"sync_token,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
@@ -83,6 +87,8 @@ func (*Calendar) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case calendar.FieldReminderOverrides:
+			values[i] = new([]byte)
 		case calendar.FieldReadOnly, calendar.FieldHidden:
 			values[i] = new(sql.NullBool)
 		case calendar.FieldID, calendar.FieldRemoteID, calendar.FieldName, calendar.FieldNameOverride, calendar.FieldDescription, calendar.FieldColor, calendar.FieldTimeZone, calendar.FieldSyncToken:
@@ -159,6 +165,14 @@ func (_m *Calendar) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field hidden", values[i])
 			} else if value.Valid {
 				_m.Hidden = value.Bool
+			}
+		case calendar.FieldReminderOverrides:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field reminder_overrides", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.ReminderOverrides); err != nil {
+					return fmt.Errorf("unmarshal field reminder_overrides: %w", err)
+				}
 			}
 		case calendar.FieldSyncToken:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -254,6 +268,9 @@ func (_m *Calendar) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("hidden=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Hidden))
+	builder.WriteString(", ")
+	builder.WriteString("reminder_overrides=")
+	builder.WriteString(fmt.Sprintf("%v", _m.ReminderOverrides))
 	builder.WriteString(", ")
 	builder.WriteString("sync_token=")
 	builder.WriteString(_m.SyncToken)

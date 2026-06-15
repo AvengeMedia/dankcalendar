@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"html"
 	"net"
 	"net/http"
 	"net/url"
@@ -74,9 +75,10 @@ func (f *LoopbackFlow) handleCallback(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 
 	if errParam := q.Get("error"); errParam != "" {
+		msg := FormatCallbackError(errParam, q.Get("error_description"))
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		fmt.Fprintf(w, "<h1>Authorization failed</h1><p>%s</p><p>You can close this window.</p>", errParam)
-		f.errCh <- fmt.Errorf("oauth error: %s", errParam)
+		fmt.Fprintf(w, "<h1>Authorization failed</h1><p>%s</p><p>You can close this window.</p>", html.EscapeString(msg))
+		f.errCh <- errors.New(msg)
 		return
 	}
 

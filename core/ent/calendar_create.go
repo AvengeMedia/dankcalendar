@@ -15,6 +15,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
 // CalendarCreate is the builder for creating a Calendar entity.
@@ -118,6 +119,12 @@ func (_c *CalendarCreate) SetNillableHidden(v *bool) *CalendarCreate {
 	if v != nil {
 		_c.SetHidden(*v)
 	}
+	return _c
+}
+
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (_c *CalendarCreate) SetReminderOverrides(v *settings.ReminderOverride) *CalendarCreate {
+	_c.mutation.SetReminderOverrides(v)
 	return _c
 }
 
@@ -354,6 +361,10 @@ func (_c *CalendarCreate) createSpec() (*Calendar, *sqlgraph.CreateSpec) {
 		_spec.SetField(calendar.FieldHidden, field.TypeBool, value)
 		_node.Hidden = value
 	}
+	if value, ok := _c.mutation.ReminderOverrides(); ok {
+		_spec.SetField(calendar.FieldReminderOverrides, field.TypeJSON, value)
+		_node.ReminderOverrides = value
+	}
 	if value, ok := _c.mutation.SyncToken(); ok {
 		_spec.SetField(calendar.FieldSyncToken, field.TypeString, value)
 		_node.SyncToken = value
@@ -568,6 +579,24 @@ func (u *CalendarUpsert) SetHidden(v bool) *CalendarUpsert {
 // UpdateHidden sets the "hidden" field to the value that was provided on create.
 func (u *CalendarUpsert) UpdateHidden() *CalendarUpsert {
 	u.SetExcluded(calendar.FieldHidden)
+	return u
+}
+
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (u *CalendarUpsert) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpsert {
+	u.Set(calendar.FieldReminderOverrides, v)
+	return u
+}
+
+// UpdateReminderOverrides sets the "reminder_overrides" field to the value that was provided on create.
+func (u *CalendarUpsert) UpdateReminderOverrides() *CalendarUpsert {
+	u.SetExcluded(calendar.FieldReminderOverrides)
+	return u
+}
+
+// ClearReminderOverrides clears the value of the "reminder_overrides" field.
+func (u *CalendarUpsert) ClearReminderOverrides() *CalendarUpsert {
+	u.SetNull(calendar.FieldReminderOverrides)
 	return u
 }
 
@@ -789,6 +818,27 @@ func (u *CalendarUpsertOne) SetHidden(v bool) *CalendarUpsertOne {
 func (u *CalendarUpsertOne) UpdateHidden() *CalendarUpsertOne {
 	return u.Update(func(s *CalendarUpsert) {
 		s.UpdateHidden()
+	})
+}
+
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (u *CalendarUpsertOne) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.SetReminderOverrides(v)
+	})
+}
+
+// UpdateReminderOverrides sets the "reminder_overrides" field to the value that was provided on create.
+func (u *CalendarUpsertOne) UpdateReminderOverrides() *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.UpdateReminderOverrides()
+	})
+}
+
+// ClearReminderOverrides clears the value of the "reminder_overrides" field.
+func (u *CalendarUpsertOne) ClearReminderOverrides() *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.ClearReminderOverrides()
 	})
 }
 
@@ -1182,6 +1232,27 @@ func (u *CalendarUpsertBulk) SetHidden(v bool) *CalendarUpsertBulk {
 func (u *CalendarUpsertBulk) UpdateHidden() *CalendarUpsertBulk {
 	return u.Update(func(s *CalendarUpsert) {
 		s.UpdateHidden()
+	})
+}
+
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (u *CalendarUpsertBulk) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.SetReminderOverrides(v)
+	})
+}
+
+// UpdateReminderOverrides sets the "reminder_overrides" field to the value that was provided on create.
+func (u *CalendarUpsertBulk) UpdateReminderOverrides() *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.UpdateReminderOverrides()
+	})
+}
+
+// ClearReminderOverrides clears the value of the "reminder_overrides" field.
+func (u *CalendarUpsertBulk) ClearReminderOverrides() *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.ClearReminderOverrides()
 	})
 }
 

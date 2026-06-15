@@ -376,6 +376,20 @@ Singleton {
         });
     }
 
+    function setCalendarReminders(calendarId, overrides, callback) {
+        sendRequest("calendars.setReminders", {
+            "calendarId": calendarId,
+            "overrides": overrides || {}
+        }, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                refreshCalendars();
+            if (callback)
+                callback(response);
+        });
+    }
+
     function deleteCalendar(calendarId, callback) {
         sendRequest("calendars.delete", {
             "calendarId": calendarId

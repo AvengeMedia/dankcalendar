@@ -43,6 +43,7 @@ var (
 		{Name: "time_zone", Type: field.TypeString, Nullable: true},
 		{Name: "read_only", Type: field.TypeBool, Default: false},
 		{Name: "hidden", Type: field.TypeBool, Default: false},
+		{Name: "reminder_overrides", Type: field.TypeJSON, Nullable: true},
 		{Name: "sync_token", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
@@ -56,7 +57,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "calendars_accounts_calendars",
-				Columns:    []*schema.Column{CalendarsColumns[12]},
+				Columns:    []*schema.Column{CalendarsColumns[13]},
 				RefColumns: []*schema.Column{AccountsColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
@@ -65,7 +66,7 @@ var (
 			{
 				Name:    "calendar_remote_id_account_calendars",
 				Unique:  true,
-				Columns: []*schema.Column{CalendarsColumns[1], CalendarsColumns[12]},
+				Columns: []*schema.Column{CalendarsColumns[1], CalendarsColumns[13]},
 			},
 		},
 	}

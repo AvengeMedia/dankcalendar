@@ -8,6 +8,8 @@ import (
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
 type Calendar struct {
@@ -39,6 +41,10 @@ func (Calendar) Fields() []ent.Field {
 			Default(false),
 		field.Bool("hidden").
 			Default(false),
+		// Per-calendar reminder overrides; owned locally like hidden,
+		// nil means the calendar follows the global reminder settings.
+		field.JSON("reminder_overrides", &settings.ReminderOverride{}).
+			Optional(),
 		field.String("sync_token").
 			Optional(),
 		field.Time("created_at").

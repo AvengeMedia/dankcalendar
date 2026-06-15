@@ -15,6 +15,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
 // CalendarUpdate is the builder for updating Calendar entities.
@@ -164,6 +165,18 @@ func (_u *CalendarUpdate) SetNillableHidden(v *bool) *CalendarUpdate {
 	if v != nil {
 		_u.SetHidden(*v)
 	}
+	return _u
+}
+
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (_u *CalendarUpdate) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpdate {
+	_u.mutation.SetReminderOverrides(v)
+	return _u
+}
+
+// ClearReminderOverrides clears the value of the "reminder_overrides" field.
+func (_u *CalendarUpdate) ClearReminderOverrides() *CalendarUpdate {
+	_u.mutation.ClearReminderOverrides()
 	return _u
 }
 
@@ -358,6 +371,12 @@ func (_u *CalendarUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if value, ok := _u.mutation.Hidden(); ok {
 		_spec.SetField(calendar.FieldHidden, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.ReminderOverrides(); ok {
+		_spec.SetField(calendar.FieldReminderOverrides, field.TypeJSON, value)
+	}
+	if _u.mutation.ReminderOverridesCleared() {
+		_spec.ClearField(calendar.FieldReminderOverrides, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.SyncToken(); ok {
 		_spec.SetField(calendar.FieldSyncToken, field.TypeString, value)
@@ -600,6 +619,18 @@ func (_u *CalendarUpdateOne) SetNillableHidden(v *bool) *CalendarUpdateOne {
 	return _u
 }
 
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (_u *CalendarUpdateOne) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpdateOne {
+	_u.mutation.SetReminderOverrides(v)
+	return _u
+}
+
+// ClearReminderOverrides clears the value of the "reminder_overrides" field.
+func (_u *CalendarUpdateOne) ClearReminderOverrides() *CalendarUpdateOne {
+	_u.mutation.ClearReminderOverrides()
+	return _u
+}
+
 // SetSyncToken sets the "sync_token" field.
 func (_u *CalendarUpdateOne) SetSyncToken(v string) *CalendarUpdateOne {
 	_u.mutation.SetSyncToken(v)
@@ -821,6 +852,12 @@ func (_u *CalendarUpdateOne) sqlSave(ctx context.Context) (_node *Calendar, err 
 	}
 	if value, ok := _u.mutation.Hidden(); ok {
 		_spec.SetField(calendar.FieldHidden, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.ReminderOverrides(); ok {
+		_spec.SetField(calendar.FieldReminderOverrides, field.TypeJSON, value)
+	}
+	if _u.mutation.ReminderOverridesCleared() {
+		_spec.ClearField(calendar.FieldReminderOverrides, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.SyncToken(); ok {
 		_spec.SetField(calendar.FieldSyncToken, field.TypeString, value)

@@ -30,6 +30,8 @@ const (
 	FieldReadOnly = "read_only"
 	// FieldHidden holds the string denoting the hidden field in the database.
 	FieldHidden = "hidden"
+	// FieldReminderOverrides holds the string denoting the reminder_overrides field in the database.
+	FieldReminderOverrides = "reminder_overrides"
 	// FieldSyncToken holds the string denoting the sync_token field in the database.
 	FieldSyncToken = "sync_token"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -69,6 +71,7 @@ var Columns = []string{
 	FieldTimeZone,
 	FieldReadOnly,
 	FieldHidden,
+	FieldReminderOverrides,
 	FieldSyncToken,
 	FieldCreatedAt,
 	FieldUpdatedAt,

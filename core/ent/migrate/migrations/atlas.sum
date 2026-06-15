@@ -1,3 +1,4 @@
-h1:QJ96ZoWKFJBiPWlHO1EuqJGqFWZ69vs3eshrLH+tg8I=
+h1:AHLK5bGeTdPCCOG5lcVbS3mHHOqRAoJYUxwLv9w68zQ=
 20260615203534_initial.sql h1:qvyo54Em5G9SLnLp5eAXjsH13fAnxWTxNBt2NzVZxOQ=
 20260615203550_add_account_reauth_fields.sql h1:MJEw726QlXfv/LEge0hZc2FIOozrBbWx/5jle5yNBrY=
+20260615213446_add_calendar_reminder_overrides.sql h1:mOwabEvPxoDAF1ry3mvtlEypCYnDBnXBRAybv57KQgQ=

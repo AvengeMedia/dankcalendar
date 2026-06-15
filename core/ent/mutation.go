@@ -17,6 +17,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
 const (
@@ -911,29 +912,30 @@ func (m *AccountMutation) ResetEdge(name string) error {
 // CalendarMutation represents an operation that mutates the Calendar nodes in the graph.
 type CalendarMutation struct {
 	config
-	op             Op
-	typ            string
-	id             *string
-	remote_id      *string
-	name           *string
-	name_override  *string
-	description    *string
-	color          *string
-	time_zone      *string
-	read_only      *bool
-	hidden         *bool
-	sync_token     *string
-	created_at     *time.Time
-	updated_at     *time.Time
-	clearedFields  map[string]struct{}
-	account        *string
-	clearedaccount bool
-	events         map[string]struct{}
-	removedevents  map[string]struct{}
-	clearedevents  bool
-	done           bool
-	oldValue       func(context.Context) (*Calendar, error)
-	predicates     []predicate.Calendar
+	op                 Op
+	typ                string
+	id                 *string
+	remote_id          *string
+	name               *string
+	name_override      *string
+	description        *string
+	color              *string
+	time_zone          *string
+	read_only          *bool
+	hidden             *bool
+	reminder_overrides **settings.ReminderOverride
+	sync_token         *string
+	created_at         *time.Time
+	updated_at         *time.Time
+	clearedFields      map[string]struct{}
+	account            *string
+	clearedaccount     bool
+	events             map[string]struct{}
+	removedevents      map[string]struct{}
+	clearedevents      bool
+	done               bool
+	oldValue           func(context.Context) (*Calendar, error)
+	predicates         []predicate.Calendar
 }
 
 var _ ent.Mutation = (*CalendarMutation)(nil)
@@ -1380,6 +1382,55 @@ func (m *CalendarMutation) ResetHidden() {
 	m.hidden = nil
 }
 
+// SetReminderOverrides sets the "reminder_overrides" field.
+func (m *CalendarMutation) SetReminderOverrides(so *settings.ReminderOverride) {
+	m.reminder_overrides = &so
+}
+
+// ReminderOverrides returns the value of the "reminder_overrides" field in the mutation.
+func (m *CalendarMutation) ReminderOverrides() (r *settings.ReminderOverride, exists bool) {
+	v := m.reminder_overrides
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldReminderOverrides returns the old "reminder_overrides" field's value of the Calendar entity.
+// If the Calendar object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CalendarMutation) OldReminderOverrides(ctx context.Context) (v *settings.ReminderOverride, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldReminderOverrides is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldReminderOverrides requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldReminderOverrides: %w", err)
+	}
+	return oldValue.ReminderOverrides, nil
+}
+
+// ClearReminderOverrides clears the value of the "reminder_overrides" field.
+func (m *CalendarMutation) ClearReminderOverrides() {
+	m.reminder_overrides = nil
+	m.clearedFields[calendar.FieldReminderOverrides] = struct{}{}
+}
+
+// ReminderOverridesCleared returns if the "reminder_overrides" field was cleared in this mutation.
+func (m *CalendarMutation) ReminderOverridesCleared() bool {
+	_, ok := m.clearedFields[calendar.FieldReminderOverrides]
+	return ok
+}
+
+// ResetReminderOverrides resets all changes to the "reminder_overrides" field.
+func (m *CalendarMutation) ResetReminderOverrides() {
+	m.reminder_overrides = nil
+	delete(m.clearedFields, calendar.FieldReminderOverrides)
+}
+
 // SetSyncToken sets the "sync_token" field.
 func (m *CalendarMutation) SetSyncToken(s string) {
 	m.sync_token = &s
@@ -1628,7 +1679,7 @@ func (m *CalendarMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CalendarMutation) Fields() []string {
-	fields := make([]string, 0, 11)
+	fields := make([]string, 0, 12)
 	if m.remote_id != nil {
 		fields = append(fields, calendar.FieldRemoteID)
 	}
@@ -1652,6 +1703,9 @@ func (m *CalendarMutation) Fields() []string {
 	}
 	if m.hidden != nil {
 		fields = append(fields, calendar.FieldHidden)
+	}
+	if m.reminder_overrides != nil {
+		fields = append(fields, calendar.FieldReminderOverrides)
 	}
 	if m.sync_token != nil {
 		fields = append(fields, calendar.FieldSyncToken)
@@ -1686,6 +1740,8 @@ func (m *CalendarMutation) Field(name string) (ent.Value, bool) {
 		return m.ReadOnly()
 	case calendar.FieldHidden:
 		return m.Hidden()
+	case calendar.FieldReminderOverrides:
+		return m.ReminderOverrides()
 	case calendar.FieldSyncToken:
 		return m.SyncToken()
 	case calendar.FieldCreatedAt:
@@ -1717,6 +1773,8 @@ func (m *CalendarMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldReadOnly(ctx)
 	case calendar.FieldHidden:
 		return m.OldHidden(ctx)
+	case calendar.FieldReminderOverrides:
+		return m.OldReminderOverrides(ctx)
 	case calendar.FieldSyncToken:
 		return m.OldSyncToken(ctx)
 	case calendar.FieldCreatedAt:
@@ -1788,6 +1846,13 @@ func (m *CalendarMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetHidden(v)
 		return nil
+	case calendar.FieldReminderOverrides:
+		v, ok := value.(*settings.ReminderOverride)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetReminderOverrides(v)
+		return nil
 	case calendar.FieldSyncToken:
 		v, ok := value.(string)
 		if !ok {
@@ -1851,6 +1916,9 @@ func (m *CalendarMutation) ClearedFields() []string {
 	if m.FieldCleared(calendar.FieldTimeZone) {
 		fields = append(fields, calendar.FieldTimeZone)
 	}
+	if m.FieldCleared(calendar.FieldReminderOverrides) {
+		fields = append(fields, calendar.FieldReminderOverrides)
+	}
 	if m.FieldCleared(calendar.FieldSyncToken) {
 		fields = append(fields, calendar.FieldSyncToken)
 	}
@@ -1879,6 +1947,9 @@ func (m *CalendarMutation) ClearField(name string) error {
 		return nil
 	case calendar.FieldTimeZone:
 		m.ClearTimeZone()
+		return nil
+	case calendar.FieldReminderOverrides:
+		m.ClearReminderOverrides()
 		return nil
 	case calendar.FieldSyncToken:
 		m.ClearSyncToken()
@@ -1914,6 +1985,9 @@ func (m *CalendarMutation) ResetField(name string) error {
 		return nil
 	case calendar.FieldHidden:
 		m.ResetHidden()
+		return nil
+	case calendar.FieldReminderOverrides:
+		m.ResetReminderOverrides()
 		return nil
 	case calendar.FieldSyncToken:
 		m.ResetSyncToken()

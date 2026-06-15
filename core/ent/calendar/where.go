@@ -570,6 +570,16 @@ func HiddenNEQ(v bool) predicate.Calendar {
 	return predicate.Calendar(sql.FieldNEQ(FieldHidden, v))
 }
 
+// ReminderOverridesIsNil applies the IsNil predicate on the "reminder_overrides" field.
+func ReminderOverridesIsNil() predicate.Calendar {
+	return predicate.Calendar(sql.FieldIsNull(FieldReminderOverrides))
+}
+
+// ReminderOverridesNotNil applies the NotNil predicate on the "reminder_overrides" field.
+func ReminderOverridesNotNil() predicate.Calendar {
+	return predicate.Calendar(sql.FieldNotNull(FieldReminderOverrides))
+}
+
 // SyncTokenEQ applies the EQ predicate on the "sync_token" field.
 func SyncTokenEQ(v string) predicate.Calendar {
 	return predicate.Calendar(sql.FieldEQ(FieldSyncToken, v))

@@ -25,7 +25,7 @@ FloatingWindow {
     readonly property bool isMicrosoft: selectedProvider === "microsoft"
     readonly property var setupSteps: isMicrosoft ? DankCalService.microsoftSetupSteps : DankCalService.googleSetupSteps
     readonly property string screenshotDir: isMicrosoft ? "../assets/microsoft-setup/" : "../assets/google-setup/"
-    readonly property int guideCount: setupSteps.length > 0 ? setupSteps.length : (isMicrosoft ? 3 : 5)
+    readonly property int guideCount: setupSteps.length > 0 ? setupSteps.length : (isMicrosoft ? 4 : 5)
     readonly property int credsStep: guideCount + 1
     readonly property int browserStepIndex: guideCount + 2
     readonly property int doneStep: guideCount + 3
@@ -733,6 +733,38 @@ FloatingWindow {
                 text: I18n.tr("Loading setup instructions…", "placeholder while setup guide steps load")
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.surfaceVariantText
+            }
+
+            StyledRect {
+                visible: !!(guideColumn.step && guideColumn.step.note)
+                width: parent.width
+                height: visible ? noteRow.implicitHeight + Theme.spacingM * 2 : 0
+                color: Theme.withAlpha(Theme.info, 0.10)
+                radius: Theme.cornerRadius
+
+                Row {
+                    id: noteRow
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: Theme.spacingM
+                    anchors.rightMargin: Theme.spacingM
+                    spacing: Theme.spacingS
+
+                    DankIcon {
+                        name: "info"
+                        size: Theme.iconSize - 4
+                        color: Theme.info
+                    }
+
+                    StyledText {
+                        width: parent.width - (Theme.iconSize - 4) - Theme.spacingS
+                        text: guideColumn.step && guideColumn.step.note ? guideColumn.step.note : ""
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.surfaceText
+                        wrapMode: Text.WordWrap
+                    }
+                }
             }
 
             // Drop matching PNGs into quickshell/assets/google-setup/ or

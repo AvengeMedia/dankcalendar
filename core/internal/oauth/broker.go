@@ -3,7 +3,6 @@ package oauth
 import (
 	"context"
 	"errors"
-	"fmt"
 	"sync"
 	"time"
 
@@ -11,9 +10,10 @@ import (
 )
 
 type CallbackPayload struct {
-	Code  string
-	State string
-	Error string
+	Code             string
+	State            string
+	Error            string
+	ErrorDescription string
 }
 
 type CallbackBroker struct {
@@ -106,7 +106,7 @@ func (f *BrokerFlow) Wait(ctx context.Context, timeout time.Duration) (CallbackR
 			return CallbackResult{}, errors.New("oauth: callback channel closed")
 		}
 		if payload.Error != "" {
-			return CallbackResult{}, fmt.Errorf("oauth error: %s", payload.Error)
+			return CallbackResult{}, errors.New(FormatCallbackError(payload.Error, payload.ErrorDescription))
 		}
 		return CallbackResult{Code: payload.Code, State: payload.State}, nil
 	case <-ctx.Done():

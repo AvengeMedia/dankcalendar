@@ -18,9 +18,10 @@ func NewCallbackHandler(b *CallbackBroker) http.HandlerFunc {
 		q := r.URL.Query()
 		state := q.Get("state")
 		payload := CallbackPayload{
-			Code:  q.Get("code"),
-			State: state,
-			Error: q.Get("error"),
+			Code:             q.Get("code"),
+			State:            state,
+			Error:            q.Get("error"),
+			ErrorDescription: q.Get("error_description"),
 		}
 
 		switch {

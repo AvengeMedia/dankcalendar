@@ -6,6 +6,9 @@ type SetupStep struct {
 	URL         string `json:"url,omitempty"`
 	URLLabel    string `json:"urlLabel,omitempty"`
 	Screenshot  string `json:"screenshot,omitempty"`
+	// Note is an optional callout rendered alongside the step (e.g. a
+	// prerequisite the user must satisfy before the step will work).
+	Note string `json:"note,omitempty"`
 }
 
 // Screenshot filenames are resolved by the GUI wizard relative to its
@@ -54,8 +57,16 @@ func GoogleSetupSteps() []SetupStep {
 func MicrosoftSetupSteps() []SetupStep {
 	return []SetupStep{
 		{
+			Title:       "Get an Azure directory (one-time)",
+			Description: "Open App registrations. If you see \"…are not contained within any directory. The ability to create applications outside of a directory has been deprecated\", your personal account is in the directory-less \"Microsoft Services\" tenant and registration is blocked. You need an Azure account with an active subscription — that's what provisions a directory to register the app in. Already have a work/school or Azure account with a directory? Skip to the next step.",
+			URL:         "https://azure.microsoft.com/free",
+			URLLabel:    "Sign up for Azure (free)",
+			Screenshot:  "00-azure-ad-missing-error.png",
+			Note:        "Requires an Azure account with an active subscription — simply having a Microsoft account is not enough. Sign up at https://azure.microsoft.com/free and complete the WHOLE flow, including phone and credit-card identity verification (the free tier charges $0). A Default Directory is only created once a subscription is provisioned. Tip: do it in a private/incognito window to avoid sign-in glitches, then reload App registrations — the error will be gone.",
+		},
+		{
 			Title:       "Start a new app registration",
-			Description: "Open App registrations in the Microsoft Entra portal and click \"New registration\". You'll only do this once.",
+			Description: "Back on App registrations, click \"New registration\". You'll only do this once.",
 			URL:         "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
 			URLLabel:    "Open App registrations",
 			Screenshot:  "01-new-registration.png",
