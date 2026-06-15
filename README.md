@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://danklinux.com">
-    <img src="assets/dankcalendar.svg" alt="DankCalendar" width="180">
+    <img src="assets/danklogo.svg" alt="DankCalendar" width="200">
   </a>
 
 ### Local, Google, Microsoft, CalDAV, and iCloud calendars in one standalone app
