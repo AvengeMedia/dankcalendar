@@ -322,6 +322,13 @@
     "comment": ""
   },
   {
+    "term": "Agenda view",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "All credentials are stored in your system keyring when available.",
     "translation": "",
     "context": "subtitle under provider selection heading",
@@ -653,7 +660,7 @@
   {
     "term": "Create event",
     "translation": "",
-    "context": "sidebar button to create a new event",
+    "context": "keyboard shortcut description | sidebar button to create a new event",
     "reference": "",
     "comment": ""
   },
@@ -710,6 +717,13 @@
     "term": "Day",
     "translation": "",
     "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Day view",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -947,7 +961,7 @@
   {
     "term": "General",
     "translation": "",
-    "context": "general settings section header | settings sidebar tab label",
+    "context": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label",
     "reference": "",
     "comment": ""
   },
@@ -962,6 +976,13 @@
     "term": "GitHub",
     "translation": "",
     "context": "about page resource button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Go to today",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1025,6 +1046,13 @@
     "term": "Keep until dismissed",
     "translation": "",
     "context": "persistent reminders toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Keyboard shortcuts",
+    "translation": "",
+    "context": "keyboard shortcuts overlay title",
     "reference": "",
     "comment": ""
   },
@@ -1120,6 +1148,13 @@
     "comment": ""
   },
   {
+    "term": "Month view",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Move to Trash",
     "translation": "",
     "context": "file browser item context menu action",
@@ -1155,9 +1190,37 @@
     "comment": ""
   },
   {
+    "term": "Navigation",
+    "translation": "",
+    "context": "keyboard shortcuts overlay section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "New event",
     "translation": "",
     "context": "event modal header when creating | event modal window title when creating",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Next day",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Next event",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Next week",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1274,6 +1337,13 @@
     "comment": ""
   },
   {
+    "term": "Open or create event",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Order",
     "translation": "",
     "context": "file browser sort menu section header",
@@ -1340,6 +1410,27 @@
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "translation": "",
     "context": "local calendar directory form instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Previous day",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Previous event",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Previous week",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1435,6 +1526,13 @@
     "comment": ""
   },
   {
+    "term": "Search",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Search events",
     "translation": "",
     "context": "search modal input placeholder",
@@ -1493,7 +1591,7 @@
   {
     "term": "Settings",
     "translation": "",
-    "context": "settings window header title",
+    "context": "keyboard shortcut description | settings window header title",
     "reference": "",
     "comment": ""
   },
@@ -1687,6 +1785,13 @@
     "comment": ""
   },
   {
+    "term": "Toggle this help",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Tomorrow",
     "translation": "",
     "context": "agenda section header for the next day | search result date label for next day",
@@ -1764,6 +1869,13 @@
     "comment": ""
   },
   {
+    "term": "View",
+    "translation": "",
+    "context": "keyboard shortcuts overlay section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Visibility, names, and removal per calendar.",
     "translation": "",
     "context": "calendars settings section subtitle",
@@ -1788,6 +1900,13 @@
     "term": "Week",
     "translation": "",
     "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Week view",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },

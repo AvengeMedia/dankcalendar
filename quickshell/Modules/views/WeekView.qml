@@ -9,6 +9,7 @@ Item {
 
     property date displayDate: new Date()
     property date today: new Date()
+    property date selectedDate: new Date()
     property int eventsVersion: 0
 
     signal eventClicked(var event)
@@ -111,6 +112,7 @@ Item {
                     required property int index
                     readonly property date d: root.dayAt(index)
                     readonly property bool isToday: root.isSameDay(d, root.today)
+                    readonly property bool isSelected: root.isSameDay(d, root.selectedDate)
 
                     width: (parent.width - root.timeColumnWidth) / 7
                     height: parent.height
@@ -132,6 +134,8 @@ Item {
                             radius: 16
                             anchors.horizontalCenter: parent.horizontalCenter
                             color: parent.parent.isToday ? Theme.primary : "transparent"
+                            border.color: Theme.primary
+                            border.width: parent.parent.isSelected && !parent.parent.isToday ? 2 : 0
 
                             StyledText {
                                 anchors.centerIn: parent

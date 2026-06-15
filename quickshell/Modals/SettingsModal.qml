@@ -149,6 +149,11 @@ FloatingWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Escape"
+        onActivated: settingsModal.hide()
+    }
+
     FloatingWindowControls {
         id: windowControls
         targetWindow: settingsModal

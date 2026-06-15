@@ -1014,6 +1014,21 @@ FloatingWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Escape"
+        onActivated: {
+            if (eventModal.confirmDelete) {
+                eventModal.confirmDelete = false;
+                return;
+            }
+            if (eventModal.editMode && !eventModal.createMode) {
+                eventModal.editMode = false;
+                return;
+            }
+            eventModal.hide();
+        }
+    }
+
     FloatingWindowControls {
         id: windowControls
         targetWindow: eventModal

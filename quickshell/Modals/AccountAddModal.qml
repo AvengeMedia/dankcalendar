@@ -398,6 +398,12 @@ FloatingWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Escape"
+        enabled: accountModal.expandedScreenshot === ""
+        onActivated: accountModal.hide()
+    }
+
     FloatingWindowControls {
         id: windowControls
         targetWindow: accountModal

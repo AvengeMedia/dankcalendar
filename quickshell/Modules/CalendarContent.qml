@@ -171,6 +171,7 @@ Item {
                 WeekView {
                     displayDate: root.displayDate
                     today: root.today
+                    selectedDate: root.selectedDate
                     onEventClicked: ev => root.eventClicked(ev)
                 }
             }

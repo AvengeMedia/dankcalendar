@@ -2,13 +2,13 @@
   {
     "term": "%1 AM",
     "context": "%1 AM",
-    "reference": "Modules/views/DayView.qml:42, Modules/views/WeekView.qml:33",
+    "reference": "Modules/views/DayView.qml:42, Modules/views/WeekView.qml:34",
     "comment": "morning hour label in time gutter"
   },
   {
     "term": "%1 PM",
     "context": "%1 PM",
-    "reference": "Modules/views/DayView.qml:42, Modules/views/WeekView.qml:33",
+    "reference": "Modules/views/DayView.qml:42, Modules/views/WeekView.qml:34",
     "comment": "afternoon hour label in time gutter"
   },
   {
@@ -276,6 +276,12 @@
     "comment": "header title when the agenda view is active | view switcher option in sidebar"
   },
   {
+    "term": "Agenda view",
+    "context": "Agenda view",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:65",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "All credentials are stored in your system keyring when available.",
     "context": "All credentials are stored in your system keyring when available.",
     "reference": "Modals/AccountAddModal.qml:428",
@@ -284,7 +290,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:826, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:49, Modules/views/MonthView.qml:31",
+    "reference": "Modals/EventDetailsModal.qml:826, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:31",
     "comment": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -410,7 +416,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:80, Modules/CalendarWindow.qml:146",
+    "reference": "Modules/CalendarWindow.qml:138, Modules/CalendarWindow.qml:299",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -560,8 +566,8 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modules/CalendarSidebar.qml:74",
-    "comment": "sidebar button to create a new event"
+    "reference": "Modules/CalendarSidebar.qml:74, Modals/KeyboardShortcutsOverlay.qml:74",
+    "comment": "keyboard shortcut description | sidebar button to create a new event"
   },
   {
     "term": "Credentials stay on this machine",
@@ -610,6 +616,12 @@
     "context": "Day",
     "reference": "Modules/CalendarSidebar.qml:91",
     "comment": "view switcher option in sidebar"
+  },
+  {
+    "term": "Day view",
+    "context": "Day view",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:61",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Default event duration",
@@ -812,8 +824,8 @@
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:268",
-    "comment": "general settings section header | settings sidebar tab label"
+    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:268, Modals/KeyboardShortcutsOverlay.qml:70",
+    "comment": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label"
   },
   {
     "term": "Generate app-specific password",
@@ -826,6 +838,12 @@
     "context": "GitHub",
     "reference": "Modals/SettingsAboutPage.qml:145",
     "comment": "about page resource button"
+  },
+  {
+    "term": "Go to today",
+    "context": "Go to today",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:16",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.",
@@ -880,6 +898,12 @@
     "context": "Keep until dismissed",
     "reference": "Modals/SettingsContent.qml:824",
     "comment": "persistent reminders toggle label"
+  },
+  {
+    "term": "Keyboard shortcuts",
+    "context": "Keyboard shortcuts",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:139",
+    "comment": "keyboard shortcuts overlay title"
   },
   {
     "term": "Ko-fi",
@@ -960,6 +984,12 @@
     "comment": "view switcher option in sidebar"
   },
   {
+    "term": "Month view",
+    "context": "Month view",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:53",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Move to Trash",
     "context": "Move to Trash",
     "reference": "Modals/FileBrowser/FileBrowserItemContextMenu.qml:21",
@@ -990,10 +1020,34 @@
     "comment": "file browser sort criterion option"
   },
   {
+    "term": "Navigation",
+    "context": "Navigation",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:12",
+    "comment": "keyboard shortcuts overlay section header"
+  },
+  {
     "term": "New event",
     "context": "New event",
     "reference": "Modals/EventDetailsModal.qml:359, Modals/EventDetailsModal.qml:408",
     "comment": "event modal header when creating | event modal window title when creating"
+  },
+  {
+    "term": "Next day",
+    "context": "Next day",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:24",
+    "comment": "keyboard shortcut description"
+  },
+  {
+    "term": "Next event",
+    "context": "Next event",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:36",
+    "comment": "keyboard shortcut description"
+  },
+  {
+    "term": "Next week",
+    "context": "Next week",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:28",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.",
@@ -1092,6 +1146,12 @@
     "comment": "button to reopen oauth url in browser"
   },
   {
+    "term": "Open or create event",
+    "context": "Open or create event",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:44",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Order",
     "context": "Order",
     "reference": "Modals/FileBrowser/FileBrowserSortMenu.qml:105",
@@ -1150,6 +1210,24 @@
     "context": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "reference": "Modals/AccountAddModal.qml:1232",
     "comment": "local calendar directory form instructions"
+  },
+  {
+    "term": "Previous day",
+    "context": "Previous day",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:20",
+    "comment": "keyboard shortcut description"
+  },
+  {
+    "term": "Previous event",
+    "context": "Previous event",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:40",
+    "comment": "keyboard shortcut description"
+  },
+  {
+    "term": "Previous week",
+    "context": "Previous week",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:32",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Quick Access",
@@ -1230,6 +1308,12 @@
     "comment": "event details save button while saving"
   },
   {
+    "term": "Search",
+    "context": "Search",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:78",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Search events",
     "context": "Search events",
     "reference": "Modals/SearchModal.qml:268",
@@ -1280,8 +1364,8 @@
   {
     "term": "Settings",
     "context": "Settings",
-    "reference": "Modals/SettingsModal.qml:83",
-    "comment": "settings window header title"
+    "reference": "Modals/SettingsModal.qml:83, Modals/KeyboardShortcutsOverlay.qml:82",
+    "comment": "keyboard shortcut description | settings window header title"
   },
   {
     "term": "Show",
@@ -1446,6 +1530,12 @@
     "comment": "agenda section header for the current day | header button that jumps to the current date | search result date label for current day"
   },
   {
+    "term": "Toggle this help",
+    "context": "Toggle this help",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:86",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Tomorrow",
     "context": "Tomorrow",
     "reference": "Modals/SearchModal.qml:71, Modules/views/AgendaView.qml:31",
@@ -1512,6 +1602,12 @@
     "comment": "file browser quick access location"
   },
   {
+    "term": "View",
+    "context": "View",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:49",
+    "comment": "keyboard shortcuts overlay section header"
+  },
+  {
     "term": "Visibility, names, and removal per calendar.",
     "context": "Visibility, names, and removal per calendar.",
     "reference": "Modals/SettingsContent.qml:482",
@@ -1534,6 +1630,12 @@
     "context": "Week",
     "reference": "Modules/CalendarSidebar.qml:96",
     "comment": "view switcher option in sidebar"
+  },
+  {
+    "term": "Week view",
+    "context": "Week view",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:57",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "When all-day event reminders fire.",

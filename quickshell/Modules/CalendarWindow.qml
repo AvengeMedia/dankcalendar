@@ -43,6 +43,65 @@ FloatingWindow {
         selectedDate = t;
     }
 
+    function weekStart(date) {
+        const d = new Date(date);
+        d.setDate(d.getDate() - ((d.getDay() - SettingsData.effectiveFirstDayOfWeek + 7) % 7));
+        d.setHours(0, 0, 0, 0);
+        return d;
+    }
+
+    function ensureSelectionVisible() {
+        switch (currentView) {
+        case "day":
+            displayDate = selectedDate;
+            return;
+        case "week":
+            if (weekStart(selectedDate).getTime() !== weekStart(displayDate).getTime())
+                displayDate = selectedDate;
+            return;
+        case "agenda":
+            {
+                const start = new Date(displayDate.getFullYear(), displayDate.getMonth(), displayDate.getDate());
+                const diff = Math.round((selectedDate.getTime() - start.getTime()) / 86400000);
+                if (diff < 0 || diff >= 14)
+                    displayDate = selectedDate;
+                return;
+            }
+        default:
+            if (selectedDate.getMonth() !== displayDate.getMonth() || selectedDate.getFullYear() !== displayDate.getFullYear())
+                displayDate = selectedDate;
+            return;
+        }
+    }
+
+    function moveSelection(days) {
+        const d = new Date(selectedDate);
+        d.setDate(d.getDate() + days);
+        selectedDate = d;
+        ensureSelectionVisible();
+    }
+
+    function jumpToEventDay(direction) {
+        for (let i = 1; i <= 366; i++) {
+            const d = new Date(selectedDate);
+            d.setDate(d.getDate() + direction * i);
+            if (DankCalService.eventsForDay(d).length === 0)
+                continue;
+            selectedDate = d;
+            ensureSelectionVisible();
+            return;
+        }
+    }
+
+    function activateSelection() {
+        const evs = DankCalService.eventsForDay(selectedDate);
+        if (evs.length > 0) {
+            openEventDetails(evs[0]);
+            return;
+        }
+        openCreateEvent();
+    }
+
     function openSettings() {
         settingsLoader.active = true;
         settingsLoader.item.show();
@@ -90,12 +149,107 @@ FloatingWindow {
     }
 
     FocusScope {
+        id: focusScope
         anchors.fill: parent
         focus: true
+
+        Component.onCompleted: forceActiveFocus()
 
         Shortcut {
             sequences: [StandardKey.Find]
             onActivated: window.openSearch()
+        }
+
+        Keys.onPressed: event => {
+            if (helpOverlay.visible) {
+                switch (event.key) {
+                case Qt.Key_Escape:
+                case Qt.Key_Question:
+                case Qt.Key_Slash:
+                    helpOverlay.visible = false;
+                    break;
+                }
+                event.accepted = true;
+                return;
+            }
+
+            const ctrl = event.modifiers & Qt.ControlModifier;
+            const shift = event.modifiers & Qt.ShiftModifier;
+
+            switch (event.key) {
+            case Qt.Key_T:
+                window.goToToday();
+                break;
+            case Qt.Key_H:
+            case Qt.Key_Left:
+                window.moveSelection(-1);
+                break;
+            case Qt.Key_L:
+            case Qt.Key_Right:
+                window.moveSelection(1);
+                break;
+            case Qt.Key_J:
+            case Qt.Key_Down:
+                window.moveSelection(7);
+                break;
+            case Qt.Key_K:
+            case Qt.Key_Up:
+                window.moveSelection(-7);
+                break;
+            case Qt.Key_Tab:
+                window.jumpToEventDay(1);
+                break;
+            case Qt.Key_Backtab:
+                window.jumpToEventDay(-1);
+                break;
+            case Qt.Key_Return:
+            case Qt.Key_Enter:
+                window.activateSelection();
+                break;
+            case Qt.Key_M:
+                window.currentView = "month";
+                break;
+            case Qt.Key_W:
+                window.currentView = "week";
+                break;
+            case Qt.Key_D:
+                window.currentView = "day";
+                break;
+            case Qt.Key_A:
+                window.currentView = "agenda";
+                break;
+            case Qt.Key_C:
+                window.openCreateEvent();
+                break;
+            case Qt.Key_Slash:
+                if (shift) {
+                    helpOverlay.visible = true;
+                    break;
+                }
+                window.openSearch();
+                break;
+            case Qt.Key_Question:
+                helpOverlay.visible = true;
+                break;
+            case Qt.Key_P:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.openSearch();
+                break;
+            case Qt.Key_Comma:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.openSettings();
+                break;
+            default:
+                event.accepted = false;
+                return;
+            }
+            event.accepted = true;
         }
 
         Column {
@@ -223,6 +377,14 @@ FloatingWindow {
                     }
                 }
             }
+        }
+
+        KeyboardShortcutsOverlay {
+            id: helpOverlay
+            anchors.fill: parent
+            visible: false
+            z: 100
+            onDismissed: visible = false
         }
     }
 
