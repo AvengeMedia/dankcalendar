@@ -143,7 +143,7 @@ func clearConfigState() {
 
 func runShellInteractive(session bool) error {
 	isSessionManaged = session
-	fmt.Fprintf(os.Stderr, "dankcal %s\n", Version)
+	fmt.Fprintf(os.Stderr, "dcal %s\n", Version)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -159,7 +159,7 @@ func runShellInteractive(session bool) error {
 	}
 	defer clearConfigState()
 
-	log.Infof("dankcal backend ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
+	log.Infof("dcal backend ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
 	log.Infof("starting UI (config=%s)", configPath)
 
 	cmd := buildUICommand(ctx, svc.socketPath())
@@ -175,7 +175,7 @@ func runShellDaemon(session bool) error {
 	isDaemonChild := slices.Contains(os.Args, "--daemon-child")
 
 	if !isDaemonChild {
-		fmt.Fprintf(os.Stderr, "dankcal %s\n", Version)
+		fmt.Fprintf(os.Stderr, "dcal %s\n", Version)
 
 		args := []string{"run", "-d", "--daemon-child"}
 		if startHidden {
@@ -193,11 +193,11 @@ func runShellDaemon(session bool) error {
 			return fmt.Errorf("starting daemon: %w", err)
 		}
 
-		log.Infof("dankcal daemon started (pid=%d)", cmd.Process.Pid)
+		log.Infof("dcal daemon started (pid=%d)", cmd.Process.Pid)
 		return nil
 	}
 
-	fmt.Fprintf(os.Stderr, "dankcal %s\n", Version)
+	fmt.Fprintf(os.Stderr, "dcal %s\n", Version)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -213,7 +213,7 @@ func runShellDaemon(session bool) error {
 	}
 	defer clearConfigState()
 
-	log.Infof("dankcal backend ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
+	log.Infof("dcal backend ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
 
 	cmd := buildUICommand(ctx, svc.socketPath())
 
@@ -234,7 +234,7 @@ func buildUICommand(ctx context.Context, socketPath string) *exec.Cmd {
 	cmd := exec.CommandContext(ctx, "qs", "-p", configPath)
 	env := append(os.Environ(),
 		"DANKCAL_SOCKET="+socketPath,
-		"QS_APP_ID=com.danklinux.dankcal",
+		"QS_APP_ID=com.danklinux.dankcalendar",
 	)
 
 	if startHidden {
@@ -349,7 +349,7 @@ func runDetachedRestart(targetPIDStr string) {
 func restartShell() {
 	pids := getAllPIDs()
 	if len(pids) == 0 {
-		log.Info("no running dankcal instances; starting daemon")
+		log.Info("no running dcal instances; starting daemon")
 		_ = runShellDaemon(false)
 		return
 	}
@@ -375,14 +375,14 @@ func restartShell() {
 			log.Errorf("sending SIGUSR1 to %d: %v", pid, err)
 			continue
 		}
-		log.Infof("sent SIGUSR1 to dankcal pid=%d", pid)
+		log.Infof("sent SIGUSR1 to dcal pid=%d", pid)
 	}
 }
 
 func killShell() {
 	pids := getAllPIDs()
 	if len(pids) == 0 {
-		log.Info("no running dankcal instances")
+		log.Info("no running dcal instances")
 		return
 	}
 
@@ -407,7 +407,7 @@ func killShell() {
 			log.Errorf("killing process %d: %v", pid, err)
 			continue
 		}
-		log.Infof("killed dankcal pid=%d", pid)
+		log.Infof("killed dcal pid=%d", pid)
 	}
 
 	dir := runtimeDir()

@@ -9,8 +9,8 @@ import (
 
 var runCmd = &cobra.Command{
 	Use:     "run",
-	Short:   "Launch dankcal (backend + calendar UI)",
-	Long:    "Start the dankcal backend (IPC + HTTP) and launch the calendar UI.",
+	Short:   "Launch dcal (backend + calendar UI)",
+	Long:    "Start the dcal backend (IPC + HTTP) and launch the calendar UI.",
 	PreRunE: findConfig,
 	RunE: func(cmd *cobra.Command, _ []string) error {
 		daemon, _ := cmd.Flags().GetBool("daemon")
@@ -20,7 +20,7 @@ var runCmd = &cobra.Command{
 
 		if !isDaemonChild && len(getAllPIDs()) > 0 {
 			if err := sendUIAction("show"); err == nil {
-				log.Info("dankcal already running; showing window")
+				log.Info("dcal already running; showing window")
 				return nil
 			}
 		}
@@ -45,7 +45,7 @@ var runCmd = &cobra.Command{
 
 var restartCmd = &cobra.Command{
 	Use:     "restart",
-	Short:   "Restart the running dankcal instance",
+	Short:   "Restart the running dcal instance",
 	PreRunE: findConfig,
 	Run: func(_ *cobra.Command, _ []string) {
 		restartShell()
@@ -63,7 +63,7 @@ var restartDetachedCmd = &cobra.Command{
 
 var killCmd = &cobra.Command{
 	Use:   "kill",
-	Short: "Kill running dankcal processes",
+	Short: "Kill running dcal processes",
 	Run: func(_ *cobra.Command, _ []string) {
 		killShell()
 	},

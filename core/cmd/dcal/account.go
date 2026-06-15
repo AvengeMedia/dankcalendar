@@ -69,7 +69,7 @@ var accountListCmd = &cobra.Command{
 		}
 
 		if len(items) == 0 {
-			fmt.Println("No accounts configured. Run `dankcal account add --help` to see providers.")
+			fmt.Println("No accounts configured. Run `dcal account add --help` to see providers.")
 			return nil
 		}
 
@@ -102,7 +102,7 @@ var accountRemoveCmd = &cobra.Command{
 		acc, err := st.repo.GetAccount(ctx, args[0])
 		if err != nil {
 			if repo.IsNotFound(err) {
-				return fmt.Errorf("no account %q (see `dankcal account list`)", args[0])
+				return fmt.Errorf("no account %q (see `dcal account list`)", args[0])
 			}
 			return err
 		}
@@ -179,7 +179,7 @@ var accountSetupCmd = &cobra.Command{
 			}
 			fmt.Println()
 		}
-		fmt.Printf("Then run:  dankcal account add %s\n", args[0])
+		fmt.Printf("Then run:  dcal account add %s\n", args[0])
 		return nil
 	},
 }

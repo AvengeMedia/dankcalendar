@@ -16,9 +16,9 @@ const (
 	busName    = "org.freedesktop.Notifications"
 	objectPath = "/org/freedesktop/Notifications"
 	appName    = "Dank Calendar"
-	appIcon    = "dankcal"
+	appIcon    = "dankcalendar"
 	// desktopEntry must match the installed .desktop file basename.
-	desktopEntry = "com.danklinux.dankcal"
+	desktopEntry = "com.danklinux.dankcalendar"
 )
 
 type Action struct {

@@ -2,7 +2,11 @@
 # Orchestrates the Go core build and local installation of the
 # binary, quickshell config, icon, desktop entry, and systemd unit.
 
-BINARY_NAME=dankcal
+BINARY_NAME=dcal
+# Quickshell config dir name (kept as dankcal for config-path compatibility).
+SHELL_NAME=dankcal
+# Icon / app name (matches the desktop AppId com.danklinux.dankcalendar).
+ICON_NAME=dankcalendar
 CORE_DIR=core
 BUILD_DIR=$(CORE_DIR)/bin
 PREFIX ?= /usr/local
@@ -15,9 +19,9 @@ USER_HOME := $(if $(SUDO_USER),$(shell getent passwd $(SUDO_USER) | cut -d: -f6)
 SYSTEMD_USER_DIR=$(USER_HOME)/.config/systemd/user
 
 SHELL_DIR=quickshell
-SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(BINARY_NAME)
+SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
-DESKTOP_ID=com.danklinux.dankcal
+DESKTOP_ID=com.danklinux.dankcalendar
 
 .PHONY: all build dev run clean test fmt vet i18n-extract install install-bin install-shell install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
 
@@ -59,7 +63,7 @@ install-shell:
 
 install-icon:
 	@echo "Installing icon..."
-	@install -D -m 644 $(SHELL_DIR)/assets/$(BINARY_NAME).svg $(ICON_DIR)/$(BINARY_NAME).svg
+	@install -D -m 644 $(SHELL_DIR)/assets/$(ICON_NAME).svg $(ICON_DIR)/$(ICON_NAME).svg
 	@gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
 
 install-desktop:
@@ -70,15 +74,15 @@ install-desktop:
 install-systemd:
 	@echo "Installing systemd user service to $(SYSTEMD_USER_DIR)..."
 	@mkdir -p $(SYSTEMD_USER_DIR)
-	@sed 's|/usr/bin/dankcal|$(INSTALL_DIR)/$(BINARY_NAME)|g' $(ASSETS_DIR)/systemd/$(BINARY_NAME).service > $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service
+	@sed 's|/usr/bin/dcal|$(INSTALL_DIR)/$(BINARY_NAME)|g' $(ASSETS_DIR)/systemd/$(BINARY_NAME).service > $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service
 	@chmod 644 $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service
 	@if [ -n "$(SUDO_USER)" ]; then chown $(SUDO_USER) $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service; fi
 
 install: install-bin install-shell install-icon install-desktop
 	@echo ""
 	@echo "Installation complete."
-	@echo "Launch with 'dankcal show' or the Dank Calendar desktop entry."
-	@echo "Optional: 'make install-systemd' then 'systemctl --user enable --now dankcal'."
+	@echo "Launch with 'dcal show' or the Dank Calendar desktop entry."
+	@echo "Optional: 'make install-systemd' then 'systemctl --user enable --now dcal'."
 
 uninstall-bin:
 	@rm -f $(INSTALL_DIR)/$(BINARY_NAME)
@@ -87,7 +91,7 @@ uninstall-shell:
 	@rm -rf $(SHELL_INSTALL_DIR)
 
 uninstall-icon:
-	@rm -f $(ICON_DIR)/$(BINARY_NAME).svg
+	@rm -f $(ICON_DIR)/$(ICON_NAME).svg
 	@gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
 
 uninstall-desktop:
@@ -103,7 +107,7 @@ uninstall: uninstall-desktop uninstall-icon uninstall-shell uninstall-bin uninst
 
 help:
 	@echo "Build:"
-	@echo "  build              - Build the dankcal binary (release flags)"
+	@echo "  build              - Build the dcal binary (release flags)"
 	@echo "  dev                - Fast development build"
 	@echo "  run                - Build and run against the in-repo quickshell config"
 	@echo "  clean / test / fmt / vet"

@@ -40,7 +40,7 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Pr
 
 	tokenBytes, err := secrets.Get(ctx, account.ID, SecretKeyToken)
 	if err != nil {
-		return nil, fmt.Errorf("account %q is not authorized; run `dankcal account google login %s`", account.ID, account.ID)
+		return nil, fmt.Errorf("account %q is not authorized; run `dcal account google login %s`", account.ID, account.ID)
 	}
 
 	tok, err := oauth.UnmarshalToken(tokenBytes)

@@ -52,9 +52,9 @@ jobs:
           CGO_ENABLED: 0
         run: |
           VERSION=${{ github.ref_name }}
-          BINARY_NAME="dankcal-linux-${{ matrix.goarch }}"
+          BINARY_NAME="dcal-linux-${{ matrix.goarch }}"
           cd core
-          go build -ldflags "-s -w -X main.Version=${VERSION#v}" -o "../${BINARY_NAME}" ./cmd/dankcal
+          go build -ldflags "-s -w -X main.Version=${VERSION#v}" -o "../${BINARY_NAME}" ./cmd/dcal
           cd ..
           gzip -c "${BINARY_NAME}" > "${BINARY_NAME}.gz"
           tar -czf "${BINARY_NAME}.tar.gz" "${BINARY_NAME}"
@@ -64,12 +64,12 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: dankcal-linux-${{ matrix.goarch }}
+          name: dcal-linux-${{ matrix.goarch }}
           path: |
-            dankcal-linux-${{ matrix.goarch }}.gz
-            dankcal-linux-${{ matrix.goarch }}.gz.sha256
-            dankcal-linux-${{ matrix.goarch }}.tar.gz
-            dankcal-linux-${{ matrix.goarch }}.tar.gz.sha256
+            dcal-linux-${{ matrix.goarch }}.gz
+            dcal-linux-${{ matrix.goarch }}.gz.sha256
+            dcal-linux-${{ matrix.goarch }}.tar.gz
+            dcal-linux-${{ matrix.goarch }}.tar.gz.sha256
 
   package_shell:
     name: Package Shell Config
@@ -81,18 +81,18 @@ jobs:
       - name: Create shell tarball
         run: |
           VERSION_NUM=${GITHUB_REF_NAME#v}
-          tar -czf "dankcal-shell-${VERSION_NUM}.tar.gz" \
+          tar -czf "dankcalendar-shell-${VERSION_NUM}.tar.gz" \
             --transform "s,^quickshell,dankcal," \
             quickshell
-          sha256sum "dankcal-shell-${VERSION_NUM}.tar.gz" > "dankcal-shell-${VERSION_NUM}.tar.gz.sha256"
+          sha256sum "dankcalendar-shell-${VERSION_NUM}.tar.gz" > "dankcalendar-shell-${VERSION_NUM}.tar.gz.sha256"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: dankcal-shell
+          name: dankcalendar-shell
           path: |
-            dankcal-shell-*.tar.gz
-            dankcal-shell-*.tar.gz.sha256
+            dankcalendar-shell-*.tar.gz
+            dankcalendar-shell-*.tar.gz.sha256
 
   create_release:
     name: Create GitHub Release
@@ -142,9 +142,9 @@ jobs:
         run: |
           VERSION_NUM=${GITHUB_REF_NAME#v}
           cd core && go mod vendor && cd ..
-          tar czf "dankcal-${VERSION_NUM}.tar.gz" \
-            --transform "s,^,dankcal-${VERSION_NUM}/," \
-            --exclude=./artifacts --exclude=.git --exclude="dankcal-*.tar.gz" *
+          tar czf "dankcalendar-${VERSION_NUM}.tar.gz" \
+            --transform "s,^,dankcalendar-${VERSION_NUM}/," \
+            --exclude=./artifacts --exclude=.git --exclude="dankcalendar-*.tar.gz" *
 
       - name: Create release and upload assets
         env:
@@ -161,10 +161,10 @@ jobs:
             --notes-file CHANGELOG.md \
             $PRERELEASE_FLAG
 
-          find ./artifacts -type f \( -name "dankcal-*" \) | while read file; do
+          find ./artifacts -type f \( -name "dcal-*" -o -name "dankcalendar-*" \) | while read file; do
             echo "Uploading: $file"
             gh release upload "$VERSION" "$file" --clobber
           done
 
           VERSION_NUM=${VERSION#v}
-          gh release upload "$VERSION" "dankcal-${VERSION_NUM}.tar.gz" --clobber
+          gh release upload "$VERSION" "dankcalendar-${VERSION_NUM}.tar.gz" --clobber

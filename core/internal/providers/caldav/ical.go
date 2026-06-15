@@ -10,7 +10,7 @@ import (
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 )
 
-const prodID = "-//dankcal//dankcalendar//EN"
+const prodID = "-//dankcalendar//dankcalendar//EN"
 
 func eventsFromObject(c cal.Calendar, obj caldav.CalendarObject) []cal.Event {
 	if obj.Data == nil {

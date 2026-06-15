@@ -59,7 +59,7 @@ func NewGoogleFlow(creds GoogleAppCredentials, callback Callback) (*GoogleFlow, 
 
 func StartGoogleLoopbackFlow(ctx context.Context, creds GoogleAppCredentials, bindAddr string) (*GoogleFlow, error) {
 	if creds.ClientID == "" || creds.ClientSecret == "" {
-		return nil, errors.New("google app credentials are required (see `dankcal account setup google` for instructions)")
+		return nil, errors.New("google app credentials are required (see `dcal account setup google` for instructions)")
 	}
 
 	loopback, err := StartLoopback(ctx, bindAddr)

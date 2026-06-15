@@ -8,7 +8,7 @@ import (
 	"github.com/adrg/xdg"
 )
 
-const entryName = "com.danklinux.dankcal.desktop"
+const entryName = "com.danklinux.dankcalendar.desktop"
 
 func EntryPath() string {
 	return filepath.Join(xdg.ConfigHome, "autostart", entryName)
@@ -35,7 +35,7 @@ Type=Application
 Name=Dank Calendar
 Comment=Dank Calendar background service
 Exec=%s run -d --hidden
-Icon=dankcal
+Icon=dankcalendar
 Terminal=false
 X-GNOME-Autostart-enabled=true
 `, exe)

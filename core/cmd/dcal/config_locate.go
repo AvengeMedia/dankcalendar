@@ -103,5 +103,5 @@ func locateDefaultConfig() error {
 		}
 	}
 
-	return fmt.Errorf("could not find dankcal shell.qml in any XDG location; pass -c <dir>")
+	return fmt.Errorf("could not find dankcalendar shell.qml in any XDG location; pass -c <dir>")
 }

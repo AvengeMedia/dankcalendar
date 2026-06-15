@@ -186,7 +186,7 @@ func loadCalendarDoc(path string) (*ics.Calendar, error) {
 
 func newCalendarDoc() *ics.Calendar {
 	doc := ics.NewCalendar()
-	doc.SetProductId("-//dankcal//dankcalendar//EN")
+	doc.SetProductId("-//dankcalendar//dankcalendar//EN")
 	return doc
 }
 

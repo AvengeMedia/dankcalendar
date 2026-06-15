@@ -67,7 +67,7 @@ func NewMicrosoftFlow(creds MicrosoftAppCredentials, callback Callback) (*Micros
 // http://localhost and matches the path exactly, so the callback lands on "/".
 func StartMicrosoftLoopbackFlow(ctx context.Context, creds MicrosoftAppCredentials, bindAddr string) (*MicrosoftFlow, error) {
 	if creds.ClientID == "" {
-		return nil, errors.New("microsoft client id is required (see `dankcal account setup microsoft` for instructions)")
+		return nil, errors.New("microsoft client id is required (see `dcal account setup microsoft` for instructions)")
 	}
 
 	loopback, err := StartLoopback(ctx, bindAddr)

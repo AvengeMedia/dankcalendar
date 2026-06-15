@@ -1,5 +1,5 @@
-BINARY_NAME=dankcal
-SOURCE_DIR=cmd/dankcal
+BINARY_NAME=dcal
+SOURCE_DIR=cmd/dcal
 BUILD_DIR=bin
 PREFIX ?= /usr/local
 INSTALL_DIR=$(PREFIX)/bin

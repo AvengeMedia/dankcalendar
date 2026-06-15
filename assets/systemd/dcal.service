@@ -6,7 +6,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/dankcal run --session --hidden
+ExecStart=/usr/bin/dcal run --session --hidden
 Restart=on-failure
 RestartSec=2
 Slice=app.slice

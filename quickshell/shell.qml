@@ -2,7 +2,7 @@
 //@ pragma Env QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 //@ pragma Env QT_QUICK_CONTROLS_STYLE=Material
 //@ pragma UseQApplication
-//@ pragma AppId com.danklinux.dankcal
+//@ pragma AppId com.danklinux.dankcalendar
 
 import QtQuick
 import Quickshell
@@ -27,7 +27,7 @@ ShellRoot {
             return;
 
         for (const t of toplevels.values) {
-            if (t.appId === "com.danklinux.dankcal") {
+            if (t.appId === "com.danklinux.dankcalendar") {
                 t.activate();
                 return;
             }

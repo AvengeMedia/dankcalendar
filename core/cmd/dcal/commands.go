@@ -7,7 +7,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "dankcal",
+	Use:     "dcal",
 	Short:   "Dank Calendar CLI",
 	Long:    "Dank Calendar — local, Google, Microsoft, CalDAV, and iCloud calendars in one standalone app.",
 	Args:    cobra.NoArgs,
@@ -28,13 +28,13 @@ var versionCmd = &cobra.Command{
 				"buildTime": BuildTime,
 			})
 		}
-		fmt.Printf("dankcal %s (commit %s, built %s)\n", Version, Commit, BuildTime)
+		fmt.Printf("dcal %s (commit %s, built %s)\n", Version, Commit, BuildTime)
 		return nil
 	},
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&customConfigPath, "config", "c", "", "Path to the dankcal UI config dir (containing shell.qml)")
+	rootCmd.PersistentFlags().StringVarP(&customConfigPath, "config", "c", "", "Path to the dcal UI config dir (containing shell.qml)")
 	rootCmd.PersistentFlags().BoolVar(&jsonOutput, "json", false, "Output JSON for programmatic usage (where supported)")
 
 	rootCmd.AddCommand(versionCmd)

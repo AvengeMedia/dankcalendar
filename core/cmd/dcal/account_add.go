@@ -176,7 +176,7 @@ var accountAddMicrosoftCmd = &cobra.Command{
 
 		if clientID == "" {
 			infof("A Microsoft app registration is required.")
-			infof("Run `dankcal account setup microsoft` for step-by-step instructions.")
+			infof("Run `dcal account setup microsoft` for step-by-step instructions.")
 			infof("")
 			var err error
 			clientID, err = readPrompt(bufio.NewReader(os.Stdin), "Application (client) ID: ")
@@ -269,7 +269,7 @@ func resolveGoogleCreds(cmd *cobra.Command) (oauth.GoogleAppCredentials, error) 
 	}
 
 	infof("Google OAuth client credentials are required.")
-	infof("Run `dankcal account setup google` for step-by-step instructions.")
+	infof("Run `dcal account setup google` for step-by-step instructions.")
 	infof("")
 
 	reader := bufio.NewReader(os.Stdin)
@@ -341,7 +341,7 @@ func finishAdd(ctx context.Context, st *cliStores, res accounts.Result) error {
 	switch {
 	case notifyDaemon(res.AccountID, true):
 		syncStatus = "daemon"
-		infof("syncing in the running dankcal daemon")
+		infof("syncing in the running dcal daemon")
 	default:
 		infof("syncing...")
 		if syncErr = syncOneAccount(ctx, st, res.AccountID); syncErr != nil {
@@ -367,7 +367,7 @@ func finishAdd(ctx context.Context, st *cliStores, res accounts.Result) error {
 	}
 
 	if syncErr != nil {
-		return fmt.Errorf("initial sync failed (run `dankcal sync %s` to retry): %w", res.AccountID, syncErr)
+		return fmt.Errorf("initial sync failed (run `dcal sync %s` to retry): %w", res.AccountID, syncErr)
 	}
 	return nil
 }

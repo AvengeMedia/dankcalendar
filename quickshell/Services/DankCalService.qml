@@ -227,7 +227,7 @@ Singleton {
         if (!connected) {
             if (callback)
                 callback({
-                    "error": "not connected to dankcal socket"
+                    "error": "not connected to dankcalendar socket"
                 });
             return;
         }

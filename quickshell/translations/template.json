@@ -1890,7 +1890,7 @@
     "comment": ""
   },
   {
-    "term": "Waiting for the dankcal daemon...",
+    "term": "Waiting for the dankcalendar daemon...",
     "translation": "",
     "context": "agenda placeholder while the daemon is not connected",
     "reference": "",

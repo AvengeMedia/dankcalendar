@@ -39,7 +39,7 @@ import (
 
 var daemonCmd = &cobra.Command{
 	Use:   "daemon",
-	Short: "Run the dankcal daemon (IPC + HTTP, no UI)",
+	Short: "Run the dcal daemon (IPC + HTTP, no UI)",
 	RunE:  runDaemon,
 }
 
@@ -193,7 +193,7 @@ func runDaemon(_ *cobra.Command, _ []string) error {
 	}
 	defer svc.close()
 
-	log.Infof("dankcal daemon ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
+	log.Infof("dcal daemon ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
 
 	signalCh := make(chan os.Signal, 1)
 	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM)
@@ -250,7 +250,7 @@ func startHTTP(ctx context.Context, cfg *config.Config, r *repo.Repo, registry *
 			return
 		}
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		_, _ = w.Write([]byte("dankcal daemon"))
+		_, _ = w.Write([]byte("dcal daemon"))
 	})
 
 	router.Group(func(rt chi.Router) {

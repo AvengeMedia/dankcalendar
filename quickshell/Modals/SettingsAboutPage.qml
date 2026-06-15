@@ -20,12 +20,12 @@ Item {
     readonly property string versionText: {
         const version = DankCalService.daemonVersion;
         if (!version)
-            return "dankcal";
+            return "dankcalendar";
         if (version === "dev")
-            return "dankcal (dev)";
+            return "dankcalendar (dev)";
         if (/^[\d.]+$/.test(version))
-            return `dankcal v${version}`;
-        return `dankcal ${version}`;
+            return `dankcalendar v${version}`;
+        return `dankcalendar ${version}`;
     }
 
     DankFlickable {

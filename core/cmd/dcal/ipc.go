@@ -13,7 +13,7 @@ import (
 
 var ipcCmd = &cobra.Command{
 	Use:   "ipc <method> [key=value...]",
-	Short: "Send an IPC request to the running dankcal daemon",
+	Short: "Send an IPC request to the running dcal daemon",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(_ *cobra.Command, args []string) error {
 		method := args[0]
@@ -26,7 +26,7 @@ var ipcCmd = &cobra.Command{
 		if socketPath == "" {
 			socketPath, err = ipc.FindRunningSocket()
 			if err != nil {
-				return fmt.Errorf("dankcal daemon not running: %w", err)
+				return fmt.Errorf("dcal daemon not running: %w", err)
 			}
 		}
 

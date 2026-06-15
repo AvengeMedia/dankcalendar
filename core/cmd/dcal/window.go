@@ -10,7 +10,7 @@ import (
 
 var showCmd = &cobra.Command{
 	Use:     "show",
-	Short:   "Show the calendar window, launching dankcal if it is not running",
+	Short:   "Show the calendar window, launching dcal if it is not running",
 	PreRunE: findConfig,
 	RunE: func(_ *cobra.Command, _ []string) error {
 		return showOrLaunch("show")
@@ -19,7 +19,7 @@ var showCmd = &cobra.Command{
 
 var toggleCmd = &cobra.Command{
 	Use:     "toggle",
-	Short:   "Toggle calendar window visibility, launching dankcal if it is not running",
+	Short:   "Toggle calendar window visibility, launching dcal if it is not running",
 	PreRunE: findConfig,
 	RunE: func(_ *cobra.Command, _ []string) error {
 		return showOrLaunch("toggle")

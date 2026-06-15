@@ -15,7 +15,7 @@ func GoogleSetupSteps() []SetupStep {
 	return []SetupStep{
 		{
 			Title:       "Create a Google Cloud project",
-			Description: "Pick any name (e.g. \"dankcal\"). You'll only do this once.",
+			Description: "Pick any name (e.g. \"dankcalendar\"). You'll only do this once.",
 			URL:         "https://console.cloud.google.com/projectcreate",
 			URLLabel:    "Open Google Cloud Console",
 			Screenshot:  "01-create-project.png",
@@ -29,7 +29,7 @@ func GoogleSetupSteps() []SetupStep {
 		},
 		{
 			Title:       "Configure the Google Auth Platform",
-			Description: "Click \"Get started\" on the overview page. App name: anything (e.g. \"dankcal\"). User support email: your own address. Audience: \"External\". Then agree and finish — nothing here is ever published.",
+			Description: "Click \"Get started\" on the overview page. App name: anything (e.g. \"dankcalendar\"). User support email: your own address. Audience: \"External\". Then agree and finish — nothing here is ever published.",
 			URL:         "https://console.cloud.google.com/auth/overview",
 			URLLabel:    "Open Google Auth Platform",
 			Screenshot:  "03-auth-platform.png",
@@ -62,7 +62,7 @@ func MicrosoftSetupSteps() []SetupStep {
 		},
 		{
 			Title:       "Fill the form and register",
-			Description: "Name: anything (e.g. \"dankcal\"). Supported account types: \"Any Entra ID Tenant + Personal Microsoft accounts\". Redirect URI: choose \"Public client/native (mobile & desktop)\" and enter http://localhost. Then click Register.",
+			Description: "Name: anything (e.g. \"dankcalendar\"). Supported account types: \"Any Entra ID Tenant + Personal Microsoft accounts\". Redirect URI: choose \"Public client/native (mobile & desktop)\" and enter http://localhost. Then click Register.",
 			Screenshot:  "01-register-form.png",
 		},
 		{
