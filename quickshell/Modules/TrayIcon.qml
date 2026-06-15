@@ -32,7 +32,7 @@ Item {
         id: tray
         visible: false
         tooltip: "Dank Calendar"
-        icon.source: Qt.resolvedUrl("../assets/dankcalendar.svg")
+        icon.source: Qt.resolvedUrl("../assets/dankcalendar-tray.svg")
 
         onActivated: reason => {
             switch (reason) {
