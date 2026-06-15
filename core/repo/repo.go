@@ -57,14 +57,13 @@ func Open(ctx context.Context, dsn string) (*ent.Client, error) {
 		return nil, fmt.Errorf("open sqlite at %q: %w", dsn, err)
 	}
 
-	driver := entsql.OpenDB(dialect.SQLite, db)
-	client := ent.NewClient(ent.Driver(driver))
-
-	if err := client.Schema.Create(ctx); err != nil {
-		client.Close()
-		return nil, fmt.Errorf("apply schema: %w", err)
+	if err := migrate(ctx, db); err != nil {
+		db.Close()
+		return nil, err
 	}
-	return client, nil
+
+	driver := entsql.OpenDB(dialect.SQLite, db)
+	return ent.NewClient(ent.Driver(driver)), nil
 }
 
 func OpenFile(ctx context.Context, path string) (*ent.Client, error) {

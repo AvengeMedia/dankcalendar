@@ -25,6 +25,8 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 		handleGoogleStart(ctx, w, req, deps)
 	case "accounts.google.complete":
 		handleGoogleComplete(ctx, w, req, deps)
+	case "accounts.google.reauth":
+		handleGoogleReauth(ctx, w, req, deps)
 	case "accounts.google.cancel", "accounts.microsoft.cancel":
 		handleFlowCancel(w, req, deps)
 	case "accounts.microsoft.setupGuide":
@@ -33,6 +35,8 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 		handleMicrosoftStart(ctx, w, req, deps)
 	case "accounts.microsoft.complete":
 		handleMicrosoftComplete(ctx, w, req, deps)
+	case "accounts.microsoft.reauth":
+		handleMicrosoftReauth(ctx, w, req, deps)
 	case "accounts.caldav.add":
 		handleCalDAVAdd(ctx, w, req, deps)
 	case "accounts.local.add":
@@ -61,6 +65,45 @@ func handleAccountsList(ctx context.Context, w *ConnWriter, req Request, deps De
 		out[i]["authorized"] = accounts.Authorized(ctx, deps.Secrets, acc)
 	}
 	Respond(w, req.ID, out)
+}
+
+func handleGoogleReauth(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	accountID := ParamString(req.Params, "accountId")
+	if accountID == "" {
+		RespondError(w, req.ID, "accountId is required")
+		return
+	}
+
+	creds, err := accounts.GoogleAppCreds(ctx, deps.Secrets, accountID)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	redirect, err := redirectURL(deps.HTTPAddr)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	brokerFlow, err := oauth.StartBrokerFlow(deps.Broker, redirect)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	flow, err := oauth.NewGoogleFlow(creds, brokerFlow)
+	if err != nil {
+		brokerFlow.Close()
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	deps.Flows.Register(flow)
+	Respond(w, req.ID, map[string]any{
+		"state":   flow.State(),
+		"authUrl": flow.AuthURL(),
+	})
 }
 
 type googleStartParams struct {

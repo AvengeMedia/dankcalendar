@@ -70,6 +70,16 @@ func DisplayName(v string) predicate.Account {
 	return predicate.Account(sql.FieldEQ(FieldDisplayName, v))
 }
 
+// NeedsReauth applies equality check predicate on the "needs_reauth" field. It's identical to NeedsReauthEQ.
+func NeedsReauth(v bool) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldNeedsReauth, v))
+}
+
+// AuthError applies equality check predicate on the "auth_error" field. It's identical to AuthErrorEQ.
+func AuthError(v string) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldAuthError, v))
+}
+
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.Account {
 	return predicate.Account(sql.FieldEQ(FieldCreatedAt, v))
@@ -173,6 +183,91 @@ func SettingsIsNil() predicate.Account {
 // SettingsNotNil applies the NotNil predicate on the "settings" field.
 func SettingsNotNil() predicate.Account {
 	return predicate.Account(sql.FieldNotNull(FieldSettings))
+}
+
+// NeedsReauthEQ applies the EQ predicate on the "needs_reauth" field.
+func NeedsReauthEQ(v bool) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldNeedsReauth, v))
+}
+
+// NeedsReauthNEQ applies the NEQ predicate on the "needs_reauth" field.
+func NeedsReauthNEQ(v bool) predicate.Account {
+	return predicate.Account(sql.FieldNEQ(FieldNeedsReauth, v))
+}
+
+// AuthErrorEQ applies the EQ predicate on the "auth_error" field.
+func AuthErrorEQ(v string) predicate.Account {
+	return predicate.Account(sql.FieldEQ(FieldAuthError, v))
+}
+
+// AuthErrorNEQ applies the NEQ predicate on the "auth_error" field.
+func AuthErrorNEQ(v string) predicate.Account {
+	return predicate.Account(sql.FieldNEQ(FieldAuthError, v))
+}
+
+// AuthErrorIn applies the In predicate on the "auth_error" field.
+func AuthErrorIn(vs ...string) predicate.Account {
+	return predicate.Account(sql.FieldIn(FieldAuthError, vs...))
+}
+
+// AuthErrorNotIn applies the NotIn predicate on the "auth_error" field.
+func AuthErrorNotIn(vs ...string) predicate.Account {
+	return predicate.Account(sql.FieldNotIn(FieldAuthError, vs...))
+}
+
+// AuthErrorGT applies the GT predicate on the "auth_error" field.
+func AuthErrorGT(v string) predicate.Account {
+	return predicate.Account(sql.FieldGT(FieldAuthError, v))
+}
+
+// AuthErrorGTE applies the GTE predicate on the "auth_error" field.
+func AuthErrorGTE(v string) predicate.Account {
+	return predicate.Account(sql.FieldGTE(FieldAuthError, v))
+}
+
+// AuthErrorLT applies the LT predicate on the "auth_error" field.
+func AuthErrorLT(v string) predicate.Account {
+	return predicate.Account(sql.FieldLT(FieldAuthError, v))
+}
+
+// AuthErrorLTE applies the LTE predicate on the "auth_error" field.
+func AuthErrorLTE(v string) predicate.Account {
+	return predicate.Account(sql.FieldLTE(FieldAuthError, v))
+}
+
+// AuthErrorContains applies the Contains predicate on the "auth_error" field.
+func AuthErrorContains(v string) predicate.Account {
+	return predicate.Account(sql.FieldContains(FieldAuthError, v))
+}
+
+// AuthErrorHasPrefix applies the HasPrefix predicate on the "auth_error" field.
+func AuthErrorHasPrefix(v string) predicate.Account {
+	return predicate.Account(sql.FieldHasPrefix(FieldAuthError, v))
+}
+
+// AuthErrorHasSuffix applies the HasSuffix predicate on the "auth_error" field.
+func AuthErrorHasSuffix(v string) predicate.Account {
+	return predicate.Account(sql.FieldHasSuffix(FieldAuthError, v))
+}
+
+// AuthErrorIsNil applies the IsNil predicate on the "auth_error" field.
+func AuthErrorIsNil() predicate.Account {
+	return predicate.Account(sql.FieldIsNull(FieldAuthError))
+}
+
+// AuthErrorNotNil applies the NotNil predicate on the "auth_error" field.
+func AuthErrorNotNil() predicate.Account {
+	return predicate.Account(sql.FieldNotNull(FieldAuthError))
+}
+
+// AuthErrorEqualFold applies the EqualFold predicate on the "auth_error" field.
+func AuthErrorEqualFold(v string) predicate.Account {
+	return predicate.Account(sql.FieldEqualFold(FieldAuthError, v))
+}
+
+// AuthErrorContainsFold applies the ContainsFold predicate on the "auth_error" field.
+func AuthErrorContainsFold(v string) predicate.Account {
+	return predicate.Account(sql.FieldContainsFold(FieldAuthError, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.

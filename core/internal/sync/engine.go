@@ -2,6 +2,7 @@ package sync
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sync"
 	"time"
@@ -110,6 +111,12 @@ func (e *Engine) SyncAll(ctx context.Context) error {
 }
 
 func (e *Engine) SyncAccount(ctx context.Context, acc *ent.Account) error {
+	err := e.syncAccount(ctx, acc)
+	e.recordAuthState(ctx, acc, err)
+	return err
+}
+
+func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) error {
 	provider, err := e.registry.Build(ctx, accountToDomain(acc), e.secrets)
 	if err != nil {
 		return err
@@ -145,6 +152,29 @@ func (e *Engine) SyncAccount(ctx context.Context, acc *ent.Account) error {
 
 	e.publish("sync", map[string]any{"type": "completed", "accountId": acc.ID})
 	return nil
+}
+
+// recordAuthState flips the account's needs_reauth flag when a sync reveals
+// the credentials are dead (or recovers). It only writes on a state change so a
+// revoked account does not churn the database or spam the UI every cycle.
+func (e *Engine) recordAuthState(ctx context.Context, acc *ent.Account, syncErr error) {
+	needsReauth := errors.Is(syncErr, calendar.ErrReauthRequired)
+	if needsReauth == acc.NeedsReauth {
+		return
+	}
+
+	authError := ""
+	if needsReauth {
+		authError = syncErr.Error()
+	}
+	if err := e.repo.SetAccountAuthState(ctx, acc.ID, needsReauth, authError); err != nil {
+		log.Warnf("record auth state for %s: %v", acc.ID, err)
+		return
+	}
+
+	acc.NeedsReauth = needsReauth
+	acc.AuthError = authError
+	e.publish("accounts", map[string]any{"type": "changed", "accountId": acc.ID})
 }
 
 func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provider, cal calendar.Calendar, token string) error {

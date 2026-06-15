@@ -14,6 +14,8 @@ var (
 		{Name: "kind", Type: field.TypeEnum, Enums: []string{"local", "google", "caldav", "microsoft"}},
 		{Name: "display_name", Type: field.TypeString},
 		{Name: "settings", Type: field.TypeJSON, Nullable: true},
+		{Name: "needs_reauth", Type: field.TypeBool, Default: false},
+		{Name: "auth_error", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}

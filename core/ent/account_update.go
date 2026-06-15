@@ -57,6 +57,40 @@ func (_u *AccountUpdate) ClearSettings() *AccountUpdate {
 	return _u
 }
 
+// SetNeedsReauth sets the "needs_reauth" field.
+func (_u *AccountUpdate) SetNeedsReauth(v bool) *AccountUpdate {
+	_u.mutation.SetNeedsReauth(v)
+	return _u
+}
+
+// SetNillableNeedsReauth sets the "needs_reauth" field if the given value is not nil.
+func (_u *AccountUpdate) SetNillableNeedsReauth(v *bool) *AccountUpdate {
+	if v != nil {
+		_u.SetNeedsReauth(*v)
+	}
+	return _u
+}
+
+// SetAuthError sets the "auth_error" field.
+func (_u *AccountUpdate) SetAuthError(v string) *AccountUpdate {
+	_u.mutation.SetAuthError(v)
+	return _u
+}
+
+// SetNillableAuthError sets the "auth_error" field if the given value is not nil.
+func (_u *AccountUpdate) SetNillableAuthError(v *string) *AccountUpdate {
+	if v != nil {
+		_u.SetAuthError(*v)
+	}
+	return _u
+}
+
+// ClearAuthError clears the value of the "auth_error" field.
+func (_u *AccountUpdate) ClearAuthError() *AccountUpdate {
+	_u.mutation.ClearAuthError()
+	return _u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (_u *AccountUpdate) SetUpdatedAt(v time.Time) *AccountUpdate {
 	_u.mutation.SetUpdatedAt(v)
@@ -213,6 +247,15 @@ func (_u *AccountUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.SettingsCleared() {
 		_spec.ClearField(account.FieldSettings, field.TypeJSON)
 	}
+	if value, ok := _u.mutation.NeedsReauth(); ok {
+		_spec.SetField(account.FieldNeedsReauth, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.AuthError(); ok {
+		_spec.SetField(account.FieldAuthError, field.TypeString, value)
+	}
+	if _u.mutation.AuthErrorCleared() {
+		_spec.ClearField(account.FieldAuthError, field.TypeString)
+	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)
 	}
@@ -351,6 +394,40 @@ func (_u *AccountUpdateOne) SetSettings(v map[string]interface{}) *AccountUpdate
 // ClearSettings clears the value of the "settings" field.
 func (_u *AccountUpdateOne) ClearSettings() *AccountUpdateOne {
 	_u.mutation.ClearSettings()
+	return _u
+}
+
+// SetNeedsReauth sets the "needs_reauth" field.
+func (_u *AccountUpdateOne) SetNeedsReauth(v bool) *AccountUpdateOne {
+	_u.mutation.SetNeedsReauth(v)
+	return _u
+}
+
+// SetNillableNeedsReauth sets the "needs_reauth" field if the given value is not nil.
+func (_u *AccountUpdateOne) SetNillableNeedsReauth(v *bool) *AccountUpdateOne {
+	if v != nil {
+		_u.SetNeedsReauth(*v)
+	}
+	return _u
+}
+
+// SetAuthError sets the "auth_error" field.
+func (_u *AccountUpdateOne) SetAuthError(v string) *AccountUpdateOne {
+	_u.mutation.SetAuthError(v)
+	return _u
+}
+
+// SetNillableAuthError sets the "auth_error" field if the given value is not nil.
+func (_u *AccountUpdateOne) SetNillableAuthError(v *string) *AccountUpdateOne {
+	if v != nil {
+		_u.SetAuthError(*v)
+	}
+	return _u
+}
+
+// ClearAuthError clears the value of the "auth_error" field.
+func (_u *AccountUpdateOne) ClearAuthError() *AccountUpdateOne {
+	_u.mutation.ClearAuthError()
 	return _u
 }
 
@@ -539,6 +616,15 @@ func (_u *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err er
 	}
 	if _u.mutation.SettingsCleared() {
 		_spec.ClearField(account.FieldSettings, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.NeedsReauth(); ok {
+		_spec.SetField(account.FieldNeedsReauth, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.AuthError(); ok {
+		_spec.SetField(account.FieldAuthError, field.TypeString, value)
+	}
+	if _u.mutation.AuthErrorCleared() {
+		_spec.ClearField(account.FieldAuthError, field.TypeString)
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)

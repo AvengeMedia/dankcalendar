@@ -731,16 +731,24 @@ Item {
                                     }
 
                                     StyledText {
+                                        readonly property bool needsReauth: parent.parent.parent.modelData.needsReauth === true
                                         readonly property bool authorized: parent.parent.parent.modelData.authorized !== false
-                                        text: authorized ? I18n.tr("Connected", "account status in account list") : I18n.tr("Not authorized — remove this account and add it again", "account status in account list")
+                                        text: needsReauth ? I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth") : (authorized ? I18n.tr("Connected", "account status in account list") : I18n.tr("Not authorized — remove this account and add it again", "account status in account list"))
                                         font.pixelSize: Theme.fontSizeSmall
-                                        color: authorized ? Theme.surfaceVariantText : Theme.error
+                                        color: (needsReauth || !authorized) ? Theme.error : Theme.surfaceVariantText
                                     }
                                 }
 
                                 Row {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: Theme.spacingXS
+
+                                    DankActionButton {
+                                        visible: accountRow.modelData.needsReauth === true
+                                        iconName: "login"
+                                        iconColor: Theme.primary
+                                        onClicked: DankCalService.reconnectAccount(accountRow.modelData)
+                                    }
 
                                     DankActionButton {
                                         iconName: "refresh"

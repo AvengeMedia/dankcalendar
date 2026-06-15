@@ -16,14 +16,18 @@ ICON_DIR=$(DATA_DIR)/icons/hicolor/scalable/apps
 APPLICATIONS_DIR=$(DATA_DIR)/applications
 
 USER_HOME := $(if $(SUDO_USER),$(shell getent passwd $(SUDO_USER) | cut -d: -f6),$(HOME))
-SYSTEMD_USER_DIR=$(USER_HOME)/.config/systemd/user
+# Honor XDG_CONFIG_HOME for the user systemd unit (NixOS and custom setups);
+# fall back to ~/.config. Under sudo we can't read the target user's env, so
+# use their home's ~/.config.
+USER_CONFIG_HOME := $(if $(SUDO_USER),$(USER_HOME)/.config,$(or $(XDG_CONFIG_HOME),$(USER_HOME)/.config))
+SYSTEMD_USER_DIR=$(USER_CONFIG_HOME)/systemd/user
 
 SHELL_DIR=quickshell
 SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
 DESKTOP_ID=com.danklinux.dankcalendar
 
-.PHONY: all build dev run clean test fmt vet i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-shell install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
+.PHONY: all build dev run clean test fmt vet migrate migrate-checksum i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-shell install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
 
 all: build
 
@@ -47,6 +51,12 @@ fmt:
 
 vet:
 	@$(MAKE) -C $(CORE_DIR) vet
+
+migrate:
+	@$(MAKE) -C $(CORE_DIR) migrate name=$(name)
+
+migrate-checksum:
+	@$(MAKE) -C $(CORE_DIR) migrate-checksum
 
 i18n-extract:
 	@python3 $(SHELL_DIR)/translations/extract_translations.py

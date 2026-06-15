@@ -82,6 +82,23 @@ func (e *graphError) Error() string {
 	return fmt.Sprintf("graph api error %d (%s): %s", e.Status, e.Code, e.Message)
 }
 
+// classifyAuthErr tags dead credentials so the sync engine flags the account
+// for re-auth. A failed refresh yields invalid_grant; a 401 means the token is
+// no longer accepted. Anything else is returned unchanged.
+func classifyAuthErr(err error) error {
+	if err == nil {
+		return nil
+	}
+	var ge *graphError
+	switch {
+	case oauth.IsInvalidGrant(err):
+		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
+	case errors.As(err, &ge) && ge.Status == http.StatusUnauthorized:
+		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
+	}
+	return err
+}
+
 func (p *Provider) doJSON(ctx context.Context, method, reqURL string, body any, out any) error {
 	var reqBody io.Reader
 	if body != nil {
@@ -142,7 +159,7 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 			NextLink string          `json:"@odata.nextLink"`
 		}
 		if err := p.doJSON(ctx, http.MethodGet, next, nil, &page); err != nil {
-			return nil, fmt.Errorf("list microsoft calendars: %w", err)
+			return nil, fmt.Errorf("list microsoft calendars: %w", classifyAuthErr(err))
 		}
 
 		for _, item := range page.Value {
@@ -177,7 +194,7 @@ func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCurs
 		if errors.As(err, &ge) && ge.Status == http.StatusGone && cursor.Token != "" {
 			return p.Sync(ctx, c, cal.SyncCursor{CalendarID: cursor.CalendarID})
 		}
-		return nil, fmt.Errorf("microsoft delta sync: %w", err)
+		return nil, fmt.Errorf("microsoft delta sync: %w", classifyAuthErr(err))
 	}
 
 	result := &cal.SyncResult{

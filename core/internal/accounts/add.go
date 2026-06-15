@@ -140,6 +140,9 @@ func FinishGoogle(ctx context.Context, r *repo.Repo, secrets calendar.SecretStor
 	if err := secrets.Set(ctx, accountID, google.SecretKeyToken, tokenBytes); err != nil {
 		return Result{}, err
 	}
+	if err := r.SetAccountAuthState(ctx, accountID, false, ""); err != nil {
+		return Result{}, err
+	}
 	return Result{AccountID: accountID, DisplayName: email}, nil
 }
 
@@ -164,6 +167,9 @@ func FinishMicrosoft(ctx context.Context, r *repo.Repo, secrets calendar.SecretS
 	}
 	tokenBytes, _ := oauth.MarshalToken(tok)
 	if err := secrets.Set(ctx, accountID, microsoft.SecretKeyToken, tokenBytes); err != nil {
+		return Result{}, err
+	}
+	if err := r.SetAccountAuthState(ctx, accountID, false, ""); err != nil {
 		return Result{}, err
 	}
 	return Result{AccountID: accountID, DisplayName: email}, nil

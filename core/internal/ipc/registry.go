@@ -1,0 +1,86 @@
+package ipc
+
+import "sort"
+
+type ParamSpec struct {
+	Name     string `json:"name"`
+	Required bool   `json:"required"`
+	Desc     string `json:"desc,omitempty"`
+}
+
+type MethodSpec struct {
+	Name   string      `json:"name"`
+	Group  string      `json:"group"`
+	Desc   string      `json:"desc,omitempty"`
+	Params []ParamSpec `json:"params,omitempty"`
+}
+
+func req(name, desc string) ParamSpec { return ParamSpec{Name: name, Required: true, Desc: desc} }
+func opt(name, desc string) ParamSpec { return ParamSpec{Name: name, Desc: desc} }
+
+// Methods is the authoritative catalog of IPC methods. It drives shell
+// completion, the `ipc list` help, and the `describe` introspection method.
+var Methods = []MethodSpec{
+	{Name: "ping", Group: "core", Desc: "Liveness check"},
+	{Name: "version", Group: "core", Desc: "Daemon and API version"},
+	{Name: "describe", Group: "core", Desc: "List all IPC methods and their params"},
+	{Name: "subscribe", Group: "core", Desc: "Subscribe to event topics", Params: []ParamSpec{opt("topics", "accounts,calendars,events,sync")}},
+	{Name: "unsubscribe", Group: "core", Desc: "Unsubscribe from event topics", Params: []ParamSpec{opt("topics", "topics to drop")}},
+
+	{Name: "accounts.list", Group: "accounts", Desc: "List configured accounts"},
+	{Name: "accounts.providers", Group: "accounts", Desc: "List available account providers"},
+	{Name: "accounts.google.setupGuide", Group: "accounts", Desc: "Google OAuth setup steps"},
+	{Name: "accounts.google.start", Group: "accounts", Desc: "Begin Google OAuth flow", Params: []ParamSpec{req("clientId", ""), req("clientSecret", ""), opt("displayName", "")}},
+	{Name: "accounts.google.complete", Group: "accounts", Desc: "Finish a pending Google flow", Params: []ParamSpec{req("state", "flow state token")}},
+	{Name: "accounts.google.reauth", Group: "accounts", Desc: "Re-authorize a Google account", Params: []ParamSpec{req("accountId", "")}},
+	{Name: "accounts.google.cancel", Group: "accounts", Desc: "Cancel a pending Google flow", Params: []ParamSpec{req("state", "flow state token")}},
+	{Name: "accounts.microsoft.setupGuide", Group: "accounts", Desc: "Microsoft OAuth setup steps"},
+	{Name: "accounts.microsoft.start", Group: "accounts", Desc: "Begin Microsoft OAuth flow", Params: []ParamSpec{req("clientId", ""), opt("clientSecret", ""), opt("tenant", "")}},
+	{Name: "accounts.microsoft.complete", Group: "accounts", Desc: "Finish a pending Microsoft flow", Params: []ParamSpec{req("state", "flow state token")}},
+	{Name: "accounts.microsoft.reauth", Group: "accounts", Desc: "Re-authorize a Microsoft account", Params: []ParamSpec{req("accountId", "")}},
+	{Name: "accounts.microsoft.cancel", Group: "accounts", Desc: "Cancel a pending Microsoft flow", Params: []ParamSpec{req("state", "flow state token")}},
+	{Name: "accounts.caldav.add", Group: "accounts", Desc: "Add a CalDAV account", Params: []ParamSpec{req("url", ""), opt("username", ""), opt("password", ""), opt("displayName", "")}},
+	{Name: "accounts.local.add", Group: "accounts", Desc: "Add a local calendar store", Params: []ParamSpec{opt("root", "storage directory"), opt("displayName", "")}},
+	{Name: "accounts.delete", Group: "accounts", Desc: "Delete an account", Params: []ParamSpec{req("accountId", "")}},
+	{Name: "accounts.refresh", Group: "accounts", Desc: "Sync one account, or all if omitted", Params: []ParamSpec{opt("accountId", "empty syncs all")}},
+	{Name: "accounts.changed", Group: "accounts", Desc: "Publish an accounts-changed event", Params: []ParamSpec{opt("accountId", "")}},
+
+	{Name: "calendars.list", Group: "calendars", Desc: "List calendars"},
+	{Name: "calendars.setHidden", Group: "calendars", Desc: "Show or hide a calendar", Params: []ParamSpec{req("calendarId", ""), req("hidden", "true|false")}},
+	{Name: "calendars.rename", Group: "calendars", Desc: "Override a calendar name (empty clears)", Params: []ParamSpec{req("calendarId", ""), opt("name", "")}},
+	{Name: "calendars.delete", Group: "calendars", Desc: "Delete a calendar", Params: []ParamSpec{req("calendarId", "")}},
+
+	{Name: "events.list", Group: "events", Desc: "List events", Params: []ParamSpec{opt("query", "text filter"), opt("from", "RFC3339"), opt("to", "RFC3339"), opt("limit", ""), opt("offset", "")}},
+	{Name: "events.create", Group: "events", Desc: "Create an event", Params: []ParamSpec{req("calendarId", ""), req("summary", ""), req("start", "RFC3339"), req("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", "")}},
+	{Name: "events.update", Group: "events", Desc: "Update an event", Params: []ParamSpec{req("id", ""), opt("summary", ""), opt("start", "RFC3339"), opt("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", "")}},
+	{Name: "events.delete", Group: "events", Desc: "Delete an event", Params: []ParamSpec{req("id", "")}},
+
+	{Name: "reminders.upcoming", Group: "reminders", Desc: "List upcoming reminders", Params: []ParamSpec{opt("limit", "default 20")}},
+	{Name: "reminders.test", Group: "reminders", Desc: "Fire a test reminder notification"},
+
+	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window"},
+	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},
+	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window"},
+	{Name: "ui.quit", Group: "ui", Desc: "Quit the running daemon"},
+
+	{Name: "system.autostart.get", Group: "system", Desc: "Report autostart status"},
+	{Name: "system.autostart.set", Group: "system", Desc: "Enable or disable autostart", Params: []ParamSpec{req("enabled", "true|false")}},
+}
+
+func MethodNames() []string {
+	names := make([]string, len(Methods))
+	for i, m := range Methods {
+		names[i] = m.Name
+	}
+	sort.Strings(names)
+	return names
+}
+
+func FindMethod(name string) (MethodSpec, bool) {
+	for _, m := range Methods {
+		if m.Name == name {
+			return m, true
+		}
+	}
+	return MethodSpec{}, false
+}

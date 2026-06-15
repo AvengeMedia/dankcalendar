@@ -655,6 +655,54 @@ Singleton {
         }, callback);
     }
 
+    function reconnectAccount(acc, callback) {
+        if (!acc)
+            return;
+
+        let startMethod = "";
+        let completeMethod = "";
+        switch (acc.kind) {
+        case "google":
+            startMethod = "accounts.google.reauth";
+            completeMethod = "accounts.google.complete";
+            break;
+        case "microsoft":
+            startMethod = "accounts.microsoft.reauth";
+            completeMethod = "accounts.microsoft.complete";
+            break;
+        default:
+            lastError = I18n.tr("This account cannot be reconnected — remove it and add it again.", "error when reconnect is unavailable for a provider");
+            if (callback)
+                callback({
+                    "error": lastError
+                });
+            return;
+        }
+
+        sendRequest(startMethod, {
+            "accountId": acc.id
+        }, response => {
+            if (response.error) {
+                lastError = response.error;
+                if (callback)
+                    callback(response);
+                return;
+            }
+            const result = response.result || {};
+            Qt.openUrlExternally(result.authUrl);
+            sendRequest(completeMethod, {
+                "state": result.state
+            }, done => {
+                if (done.error)
+                    lastError = done.error;
+                else
+                    refreshAccounts();
+                if (callback)
+                    callback(done);
+            });
+        });
+    }
+
     function addCalDAVAccount(url, username, password, displayName, callback) {
         sendRequest("accounts.caldav.add", {
             "url": url,

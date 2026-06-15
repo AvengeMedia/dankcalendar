@@ -297,7 +297,7 @@ Item {
                 Item {
                     id: accRow
                     required property var modelData
-                    readonly property bool authorized: modelData.authorized !== false
+                    readonly property bool authorized: modelData.authorized !== false && modelData.needsReauth !== true
                     readonly property string flavor: DankCalService.accountFlavor(modelData)
                     width: parent.width
                     height: 36
@@ -469,24 +469,35 @@ Item {
 
     DankPopupMenu {
         id: accountMenu
-        items: [
-            {
+        items: {
+            const entries = [];
+            if (root.actionAccount && root.actionAccount.needsReauth === true)
+                entries.push({
+                    id: "reauth",
+                    label: I18n.tr("Reconnect", "account context menu action to re-authorize the account"),
+                    icon: "login"
+                });
+            entries.push({
                 id: "sync",
                 label: I18n.tr("Sync now", "account context menu action to sync the account"),
                 icon: "refresh"
-            },
-            {
+            });
+            entries.push({
                 id: "remove",
                 label: I18n.tr("Remove…", "account context menu action to remove the account"),
                 icon: "delete_outline",
                 danger: true
-            }
-        ]
+            });
+            return entries;
+        }
         onTriggered: itemId => {
             const acc = root.actionAccount;
             if (!acc)
                 return;
             switch (itemId) {
+            case "reauth":
+                DankCalService.reconnectAccount(acc);
+                break;
             case "sync":
                 DankCalService.refreshAccount(acc.id);
                 break;

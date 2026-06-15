@@ -69,7 +69,7 @@ func (p *Provider) Account() cal.Account  { return p.account }
 func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 	res, err := p.svc.CalendarList.List().Context(ctx).Do()
 	if err != nil {
-		return nil, fmt.Errorf("list google calendars: %w", err)
+		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(err))
 	}
 
 	out := make([]cal.Calendar, 0, len(res.Items))
@@ -92,12 +92,12 @@ func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCurs
 	if err != nil {
 		var apiErr *googleapi.Error
 		if cursor.Token == "" || !errors.As(err, &apiErr) || apiErr.Code != http.StatusGone {
-			return nil, err
+			return nil, classifyAuthErr(err)
 		}
 		// Sync token expired; restart with a full listing.
 		cursor.Token = ""
 		if changes, nextToken, err = p.syncPages(ctx, c, ""); err != nil {
-			return nil, err
+			return nil, classifyAuthErr(err)
 		}
 	}
 
@@ -410,6 +410,23 @@ func toGoogleDateTime(t time.Time, tz string) *calendar.EventDateTime {
 }
 
 func (p *Provider) Close() error { return nil }
+
+// classifyAuthErr tags dead credentials so the sync engine flags the account
+// for re-auth. A failed refresh yields invalid_grant; a 401 means the token is
+// no longer accepted. Anything else is returned unchanged.
+func classifyAuthErr(err error) error {
+	if err == nil {
+		return nil
+	}
+	var apiErr *googleapi.Error
+	switch {
+	case oauth.IsInvalidGrant(err):
+		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
+	case errors.As(err, &apiErr) && apiErr.Code == http.StatusUnauthorized:
+		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
+	}
+	return err
+}
 
 type persistingTokenSource struct {
 	base      oauth2.TokenSource

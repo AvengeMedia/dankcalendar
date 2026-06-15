@@ -68,7 +68,7 @@ Singleton {
     }
 
     function monthName(jsMonth, format) {
-        return locale.monthName(jsMonth + 1, format !== undefined ? format : Locale.LongFormat);
+        return locale.monthName(jsMonth, format !== undefined ? format : Locale.LongFormat);
     }
 
     Component.onCompleted: {

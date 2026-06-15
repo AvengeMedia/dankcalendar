@@ -1,8 +1,12 @@
 BINARY_NAME=dcal
 SOURCE_DIR=cmd/dcal
 BUILD_DIR=bin
+COMPLETIONS_DIR=$(BUILD_DIR)/completions
 PREFIX ?= /usr/local
 INSTALL_DIR=$(PREFIX)/bin
+BASHCOMP_DIR=$(PREFIX)/share/bash-completion/completions
+ZSHCOMP_DIR=$(PREFIX)/share/zsh/site-functions
+FISHCOMP_DIR=$(PREFIX)/share/fish/vendor_completions.d
 
 GO=go
 
@@ -15,9 +19,9 @@ COMMIT?=$(COMMIT_HASH)
 
 BUILD_LDFLAGS=-ldflags='-s -w -X main.Version=$(VERSION) -X main.BuildTime=$(BUILD_TIME) -X main.Commit=$(COMMIT)'
 
-.PHONY: all build dev install uninstall clean test cover fmt vet deps generate mocks help
+.PHONY: all build dev completions install install-completions uninstall clean test cover fmt vet deps generate migrate migrate-checksum mocks help
 
-all: build
+all: build completions
 
 build:
 	@echo "Building $(BINARY_NAME)..."
@@ -29,11 +33,27 @@ dev:
 	@mkdir -p $(BUILD_DIR)
 	CGO_ENABLED=0 $(GO) build -o $(BUILD_DIR)/$(BINARY_NAME) ./$(SOURCE_DIR)
 
-install:
-	@install -D -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(INSTALL_DIR)/$(BINARY_NAME)
+completions: build
+	@mkdir -p $(COMPLETIONS_DIR)
+	@$(BUILD_DIR)/$(BINARY_NAME) completion bash > $(COMPLETIONS_DIR)/$(BINARY_NAME)
+	@$(BUILD_DIR)/$(BINARY_NAME) completion zsh > $(COMPLETIONS_DIR)/_$(BINARY_NAME)
+	@$(BUILD_DIR)/$(BINARY_NAME) completion fish > $(COMPLETIONS_DIR)/$(BINARY_NAME).fish
+	@$(BUILD_DIR)/$(BINARY_NAME) completion powershell > $(COMPLETIONS_DIR)/$(BINARY_NAME).ps1
+	@echo "Completions written to $(COMPLETIONS_DIR)"
+
+install: install-completions
+	@install -D -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(DESTDIR)$(INSTALL_DIR)/$(BINARY_NAME)
+
+install-completions:
+	@install -D -m 644 $(COMPLETIONS_DIR)/$(BINARY_NAME) $(DESTDIR)$(BASHCOMP_DIR)/$(BINARY_NAME)
+	@install -D -m 644 $(COMPLETIONS_DIR)/_$(BINARY_NAME) $(DESTDIR)$(ZSHCOMP_DIR)/_$(BINARY_NAME)
+	@install -D -m 644 $(COMPLETIONS_DIR)/$(BINARY_NAME).fish $(DESTDIR)$(FISHCOMP_DIR)/$(BINARY_NAME).fish
 
 uninstall:
-	@rm -f $(INSTALL_DIR)/$(BINARY_NAME)
+	@rm -f $(DESTDIR)$(INSTALL_DIR)/$(BINARY_NAME)
+	@rm -f $(DESTDIR)$(BASHCOMP_DIR)/$(BINARY_NAME)
+	@rm -f $(DESTDIR)$(ZSHCOMP_DIR)/_$(BINARY_NAME)
+	@rm -f $(DESTDIR)$(FISHCOMP_DIR)/$(BINARY_NAME).fish
 
 clean:
 	@rm -rf $(BUILD_DIR)
@@ -58,8 +78,17 @@ deps:
 generate:
 	$(GO) generate ./ent/...
 
+# Create a versioned migration by diffing the Ent schema: make migrate name=add_foo
+migrate:
+	@if [ -z "$(name)" ]; then echo "usage: make migrate name=<migration_name>"; exit 1; fi
+	$(GO) run -mod=mod ./ent/migrate/main.go -name=$(name)
+
+# Rebuild ent/migrate/migrations/atlas.sum after editing a migration by hand.
+migrate-checksum:
+	$(GO) run -mod=mod ./ent/migrate/main.go -checksum
+
 mocks:
 	mockery
 
 help:
-	@echo "Targets: build dev install uninstall clean test cover fmt vet deps generate mocks"
+	@echo "Targets: build dev completions install install-completions uninstall clean test cover fmt vet deps generate migrate migrate-checksum mocks"

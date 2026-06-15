@@ -23,12 +23,16 @@ func init() {
 	accountDescDisplayName := accountFields[2].Descriptor()
 	// account.DisplayNameValidator is a validator for the "display_name" field. It is called by the builders before save.
 	account.DisplayNameValidator = accountDescDisplayName.Validators[0].(func(string) error)
+	// accountDescNeedsReauth is the schema descriptor for needs_reauth field.
+	accountDescNeedsReauth := accountFields[4].Descriptor()
+	// account.DefaultNeedsReauth holds the default value on creation for the needs_reauth field.
+	account.DefaultNeedsReauth = accountDescNeedsReauth.Default.(bool)
 	// accountDescCreatedAt is the schema descriptor for created_at field.
-	accountDescCreatedAt := accountFields[4].Descriptor()
+	accountDescCreatedAt := accountFields[6].Descriptor()
 	// account.DefaultCreatedAt holds the default value on creation for the created_at field.
 	account.DefaultCreatedAt = accountDescCreatedAt.Default.(func() time.Time)
 	// accountDescUpdatedAt is the schema descriptor for updated_at field.
-	accountDescUpdatedAt := accountFields[5].Descriptor()
+	accountDescUpdatedAt := accountFields[7].Descriptor()
 	// account.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	account.DefaultUpdatedAt = accountDescUpdatedAt.Default.(func() time.Time)
 	// account.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.

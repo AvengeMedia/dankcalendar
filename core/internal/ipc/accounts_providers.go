@@ -50,6 +50,45 @@ func handleMicrosoftStart(_ context.Context, w *ConnWriter, req Request, deps De
 	})
 }
 
+func handleMicrosoftReauth(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	accountID := strings.TrimSpace(ParamString(req.Params, "accountId"))
+	if accountID == "" {
+		RespondError(w, req.ID, "accountId is required")
+		return
+	}
+
+	creds, err := accounts.MicrosoftAppCreds(ctx, deps.Secrets, accountID)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	redirect, err := redirectURLForHost(deps.HTTPAddr, "localhost", "/")
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	brokerFlow, err := oauth.StartBrokerFlow(deps.Broker, redirect)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	flow, err := oauth.NewMicrosoftFlow(creds, brokerFlow)
+	if err != nil {
+		brokerFlow.Close()
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	deps.Flows.Register(flow)
+	Respond(w, req.ID, map[string]any{
+		"state":   flow.State(),
+		"authUrl": flow.AuthURL(),
+	})
+}
+
 func handleMicrosoftComplete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	state := ParamString(req.Params, "state")
 	if state == "" {

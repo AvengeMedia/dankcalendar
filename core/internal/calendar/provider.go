@@ -1,6 +1,14 @@
 package calendar
 
-import "context"
+import (
+	"context"
+	"errors"
+)
+
+// ErrReauthRequired marks a sync failure as a dead credential: the stored
+// token was rejected and the account must be re-authorized. Providers wrap it
+// around the underlying error so the sync engine can flag the account.
+var ErrReauthRequired = errors.New("reauthentication required")
 
 type Provider interface {
 	Kind() AccountKind

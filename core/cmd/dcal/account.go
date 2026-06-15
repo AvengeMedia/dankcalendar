@@ -52,6 +52,7 @@ var accountListCmd = &cobra.Command{
 				Provider    string         `json:"provider"`
 				DisplayName string         `json:"displayName"`
 				Authorized  bool           `json:"authorized"`
+				NeedsReauth bool           `json:"needsReauth"`
 				Settings    map[string]any `json:"settings,omitempty"`
 			}
 			out := make([]accountOut, 0, len(items))
@@ -62,6 +63,7 @@ var accountListCmd = &cobra.Command{
 					Provider:    accounts.Flavor(string(a.Kind), a.Settings),
 					DisplayName: a.DisplayName,
 					Authorized:  accounts.Authorized(ctx, st.secrets, a),
+					NeedsReauth: a.NeedsReauth,
 					Settings:    a.Settings,
 				})
 			}
@@ -77,7 +79,10 @@ var accountListCmd = &cobra.Command{
 		fmt.Fprintln(w, "ID\tPROVIDER\tNAME\tSTATUS")
 		for _, a := range items {
 			status := "ok"
-			if !accounts.Authorized(ctx, st.secrets, a) {
+			switch {
+			case a.NeedsReauth:
+				status = "needs reauth"
+			case !accounts.Authorized(ctx, st.secrets, a):
 				status = "needs auth"
 			}
 			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", a.ID, accounts.Flavor(string(a.Kind), a.Settings), a.DisplayName, status)
@@ -189,6 +194,7 @@ func init() {
 
 	accountCmd.AddCommand(accountListCmd)
 	accountCmd.AddCommand(accountAddCmd)
+	accountCmd.AddCommand(accountReauthCmd)
 	accountCmd.AddCommand(accountRemoveCmd)
 	accountCmd.AddCommand(accountProvidersCmd)
 	accountCmd.AddCommand(accountSetupCmd)

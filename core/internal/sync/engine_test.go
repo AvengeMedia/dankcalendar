@@ -3,6 +3,7 @@ package sync_test
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 	"time"
 
@@ -264,6 +265,56 @@ func (s *EngineSuite) TestSyncAccountListCalendarsError() {
 
 	err := s.engine.SyncAccount(s.ctx, s.account)
 	s.Require().ErrorContains(err, "list calendars")
+}
+
+func (s *EngineSuite) TestSyncAccountFlagsReauthOnAuthError() {
+	var topics []string
+	s.engine.SetNotifier(func(topic string, _ any) { topics = append(topics, topic) })
+
+	provider := s.registerProvider()
+	authErr := fmt.Errorf("list google calendars: %w", calendar.ErrReauthRequired)
+	provider.EXPECT().ListCalendars(mock.Anything).Return(nil, authErr)
+	provider.EXPECT().Close().Return(nil)
+
+	err := s.engine.SyncAccount(s.ctx, s.account)
+	s.Require().Error(err)
+
+	acc, err := s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
+	s.True(acc.NeedsReauth)
+	s.NotEmpty(acc.AuthError)
+	s.Contains(topics, "accounts")
+}
+
+func (s *EngineSuite) TestSyncAccountLeavesReauthClearOnGenericError() {
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return(nil, errors.New("upstream down"))
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().Error(s.engine.SyncAccount(s.ctx, s.account))
+
+	acc, err := s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
+	s.False(acc.NeedsReauth)
+}
+
+func (s *EngineSuite) TestSyncAccountClearsReauthOnSuccess() {
+	s.Require().NoError(s.repo.SetAccountAuthState(s.ctx, s.account.ID, true, "stale"))
+	s.account, _ = s.repo.GetAccount(s.ctx, s.account.ID)
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	acc, err := s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
+	s.False(acc.NeedsReauth)
+	s.Empty(acc.AuthError)
 }
 
 func (s *EngineSuite) TestSyncAllContinuesPastFailingAccount() {

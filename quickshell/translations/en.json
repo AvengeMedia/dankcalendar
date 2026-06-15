@@ -248,7 +248,7 @@
   {
     "term": "Add account",
     "context": "Add account",
-    "reference": "Modules/CalendarSidebar.qml:400, Modals/AccountAddModal.qml:196, Modals/AccountAddModal.qml:285, Modals/SettingsContent.qml:770",
+    "reference": "Modules/CalendarSidebar.qml:400, Modals/AccountAddModal.qml:196, Modals/AccountAddModal.qml:285, Modals/SettingsContent.qml:778",
     "comment": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account"
   },
   {
@@ -296,7 +296,7 @@
   {
     "term": "All-day reminder time",
     "context": "All-day reminder time",
-    "reference": "Modals/SettingsContent.qml:863",
+    "reference": "Modals/SettingsContent.qml:871",
     "comment": "all-day reminder time setting label"
   },
   {
@@ -404,7 +404,7 @@
   {
     "term": "Backend not connected.",
     "context": "Backend not connected.",
-    "reference": "Modals/SettingsContent.qml:491, Modals/SettingsContent.qml:663, Modals/SettingsContent.qml:888",
+    "reference": "Modals/SettingsContent.qml:491, Modals/SettingsContent.qml:663, Modals/SettingsContent.qml:896",
     "comment": "accounts settings section subtitle | calendars page empty state | test notification setting description when backend is unavailable"
   },
   {
@@ -530,7 +530,7 @@
   {
     "term": "Connected",
     "context": "Connected",
-    "reference": "Modals/AccountAddModal.qml:1049, Modals/SettingsContent.qml:735, Modals/SettingsAboutPage.qml:365",
+    "reference": "Modals/AccountAddModal.qml:1049, Modals/SettingsContent.qml:736, Modals/SettingsAboutPage.qml:365",
     "comment": "about page daemon status value | account status in account list | success step status heading"
   },
   {
@@ -680,7 +680,7 @@
   {
     "term": "Desktop notifications for upcoming events.",
     "context": "Desktop notifications for upcoming events.",
-    "reference": "Modals/SettingsContent.qml:814",
+    "reference": "Modals/SettingsContent.qml:822",
     "comment": "reminders toggle description"
   },
   {
@@ -740,7 +740,7 @@
   {
     "term": "Enable reminders",
     "context": "Enable reminders",
-    "reference": "Modals/SettingsContent.qml:813",
+    "reference": "Modals/SettingsContent.qml:821",
     "comment": "reminders toggle label"
   },
   {
@@ -866,7 +866,7 @@
   {
     "term": "How long the snooze button postpones a reminder.",
     "context": "How long the snooze button postpones a reminder.",
-    "reference": "Modals/SettingsContent.qml:837",
+    "reference": "Modals/SettingsContent.qml:845",
     "comment": "snooze duration setting description"
   },
   {
@@ -896,7 +896,7 @@
   {
     "term": "Keep until dismissed",
     "context": "Keep until dismissed",
-    "reference": "Modals/SettingsContent.qml:824",
+    "reference": "Modals/SettingsContent.qml:832",
     "comment": "persistent reminders toggle label"
   },
   {
@@ -1094,7 +1094,7 @@
   {
     "term": "Not authorized — remove this account and add it again",
     "context": "Not authorized — remove this account and add it again",
-    "reference": "Modals/SettingsContent.qml:735",
+    "reference": "Modals/SettingsContent.qml:736",
     "comment": "account status in account list"
   },
   {
@@ -1106,13 +1106,13 @@
   {
     "term": "Notifications",
     "context": "Notifications",
-    "reference": "Modals/SettingsSidebar.qml:31, Modals/SettingsContent.qml:804",
+    "reference": "Modals/SettingsSidebar.qml:31, Modals/SettingsContent.qml:812",
     "comment": "notifications settings section header | settings sidebar tab label"
   },
   {
     "term": "Notify for all-day events without their own reminders.",
     "context": "Notify for all-day events without their own reminders.",
-    "reference": "Modals/SettingsContent.qml:852",
+    "reference": "Modals/SettingsContent.qml:860",
     "comment": "all-day reminders toggle description"
   },
   {
@@ -1242,33 +1242,39 @@
     "comment": "tray menu item to quit the application"
   },
   {
+    "term": "Reconnect",
+    "context": "Reconnect",
+    "reference": "Modules/CalendarSidebar.qml:477",
+    "comment": "account context menu action to re-authorize the account"
+  },
+  {
     "term": "Reminders and desktop alerts.",
     "context": "Reminders and desktop alerts.",
-    "reference": "Modals/SettingsContent.qml:805",
+    "reference": "Modals/SettingsContent.qml:813",
     "comment": "notifications settings section subtitle"
   },
   {
     "term": "Reminders stay on screen until you act on them.",
     "context": "Reminders stay on screen until you act on them.",
-    "reference": "Modals/SettingsContent.qml:825",
+    "reference": "Modals/SettingsContent.qml:833",
     "comment": "persistent reminders toggle description"
   },
   {
     "term": "Remove",
     "context": "Remove",
-    "reference": "Modules/CalendarSidebar.qml:497, Modals/SettingsContent.qml:759",
+    "reference": "Modules/CalendarSidebar.qml:508, Modals/SettingsContent.qml:767",
     "comment": "confirm button for removing an account | remove account confirmation button"
   },
   {
     "term": "Remove \"%1\"?",
     "context": "Remove \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:495, Modals/SettingsContent.qml:757",
+    "reference": "Modules/CalendarSidebar.qml:506, Modals/SettingsContent.qml:765",
     "comment": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title"
   },
   {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "context": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
-    "reference": "Modules/CalendarSidebar.qml:496, Modals/SettingsContent.qml:758",
+    "reference": "Modules/CalendarSidebar.qml:507, Modals/SettingsContent.qml:766",
     "comment": "confirm dialog body for removing an account | remove account confirmation message"
   },
   {
@@ -1280,7 +1286,7 @@
   {
     "term": "Remove…",
     "context": "Remove…",
-    "reference": "Modules/CalendarSidebar.qml:480",
+    "reference": "Modules/CalendarSidebar.qml:487",
     "comment": "account context menu action to remove the account"
   },
   {
@@ -1352,7 +1358,7 @@
   {
     "term": "Send test",
     "context": "Send test",
-    "reference": "Modals/SettingsContent.qml:892",
+    "reference": "Modals/SettingsContent.qml:900",
     "comment": "test notification button"
   },
   {
@@ -1376,7 +1382,7 @@
   {
     "term": "Show all-day reminders",
     "context": "Show all-day reminders",
-    "reference": "Modals/SettingsContent.qml:851",
+    "reference": "Modals/SettingsContent.qml:859",
     "comment": "all-day reminders toggle label"
   },
   {
@@ -1404,6 +1410,12 @@
     "comment": "google provider description in picker"
   },
   {
+    "term": "Sign-in expired — reconnect to keep syncing",
+    "context": "Sign-in expired — reconnect to keep syncing",
+    "reference": "Modals/SettingsContent.qml:736",
+    "comment": "account status when oauth needs re-auth"
+  },
+  {
     "term": "Size",
     "context": "Size",
     "reference": "Modals/FileBrowser/FileBrowserSortMenu.qml:45",
@@ -1412,7 +1424,7 @@
   {
     "term": "Snooze duration",
     "context": "Snooze duration",
-    "reference": "Modals/SettingsContent.qml:836",
+    "reference": "Modals/SettingsContent.qml:844",
     "comment": "snooze duration setting label"
   },
   {
@@ -1466,7 +1478,7 @@
   {
     "term": "Sync now",
     "context": "Sync now",
-    "reference": "Modules/CalendarSidebar.qml:475",
+    "reference": "Modules/CalendarSidebar.qml:482",
     "comment": "account context menu action to sync the account"
   },
   {
@@ -1496,7 +1508,7 @@
   {
     "term": "Test notification",
     "context": "Test notification",
-    "reference": "Modals/SettingsContent.qml:887",
+    "reference": "Modals/SettingsContent.qml:895",
     "comment": "test notification setting label"
   },
   {
@@ -1510,6 +1522,12 @@
     "context": "Theme",
     "reference": "Modals/SettingsContent.qml:402",
     "comment": "theme mode setting label"
+  },
+  {
+    "term": "This account cannot be reconnected — remove it and add it again.",
+    "context": "This account cannot be reconnected — remove it and add it again.",
+    "reference": "Services/DankCalService.qml:674",
+    "comment": "error when reconnect is unavailable for a provider"
   },
   {
     "term": "Time format",
@@ -1586,7 +1604,7 @@
   {
     "term": "Verify desktop notifications are working.",
     "context": "Verify desktop notifications are working.",
-    "reference": "Modals/SettingsContent.qml:888",
+    "reference": "Modals/SettingsContent.qml:896",
     "comment": "test notification setting description"
   },
   {
@@ -1640,7 +1658,7 @@
   {
     "term": "When all-day event reminders fire.",
     "context": "When all-day event reminders fire.",
-    "reference": "Modals/SettingsContent.qml:864",
+    "reference": "Modals/SettingsContent.qml:872",
     "comment": "all-day reminder time setting description"
   },
   {

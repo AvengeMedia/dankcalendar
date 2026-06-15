@@ -44,6 +44,8 @@ type AccountMutation struct {
 	kind             *account.Kind
 	display_name     *string
 	settings         *map[string]interface{}
+	needs_reauth     *bool
+	auth_error       *string
 	created_at       *time.Time
 	updated_at       *time.Time
 	clearedFields    map[string]struct{}
@@ -283,6 +285,91 @@ func (m *AccountMutation) ResetSettings() {
 	delete(m.clearedFields, account.FieldSettings)
 }
 
+// SetNeedsReauth sets the "needs_reauth" field.
+func (m *AccountMutation) SetNeedsReauth(b bool) {
+	m.needs_reauth = &b
+}
+
+// NeedsReauth returns the value of the "needs_reauth" field in the mutation.
+func (m *AccountMutation) NeedsReauth() (r bool, exists bool) {
+	v := m.needs_reauth
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldNeedsReauth returns the old "needs_reauth" field's value of the Account entity.
+// If the Account object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AccountMutation) OldNeedsReauth(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldNeedsReauth is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldNeedsReauth requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldNeedsReauth: %w", err)
+	}
+	return oldValue.NeedsReauth, nil
+}
+
+// ResetNeedsReauth resets all changes to the "needs_reauth" field.
+func (m *AccountMutation) ResetNeedsReauth() {
+	m.needs_reauth = nil
+}
+
+// SetAuthError sets the "auth_error" field.
+func (m *AccountMutation) SetAuthError(s string) {
+	m.auth_error = &s
+}
+
+// AuthError returns the value of the "auth_error" field in the mutation.
+func (m *AccountMutation) AuthError() (r string, exists bool) {
+	v := m.auth_error
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAuthError returns the old "auth_error" field's value of the Account entity.
+// If the Account object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AccountMutation) OldAuthError(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldAuthError is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldAuthError requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAuthError: %w", err)
+	}
+	return oldValue.AuthError, nil
+}
+
+// ClearAuthError clears the value of the "auth_error" field.
+func (m *AccountMutation) ClearAuthError() {
+	m.auth_error = nil
+	m.clearedFields[account.FieldAuthError] = struct{}{}
+}
+
+// AuthErrorCleared returns if the "auth_error" field was cleared in this mutation.
+func (m *AccountMutation) AuthErrorCleared() bool {
+	_, ok := m.clearedFields[account.FieldAuthError]
+	return ok
+}
+
+// ResetAuthError resets all changes to the "auth_error" field.
+func (m *AccountMutation) ResetAuthError() {
+	m.auth_error = nil
+	delete(m.clearedFields, account.FieldAuthError)
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (m *AccountMutation) SetCreatedAt(t time.Time) {
 	m.created_at = &t
@@ -497,7 +584,7 @@ func (m *AccountMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AccountMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 7)
 	if m.kind != nil {
 		fields = append(fields, account.FieldKind)
 	}
@@ -506,6 +593,12 @@ func (m *AccountMutation) Fields() []string {
 	}
 	if m.settings != nil {
 		fields = append(fields, account.FieldSettings)
+	}
+	if m.needs_reauth != nil {
+		fields = append(fields, account.FieldNeedsReauth)
+	}
+	if m.auth_error != nil {
+		fields = append(fields, account.FieldAuthError)
 	}
 	if m.created_at != nil {
 		fields = append(fields, account.FieldCreatedAt)
@@ -527,6 +620,10 @@ func (m *AccountMutation) Field(name string) (ent.Value, bool) {
 		return m.DisplayName()
 	case account.FieldSettings:
 		return m.Settings()
+	case account.FieldNeedsReauth:
+		return m.NeedsReauth()
+	case account.FieldAuthError:
+		return m.AuthError()
 	case account.FieldCreatedAt:
 		return m.CreatedAt()
 	case account.FieldUpdatedAt:
@@ -546,6 +643,10 @@ func (m *AccountMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldDisplayName(ctx)
 	case account.FieldSettings:
 		return m.OldSettings(ctx)
+	case account.FieldNeedsReauth:
+		return m.OldNeedsReauth(ctx)
+	case account.FieldAuthError:
+		return m.OldAuthError(ctx)
 	case account.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case account.FieldUpdatedAt:
@@ -579,6 +680,20 @@ func (m *AccountMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSettings(v)
+		return nil
+	case account.FieldNeedsReauth:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetNeedsReauth(v)
+		return nil
+	case account.FieldAuthError:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAuthError(v)
 		return nil
 	case account.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -627,6 +742,9 @@ func (m *AccountMutation) ClearedFields() []string {
 	if m.FieldCleared(account.FieldSettings) {
 		fields = append(fields, account.FieldSettings)
 	}
+	if m.FieldCleared(account.FieldAuthError) {
+		fields = append(fields, account.FieldAuthError)
+	}
 	return fields
 }
 
@@ -644,6 +762,9 @@ func (m *AccountMutation) ClearField(name string) error {
 	case account.FieldSettings:
 		m.ClearSettings()
 		return nil
+	case account.FieldAuthError:
+		m.ClearAuthError()
+		return nil
 	}
 	return fmt.Errorf("unknown Account nullable field %s", name)
 }
@@ -660,6 +781,12 @@ func (m *AccountMutation) ResetField(name string) error {
 		return nil
 	case account.FieldSettings:
 		m.ResetSettings()
+		return nil
+	case account.FieldNeedsReauth:
+		m.ResetNeedsReauth()
+		return nil
+	case account.FieldAuthError:
+		m.ResetAuthError()
 		return nil
 	case account.FieldCreatedAt:
 		m.ResetCreatedAt()

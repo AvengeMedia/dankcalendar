@@ -1449,6 +1449,13 @@
     "comment": ""
   },
   {
+    "term": "Reconnect",
+    "translation": "",
+    "context": "account context menu action to re-authorize the account",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Reminders and desktop alerts.",
     "translation": "",
     "context": "notifications settings section subtitle",
@@ -1638,6 +1645,13 @@
     "comment": ""
   },
   {
+    "term": "Sign-in expired — reconnect to keep syncing",
+    "translation": "",
+    "context": "account status when oauth needs re-auth",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Size",
     "translation": "",
     "context": "file browser sort criterion option",
@@ -1760,6 +1774,13 @@
     "term": "Theme",
     "translation": "",
     "context": "theme mode setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "This account cannot be reconnected — remove it and add it again.",
+    "translation": "",
+    "context": "error when reconnect is unavailable for a provider",
     "reference": "",
     "comment": ""
   },

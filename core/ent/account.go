@@ -24,6 +24,10 @@ type Account struct {
 	DisplayName string `json:"display_name,omitempty"`
 	// Settings holds the value of the "settings" field.
 	Settings map[string]interface{} `json:"settings,omitempty"`
+	// NeedsReauth holds the value of the "needs_reauth" field.
+	NeedsReauth bool `json:"needs_reauth,omitempty"`
+	// AuthError holds the value of the "auth_error" field.
+	AuthError string `json:"auth_error,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -70,7 +74,9 @@ func (*Account) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case account.FieldSettings:
 			values[i] = new([]byte)
-		case account.FieldID, account.FieldKind, account.FieldDisplayName:
+		case account.FieldNeedsReauth:
+			values[i] = new(sql.NullBool)
+		case account.FieldID, account.FieldKind, account.FieldDisplayName, account.FieldAuthError:
 			values[i] = new(sql.NullString)
 		case account.FieldCreatedAt, account.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -114,6 +120,18 @@ func (_m *Account) assignValues(columns []string, values []any) error {
 				if err := json.Unmarshal(*value, &_m.Settings); err != nil {
 					return fmt.Errorf("unmarshal field settings: %w", err)
 				}
+			}
+		case account.FieldNeedsReauth:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field needs_reauth", values[i])
+			} else if value.Valid {
+				_m.NeedsReauth = value.Bool
+			}
+		case account.FieldAuthError:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field auth_error", values[i])
+			} else if value.Valid {
+				_m.AuthError = value.String
 			}
 		case account.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -181,6 +199,12 @@ func (_m *Account) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("settings=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Settings))
+	builder.WriteString(", ")
+	builder.WriteString("needs_reauth=")
+	builder.WriteString(fmt.Sprintf("%v", _m.NeedsReauth))
+	builder.WriteString(", ")
+	builder.WriteString("auth_error=")
+	builder.WriteString(_m.AuthError)
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

@@ -43,6 +43,34 @@ func (_c *AccountCreate) SetSettings(v map[string]interface{}) *AccountCreate {
 	return _c
 }
 
+// SetNeedsReauth sets the "needs_reauth" field.
+func (_c *AccountCreate) SetNeedsReauth(v bool) *AccountCreate {
+	_c.mutation.SetNeedsReauth(v)
+	return _c
+}
+
+// SetNillableNeedsReauth sets the "needs_reauth" field if the given value is not nil.
+func (_c *AccountCreate) SetNillableNeedsReauth(v *bool) *AccountCreate {
+	if v != nil {
+		_c.SetNeedsReauth(*v)
+	}
+	return _c
+}
+
+// SetAuthError sets the "auth_error" field.
+func (_c *AccountCreate) SetAuthError(v string) *AccountCreate {
+	_c.mutation.SetAuthError(v)
+	return _c
+}
+
+// SetNillableAuthError sets the "auth_error" field if the given value is not nil.
+func (_c *AccountCreate) SetNillableAuthError(v *string) *AccountCreate {
+	if v != nil {
+		_c.SetAuthError(*v)
+	}
+	return _c
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (_c *AccountCreate) SetCreatedAt(v time.Time) *AccountCreate {
 	_c.mutation.SetCreatedAt(v)
@@ -142,6 +170,10 @@ func (_c *AccountCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_c *AccountCreate) defaults() {
+	if _, ok := _c.mutation.NeedsReauth(); !ok {
+		v := account.DefaultNeedsReauth
+		_c.mutation.SetNeedsReauth(v)
+	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := account.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
@@ -169,6 +201,9 @@ func (_c *AccountCreate) check() error {
 		if err := account.DisplayNameValidator(v); err != nil {
 			return &ValidationError{Name: "display_name", err: fmt.Errorf(`ent: validator failed for field "Account.display_name": %w`, err)}
 		}
+	}
+	if _, ok := _c.mutation.NeedsReauth(); !ok {
+		return &ValidationError{Name: "needs_reauth", err: errors.New(`ent: missing required field "Account.needs_reauth"`)}
 	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Account.created_at"`)}
@@ -228,6 +263,14 @@ func (_c *AccountCreate) createSpec() (*Account, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Settings(); ok {
 		_spec.SetField(account.FieldSettings, field.TypeJSON, value)
 		_node.Settings = value
+	}
+	if value, ok := _c.mutation.NeedsReauth(); ok {
+		_spec.SetField(account.FieldNeedsReauth, field.TypeBool, value)
+		_node.NeedsReauth = value
+	}
+	if value, ok := _c.mutation.AuthError(); ok {
+		_spec.SetField(account.FieldAuthError, field.TypeString, value)
+		_node.AuthError = value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(account.FieldCreatedAt, field.TypeTime, value)
@@ -351,6 +394,36 @@ func (u *AccountUpsert) ClearSettings() *AccountUpsert {
 	return u
 }
 
+// SetNeedsReauth sets the "needs_reauth" field.
+func (u *AccountUpsert) SetNeedsReauth(v bool) *AccountUpsert {
+	u.Set(account.FieldNeedsReauth, v)
+	return u
+}
+
+// UpdateNeedsReauth sets the "needs_reauth" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateNeedsReauth() *AccountUpsert {
+	u.SetExcluded(account.FieldNeedsReauth)
+	return u
+}
+
+// SetAuthError sets the "auth_error" field.
+func (u *AccountUpsert) SetAuthError(v string) *AccountUpsert {
+	u.Set(account.FieldAuthError, v)
+	return u
+}
+
+// UpdateAuthError sets the "auth_error" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateAuthError() *AccountUpsert {
+	u.SetExcluded(account.FieldAuthError)
+	return u
+}
+
+// ClearAuthError clears the value of the "auth_error" field.
+func (u *AccountUpsert) ClearAuthError() *AccountUpsert {
+	u.SetNull(account.FieldAuthError)
+	return u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (u *AccountUpsert) SetUpdatedAt(v time.Time) *AccountUpsert {
 	u.Set(account.FieldUpdatedAt, v)
@@ -449,6 +522,41 @@ func (u *AccountUpsertOne) UpdateSettings() *AccountUpsertOne {
 func (u *AccountUpsertOne) ClearSettings() *AccountUpsertOne {
 	return u.Update(func(s *AccountUpsert) {
 		s.ClearSettings()
+	})
+}
+
+// SetNeedsReauth sets the "needs_reauth" field.
+func (u *AccountUpsertOne) SetNeedsReauth(v bool) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetNeedsReauth(v)
+	})
+}
+
+// UpdateNeedsReauth sets the "needs_reauth" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateNeedsReauth() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateNeedsReauth()
+	})
+}
+
+// SetAuthError sets the "auth_error" field.
+func (u *AccountUpsertOne) SetAuthError(v string) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetAuthError(v)
+	})
+}
+
+// UpdateAuthError sets the "auth_error" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateAuthError() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateAuthError()
+	})
+}
+
+// ClearAuthError clears the value of the "auth_error" field.
+func (u *AccountUpsertOne) ClearAuthError() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearAuthError()
 	})
 }
 
@@ -719,6 +827,41 @@ func (u *AccountUpsertBulk) UpdateSettings() *AccountUpsertBulk {
 func (u *AccountUpsertBulk) ClearSettings() *AccountUpsertBulk {
 	return u.Update(func(s *AccountUpsert) {
 		s.ClearSettings()
+	})
+}
+
+// SetNeedsReauth sets the "needs_reauth" field.
+func (u *AccountUpsertBulk) SetNeedsReauth(v bool) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetNeedsReauth(v)
+	})
+}
+
+// UpdateNeedsReauth sets the "needs_reauth" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateNeedsReauth() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateNeedsReauth()
+	})
+}
+
+// SetAuthError sets the "auth_error" field.
+func (u *AccountUpsertBulk) SetAuthError(v string) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetAuthError(v)
+	})
+}
+
+// UpdateAuthError sets the "auth_error" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateAuthError() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateAuthError()
+	})
+}
+
+// ClearAuthError clears the value of the "auth_error" field.
+func (u *AccountUpsertBulk) ClearAuthError() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearAuthError()
 	})
 }
 

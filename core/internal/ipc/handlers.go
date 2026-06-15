@@ -102,6 +102,8 @@ func mapAccount(a *ent.Account) map[string]any {
 		"kind":        string(a.Kind),
 		"displayName": a.DisplayName,
 		"settings":    a.Settings,
+		"needsReauth": a.NeedsReauth,
+		"authError":   a.AuthError,
 		"createdAt":   a.CreatedAt,
 		"updatedAt":   a.UpdatedAt,
 	}

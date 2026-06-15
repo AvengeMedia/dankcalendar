@@ -28,6 +28,10 @@ func (Account) Fields() []ent.Field {
 			NotEmpty(),
 		field.JSON("settings", map[string]any{}).
 			Optional(),
+		field.Bool("needs_reauth").
+			Default(false),
+		field.String("auth_error").
+			Optional(),
 		field.Time("created_at").
 			Default(time.Now).
 			Immutable(),

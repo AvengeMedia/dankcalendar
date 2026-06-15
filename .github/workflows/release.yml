@@ -71,6 +71,40 @@ jobs:
             dcal-linux-${{ matrix.goarch }}.tar.gz
             dcal-linux-${{ matrix.goarch }}.tar.gz.sha256
 
+  package_completions:
+    name: Package Shell Completions
+    needs: [test]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: ./core/go.mod
+
+      - name: Generate completions
+        run: |
+          VERSION_NUM=${GITHUB_REF_NAME#v}
+          cd core
+          go build -o /tmp/dcal ./cmd/dcal
+          mkdir -p completions
+          /tmp/dcal completion bash > completions/dcal
+          /tmp/dcal completion zsh > completions/_dcal
+          /tmp/dcal completion fish > completions/dcal.fish
+          /tmp/dcal completion powershell > completions/dcal.ps1
+          tar -czf "../dcal-completions-${VERSION_NUM}.tar.gz" -C completions .
+          cd ..
+          sha256sum "dcal-completions-${VERSION_NUM}.tar.gz" > "dcal-completions-${VERSION_NUM}.tar.gz.sha256"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dcal-completions
+          path: |
+            dcal-completions-*.tar.gz
+            dcal-completions-*.tar.gz.sha256
+
   package_shell:
     name: Package Shell Config
     needs: [test]
@@ -97,7 +131,7 @@ jobs:
   create_release:
     name: Create GitHub Release
     runs-on: ubuntu-24.04
-    needs: [build, package_shell]
+    needs: [build, package_shell, package_completions]
     permissions:
       contents: write
     steps:

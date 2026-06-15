@@ -46,6 +46,15 @@ func (r *Repo) UpdateAccount(ctx context.Context, id string, in UpdateAccountInp
 	return q.Save(ctx)
 }
 
+// SetAccountAuthState records whether an account needs re-authorization and the
+// last auth error seen, so the CLI and GUI can surface a reconnect prompt.
+func (r *Repo) SetAccountAuthState(ctx context.Context, id string, needsReauth bool, authError string) error {
+	return r.client.Account.UpdateOneID(id).
+		SetNeedsReauth(needsReauth).
+		SetAuthError(authError).
+		Exec(ctx)
+}
+
 // Children are deleted explicitly so pre-cascade databases stay deletable.
 func (r *Repo) DeleteAccount(ctx context.Context, id string) error {
 	return r.WithTx(ctx, func(tx *ent.Tx) error {

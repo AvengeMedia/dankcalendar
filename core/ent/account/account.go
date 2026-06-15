@@ -21,6 +21,10 @@ const (
 	FieldDisplayName = "display_name"
 	// FieldSettings holds the string denoting the settings field in the database.
 	FieldSettings = "settings"
+	// FieldNeedsReauth holds the string denoting the needs_reauth field in the database.
+	FieldNeedsReauth = "needs_reauth"
+	// FieldAuthError holds the string denoting the auth_error field in the database.
+	FieldAuthError = "auth_error"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -53,6 +57,8 @@ var Columns = []string{
 	FieldKind,
 	FieldDisplayName,
 	FieldSettings,
+	FieldNeedsReauth,
+	FieldAuthError,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -70,6 +76,8 @@ func ValidColumn(column string) bool {
 var (
 	// DisplayNameValidator is a validator for the "display_name" field. It is called by the builders before save.
 	DisplayNameValidator func(string) error
+	// DefaultNeedsReauth holds the default value on creation for the "needs_reauth" field.
+	DefaultNeedsReauth bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -121,6 +129,16 @@ func ByKind(opts ...sql.OrderTermOption) OrderOption {
 // ByDisplayName orders the results by the display_name field.
 func ByDisplayName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDisplayName, opts...).ToFunc()
+}
+
+// ByNeedsReauth orders the results by the needs_reauth field.
+func ByNeedsReauth(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNeedsReauth, opts...).ToFunc()
+}
+
+// ByAuthError orders the results by the auth_error field.
+func ByAuthError(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAuthError, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
