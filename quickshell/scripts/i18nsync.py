@@ -26,7 +26,10 @@ PROJECT_ID_ENV = "DCAL_POEDITOR_PROJECT_ID"
 
 # POEditor language code -> poexports/<file>. Empty until the project has
 # translations; add entries as locales come online, e.g. "de": "de.json".
-LANGUAGES = {}
+LANGUAGES = {
+    "it": "it.json",
+    "vi": "vi.json"
+}
 
 
 def error(msg):

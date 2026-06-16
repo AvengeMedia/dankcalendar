@@ -1,0 +1,893 @@
+{
+  "%1 AM": {
+    "%1 AM": "%1 AM"
+  },
+  "%1 PM": {
+    "%1 PM": "%1 PM"
+  },
+  "%1 · All day": {
+    "%1 · All day": "%1 · Cả ngày"
+  },
+  "%1d before": {
+    "%1d before": "trước %1 ngày"
+  },
+  "%1h": {
+    "%1h": "%1g"
+  },
+  "%1h before": {
+    "%1h before": "trước %1 giờ"
+  },
+  "%1h%2m": {
+    "%1h%2m": "%1g%2ph"
+  },
+  "%1m": {
+    "%1m": "%1ph"
+  },
+  "%1m before": {
+    "%1m before": "trước %1 phút"
+  },
+  "%1w before": {
+    "%1w before": "trước %1 tuần"
+  },
+  "(untitled)": {
+    "(untitled)": "(chưa đặt tên)"
+  },
+  "+%1 more": {
+    "+%1 more": "+%1 khác"
+  },
+  "1 day before": {
+    "1 day before": "1 ngày trước"
+  },
+  "1 hour": {
+    "1 hour": "1 giờ"
+  },
+  "1 hour before": {
+    "1 hour before": "1 giờ trước"
+  },
+  "1 week before": {
+    "1 week before": "1 tuần trước"
+  },
+  "1.5 hours": {
+    "1.5 hours": "1,5 giờ"
+  },
+  "10 minutes": {
+    "10 minutes": "10 phút"
+  },
+  "10 minutes before": {
+    "10 minutes before": "10 phút trước"
+  },
+  "12-hour": {
+    "12-hour": "12 giờ"
+  },
+  "12h": {
+    "12h": "12h"
+  },
+  "15 minutes": {
+    "15 minutes": "15 phút"
+  },
+  "15 minutes before": {
+    "15 minutes before": "15 phút trước"
+  },
+  "2 days before": {
+    "2 days before": "2 ngày trước"
+  },
+  "2 hours": {
+    "2 hours": "2 giờ"
+  },
+  "2 hours before": {
+    "2 hours before": "2 giờ trước"
+  },
+  "24-hour": {
+    "24-hour": "24 giờ"
+  },
+  "24h": {
+    "24h": "24h"
+  },
+  "30 minutes": {
+    "30 minutes": "30 phút"
+  },
+  "30 minutes before": {
+    "30 minutes before": "30 phút trước"
+  },
+  "45 minutes": {
+    "45 minutes": "45 phút"
+  },
+  "5 minutes": {
+    "5 minutes": "5 phút"
+  },
+  "5 minutes before": {
+    "5 minutes before": "5 phút trước"
+  },
+  "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
+    "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Giấy phép MIT</a>"
+  },
+  "A file with this name already exists. Do you want to overwrite it?": {
+    "A file with this name already exists. Do you want to overwrite it?": "Một tệp có tên này đã tồn tại. Bạn có muốn ghi đè không?"
+  },
+  "A folder of .ics files on this machine.": {
+    "A folder of .ics files on this machine.": "Một thư mục chứa các tệp .ics trên máy này."
+  },
+  "API": {
+    "API": "API"
+  },
+  "About": {
+    "About": "Giới thiệu"
+  },
+  "Account connected": {
+    "Account connected": "Đã kết nối tài khoản"
+  },
+  "Accounts": {
+    "Accounts": "Tài khoản"
+  },
+  "Add": {
+    "Add": "Thêm"
+  },
+  "Add account": {
+    "Add account": "Thêm tài khoản"
+  },
+  "Add description": {
+    "Add description": "Thêm mô tả"
+  },
+  "Add title": {
+    "Add title": "Thêm tiêu đề"
+  },
+  "Adding…": {
+    "Adding…": "Đang thêm…"
+  },
+  "Agenda": {
+    "Agenda": "Lịch trình"
+  },
+  "Agenda view": {
+    "Agenda view": "Chế độ lịch trình"
+  },
+  "All credentials are stored in your system keyring when available.": {
+    "All credentials are stored in your system keyring when available.": "Mọi thông tin xác thực đều được lưu vào keyring hệ thống khi có thể."
+  },
+  "All day": {
+    "All day": "Cả ngày"
+  },
+  "All-day reminder time": {
+    "All-day reminder time": "Thời điểm nhắc sự kiện cả ngày"
+  },
+  "All-day reminder timing": {
+    "All-day reminder timing": "Thời điểm nhắc sự kiện cả ngày"
+  },
+  "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
+    "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Quay lại • F1/I: Thông tin tệp • F10: Trợ giúp • Esc: Đóng"
+  },
+  "Always use the dark theme.": {
+    "Always use the dark theme.": "Luôn dùng giao diện tối."
+  },
+  "Always use the light theme.": {
+    "Always use the light theme.": "Luôn dùng giao diện sáng."
+  },
+  "App-specific password": {
+    "App-specific password": "Mật khẩu dành riêng cho ứng dụng"
+  },
+  "Appearance": {
+    "Appearance": "Giao diện"
+  },
+  "Apple ID": {
+    "Apple ID": "Apple ID"
+  },
+  "Apple iCloud calendars via app-specific password.": {
+    "Apple iCloud calendars via app-specific password.": "Lịch Apple iCloud qua mật khẩu dành riêng cho ứng dụng."
+  },
+  "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": {
+    "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": "Cấp quyền truy cập trong trình duyệt. Cửa sổ sẽ tự động quay lại khi %1 gửi lại mã xác thực."
+  },
+  "Ascending": {
+    "Ascending": "Tăng dần"
+  },
+  "At start": {
+    "At start": "Lúc bắt đầu"
+  },
+  "Attendees": {
+    "Attendees": "Người tham dự"
+  },
+  "Authorization failed": {
+    "Authorization failed": "Xác thực thất bại"
+  },
+  "Authorize in your browser": {
+    "Authorize in your browser": "Xác thực trong trình duyệt"
+  },
+  "Auto": {
+    "Auto": "Tự động"
+  },
+  "Auto follows your locale (%1).": {
+    "Auto follows your locale (%1).": "Tự động theo ngôn ngữ hệ thống (%1)."
+  },
+  "Back": {
+    "Back": "Quay lại"
+  },
+  "Backend": {
+    "Backend": "Backend"
+  },
+  "Backend not connected.": {
+    "Backend not connected.": "Backend chưa kết nối."
+  },
+  "Begin setup": {
+    "Begin setup": "Bắt đầu thiết lập"
+  },
+  "Calendar": {
+    "Calendar": "Lịch"
+  },
+  "Calendar Settings": {
+    "Calendar Settings": "Cài đặt lịch"
+  },
+  "Calendar name": {
+    "Calendar name": "Tên lịch"
+  },
+  "Calendars": {
+    "Calendars": "Lịch"
+  },
+  "Cancel": {
+    "Cancel": "Hủy"
+  },
+  "Capabilities": {
+    "Capabilities": "Tính năng hỗ trợ"
+  },
+  "Choose a provider": {
+    "Choose a provider": "Chọn nhà cung cấp"
+  },
+  "Choose calendar directory": {
+    "Choose calendar directory": "Chọn thư mục lịch"
+  },
+  "Click to zoom · Esc to close": {
+    "Click to zoom · Esc to close": "Nhấn để phóng to · Esc để đóng"
+  },
+  "Client ID": {
+    "Client ID": "Client ID"
+  },
+  "Client Secret": {
+    "Client Secret": "Client Secret"
+  },
+  "Close behavior": {
+    "Close behavior": ""
+  },
+  "Color source": {
+    "Color source": "Nguồn màu"
+  },
+  "Colors are shared with DankMaterialShell when available.": {
+    "Colors are shared with DankMaterialShell when available.": "Màu sắc được chia sẻ với DankMaterialShell khi có thể."
+  },
+  "Coming soon": {
+    "Coming soon": "Sắp có"
+  },
+  "Confirm": {
+    "Confirm": "Xác nhận"
+  },
+  "Confirm delete": {
+    "Confirm delete": "Xác nhận xóa"
+  },
+  "Connect": {
+    "Connect": "Kết nối"
+  },
+  "Connect %1": {
+    "Connect %1": "Kết nối %1"
+  },
+  "Connect any CalDAV-compatible server.": {
+    "Connect any CalDAV-compatible server.": "Kết nối bất kỳ máy chủ tương thích CalDAV nào."
+  },
+  "Connected": {
+    "Connected": "Đã kết nối"
+  },
+  "Connected calendar providers.": {
+    "Connected calendar providers.": "Các nhà cung cấp lịch đã kết nối."
+  },
+  "Connecting…": {
+    "Connecting…": "Đang kết nối…"
+  },
+  "Continue": {
+    "Continue": "Tiếp tục"
+  },
+  "Copy path": {
+    "Copy path": "Sao chép đường dẫn"
+  },
+  "Could not read that file.": {
+    "Could not read that file.": "Không thể đọc tệp này."
+  },
+  "Create event": {
+    "Create event": "Tạo sự kiện"
+  },
+  "Credentials stay on this machine": {
+    "Credentials stay on this machine": "Thông tin xác thực chỉ lưu trên máy này"
+  },
+  "DMS dynamic": {
+    "DMS dynamic": "DMS dynamic"
+  },
+  "DMS dynamic colors detected when available.": {
+    "DMS dynamic colors detected when available.": "Màu động DMS được áp dụng khi phát hiện."
+  },
+  "Daemon offline": {
+    "Daemon offline": "Daemon ngoại tuyến"
+  },
+  "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
+    "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar là ứng dụng lịch cho màn hình Linux hiện đại với thiết kế lấy cảm hứng từ <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3</a>, cùng CLI và socket API có thể tùy biến để tích hợp.<br /><br/>Ứng dụng được xây dựng bằng <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, một framework QT6 để xây dựng desktop shell, và <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, một ngôn ngữ lập trình biên dịch kiểu tĩnh."
+  },
+  "Dank Linux Discord": {
+    "Dank Linux Discord": "Dank Linux Discord"
+  },
+  "Dark": {
+    "Dark": "Tối"
+  },
+  "Day": {
+    "Day": "Ngày"
+  },
+  "Day view": {
+    "Day view": "Chế độ ngày"
+  },
+  "Default event duration": {
+    "Default event duration": "Thời lượng sự kiện mặc định"
+  },
+  "Default reminder": {
+    "Default reminder": "Lời nhắc mặc định"
+  },
+  "Defaults follow your locale unless overridden.": {
+    "Defaults follow your locale unless overridden.": "Mặc định theo cài đặt ngôn ngữ hệ thống, trừ khi được ghi đè."
+  },
+  "Delete": {
+    "Delete": "Xóa"
+  },
+  "Delete \"%1\"?": {
+    "Delete \"%1\"?": "Xóa \"%1\"?"
+  },
+  "Delete…": {
+    "Delete…": "Xóa…"
+  },
+  "Descending": {
+    "Descending": "Giảm dần"
+  },
+  "Description": {
+    "Description": "Mô tả"
+  },
+  "Desktop": {
+    "Desktop": "Máy tính để bàn"
+  },
+  "Desktop notifications for upcoming events.": {
+    "Desktop notifications for upcoming events.": "Thông báo trên màn hình cho các sự kiện sắp tới."
+  },
+  "Directory": {
+    "Directory": "Thư mục"
+  },
+  "Display ISO week numbers in month view.": {
+    "Display ISO week numbers in month view.": "Hiển thị số tuần ISO trong chế độ tháng."
+  },
+  "Display name (optional)": {
+    "Display name (optional)": "Tên hiển thị (tùy chọn)"
+  },
+  "Docs": {
+    "Docs": "Docs"
+  },
+  "Documents": {
+    "Documents": "Tài liệu"
+  },
+  "Done": {
+    "Done": "Xong"
+  },
+  "Downloads": {
+    "Downloads": "Tải xuống"
+  },
+  "Drag to pan · click to fit": {
+    "Drag to pan · click to fit": "Kéo để di chuyển · nhấn để vừa khung"
+  },
+  "Edit event": {
+    "Edit event": "Chỉnh sửa sự kiện"
+  },
+  "Enable reminders": {
+    "Enable reminders": "Bật lời nhắc"
+  },
+  "Enlarge": {
+    "Enlarge": "Phóng to"
+  },
+  "Enter client ID": {
+    "Enter client ID": "Nhập Client ID"
+  },
+  "Enter filename...": {
+    "Enter filename...": "Nhập tên tệp..."
+  },
+  "Enter your CalDAV server details. The connection is verified before the account is saved.": {
+    "Enter your CalDAV server details. The connection is verified before the account is saved.": "Nhập thông tin máy chủ CalDAV. Kết nối được xác minh trước khi lưu tài khoản."
+  },
+  "Enter your client ID": {
+    "Enter your client ID": "Nhập Client ID của bạn"
+  },
+  "Event": {
+    "Event": "Sự kiện"
+  },
+  "Event details": {
+    "Event details": "Chi tiết sự kiện"
+  },
+  "F1/I: Toggle • F10: Help": {
+    "F1/I: Toggle • F10: Help": "F1/I: Bật/tắt • F10: Trợ giúp"
+  },
+  "File Already Exists": {
+    "File Already Exists": "Tệp đã tồn tại"
+  },
+  "File Information": {
+    "File Information": "Thông tin tệp"
+  },
+  "Files - %1": {
+    "Files - %1": "Tệp - %1"
+  },
+  "First day shown in week and month views.": {
+    "First day shown in week and month views.": "Ngày đầu tiên hiển thị trong chế độ tuần và tháng."
+  },
+  "Following the system color scheme (currently %1).": {
+    "Following the system color scheme (currently %1).": "Đang theo bảng màu hệ thống (hiện tại: %1)."
+  },
+  "General": {
+    "General": "Chung"
+  },
+  "Generate app-specific password": {
+    "Generate app-specific password": "Tạo mật khẩu dành riêng cho ứng dụng"
+  },
+  "GitHub": {
+    "GitHub": "GitHub"
+  },
+  "Go to today": {
+    "Go to today": "Đến hôm nay"
+  },
+  "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
+    "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google yêu cầu bạn tạo OAuth client riêng để đọc dữ liệu lịch. Đây là thiết lập một lần, mất khoảng ba phút."
+  },
+  "Hide": {
+    "Hide": "Ẩn"
+  },
+  "Home": {
+    "Home": "Thư mục gốc"
+  },
+  "How long the snooze button postpones a reminder.": {
+    "How long the snooze button postpones a reminder.": "Thời gian nút báo lại hoãn một lời nhắc."
+  },
+  "Import client_secret.json": {
+    "Import client_secret.json": "Nhập client_secret.json"
+  },
+  "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
+    "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Nhập tệp client_secret_….json đã tải về khi tạo client, hoặc dán Client ID và Secret thủ công."
+  },
+  "Initial reminder set on new events.": {
+    "Initial reminder set on new events.": "Lời nhắc mặc định được đặt khi tạo sự kiện mới."
+  },
+  "Keep typing": {
+    "Keep typing": "Tiếp tục nhập"
+  },
+  "Keep until dismissed": {
+    "Keep until dismissed": "Giữ đến khi đóng"
+  },
+  "Keyboard shortcuts": {
+    "Keyboard shortcuts": "Phím tắt"
+  },
+  "Ko-fi": {
+    "Ko-fi": "Ko-fi"
+  },
+  "Launch Dank Calendar in the background when you log in.": {
+    "Launch Dank Calendar in the background when you log in.": "Khởi động Dank Calendar nền khi đăng nhập."
+  },
+  "Length used when creating events.": {
+    "Length used when creating events.": "Thời lượng dùng khi tạo sự kiện."
+  },
+  "Light": {
+    "Light": "Sáng"
+  },
+  "Loading setup instructions…": {
+    "Loading setup instructions…": "Đang tải hướng dẫn thiết lập…"
+  },
+  "Local": {
+    "Local": "Cục bộ"
+  },
+  "Local calendar": {
+    "Local calendar": "Lịch cục bộ"
+  },
+  "Local calendars": {
+    "Local calendars": "Lịch cục bộ"
+  },
+  "Location": {
+    "Location": "Địa điểm"
+  },
+  "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
+    "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft thường trả về server_error trong vài phút đầu sau khi tạo hoặc thay đổi đăng ký ứng dụng. Hãy đợi một hoặc hai phút rồi thử lại."
+  },
+  "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": {
+    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft yêu cầu bạn đăng ký ứng dụng riêng để đọc dữ liệu lịch. Đây là thiết lập một lần, mất khoảng hai phút — không cần client secret."
+  },
+  "Minimize": {
+    "Minimize": ""
+  },
+  "Modified": {
+    "Modified": "Đã sửa đổi"
+  },
+  "Month": {
+    "Month": "Tháng"
+  },
+  "Month view": {
+    "Month view": "Chế độ tháng"
+  },
+  "Move to Trash": {
+    "Move to Trash": "Chuyển vào thùng rác"
+  },
+  "Music": {
+    "Music": "Âm nhạc"
+  },
+  "My calendars": {
+    "My calendars": "Lịch của tôi"
+  },
+  "My server": {
+    "My server": "Máy chủ của tôi"
+  },
+  "Name": {
+    "Name": "Tên"
+  },
+  "Navigation": {
+    "Navigation": "Điều hướng"
+  },
+  "New event": {
+    "New event": "Sự kiện mới"
+  },
+  "Next day": {
+    "Next day": "Ngày tiếp theo"
+  },
+  "Next event": {
+    "Next event": "Sự kiện tiếp theo"
+  },
+  "Next week": {
+    "Next week": "Tuần tiếp theo"
+  },
+  "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
+    "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "Không tìm thấy OAuth client trong tệp — cần tệp client_secret_….json tải từ Google."
+  },
+  "No accounts yet. Click \"Add account\" to connect one.": {
+    "No accounts yet. Click \"Add account\" to connect one.": "Chưa có tài khoản nào. Nhấn \"Thêm tài khoản\" để kết nối."
+  },
+  "No calendars yet": {
+    "No calendars yet": "Chưa có lịch nào"
+  },
+  "No calendars yet. Add an account first.": {
+    "No calendars yet. Add an account first.": "Chưa có lịch nào. Hãy thêm tài khoản trước."
+  },
+  "No matching events": {
+    "No matching events": "Không tìm thấy sự kiện"
+  },
+  "No writable calendar available": {
+    "No writable calendar available": "Không có lịch nào có thể ghi"
+  },
+  "None": {
+    "None": "Không có"
+  },
+  "Not authorized — remove this account and add it again": {
+    "Not authorized — remove this account and add it again": "Chưa được xác thực — gỡ bỏ tài khoản này và thêm lại"
+  },
+  "Nothing scheduled in the next %1 days": {
+    "Nothing scheduled in the next %1 days": "Không có gì trong %1 ngày tới"
+  },
+  "Notifications": {
+    "Notifications": "Thông báo"
+  },
+  "Notify for all-day events without their own reminders.": {
+    "Notify for all-day events without their own reminders.": "Thông báo cho các sự kiện cả ngày không có lời nhắc riêng."
+  },
+  "Offline": {
+    "Offline": "Ngoại tuyến"
+  },
+  "On the day": {
+    "On the day": "Vào ngày đó"
+  },
+  "Open": {
+    "Open": "Mở"
+  },
+  "Open Calendar": {
+    "Open Calendar": "Mở Lịch"
+  },
+  "Open browser again": {
+    "Open browser again": "Mở lại trình duyệt"
+  },
+  "Open or create event": {
+    "Open or create event": "Mở hoặc tạo sự kiện"
+  },
+  "Order": {
+    "Order": "Thứ tự"
+  },
+  "Outlook, Office 365 and Exchange Online calendars.": {
+    "Outlook, Office 365 and Exchange Online calendars.": "Lịch Outlook, Office 365 và Exchange Online."
+  },
+  "Override": {
+    "Override": "Ghi đè riêng"
+  },
+  "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "Ghi đè cài đặt lời nhắc toàn cục cho lịch này. Các tùy chọn không thay đổi sẽ theo mặc định toàn cục."
+  },
+  "Overwrite": {
+    "Overwrite": "Ghi đè"
+  },
+  "Part of the Dank Linux suite.": {
+    "Part of the Dank Linux suite.": "Một phần của bộ Dank Linux."
+  },
+  "Password": {
+    "Password": "Mật khẩu"
+  },
+  "Paste credentials": {
+    "Paste credentials": "Dán thông tin xác thực"
+  },
+  "Paste the Application (client) ID from your app registration's Overview page.": {
+    "Paste the Application (client) ID from your app registration's Overview page.": "Dán Application (client) ID từ trang Overview của đăng ký ứng dụng."
+  },
+  "Paste your credentials": {
+    "Paste your credentials": "Dán thông tin xác thực của bạn"
+  },
+  "Pictures": {
+    "Pictures": "Hình ảnh"
+  },
+  "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Trỏ đến thư mục chứa các tệp .ics. Mỗi thư mục con hoặc tệp .ics sẽ thành một lịch — tương thích với cấu trúc vdirsyncer/khal. Thư mục được tạo nếu chưa tồn tại."
+  },
+  "Previous day": {
+    "Previous day": "Ngày trước"
+  },
+  "Previous event": {
+    "Previous event": "Sự kiện trước"
+  },
+  "Previous week": {
+    "Previous week": "Tuần trước"
+  },
+  "Quick Access": {
+    "Quick Access": "Truy cập nhanh"
+  },
+  "Quit": {
+    "Quit": "Thoát"
+  },
+  "Reconnect": {
+    "Reconnect": "Kết nối lại"
+  },
+  "Reminders and desktop alerts.": {
+    "Reminders and desktop alerts.": "Lời nhắc và cảnh báo trên màn hình."
+  },
+  "Reminders are disabled globally, so nothing fires until you re-enable them.": {
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "Lời nhắc đang tắt ở cấp toàn cục, không có gì được kích hoạt cho đến khi bạn bật lại."
+  },
+  "Reminders for \"%1": {
+    "Reminders for \"%1\"": "Lời nhắc cho \"%1\""
+  },
+  "Reminders stay on screen until you act on them.": {
+    "Reminders stay on screen until you act on them.": "Lời nhắc giữ trên màn hình cho đến khi bạn xử lý."
+  },
+  "Remove": {
+    "Remove": "Gỡ bỏ"
+  },
+  "Remove \"%1\"?": {
+    "Remove \"%1\"?": "Gỡ bỏ \"%1\"?"
+  },
+  "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
+    "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Gỡ bỏ tài khoản này cùng lịch và sự kiện khỏi Dank Calendar. Dữ liệu trên nhà cung cấp không bị xóa."
+  },
+  "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": {
+    "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": "Gỡ bỏ lịch này và các sự kiện của nó khỏi Dank Calendar. Nếu nhà cung cấp vẫn còn lịch này, nó sẽ được khôi phục lần đồng bộ tiếp theo."
+  },
+  "Remove…": {
+    "Remove…": "Gỡ bỏ…"
+  },
+  "Rename calendar": {
+    "Rename calendar": "Đổi tên lịch"
+  },
+  "Rename…": {
+    "Rename…": "Đổi tên…"
+  },
+  "Reset to global": {
+    "Reset to global": "Đặt lại về toàn cục"
+  },
+  "Save": {
+    "Save": "Lưu"
+  },
+  "Saving...": {
+    "Saving...": "Đang lưu..."
+  },
+  "Search": {
+    "Search": "Tìm kiếm"
+  },
+  "Search events": {
+    "Search events": "Tìm kiếm sự kiện"
+  },
+  "Search failed": {
+    "Search failed": "Tìm kiếm thất bại"
+  },
+  "Searching": {
+    "Searching": "Đang tìm kiếm"
+  },
+  "Select File": {
+    "Select File": "Chọn tệp"
+  },
+  "Select client_secret.json": {
+    "Select client_secret.json": "Chọn client_secret.json"
+  },
+  "Select file": {
+    "Select file": "Chọn tệp"
+  },
+  "Send test": {
+    "Send test": "Gửi thử"
+  },
+  "Server URL": {
+    "Server URL": "URL máy chủ"
+  },
+  "Settings": {
+    "Settings": "Cài đặt"
+  },
+  "Show": {
+    "Show": "Hiện"
+  },
+  "Show all-day reminders": {
+    "Show all-day reminders": "Hiển thị lời nhắc cả ngày"
+  },
+  "Show week numbers": {
+    "Show week numbers": "Hiển thị số tuần"
+  },
+  "Sign in with %1": {
+    "Sign in with %1": "Đăng nhập bằng %1"
+  },
+  "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
+    "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Đăng nhập bằng Apple ID và mật khẩu dành riêng cho ứng dụng. Mật khẩu Apple ID thông thường sẽ không hoạt động."
+  },
+  "Sign in with your Google account.": {
+    "Sign in with your Google account.": "Đăng nhập bằng tài khoản Google."
+  },
+  "Sign-in expired — reconnect to keep syncing": {
+    "Sign-in expired — reconnect to keep syncing": "Phiên đăng nhập hết hạn — kết nối lại để tiếp tục đồng bộ"
+  },
+  "Size": {
+    "Size": "Kích cỡ"
+  },
+  "Snooze duration": {
+    "Snooze duration": "Thời gian báo lại"
+  },
+  "Sort By": {
+    "Sort By": "Sắp xếp theo"
+  },
+  "Start at login": {
+    "Start at login": "Khởi động khi đăng nhập"
+  },
+  "Start week on": {
+    "Start week on": "Bắt đầu tuần vào"
+  },
+  "Starting…": {
+    "Starting…": "Đang khởi động…"
+  },
+  "Status": {
+    "Status": "Trạng thái"
+  },
+  "Step %1": {
+    "Step %1": "Bước %1"
+  },
+  "Step %1: %2": {
+    "Step %1: %2": "Bước %1: %2"
+  },
+  "Stock palette": {
+    "Stock palette": "Bảng màu mặc định"
+  },
+  "Sync now": {
+    "Sync now": "Đồng bộ ngay"
+  },
+  "Synced as \"%1\". The name only changes in Dank Calendar.": {
+    "Synced as \"%1\". The name only changes in Dank Calendar.": "Đồng bộ với tên \"%1\". Tên chỉ thay đổi trong Dank Calendar."
+  },
+  "System default (%1)": {
+    "System default (%1)": "Mặc định hệ thống (%1)"
+  },
+  "System preference unavailable — using dark.": {
+    "System preference unavailable — using dark.": "Không có tùy chọn hệ thống — đang dùng giao diện tối."
+  },
+  "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
+    "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Di chuyển • ←→↑↓: Di chuyển lưới • Enter/Space: Chọn"
+  },
+  "Test notification": {
+    "Test notification": "Thông báo thử nghiệm"
+  },
+  "That file is not valid JSON.": {
+    "That file is not valid JSON.": "Tệp này không phải JSON hợp lệ."
+  },
+  "Theme": {
+    "Theme": "Giao diện"
+  },
+  "This account cannot be reconnected — remove it and add it again.": {
+    "This account cannot be reconnected — remove it and add it again.": "Tài khoản này không thể kết nối lại — hãy gỡ bỏ và thêm lại."
+  },
+  "Time format": {
+    "Time format": "Định dạng giờ"
+  },
+  "Title is required": {
+    "Title is required": "Tiêu đề là bắt buộc"
+  },
+  "Today": {
+    "Today": "Hôm nay"
+  },
+  "Toggle this help": {
+    "Toggle this help": "Bật/tắt trợ giúp này"
+  },
+  "Tomorrow": {
+    "Tomorrow": "Ngày mai"
+  },
+  "Try a different search.": {
+    "Try a different search.": "Hãy thử tìm kiếm khác."
+  },
+  "Try again": {
+    "Try again": "Thử lại"
+  },
+  "Type": {
+    "Type": "Loại"
+  },
+  "Type at least 2 characters to search events.": {
+    "Type at least 2 characters to search events.": "Nhập ít nhất 2 ký tự để tìm kiếm sự kiện."
+  },
+  "Use synced name": {
+    "Use synced name": "Dùng tên đã đồng bộ"
+  },
+  "Use this folder": {
+    "Use this folder": "Dùng thư mục này"
+  },
+  "Username": {
+    "Username": "Tên người dùng"
+  },
+  "Verify desktop notifications are working.": {
+    "Verify desktop notifications are working.": "Kiểm tra xem thông báo màn hình có hoạt động không."
+  },
+  "Version": {
+    "Version": "Phiên bản"
+  },
+  "Videos": {
+    "Videos": "Video"
+  },
+  "View": {
+    "View": "Chế độ xem"
+  },
+  "Visibility, names, and removal per calendar.": {
+    "Visibility, names, and removal per calendar.": "Hiển thị, tên và gỡ bỏ theo từng lịch."
+  },
+  "Waiting for browser…": {
+    "Waiting for browser…": "Đang chờ trình duyệt…"
+  },
+  "Waiting for the dankcalendar daemon...": {
+    "Waiting for the dankcalendar daemon...": "Đang chờ daemon dankcalendar..."
+  },
+  "Week": {
+    "Week": "Tuần"
+  },
+  "Week view": {
+    "Week view": "Chế độ tuần"
+  },
+  "What the window's close button does.": {
+    "What the window's close button does.": ""
+  },
+  "When all-day event reminders fire.": {
+    "When all-day event reminders fire.": "Thời điểm kích hoạt lời nhắc sự kiện cả ngày."
+  },
+  "Yesterday": {
+    "Yesterday": "Hôm qua"
+  },
+  "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": {
+    "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": "Lịch của bạn sẽ đồng bộ nền. Bạn có thể quản lý tài khoản này từ Cài đặt → Tài khoản."
+  },
+  "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
+    "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Client ID, secret và refresh token của bạn được lưu trong keyring hệ thống (libsecret/kwallet) nếu có, hoặc trong tệp cục bộ được mã hóa."
+  },
+  "all day": {
+    "all day": "cả ngày"
+  },
+  "dark": {
+    "dark": "tối"
+  },
+  "light": {
+    "light": "sáng"
+  },
+  "password": {
+    "password": "mật khẩu"
+  },
+  "read-only": {
+    "read-only": "chỉ đọc"
+  },
+  "synced as \"%1": {
+    "synced as \"%1\"": "đồng bộ với tên \"%1\""
+  },
+  "username": {
+    "username": "tên người dùng"
+  },
+  "· %1 invited · %2 accepted": {
+    "· %1 invited · %2 accepted": "· %1 được mời · %2 đã chấp nhận"
+  }
+}

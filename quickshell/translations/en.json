@@ -272,7 +272,7 @@
   {
     "term": "Agenda",
     "context": "Agenda",
-    "reference": "Modules/CalendarSidebar.qml:106, Modules/CalendarContent.qml:30",
+    "reference": "Modules/CalendarSidebar.qml:106, Modules/CalendarContent.qml:31",
     "comment": "header title when the agenda view is active | view switcher option in sidebar"
   },
   {
@@ -1592,7 +1592,7 @@
   {
     "term": "Today",
     "context": "Today",
-    "reference": "Modules/CalendarContent.qml:51, Modals/SearchModal.qml:69, Modules/views/AgendaView.qml:29",
+    "reference": "Modules/CalendarContent.qml:52, Modals/SearchModal.qml:69, Modules/views/AgendaView.qml:29",
     "comment": "agenda section header for the current day | header button that jumps to the current date | search result date label for current day"
   },
   {
