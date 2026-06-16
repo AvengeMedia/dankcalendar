@@ -1,0 +1,37 @@
+name: Nix flake and NixOS tests
+
+on:
+  pull_request:
+    branches: [master, main]
+    paths:
+      - "flake.*"
+      - "distro/nix/**"
+jobs:
+  check-flake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          enable_kvm: true
+          extra_nix_config: |
+            system-features = nixos-test benchmark big-parallel kvm
+
+      - name: Check the flake
+        run: nix flake check -L
+
+      - name: Run NixOS module test
+        run: nix build .#nixosTests.x86_64-linux.nixos-module -L
+
+      - name: Run NixOS service start test
+        run: nix build .#nixosTests.x86_64-linux.nixos-service-start-module -L
+
+      - name: Run home-manager module test
+        run: nix build .#nixosTests.x86_64-linux.home-manager-module -L
