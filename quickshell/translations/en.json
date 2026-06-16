@@ -68,7 +68,7 @@
   {
     "term": "+%1 more",
     "context": "+%1 more",
-    "reference": "Modules/views/MonthView.qml:276",
+    "reference": "Modules/views/MonthView.qml:336",
     "comment": "overflow label in month grid day cell, %1 is the number of hidden events"
   },
   {
@@ -302,7 +302,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:830, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:31",
+    "reference": "Modals/EventDetailsModal.qml:830, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:91",
     "comment": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -434,7 +434,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:139, Modules/CalendarWindow.qml:300",
+    "reference": "Modules/CalendarWindow.qml:152, Modules/CalendarWindow.qml:313",
     "comment": "main window title | main window title bar text"
   },
   {

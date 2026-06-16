@@ -42,6 +42,9 @@ Popup {
     contentItem: Column {
         spacing: Theme.spacingM
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         StyledText {
             text: root.title
             font.pixelSize: Theme.fontSizeLarge

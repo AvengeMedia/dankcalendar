@@ -1,0 +1,956 @@
+{
+  "%1 AM": {
+    "%1 AM": "%1 ДП"
+  },
+  "%1 PM": {
+    "%1 PM": "%1 ПП"
+  },
+  "%1 · All day": {
+    "%1 · All day": "%1 · Все дни"
+  },
+  "%1d before": {
+    "%1d before": "за %1 дн."
+  },
+  "%1h": {
+    "%1h": "%1 ч."
+  },
+  "%1h before": {
+    "%1h before": "за %1 ч."
+  },
+  "%1h%2m": {
+    "%1h%2m": "%1 ч. %2 мин."
+  },
+  "%1m": {
+    "%1m": "%1 мин."
+  },
+  "%1m before": {
+    "%1m before": "за %1 мин."
+  },
+  "%1w before": {
+    "%1w before": "за %1 нед."
+  },
+  "(untitled)": {
+    "(untitled)": "(без названия)"
+  },
+  "+%1 more": {
+    "+%1 more": "ещё %1"
+  },
+  "1 day before": {
+    "1 day before": "За 1 день"
+  },
+  "1 hour": {
+    "1 hour": "1 час"
+  },
+  "1 hour before": {
+    "1 hour before": "За 1 час"
+  },
+  "1 week before": {
+    "1 week before": "За 1 неделю"
+  },
+  "1.5 hours": {
+    "1.5 hours": "1,5 часа"
+  },
+  "10 minutes": {
+    "10 minutes": "10 минут"
+  },
+  "10 minutes before": {
+    "10 minutes before": "За 10 минут"
+  },
+  "12-hour": {
+    "12-hour": "12-часовой"
+  },
+  "12h": {
+    "12h": "12 ч."
+  },
+  "15 minutes": {
+    "15 minutes": "15 минут"
+  },
+  "15 minutes before": {
+    "15 minutes before": "За 15 минут"
+  },
+  "2 days before": {
+    "2 days before": "За 2 дня"
+  },
+  "2 hours": {
+    "2 hours": "2 часа"
+  },
+  "2 hours before": {
+    "2 hours before": "За 2 часа"
+  },
+  "24-hour": {
+    "24-hour": "24-часовой"
+  },
+  "24h": {
+    "24h": "24 ч."
+  },
+  "30 minutes": {
+    "30 minutes": "30 минут"
+  },
+  "30 minutes before": {
+    "30 minutes before": "За 30 минут"
+  },
+  "45 minutes": {
+    "45 minutes": "45 минут"
+  },
+  "5 minutes": {
+    "5 minutes": "5 минут"
+  },
+  "5 minutes before": {
+    "5 minutes before": "За 5 минут"
+  },
+  "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
+    "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Лицензия MIT</a>"
+  },
+  "A file with this name already exists. Do you want to overwrite it?": {
+    "A file with this name already exists. Do you want to overwrite it?": "Файл с таким именем уже существует. Перезаписать?"
+  },
+  "A folder of .ics files on this machine.": {
+    "A folder of .ics files on this machine.": "Папка с файлами .ics на этом компьютере."
+  },
+  "API": {
+    "API": "API"
+  },
+  "About": {
+    "About": "О программе"
+  },
+  "Account connected": {
+    "Account connected": "Аккаунт подключён"
+  },
+  "Accounts": {
+    "Accounts": "Аккаунты"
+  },
+  "Add": {
+    "Add": "Добавить"
+  },
+  "Add a calendar": {
+    "Add a calendar": "Добавить календарь"
+  },
+  "Add account": {
+    "Add account": "Добавить аккаунт"
+  },
+  "Add description": {
+    "Add description": "Добавить описание"
+  },
+  "Add title": {
+    "Add title": "Добавить название"
+  },
+  "Adding…": {
+    "Adding…": "Добавление…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": "Добавляет календарь в «%1»."
+  },
+  "Agenda": {
+    "Agenda": "Расписание"
+  },
+  "Agenda view": {
+    "Agenda view": "Режим расписания"
+  },
+  "All credentials are stored in your system keyring when available.": {
+    "All credentials are stored in your system keyring when available.": "Все учётные данные хранятся в системной связке ключей, если она доступна."
+  },
+  "All day": {
+    "All day": "Весь день"
+  },
+  "All-day reminder time": {
+    "All-day reminder time": "Время напоминания на весь день"
+  },
+  "All-day reminder timing": {
+    "All-day reminder timing": "Время напоминания на весь день"
+  },
+  "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
+    "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Назад • F1/I: Сведения • F10: Справка • Esc: Закрыть"
+  },
+  "Always use the dark theme.": {
+    "Always use the dark theme.": "Всегда использовать тёмную тему."
+  },
+  "Always use the light theme.": {
+    "Always use the light theme.": "Всегда использовать светлую тему."
+  },
+  "App-specific password": {
+    "App-specific password": "Пароль приложения"
+  },
+  "Appearance": {
+    "Appearance": "Оформление"
+  },
+  "Apple ID": {
+    "Apple ID": "Apple ID"
+  },
+  "Apple iCloud calendars via app-specific password.": {
+    "Apple iCloud calendars via app-specific password.": "Календари Apple iCloud через пароль приложения."
+  },
+  "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": {
+    "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": "Подтвердите доступ в браузере. Окно вернётся сюда автоматически, когда %1 отправит код авторизации."
+  },
+  "Ascending": {
+    "Ascending": "По возрастанию"
+  },
+  "At start": {
+    "At start": "В начале"
+  },
+  "Attendees": {
+    "Attendees": "Участники"
+  },
+  "Authorization failed": {
+    "Authorization failed": "Авторизация не удалась"
+  },
+  "Authorize in your browser": {
+    "Authorize in your browser": "Авторизуйтесь в браузере"
+  },
+  "Auto": {
+    "Auto": "Авто"
+  },
+  "Auto follows your locale (%1).": {
+    "Auto follows your locale (%1).": "Автоматически следует локали (%1)."
+  },
+  "Back": {
+    "Back": "Назад"
+  },
+  "Backend": {
+    "Backend": "Сервер"
+  },
+  "Backend not connected.": {
+    "Backend not connected.": "Сервер не подключён."
+  },
+  "Begin setup": {
+    "Begin setup": "Начать настройку"
+  },
+  "Calendar": {
+    "Calendar": "Календарь"
+  },
+  "Calendar Settings": {
+    "Calendar Settings": "Настройки календаря"
+  },
+  "Calendar name": {
+    "Calendar name": "Название календаря"
+  },
+  "Calendars": {
+    "Calendars": "Календари"
+  },
+  "Cancel": {
+    "Cancel": "Отмена"
+  },
+  "Capabilities": {
+    "Capabilities": "Возможности"
+  },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": ""
+  },
+  "Choose a provider": {
+    "Choose a provider": "Выберите провайдера"
+  },
+  "Choose calendar directory": {
+    "Choose calendar directory": "Выберите папку календаря"
+  },
+  "Click to zoom · Esc to close": {
+    "Click to zoom · Esc to close": "Нажмите для увеличения · Esc для закрытия"
+  },
+  "Client ID": {
+    "Client ID": "ID клиента"
+  },
+  "Client Secret": {
+    "Client Secret": "Секрет клиента"
+  },
+  "Close behavior": {
+    "Close behavior": "Поведение при закрытии"
+  },
+  "Color source": {
+    "Color source": "Источник цвета"
+  },
+  "Colors are shared with DankMaterialShell when available.": {
+    "Colors are shared with DankMaterialShell when available.": "Цвета используются совместно с DankMaterialShell, если доступно."
+  },
+  "Coming soon": {
+    "Coming soon": "Скоро"
+  },
+  "Confirm": {
+    "Confirm": "Подтвердить"
+  },
+  "Confirm delete": {
+    "Confirm delete": "Подтвердить удаление"
+  },
+  "Connect": {
+    "Connect": "Подключить"
+  },
+  "Connect %1": {
+    "Connect %1": "Подключить %1"
+  },
+  "Connect any CalDAV-compatible server.": {
+    "Connect any CalDAV-compatible server.": "Подключите любой CalDAV-совместимый сервер."
+  },
+  "Connected": {
+    "Connected": "Подключено"
+  },
+  "Connected calendar providers.": {
+    "Connected calendar providers.": "Подключённые провайдеры календарей."
+  },
+  "Connecting…": {
+    "Connecting…": "Подключение…"
+  },
+  "Continue": {
+    "Continue": "Продолжить"
+  },
+  "Copy link": {
+    "Copy link": ""
+  },
+  "Copy path": {
+    "Copy path": "Копировать путь"
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": ""
+  },
+  "Could not read that file.": {
+    "Could not read that file.": "Не удалось прочитать файл."
+  },
+  "Create": {
+    "Create": "Создать"
+  },
+  "Create event": {
+    "Create event": "Создать событие"
+  },
+  "Credentials stay on this machine": {
+    "Credentials stay on this machine": "Учётные данные остаются на этом устройстве"
+  },
+  "Custom": {
+    "Custom": ""
+  },
+  "DMS dynamic": {
+    "DMS dynamic": "Динамические DMS"
+  },
+  "DMS dynamic colors detected when available.": {
+    "DMS dynamic colors detected when available.": "Динамические цвета DMS используются, если обнаружены."
+  },
+  "Daemon offline": {
+    "Daemon offline": "Демон не запущен"
+  },
+  "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
+    "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar — это календарь для современного Linux-десктопа с дизайном в стиле <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3</a>, а также расширяемым CLI и сокет-API для интеграций.<br /><br/>Создан с использованием <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, фреймворка QT6 для оболочек рабочего стола, и <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, статически типизированного компилируемого языка программирования."
+  },
+  "Dank Linux Discord": {
+    "Dank Linux Discord": "Dank Linux Discord"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": ""
+  },
+  "Dark": {
+    "Dark": "Тёмная"
+  },
+  "Day": {
+    "Day": "День"
+  },
+  "Day view": {
+    "Day view": "Режим дня"
+  },
+  "Default event duration": {
+    "Default event duration": "Длительность события по умолчанию"
+  },
+  "Default reminder": {
+    "Default reminder": "Напоминание по умолчанию"
+  },
+  "Defaults follow your locale unless overridden.": {
+    "Defaults follow your locale unless overridden.": "Значения по умолчанию определяются локалью, если не переопределены."
+  },
+  "Delete": {
+    "Delete": "Удалить"
+  },
+  "Delete \"%1\"?": {
+    "Delete \"%1\"?": "Удалить «%1»?"
+  },
+  "Delete…": {
+    "Delete…": "Удалить…"
+  },
+  "Descending": {
+    "Descending": "По убыванию"
+  },
+  "Description": {
+    "Description": "Описание"
+  },
+  "Desktop": {
+    "Desktop": "Рабочий стол"
+  },
+  "Desktop notifications for upcoming events.": {
+    "Desktop notifications for upcoming events.": "Уведомления на рабочем столе о предстоящих событиях."
+  },
+  "Directory": {
+    "Directory": "Папка"
+  },
+  "Display ISO week numbers in month view.": {
+    "Display ISO week numbers in month view.": "Отображать номера недель ISO в режиме месяца."
+  },
+  "Display name (optional)": {
+    "Display name (optional)": "Отображаемое имя (необязательно)"
+  },
+  "Docs": {
+    "Docs": "Документация"
+  },
+  "Documents": {
+    "Documents": "Документы"
+  },
+  "Done": {
+    "Done": "Готово"
+  },
+  "Downloads": {
+    "Downloads": "Загрузки"
+  },
+  "Drag to pan · click to fit": {
+    "Drag to pan · click to fit": "Перетащите для прокрутки · нажмите для подгонки"
+  },
+  "Edit event": {
+    "Edit event": "Редактировать событие"
+  },
+  "Enable reminders": {
+    "Enable reminders": "Включить напоминания"
+  },
+  "Enlarge": {
+    "Enlarge": "Увеличить"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": "Введите название календаря."
+  },
+  "Enter client ID": {
+    "Enter client ID": "Введите ID клиента"
+  },
+  "Enter filename...": {
+    "Enter filename...": "Введите имя файла..."
+  },
+  "Enter your CalDAV server details. The connection is verified before the account is saved.": {
+    "Enter your CalDAV server details. The connection is verified before the account is saved.": "Введите данные CalDAV-сервера. Соединение проверяется перед сохранением аккаунта."
+  },
+  "Enter your client ID": {
+    "Enter your client ID": "Введите ID клиента"
+  },
+  "Event": {
+    "Event": "Событие"
+  },
+  "Event details": {
+    "Event details": "Сведения о событии"
+  },
+  "F1/I: Toggle • F10: Help": {
+    "F1/I: Toggle • F10: Help": "F1/I: Переключить • F10: Справка"
+  },
+  "File Already Exists": {
+    "File Already Exists": "Файл уже существует"
+  },
+  "File Information": {
+    "File Information": "Сведения о файле"
+  },
+  "Files - %1": {
+    "Files - %1": "Файлы — %1"
+  },
+  "First day shown in week and month views.": {
+    "First day shown in week and month views.": "Первый день, отображаемый в режимах недели и месяца."
+  },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": ""
+  },
+  "Following the system color scheme (currently %1).": {
+    "Following the system color scheme (currently %1).": "Следует системной цветовой схеме (сейчас %1)."
+  },
+  "General": {
+    "General": "Общие"
+  },
+  "Generate app-specific password": {
+    "Generate app-specific password": "Создать пароль приложения"
+  },
+  "GitHub": {
+    "GitHub": "GitHub"
+  },
+  "Go to today": {
+    "Go to today": "Перейти к сегодняшнему дню"
+  },
+  "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
+    "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google требует создания собственного клиента OAuth для чтения данных календаря от вашего имени. Это одноразовая настройка, занимающая около трёх минут."
+  },
+  "Hide": {
+    "Hide": "Скрыть"
+  },
+  "Home": {
+    "Home": "Домашняя папка"
+  },
+  "How long the snooze button postpones a reminder.": {
+    "How long the snooze button postpones a reminder.": "Время, на которое откладывается напоминание."
+  },
+  "Import client_secret.json": {
+    "Import client_secret.json": "Импортировать client_secret.json"
+  },
+  "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
+    "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Импортируйте скачанный при создании клиента файл client_secret_….json или вставьте ID клиента и секрет вручную."
+  },
+  "Initial reminder set on new events.": {
+    "Initial reminder set on new events.": "Начальное напоминание для новых событий."
+  },
+  "Keep typing": {
+    "Keep typing": "Продолжайте ввод"
+  },
+  "Keep until dismissed": {
+    "Keep until dismissed": "Показывать до закрытия"
+  },
+  "Keyboard shortcuts": {
+    "Keyboard shortcuts": "Сочетания клавиш"
+  },
+  "Ko-fi": {
+    "Ko-fi": "Ko-fi"
+  },
+  "Launch Dank Calendar in the background when you log in.": {
+    "Launch Dank Calendar in the background when you log in.": "Запускать Dank Calendar в фоне при входе в систему."
+  },
+  "Length used when creating events.": {
+    "Length used when creating events.": "Длительность, используемая при создании событий."
+  },
+  "Light": {
+    "Light": "Светлая"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": ""
+  },
+  "Loading setup instructions…": {
+    "Loading setup instructions…": "Загрузка инструкций…"
+  },
+  "Local": {
+    "Local": "Локальный"
+  },
+  "Local calendar": {
+    "Local calendar": "Локальный календарь"
+  },
+  "Local calendars": {
+    "Local calendars": "Локальные календари"
+  },
+  "Location": {
+    "Location": "Местоположение"
+  },
+  "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
+    "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft часто возвращает server_error в первые минуты после создания или изменения регистрации приложения. Подождите пару минут и попробуйте снова."
+  },
+  "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": {
+    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft требует зарегистрировать собственное приложение для чтения данных календаря от вашего имени. Это одноразовая настройка, занимающая около двух минут — секрет клиента не нужен."
+  },
+  "Minimize": {
+    "Minimize": "Свернуть"
+  },
+  "Modified": {
+    "Modified": "Изменён"
+  },
+  "Month": {
+    "Month": "Месяц"
+  },
+  "Month view": {
+    "Month view": "Режим месяца"
+  },
+  "Move to Trash": {
+    "Move to Trash": "Переместить в корзину"
+  },
+  "Music": {
+    "Music": "Музыка"
+  },
+  "My calendars": {
+    "My calendars": "Мои календари"
+  },
+  "My server": {
+    "My server": "Мой сервер"
+  },
+  "Name": {
+    "Name": "Имя"
+  },
+  "Navigation": {
+    "Navigation": "Навигация"
+  },
+  "New calendar": {
+    "New calendar": "Новый календарь"
+  },
+  "New calendar…": {
+    "New calendar…": "Новый календарь…"
+  },
+  "New event": {
+    "New event": "Новое событие"
+  },
+  "Next day": {
+    "Next day": "Следующий день"
+  },
+  "Next event": {
+    "Next event": "Следующее событие"
+  },
+  "Next week": {
+    "Next week": "Следующая неделя"
+  },
+  "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
+    "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "В этом файле не найден клиент OAuth — ожидался файл client_secret_….json, скачанный из Google."
+  },
+  "No accounts yet. Click \"Add account\" to connect one.": {
+    "No accounts yet. Click \"Add account\" to connect one.": "Аккаунтов пока нет. Нажмите «Добавить аккаунт», чтобы подключить."
+  },
+  "No calendars yet": {
+    "No calendars yet": "Календарей пока нет"
+  },
+  "No calendars yet. Add an account first.": {
+    "No calendars yet. Add an account first.": "Календарей пока нет. Сначала добавьте аккаунт."
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": "Календарей пока нет. Создайте один, чтобы начать добавлять события."
+  },
+  "No matching events": {
+    "No matching events": "Ничего не найдено"
+  },
+  "No theme file selected": {
+    "No theme file selected": ""
+  },
+  "No writable calendar available": {
+    "No writable calendar available": "Нет доступного для записи календаря"
+  },
+  "None": {
+    "None": "Нет"
+  },
+  "Not authorized — remove this account and add it again": {
+    "Not authorized — remove this account and add it again": "Не авторизован — удалите аккаунт и добавьте заново"
+  },
+  "Nothing scheduled in the next %1 days": {
+    "Nothing scheduled in the next %1 days": "Нет событий на ближайшие %1 дней"
+  },
+  "Notifications": {
+    "Notifications": "Уведомления"
+  },
+  "Notify for all-day events without their own reminders.": {
+    "Notify for all-day events without their own reminders.": "Уведомлять о событиях на весь день без собственных напоминаний."
+  },
+  "Offline": {
+    "Offline": "Не в сети"
+  },
+  "On the day": {
+    "On the day": "В день события"
+  },
+  "Open": {
+    "Open": "Открыть"
+  },
+  "Open Calendar": {
+    "Open Calendar": "Открыть календарь"
+  },
+  "Open browser again": {
+    "Open browser again": "Открыть браузер снова"
+  },
+  "Open or create event": {
+    "Open or create event": "Открыть или создать событие"
+  },
+  "Order": {
+    "Order": "Порядок"
+  },
+  "Outlook, Office 365 and Exchange Online calendars.": {
+    "Outlook, Office 365 and Exchange Online calendars.": "Календари Outlook, Office 365 и Exchange Online."
+  },
+  "Override": {
+    "Override": "Переопределить"
+  },
+  "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "Переопределить глобальные настройки напоминаний для этого календаря. Неизменённые параметры следуют глобальным значениям."
+  },
+  "Overwrite": {
+    "Overwrite": "Перезаписать"
+  },
+  "Palette: %1": {
+    "Palette: %1": ""
+  },
+  "Part of the Dank Linux suite.": {
+    "Part of the Dank Linux suite.": "Часть пакета Dank Linux."
+  },
+  "Password": {
+    "Password": "Пароль"
+  },
+  "Paste credentials": {
+    "Paste credentials": "Вставить учётные данные"
+  },
+  "Paste the Application (client) ID from your app registration's Overview page.": {
+    "Paste the Application (client) ID from your app registration's Overview page.": "Вставьте ID приложения (клиента) со страницы обзора регистрации приложения."
+  },
+  "Paste your credentials": {
+    "Paste your credentials": "Вставьте учётные данные"
+  },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": ""
+  },
+  "Pictures": {
+    "Pictures": "Изображения"
+  },
+  "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Укажите папку с файлами .ics. Каждый подкаталог или файл .ics становится календарём — совместимо с vdirsyncer/khal. Папка создаётся, если не существует."
+  },
+  "Preset": {
+    "Preset": ""
+  },
+  "Previous day": {
+    "Previous day": "Предыдущий день"
+  },
+  "Previous event": {
+    "Previous event": "Предыдущее событие"
+  },
+  "Previous week": {
+    "Previous week": "Предыдущая неделя"
+  },
+  "Quick Access": {
+    "Quick Access": "Быстрый доступ"
+  },
+  "Quit": {
+    "Quit": "Выход"
+  },
+  "Reconnect": {
+    "Reconnect": "Переподключить"
+  },
+  "Reminders and desktop alerts.": {
+    "Reminders and desktop alerts.": "Напоминания и уведомления на рабочем столе."
+  },
+  "Reminders are disabled globally, so nothing fires until you re-enable them.": {
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "Напоминания отключены глобально — ничего не сработает, пока вы их не включите снова."
+  },
+  "Reminders for \"%1": {
+    "Reminders for \"%1\"": "Напоминания для «%1»"
+  },
+  "Reminders stay on screen until you act on them.": {
+    "Reminders stay on screen until you act on them.": "Напоминания остаются на экране, пока вы не отреагируете."
+  },
+  "Remove": {
+    "Remove": "Удалить"
+  },
+  "Remove \"%1\"?": {
+    "Remove \"%1\"?": "Удалить «%1»?"
+  },
+  "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
+    "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Удаляет этот аккаунт, его календари и события из Dank Calendar. У провайдера ничего не удаляется."
+  },
+  "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": {
+    "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": "Удаляет этот календарь и его события из Dank Calendar. Если провайдер его ещё предоставляет, он вернётся при следующей синхронизации."
+  },
+  "Remove…": {
+    "Remove…": "Удалить…"
+  },
+  "Rename calendar": {
+    "Rename calendar": "Переименовать календарь"
+  },
+  "Rename…": {
+    "Rename…": "Переименовать…"
+  },
+  "Reset to global": {
+    "Reset to global": "Сбросить к глобальным"
+  },
+  "Save": {
+    "Save": "Сохранить"
+  },
+  "Saving...": {
+    "Saving...": "Сохранение..."
+  },
+  "Search": {
+    "Search": "Поиск"
+  },
+  "Search events": {
+    "Search events": "Поиск событий"
+  },
+  "Search failed": {
+    "Search failed": "Ошибка поиска"
+  },
+  "Searching": {
+    "Searching": "Поиск…"
+  },
+  "Select File": {
+    "Select File": "Выбрать файл"
+  },
+  "Select client_secret.json": {
+    "Select client_secret.json": "Выберите client_secret.json"
+  },
+  "Select file": {
+    "Select file": "Выберите файл"
+  },
+  "Select theme file": {
+    "Select theme file": ""
+  },
+  "Send test": {
+    "Send test": "Отправить тестовое"
+  },
+  "Server URL": {
+    "Server URL": "URL сервера"
+  },
+  "Settings": {
+    "Settings": "Настройки"
+  },
+  "Show": {
+    "Show": "Показать"
+  },
+  "Show all-day reminders": {
+    "Show all-day reminders": "Показывать напоминания на весь день"
+  },
+  "Show week numbers": {
+    "Show week numbers": "Показывать номера недель"
+  },
+  "Sign in with %1": {
+    "Sign in with %1": "Войти через %1"
+  },
+  "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
+    "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Войдите с Apple ID и паролем приложения. Обычные пароли Apple ID не подойдут."
+  },
+  "Sign in with your Google account.": {
+    "Sign in with your Google account.": "Войдите с аккаунтом Google."
+  },
+  "Sign-in expired — reconnect to keep syncing": {
+    "Sign-in expired — reconnect to keep syncing": "Сессия истекла — переподключитесь для синхронизации"
+  },
+  "Size": {
+    "Size": "Размер"
+  },
+  "Snooze duration": {
+    "Snooze duration": "Время откладывания"
+  },
+  "Sort By": {
+    "Sort By": "Сортировка"
+  },
+  "Start at login": {
+    "Start at login": "Запускать при входе"
+  },
+  "Start week on": {
+    "Start week on": "Начало недели"
+  },
+  "Starting…": {
+    "Starting…": "Запуск…"
+  },
+  "Status": {
+    "Status": "Состояние"
+  },
+  "Step %1": {
+    "Step %1": "Шаг %1"
+  },
+  "Step %1: %2": {
+    "Step %1: %2": "Шаг %1: %2"
+  },
+  "Stock palette": {
+    "Stock palette": "Стандартная палитра"
+  },
+  "Sync now": {
+    "Sync now": "Синхронизировать"
+  },
+  "Synced as \"%1\". The name only changes in Dank Calendar.": {
+    "Synced as \"%1\". The name only changes in Dank Calendar.": "Синхронизировано как «%1». Имя изменяется только в Dank Calendar."
+  },
+  "System default (%1)": {
+    "System default (%1)": "Системное (%1)"
+  },
+  "System preference unavailable — using dark.": {
+    "System preference unavailable — using dark.": "Системные настройки недоступны — используется тёмная тема."
+  },
+  "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
+    "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Навигация • ←→↑↓: По сетке • Enter/Space: Выбор"
+  },
+  "Test notification": {
+    "Test notification": "Тестовое уведомление"
+  },
+  "That file is not valid JSON.": {
+    "That file is not valid JSON.": "Этот файл не является допустимым JSON."
+  },
+  "Theme": {
+    "Theme": "Тема"
+  },
+  "This account cannot be reconnected — remove it and add it again.": {
+    "This account cannot be reconnected — remove it and add it again.": "Этот аккаунт невозможно переподключить — удалите его и добавьте заново."
+  },
+  "Time format": {
+    "Time format": "Формат времени"
+  },
+  "Title is required": {
+    "Title is required": "Требуется название"
+  },
+  "Today": {
+    "Today": "Сегодня"
+  },
+  "Toggle this help": {
+    "Toggle this help": "Показать/скрыть справку"
+  },
+  "Tomorrow": {
+    "Tomorrow": "Завтра"
+  },
+  "Try a different search.": {
+    "Try a different search.": "Попробуйте другой запрос."
+  },
+  "Try again": {
+    "Try again": "Попробовать снова"
+  },
+  "Type": {
+    "Type": "Тип"
+  },
+  "Type at least 2 characters to search events.": {
+    "Type at least 2 characters to search events.": "Введите не менее 2 символов для поиска событий."
+  },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": ""
+  },
+  "Use synced name": {
+    "Use synced name": "Использовать имя из синхронизации"
+  },
+  "Use this folder": {
+    "Use this folder": "Выбрать эту папку"
+  },
+  "Username": {
+    "Username": "Имя пользователя"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": ""
+  },
+  "Verify desktop notifications are working.": {
+    "Verify desktop notifications are working.": "Проверьте, работают ли уведомления."
+  },
+  "Version": {
+    "Version": "Версия"
+  },
+  "Videos": {
+    "Videos": "Видео"
+  },
+  "View": {
+    "View": "Вид"
+  },
+  "Visibility, names, and removal per calendar.": {
+    "Visibility, names, and removal per calendar.": "Видимость, названия и удаление для каждого календаря."
+  },
+  "Waiting for browser…": {
+    "Waiting for browser…": "Ожидание браузера…"
+  },
+  "Waiting for the dankcalendar daemon...": {
+    "Waiting for the dankcalendar daemon...": "Ожидание демона dankcalendar..."
+  },
+  "Week": {
+    "Week": "Неделя"
+  },
+  "Week view": {
+    "Week view": "Режим недели"
+  },
+  "What the window's close button does.": {
+    "What the window's close button does.": "Действие кнопки закрытия окна."
+  },
+  "When all-day event reminders fire.": {
+    "When all-day event reminders fire.": "Когда срабатывают напоминания о событиях на весь день."
+  },
+  "Yesterday": {
+    "Yesterday": "Вчера"
+  },
+  "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": {
+    "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": "Календари будут синхронизироваться в фоне. Управлять аккаунтом можно в разделе Настройки → Аккаунты."
+  },
+  "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
+    "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "ID клиента, секрет и токен обновления хранятся в системной связке ключей (libsecret/kwallet), если доступна, или в зашифрованном локальном файле."
+  },
+  "all day": {
+    "all day": "весь день"
+  },
+  "dark": {
+    "dark": "тёмная"
+  },
+  "light": {
+    "light": "светлая"
+  },
+  "password": {
+    "password": "пароль"
+  },
+  "read-only": {
+    "read-only": "только чтение"
+  },
+  "synced as \"%1": {
+    "synced as \"%1\"": "синхронизировано как «%1»"
+  },
+  "username": {
+    "username": "имя пользователя"
+  },
+  "· %1 invited · %2 accepted": {
+    "· %1 invited · %2 accepted": "· Приглашено: %1 · Принято: %2"
+  }
+}

@@ -29,7 +29,11 @@ PROJECT_ID_ENV = "DCAL_POEDITOR_PROJECT_ID"
 LANGUAGES = {
     "it": "it.json",
     "vi": "vi.json",
-    "nl": "nl.json"
+    "nl": "nl.json",
+    "he": "he.json",
+    "ru": "ru.json",
+    "es": "es.json",
+    "uk": "uk.json"
 }
 
 

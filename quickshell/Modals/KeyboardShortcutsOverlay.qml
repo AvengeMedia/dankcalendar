@@ -157,6 +157,7 @@ Item {
                             font.pixelSize: Theme.fontSizeSmall
                             font.weight: Font.Medium
                             color: Theme.surfaceVariantText
+                            width: parent.width
                         }
 
                         Repeater {

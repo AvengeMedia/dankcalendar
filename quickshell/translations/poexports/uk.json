@@ -1,0 +1,956 @@
+{
+  "%1 AM": {
+    "%1 AM": "%1 ДП"
+  },
+  "%1 PM": {
+    "%1 PM": "%1 ПП"
+  },
+  "%1 · All day": {
+    "%1 · All day": "%1 · Весь день"
+  },
+  "%1d before": {
+    "%1d before": "%1 д. до"
+  },
+  "%1h": {
+    "%1h": "%1 год."
+  },
+  "%1h before": {
+    "%1h before": "%1 год. до"
+  },
+  "%1h%2m": {
+    "%1h%2m": "%1 год. %2 хв."
+  },
+  "%1m": {
+    "%1m": "%1 хв."
+  },
+  "%1m before": {
+    "%1m before": "%1 хв. до"
+  },
+  "%1w before": {
+    "%1w before": "%1 тиж. до"
+  },
+  "(untitled)": {
+    "(untitled)": "(без назви)"
+  },
+  "+%1 more": {
+    "+%1 more": "+%1 ще"
+  },
+  "1 day before": {
+    "1 day before": "за 1 день"
+  },
+  "1 hour": {
+    "1 hour": "1 година"
+  },
+  "1 hour before": {
+    "1 hour before": "за 1 годину"
+  },
+  "1 week before": {
+    "1 week before": "за 1 тиждень"
+  },
+  "1.5 hours": {
+    "1.5 hours": "1,5 години"
+  },
+  "10 minutes": {
+    "10 minutes": "10 хвилин"
+  },
+  "10 minutes before": {
+    "10 minutes before": "за 10 хвилин"
+  },
+  "12-hour": {
+    "12-hour": "12-годинний"
+  },
+  "12h": {
+    "12h": "12 год."
+  },
+  "15 minutes": {
+    "15 minutes": "15 хвилин"
+  },
+  "15 minutes before": {
+    "15 minutes before": "за 15 хвилин"
+  },
+  "2 days before": {
+    "2 days before": "за 2 дні"
+  },
+  "2 hours": {
+    "2 hours": "2 години"
+  },
+  "2 hours before": {
+    "2 hours before": "за 2 години"
+  },
+  "24-hour": {
+    "24-hour": "24-годинний"
+  },
+  "24h": {
+    "24h": "24 год."
+  },
+  "30 minutes": {
+    "30 minutes": "30 хвилин"
+  },
+  "30 minutes before": {
+    "30 minutes before": "за 30 хвилин"
+  },
+  "45 minutes": {
+    "45 minutes": "45 хвилин"
+  },
+  "5 minutes": {
+    "5 minutes": "5 хвилин"
+  },
+  "5 minutes before": {
+    "5 minutes before": "за 5 хвилин"
+  },
+  "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
+    "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Ліцензія MIT</a>"
+  },
+  "A file with this name already exists. Do you want to overwrite it?": {
+    "A file with this name already exists. Do you want to overwrite it?": "Файл із такою назвою вже існує. Бажаєте перезаписати його?"
+  },
+  "A folder of .ics files on this machine.": {
+    "A folder of .ics files on this machine.": "Папка з файлами .ics на цьому комп'ютері."
+  },
+  "API": {
+    "API": "API"
+  },
+  "About": {
+    "About": "Про програму"
+  },
+  "Account connected": {
+    "Account connected": "Обліковий запис підключено"
+  },
+  "Accounts": {
+    "Accounts": "Облікові записи"
+  },
+  "Add": {
+    "Add": "Додати"
+  },
+  "Add a calendar": {
+    "Add a calendar": "Додати календар"
+  },
+  "Add account": {
+    "Add account": "Додати обліковий запис"
+  },
+  "Add description": {
+    "Add description": "Додати опис"
+  },
+  "Add title": {
+    "Add title": "Додати заголовок"
+  },
+  "Adding…": {
+    "Adding…": "Додавання…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": "Додає календар до «%1»."
+  },
+  "Agenda": {
+    "Agenda": "Розклад"
+  },
+  "Agenda view": {
+    "Agenda view": "Режим розкладу"
+  },
+  "All credentials are stored in your system keyring when available.": {
+    "All credentials are stored in your system keyring when available.": "Усі облікові дані зберігаються в системній в'язці ключів (за наявності)."
+  },
+  "All day": {
+    "All day": "Весь день"
+  },
+  "All-day reminder time": {
+    "All-day reminder time": "Час нагадування для подій на весь день"
+  },
+  "All-day reminder timing": {
+    "All-day reminder timing": "Час нагадування про подію на весь день"
+  },
+  "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
+    "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Назад • F1/I: Властивості файлу • F10: Довідка • Esc: Закрити"
+  },
+  "Always use the dark theme.": {
+    "Always use the dark theme.": "Завжди використовувати темну тему."
+  },
+  "Always use the light theme.": {
+    "Always use the light theme.": "Завжди використовувати світлу тему."
+  },
+  "App-specific password": {
+    "App-specific password": "Пароль додатка"
+  },
+  "Appearance": {
+    "Appearance": "Зовнішній вигляд"
+  },
+  "Apple ID": {
+    "Apple ID": "Apple ID"
+  },
+  "Apple iCloud calendars via app-specific password.": {
+    "Apple iCloud calendars via app-specific password.": "Календарі Apple iCloud через пароль додатка."
+  },
+  "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": {
+    "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": "Підтвердьте доступ у браузері. Це вікно автоматично повернеться сюди, щойно %1 надішле код авторизації."
+  },
+  "Ascending": {
+    "Ascending": "За зростанням"
+  },
+  "At start": {
+    "At start": "На початку"
+  },
+  "Attendees": {
+    "Attendees": "Учасники"
+  },
+  "Authorization failed": {
+    "Authorization failed": "Авторизація не вдалася"
+  },
+  "Authorize in your browser": {
+    "Authorize in your browser": "Авторизуватися в браузері"
+  },
+  "Auto": {
+    "Auto": "Авто"
+  },
+  "Auto follows your locale (%1).": {
+    "Auto follows your locale (%1).": "Автоматично підлаштовується під вашу локаль (%1)."
+  },
+  "Back": {
+    "Back": "Назад"
+  },
+  "Backend": {
+    "Backend": "Служба"
+  },
+  "Backend not connected.": {
+    "Backend not connected.": "Служба не підключена."
+  },
+  "Begin setup": {
+    "Begin setup": "Розпочати налаштування"
+  },
+  "Calendar": {
+    "Calendar": "Календар"
+  },
+  "Calendar Settings": {
+    "Calendar Settings": "Налаштування календаря"
+  },
+  "Calendar name": {
+    "Calendar name": "Назва календаря"
+  },
+  "Calendars": {
+    "Calendars": "Календарі"
+  },
+  "Cancel": {
+    "Cancel": "Скасувати"
+  },
+  "Capabilities": {
+    "Capabilities": "Можливості"
+  },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": ""
+  },
+  "Choose a provider": {
+    "Choose a provider": "Виберіть провайдера"
+  },
+  "Choose calendar directory": {
+    "Choose calendar directory": "Виберіть папку календаря"
+  },
+  "Click to zoom · Esc to close": {
+    "Click to zoom · Esc to close": "Натисніть, щоб збільшити · Esc, щоб закрити"
+  },
+  "Client ID": {
+    "Client ID": "ID клієнта"
+  },
+  "Client Secret": {
+    "Client Secret": "Секрет клієнта"
+  },
+  "Close behavior": {
+    "Close behavior": "Поведінка при закритті"
+  },
+  "Color source": {
+    "Color source": "Джерело кольору"
+  },
+  "Colors are shared with DankMaterialShell when available.": {
+    "Colors are shared with DankMaterialShell when available.": "Кольори синхронізуються з DankMaterialShell (за наявності)."
+  },
+  "Coming soon": {
+    "Coming soon": "У розробці"
+  },
+  "Confirm": {
+    "Confirm": "Підтвердити"
+  },
+  "Confirm delete": {
+    "Confirm delete": "Підтвердити видалення"
+  },
+  "Connect": {
+    "Connect": "Підключити"
+  },
+  "Connect %1": {
+    "Connect %1": "Підключити %1"
+  },
+  "Connect any CalDAV-compatible server.": {
+    "Connect any CalDAV-compatible server.": "Підключіть будь-який CalDAV-сумісний сервер."
+  },
+  "Connected": {
+    "Connected": "Підключено"
+  },
+  "Connected calendar providers.": {
+    "Connected calendar providers.": "Підключені провайдери календарів."
+  },
+  "Connecting…": {
+    "Connecting…": "Підключення…"
+  },
+  "Continue": {
+    "Continue": "Продовжити"
+  },
+  "Copy link": {
+    "Copy link": ""
+  },
+  "Copy path": {
+    "Copy path": "Копіювати шлях"
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": ""
+  },
+  "Could not read that file.": {
+    "Could not read that file.": "Не вдалося прочитати цей файл."
+  },
+  "Create": {
+    "Create": "Створити"
+  },
+  "Create event": {
+    "Create event": "Створити подію"
+  },
+  "Credentials stay on this machine": {
+    "Credentials stay on this machine": "Облікові дані залишаються на цьому комп'ютері"
+  },
+  "Custom": {
+    "Custom": ""
+  },
+  "DMS dynamic": {
+    "DMS dynamic": "Динамічний DMS"
+  },
+  "DMS dynamic colors detected when available.": {
+    "DMS dynamic colors detected when available.": "Виявлено динамічні кольори DMS (за наявності)."
+  },
+  "Daemon offline": {
+    "Daemon offline": "Демон відключений"
+  },
+  "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
+    "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar — це календар для сучасних Linux-дистрибутивів із дизайном у стилі <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3</a>, а також розширюваним CLI та сокет-API для інтеграцій.<br /><br/>Він створений із використанням <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, фреймворка QT6 для створення інтерфейсів робочого столу, та <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, статично типізованої компільованої мови програмування."
+  },
+  "Dank Linux Discord": {
+    "Dank Linux Discord": "Dank Linux Discord"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": ""
+  },
+  "Dark": {
+    "Dark": "Темна"
+  },
+  "Day": {
+    "Day": "День"
+  },
+  "Day view": {
+    "Day view": "Режим дня"
+  },
+  "Default event duration": {
+    "Default event duration": "Тривалість події за замовчуванням"
+  },
+  "Default reminder": {
+    "Default reminder": "Нагадування за замовчуванням"
+  },
+  "Defaults follow your locale unless overridden.": {
+    "Defaults follow your locale unless overridden.": "Значення за замовчуванням відповідають вашій локалі, якщо їх не перевизначено."
+  },
+  "Delete": {
+    "Delete": "Видалити"
+  },
+  "Delete \"%1\"?": {
+    "Delete \"%1\"?": "Видалити «%1»?"
+  },
+  "Delete…": {
+    "Delete…": "Видалити…"
+  },
+  "Descending": {
+    "Descending": "За спаданням"
+  },
+  "Description": {
+    "Description": "Опис"
+  },
+  "Desktop": {
+    "Desktop": "Робочий стіл"
+  },
+  "Desktop notifications for upcoming events.": {
+    "Desktop notifications for upcoming events.": "Спливаючі сповіщення про майбутні події."
+  },
+  "Directory": {
+    "Directory": "Папка"
+  },
+  "Display ISO week numbers in month view.": {
+    "Display ISO week numbers in month view.": "Відображати номери тижнів ISO в режимі місяця."
+  },
+  "Display name (optional)": {
+    "Display name (optional)": "Відображуване ім'я (необов'язково)"
+  },
+  "Docs": {
+    "Docs": "Документація"
+  },
+  "Documents": {
+    "Documents": "Документи"
+  },
+  "Done": {
+    "Done": "Готово"
+  },
+  "Downloads": {
+    "Downloads": "Завантаження"
+  },
+  "Drag to pan · click to fit": {
+    "Drag to pan · click to fit": "Перетягуйте для переміщення · натисніть для масштабування"
+  },
+  "Edit event": {
+    "Edit event": "Редагувати подію"
+  },
+  "Enable reminders": {
+    "Enable reminders": "Увімкнути нагадування"
+  },
+  "Enlarge": {
+    "Enlarge": "Збільшити"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": "Введіть назву календаря."
+  },
+  "Enter client ID": {
+    "Enter client ID": "Введіть ID клієнта"
+  },
+  "Enter filename...": {
+    "Enter filename...": "Введіть ім'я файлу..."
+  },
+  "Enter your CalDAV server details. The connection is verified before the account is saved.": {
+    "Enter your CalDAV server details. The connection is verified before the account is saved.": "Введіть дані вашого сервера CalDAV. Підключення перевіряється перед збереженням облікового запису."
+  },
+  "Enter your client ID": {
+    "Enter your client ID": "Введіть ваш ID клієнта"
+  },
+  "Event": {
+    "Event": "Подія"
+  },
+  "Event details": {
+    "Event details": "Деталі події"
+  },
+  "F1/I: Toggle • F10: Help": {
+    "F1/I: Toggle • F10: Help": "F1/I: Переключити • F10: Довідка"
+  },
+  "File Already Exists": {
+    "File Already Exists": "Файл уже існує"
+  },
+  "File Information": {
+    "File Information": "Властивості файлу"
+  },
+  "Files - %1": {
+    "Files - %1": "Файли — %1"
+  },
+  "First day shown in week and month views.": {
+    "First day shown in week and month views.": "Перший день тижня в режимах тижня та місяця."
+  },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": ""
+  },
+  "Following the system color scheme (currently %1).": {
+    "Following the system color scheme (currently %1).": "Відповідно до системної колірної схеми (зараз %1)."
+  },
+  "General": {
+    "General": "Загальні"
+  },
+  "Generate app-specific password": {
+    "Generate app-specific password": "Створити пароль додатка"
+  },
+  "GitHub": {
+    "GitHub": "GitHub"
+  },
+  "Go to today": {
+    "Go to today": "Перейти до сьогоднішнього дня"
+  },
+  "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
+    "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google вимагає від вас створити власний клієнт OAuth для читання даних календаря від вашого імені. Це одноразове налаштування, яке займає близько трьох хвилин."
+  },
+  "Hide": {
+    "Hide": "Приховати"
+  },
+  "Home": {
+    "Home": "Домашня папка"
+  },
+  "How long the snooze button postpones a reminder.": {
+    "How long the snooze button postpones a reminder.": "Час, на який кнопка відкладення переносить нагадування."
+  },
+  "Import client_secret.json": {
+    "Import client_secret.json": "Імпортувати client_secret.json"
+  },
+  "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
+    "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Імпортуйте файл client_secret_….json, завантажений під час створення клієнта, або вставте ID та секрет клієнта вручну."
+  },
+  "Initial reminder set on new events.": {
+    "Initial reminder set on new events.": "Нагадування за замовчуванням для нових подій."
+  },
+  "Keep typing": {
+    "Keep typing": "Продовжуйте вводити"
+  },
+  "Keep until dismissed": {
+    "Keep until dismissed": "Показувати до закриття"
+  },
+  "Keyboard shortcuts": {
+    "Keyboard shortcuts": "Комбінації клавіш"
+  },
+  "Ko-fi": {
+    "Ko-fi": "Ko-fi"
+  },
+  "Launch Dank Calendar in the background when you log in.": {
+    "Launch Dank Calendar in the background when you log in.": "Запускати Dank Calendar у фоновому режимі під час входу в систему."
+  },
+  "Length used when creating events.": {
+    "Length used when creating events.": "Тривалість, що використовується при створенні подій."
+  },
+  "Light": {
+    "Light": "Світла"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": ""
+  },
+  "Loading setup instructions…": {
+    "Loading setup instructions…": "Завантаження інструкцій із налаштування…"
+  },
+  "Local": {
+    "Local": "Локальний"
+  },
+  "Local calendar": {
+    "Local calendar": "Локальний календар"
+  },
+  "Local calendars": {
+    "Local calendars": "Локальні календарі"
+  },
+  "Location": {
+    "Location": "Місце"
+  },
+  "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
+    "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft часто повертає помилку server_error в перші кілька хвилин після створення або зміни реєстрації додатка. Зачекайте хвилину-дві та спробуйте знову."
+  },
+  "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": {
+    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft вимагає зареєструвати ваш власний додаток для читання даних календаря від вашого імені. Це одноразове налаштування, яке займає близько двох хвилин — секрет клієнта не потрібен."
+  },
+  "Minimize": {
+    "Minimize": "Згорнути"
+  },
+  "Modified": {
+    "Modified": "Змінено"
+  },
+  "Month": {
+    "Month": "Місяць"
+  },
+  "Month view": {
+    "Month view": "Режим місяця"
+  },
+  "Move to Trash": {
+    "Move to Trash": "Перемістити в кошик"
+  },
+  "Music": {
+    "Music": "Музика"
+  },
+  "My calendars": {
+    "My calendars": "Мої календарі"
+  },
+  "My server": {
+    "My server": "Мій сервер"
+  },
+  "Name": {
+    "Name": "Назва"
+  },
+  "Navigation": {
+    "Navigation": "Навігація"
+  },
+  "New calendar": {
+    "New calendar": "Новий календар"
+  },
+  "New calendar…": {
+    "New calendar…": "Новий календар…"
+  },
+  "New event": {
+    "New event": "Нова подія"
+  },
+  "Next day": {
+    "Next day": "Наступний день"
+  },
+  "Next event": {
+    "Next event": "Наступна подія"
+  },
+  "Next week": {
+    "Next week": "Наступний тиждень"
+  },
+  "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
+    "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "У цьому файлі не знайдено клієнта OAuth — очікувався файл client_secret_….json, завантажений із Google."
+  },
+  "No accounts yet. Click \"Add account\" to connect one.": {
+    "No accounts yet. Click \"Add account\" to connect one.": "Облікових записів ще немає. Натисніть «Додати обліковий запис», щоб підключити один."
+  },
+  "No calendars yet": {
+    "No calendars yet": "Календарів ще немає"
+  },
+  "No calendars yet. Add an account first.": {
+    "No calendars yet. Add an account first.": "Календарів ще немає. Спочатку додайте обліковий запис."
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": "Календарів ще немає. Додайте календар, щоб почати створювати події."
+  },
+  "No matching events": {
+    "No matching events": "Подій не знайдено"
+  },
+  "No theme file selected": {
+    "No theme file selected": ""
+  },
+  "No writable calendar available": {
+    "No writable calendar available": "Немає календаря, доступного для запису"
+  },
+  "None": {
+    "None": "Немає"
+  },
+  "Not authorized — remove this account and add it again": {
+    "Not authorized — remove this account and add it again": "Не авторизовано — вилучіть цей обліковий запис і додайте його знову"
+  },
+  "Nothing scheduled in the next %1 days": {
+    "Nothing scheduled in the next %1 days": "Нічого не заплановано на найближчі %1 днів"
+  },
+  "Notifications": {
+    "Notifications": "Сповіщення"
+  },
+  "Notify for all-day events without their own reminders.": {
+    "Notify for all-day events without their own reminders.": "Сповіщати про події на весь день без власних нагадувань."
+  },
+  "Offline": {
+    "Offline": "Поза мережею"
+  },
+  "On the day": {
+    "On the day": "В день події"
+  },
+  "Open": {
+    "Open": "Відкрити"
+  },
+  "Open Calendar": {
+    "Open Calendar": "Відкрити календар"
+  },
+  "Open browser again": {
+    "Open browser again": "Відкрити браузер знову"
+  },
+  "Open or create event": {
+    "Open or create event": "Відкрити або створити подію"
+  },
+  "Order": {
+    "Order": "Порядок"
+  },
+  "Outlook, Office 365 and Exchange Online calendars.": {
+    "Outlook, Office 365 and Exchange Online calendars.": "Календарі Outlook, Office 365 та Exchange Online."
+  },
+  "Override": {
+    "Override": "Перевизначити"
+  },
+  "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "Перевизначити глобальні налаштування нагадувань для цього календаря. Незмінені параметри відповідатимуть глобальним значенням за замовчуванням."
+  },
+  "Overwrite": {
+    "Overwrite": "Перезаписати"
+  },
+  "Palette: %1": {
+    "Palette: %1": ""
+  },
+  "Part of the Dank Linux suite.": {
+    "Part of the Dank Linux suite.": "Частина пакета Dank Linux."
+  },
+  "Password": {
+    "Password": "Пароль"
+  },
+  "Paste credentials": {
+    "Paste credentials": "Вставити облікові дані"
+  },
+  "Paste the Application (client) ID from your app registration's Overview page.": {
+    "Paste the Application (client) ID from your app registration's Overview page.": "Вставте ID додатка (клієнта) зі сторінки «Огляд» реєстрації вашого додатка."
+  },
+  "Paste your credentials": {
+    "Paste your credentials": "Вставте ваші облікові дані"
+  },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": ""
+  },
+  "Pictures": {
+    "Pictures": "Зображення"
+  },
+  "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Укажіть папку з файлами .ics. Кожна підпапка або файл .ics стане календарем — сумісно зі структурами vdirsyncer/khal. Якщо папка не існує, її буде створено."
+  },
+  "Preset": {
+    "Preset": ""
+  },
+  "Previous day": {
+    "Previous day": "Попередній день"
+  },
+  "Previous event": {
+    "Previous event": "Попередня подія"
+  },
+  "Previous week": {
+    "Previous week": "Попередній тиждень"
+  },
+  "Quick Access": {
+    "Quick Access": "Швидкий доступ"
+  },
+  "Quit": {
+    "Quit": "Вийти"
+  },
+  "Reconnect": {
+    "Reconnect": "Перепідключити"
+  },
+  "Reminders and desktop alerts.": {
+    "Reminders and desktop alerts.": "Нагадування та сповіщення на робочому столі."
+  },
+  "Reminders are disabled globally, so nothing fires until you re-enable them.": {
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "Нагадування вимкнено глобально, тому вони не спрацьовуватимуть, доки ви їх знову не увімкнете."
+  },
+  "Reminders for \"%1": {
+    "Reminders for \"%1\"": "Нагадування для «%1»"
+  },
+  "Reminders stay on screen until you act on them.": {
+    "Reminders stay on screen until you act on them.": "Нагадування залишаються на екрані, доки ви на них не відреагуєте."
+  },
+  "Remove": {
+    "Remove": "Вилучити"
+  },
+  "Remove \"%1\"?": {
+    "Remove \"%1\"?": "Вилучити «%1»?"
+  },
+  "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
+    "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Вилучає цей обліковий запис, його календарі та події з Dank Calendar. У провайдера нічого не видаляється."
+  },
+  "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": {
+    "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": "Вилучає цей календар та його події з Dank Calendar. Якщо провайдер усе ще надає його, він повернеться при наступній синхронізації."
+  },
+  "Remove…": {
+    "Remove…": "Вилучити…"
+  },
+  "Rename calendar": {
+    "Rename calendar": "Перейменувати календар"
+  },
+  "Rename…": {
+    "Rename…": "Перейменувати…"
+  },
+  "Reset to global": {
+    "Reset to global": "Скинути до глобальних"
+  },
+  "Save": {
+    "Save": "Зберегти"
+  },
+  "Saving...": {
+    "Saving...": "Збереження..."
+  },
+  "Search": {
+    "Search": "Пошук"
+  },
+  "Search events": {
+    "Search events": "Пошук подій"
+  },
+  "Search failed": {
+    "Search failed": "Пошук не вдався"
+  },
+  "Searching": {
+    "Searching": "Пошук…"
+  },
+  "Select File": {
+    "Select File": "Вибрати файл"
+  },
+  "Select client_secret.json": {
+    "Select client_secret.json": "Виберіть client_secret.json"
+  },
+  "Select file": {
+    "Select file": "Виберіть файл"
+  },
+  "Select theme file": {
+    "Select theme file": ""
+  },
+  "Send test": {
+    "Send test": "Надіслати тестове сповіщення"
+  },
+  "Server URL": {
+    "Server URL": "URL сервера"
+  },
+  "Settings": {
+    "Settings": "Налаштування"
+  },
+  "Show": {
+    "Show": "Показати"
+  },
+  "Show all-day reminders": {
+    "Show all-day reminders": "Показувати нагадування для подій на весь день"
+  },
+  "Show week numbers": {
+    "Show week numbers": "Показувати номери тижнів"
+  },
+  "Sign in with %1": {
+    "Sign in with %1": "Увійти за допомогою %1"
+  },
+  "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
+    "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Увійдіть за допомогою Apple ID та пароля додатка. Звичайні паролі Apple ID не підійдуть."
+  },
+  "Sign in with your Google account.": {
+    "Sign in with your Google account.": "Увійдіть за допомогою облікового запису Google."
+  },
+  "Sign-in expired — reconnect to keep syncing": {
+    "Sign-in expired — reconnect to keep syncing": "Сесія застаріла — перепідключіться для синхронізації"
+  },
+  "Size": {
+    "Size": "Розмір"
+  },
+  "Snooze duration": {
+    "Snooze duration": "Тривалість відкладення"
+  },
+  "Sort By": {
+    "Sort By": "Сортувати за"
+  },
+  "Start at login": {
+    "Start at login": "Запускати при вході в систему"
+  },
+  "Start week on": {
+    "Start week on": "Перший день тижня"
+  },
+  "Starting…": {
+    "Starting…": "Запуск…"
+  },
+  "Status": {
+    "Status": "Статус"
+  },
+  "Step %1": {
+    "Step %1": "Крок %1"
+  },
+  "Step %1: %2": {
+    "Step %1: %2": "Крок %1: %2"
+  },
+  "Stock palette": {
+    "Stock palette": "Стандартна палітра"
+  },
+  "Sync now": {
+    "Sync now": "Синхронізувати"
+  },
+  "Synced as \"%1\". The name only changes in Dank Calendar.": {
+    "Synced as \"%1\". The name only changes in Dank Calendar.": "Синхронізовано як «%1». Ім'я зміниться лише в Dank Calendar."
+  },
+  "System default (%1)": {
+    "System default (%1)": "За замовчуванням (%1)"
+  },
+  "System preference unavailable — using dark.": {
+    "System preference unavailable — using dark.": "Системні налаштування недоступні — використовується темна тема."
+  },
+  "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
+    "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Нав. • ←→↑↓: Нав. по сітці • Enter/Пробіл: Вибрати"
+  },
+  "Test notification": {
+    "Test notification": "Тестове сповіщення"
+  },
+  "That file is not valid JSON.": {
+    "That file is not valid JSON.": "Цей файл не є коректним JSON."
+  },
+  "Theme": {
+    "Theme": "Тема"
+  },
+  "This account cannot be reconnected — remove it and add it again.": {
+    "This account cannot be reconnected — remove it and add it again.": "Цей обліковий запис не може бути перепідключений — вилучіть і додайте його знову."
+  },
+  "Time format": {
+    "Time format": "Формат часу"
+  },
+  "Title is required": {
+    "Title is required": "Заголовок є обов'язковим"
+  },
+  "Today": {
+    "Today": "Сьогодні"
+  },
+  "Toggle this help": {
+    "Toggle this help": "Показати/приховати довідку"
+  },
+  "Tomorrow": {
+    "Tomorrow": "Завтра"
+  },
+  "Try a different search.": {
+    "Try a different search.": "Спробуйте інший запит."
+  },
+  "Try again": {
+    "Try again": "Спробувати знову"
+  },
+  "Type": {
+    "Type": "Тип"
+  },
+  "Type at least 2 characters to search events.": {
+    "Type at least 2 characters to search events.": "Введіть не менше 2 символів для пошуку подій."
+  },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": ""
+  },
+  "Use synced name": {
+    "Use synced name": "Використовувати синхронізовану назву"
+  },
+  "Use this folder": {
+    "Use this folder": "Використовувати цю папку"
+  },
+  "Username": {
+    "Username": "Ім'я користувача"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": ""
+  },
+  "Verify desktop notifications are working.": {
+    "Verify desktop notifications are working.": "Перевірте, чи працюють спливаючі сповіщення."
+  },
+  "Version": {
+    "Version": "Версія"
+  },
+  "Videos": {
+    "Videos": "Відео"
+  },
+  "View": {
+    "View": "Вигляд"
+  },
+  "Visibility, names, and removal per calendar.": {
+    "Visibility, names, and removal per calendar.": "Видимість, назви та вилучення для кожного календаря."
+  },
+  "Waiting for browser…": {
+    "Waiting for browser…": "Очікування браузера…"
+  },
+  "Waiting for the dankcalendar daemon...": {
+    "Waiting for the dankcalendar daemon...": "Очікування демона dankcalendar..."
+  },
+  "Week": {
+    "Week": "Тиждень"
+  },
+  "Week view": {
+    "Week view": "Режим тижня"
+  },
+  "What the window's close button does.": {
+    "What the window's close button does.": "Дія при натисканні кнопки закриття вікна."
+  },
+  "When all-day event reminders fire.": {
+    "When all-day event reminders fire.": "Коли спрацьовують нагадування про події на весь день."
+  },
+  "Yesterday": {
+    "Yesterday": "Вчора"
+  },
+  "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": {
+    "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": "Ваші календарі синхронізуватимуться у фоновому режимі. Ви можете керувати цим обліковим записом у меню «Налаштування» → «Облікові записи»."
+  },
+  "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
+    "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Ваш ID клієнта, секрет та токен оновлення зберігаються в системній в'язці ключів (libsecret/kwallet) за наявності, або в зашифрованому локальному файлі."
+  },
+  "all day": {
+    "all day": "весь день"
+  },
+  "dark": {
+    "dark": "темна"
+  },
+  "light": {
+    "light": "світла"
+  },
+  "password": {
+    "password": "пароль"
+  },
+  "read-only": {
+    "read-only": "тільки для читання"
+  },
+  "synced as \"%1": {
+    "synced as \"%1\"": "синхронізовано як «%1»"
+  },
+  "username": {
+    "username": "ім'я користувача"
+  },
+  "· %1 invited · %2 accepted": {
+    "· %1 invited · %2 accepted": "· Запрошено: %1 · Прийнято: %2"
+  }
+}

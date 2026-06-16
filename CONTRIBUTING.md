@@ -76,7 +76,7 @@ touch .qmlls.ini
 
 ```bash
 # from core/
-DCAL_ENABLE_HOT_RELOAD=1 go run ./cmd/dcal run -c ../quickshell
+DCAL_ENABLE_HOTRELOAD=1 go run ./cmd/dcal run -c ../quickshell
 ```
 
 ### I18n/Localization

@@ -166,6 +166,9 @@ FloatingWindow {
         anchors.fill: parent
         focus: true
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         Component.onCompleted: forceActiveFocus()
 
         Shortcut {
@@ -195,11 +198,11 @@ FloatingWindow {
                 break;
             case Qt.Key_H:
             case Qt.Key_Left:
-                window.moveSelection(-1);
+                window.moveSelection(I18n.isRtl ? 1 : -1);
                 break;
             case Qt.Key_L:
             case Qt.Key_Right:
-                window.moveSelection(1);
+                window.moveSelection(I18n.isRtl ? -1 : 1);
                 break;
             case Qt.Key_J:
             case Qt.Key_Down:

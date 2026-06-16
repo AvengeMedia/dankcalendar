@@ -169,6 +169,9 @@ Item {
             spacing: 1
             model: root.slotCount
 
+            LayoutMirroring.enabled: I18n.isRtl
+            LayoutMirroring.childrenInherit: true
+
             delegate: Rectangle {
                 id: slot
 

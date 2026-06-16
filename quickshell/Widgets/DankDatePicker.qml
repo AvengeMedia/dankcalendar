@@ -90,6 +90,9 @@ Item {
         contentItem: Column {
             spacing: Theme.spacingXS
 
+            LayoutMirroring.enabled: I18n.isRtl
+            LayoutMirroring.childrenInherit: true
+
             Item {
                 width: parent.width
                 height: 32
@@ -97,7 +100,7 @@ Item {
                 DankActionButton {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
-                    iconName: "chevron_left"
+                    iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
                     iconColor: Theme.surfaceVariantText
                     onClicked: popup.displayDate = new Date(popup.gridYear, popup.gridMonth - 1, 1)
                 }
@@ -112,7 +115,7 @@ Item {
                 DankActionButton {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    iconName: "chevron_right"
+                    iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
                     iconColor: Theme.surfaceVariantText
                     onClicked: popup.displayDate = new Date(popup.gridYear, popup.gridMonth + 1, 1)
                 }

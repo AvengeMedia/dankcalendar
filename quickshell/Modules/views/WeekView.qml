@@ -244,6 +244,7 @@ Item {
                 height: root.hourHeight * root.hourCount
 
                 Column {
+                    anchors.left: parent.left
                     width: root.timeColumnWidth
                     spacing: 0
 
@@ -270,7 +271,7 @@ Item {
                 }
 
                 Column {
-                    x: root.timeColumnWidth
+                    anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
                     spacing: 0
 
@@ -295,7 +296,7 @@ Item {
                 }
 
                 Row {
-                    x: root.timeColumnWidth
+                    anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
                     height: parent.height
 

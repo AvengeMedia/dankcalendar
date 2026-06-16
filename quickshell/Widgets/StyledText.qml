@@ -10,6 +10,7 @@ Text {
     font.weight: Theme.fontWeight
     wrapMode: Text.WordWrap
     elide: Text.ElideRight
+    horizontalAlignment: Text.AlignLeft
     verticalAlignment: Text.AlignVCenter
 
     Behavior on opacity {

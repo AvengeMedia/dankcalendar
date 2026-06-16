@@ -371,6 +371,9 @@ FloatingWindow {
         anchors.fill: parent
         spacing: 0
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         Item {
             width: parent.width
             height: 48
@@ -555,6 +558,7 @@ FloatingWindow {
                     text: eventModal.timeLabel()
                     font.pixelSize: Theme.fontSizeMedium
                     color: Theme.surfaceVariantText
+                    width: parent.width
                 }
             }
 

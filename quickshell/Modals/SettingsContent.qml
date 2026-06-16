@@ -211,6 +211,7 @@ Item {
             font.pixelSize: Theme.fontSizeXLarge
             font.weight: Font.Medium
             color: Theme.surfaceText
+            width: parent.width
         }
 
         StyledText {
@@ -218,6 +219,7 @@ Item {
             text: parent.subtitle
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.surfaceVariantText
+            width: parent.width
         }
     }
 
@@ -574,6 +576,7 @@ Item {
                                 font.pixelSize: Theme.fontSizeMedium
                                 font.weight: Font.Medium
                                 color: Theme.surfaceText
+                                width: parent.width
                             }
 
                             Flow {
@@ -712,6 +715,7 @@ Item {
                         text: DankCalService.connected ? I18n.tr("No calendars yet. Add an account first.", "calendars page empty state") : I18n.tr("Backend not connected.", "calendars page empty state")
                         font.pixelSize: Theme.fontSizeMedium
                         color: Theme.surfaceVariantText
+                        width: parent.width
                     }
 
                     Repeater {
@@ -903,6 +907,7 @@ Item {
                         text: I18n.tr("No accounts yet. Click \"Add account\" to connect one.", "accounts page empty state")
                         font.pixelSize: Theme.fontSizeMedium
                         color: Theme.surfaceVariantText
+                        width: parent.width
                     }
 
                     Repeater {
@@ -951,6 +956,7 @@ Item {
                                         font.pixelSize: Theme.fontSizeMedium
                                         font.weight: Font.Medium
                                         color: Theme.surfaceText
+                                        width: parent.width
                                     }
 
                                     StyledText {
@@ -967,6 +973,7 @@ Item {
                                         text: needsReauth ? I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth") : (authorized ? I18n.tr("Connected", "account status in account list") : I18n.tr("Not authorized — remove this account and add it again", "account status in account list"))
                                         font.pixelSize: Theme.fontSizeSmall
                                         color: (needsReauth || !authorized) ? Theme.error : Theme.surfaceVariantText
+                                        width: parent.width
                                     }
                                 }
 

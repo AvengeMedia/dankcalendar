@@ -176,7 +176,7 @@ make fmt    # format Go code
 >
 > ```bash
 > # from core/
-> DCAL_ENABLE_HOT_RELOAD=1 go run ./cmd/dcal run -c ../quickshell
+> DCAL_ENABLE_HOTRELOAD=1 go run ./cmd/dcal run -c ../quickshell
 > ```
 
 Install [prek](https://prek.j178.dev/) and activate the hooks:

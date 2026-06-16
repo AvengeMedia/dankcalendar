@@ -239,6 +239,9 @@ Popup {
     contentItem: Column {
         spacing: Theme.spacingM
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         StyledText {
             text: I18n.tr("Reminders for \"%1\"", "per-calendar reminders dialog header").arg(root.calendar ? root.calendar.name : "")
             font.pixelSize: Theme.fontSizeLarge

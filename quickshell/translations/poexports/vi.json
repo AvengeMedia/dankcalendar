@@ -233,6 +233,9 @@
   "Capabilities": {
     "Capabilities": "Tính năng hỗ trợ"
   },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": ""
+  },
   "Choose a provider": {
     "Choose a provider": "Chọn nhà cung cấp"
   },
@@ -287,8 +290,14 @@
   "Continue": {
     "Continue": "Tiếp tục"
   },
+  "Copy link": {
+    "Copy link": ""
+  },
   "Copy path": {
     "Copy path": "Sao chép đường dẫn"
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": ""
   },
   "Could not read that file.": {
     "Could not read that file.": "Không thể đọc tệp này."
@@ -301,6 +310,9 @@
   },
   "Credentials stay on this machine": {
     "Credentials stay on this machine": "Thông tin xác thực chỉ lưu trên máy này"
+  },
+  "Custom": {
+    "Custom": ""
   },
   "DMS dynamic": {
     "DMS dynamic": "DMS dynamic"
@@ -316,6 +328,9 @@
   },
   "Dank Linux Discord": {
     "Dank Linux Discord": "Dank Linux Discord"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": ""
   },
   "Dark": {
     "Dark": "Tối"
@@ -425,6 +440,9 @@
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Ngày đầu tiên hiển thị trong chế độ tuần và tháng."
   },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": ""
+  },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Đang theo bảng màu hệ thống (hiện tại: %1)."
   },
@@ -481,6 +499,9 @@
   },
   "Light": {
     "Light": "Sáng"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": ""
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Đang tải hướng dẫn thiết lập…"
@@ -569,6 +590,9 @@
   "No matching events": {
     "No matching events": "Không tìm thấy sự kiện"
   },
+  "No theme file selected": {
+    "No theme file selected": ""
+  },
   "No writable calendar available": {
     "No writable calendar available": "Không có lịch nào có thể ghi"
   },
@@ -620,6 +644,9 @@
   "Overwrite": {
     "Overwrite": "Ghi đè"
   },
+  "Palette: %1": {
+    "Palette: %1": ""
+  },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Một phần của bộ Dank Linux."
   },
@@ -635,11 +662,17 @@
   "Paste your credentials": {
     "Paste your credentials": "Dán thông tin xác thực của bạn"
   },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": ""
+  },
   "Pictures": {
     "Pictures": "Hình ảnh"
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Trỏ đến thư mục chứa các tệp .ics. Mỗi thư mục con hoặc tệp .ics sẽ thành một lịch — tương thích với cấu trúc vdirsyncer/khal. Thư mục được tạo nếu chưa tồn tại."
+  },
+  "Preset": {
+    "Preset": ""
   },
   "Previous day": {
     "Previous day": "Ngày trước"
@@ -721,6 +754,9 @@
   },
   "Select file": {
     "Select file": "Chọn tệp"
+  },
+  "Select theme file": {
+    "Select theme file": ""
   },
   "Send test": {
     "Send test": "Gửi thử"
@@ -836,6 +872,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Nhập ít nhất 2 ký tự để tìm kiếm sự kiện."
   },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": ""
+  },
   "Use synced name": {
     "Use synced name": "Dùng tên đã đồng bộ"
   },
@@ -844,6 +883,9 @@
   },
   "Username": {
     "Username": "Tên người dùng"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": ""
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Kiểm tra xem thông báo màn hình có hoạt động không."

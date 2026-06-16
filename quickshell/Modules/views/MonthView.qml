@@ -336,6 +336,7 @@ Item {
                                 text: I18n.tr("+%1 more", "overflow label in month grid day cell, %1 is the number of hidden events").arg(parent.parent.cellEvents.length - parent.parent.maxChips)
                                 font.pixelSize: 10
                                 color: Theme.surfaceVariantText
+                                width: parent.width
                             }
                         }
 

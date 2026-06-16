@@ -211,6 +211,9 @@ Popup {
     contentItem: Item {
         implicitHeight: root.searchBarH + resultsContainer.height
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         Rectangle {
             id: searchBar
             anchors.top: parent.top

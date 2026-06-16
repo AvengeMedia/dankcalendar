@@ -59,7 +59,7 @@ Item {
                 }
 
                 DankActionButton {
-                    iconName: "chevron_left"
+                    iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
                     iconSize: Theme.iconSize - 4
                     iconColor: Theme.surfaceText
                     circular: true
@@ -68,7 +68,7 @@ Item {
                 }
 
                 DankActionButton {
-                    iconName: "chevron_right"
+                    iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
                     iconSize: Theme.iconSize - 4
                     iconColor: Theme.surfaceText
                     circular: true

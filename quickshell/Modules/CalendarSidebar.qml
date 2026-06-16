@@ -164,6 +164,7 @@ Item {
                 font.pixelSize: Theme.fontSizeSmall
                 font.weight: Font.Medium
                 color: Theme.surfaceVariantText
+                width: parent.width
             }
 
             StyledText {
@@ -171,6 +172,7 @@ Item {
                 text: DankCalService.connected ? I18n.tr("No calendars yet", "sidebar placeholder when the calendar list is empty") : I18n.tr("Daemon offline", "sidebar placeholder when the daemon is not connected")
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.surfaceVariantText
+                width: parent.width
             }
 
             Repeater {
@@ -287,6 +289,7 @@ Item {
                 font.pixelSize: Theme.fontSizeSmall
                 font.weight: Font.Medium
                 color: Theme.surfaceVariantText
+                width: parent.width
             }
 
             Repeater {

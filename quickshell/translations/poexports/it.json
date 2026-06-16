@@ -233,6 +233,9 @@
   "Capabilities": {
     "Capabilities": "Funzionalità"
   },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": ""
+  },
   "Choose a provider": {
     "Choose a provider": "Scegli un provider"
   },
@@ -287,8 +290,14 @@
   "Continue": {
     "Continue": "Continua"
   },
+  "Copy link": {
+    "Copy link": ""
+  },
   "Copy path": {
     "Copy path": "Copia percorso"
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": ""
   },
   "Could not read that file.": {
     "Could not read that file.": "Impossibile leggere quel file."
@@ -301,6 +310,9 @@
   },
   "Credentials stay on this machine": {
     "Credentials stay on this machine": "Le credenziali rimangono su questo computer"
+  },
+  "Custom": {
+    "Custom": ""
   },
   "DMS dynamic": {
     "DMS dynamic": "Dinamico DMS"
@@ -316,6 +328,9 @@
   },
   "Dank Linux Discord": {
     "Dank Linux Discord": "Discord di Dank Linux"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": ""
   },
   "Dark": {
     "Dark": "Scuro"
@@ -425,6 +440,9 @@
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Primo giorno mostrato nelle viste settimanale e mensile."
   },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": ""
+  },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Segue lo schema colori di sistema (attualmente %1)."
   },
@@ -481,6 +499,9 @@
   },
   "Light": {
     "Light": "Chiaro"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": ""
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Caricamento istruzioni di configurazione…"
@@ -569,6 +590,9 @@
   "No matching events": {
     "No matching events": "Nessun evento corrispondente"
   },
+  "No theme file selected": {
+    "No theme file selected": ""
+  },
   "No writable calendar available": {
     "No writable calendar available": "Nessun calendario scrivibile disponibile"
   },
@@ -620,6 +644,9 @@
   "Overwrite": {
     "Overwrite": "Sovrascrivi"
   },
+  "Palette: %1": {
+    "Palette: %1": ""
+  },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Parte della suite Dank Linux."
   },
@@ -635,11 +662,17 @@
   "Paste your credentials": {
     "Paste your credentials": "Incolla le tue credenziali"
   },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": ""
+  },
   "Pictures": {
     "Pictures": "Immagini"
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Specifica una cartella con file .ics.  Ogni sottocartella o file .ics diventa un calendario, compatibile con i layout di vdirsyncer/khal. La cartella viene creata se non esiste."
+  },
+  "Preset": {
+    "Preset": ""
   },
   "Previous day": {
     "Previous day": "Giorno precedente"
@@ -721,6 +754,9 @@
   },
   "Select file": {
     "Select file": "Seleziona file"
+  },
+  "Select theme file": {
+    "Select theme file": ""
   },
   "Send test": {
     "Send test": "Invia test"
@@ -836,6 +872,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Digita almeno 2 caratteri per cercare eventi."
   },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": ""
+  },
   "Use synced name": {
     "Use synced name": "Usa nome sincronizzato"
   },
@@ -844,6 +883,9 @@
   },
   "Username": {
     "Username": "Nome utente"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": ""
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Verifica che le notifiche desktop funzionino."

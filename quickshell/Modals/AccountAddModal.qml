@@ -236,6 +236,9 @@ FloatingWindow {
         anchors.fill: parent
         spacing: 0
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         Item {
             width: parent.width
             height: 48
@@ -428,12 +431,14 @@ FloatingWindow {
                     font.pixelSize: Theme.fontSizeLarge
                     font.weight: Font.Medium
                     color: Theme.surfaceText
+                    width: parent.width
                 }
 
                 StyledText {
                     text: I18n.tr("All credentials are stored in your system keyring when available.", "subtitle under provider selection heading")
                     font.pixelSize: Theme.fontSizeMedium
                     color: Theme.surfaceVariantText
+                    width: parent.width
                 }
 
                 Grid {
@@ -596,6 +601,7 @@ FloatingWindow {
                 }
 
                 StyledText {
+                    width: parent.width
                     text: {
                         const step = accountModal.wizardStep;
                         switch (step) {
@@ -733,6 +739,7 @@ FloatingWindow {
                 text: I18n.tr("Loading setup instructions…", "placeholder while setup guide steps load")
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.surfaceVariantText
+                width: parent.width
             }
 
             StyledRect {

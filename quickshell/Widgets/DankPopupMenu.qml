@@ -45,6 +45,9 @@ Popup {
     contentItem: Column {
         spacing: 1
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         Repeater {
             model: ScriptModel {
                 values: root.items

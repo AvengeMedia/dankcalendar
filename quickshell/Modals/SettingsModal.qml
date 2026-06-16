@@ -36,6 +36,9 @@ FloatingWindow {
         anchors.fill: parent
         focus: true
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         Column {
             anchors.fill: parent
             spacing: 0

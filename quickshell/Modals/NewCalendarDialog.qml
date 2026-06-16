@@ -56,7 +56,11 @@ Popup {
     contentItem: Column {
         spacing: Theme.spacingM
 
+        LayoutMirroring.enabled: I18n.isRtl
+        LayoutMirroring.childrenInherit: true
+
         StyledText {
+            width: parent.width
             text: I18n.tr("New calendar", "new calendar dialog header")
             font.pixelSize: Theme.fontSizeLarge
             font.weight: Font.Medium
