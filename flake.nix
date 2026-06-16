@@ -53,7 +53,7 @@
             inherit version;
             pname = "dankcalendar";
             src = ./core;
-            vendorHash = "sha256-RBqKsr+bAvPqLaLw+4nJQ8j1r5j9hwgK0qFMmvTKuzc=";
+            vendorHash = "sha256-a9H88PwvuCRaTVV8FIg5SGK2nehg5MN/fJ92Wi+RAIU=";
 
             subPackages = [ "cmd/dcal" ];
 
