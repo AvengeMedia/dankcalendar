@@ -160,7 +160,7 @@ Item {
                             anchors.fill: parent
                             color: "transparent"
                             border.width: 1
-                            border.color: Theme.outlineLight
+                            border.color: Theme.gridLine
                         }
 
                         Rectangle {

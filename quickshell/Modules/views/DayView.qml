@@ -172,7 +172,7 @@ Item {
                         y: index * root.hourHeight
                         width: parent.width
                         height: 1
-                        color: Theme.outlineLight
+                        color: Theme.gridLine
                     }
                 }
 

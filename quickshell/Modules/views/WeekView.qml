@@ -151,7 +151,7 @@ Item {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: Theme.outlineLight
+                        color: Theme.gridLine
                     }
                 }
             }
@@ -288,7 +288,7 @@ Item {
                                 anchors.top: parent.top
                                 width: parent.width
                                 height: 1
-                                color: Theme.outlineLight
+                                color: Theme.gridLine
                             }
                         }
                     }
@@ -317,7 +317,7 @@ Item {
                                 anchors.left: parent.left
                                 width: 1
                                 height: parent.height
-                                color: Theme.outlineLight
+                                color: Theme.gridLine
                             }
 
                             Repeater {

@@ -129,6 +129,7 @@ Singleton {
     property color outlineLight: Qt.rgba(outline.r, outline.g, outline.b, 0.05)
     property color outlineMedium: Qt.rgba(outline.r, outline.g, outline.b, 0.12)
     property color outlineStrong: Qt.rgba(outline.r, outline.g, outline.b, 0.18)
+    property color gridLine: Qt.rgba(outline.r, outline.g, outline.b, 0.25)
 
     property color errorHover: Qt.rgba(error.r, error.g, error.b, 0.12)
     property color errorPressed: Qt.rgba(error.r, error.g, error.b, 0.16)
