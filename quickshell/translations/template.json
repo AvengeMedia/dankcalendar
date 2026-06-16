@@ -464,7 +464,7 @@
   {
     "term": "Auto",
     "translation": "",
-    "context": "theme mode button group option | time format button group option",
+    "context": "color source button group option following DMS | theme mode button group option | time format button group option",
     "reference": "",
     "comment": ""
   },
@@ -546,6 +546,13 @@
     "comment": ""
   },
   {
+    "term": "Choose a JSON color theme file.",
+    "translation": "",
+    "context": "custom theme hint when none selected",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Choose a provider",
     "translation": "",
     "context": "heading for provider selection list",
@@ -591,13 +598,6 @@
     "term": "Color source",
     "translation": "",
     "context": "color source setting label",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Colors are shared with DankMaterialShell when available.",
-    "translation": "",
-    "context": "appearance settings section subtitle",
     "reference": "",
     "comment": ""
   },
@@ -679,6 +679,13 @@
     "comment": ""
   },
   {
+    "term": "Could not read that file — expected a JSON color theme.",
+    "translation": "",
+    "context": "custom theme error when file is invalid",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Could not read that file.",
     "translation": "",
     "context": "error when credentials file cannot be read",
@@ -707,16 +714,9 @@
     "comment": ""
   },
   {
-    "term": "DMS dynamic",
+    "term": "Custom",
     "translation": "",
-    "context": "color source status value",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "DMS dynamic colors detected when available.",
-    "translation": "",
-    "context": "color source setting description",
+    "context": "color source button group option for a custom theme file",
     "reference": "",
     "comment": ""
   },
@@ -738,6 +738,13 @@
     "term": "Dank Linux Discord",
     "translation": "",
     "context": "about page community icon tooltip",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "DankMaterialShell not detected — using the %1 preset.",
+    "translation": "",
+    "context": "auto color source status when DMS is missing",
     "reference": "",
     "comment": ""
   },
@@ -994,6 +1001,13 @@
     "comment": ""
   },
   {
+    "term": "Follow DankMaterialShell colors, falling back to a preset.",
+    "translation": "",
+    "context": "color source description for auto",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Following the system color scheme (currently %1).",
     "translation": "",
     "context": "theme mode setting description",
@@ -1123,6 +1137,13 @@
     "term": "Light",
     "translation": "",
     "context": "theme mode button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Load colors from your own theme file.",
+    "translation": "",
+    "context": "color source description for custom",
     "reference": "",
     "comment": ""
   },
@@ -1330,6 +1351,13 @@
     "comment": ""
   },
   {
+    "term": "No theme file selected",
+    "translation": "",
+    "context": "custom theme empty state title",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "No writable calendar available",
     "translation": "",
     "context": "event form error when no calendar allows creating events",
@@ -1449,6 +1477,13 @@
     "comment": ""
   },
   {
+    "term": "Palette: %1",
+    "translation": "",
+    "context": "selected preset palette name",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Part of the Dank Linux suite.",
     "translation": "",
     "context": "app tagline on about page",
@@ -1484,6 +1519,13 @@
     "comment": ""
   },
   {
+    "term": "Pick a color source, palette, or your own theme file.",
+    "translation": "",
+    "context": "appearance settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Pictures",
     "translation": "",
     "context": "file browser quick access location",
@@ -1494,6 +1536,13 @@
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "translation": "",
     "context": "local calendar directory form instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Preset",
+    "translation": "",
+    "context": "color source button group option for bundled palettes",
     "reference": "",
     "comment": ""
   },
@@ -1687,6 +1736,13 @@
     "comment": ""
   },
   {
+    "term": "Select theme file",
+    "translation": "",
+    "context": "custom theme file picker title",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Send test",
     "translation": "",
     "context": "test notification button",
@@ -1820,13 +1876,6 @@
     "comment": ""
   },
   {
-    "term": "Stock palette",
-    "translation": "",
-    "context": "color source status value",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Sync now",
     "translation": "",
     "context": "account context menu action to sync the account",
@@ -1953,6 +2002,13 @@
     "comment": ""
   },
   {
+    "term": "Use a bundled color palette.",
+    "translation": "",
+    "context": "color source description for preset",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Use synced name",
     "translation": "",
     "context": "rename calendar dialog button to revert to provider name",
@@ -1970,6 +2026,13 @@
     "term": "Username",
     "translation": "",
     "context": "caldav username field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Using DankMaterialShell dynamic colors.",
+    "translation": "",
+    "context": "auto color source status when DMS is active",
     "reference": "",
     "comment": ""
   },

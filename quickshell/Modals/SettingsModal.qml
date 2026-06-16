@@ -142,6 +142,7 @@ FloatingWindow {
                     SettingsContent {
                         anchors.fill: parent
                         currentIndex: settingsModal.currentTabIndex
+                        hostWindow: settingsModal
                         onAddAccountRequested: settingsModal.addAccountRequested()
                     }
                 }

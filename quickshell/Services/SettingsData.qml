@@ -18,6 +18,11 @@ Singleton {
 
     // "auto" | "light" | "dark"
     property alias themeMode: adapter.themeMode
+    // "auto" follows DMS dynamic colors when available, falling back to the
+    // chosen preset; "preset" forces a bundled palette; "custom" loads a JSON file
+    property alias colorSource: adapter.colorSource
+    property alias presetTheme: adapter.presetTheme
+    property alias customThemeFile: adapter.customThemeFile
     // -1 = locale default, otherwise 0 (Sunday) … 6 (Saturday)
     property alias firstDayOfWeek: adapter.firstDayOfWeek
     // "auto" | "12h" | "24h"
@@ -114,6 +119,9 @@ Singleton {
         JsonAdapter {
             id: adapter
             property string themeMode: "auto"
+            property string colorSource: "auto"
+            property string presetTheme: "purple"
+            property string customThemeFile: ""
             property int firstDayOfWeek: -1
             property string timeFormat: "auto"
             property bool use24HourClock: true

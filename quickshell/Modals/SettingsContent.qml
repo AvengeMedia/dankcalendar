@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import qs.Common
+import qs.Modals.FileBrowser
 import qs.Services
 import qs.Widgets
 
@@ -8,6 +9,22 @@ Item {
     id: root
 
     property int currentIndex: 0
+    property var hostWindow: null
+
+    readonly property var colorSourceOptions: [
+        {
+            label: I18n.tr("Auto", "color source button group option following DMS"),
+            value: "auto"
+        },
+        {
+            label: I18n.tr("Preset", "color source button group option for bundled palettes"),
+            value: "preset"
+        },
+        {
+            label: I18n.tr("Custom", "color source button group option for a custom theme file"),
+            value: "custom"
+        }
+    ]
 
     signal addAccountRequested
 
@@ -397,9 +414,18 @@ Item {
     Component {
         id: appearancePage
         DankFlickable {
+            id: appearanceFlickable
             clip: true
             contentWidth: width
             contentHeight: appearanceColumn.implicitHeight
+
+            function openThemeFilePicker() {
+                themePickerLoader.active = true;
+                const picker = themePickerLoader.item;
+                picker.browserTitle = I18n.tr("Select theme file", "custom theme file picker title");
+                picker.fileExtensions = ["*.json"];
+                picker.open();
+            }
 
             Column {
                 id: appearanceColumn
@@ -409,7 +435,7 @@ Item {
 
                 SectionHeader {
                     title: I18n.tr("Appearance", "appearance settings section header")
-                    subtitle: I18n.tr("Colors are shared with DankMaterialShell when available.", "appearance settings section subtitle")
+                    subtitle: I18n.tr("Pick a color source, palette, or your own theme file.", "appearance settings section subtitle")
                 }
 
                 Column {
@@ -464,14 +490,191 @@ Item {
 
                     SettingsRow {
                         label: I18n.tr("Color source", "color source setting label")
-                        description: I18n.tr("DMS dynamic colors detected when available.", "color source setting description")
-
-                        StyledText {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: Theme.colorsLoaded ? I18n.tr("DMS dynamic", "color source status value") : I18n.tr("Stock palette", "color source status value")
-                            font.pixelSize: Theme.fontSizeMedium
-                            color: Theme.colorsLoaded ? Theme.success : Theme.surfaceVariantText
+                        description: {
+                            switch (SettingsData.colorSource) {
+                            case "preset":
+                                return I18n.tr("Use a bundled color palette.", "color source description for preset");
+                            case "custom":
+                                return I18n.tr("Load colors from your own theme file.", "color source description for custom");
+                            default:
+                                return I18n.tr("Follow DankMaterialShell colors, falling back to a preset.", "color source description for auto");
+                            }
                         }
+
+                        DankButtonGroup {
+                            anchors.verticalCenter: parent.verticalCenter
+                            buttonHeight: 36
+                            minButtonWidth: 64
+                            model: root.optionLabels(root.colorSourceOptions)
+                            currentIndex: {
+                                for (let i = 0; i < root.colorSourceOptions.length; i++) {
+                                    if (root.colorSourceOptions[i].value === SettingsData.colorSource)
+                                        return i;
+                                }
+                                return 0;
+                            }
+                            onSelectionChanged: (index, selected) => {
+                                if (!selected)
+                                    return;
+                                SettingsData.colorSource = root.colorSourceOptions[index].value;
+                            }
+                        }
+                    }
+
+                    StyledRect {
+                        visible: SettingsData.colorSource === "auto"
+                        width: parent.width
+                        height: 64
+                        color: Theme.surfaceContainer
+                        radius: Theme.cornerRadius
+
+                        Row {
+                            anchors.fill: parent
+                            anchors.leftMargin: Theme.spacingL
+                            anchors.rightMargin: Theme.spacingL
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: Theme.spacingM
+
+                            DankIcon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                name: Theme.dmsColorsAvailable ? "check_circle" : "info"
+                                size: Theme.iconSize
+                                color: Theme.dmsColorsAvailable ? Theme.success : Theme.surfaceVariantText
+                            }
+
+                            StyledText {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: parent.width - Theme.iconSize - Theme.spacingM
+                                text: Theme.dmsColorsAvailable ? I18n.tr("Using DankMaterialShell dynamic colors.", "auto color source status when DMS is active") : I18n.tr("DankMaterialShell not detected — using the %1 preset.", "auto color source status when DMS is missing").arg(Theme.presetLabel(SettingsData.presetTheme))
+                                font.pixelSize: Theme.fontSizeMedium
+                                color: Theme.surfaceText
+                                wrapMode: Text.WordWrap
+                            }
+                        }
+                    }
+
+                    StyledRect {
+                        visible: SettingsData.colorSource === "preset"
+                        width: parent.width
+                        height: presetContent.implicitHeight + Theme.spacingL * 2
+                        color: Theme.surfaceContainer
+                        radius: Theme.cornerRadius
+
+                        Column {
+                            id: presetContent
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.leftMargin: Theme.spacingL
+                            anchors.rightMargin: Theme.spacingL
+                            spacing: Theme.spacingM
+
+                            StyledText {
+                                text: I18n.tr("Palette: %1", "selected preset palette name").arg(Theme.presetLabel(SettingsData.presetTheme))
+                                font.pixelSize: Theme.fontSizeMedium
+                                font.weight: Font.Medium
+                                color: Theme.surfaceText
+                            }
+
+                            Flow {
+                                width: parent.width
+                                spacing: Theme.spacingS
+
+                                Repeater {
+                                    model: Theme.presetNames()
+
+                                    Rectangle {
+                                        required property string modelData
+                                        readonly property bool active: SettingsData.presetTheme === modelData
+
+                                        width: 36
+                                        height: 36
+                                        radius: width / 2
+                                        color: Theme.presetColors(modelData).primary
+                                        border.color: active ? Theme.primary : Theme.outline
+                                        border.width: active ? 3 : 1
+                                        scale: active ? 1.1 : 1
+
+                                        Behavior on scale {
+                                            NumberAnimation {
+                                                duration: Theme.shortDuration
+                                                easing.type: Theme.emphasizedEasing
+                                            }
+                                        }
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: SettingsData.presetTheme = parent.modelData
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    StyledRect {
+                        visible: SettingsData.colorSource === "custom"
+                        width: parent.width
+                        height: 72
+                        color: Theme.surfaceContainer
+                        radius: Theme.cornerRadius
+
+                        Row {
+                            anchors.fill: parent
+                            anchors.leftMargin: Theme.spacingL
+                            anchors.rightMargin: Theme.spacingL
+                            spacing: Theme.spacingM
+
+                            DankActionButton {
+                                anchors.verticalCenter: parent.verticalCenter
+                                iconName: "folder_open"
+                                iconColor: Theme.primary
+                                onClicked: appearanceFlickable.openThemeFilePicker()
+                            }
+
+                            Column {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: parent.width - 40 - Theme.spacingM
+                                spacing: 2
+
+                                StyledText {
+                                    text: SettingsData.customThemeFile ? SettingsData.customThemeFile.split('/').pop() : I18n.tr("No theme file selected", "custom theme empty state title")
+                                    font.pixelSize: Theme.fontSizeMedium
+                                    font.weight: Font.Medium
+                                    color: Theme.surfaceText
+                                    elide: Text.ElideMiddle
+                                    width: parent.width
+                                }
+
+                                StyledText {
+                                    text: {
+                                        if (!SettingsData.customThemeFile)
+                                            return I18n.tr("Choose a JSON color theme file.", "custom theme hint when none selected");
+                                        if (Theme.customThemeLoaded)
+                                            return SettingsData.customThemeFile;
+                                        return I18n.tr("Could not read that file — expected a JSON color theme.", "custom theme error when file is invalid");
+                                    }
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: (SettingsData.customThemeFile && !Theme.customThemeLoaded) ? Theme.error : Theme.surfaceVariantText
+                                    elide: Text.ElideMiddle
+                                    width: parent.width
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Loader {
+                id: themePickerLoader
+                active: false
+                sourceComponent: FileBrowserModal {
+                    parentModal: root.hostWindow
+                    onFileSelected: path => {
+                        SettingsData.customThemeFile = path;
+                        close();
                     }
                 }
             }
