@@ -4,16 +4,21 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
-	ics "github.com/arran4/golang-ical"
+	ical "github.com/emersion/go-ical"
 	"github.com/google/uuid"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
 )
+
+// emptyCalendar is written when a file calendar loses its last event: the file
+// is the calendar, so it must survive, but the encoder rejects a childless one.
+const emptyCalendar = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//dankcalendar//dankcalendar//EN\r\nEND:VCALENDAR\r\n"
 
 var filenameSanitizer = strings.NewReplacer(
 	"/", "_", "\\", "_", ":", "_", "*", "_", "?", "_",
@@ -53,7 +58,7 @@ func (p *Provider) UpdateEvent(ctx context.Context, cal calendar.Calendar, ev *c
 	}
 
 	path := source
-	var doc *ics.Calendar
+	var doc *ical.Calendar
 	switch {
 	case strings.HasPrefix(cal.RemoteID, "dir:"):
 		path, doc, err = findEventFile(source, ev.UID)
@@ -64,7 +69,7 @@ func (p *Provider) UpdateEvent(ctx context.Context, cal calendar.Calendar, ev *c
 		return nil, err
 	}
 
-	if !replaceVEvent(doc, ev.UID, ev) {
+	if !replaceEvent(doc, ev.UID, ev) {
 		return nil, fmt.Errorf("event not found")
 	}
 	if err := writeAtomic(path, doc); err != nil {
@@ -99,8 +104,8 @@ func createInDirectory(dir, uid string, ev *calendar.Event) error {
 		return fmt.Errorf("stat %q: %w", path, err)
 	}
 
-	doc := newCalendarDoc()
-	doc.AddVEvent(buildVEvent(uid, ev))
+	doc := icalconv.NewCalendar()
+	doc.Children = append(doc.Children, icalconv.BuildEvent(ev, uid).Component)
 	return writeAtomic(path, doc)
 }
 
@@ -108,15 +113,15 @@ func createInFile(path, uid string, ev *calendar.Event) error {
 	doc, err := loadCalendarDoc(path)
 	switch {
 	case errors.Is(err, os.ErrNotExist):
-		doc = newCalendarDoc()
+		doc = icalconv.NewCalendar()
 	case err != nil:
 		return err
 	}
 
-	if findVEvent(doc, uid) != nil {
+	if findEvent(doc, uid) != nil {
 		return fmt.Errorf("event %q already exists", uid)
 	}
-	doc.AddVEvent(buildVEvent(uid, ev))
+	doc.Children = append(doc.Children, icalconv.BuildEvent(ev, uid).Component)
 	return writeAtomic(path, doc)
 }
 
@@ -126,7 +131,7 @@ func deleteInDirectory(dir, uid string) error {
 		return err
 	}
 
-	removeVEvent(doc, uid)
+	removeEvent(doc, uid)
 	if len(doc.Events()) == 0 {
 		return os.Remove(path)
 	}
@@ -138,15 +143,15 @@ func deleteInFile(path, uid string) error {
 	if err != nil {
 		return err
 	}
-	if !removeVEvent(doc, uid) {
+	if !removeEvent(doc, uid) {
 		return fmt.Errorf("event not found")
 	}
 	return writeAtomic(path, doc)
 }
 
-func findEventFile(dir, uid string) (string, *ics.Calendar, error) {
+func findEventFile(dir, uid string) (string, *ical.Calendar, error) {
 	fast := filepath.Join(dir, filenameSanitizer.Replace(uid)+".ics")
-	if doc, err := loadCalendarDoc(fast); err == nil && findVEvent(doc, uid) != nil {
+	if doc, err := loadCalendarDoc(fast); err == nil && findEvent(doc, uid) != nil {
 		return fast, doc, nil
 	}
 
@@ -163,111 +168,56 @@ func findEventFile(dir, uid string) (string, *ics.Calendar, error) {
 		if err != nil {
 			return "", nil, err
 		}
-		if findVEvent(doc, uid) != nil {
+		if findEvent(doc, uid) != nil {
 			return path, doc, nil
 		}
 	}
 	return "", nil, fmt.Errorf("event not found")
 }
 
-func loadCalendarDoc(path string) (*ics.Calendar, error) {
+func loadCalendarDoc(path string) (*ical.Calendar, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
 
-	doc, err := ics.ParseCalendar(f)
+	doc, err := ical.NewDecoder(f).Decode()
 	if err != nil {
 		return nil, fmt.Errorf("parse %q: %w", path, err)
 	}
 	return doc, nil
 }
 
-func newCalendarDoc() *ics.Calendar {
-	doc := ics.NewCalendar()
-	doc.SetProductId("-//dankcalendar//dankcalendar//EN")
-	return doc
-}
-
-func findVEvent(doc *ics.Calendar, uid string) *ics.VEvent {
-	for _, ev := range doc.Events() {
-		if ev.Id() == uid {
-			return ev
+func findEvent(doc *ical.Calendar, uid string) *ical.Component {
+	for _, child := range doc.Children {
+		if child.Name == ical.CompEvent && icalconv.ComponentUID(child) == uid {
+			return child
 		}
 	}
 	return nil
 }
 
-func replaceVEvent(doc *ics.Calendar, uid string, ev *calendar.Event) bool {
-	for i, comp := range doc.Components {
-		ve, ok := comp.(*ics.VEvent)
-		if !ok || ve.Id() != uid {
+func replaceEvent(doc *ical.Calendar, uid string, ev *calendar.Event) bool {
+	for i, child := range doc.Children {
+		if child.Name != ical.CompEvent || icalconv.ComponentUID(child) != uid {
 			continue
 		}
-		doc.Components[i] = buildVEvent(uid, ev)
+		doc.Children[i] = icalconv.BuildEvent(ev, uid).Component
 		return true
 	}
 	return false
 }
 
-func removeVEvent(doc *ics.Calendar, uid string) bool {
-	for i, comp := range doc.Components {
-		ve, ok := comp.(*ics.VEvent)
-		if !ok || ve.Id() != uid {
+func removeEvent(doc *ical.Calendar, uid string) bool {
+	for i, child := range doc.Children {
+		if child.Name != ical.CompEvent || icalconv.ComponentUID(child) != uid {
 			continue
 		}
-		doc.Components = append(doc.Components[:i], doc.Components[i+1:]...)
+		doc.Children = append(doc.Children[:i], doc.Children[i+1:]...)
 		return true
 	}
 	return false
-}
-
-func buildVEvent(uid string, ev *calendar.Event) *ics.VEvent {
-	out := ics.NewEvent(uid)
-	out.SetDtStampTime(time.Now().UTC())
-	out.SetSummary(ev.Summary)
-
-	switch {
-	case ev.AllDay:
-		out.SetAllDayStartAt(ev.Start)
-		out.SetAllDayEndAt(ev.End)
-	default:
-		out.SetStartAt(ev.Start)
-		out.SetEndAt(ev.End)
-	}
-
-	if ev.Description != "" {
-		out.SetDescription(ev.Description)
-	}
-	if ev.Location != "" {
-		out.SetLocation(ev.Location)
-	}
-	if ev.URL != "" {
-		out.SetURL(ev.URL)
-	}
-	if status, ok := icalStatus(ev.Status); ok {
-		out.SetStatus(status)
-	}
-	if ev.Recurrence != nil {
-		for _, rule := range ev.Recurrence.RRule {
-			out.AddRrule(rule)
-		}
-	}
-	addAlarms(out, ev.Reminders)
-	return out
-}
-
-func icalStatus(status calendar.EventStatus) (ics.ObjectStatus, bool) {
-	switch status {
-	case calendar.EventConfirmed:
-		return ics.ObjectStatusConfirmed, true
-	case calendar.EventTentative:
-		return ics.ObjectStatusTentative, true
-	case calendar.EventCancelled:
-		return ics.ObjectStatusCancelled, true
-	}
-	return "", false
 }
 
 func storedEvent(cal calendar.Calendar, uid string, ev *calendar.Event) *calendar.Event {
@@ -278,7 +228,7 @@ func storedEvent(cal calendar.Calendar, uid string, ev *calendar.Event) *calenda
 	return &out
 }
 
-func writeAtomic(path string, doc *ics.Calendar) error {
+func writeAtomic(path string, doc *ical.Calendar) error {
 	dir := filepath.Dir(path)
 	tmp, err := os.CreateTemp(dir, ".dankcal-*.tmp")
 	if err != nil {
@@ -286,7 +236,7 @@ func writeAtomic(path string, doc *ics.Calendar) error {
 	}
 	defer os.Remove(tmp.Name())
 
-	if err := doc.SerializeTo(tmp); err != nil {
+	if err := encodeCalendar(tmp, doc); err != nil {
 		tmp.Close()
 		return fmt.Errorf("serialize %q: %w", path, err)
 	}
@@ -294,4 +244,12 @@ func writeAtomic(path string, doc *ics.Calendar) error {
 		return err
 	}
 	return os.Rename(tmp.Name(), path)
+}
+
+func encodeCalendar(w io.Writer, doc *ical.Calendar) error {
+	if len(doc.Children) == 0 {
+		_, err := io.WriteString(w, emptyCalendar)
+		return err
+	}
+	return ical.NewEncoder(w).Encode(doc)
 }

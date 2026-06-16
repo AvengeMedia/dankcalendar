@@ -753,6 +753,20 @@ Singleton {
         });
     }
 
+    function createCalendar(accountId, name, callback) {
+        sendRequest("calendars.create", {
+            "accountId": accountId,
+            "name": name
+        }, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                refreshCalendars();
+            if (callback)
+                callback(response);
+        });
+    }
+
     function removeAccount(accountId, callback) {
         sendRequest("accounts.delete", {
             "accountId": accountId

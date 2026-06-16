@@ -2,7 +2,6 @@ package google
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -16,51 +15,29 @@ import (
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
 )
 
 const maxPageSize = 2500
 
 type Provider struct {
 	account cal.Account
-	secrets cal.SecretStore
 	svc     *calendar.Service
-	cfg     *oauth2.Config
 }
 
 func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Provider, error) {
-	appBytes, err := secrets.Get(ctx, account.ID, SecretKeyApp)
-	if err != nil {
-		return nil, fmt.Errorf("missing google app credentials for account %q: %w", account.ID, err)
-	}
-
-	var creds oauth.GoogleAppCredentials
-	if err := json.Unmarshal(appBytes, &creds); err != nil {
-		return nil, fmt.Errorf("decode google app credentials: %w", err)
-	}
-
-	tokenBytes, err := secrets.Get(ctx, account.ID, SecretKeyToken)
-	if err != nil {
-		return nil, fmt.Errorf("account %q is not authorized; run `dcal account google login %s`", account.ID, account.ID)
-	}
-
-	tok, err := oauth.UnmarshalToken(tokenBytes)
+	src, err := oauthbase.LoadTokenSource(ctx, secrets, account, SecretKeyApp, SecretKeyToken,
+		func(c oauth.GoogleAppCredentials) *oauth2.Config { return oauth.GoogleConfig(c, "") })
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := oauth.GoogleConfig(creds, "")
-	tokenSource := persistingTokenSource{
-		base:      cfg.TokenSource(ctx, tok),
-		secrets:   secrets,
-		accountID: account.ID,
-	}
-
-	svc, err := calendar.NewService(ctx, option.WithTokenSource(&tokenSource))
+	svc, err := calendar.NewService(ctx, option.WithTokenSource(src))
 	if err != nil {
 		return nil, fmt.Errorf("init google calendar service: %w", err)
 	}
 
-	return &Provider{account: account, secrets: secrets, svc: svc, cfg: cfg}, nil
+	return &Provider{account: account, svc: svc}, nil
 }
 
 func (p *Provider) Kind() cal.AccountKind { return cal.AccountGoogle }
@@ -411,40 +388,9 @@ func toGoogleDateTime(t time.Time, tz string) *calendar.EventDateTime {
 
 func (p *Provider) Close() error { return nil }
 
-// classifyAuthErr tags dead credentials so the sync engine flags the account
-// for re-auth. A failed refresh yields invalid_grant; a 401 means the token is
-// no longer accepted. Anything else is returned unchanged.
 func classifyAuthErr(err error) error {
-	if err == nil {
-		return nil
-	}
-	var apiErr *googleapi.Error
-	switch {
-	case oauth.IsInvalidGrant(err):
-		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
-	case errors.As(err, &apiErr) && apiErr.Code == http.StatusUnauthorized:
-		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
-	}
-	return err
-}
-
-type persistingTokenSource struct {
-	base      oauth2.TokenSource
-	secrets   cal.SecretStore
-	accountID string
-}
-
-func (s *persistingTokenSource) Token() (*oauth2.Token, error) {
-	tok, err := s.base.Token()
-	if err != nil {
-		return nil, err
-	}
-	data, err := oauth.MarshalToken(tok)
-	if err != nil {
-		return tok, nil
-	}
-	if err := s.secrets.Set(context.Background(), s.accountID, SecretKeyToken, data); err != nil {
-		return tok, nil
-	}
-	return tok, nil
+	return oauthbase.ClassifyAuthErr(err, func(e error) bool {
+		var apiErr *googleapi.Error
+		return errors.As(e, &apiErr) && apiErr.Code == http.StatusUnauthorized
+	})
 }

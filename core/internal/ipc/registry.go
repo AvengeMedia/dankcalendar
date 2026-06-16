@@ -46,6 +46,7 @@ var Methods = []MethodSpec{
 	{Name: "accounts.changed", Group: "accounts", Desc: "Publish an accounts-changed event", Params: []ParamSpec{opt("accountId", "")}},
 
 	{Name: "calendars.list", Group: "calendars", Desc: "List calendars"},
+	{Name: "calendars.create", Group: "calendars", Desc: "Create a calendar in a local account", Params: []ParamSpec{req("accountId", ""), req("name", "")}},
 	{Name: "calendars.setHidden", Group: "calendars", Desc: "Show or hide a calendar", Params: []ParamSpec{req("calendarId", ""), req("hidden", "true|false")}},
 	{Name: "calendars.rename", Group: "calendars", Desc: "Override a calendar name (empty clears)", Params: []ParamSpec{req("calendarId", ""), opt("name", "")}},
 	{Name: "calendars.setReminders", Group: "calendars", Desc: "Set per-calendar reminder overrides (empty clears)", Params: []ParamSpec{req("calendarId", ""), opt("overrides", "override object; omit to inherit")}},

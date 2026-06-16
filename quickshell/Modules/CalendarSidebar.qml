@@ -441,10 +441,12 @@ Item {
                 DankCalService.setCalendarHidden(cal.id, !cal.hidden);
                 break;
             case "rename":
-                renameDialog.show(cal);
+                renameLoader.active = true;
+                renameLoader.item.show(cal);
                 break;
             case "delete":
-                deleteConfirm.show({
+                deleteConfirmLoader.active = true;
+                deleteConfirmLoader.item.show({
                     title: I18n.tr("Delete \"%1\"?", "confirm dialog title for deleting a calendar, %1 is the calendar name").arg(cal.name),
                     message: I18n.tr("Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.", "confirm dialog body for deleting a calendar"),
                     confirmText: I18n.tr("Delete", "confirm button for deleting a calendar"),
@@ -455,15 +457,31 @@ Item {
         }
     }
 
-    RenameCalendarDialog {
-        id: renameDialog
+    Loader {
+        id: renameLoader
+        active: false
+        sourceComponent: RenameCalendarDialog {
+            onClosed: renameLoader.active = false
+        }
     }
 
-    ConfirmDialog {
-        id: deleteConfirm
-        onConfirmed: {
-            if (root.actionCalendar)
-                DankCalService.deleteCalendar(root.actionCalendar.id);
+    Loader {
+        id: newCalendarLoader
+        active: false
+        sourceComponent: NewCalendarDialog {
+            onClosed: newCalendarLoader.active = false
+        }
+    }
+
+    Loader {
+        id: deleteConfirmLoader
+        active: false
+        sourceComponent: ConfirmDialog {
+            onConfirmed: {
+                if (root.actionCalendar)
+                    DankCalService.deleteCalendar(root.actionCalendar.id);
+            }
+            onClosed: deleteConfirmLoader.active = false
         }
     }
 
@@ -476,6 +494,12 @@ Item {
                     id: "reauth",
                     label: I18n.tr("Reconnect", "account context menu action to re-authorize the account"),
                     icon: "login"
+                });
+            if (root.actionAccount && root.actionAccount.kind === "local")
+                entries.push({
+                    id: "newCalendar",
+                    label: I18n.tr("New calendar…", "account context menu action to create a calendar in a local folder"),
+                    icon: "create_new_folder"
                 });
             entries.push({
                 id: "sync",
@@ -498,11 +522,16 @@ Item {
             case "reauth":
                 DankCalService.reconnectAccount(acc);
                 break;
+            case "newCalendar":
+                newCalendarLoader.active = true;
+                newCalendarLoader.item.show(acc);
+                break;
             case "sync":
                 DankCalService.refreshAccount(acc.id);
                 break;
             case "remove":
-                accountRemoveConfirm.show({
+                accountRemoveLoader.active = true;
+                accountRemoveLoader.item.show({
                     title: I18n.tr("Remove \"%1\"?", "confirm dialog title for removing an account, %1 is the account label").arg(DankCalService.accountLabel(acc)),
                     message: I18n.tr("Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.", "confirm dialog body for removing an account"),
                     confirmText: I18n.tr("Remove", "confirm button for removing an account"),
@@ -513,11 +542,15 @@ Item {
         }
     }
 
-    ConfirmDialog {
-        id: accountRemoveConfirm
-        onConfirmed: {
-            if (root.actionAccount)
-                DankCalService.removeAccount(root.actionAccount.id);
+    Loader {
+        id: accountRemoveLoader
+        active: false
+        sourceComponent: ConfirmDialog {
+            onConfirmed: {
+                if (root.actionAccount)
+                    DankCalService.removeAccount(root.actionAccount.id);
+            }
+            onClosed: accountRemoveLoader.active = false
         }
     }
 }

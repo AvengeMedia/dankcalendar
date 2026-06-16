@@ -1,4 +1,4 @@
-package local
+package icalconv
 
 import (
 	"fmt"
@@ -6,46 +6,50 @@ import (
 	"strconv"
 	"strings"
 
-	ics "github.com/arran4/golang-ical"
+	ical "github.com/emersion/go-ical"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 )
 
 var durationPattern = regexp.MustCompile(`^([+-])?P(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$`)
 
-func applyAlarms(ev *ics.VEvent, out *calendar.Event) {
-	for _, alarm := range ev.Alarms() {
-		switch strings.ToUpper(alarmProp(alarm, ics.ComponentPropertyAction)) {
-		case "", string(ics.ActionDisplay), string(ics.ActionAudio):
+func applyAlarms(comp *ical.Component, ev *cal.Event) {
+	for _, alarm := range comp.Children {
+		if alarm.Name != ical.CompAlarm {
+			continue
+		}
+		switch strings.ToUpper(propValue(alarm, ical.PropAction)) {
+		case "", "DISPLAY", "AUDIO":
 		default:
 			continue
 		}
-
-		minutes, ok := triggerMinutes(alarmProp(alarm, ics.ComponentPropertyTrigger))
+		minutes, ok := triggerMinutes(propValue(alarm, ical.PropTrigger))
 		if !ok {
 			continue
 		}
-		out.Reminders = append(out.Reminders, calendar.Reminder{Method: "popup", Minutes: minutes})
+		ev.Reminders = append(ev.Reminders, cal.Reminder{Method: "popup", Minutes: minutes})
 	}
 }
 
-func addAlarms(out *ics.VEvent, reminders []calendar.Reminder) {
+func addAlarms(event *ical.Event, reminders []cal.Reminder) {
 	for _, rem := range reminders {
 		if strings.EqualFold(rem.Method, "email") {
 			continue
 		}
-		alarm := out.AddAlarm()
-		alarm.SetAction(ics.ActionDisplay)
-		alarm.SetTrigger(triggerFromMinutes(rem.Minutes))
+		alarm := ical.NewComponent(ical.CompAlarm)
+		alarm.Props.SetText(ical.PropAction, "DISPLAY")
+		// DISPLAY alarms require a description per RFC 5545.
+		alarm.Props.SetText(ical.PropDescription, "Reminder")
+		setRaw(alarm.Props, ical.PropTrigger, triggerFromMinutes(rem.Minutes))
+		event.Children = append(event.Children, alarm)
 	}
 }
 
-func alarmProp(alarm *ics.VAlarm, key ics.ComponentProperty) string {
-	prop := alarm.GetProperty(key)
-	if prop == nil {
-		return ""
+func propValue(comp *ical.Component, name string) string {
+	if p := comp.Props.Get(name); p != nil {
+		return p.Value
 	}
-	return prop.Value
+	return ""
 }
 
 // triggerMinutes converts a relative TRIGGER duration into minutes before the

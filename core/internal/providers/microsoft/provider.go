@@ -17,6 +17,7 @@ import (
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
 )
 
 const (
@@ -26,45 +27,20 @@ const (
 
 type Provider struct {
 	account    cal.Account
-	secrets    cal.SecretStore
 	httpClient *http.Client
-	cfg        *oauth2.Config
 	masters    map[string]graphEvent
 }
 
 func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Provider, error) {
-	appBytes, err := secrets.Get(ctx, account.ID, SecretKeyApp)
-	if err != nil {
-		return nil, fmt.Errorf("missing microsoft app credentials for account %q: %w", account.ID, err)
-	}
-
-	var creds oauth.MicrosoftAppCredentials
-	if err := json.Unmarshal(appBytes, &creds); err != nil {
-		return nil, fmt.Errorf("decode microsoft app credentials: %w", err)
-	}
-
-	tokenBytes, err := secrets.Get(ctx, account.ID, SecretKeyToken)
-	if err != nil {
-		return nil, fmt.Errorf("account %q is not authorized; run `dcal account microsoft login %s`", account.ID, account.ID)
-	}
-
-	tok, err := oauth.UnmarshalToken(tokenBytes)
+	src, err := oauthbase.LoadTokenSource(ctx, secrets, account, SecretKeyApp, SecretKeyToken,
+		func(c oauth.MicrosoftAppCredentials) *oauth2.Config { return oauth.MicrosoftConfig(c, "") })
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := oauth.MicrosoftConfig(creds, "")
-	tokenSource := persistingTokenSource{
-		base:      cfg.TokenSource(ctx, tok),
-		secrets:   secrets,
-		accountID: account.ID,
-	}
-
 	return &Provider{
 		account:    account,
-		secrets:    secrets,
-		httpClient: oauth2.NewClient(ctx, &tokenSource),
-		cfg:        cfg,
+		httpClient: oauth2.NewClient(ctx, src),
 		masters:    make(map[string]graphEvent),
 	}, nil
 }
@@ -82,21 +58,11 @@ func (e *graphError) Error() string {
 	return fmt.Sprintf("graph api error %d (%s): %s", e.Status, e.Code, e.Message)
 }
 
-// classifyAuthErr tags dead credentials so the sync engine flags the account
-// for re-auth. A failed refresh yields invalid_grant; a 401 means the token is
-// no longer accepted. Anything else is returned unchanged.
 func classifyAuthErr(err error) error {
-	if err == nil {
-		return nil
-	}
-	var ge *graphError
-	switch {
-	case oauth.IsInvalidGrant(err):
-		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
-	case errors.As(err, &ge) && ge.Status == http.StatusUnauthorized:
-		return fmt.Errorf("%w: %v", cal.ErrReauthRequired, err)
-	}
-	return err
+	return oauthbase.ClassifyAuthErr(err, func(e error) bool {
+		var ge *graphError
+		return errors.As(e, &ge) && ge.Status == http.StatusUnauthorized
+	})
 }
 
 func (p *Provider) doJSON(ctx context.Context, method, reqURL string, body any, out any) error {
@@ -380,24 +346,3 @@ func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event
 }
 
 func (p *Provider) Close() error { return nil }
-
-type persistingTokenSource struct {
-	base      oauth2.TokenSource
-	secrets   cal.SecretStore
-	accountID string
-}
-
-func (s *persistingTokenSource) Token() (*oauth2.Token, error) {
-	tok, err := s.base.Token()
-	if err != nil {
-		return nil, err
-	}
-	data, err := oauth.MarshalToken(tok)
-	if err != nil {
-		return tok, nil
-	}
-	if err := s.secrets.Set(context.Background(), s.accountID, SecretKeyToken, data); err != nil {
-		return tok, nil
-	}
-	return tok, nil
-}

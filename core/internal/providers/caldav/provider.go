@@ -17,6 +17,7 @@ import (
 	"github.com/google/uuid"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
 )
 
 type Provider struct {
@@ -127,7 +128,7 @@ func (p *Provider) CreateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	}
 
 	path := objectPath(c.RemoteID, uid)
-	obj, err := p.client.PutCalendarObject(ctx, path, icalFromEvent(ev, uid))
+	obj, err := p.client.PutCalendarObject(ctx, path, icalconv.CalendarFromEvent(ev, uid))
 	if err != nil {
 		return nil, fmt.Errorf("put caldav object %q: %w", path, err)
 	}
@@ -144,7 +145,7 @@ func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 		return nil, errors.New("caldav update requires remote id")
 	}
 
-	obj, err := p.client.PutCalendarObject(ctx, ev.RemoteID, icalFromEvent(ev, ev.UID))
+	obj, err := p.client.PutCalendarObject(ctx, ev.RemoteID, icalconv.CalendarFromEvent(ev, ev.UID))
 	if err != nil {
 		return nil, fmt.Errorf("put caldav object %q: %w", ev.RemoteID, err)
 	}

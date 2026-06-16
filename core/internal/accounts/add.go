@@ -19,6 +19,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -111,6 +112,9 @@ func AddLocal(ctx context.Context, r *repo.Repo, in LocalInput) (Result, error) 
 	settings := map[string]any{"root": root}
 	if err := Ensure(ctx, r, accountID, account.KindLocal, displayName, settings); err != nil {
 		return Result{}, err
+	}
+	if err := local.SeedDefaultCalendar(root, ""); err != nil {
+		return Result{}, fmt.Errorf("seed default calendar: %w", err)
 	}
 	return Result{AccountID: accountID, DisplayName: displayName}, nil
 }

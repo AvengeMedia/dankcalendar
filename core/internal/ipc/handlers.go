@@ -19,6 +19,8 @@ func HandleCalendars(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 			return
 		}
 		Respond(w, req.ID, mapCalendars(calendars))
+	case "calendars.create":
+		handleCalendarCreate(ctx, w, req, deps)
 	case "calendars.setHidden":
 		handleCalendarSetHidden(ctx, w, req, deps)
 	case "calendars.rename":

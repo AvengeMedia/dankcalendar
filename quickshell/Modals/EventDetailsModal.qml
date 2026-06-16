@@ -15,6 +15,10 @@ FloatingWindow {
     property bool saving: false
     property string formError: ""
 
+    readonly property bool noWritableCalendars: DankCalService.writableCalendars().length === 0
+
+    signal addCalendarRequested
+
     property string formTitle: ""
     property date formStartDate: new Date()
     property int formStartMinutes: 600
@@ -874,6 +878,7 @@ FloatingWindow {
             Row {
                 width: parent.width
                 spacing: Theme.spacingM
+                visible: !(eventModal.createMode && eventModal.noWritableCalendars)
 
                 DankIcon {
                     name: "calendar_month"
@@ -896,6 +901,44 @@ FloatingWindow {
                                 eventModal.formCalendarIndex = i;
                                 return;
                             }
+                        }
+                    }
+                }
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: eventModal.createMode && eventModal.noWritableCalendars
+
+                DankIcon {
+                    name: "calendar_add_on"
+                    size: Theme.iconSize - 6
+                    color: Theme.surfaceVariantText
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Column {
+                    width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                    spacing: Theme.spacingXS
+
+                    StyledText {
+                        width: parent.width
+                        text: I18n.tr("No calendars yet. Add one to start creating events.", "event form guidance when there are no writable calendars")
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.surfaceVariantText
+                        wrapMode: Text.WordWrap
+                    }
+
+                    DankButton {
+                        text: I18n.tr("Add a calendar", "event form button to add a calendar when none exist")
+                        iconName: "add"
+                        buttonHeight: 36
+                        backgroundColor: Theme.primary
+                        textColor: Theme.primaryText
+                        onClicked: {
+                            eventModal.addCalendarRequested();
+                            eventModal.hide();
                         }
                     }
                 }

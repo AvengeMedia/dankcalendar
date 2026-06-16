@@ -430,6 +430,7 @@ FloatingWindow {
         sourceComponent: Component {
             EventDetailsModal {
                 parentWindow: window
+                onAddCalendarRequested: window.openAddAccount()
             }
         }
     }

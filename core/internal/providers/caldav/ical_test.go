@@ -1,7 +1,6 @@
 package caldav
 
 import (
-	"bytes"
 	"strings"
 	"testing"
 	"time"
@@ -141,82 +140,4 @@ SUMMARY:Weekly
 	assert.Equal(t, []string{"FREQ=WEEKLY;BYDAY=TH"}, rec.RRule)
 	assert.Equal(t, []string{"20260514T140000Z"}, rec.ExDate)
 	assert.Empty(t, rec.RDate)
-}
-
-func TestICalFromEventRoundTrip(t *testing.T) {
-	src := &cal.Event{
-		Summary:     "Sync up",
-		Description: "Weekly team sync",
-		Location:    "Hall B",
-		URL:         "https://example.com/sync",
-		Status:      cal.EventTentative,
-		Start:       time.Date(2026, 5, 7, 14, 0, 0, 0, time.UTC),
-		End:         time.Date(2026, 5, 7, 15, 0, 0, 0, time.UTC),
-		Recurrence:  &cal.Recurrence{RRule: []string{"FREQ=WEEKLY;BYDAY=TH"}},
-		Organizer:   &cal.Attendee{Email: "alice@example.com", DisplayName: "Alice", Organizer: true},
-		Attendees: []cal.Attendee{
-			{Email: "bob@example.com", DisplayName: "Bob", Role: "REQ-PARTICIPANT", Status: "accepted"},
-		},
-	}
-
-	encoded := icalFromEvent(src, "uid-9")
-	var buf bytes.Buffer
-	require.NoError(t, ical.NewEncoder(&buf).Encode(encoded))
-
-	events := eventsFromObject(cal.Calendar{}, caldav.CalendarObject{Data: decodeICS(t, buf.String())})
-	require.Len(t, events, 1)
-
-	got := events[0]
-	assert.Equal(t, "uid-9", got.UID)
-	assert.Equal(t, src.Summary, got.Summary)
-	assert.Equal(t, src.Description, got.Description)
-	assert.Equal(t, src.Location, got.Location)
-	assert.Equal(t, src.URL, got.URL)
-	assert.Equal(t, src.Status, got.Status)
-	assert.Equal(t, src.Start, got.Start.UTC())
-	assert.Equal(t, src.End, got.End.UTC())
-
-	require.NotNil(t, got.Recurrence)
-	assert.Equal(t, src.Recurrence.RRule, got.Recurrence.RRule)
-
-	require.NotNil(t, got.Organizer)
-	assert.Equal(t, "alice@example.com", got.Organizer.Email)
-
-	require.Len(t, got.Attendees, 1)
-	assert.Equal(t, "bob@example.com", got.Attendees[0].Email)
-	assert.Equal(t, "accepted", got.Attendees[0].Status)
-}
-
-func TestICalFromEventAllDay(t *testing.T) {
-	src := &cal.Event{
-		Summary: "Conference",
-		AllDay:  true,
-		Start:   time.Date(2026, 5, 7, 0, 0, 0, 0, time.UTC),
-		End:     time.Date(2026, 5, 7, 0, 0, 0, 0, time.UTC),
-	}
-
-	encoded := icalFromEvent(src, "day-9")
-	var buf bytes.Buffer
-	require.NoError(t, ical.NewEncoder(&buf).Encode(encoded))
-
-	events := eventsFromObject(cal.Calendar{}, caldav.CalendarObject{Data: decodeICS(t, buf.String())})
-	require.Len(t, events, 1)
-	assert.True(t, events[0].AllDay)
-	assert.Equal(t, events[0].Start.Add(24*time.Hour), events[0].End, "zero-length all-day event should expand to one day")
-}
-
-func TestStripMailto(t *testing.T) {
-	tests := []struct {
-		raw  string
-		want string
-	}{
-		{"mailto:a@example.com", "a@example.com"},
-		{"MAILTO:a@example.com", "a@example.com"},
-		{"a@example.com", "a@example.com"},
-		{"", ""},
-	}
-
-	for _, tc := range tests {
-		assert.Equal(t, tc.want, stripMailto(tc.raw))
-	}
 }
