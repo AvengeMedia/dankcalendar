@@ -61,7 +61,7 @@
               "-s"
               "-w"
               "-X main.Version=${version}"
-              "-X main.Commit=${self.rev or "dirty"}"
+              "-X main.Commit=${self.shortRev or self.dirtyShortRev or "dirty"}"
             ];
 
             nativeBuildInputs = with pkgs; [
