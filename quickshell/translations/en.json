@@ -242,7 +242,7 @@
   {
     "term": "Add",
     "context": "Add",
-    "reference": "Modals/AccountAddModal.qml:1327",
+    "reference": "Modals/AccountAddModal.qml:1356",
     "comment": "button to add local calendar account"
   },
   {
@@ -272,7 +272,7 @@
   {
     "term": "Adding…",
     "context": "Adding…",
-    "reference": "Modals/AccountAddModal.qml:1327",
+    "reference": "Modals/AccountAddModal.qml:1356",
     "comment": "add button while local account is created"
   },
   {
@@ -338,7 +338,7 @@
   {
     "term": "App-specific password",
     "context": "App-specific password",
-    "reference": "Modals/AccountAddModal.qml:1183",
+    "reference": "Modals/AccountAddModal.qml:1212",
     "comment": "icloud password field label"
   },
   {
@@ -350,7 +350,7 @@
   {
     "term": "Apple ID",
     "context": "Apple ID",
-    "reference": "Modals/AccountAddModal.qml:1174",
+    "reference": "Modals/AccountAddModal.qml:1203",
     "comment": "icloud username field label"
   },
   {
@@ -362,7 +362,7 @@
   {
     "term": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
     "context": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
-    "reference": "Modals/AccountAddModal.qml:984",
+    "reference": "Modals/AccountAddModal.qml:1000",
     "comment": "browser step body while waiting for oauth"
   },
   {
@@ -386,7 +386,7 @@
   {
     "term": "Authorization failed",
     "context": "Authorization failed",
-    "reference": "Modals/AccountAddModal.qml:975",
+    "reference": "Modals/AccountAddModal.qml:991",
     "comment": "browser step heading on oauth error"
   },
   {
@@ -410,7 +410,7 @@
   {
     "term": "Back",
     "context": "Back",
-    "reference": "Modals/AccountAddModal.qml:857, Modals/AccountAddModal.qml:946",
+    "reference": "Modals/AccountAddModal.qml:873, Modals/AccountAddModal.qml:962",
     "comment": "back button in account setup wizard"
   },
   {
@@ -458,7 +458,7 @@
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/ConfirmDialog.qml:68, Modals/EventDetailsModal.qml:504, Modals/NewCalendarDialog.qml:96, Modals/RenameCalendarDialog.qml:93, Modals/AccountAddModal.qml:1039, Modals/CalendarRemindersDialog.qml:372, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
+    "reference": "Modals/ConfirmDialog.qml:68, Modals/EventDetailsModal.qml:504, Modals/NewCalendarDialog.qml:96, Modals/RenameCalendarDialog.qml:93, Modals/AccountAddModal.qml:1055, Modals/CalendarRemindersDialog.qml:372, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
     "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel"
   },
   {
@@ -482,7 +482,7 @@
   {
     "term": "Choose calendar directory",
     "context": "Choose calendar directory",
-    "reference": "Modals/AccountAddModal.qml:1297",
+    "reference": "Modals/AccountAddModal.qml:1326",
     "comment": "folder picker title for local calendar directory"
   },
   {
@@ -494,13 +494,13 @@
   {
     "term": "Client ID",
     "context": "Client ID",
-    "reference": "Modals/AccountAddModal.qml:897",
+    "reference": "Modals/AccountAddModal.qml:913",
     "comment": "oauth client id field label"
   },
   {
     "term": "Client Secret",
     "context": "Client Secret",
-    "reference": "Modals/AccountAddModal.qml:910",
+    "reference": "Modals/AccountAddModal.qml:926",
     "comment": "oauth client secret field label"
   },
   {
@@ -536,7 +536,7 @@
   {
     "term": "Connect",
     "context": "Connect",
-    "reference": "Modals/AccountAddModal.qml:936, Modals/AccountAddModal.qml:1215",
+    "reference": "Modals/AccountAddModal.qml:952, Modals/AccountAddModal.qml:1244",
     "comment": "account setup button to start provider sign-in"
   },
   {
@@ -554,7 +554,7 @@
   {
     "term": "Connected",
     "context": "Connected",
-    "reference": "Modals/AccountAddModal.qml:1081, Modals/SettingsContent.qml:967, Modals/SettingsAboutPage.qml:365",
+    "reference": "Modals/AccountAddModal.qml:1097, Modals/SettingsContent.qml:967, Modals/SettingsAboutPage.qml:365",
     "comment": "about page daemon status value | account status in account list | success step status heading"
   },
   {
@@ -566,14 +566,20 @@
   {
     "term": "Connecting…",
     "context": "Connecting…",
-    "reference": "Modals/AccountAddModal.qml:1215",
+    "reference": "Modals/AccountAddModal.qml:1244",
     "comment": "connect button while caldav connection verifies"
   },
   {
     "term": "Continue",
     "context": "Continue",
-    "reference": "Modals/AccountAddModal.qml:848",
+    "reference": "Modals/AccountAddModal.qml:864",
     "comment": "guide step next button"
+  },
+  {
+    "term": "Copy link",
+    "context": "Copy link",
+    "reference": "Modals/AccountAddModal.qml:846, Modals/AccountAddModal.qml:1182",
+    "comment": "button to copy a setup guide url to the clipboard"
   },
   {
     "term": "Copy path",
@@ -722,7 +728,7 @@
   {
     "term": "Directory",
     "context": "Directory",
-    "reference": "Modals/AccountAddModal.qml:1284",
+    "reference": "Modals/AccountAddModal.qml:1313",
     "comment": "local calendar directory field label"
   },
   {
@@ -734,7 +740,7 @@
   {
     "term": "Display name (optional)",
     "context": "Display name (optional)",
-    "reference": "Modals/AccountAddModal.qml:1193, Modals/AccountAddModal.qml:1305",
+    "reference": "Modals/AccountAddModal.qml:1222, Modals/AccountAddModal.qml:1334",
     "comment": "optional account display name field label"
   },
   {
@@ -752,7 +758,7 @@
   {
     "term": "Done",
     "context": "Done",
-    "reference": "Modals/AccountAddModal.qml:1109",
+    "reference": "Modals/AccountAddModal.qml:1125",
     "comment": "button to close modal after account added"
   },
   {
@@ -794,7 +800,7 @@
   {
     "term": "Enter client ID",
     "context": "Enter client ID",
-    "reference": "Modals/AccountAddModal.qml:848",
+    "reference": "Modals/AccountAddModal.qml:864",
     "comment": "last guide step button to microsoft credentials"
   },
   {
@@ -806,7 +812,7 @@
   {
     "term": "Enter your CalDAV server details. The connection is verified before the account is saved.",
     "context": "Enter your CalDAV server details. The connection is verified before the account is saved.",
-    "reference": "Modals/AccountAddModal.qml:1145",
+    "reference": "Modals/AccountAddModal.qml:1161",
     "comment": "caldav sign-in form instructions"
   },
   {
@@ -878,7 +884,7 @@
   {
     "term": "Generate app-specific password",
     "context": "Generate app-specific password",
-    "reference": "Modals/AccountAddModal.qml:1154",
+    "reference": "Modals/AccountAddModal.qml:1173",
     "comment": "button to open apple app password page"
   },
   {
@@ -920,13 +926,13 @@
   {
     "term": "Import client_secret.json",
     "context": "Import client_secret.json",
-    "reference": "Modals/AccountAddModal.qml:884",
+    "reference": "Modals/AccountAddModal.qml:900",
     "comment": "button to import google oauth client json"
   },
   {
     "term": "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.",
     "context": "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.",
-    "reference": "Modals/AccountAddModal.qml:875",
+    "reference": "Modals/AccountAddModal.qml:891",
     "comment": "google credentials step instructions"
   },
   {
@@ -1004,7 +1010,7 @@
   {
     "term": "Local calendars",
     "context": "Local calendars",
-    "reference": "Modals/AccountAddModal.qml:1306",
+    "reference": "Modals/AccountAddModal.qml:1335",
     "comment": "local account display name field placeholder"
   },
   {
@@ -1016,7 +1022,7 @@
   {
     "term": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
     "context": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
-    "reference": "Modals/AccountAddModal.qml:1002",
+    "reference": "Modals/AccountAddModal.qml:1018",
     "comment": "hint about microsoft server_error during oauth"
   },
   {
@@ -1070,7 +1076,7 @@
   {
     "term": "My server",
     "context": "My server",
-    "reference": "Modals/AccountAddModal.qml:1194",
+    "reference": "Modals/AccountAddModal.qml:1223",
     "comment": "caldav display name field placeholder"
   },
   {
@@ -1214,7 +1220,7 @@
   {
     "term": "Open",
     "context": "Open",
-    "reference": "Modals/AccountAddModal.qml:831",
+    "reference": "Modals/AccountAddModal.qml:834",
     "comment": "fallback label for guide step link button"
   },
   {
@@ -1226,7 +1232,7 @@
   {
     "term": "Open browser again",
     "context": "Open browser again",
-    "reference": "Modals/AccountAddModal.qml:1011",
+    "reference": "Modals/AccountAddModal.qml:1027",
     "comment": "button to reopen oauth url in browser"
   },
   {
@@ -1280,19 +1286,19 @@
   {
     "term": "Password",
     "context": "Password",
-    "reference": "Modals/AccountAddModal.qml:1183",
+    "reference": "Modals/AccountAddModal.qml:1212",
     "comment": "caldav password field label"
   },
   {
     "term": "Paste credentials",
     "context": "Paste credentials",
-    "reference": "Modals/AccountAddModal.qml:848",
+    "reference": "Modals/AccountAddModal.qml:864",
     "comment": "last guide step button to google credentials"
   },
   {
     "term": "Paste the Application (client) ID from your app registration's Overview page.",
     "context": "Paste the Application (client) ID from your app registration's Overview page.",
-    "reference": "Modals/AccountAddModal.qml:875",
+    "reference": "Modals/AccountAddModal.qml:891",
     "comment": "microsoft credentials step instructions"
   },
   {
@@ -1316,7 +1322,7 @@
   {
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "context": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
-    "reference": "Modals/AccountAddModal.qml:1270",
+    "reference": "Modals/AccountAddModal.qml:1299",
     "comment": "local calendar directory form instructions"
   },
   {
@@ -1478,7 +1484,7 @@
   {
     "term": "Select client_secret.json",
     "context": "Select client_secret.json",
-    "reference": "Modals/AccountAddModal.qml:890",
+    "reference": "Modals/AccountAddModal.qml:906",
     "comment": "file picker title for google client json"
   },
   {
@@ -1502,7 +1508,7 @@
   {
     "term": "Server URL",
     "context": "Server URL",
-    "reference": "Modals/AccountAddModal.qml:1165",
+    "reference": "Modals/AccountAddModal.qml:1194",
     "comment": "caldav server url field label"
   },
   {
@@ -1538,7 +1544,7 @@
   {
     "term": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
     "context": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
-    "reference": "Modals/AccountAddModal.qml:1145",
+    "reference": "Modals/AccountAddModal.qml:1161",
     "comment": "icloud sign-in form instructions"
   },
   {
@@ -1586,7 +1592,7 @@
   {
     "term": "Starting…",
     "context": "Starting…",
-    "reference": "Modals/AccountAddModal.qml:936",
+    "reference": "Modals/AccountAddModal.qml:952",
     "comment": "connect button while oauth flow starts"
   },
   {
@@ -1700,7 +1706,7 @@
   {
     "term": "Try again",
     "context": "Try again",
-    "reference": "Modals/AccountAddModal.qml:1026",
+    "reference": "Modals/AccountAddModal.qml:1042",
     "comment": "button to retry oauth after failure"
   },
   {
@@ -1736,7 +1742,7 @@
   {
     "term": "Username",
     "context": "Username",
-    "reference": "Modals/AccountAddModal.qml:1174",
+    "reference": "Modals/AccountAddModal.qml:1203",
     "comment": "caldav username field label"
   },
   {
@@ -1778,7 +1784,7 @@
   {
     "term": "Waiting for browser…",
     "context": "Waiting for browser…",
-    "reference": "Modals/AccountAddModal.qml:975",
+    "reference": "Modals/AccountAddModal.qml:991",
     "comment": "browser step heading while waiting for oauth"
   },
   {
@@ -1820,7 +1826,7 @@
   {
     "term": "Your calendars will sync in the background. You can manage this account from Settings → Accounts.",
     "context": "Your calendars will sync in the background. You can manage this account from Settings → Accounts.",
-    "reference": "Modals/AccountAddModal.qml:1096",
+    "reference": "Modals/AccountAddModal.qml:1112",
     "comment": "success step body about background sync"
   },
   {
@@ -1850,7 +1856,7 @@
   {
     "term": "password",
     "context": "password",
-    "reference": "Modals/AccountAddModal.qml:1184",
+    "reference": "Modals/AccountAddModal.qml:1213",
     "comment": "caldav password field placeholder"
   },
   {
@@ -1868,7 +1874,7 @@
   {
     "term": "username",
     "context": "username",
-    "reference": "Modals/AccountAddModal.qml:1175",
+    "reference": "Modals/AccountAddModal.qml:1204",
     "comment": "caldav username field placeholder"
   },
   {

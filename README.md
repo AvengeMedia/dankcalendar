@@ -172,6 +172,13 @@ make test   # run the Go test suite
 make fmt    # format Go code
 ```
 
+> **Tip:** Run with hot reload to pick up QML changes without restarting:
+>
+> ```bash
+> # from core/
+> DCAL_ENABLE_HOT_RELOAD=1 go run ./cmd/dcal run -c ../quickshell
+> ```
+
 Install [prek](https://prek.j178.dev/) and activate the hooks:
 
 ```bash

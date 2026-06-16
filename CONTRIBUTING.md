@@ -72,6 +72,13 @@ touch .qmlls.ini
 
 4. Make your changes, test, and open a pull request.
 
+**Tip:** Run with hot reload to pick up QML changes without restarting the app:
+
+```bash
+# from core/
+DCAL_ENABLE_HOT_RELOAD=1 go run ./cmd/dcal run -c ../quickshell
+```
+
 ### I18n/Localization
 
 When adding user-facing strings, ensure they are wrapped in `I18n.tr()` with context, for example.

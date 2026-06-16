@@ -672,6 +672,13 @@
     "comment": ""
   },
   {
+    "term": "Copy link",
+    "translation": "",
+    "context": "button to copy a setup guide url to the clipboard",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Copy path",
     "translation": "",
     "context": "file browser item context menu action",

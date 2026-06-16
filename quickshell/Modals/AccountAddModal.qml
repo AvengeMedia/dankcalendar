@@ -826,16 +826,32 @@ FloatingWindow {
                 }
             }
 
-            DankButton {
+            Row {
                 visible: !!(guideColumn.step && guideColumn.step.url)
-                text: (guideColumn.step && guideColumn.step.urlLabel) || I18n.tr("Open", "fallback label for guide step link button")
-                iconName: "open_in_new"
-                buttonHeight: 44
-                backgroundColor: Theme.primary
-                textColor: Theme.primaryText
-                onClicked: {
-                    if (guideColumn.step && guideColumn.step.url)
-                        Qt.openUrlExternally(guideColumn.step.url);
+                spacing: Theme.spacingS
+
+                DankButton {
+                    text: (guideColumn.step && guideColumn.step.urlLabel) || I18n.tr("Open", "fallback label for guide step link button")
+                    iconName: "open_in_new"
+                    buttonHeight: 44
+                    backgroundColor: Theme.primary
+                    textColor: Theme.primaryText
+                    onClicked: {
+                        if (guideColumn.step && guideColumn.step.url)
+                            Qt.openUrlExternally(guideColumn.step.url);
+                    }
+                }
+
+                DankButton {
+                    text: I18n.tr("Copy link", "button to copy a setup guide url to the clipboard")
+                    iconName: "content_copy"
+                    buttonHeight: 44
+                    backgroundColor: Theme.surfaceContainer
+                    textColor: Theme.surfaceText
+                    onClicked: {
+                        if (guideColumn.step && guideColumn.step.url)
+                            Quickshell.clipboardText = guideColumn.step.url;
+                    }
                 }
             }
 
@@ -1149,14 +1165,27 @@ FloatingWindow {
                     wrapMode: Text.WordWrap
                 }
 
-                DankButton {
+                Row {
                     visible: caldavRoot.isICloud
-                    text: I18n.tr("Generate app-specific password", "button to open apple app password page")
-                    iconName: "open_in_new"
-                    buttonHeight: 40
-                    backgroundColor: Theme.surfaceContainer
-                    textColor: Theme.surfaceText
-                    onClicked: Qt.openUrlExternally("https://account.apple.com/account/manage")
+                    spacing: Theme.spacingS
+
+                    DankButton {
+                        text: I18n.tr("Generate app-specific password", "button to open apple app password page")
+                        iconName: "open_in_new"
+                        buttonHeight: 40
+                        backgroundColor: Theme.surfaceContainer
+                        textColor: Theme.surfaceText
+                        onClicked: Qt.openUrlExternally("https://account.apple.com/account/manage")
+                    }
+
+                    DankButton {
+                        text: I18n.tr("Copy link", "button to copy a setup guide url to the clipboard")
+                        iconName: "content_copy"
+                        buttonHeight: 40
+                        backgroundColor: Theme.surfaceContainer
+                        textColor: Theme.surfaceText
+                        onClicked: Quickshell.clipboardText = "https://account.apple.com/account/manage"
+                    }
                 }
 
                 DankTextField {
