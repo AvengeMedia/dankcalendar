@@ -102,6 +102,17 @@ FloatingWindow {
         openCreateEvent();
     }
 
+    function requestClose() {
+        switch (SettingsData.closeBehavior) {
+        case "quit":
+            DankCalService.quit();
+            return;
+        default:
+            window.hideRequested();
+            return;
+        }
+    }
+
     function openSettings() {
         settingsLoader.active = true;
         settingsLoader.item.show();
@@ -135,6 +146,8 @@ FloatingWindow {
 
     onDisplayDateChanged: DankCalService.focusDate = displayDate
     Component.onCompleted: DankCalService.focusDate = displayDate
+
+    onClosed: window.requestClose()
 
     title: I18n.tr("Calendar", "main window title")
     minimumSize: Qt.size(560, 400)
@@ -326,16 +339,7 @@ FloatingWindow {
                         iconName: "close"
                         iconSize: Theme.iconSize - 4
                         iconColor: Theme.surfaceText
-                        onClicked: {
-                            switch (SettingsData.closeBehavior) {
-                            case "quit":
-                                DankCalService.quit();
-                                break;
-                            default:
-                                window.hideRequested();
-                                break;
-                            }
-                        }
+                        onClicked: window.requestClose()
                     }
                 }
             }
