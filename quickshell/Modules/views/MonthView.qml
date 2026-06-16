@@ -14,6 +14,66 @@ Item {
 
     signal daySelected(date day)
     signal eventClicked(var event)
+    signal previousRequested
+    signal nextRequested
+
+    Timer {
+        id: scrollCooldown
+        interval: 100
+        onTriggered: wheelHandler.scrollInProgress = false
+    }
+
+    WheelHandler {
+        id: wheelHandler
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+
+        // Touchpad reports large continuous angleDelta, so it needs a much
+        // higher threshold than a mouse wheel's discrete 120-unit notches.
+        readonly property int touchpadThreshold: 500
+        readonly property int mouseThreshold: 120
+        property real touchpadAccumulator: 0
+        property real mouseAccumulator: 0
+        property bool scrollInProgress: false
+
+        function step(direction) {
+            if (direction < 0)
+                root.previousRequested();
+            else
+                root.nextRequested();
+            scrollInProgress = true;
+            scrollCooldown.restart();
+        }
+
+        onWheel: event => {
+            if (Math.abs(event.angleDelta.x) > Math.abs(event.angleDelta.y)) {
+                event.accepted = false;
+                return;
+            }
+
+            event.accepted = true;
+
+            if (scrollInProgress)
+                return;
+
+            const delta = event.angleDelta.y;
+            const isTouchpad = event.pixelDelta && event.pixelDelta.y !== 0;
+
+            if (isTouchpad) {
+                touchpadAccumulator += delta;
+                if (Math.abs(touchpadAccumulator) < touchpadThreshold)
+                    return;
+                step(touchpadAccumulator > 0 ? -1 : 1);
+                touchpadAccumulator = 0;
+                return;
+            }
+
+            mouseAccumulator += delta;
+            if (Math.abs(mouseAccumulator) < mouseThreshold)
+                return;
+            step(mouseAccumulator > 0 ? -1 : 1);
+            mouseAccumulator = 0;
+        }
+    }
 
     Connections {
         target: DankCalService

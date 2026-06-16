@@ -164,6 +164,8 @@ Item {
                     selectedDate: root.selectedDate
                     onDaySelected: day => root.daySelected(day)
                     onEventClicked: ev => root.eventClicked(ev)
+                    onPreviousRequested: root.previousRequested()
+                    onNextRequested: root.nextRequested()
                 }
             }
 
