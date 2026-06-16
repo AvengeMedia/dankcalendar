@@ -382,6 +382,7 @@ FloatingWindow {
                         onNextRequested: window.shiftDisplayDate(1)
                         onSettingsRequested: window.openSettings()
                         onSearchRequested: window.openSearch()
+                        onDaySelected: day => window.selectedDate = day
                         onEventClicked: ev => window.openEventDetails(ev)
                     }
                 }

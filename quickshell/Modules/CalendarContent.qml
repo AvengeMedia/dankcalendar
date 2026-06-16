@@ -19,6 +19,7 @@ Item {
     signal eventClicked(var event)
     signal settingsRequested
     signal searchRequested
+    signal daySelected(date day)
 
     function headerTitle() {
         switch (currentView) {
@@ -161,7 +162,7 @@ Item {
                     displayDate: root.displayDate
                     today: root.today
                     selectedDate: root.selectedDate
-                    onDaySelected: day => root.selectedDate = day
+                    onDaySelected: day => root.daySelected(day)
                     onEventClicked: ev => root.eventClicked(ev)
                 }
             }
