@@ -122,6 +122,9 @@
   "Add": {
     "Add": "Thêm"
   },
+  "Add a calendar": {
+    "Add a calendar": ""
+  },
   "Add account": {
     "Add account": "Thêm tài khoản"
   },
@@ -133,6 +136,9 @@
   },
   "Adding…": {
     "Adding…": "Đang thêm…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": ""
   },
   "Agenda": {
     "Agenda": "Lịch trình"
@@ -287,6 +293,9 @@
   "Could not read that file.": {
     "Could not read that file.": "Không thể đọc tệp này."
   },
+  "Create": {
+    "Create": ""
+  },
   "Create event": {
     "Create event": "Tạo sự kiện"
   },
@@ -379,6 +388,9 @@
   },
   "Enlarge": {
     "Enlarge": "Phóng to"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": ""
   },
   "Enter client ID": {
     "Enter client ID": "Nhập Client ID"
@@ -521,6 +533,12 @@
   "Navigation": {
     "Navigation": "Điều hướng"
   },
+  "New calendar": {
+    "New calendar": ""
+  },
+  "New calendar…": {
+    "New calendar…": ""
+  },
   "New event": {
     "New event": "Sự kiện mới"
   },
@@ -544,6 +562,9 @@
   },
   "No calendars yet. Add an account first.": {
     "No calendars yet. Add an account first.": "Chưa có lịch nào. Hãy thêm tài khoản trước."
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": ""
   },
   "No matching events": {
     "No matching events": "Không tìm thấy sự kiện"

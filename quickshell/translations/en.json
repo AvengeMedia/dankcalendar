@@ -14,13 +14,13 @@
   {
     "term": "%1 · All day",
     "context": "%1 · All day",
-    "reference": "Modals/EventDetailsModal.qml:343",
+    "reference": "Modals/EventDetailsModal.qml:347",
     "comment": "event details time label for all-day events"
   },
   {
     "term": "%1d before",
     "context": "%1d before",
-    "reference": "Modals/EventDetailsModal.qml:169",
+    "reference": "Modals/EventDetailsModal.qml:173",
     "comment": "event details short reminder offset in days"
   },
   {
@@ -32,7 +32,7 @@
   {
     "term": "%1h before",
     "context": "%1h before",
-    "reference": "Modals/EventDetailsModal.qml:171",
+    "reference": "Modals/EventDetailsModal.qml:175",
     "comment": "event details short reminder offset in hours"
   },
   {
@@ -50,19 +50,19 @@
   {
     "term": "%1m before",
     "context": "%1m before",
-    "reference": "Modals/EventDetailsModal.qml:172",
+    "reference": "Modals/EventDetailsModal.qml:176",
     "comment": "event details short reminder offset in minutes"
   },
   {
     "term": "%1w before",
     "context": "%1w before",
-    "reference": "Modals/EventDetailsModal.qml:167",
+    "reference": "Modals/EventDetailsModal.qml:171",
     "comment": "event details short reminder offset in weeks"
   },
   {
     "term": "(untitled)",
     "context": "(untitled)",
-    "reference": "Modals/EventDetailsModal.qml:540",
+    "reference": "Modals/EventDetailsModal.qml:544",
     "comment": "event details fallback title when event has no title"
   },
   {
@@ -74,7 +74,7 @@
   {
     "term": "1 day before",
     "context": "1 day before",
-    "reference": "Modals/EventDetailsModal.qml:62, Modals/SettingsContent.qml:116, Modals/CalendarRemindersDialog.qml:81",
+    "reference": "Modals/EventDetailsModal.qml:66, Modals/SettingsContent.qml:116, Modals/CalendarRemindersDialog.qml:81",
     "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
@@ -86,13 +86,13 @@
   {
     "term": "1 hour before",
     "context": "1 hour before",
-    "reference": "Modals/EventDetailsModal.qml:54, Modals/SettingsContent.qml:86, Modals/CalendarRemindersDialog.qml:53",
+    "reference": "Modals/EventDetailsModal.qml:58, Modals/SettingsContent.qml:86, Modals/CalendarRemindersDialog.qml:53",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "1 week before",
     "context": "1 week before",
-    "reference": "Modals/EventDetailsModal.qml:70, Modals/SettingsContent.qml:124, Modals/CalendarRemindersDialog.qml:89",
+    "reference": "Modals/EventDetailsModal.qml:74, Modals/SettingsContent.qml:124, Modals/CalendarRemindersDialog.qml:89",
     "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
@@ -110,7 +110,7 @@
   {
     "term": "10 minutes before",
     "context": "10 minutes before",
-    "reference": "Modals/EventDetailsModal.qml:42, Modals/SettingsContent.qml:74, Modals/CalendarRemindersDialog.qml:41",
+    "reference": "Modals/EventDetailsModal.qml:46, Modals/SettingsContent.qml:74, Modals/CalendarRemindersDialog.qml:41",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -134,13 +134,13 @@
   {
     "term": "15 minutes before",
     "context": "15 minutes before",
-    "reference": "Modals/EventDetailsModal.qml:46, Modals/SettingsContent.qml:78, Modals/CalendarRemindersDialog.qml:45",
+    "reference": "Modals/EventDetailsModal.qml:50, Modals/SettingsContent.qml:78, Modals/CalendarRemindersDialog.qml:45",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "2 days before",
     "context": "2 days before",
-    "reference": "Modals/EventDetailsModal.qml:66, Modals/SettingsContent.qml:120, Modals/CalendarRemindersDialog.qml:85",
+    "reference": "Modals/EventDetailsModal.qml:70, Modals/SettingsContent.qml:120, Modals/CalendarRemindersDialog.qml:85",
     "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
@@ -152,7 +152,7 @@
   {
     "term": "2 hours before",
     "context": "2 hours before",
-    "reference": "Modals/EventDetailsModal.qml:58",
+    "reference": "Modals/EventDetailsModal.qml:62",
     "comment": "event reminder dropdown option"
   },
   {
@@ -176,7 +176,7 @@
   {
     "term": "30 minutes before",
     "context": "30 minutes before",
-    "reference": "Modals/EventDetailsModal.qml:50, Modals/SettingsContent.qml:82, Modals/CalendarRemindersDialog.qml:49",
+    "reference": "Modals/EventDetailsModal.qml:54, Modals/SettingsContent.qml:82, Modals/CalendarRemindersDialog.qml:49",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -194,7 +194,7 @@
   {
     "term": "5 minutes before",
     "context": "5 minutes before",
-    "reference": "Modals/EventDetailsModal.qml:38, Modals/SettingsContent.qml:70, Modals/CalendarRemindersDialog.qml:37",
+    "reference": "Modals/EventDetailsModal.qml:42, Modals/SettingsContent.qml:70, Modals/CalendarRemindersDialog.qml:37",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -246,6 +246,12 @@
     "comment": "button to add local calendar account"
   },
   {
+    "term": "Add a calendar",
+    "context": "Add a calendar",
+    "reference": "Modals/EventDetailsModal.qml:934",
+    "comment": "event form button to add a calendar when none exist"
+  },
+  {
     "term": "Add account",
     "context": "Add account",
     "reference": "Modules/CalendarSidebar.qml:400, Modals/AccountAddModal.qml:196, Modals/AccountAddModal.qml:285, Modals/SettingsContent.qml:806",
@@ -254,13 +260,13 @@
   {
     "term": "Add description",
     "context": "Add description",
-    "reference": "Modals/EventDetailsModal.qml:962",
+    "reference": "Modals/EventDetailsModal.qml:1005",
     "comment": "event form placeholder for description text area"
   },
   {
     "term": "Add title",
     "context": "Add title",
-    "reference": "Modals/EventDetailsModal.qml:797",
+    "reference": "Modals/EventDetailsModal.qml:801",
     "comment": "event form placeholder for title input"
   },
   {
@@ -268,6 +274,12 @@
     "context": "Adding…",
     "reference": "Modals/AccountAddModal.qml:1327",
     "comment": "add button while local account is created"
+  },
+  {
+    "term": "Adds a calendar to \"%1\".",
+    "context": "Adds a calendar to \"%1\".",
+    "reference": "Modals/NewCalendarDialog.qml:67",
+    "comment": "new calendar dialog subtitle naming the local account"
   },
   {
     "term": "Agenda",
@@ -290,7 +302,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:826, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:31",
+    "reference": "Modals/EventDetailsModal.qml:830, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:31",
     "comment": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -362,13 +374,13 @@
   {
     "term": "At start",
     "context": "At start",
-    "reference": "Modals/EventDetailsModal.qml:34, Modals/EventDetailsModal.qml:165, Modals/SettingsContent.qml:66, Modals/CalendarRemindersDialog.qml:33",
+    "reference": "Modals/EventDetailsModal.qml:38, Modals/EventDetailsModal.qml:169, Modals/SettingsContent.qml:66, Modals/CalendarRemindersDialog.qml:33",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "Attendees",
     "context": "Attendees",
-    "reference": "Modals/EventDetailsModal.qml:617",
+    "reference": "Modals/EventDetailsModal.qml:621",
     "comment": "event details section label for attendee list"
   },
   {
@@ -434,8 +446,8 @@
   {
     "term": "Calendar name",
     "context": "Calendar name",
-    "reference": "Modals/RenameCalendarDialog.qml:64",
-    "comment": "rename calendar dialog placeholder for name input"
+    "reference": "Modals/NewCalendarDialog.qml:77, Modals/RenameCalendarDialog.qml:64",
+    "comment": "new calendar dialog placeholder for name input | rename calendar dialog placeholder for name input"
   },
   {
     "term": "Calendars",
@@ -446,8 +458,8 @@
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/ConfirmDialog.qml:68, Modals/EventDetailsModal.qml:500, Modals/RenameCalendarDialog.qml:93, Modals/AccountAddModal.qml:1039, Modals/CalendarRemindersDialog.qml:372, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
-    "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel"
+    "reference": "Modals/ConfirmDialog.qml:68, Modals/EventDetailsModal.qml:504, Modals/NewCalendarDialog.qml:96, Modals/RenameCalendarDialog.qml:93, Modals/AccountAddModal.qml:1039, Modals/CalendarRemindersDialog.qml:372, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
+    "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel"
   },
   {
     "term": "Capabilities",
@@ -518,7 +530,7 @@
   {
     "term": "Confirm delete",
     "context": "Confirm delete",
-    "reference": "Modals/EventDetailsModal.qml:432",
+    "reference": "Modals/EventDetailsModal.qml:436",
     "comment": "event details button to confirm deleting the event"
   },
   {
@@ -574,6 +586,12 @@
     "context": "Could not read that file.",
     "reference": "Modals/AccountAddModal.qml:178",
     "comment": "error when credentials file cannot be read"
+  },
+  {
+    "term": "Create",
+    "context": "Create",
+    "reference": "Modals/NewCalendarDialog.qml:103",
+    "comment": "new calendar dialog button to create the calendar"
   },
   {
     "term": "Create event",
@@ -656,13 +674,13 @@
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modules/CalendarSidebar.qml:450, Modals/SettingsContent.qml:596",
+    "reference": "Modules/CalendarSidebar.qml:452, Modals/SettingsContent.qml:596",
     "comment": "confirm button for deleting a calendar | delete calendar confirmation button"
   },
   {
     "term": "Delete \"%1\"?",
     "context": "Delete \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:448, Modals/SettingsContent.qml:594",
+    "reference": "Modules/CalendarSidebar.qml:450, Modals/SettingsContent.qml:594",
     "comment": "confirm dialog title for deleting a calendar, %1 is the calendar name | delete calendar confirmation title"
   },
   {
@@ -680,7 +698,7 @@
   {
     "term": "Description",
     "context": "Description",
-    "reference": "Modals/EventDetailsModal.qml:746",
+    "reference": "Modals/EventDetailsModal.qml:750",
     "comment": "event details section label for description"
   },
   {
@@ -746,7 +764,7 @@
   {
     "term": "Edit event",
     "context": "Edit event",
-    "reference": "Modals/EventDetailsModal.qml:359, Modals/EventDetailsModal.qml:408",
+    "reference": "Modals/EventDetailsModal.qml:363, Modals/EventDetailsModal.qml:412",
     "comment": "event modal header when editing | event modal window title when editing"
   },
   {
@@ -760,6 +778,12 @@
     "context": "Enlarge",
     "reference": "Modals/AccountAddModal.qml:814",
     "comment": "hint on setup screenshot thumbnail"
+  },
+  {
+    "term": "Enter a name for the calendar.",
+    "context": "Enter a name for the calendar.",
+    "reference": "Modals/NewCalendarDialog.qml:26",
+    "comment": "new calendar dialog validation when the name is empty"
   },
   {
     "term": "Enter client ID",
@@ -788,13 +812,13 @@
   {
     "term": "Event",
     "context": "Event",
-    "reference": "Modals/EventDetailsModal.qml:359",
+    "reference": "Modals/EventDetailsModal.qml:363",
     "comment": "event modal window title when viewing"
   },
   {
     "term": "Event details",
     "context": "Event details",
-    "reference": "Modals/EventDetailsModal.qml:408",
+    "reference": "Modals/EventDetailsModal.qml:412",
     "comment": "event modal header when viewing"
   },
   {
@@ -968,7 +992,7 @@
   {
     "term": "Location",
     "context": "Location",
-    "reference": "Modals/EventDetailsModal.qml:869",
+    "reference": "Modals/EventDetailsModal.qml:873",
     "comment": "event form placeholder for location input"
   },
   {
@@ -1044,9 +1068,21 @@
     "comment": "keyboard shortcuts overlay section header"
   },
   {
+    "term": "New calendar",
+    "context": "New calendar",
+    "reference": "Modals/NewCalendarDialog.qml:60",
+    "comment": "new calendar dialog header"
+  },
+  {
+    "term": "New calendar…",
+    "context": "New calendar…",
+    "reference": "Modules/CalendarSidebar.qml:501",
+    "comment": "account context menu action to create a calendar in a local folder"
+  },
+  {
     "term": "New event",
     "context": "New event",
-    "reference": "Modals/EventDetailsModal.qml:359, Modals/EventDetailsModal.qml:408",
+    "reference": "Modals/EventDetailsModal.qml:363, Modals/EventDetailsModal.qml:412",
     "comment": "event modal header when creating | event modal window title when creating"
   },
   {
@@ -1092,6 +1128,12 @@
     "comment": "calendars page empty state"
   },
   {
+    "term": "No calendars yet. Add one to start creating events.",
+    "context": "No calendars yet. Add one to start creating events.",
+    "reference": "Modals/EventDetailsModal.qml:927",
+    "comment": "event form guidance when there are no writable calendars"
+  },
+  {
     "term": "No matching events",
     "context": "No matching events",
     "reference": "Modals/SearchModal.qml:95",
@@ -1100,13 +1142,13 @@
   {
     "term": "No writable calendar available",
     "context": "No writable calendar available",
-    "reference": "Modals/EventDetailsModal.qml:215",
+    "reference": "Modals/EventDetailsModal.qml:219",
     "comment": "event form error when no calendar allows creating events"
   },
   {
     "term": "None",
     "context": "None",
-    "reference": "Modals/EventDetailsModal.qml:30, Modals/SettingsContent.qml:62, Modals/CalendarRemindersDialog.qml:29",
+    "reference": "Modals/EventDetailsModal.qml:34, Modals/SettingsContent.qml:62, Modals/CalendarRemindersDialog.qml:29",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -1274,7 +1316,7 @@
   {
     "term": "Reconnect",
     "context": "Reconnect",
-    "reference": "Modules/CalendarSidebar.qml:477",
+    "reference": "Modules/CalendarSidebar.qml:495",
     "comment": "account context menu action to re-authorize the account"
   },
   {
@@ -1304,31 +1346,31 @@
   {
     "term": "Remove",
     "context": "Remove",
-    "reference": "Modules/CalendarSidebar.qml:508, Modals/SettingsContent.qml:795",
+    "reference": "Modules/CalendarSidebar.qml:537, Modals/SettingsContent.qml:795",
     "comment": "confirm button for removing an account | remove account confirmation button"
   },
   {
     "term": "Remove \"%1\"?",
     "context": "Remove \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:506, Modals/SettingsContent.qml:793",
+    "reference": "Modules/CalendarSidebar.qml:535, Modals/SettingsContent.qml:793",
     "comment": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title"
   },
   {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "context": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
-    "reference": "Modules/CalendarSidebar.qml:507, Modals/SettingsContent.qml:794",
+    "reference": "Modules/CalendarSidebar.qml:536, Modals/SettingsContent.qml:794",
     "comment": "confirm dialog body for removing an account | remove account confirmation message"
   },
   {
     "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
     "context": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
-    "reference": "Modules/CalendarSidebar.qml:449, Modals/SettingsContent.qml:595",
+    "reference": "Modules/CalendarSidebar.qml:451, Modals/SettingsContent.qml:595",
     "comment": "confirm dialog body for deleting a calendar | delete calendar confirmation message"
   },
   {
     "term": "Remove…",
     "context": "Remove…",
-    "reference": "Modules/CalendarSidebar.qml:487",
+    "reference": "Modules/CalendarSidebar.qml:511",
     "comment": "account context menu action to remove the account"
   },
   {
@@ -1352,13 +1394,13 @@
   {
     "term": "Save",
     "context": "Save",
-    "reference": "Modals/EventDetailsModal.qml:514, Modals/RenameCalendarDialog.qml:100, Modals/CalendarRemindersDialog.qml:379, Modals/FileBrowser/FileBrowserSaveRow.qml:59",
+    "reference": "Modals/EventDetailsModal.qml:518, Modals/RenameCalendarDialog.qml:100, Modals/CalendarRemindersDialog.qml:379, Modals/FileBrowser/FileBrowserSaveRow.qml:59",
     "comment": "event details button to save changes | file browser save button | per-calendar reminders dialog button to save | rename calendar dialog button to save name"
   },
   {
     "term": "Saving...",
     "context": "Saving...",
-    "reference": "Modals/EventDetailsModal.qml:514",
+    "reference": "Modals/EventDetailsModal.qml:518",
     "comment": "event details save button while saving"
   },
   {
@@ -1526,7 +1568,7 @@
   {
     "term": "Sync now",
     "context": "Sync now",
-    "reference": "Modules/CalendarSidebar.qml:482",
+    "reference": "Modules/CalendarSidebar.qml:506",
     "comment": "account context menu action to sync the account"
   },
   {
@@ -1586,7 +1628,7 @@
   {
     "term": "Title is required",
     "context": "Title is required",
-    "reference": "Modals/EventDetailsModal.qml:209",
+    "reference": "Modals/EventDetailsModal.qml:213",
     "comment": "event form validation error for missing title"
   },
   {
@@ -1778,7 +1820,7 @@
   {
     "term": "· %1 invited · %2 accepted",
     "context": "· %1 invited · %2 accepted",
-    "reference": "Modals/EventDetailsModal.qml:356",
+    "reference": "Modals/EventDetailsModal.qml:360",
     "comment": "event details attendee count summary"
   }
 ]

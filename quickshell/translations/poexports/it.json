@@ -122,6 +122,9 @@
   "Add": {
     "Add": "Aggiungi"
   },
+  "Add a calendar": {
+    "Add a calendar": ""
+  },
   "Add account": {
     "Add account": "Aggiungi account"
   },
@@ -133,6 +136,9 @@
   },
   "Adding…": {
     "Adding…": "Aggiunta in corso…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": ""
   },
   "Agenda": {
     "Agenda": "Agenda"
@@ -287,6 +293,9 @@
   "Could not read that file.": {
     "Could not read that file.": "Impossibile leggere quel file."
   },
+  "Create": {
+    "Create": ""
+  },
   "Create event": {
     "Create event": "Crea evento"
   },
@@ -379,6 +388,9 @@
   },
   "Enlarge": {
     "Enlarge": "Aumenta"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": ""
   },
   "Enter client ID": {
     "Enter client ID": "Inserisci ID client"
@@ -521,6 +533,12 @@
   "Navigation": {
     "Navigation": "Navigazione"
   },
+  "New calendar": {
+    "New calendar": ""
+  },
+  "New calendar…": {
+    "New calendar…": ""
+  },
   "New event": {
     "New event": "Nuovo evento"
   },
@@ -544,6 +562,9 @@
   },
   "No calendars yet. Add an account first.": {
     "No calendars yet. Add an account first.": "Nessun calendario ancora. Aggiungi prima un account."
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": ""
   },
   "No matching events": {
     "No matching events": "Nessun evento corrispondente"

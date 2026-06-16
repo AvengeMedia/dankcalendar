@@ -287,6 +287,13 @@
     "comment": ""
   },
   {
+    "term": "Add a calendar",
+    "translation": "",
+    "context": "event form button to add a calendar when none exist",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Add account",
     "translation": "",
     "context": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account",
@@ -311,6 +318,13 @@
     "term": "Adding…",
     "translation": "",
     "context": "add button while local account is created",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Adds a calendar to \"%1\".",
+    "translation": "",
+    "context": "new calendar dialog subtitle naming the local account",
     "reference": "",
     "comment": ""
   },
@@ -506,7 +520,7 @@
   {
     "term": "Calendar name",
     "translation": "",
-    "context": "rename calendar dialog placeholder for name input",
+    "context": "new calendar dialog placeholder for name input | rename calendar dialog placeholder for name input",
     "reference": "",
     "comment": ""
   },
@@ -520,7 +534,7 @@
   {
     "term": "Cancel",
     "translation": "",
-    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel",
+    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel",
     "reference": "",
     "comment": ""
   },
@@ -668,6 +682,13 @@
     "term": "Could not read that file.",
     "translation": "",
     "context": "error when credentials file cannot be read",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Create",
+    "translation": "",
+    "context": "new calendar dialog button to create the calendar",
     "reference": "",
     "comment": ""
   },
@@ -885,6 +906,13 @@
     "term": "Enlarge",
     "translation": "",
     "context": "hint on setup screenshot thumbnail",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enter a name for the calendar.",
+    "translation": "",
+    "context": "new calendar dialog validation when the name is empty",
     "reference": "",
     "comment": ""
   },
@@ -1218,6 +1246,20 @@
     "comment": ""
   },
   {
+    "term": "New calendar",
+    "translation": "",
+    "context": "new calendar dialog header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "New calendar…",
+    "translation": "",
+    "context": "account context menu action to create a calendar in a local folder",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "New event",
     "translation": "",
     "context": "event modal header when creating | event modal window title when creating",
@@ -1270,6 +1312,13 @@
     "term": "No calendars yet. Add an account first.",
     "translation": "",
     "context": "calendars page empty state",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No calendars yet. Add one to start creating events.",
+    "translation": "",
+    "context": "event form guidance when there are no writable calendars",
     "reference": "",
     "comment": ""
   },
