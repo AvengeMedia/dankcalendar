@@ -27,7 +27,7 @@
     "%1m before": "%1m prima"
   },
   "%1w before": {
-    "%1w before": "%1sett prima"
+    "%1w before": "%1 sett. prima"
   },
   "(untitled)": {
     "(untitled)": "(senza titolo)"
@@ -123,7 +123,7 @@
     "Add": "Aggiungi"
   },
   "Add a calendar": {
-    "Add a calendar": ""
+    "Add a calendar": "Aggiungi un calendario"
   },
   "Add account": {
     "Add account": "Aggiungi account"
@@ -138,7 +138,7 @@
     "Adding…": "Aggiunta in corso…"
   },
   "Adds a calendar to \"%1\".": {
-    "Adds a calendar to \"%1\".": ""
+    "Adds a calendar to \"%1\".": "Aggiunge un calendario a \"%1\"."
   },
   "Agenda": {
     "Agenda": "Agenda"
@@ -156,7 +156,7 @@
     "All-day reminder time": "Orario promemoria per eventi di tutto il giorno"
   },
   "All-day reminder timing": {
-    "All-day reminder timing": ""
+    "All-day reminder timing": "Orario promemoria evento di tutto il giorno"
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Indietro • F1/I: Info file • F10: Aiuto • Esc: Chiudi"
@@ -219,7 +219,7 @@
     "Calendar": "Calendario"
   },
   "Calendar Settings": {
-    "Calendar Settings": "Impostazioni calendario"
+    "Calendar Settings": "Impostazioni Calendario"
   },
   "Calendar name": {
     "Calendar name": "Nome calendario"
@@ -240,16 +240,16 @@
     "Choose calendar directory": "Scegli la cartella del calendario"
   },
   "Click to zoom · Esc to close": {
-    "Click to zoom · Esc to close": "Clicca per zoomare · Esc per chiudere"
+    "Click to zoom · Esc to close": "Clicca per ingrandire · Esc per chiudere"
   },
   "Client ID": {
     "Client ID": "ID client"
   },
   "Client Secret": {
-    "Client Secret": "Segreto client"
+    "Client Secret": "Client Secret"
   },
   "Close behavior": {
-    "Close behavior": ""
+    "Close behavior": "Comportamento alla chiusura"
   },
   "Color source": {
     "Color source": "Origine colore"
@@ -264,7 +264,7 @@
     "Confirm": "Conferma"
   },
   "Confirm delete": {
-    "Confirm delete": "Confermare l'eliminazione"
+    "Confirm delete": "Conferma l'eliminazione"
   },
   "Connect": {
     "Connect": "Connetti"
@@ -294,7 +294,7 @@
     "Could not read that file.": "Impossibile leggere quel file."
   },
   "Create": {
-    "Create": ""
+    "Create": "Crea"
   },
   "Create event": {
     "Create event": "Crea evento"
@@ -387,10 +387,10 @@
     "Enable reminders": "Attiva promemoria"
   },
   "Enlarge": {
-    "Enlarge": "Aumenta"
+    "Enlarge": "Ingrandisci"
   },
   "Enter a name for the calendar.": {
-    "Enter a name for the calendar.": ""
+    "Enter a name for the calendar.": "Inserisci un nome per il calendario."
   },
   "Enter client ID": {
     "Enter client ID": "Inserisci ID client"
@@ -414,10 +414,10 @@
     "F1/I: Toggle • F10: Help": "F1/I: Attiva/disattiva • F10: Aiuto"
   },
   "File Already Exists": {
-    "File Already Exists": "Il file esiste già"
+    "File Already Exists": "Il File Esiste Già"
   },
   "File Information": {
-    "File Information": "Informazioni file"
+    "File Information": "Informazioni File"
   },
   "Files - %1": {
     "Files - %1": "File - %1"
@@ -450,7 +450,7 @@
     "Home": "Home"
   },
   "How long the snooze button postpones a reminder.": {
-    "How long the snooze button postpones a reminder.": "Per quanto tempo il pulsante posticipa rinvia un promemoria."
+    "How long the snooze button postpones a reminder.": "Per quanto tempo il pulsante posticipa un promemoria."
   },
   "Import client_secret.json": {
     "Import client_secret.json": "Importa client_secret.json"
@@ -465,7 +465,7 @@
     "Keep typing": "Continua a digitare"
   },
   "Keep until dismissed": {
-    "Keep until dismissed": "Mantieni finché non viene chiuso"
+    "Keep until dismissed": "Mantieni finché non viene ignorato"
   },
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "Scorciatoie da tastiera"
@@ -501,10 +501,10 @@
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft spesso restituisce server_error per i primi minuti dopo la creazione o la modifica della registrazione di un'app. Attendi un minuto o due e riprova."
   },
   "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": {
-    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft richiede di registrare una propria app per leggere i dati del calendario per tuo conto. Si tratta di una configurazione unica che richiede circa due minuti, senza bisogno di un segreto client."
+    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft richiede di registrare una propria app per leggere i dati del calendario per tuo conto. Si tratta di una configurazione unica che richiede circa due minuti, senza bisogno di un client secret."
   },
   "Minimize": {
-    "Minimize": ""
+    "Minimize": "Riduci a icona"
   },
   "Modified": {
     "Modified": "Modificato"
@@ -516,7 +516,7 @@
     "Month view": "Vista mese"
   },
   "Move to Trash": {
-    "Move to Trash": "Sposta nel cestino"
+    "Move to Trash": "Sposta nel Cestino"
   },
   "Music": {
     "Music": "Musica"
@@ -534,10 +534,10 @@
     "Navigation": "Navigazione"
   },
   "New calendar": {
-    "New calendar": ""
+    "New calendar": "Nuovo calendario"
   },
   "New calendar…": {
-    "New calendar…": ""
+    "New calendar…": "Nuovo calendario..."
   },
   "New event": {
     "New event": "Nuovo evento"
@@ -564,7 +564,7 @@
     "No calendars yet. Add an account first.": "Nessun calendario ancora. Aggiungi prima un account."
   },
   "No calendars yet. Add one to start creating events.": {
-    "No calendars yet. Add one to start creating events.": ""
+    "No calendars yet. Add one to start creating events.": "Nessun calendario ancora. Aggiungine uno per iniziare a creare eventi."
   },
   "No matching events": {
     "No matching events": "Nessun evento corrispondente"
@@ -612,10 +612,10 @@
     "Outlook, Office 365 and Exchange Online calendars.": "Calendari Outlook, Office 365 ed Exchange Online."
   },
   "Override": {
-    "Override": ""
+    "Override": "Personalizza"
   },
   "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
-    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": ""
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "Personalizza le impostazioni globali dei promemoria per questo calendario. Le opzioni non modificate seguono i valori predefiniti globali."
   },
   "Overwrite": {
     "Overwrite": "Sovrascrivi"
@@ -639,7 +639,7 @@
     "Pictures": "Immagini"
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
-    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Indica una cartella di file .ics. Ogni sottocartella o file .ics diventa un calendario, compatibile con i layout di vdirsyncer/khal. La cartella viene creata se non esiste."
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Specifica una cartella con file .ics.  Ogni sottocartella o file .ics diventa un calendario, compatibile con i layout di vdirsyncer/khal. La cartella viene creata se non esiste."
   },
   "Previous day": {
     "Previous day": "Giorno precedente"
@@ -663,10 +663,10 @@
     "Reminders and desktop alerts.": "Promemoria e avvisi desktop."
   },
   "Reminders are disabled globally, so nothing fires until you re-enable them.": {
-    "Reminders are disabled globally, so nothing fires until you re-enable them.": ""
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "I promemoria sono disattivati a livello globale, quindi non verrà attivato nulla finché non li riattivi."
   },
   "Reminders for \"%1": {
-    "Reminders for \"%1\"": ""
+    "Reminders for \"%1\"": "Promemoria per \"%1\""
   },
   "Reminders stay on screen until you act on them.": {
     "Reminders stay on screen until you act on them.": "I promemoria rimangono sullo schermo finché non vengono gestiti."
@@ -693,7 +693,7 @@
     "Rename…": "Rinomina…"
   },
   "Reset to global": {
-    "Reset to global": ""
+    "Reset to global": "Ripristina valori globali"
   },
   "Save": {
     "Save": "Salva"
@@ -750,7 +750,7 @@
     "Sign in with your Google account.": "Accedi con il tuo account Google."
   },
   "Sign-in expired — reconnect to keep syncing": {
-    "Sign-in expired — reconnect to keep syncing": "Accesso scaduto: riconnetti per continuare a sincronizzare"
+    "Sign-in expired — reconnect to keep syncing": "Accesso scaduto: riconnetti per continuare la sincronizzazione"
   },
   "Size": {
     "Size": "Dimensione"
@@ -819,7 +819,7 @@
     "Today": "Oggi"
   },
   "Toggle this help": {
-    "Toggle this help": "Attiva/disattiva questo aiuto"
+    "Toggle this help": "Mostra/nascondi questo aiuto"
   },
   "Tomorrow": {
     "Tomorrow": "Domani"
@@ -873,7 +873,7 @@
     "Week view": "Vista settimana"
   },
   "What the window's close button does.": {
-    "What the window's close button does.": ""
+    "What the window's close button does.": "Cosa fa il pulsante di chiusura della finestra."
   },
   "When all-day event reminders fire.": {
     "When all-day event reminders fire.": "Quando vengono attivati i promemoria per eventi di tutto il giorno."

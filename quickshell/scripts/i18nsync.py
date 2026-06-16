@@ -28,7 +28,8 @@ PROJECT_ID_ENV = "DCAL_POEDITOR_PROJECT_ID"
 # translations; add entries as locales come online, e.g. "de": "de.json".
 LANGUAGES = {
     "it": "it.json",
-    "vi": "vi.json"
+    "vi": "vi.json",
+    "nl": "nl.json"
 }
 
 

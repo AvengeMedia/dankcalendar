@@ -123,7 +123,7 @@
     "Add": "Thêm"
   },
   "Add a calendar": {
-    "Add a calendar": ""
+    "Add a calendar": "Thêm lịch"
   },
   "Add account": {
     "Add account": "Thêm tài khoản"
@@ -138,7 +138,7 @@
     "Adding…": "Đang thêm…"
   },
   "Adds a calendar to \"%1\".": {
-    "Adds a calendar to \"%1\".": ""
+    "Adds a calendar to \"%1\".": "Thêm lịch vào \"%1\"."
   },
   "Agenda": {
     "Agenda": "Lịch trình"
@@ -249,7 +249,7 @@
     "Client Secret": "Client Secret"
   },
   "Close behavior": {
-    "Close behavior": ""
+    "Close behavior": "Hành vi đóng"
   },
   "Color source": {
     "Color source": "Nguồn màu"
@@ -294,7 +294,7 @@
     "Could not read that file.": "Không thể đọc tệp này."
   },
   "Create": {
-    "Create": ""
+    "Create": "Tạo"
   },
   "Create event": {
     "Create event": "Tạo sự kiện"
@@ -390,7 +390,7 @@
     "Enlarge": "Phóng to"
   },
   "Enter a name for the calendar.": {
-    "Enter a name for the calendar.": ""
+    "Enter a name for the calendar.": "Nhập tên cho lịch."
   },
   "Enter client ID": {
     "Enter client ID": "Nhập Client ID"
@@ -504,7 +504,7 @@
     "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft yêu cầu bạn đăng ký ứng dụng riêng để đọc dữ liệu lịch. Đây là thiết lập một lần, mất khoảng hai phút — không cần client secret."
   },
   "Minimize": {
-    "Minimize": ""
+    "Minimize": "Thu nhỏ"
   },
   "Modified": {
     "Modified": "Đã sửa đổi"
@@ -534,10 +534,10 @@
     "Navigation": "Điều hướng"
   },
   "New calendar": {
-    "New calendar": ""
+    "New calendar": "Lịch mới"
   },
   "New calendar…": {
-    "New calendar…": ""
+    "New calendar…": "Lịch mới…"
   },
   "New event": {
     "New event": "Sự kiện mới"
@@ -564,7 +564,7 @@
     "No calendars yet. Add an account first.": "Chưa có lịch nào. Hãy thêm tài khoản trước."
   },
   "No calendars yet. Add one to start creating events.": {
-    "No calendars yet. Add one to start creating events.": ""
+    "No calendars yet. Add one to start creating events.": "Chưa có lịch. Thêm một để bắt đầu tạo sự kiện."
   },
   "No matching events": {
     "No matching events": "Không tìm thấy sự kiện"
@@ -873,7 +873,7 @@
     "Week view": "Chế độ tuần"
   },
   "What the window's close button does.": {
-    "What the window's close button does.": ""
+    "What the window's close button does.": "Nút đóng của cửa sổ có tác dụng gì."
   },
   "When all-day event reminders fire.": {
     "When all-day event reminders fire.": "Thời điểm kích hoạt lời nhắc sự kiện cả ngày."
