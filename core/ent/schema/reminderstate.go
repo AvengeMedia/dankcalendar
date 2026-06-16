@@ -36,6 +36,5 @@ func (ReminderState) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("calendar_id", "uid", "occurrence_start", "minutes").Unique(),
 		index.Fields("occurrence_start"),
-		index.Fields("snoozed_until"),
 	}
 }

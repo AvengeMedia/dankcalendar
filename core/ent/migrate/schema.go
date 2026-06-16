@@ -3,6 +3,7 @@
 package migrate
 
 import (
+	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/dialect/sql/schema"
 	"entgo.io/ent/schema/field"
 )
@@ -130,9 +131,20 @@ var (
 				Columns: []*schema.Column{EventsColumns[10]},
 			},
 			{
-				Name:    "event_recurring_id",
+				Name:    "event_exceptions",
 				Unique:  false,
 				Columns: []*schema.Column{EventsColumns[15]},
+				Annotation: &entsql.IndexAnnotation{
+					Where: "recurring_id <> ''",
+				},
+			},
+			{
+				Name:    "event_recurring_masters",
+				Unique:  false,
+				Columns: []*schema.Column{EventsColumns[9]},
+				Annotation: &entsql.IndexAnnotation{
+					Where: "recurrence IS NOT NULL",
+				},
 			},
 		},
 	}
@@ -161,11 +173,6 @@ var (
 				Name:    "reminderstate_occurrence_start",
 				Unique:  false,
 				Columns: []*schema.Column{ReminderStatesColumns[3]},
-			},
-			{
-				Name:    "reminderstate_snoozed_until",
-				Unique:  false,
-				Columns: []*schema.Column{ReminderStatesColumns[6]},
 			},
 		},
 	}

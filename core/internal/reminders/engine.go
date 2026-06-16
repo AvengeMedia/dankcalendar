@@ -1,7 +1,9 @@
 // Package reminders schedules desktop notifications for upcoming events.
-// A periodic tick expands events over a lookahead window, derives trigger
-// times from each event's reminders (or the configured default), and fires
-// each trigger exactly once per occurrence, tracked via ReminderState rows.
+// It expands events over a lookahead window, derives trigger times from each
+// event's reminders (or the configured default), and fires each trigger
+// exactly once per occurrence, tracked via ReminderState rows. Evaluation is
+// event-driven: the engine parks until the next trigger is due and wakes
+// early when calendar data changes or the system resumes from suspend.
 package reminders
 
 import (
@@ -34,10 +36,12 @@ const (
 	// allDayLate bounds how stale an all-day trigger may be: those triggers
 	// can sit days inside a multi-day occurrence, so the start-based grace
 	// does not apply.
-	allDayLate  = 24 * time.Hour
-	stateFloor  = 35 * 24 * time.Hour
-	pruneAfter  = 60 * 24 * time.Hour
-	defaultTick = 30 * time.Second
+	allDayLate = 24 * time.Hour
+	stateFloor = 35 * 24 * time.Hour
+	pruneAfter = 60 * 24 * time.Hour
+	// defaultMaxWake caps how long the engine parks; a backstop against a
+	// missed wake signal or an undetected clock change, not the normal path.
+	defaultMaxWake = time.Hour
 )
 
 type Sender interface {
@@ -79,7 +83,9 @@ type Engine struct {
 	now      func() time.Time
 	loc      *time.Location
 	open     func()
-	interval time.Duration
+	maxWake  time.Duration
+
+	wake chan struct{}
 
 	mu      sync.Mutex
 	pending map[uint32]stateKey
@@ -87,9 +93,9 @@ type Engine struct {
 	stop    chan struct{}
 }
 
-func NewEngine(r *repo.Repo, sender Sender, interval time.Duration) *Engine {
-	if interval <= 0 {
-		interval = defaultTick
+func NewEngine(r *repo.Repo, sender Sender, maxWake time.Duration) *Engine {
+	if maxWake <= 0 {
+		maxWake = defaultMaxWake
 	}
 	return &Engine{
 		repo:     r,
@@ -98,7 +104,8 @@ func NewEngine(r *repo.Repo, sender Sender, interval time.Duration) *Engine {
 		now:      time.Now,
 		loc:      time.Local,
 		open:     openApp,
-		interval: interval,
+		maxWake:  maxWake,
+		wake:     make(chan struct{}, 1),
 		pending:  make(map[uint32]stateKey),
 		stop:     make(chan struct{}),
 	}
@@ -121,6 +128,32 @@ func (e *Engine) Start(ctx context.Context) {
 	e.mu.Unlock()
 
 	go e.loop(ctx)
+	go e.watchSuspend(ctx)
+}
+
+// Wake triggers a reschedule; concurrent calls coalesce.
+func (e *Engine) Wake() {
+	select {
+	case e.wake <- struct{}{}:
+	default:
+	}
+}
+
+// WatchMutations reschedules when calendar data changes. ReminderState is
+// excluded: the engine writes it when firing, so hooking it would loop.
+func (e *Engine) WatchMutations(client *ent.Client) {
+	wake := func(next ent.Mutator) ent.Mutator {
+		return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+			v, err := next.Mutate(ctx, m)
+			if err == nil {
+				e.Wake()
+			}
+			return v, err
+		})
+	}
+	client.Event.Use(wake)
+	client.Calendar.Use(wake)
+	client.Account.Use(wake)
 }
 
 func (e *Engine) Stop() {
@@ -139,24 +172,60 @@ func (e *Engine) loop(ctx context.Context) {
 		log.Debugf("reminders: pruned %d stale states", n)
 	}
 
-	ticker := time.NewTicker(e.interval)
-	defer ticker.Stop()
+	// NewTimer(0) evaluates immediately, then loop() parks it on the next due trigger.
+	timer := time.NewTimer(0)
+	defer timer.Stop()
 
-	if err := e.Tick(ctx); err != nil {
-		log.Warnf("reminders: %v", err)
-	}
 	for {
 		select {
 		case <-ctx.Done():
 			return
 		case <-e.stop:
 			return
-		case <-ticker.C:
-			if err := e.Tick(ctx); err != nil {
-				log.Warnf("reminders: %v", err)
-			}
+		case <-e.wake:
+		case <-timer.C:
+		}
+
+		if err := e.Tick(ctx); err != nil {
+			log.Warnf("reminders: %v", err)
+		}
+		resetTimer(timer, e.untilNext(ctx))
+	}
+}
+
+// untilNext is the delay until the next due reminder, capped at maxWake.
+func (e *Engine) untilNext(ctx context.Context) time.Duration {
+	if !e.settings().RemindersEnabled {
+		return e.maxWake
+	}
+	up, err := e.Upcoming(ctx, 1)
+	if err != nil {
+		log.Warnf("reminders: schedule: %v", err)
+		return e.maxWake
+	}
+	if len(up) == 0 {
+		return e.maxWake
+	}
+	switch d := up[0].Trigger.Sub(e.now()); {
+	case d < 0:
+		return 0
+	case d > e.maxWake:
+		return e.maxWake
+	default:
+		return d
+	}
+}
+
+// resetTimer rearms t, draining a pending fire so the next select sees only
+// the new deadline.
+func resetTimer(t *time.Timer, d time.Duration) {
+	if !t.Stop() {
+		select {
+		case <-t.C:
+		default:
 		}
 	}
+	t.Reset(d)
 }
 
 func (e *Engine) Tick(ctx context.Context) error {

@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"entgo.io/ent"
+	entsql "entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
@@ -87,6 +88,13 @@ func (Event) Indexes() []ent.Index {
 		index.Edges("calendar").Fields("uid").Unique(),
 		index.Fields("start"),
 		index.Fields("end"),
-		index.Fields("recurring_id"),
+		// Partial indexes: exceptions and recurring masters are each a tiny
+		// fraction of rows, so index only them rather than the whole table.
+		index.Fields("recurring_id").
+			Annotations(entsql.IndexWhere("recurring_id <> ''")).
+			StorageKey("event_exceptions"),
+		index.Fields("start").
+			Annotations(entsql.IndexWhere("recurrence IS NOT NULL")).
+			StorageKey("event_recurring_masters"),
 	}
 }

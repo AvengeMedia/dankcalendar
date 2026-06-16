@@ -132,8 +132,9 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	if notifier != nil {
 		sender = notifier
 	}
-	remindersEngine := reminders.NewEngine(r, sender, 30*time.Second)
+	remindersEngine := reminders.NewEngine(r, sender, time.Hour)
 	remindersEngine.SetPublisher(bus.Publish)
+	remindersEngine.WatchMutations(client)
 	if notifier != nil {
 		notifier.SetHandlers(remindersEngine.HandleAction, remindersEngine.HandleClosed)
 	}

@@ -137,6 +137,27 @@ func (s *EngineSuite) TestFutureTriggerNotDue() {
 	s.Require().NoError(s.engine.Tick(s.ctx))
 }
 
+func (s *EngineSuite) TestUntilNextSchedulesToTrigger() {
+	s.engine.maxWake = time.Hour
+	// Default 10m reminder on an event 30m out → trigger 20m from now.
+	s.addEvent("ev1", t0.Add(30*time.Minute), t0.Add(time.Hour))
+
+	s.Equal(20*time.Minute, s.engine.untilNext(s.ctx))
+}
+
+func (s *EngineSuite) TestUntilNextCapsAtMaxWake() {
+	s.engine.maxWake = time.Minute
+	s.addEvent("ev1", t0.Add(30*time.Minute), t0.Add(time.Hour))
+
+	s.Equal(time.Minute, s.engine.untilNext(s.ctx))
+}
+
+func (s *EngineSuite) TestUntilNextBackstopWhenIdle() {
+	s.engine.maxWake = time.Hour
+
+	s.Equal(time.Hour, s.engine.untilNext(s.ctx))
+}
+
 func (s *EngineSuite) TestStaleTimedReminderSkipped() {
 	s.addEvent("ev1", t0.Add(-30*time.Minute), t0.Add(time.Hour))
 

@@ -55,7 +55,20 @@ func TestMigrateBaselinesLegacyDatabase(t *testing.T) {
 		time_zone text NULL, read_only bool NOT NULL DEFAULT (false),
 		hidden bool NOT NULL DEFAULT (false), sync_token text NULL,
 		created_at datetime NOT NULL, updated_at datetime NOT NULL,
-		account_calendars text NOT NULL, PRIMARY KEY (id));`)
+		account_calendars text NOT NULL, PRIMARY KEY (id));
+		CREATE TABLE events (
+		id text NOT NULL, uid text NOT NULL, summary text NOT NULL,
+		status text NOT NULL DEFAULT ('confirmed'), start datetime NOT NULL,
+		end datetime NOT NULL, all_day bool NOT NULL DEFAULT (false),
+		recurrence json NULL, recurring_id text NULL,
+		created datetime NOT NULL, updated datetime NOT NULL,
+		calendar_events text NOT NULL, PRIMARY KEY (id));
+		CREATE INDEX event_recurring_id ON events (recurring_id);
+		CREATE TABLE reminder_states (
+		id integer NOT NULL PRIMARY KEY AUTOINCREMENT, calendar_id text NOT NULL,
+		uid text NOT NULL, occurrence_start datetime NOT NULL, minutes integer NOT NULL,
+		fired_at datetime NOT NULL, snoozed_until datetime NULL);
+		CREATE INDEX reminderstate_snoozed_until ON reminder_states (snoozed_until);`)
 	if err != nil {
 		t.Fatal(err)
 	}
