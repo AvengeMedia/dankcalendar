@@ -33,7 +33,8 @@ LANGUAGES = {
     "he": "he.json",
     "ru": "ru.json",
     "es": "es.json",
-    "uk": "uk.json"
+    "uk": "uk.json",
+    "ar": "ar.json"
 }
 
 

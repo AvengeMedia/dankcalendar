@@ -234,7 +234,7 @@
     "Capabilities": "Возможности"
   },
   "Choose a JSON color theme file.": {
-    "Choose a JSON color theme file.": ""
+    "Choose a JSON color theme file.": "Выберите JSON-файл цветовой темы."
   },
   "Choose a provider": {
     "Choose a provider": "Выберите провайдера"
@@ -291,13 +291,13 @@
     "Continue": "Продолжить"
   },
   "Copy link": {
-    "Copy link": ""
+    "Copy link": "Копировать ссылку"
   },
   "Copy path": {
     "Copy path": "Копировать путь"
   },
   "Could not read that file — expected a JSON color theme.": {
-    "Could not read that file — expected a JSON color theme.": ""
+    "Could not read that file — expected a JSON color theme.": "Не удалось прочитать файл — ожидался JSON-файл цветовой темы."
   },
   "Could not read that file.": {
     "Could not read that file.": "Не удалось прочитать файл."
@@ -312,7 +312,7 @@
     "Credentials stay on this machine": "Учётные данные остаются на этом устройстве"
   },
   "Custom": {
-    "Custom": ""
+    "Custom": "Пользовательская"
   },
   "DMS dynamic": {
     "DMS dynamic": "Динамические DMS"
@@ -330,7 +330,7 @@
     "Dank Linux Discord": "Dank Linux Discord"
   },
   "DankMaterialShell not detected — using the %1 preset.": {
-    "DankMaterialShell not detected — using the %1 preset.": ""
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell не обнаружена — используется пресет %1."
   },
   "Dark": {
     "Dark": "Тёмная"
@@ -441,7 +441,7 @@
     "First day shown in week and month views.": "Первый день, отображаемый в режимах недели и месяца."
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
-    "Follow DankMaterialShell colors, falling back to a preset.": ""
+    "Follow DankMaterialShell colors, falling back to a preset.": "Использовать цвета DankMaterialShell с переходом на пресет при отсутствии."
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Следует системной цветовой схеме (сейчас %1)."
@@ -501,7 +501,7 @@
     "Light": "Светлая"
   },
   "Load colors from your own theme file.": {
-    "Load colors from your own theme file.": ""
+    "Load colors from your own theme file.": "Загрузить цвета из вашего собственного файла темы."
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Загрузка инструкций…"
@@ -591,7 +591,7 @@
     "No matching events": "Ничего не найдено"
   },
   "No theme file selected": {
-    "No theme file selected": ""
+    "No theme file selected": "Файл темы не выбран"
   },
   "No writable calendar available": {
     "No writable calendar available": "Нет доступного для записи календаря"
@@ -645,7 +645,7 @@
     "Overwrite": "Перезаписать"
   },
   "Palette: %1": {
-    "Palette: %1": ""
+    "Palette: %1": "Палитра: %1"
   },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Часть пакета Dank Linux."
@@ -663,7 +663,7 @@
     "Paste your credentials": "Вставьте учётные данные"
   },
   "Pick a color source, palette, or your own theme file.": {
-    "Pick a color source, palette, or your own theme file.": ""
+    "Pick a color source, palette, or your own theme file.": "Выберите источник цвета, палитру или собственный файл темы."
   },
   "Pictures": {
     "Pictures": "Изображения"
@@ -672,7 +672,7 @@
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Укажите папку с файлами .ics. Каждый подкаталог или файл .ics становится календарём — совместимо с vdirsyncer/khal. Папка создаётся, если не существует."
   },
   "Preset": {
-    "Preset": ""
+    "Preset": "Пресет"
   },
   "Previous day": {
     "Previous day": "Предыдущий день"
@@ -756,7 +756,7 @@
     "Select file": "Выберите файл"
   },
   "Select theme file": {
-    "Select theme file": ""
+    "Select theme file": "Выбрать файл темы"
   },
   "Send test": {
     "Send test": "Отправить тестовое"
@@ -873,7 +873,7 @@
     "Type at least 2 characters to search events.": "Введите не менее 2 символов для поиска событий."
   },
   "Use a bundled color palette.": {
-    "Use a bundled color palette.": ""
+    "Use a bundled color palette.": "Использовать встроенную палитру цветов."
   },
   "Use synced name": {
     "Use synced name": "Использовать имя из синхронизации"
@@ -885,7 +885,7 @@
     "Username": "Имя пользователя"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": ""
+    "Using DankMaterialShell dynamic colors.": "Используются динамические цвета DankMaterialShell."
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Проверьте, работают ли уведомления."

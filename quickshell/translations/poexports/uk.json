@@ -234,7 +234,7 @@
     "Capabilities": "Можливості"
   },
   "Choose a JSON color theme file.": {
-    "Choose a JSON color theme file.": ""
+    "Choose a JSON color theme file.": "Виберіть JSON-файл колірної теми."
   },
   "Choose a provider": {
     "Choose a provider": "Виберіть провайдера"
@@ -291,13 +291,13 @@
     "Continue": "Продовжити"
   },
   "Copy link": {
-    "Copy link": ""
+    "Copy link": "Копіювати посилання"
   },
   "Copy path": {
     "Copy path": "Копіювати шлях"
   },
   "Could not read that file — expected a JSON color theme.": {
-    "Could not read that file — expected a JSON color theme.": ""
+    "Could not read that file — expected a JSON color theme.": "Не вдалося прочитати файл — очікувався JSON-файл колірної теми."
   },
   "Could not read that file.": {
     "Could not read that file.": "Не вдалося прочитати цей файл."
@@ -312,7 +312,7 @@
     "Credentials stay on this machine": "Облікові дані залишаються на цьому комп'ютері"
   },
   "Custom": {
-    "Custom": ""
+    "Custom": "Власна"
   },
   "DMS dynamic": {
     "DMS dynamic": "Динамічний DMS"
@@ -330,7 +330,7 @@
     "Dank Linux Discord": "Dank Linux Discord"
   },
   "DankMaterialShell not detected — using the %1 preset.": {
-    "DankMaterialShell not detected — using the %1 preset.": ""
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell не виявлено — використовується пресет %1."
   },
   "Dark": {
     "Dark": "Темна"
@@ -441,7 +441,7 @@
     "First day shown in week and month views.": "Перший день тижня в режимах тижня та місяця."
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
-    "Follow DankMaterialShell colors, falling back to a preset.": ""
+    "Follow DankMaterialShell colors, falling back to a preset.": "Використовувати кольори DankMaterialShell з переходом на пресет за відсутності."
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Відповідно до системної колірної схеми (зараз %1)."
@@ -501,7 +501,7 @@
     "Light": "Світла"
   },
   "Load colors from your own theme file.": {
-    "Load colors from your own theme file.": ""
+    "Load colors from your own theme file.": "Завантажити кольори з вашого власного файлу теми."
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Завантаження інструкцій із налаштування…"
@@ -591,7 +591,7 @@
     "No matching events": "Подій не знайдено"
   },
   "No theme file selected": {
-    "No theme file selected": ""
+    "No theme file selected": "Файл теми не вибрано"
   },
   "No writable calendar available": {
     "No writable calendar available": "Немає календаря, доступного для запису"
@@ -645,7 +645,7 @@
     "Overwrite": "Перезаписати"
   },
   "Palette: %1": {
-    "Palette: %1": ""
+    "Palette: %1": "Палітра: %1"
   },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Частина пакета Dank Linux."
@@ -663,7 +663,7 @@
     "Paste your credentials": "Вставте ваші облікові дані"
   },
   "Pick a color source, palette, or your own theme file.": {
-    "Pick a color source, palette, or your own theme file.": ""
+    "Pick a color source, palette, or your own theme file.": "Виберіть джерело кольору, палітру або власний файл теми."
   },
   "Pictures": {
     "Pictures": "Зображення"
@@ -672,7 +672,7 @@
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Укажіть папку з файлами .ics. Кожна підпапка або файл .ics стане календарем — сумісно зі структурами vdirsyncer/khal. Якщо папка не існує, її буде створено."
   },
   "Preset": {
-    "Preset": ""
+    "Preset": "Пресет"
   },
   "Previous day": {
     "Previous day": "Попередній день"
@@ -756,7 +756,7 @@
     "Select file": "Виберіть файл"
   },
   "Select theme file": {
-    "Select theme file": ""
+    "Select theme file": "Вибрати файл теми"
   },
   "Send test": {
     "Send test": "Надіслати тестове сповіщення"
@@ -873,7 +873,7 @@
     "Type at least 2 characters to search events.": "Введіть не менше 2 символів для пошуку подій."
   },
   "Use a bundled color palette.": {
-    "Use a bundled color palette.": ""
+    "Use a bundled color palette.": "Використовувати вбудовану палітру кольорів."
   },
   "Use synced name": {
     "Use synced name": "Використовувати синхронізовану назву"
@@ -885,7 +885,7 @@
     "Username": "Ім'я користувача"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": ""
+    "Using DankMaterialShell dynamic colors.": "Використовуються динамічні кольори DankMaterialShell."
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Перевірте, чи працюють спливаючі сповіщення."
