@@ -193,6 +193,7 @@ Item {
                             return provider;
                         return provider + " · " + label;
                     }
+                    readonly property string rowTooltip: modelData.name + "  —  " + accountTooltip
                     width: parent.width
                     height: 32
 
@@ -224,6 +225,8 @@ Item {
                             color: Theme.surfaceText
                             opacity: calRow.modelData.hidden ? 0.6 : 1.0
                             width: parent.width - 14 - Theme.spacingM
+                            wrapMode: Text.NoWrap
+                            maximumLineCount: 1
                             elide: Text.ElideRight
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -234,7 +237,7 @@ Item {
                         stateColor: Theme.primary
                         cornerRadius: Theme.cornerRadiusSmall
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        onEntered: calTooltip.show(calRow.accountTooltip, calRow)
+                        onEntered: calTooltip.show(calRow.rowTooltip, calRow)
                         onExited: calTooltip.hide()
                         onClicked: mouse => {
                             calTooltip.hide();

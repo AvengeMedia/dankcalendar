@@ -40,6 +40,8 @@ Singleton {
     property alias snoozeMinutes: adapter.snoozeMinutes
     // "minimize" = hide to tray, "quit" = stop the daemon and child
     property alias closeBehavior: adapter.closeBehavior
+    // width of the calendar sidebar in pixels, set by dragging its edge
+    property alias sidebarWidth: adapter.sidebarWidth
 
     readonly property var locale: Qt.locale()
     // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
@@ -135,6 +137,7 @@ Singleton {
             property int allDayReminderDaysBefore: 0
             property int snoozeMinutes: 5
             property string closeBehavior: "minimize"
+            property int sidebarWidth: 240
         }
     }
 }

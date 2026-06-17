@@ -348,16 +348,29 @@ FloatingWindow {
             }
 
             Item {
+                id: bodyArea
                 width: parent.width
                 height: parent.height - 48
                 clip: true
+
+                readonly property real minSidebarWidth: 200
+                readonly property real maxSidebarWidth: Math.max(minSidebarWidth, width - 360)
+                property real liveSidebarWidth: SettingsData.sidebarWidth
+
+                Connections {
+                    target: SettingsData
+                    function onSidebarWidthChanged() {
+                        if (!sidebarResizer.dragging)
+                            bodyArea.liveSidebarWidth = SettingsData.sidebarWidth;
+                    }
+                }
 
                 CalendarSidebar {
                     id: sidebar
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: window.isCompactMode ? parent.width : implicitWidth
+                    width: window.isCompactMode ? parent.width : Math.max(bodyArea.minSidebarWidth, Math.min(bodyArea.maxSidebarWidth, bodyArea.liveSidebarWidth))
                     visible: window.isCompactMode ? window.menuVisible : true
                     currentView: window.currentView
                     selectedDate: window.selectedDate
@@ -369,6 +382,57 @@ FloatingWindow {
                     onTodayRequested: window.goToToday()
                     onCreateEventRequested: window.openCreateEvent()
                     onAddAccountRequested: window.openAddAccount()
+                }
+
+                Item {
+                    id: sidebarResizer
+                    anchors.left: sidebar.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: Theme.spacingS
+                    z: 10
+                    visible: !window.isCompactMode
+
+                    property bool dragging: false
+                    property real pressX: 0
+                    property real startWidth: 0
+
+                    Rectangle {
+                        anchors.right: parent.right
+                        width: 1
+                        height: parent.height
+                        color: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.primary : Theme.outlineLight
+                    }
+
+                    MouseArea {
+                        id: resizeArea
+                        anchors.fill: parent
+                        anchors.leftMargin: -Theme.spacingXS
+                        anchors.rightMargin: -Theme.spacingXS
+                        hoverEnabled: true
+                        cursorShape: Qt.SizeHorCursor
+                        onPressed: mouse => {
+                            sidebarResizer.dragging = true;
+                            sidebarResizer.pressX = mapToItem(bodyArea, mouse.x, 0).x;
+                            sidebarResizer.startWidth = sidebar.width;
+                        }
+                        onPositionChanged: mouse => {
+                            if (!sidebarResizer.dragging)
+                                return;
+                            const px = mapToItem(bodyArea, mouse.x, 0).x;
+                            const dir = I18n.isRtl ? -1 : 1;
+                            const w = sidebarResizer.startWidth + dir * (px - sidebarResizer.pressX);
+                            bodyArea.liveSidebarWidth = Math.max(bodyArea.minSidebarWidth, Math.min(bodyArea.maxSidebarWidth, w));
+                        }
+                        onReleased: {
+                            sidebarResizer.dragging = false;
+                            SettingsData.sidebarWidth = Math.round(bodyArea.liveSidebarWidth);
+                        }
+                        onCanceled: {
+                            sidebarResizer.dragging = false;
+                            SettingsData.sidebarWidth = Math.round(bodyArea.liveSidebarWidth);
+                        }
+                    }
                 }
 
                 Item {
