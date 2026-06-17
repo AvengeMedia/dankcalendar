@@ -45,6 +45,7 @@ func init() {
 	rootCmd.AddCommand(killCmd)
 	rootCmd.AddCommand(showCmd)
 	rootCmd.AddCommand(toggleCmd)
+	rootCmd.AddCommand(openCmd)
 	rootCmd.AddCommand(ipcCmd)
 	rootCmd.AddCommand(accountCmd)
 	rootCmd.AddCommand(syncCmd)

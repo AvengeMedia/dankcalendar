@@ -10,6 +10,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
+	icalprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -53,6 +54,13 @@ func Providers() []Provider {
 			Description:  "Apple iCloud calendars via app-specific password.",
 			Implemented:  true,
 			Capabilities: []string{"events", "calendars"},
+		},
+		{
+			ID:           "ical",
+			Name:         "iCal subscription",
+			Description:  "Subscribe to an external calendar by URL (webcal/https).",
+			Implemented:  true,
+			Capabilities: []string{"events", "calendars", "readonly"},
 		},
 		{
 			ID:           "local",
@@ -100,6 +108,12 @@ func Authorized(ctx context.Context, secrets calendar.SecretStore, acc *ent.Acco
 		key = microsoft.SecretKeyToken
 	case account.KindCaldav:
 		key = caldavprovider.SecretKeyPassword
+	case account.KindIcal:
+		user, _ := acc.Settings["username"].(string)
+		if user == "" {
+			return true
+		}
+		key = icalprovider.SecretKeyPassword
 	default:
 		return true
 	}
@@ -135,6 +149,7 @@ func Delete(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, acc
 		microsoft.SecretKeyToken,
 		microsoft.SecretKeyApp,
 		caldavprovider.SecretKeyPassword,
+		icalprovider.SecretKeyPassword,
 	} {
 		_ = secrets.Delete(ctx, accountID, key)
 	}

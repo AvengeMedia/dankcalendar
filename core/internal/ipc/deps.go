@@ -30,5 +30,6 @@ type Deps struct {
 	Sync      SyncTrigger
 	Reminders RemindersEngine
 	Bus       *EventBus
+	Pending   *PendingOpen
 	Version   string
 }

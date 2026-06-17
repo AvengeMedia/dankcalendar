@@ -148,6 +148,23 @@ func handleCalDAVAdd(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 	kickAccountSync(deps, res.AccountID)
 }
 
+func handleICalAdd(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	res, err := accounts.AddICal(ctx, deps.Repo, deps.Secrets, accounts.ICalInput{
+		URL:         ParamString(req.Params, "url"),
+		Username:    ParamString(req.Params, "username"),
+		Password:    ParamString(req.Params, "password"),
+		DisplayName: ParamString(req.Params, "displayName"),
+	})
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	publishAccountsChanged(deps, res.AccountID)
+	Respond(w, req.ID, map[string]any{"accountId": res.AccountID, "displayName": res.DisplayName})
+	kickAccountSync(deps, res.AccountID)
+}
+
 func handleLocalAdd(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	res, err := accounts.AddLocal(ctx, deps.Repo, accounts.LocalInput{
 		Root:        ParamString(req.Params, "root"),

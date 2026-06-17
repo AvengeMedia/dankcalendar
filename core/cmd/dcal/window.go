@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"time"
 
 	"github.com/spf13/cobra"
 
@@ -26,11 +27,69 @@ var toggleCmd = &cobra.Command{
 	},
 }
 
+var openCmd = &cobra.Command{
+	Use:     "open [url]",
+	Short:   "Open a webcal:// subscription link (no url just shows the window)",
+	PreRunE: findConfig,
+	Args:    cobra.MaximumNArgs(1),
+	RunE: func(_ *cobra.Command, args []string) error {
+		if len(args) == 0 || args[0] == "" {
+			return showOrLaunch("show")
+		}
+		return openLink(args[0])
+	},
+}
+
 func showOrLaunch(action string) error {
 	if err := sendUIAction(action); err == nil {
 		return nil
 	}
 	return runShellDaemon(false)
+}
+
+// openLink hands a subscription URL to a running instance, or cold-starts one
+// and retries until its socket is up; the daemon holds the URL until the GUI
+// subscribes.
+func openLink(url string) error {
+	if err := sendUIOpen(url); err == nil {
+		return nil
+	}
+	if err := runShellDaemon(false); err != nil {
+		return err
+	}
+
+	deadline := time.Now().Add(15 * time.Second)
+	for {
+		if err := sendUIOpen(url); err == nil {
+			return nil
+		}
+		if time.Now().After(deadline) {
+			return errors.New("timed out waiting for dcal to start")
+		}
+		time.Sleep(250 * time.Millisecond)
+	}
+}
+
+func sendUIOpen(url string) error {
+	socketPath, err := ipc.FindRunningSocket()
+	if err != nil {
+		return err
+	}
+
+	client, err := ipc.Dial(socketPath)
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	resp, err := client.Call(ipc.Request{ID: 1, Method: "ui.open", Params: map[string]any{"url": url}})
+	if err != nil {
+		return err
+	}
+	if resp.Error != "" {
+		return errors.New(resp.Error)
+	}
+	return nil
 }
 
 func sendUIAction(action string) error {

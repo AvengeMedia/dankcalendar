@@ -428,6 +428,9 @@
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Alternar • F10: Ayuda"
   },
+  "Feed URL": {
+    "Feed URL": ""
+  },
   "File Already Exists": {
     "File Already Exists": "El archivo ya existe"
   },
@@ -653,11 +656,17 @@
   "Password": {
     "Password": "Contraseña"
   },
+  "Password (optional)": {
+    "Password (optional)": ""
+  },
   "Paste credentials": {
     "Paste credentials": "Pega las credenciales"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "Pega el ID de aplicación (cliente) de la página de información general de registro de tu aplicación."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
   },
   "Paste your credentials": {
     "Paste your credentials": "Pega tus credenciales"
@@ -818,6 +827,15 @@
   "Stock palette": {
     "Stock palette": "Paleta predeterminada"
   },
+  "Subscribe": {
+    "Subscribe": ""
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": ""
+  },
+  "Subscribing…": {
+    "Subscribing…": ""
+  },
   "Sync now": {
     "Sync now": "Sincronizar ahora"
   },
@@ -872,6 +890,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Introduce al menos 2 caractéres para buscar eventos."
   },
+  "University timetable": {
+    "University timetable": ""
+  },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": ""
   },
@@ -883,6 +904,9 @@
   },
   "Username": {
     "Username": "Nombre de usuario"
+  },
+  "Username (optional)": {
+    "Username (optional)": ""
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": ""
@@ -935,8 +959,14 @@
   "dark": {
     "dark": "oscuro"
   },
+  "iCal subscription": {
+    "iCal subscription": ""
+  },
   "light": {
     "light": "claro"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": ""
   },
   "password": {
     "password": "contraseña"

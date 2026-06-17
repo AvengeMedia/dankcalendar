@@ -53,6 +53,7 @@ Singleton {
     signal accountRemoved(string accountId)
     signal eventsUpdated
     signal windowActionRequested(string action)
+    signal subscribeRequested(string url)
 
     onFocusDateChanged: _ensureWindow()
 
@@ -207,9 +208,14 @@ Singleton {
         case "sync":
             refreshDebounce.restart();
             break;
-        case "ui":
-            windowActionRequested((event.data || {}).action || "");
+        case "ui": {
+            const data = event.data || {};
+            if (data.action === "subscribe")
+                subscribeRequested(data.url || "");
+            else
+                windowActionRequested(data.action || "");
             break;
+        }
         }
     }
 
@@ -723,6 +729,25 @@ Singleton {
             "username": username,
             "password": password,
             "displayName": displayName || ""
+        }, response => {
+            if (response.error) {
+                lastError = response.error;
+            } else {
+                const result = response.result || {};
+                accountAdded(result.accountId);
+                refreshAccounts();
+            }
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function addICalAccount(url, name, username, password, callback) {
+        sendRequest("accounts.ical.add", {
+            "url": url,
+            "username": username || "",
+            "password": password || "",
+            "displayName": name || ""
         }, response => {
             if (response.error) {
                 lastError = response.error;

@@ -39,6 +39,8 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 		handleMicrosoftReauth(ctx, w, req, deps)
 	case "accounts.caldav.add":
 		handleCalDAVAdd(ctx, w, req, deps)
+	case "accounts.ical.add":
+		handleICalAdd(ctx, w, req, deps)
 	case "accounts.local.add":
 		handleLocalAdd(ctx, w, req, deps)
 	case "accounts.delete":

@@ -42,6 +42,20 @@ func (b *EventBus) Publish(topic string, data any) {
 	}
 }
 
+func (b *EventBus) HasSubscriber(topic string) bool {
+	b.mu.RLock()
+	defer b.mu.RUnlock()
+	for s := range b.subscribers {
+		s.mu.Lock()
+		subscribed := !s.closed && s.topics[topic]
+		s.mu.Unlock()
+		if subscribed {
+			return true
+		}
+	}
+	return false
+}
+
 func (b *EventBus) NewSubscriber(ctx context.Context, writer *ConnWriter) *Subscriber {
 	cctx, cancel := context.WithCancel(ctx)
 	s := &Subscriber{

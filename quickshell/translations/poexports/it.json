@@ -428,6 +428,9 @@
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Attiva/disattiva • F10: Aiuto"
   },
+  "Feed URL": {
+    "Feed URL": ""
+  },
   "File Already Exists": {
     "File Already Exists": "Il File Esiste Già"
   },
@@ -653,11 +656,17 @@
   "Password": {
     "Password": "Password"
   },
+  "Password (optional)": {
+    "Password (optional)": ""
+  },
   "Paste credentials": {
     "Paste credentials": "Incolla credenziali"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "Incolla l'ID applicazione (client) dalla pagina Panoramica della registrazione della tua app."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
   },
   "Paste your credentials": {
     "Paste your credentials": "Incolla le tue credenziali"
@@ -818,6 +827,15 @@
   "Stock palette": {
     "Stock palette": "Tavolozza predefinita"
   },
+  "Subscribe": {
+    "Subscribe": ""
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": ""
+  },
+  "Subscribing…": {
+    "Subscribing…": ""
+  },
   "Sync now": {
     "Sync now": "Sincronizza ora"
   },
@@ -872,6 +890,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Digita almeno 2 caratteri per cercare eventi."
   },
+  "University timetable": {
+    "University timetable": ""
+  },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": ""
   },
@@ -883,6 +904,9 @@
   },
   "Username": {
     "Username": "Nome utente"
+  },
+  "Username (optional)": {
+    "Username (optional)": ""
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": ""
@@ -935,8 +959,14 @@
   "dark": {
     "dark": "scuro"
   },
+  "iCal subscription": {
+    "iCal subscription": ""
+  },
   "light": {
     "light": "chiaro"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": ""
   },
   "password": {
     "password": "password"

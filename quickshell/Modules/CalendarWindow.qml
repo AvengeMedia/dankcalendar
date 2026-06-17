@@ -123,6 +123,11 @@ FloatingWindow {
         accountLoader.item.show();
     }
 
+    function openSubscribe(url) {
+        accountLoader.active = true;
+        accountLoader.item.showIcal(url);
+    }
+
     function openEventDetails(event) {
         eventLoader.active = true;
         eventLoader.item.show(event);

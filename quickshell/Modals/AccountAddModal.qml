@@ -11,6 +11,7 @@ FloatingWindow {
     id: accountModal
 
     property string selectedProvider: ""
+    property string presetUrl: ""
     property int wizardStep: 0
     property string clientId: ""
     property string clientSecret: ""
@@ -35,6 +36,13 @@ FloatingWindow {
         visible = true;
     }
 
+    function showIcal(url) {
+        resetState();
+        presetUrl = url || "";
+        selectedProvider = "ical";
+        visible = true;
+    }
+
     function hide() {
         cancelPendingFlow();
         visible = false;
@@ -42,6 +50,7 @@ FloatingWindow {
 
     function resetState() {
         selectedProvider = "";
+        presetUrl = "";
         wizardStep = 0;
         clientId = "";
         clientSecret = "";
@@ -105,6 +114,8 @@ FloatingWindow {
             return "CalDAV";
         case "icloud":
             return "iCloud";
+        case "ical":
+            return I18n.tr("iCal subscription", "ical subscription provider name in account add modal");
         case "local":
             return I18n.tr("Local", "local provider name in account add modal");
         }
@@ -119,6 +130,8 @@ FloatingWindow {
             return "business";
         case "icloud":
             return "cloud_circle";
+        case "ical":
+            return "rss_feed";
         case "local":
             return "folder";
         default:
@@ -319,6 +332,8 @@ FloatingWindow {
                     case "caldav":
                     case "icloud":
                         return caldavForm;
+                    case "ical":
+                        return icalForm;
                     case "local":
                         return localForm;
                     default:
@@ -472,6 +487,12 @@ FloatingWindow {
                                     "id": "icloud",
                                     "name": "iCloud",
                                     "description": I18n.tr("Apple iCloud calendars via app-specific password.", "icloud provider description in picker"),
+                                    "implemented": true
+                                },
+                                {
+                                    "id": "ical",
+                                    "name": I18n.tr("iCal subscription", "ical subscription provider name in account add modal"),
+                                    "description": I18n.tr("Subscribe to an external calendar by URL (webcal/https).", "ical provider description in picker"),
                                     "implemented": true
                                 },
                                 {
@@ -1389,6 +1410,122 @@ FloatingWindow {
                 width: parent.width
                 visible: localRoot.done
                 sourceComponent: localRoot.done ? successStep : null
+            }
+        }
+    }
+
+    Component {
+        id: icalForm
+
+        DankFlickable {
+            id: icalRoot
+            clip: true
+            contentWidth: width
+            contentHeight: icalColumn.implicitHeight + Theme.spacingL * 2
+
+            property string feedUrl: accountModal.presetUrl
+            property string displayName: ""
+            property string username: ""
+            property string password: ""
+            property bool busy: false
+            property bool done: false
+            property string error: ""
+
+            Column {
+                id: icalColumn
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: !icalRoot.done
+
+                StyledText {
+                    text: I18n.tr("Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.", "ical subscription form instructions")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                }
+
+                DankTextField {
+                    width: parent.width
+                    label: I18n.tr("Feed URL", "ical feed url field label")
+                    placeholderText: "https://example.com/calendar.ics"
+                    iconName: "rss_feed"
+                    text: icalRoot.feedUrl
+                    onTextChanged: icalRoot.feedUrl = text
+                }
+
+                DankTextField {
+                    width: parent.width
+                    label: I18n.tr("Display name (optional)", "optional account display name field label")
+                    placeholderText: I18n.tr("University timetable", "ical display name field placeholder")
+                    iconName: "badge"
+                    text: icalRoot.displayName
+                    onTextChanged: icalRoot.displayName = text
+                }
+
+                DankTextField {
+                    width: parent.width
+                    label: I18n.tr("Username (optional)", "ical optional basic-auth username field label")
+                    placeholderText: I18n.tr("only if the feed requires sign-in", "ical optional username field placeholder")
+                    iconName: "person"
+                    text: icalRoot.username
+                    onTextChanged: icalRoot.username = text
+                }
+
+                DankTextField {
+                    width: parent.width
+                    label: I18n.tr("Password (optional)", "ical optional basic-auth password field label")
+                    placeholderText: I18n.tr("only if the feed requires sign-in", "ical optional password field placeholder")
+                    iconName: "lock"
+                    echoMode: TextInput.Password
+                    text: icalRoot.password
+                    onTextChanged: icalRoot.password = text
+                }
+
+                StyledText {
+                    visible: icalRoot.error !== ""
+                    text: icalRoot.error
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.error
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                }
+
+                Row {
+                    width: parent.width
+                    spacing: Theme.spacingS
+                    layoutDirection: Qt.RightToLeft
+
+                    DankButton {
+                        text: icalRoot.busy ? I18n.tr("Subscribing…", "subscribe button while ical feed is verified") : I18n.tr("Subscribe", "button to subscribe to an ical feed")
+                        iconName: "check"
+                        buttonHeight: 40
+                        backgroundColor: Theme.primary
+                        textColor: Theme.primaryText
+                        enabled: !icalRoot.busy && icalRoot.feedUrl.length > 0
+                        onClicked: {
+                            icalRoot.busy = true;
+                            icalRoot.error = "";
+                            DankCalService.addICalAccount(icalRoot.feedUrl, icalRoot.displayName, icalRoot.username, icalRoot.password, response => {
+                                icalRoot.busy = false;
+                                if (response.error) {
+                                    icalRoot.error = response.error;
+                                    return;
+                                }
+                                const result = response.result || {};
+                                accountModal.completedAccountId = result.accountId || "";
+                                accountModal.completedEmail = result.displayName || result.accountId || "";
+                                icalRoot.done = true;
+                            });
+                        }
+                    }
+                }
+            }
+
+            Loader {
+                width: parent.width
+                visible: icalRoot.done
+                sourceComponent: icalRoot.done ? successStep : null
             }
         }
     }

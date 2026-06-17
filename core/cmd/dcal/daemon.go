@@ -30,6 +30,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
 	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
@@ -113,6 +114,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	registry.Register(google.Factory{})
 	registry.Register(caldav.Factory{})
 	registry.Register(microsoft.Factory{})
+	registry.Register(ical.Factory{})
 
 	keyringStore := dankkeyring.Open()
 	secrets := dankkeyring.NewSecretStore(keyringStore, repo.NewSecretStore(r))
@@ -122,6 +124,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	syncEngine := sync.NewEngine(r, registry, secrets, 5*time.Minute)
 	bus := ipc.NewEventBus()
 	syncEngine.SetNotifier(bus.Publish)
+	syncEngine.WatchMutations(client)
 
 	notifier, err := notify.New()
 	if err != nil {
@@ -155,6 +158,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 		Sync:      syncEngine,
 		Reminders: remindersEngine,
 		Bus:       bus,
+		Pending:   &ipc.PendingOpen{},
 		Version:   Version,
 	}
 	ipcSrv, ipcErrCh, err := startIPC(ctx, deps)

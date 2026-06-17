@@ -14,6 +14,20 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 		action := strings.TrimPrefix(req.Method, "ui.")
 		deps.Bus.Publish("ui", map[string]any{"action": action})
 		Respond(w, req.ID, map[string]any{"ok": true})
+	case "ui.open":
+		url := strings.TrimSpace(ParamString(req.Params, "url"))
+		if url == "" {
+			RespondError(w, req.ID, "ui.open requires a url")
+			return
+		}
+		// Deliver live when the GUI is listening, else stash it for the next
+		// "ui" subscriber so a cold-started window still opens the link.
+		if deps.Bus.HasSubscriber("ui") {
+			deps.Bus.Publish("ui", map[string]any{"action": "subscribe", "url": url})
+		} else if deps.Pending != nil {
+			deps.Pending.Set(url)
+		}
+		Respond(w, req.ID, map[string]any{"ok": true})
 	case "ui.quit":
 		Respond(w, req.ID, map[string]any{"ok": true})
 		go func() {

@@ -980,6 +980,13 @@
     "comment": ""
   },
   {
+    "term": "Feed URL",
+    "translation": "",
+    "context": "ical feed url field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "File Already Exists",
     "translation": "",
     "context": "file browser overwrite dialog title",
@@ -1505,6 +1512,13 @@
     "comment": ""
   },
   {
+    "term": "Password (optional)",
+    "translation": "",
+    "context": "ical optional basic-auth password field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Paste credentials",
     "translation": "",
     "context": "last guide step button to google credentials",
@@ -1515,6 +1529,13 @@
     "term": "Paste the Application (client) ID from your app registration's Overview page.",
     "translation": "",
     "context": "microsoft credentials step instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.",
+    "translation": "",
+    "context": "ical subscription form instructions",
     "reference": "",
     "comment": ""
   },
@@ -1883,6 +1904,27 @@
     "comment": ""
   },
   {
+    "term": "Subscribe",
+    "translation": "",
+    "context": "button to subscribe to an ical feed",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Subscribe to an external calendar by URL (webcal/https).",
+    "translation": "",
+    "context": "ical provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Subscribing…",
+    "translation": "",
+    "context": "subscribe button while ical feed is verified",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Sync now",
     "translation": "",
     "context": "account context menu action to sync the account",
@@ -2009,6 +2051,13 @@
     "comment": ""
   },
   {
+    "term": "University timetable",
+    "translation": "",
+    "context": "ical display name field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Use a bundled color palette.",
     "translation": "",
     "context": "color source description for preset",
@@ -2033,6 +2082,13 @@
     "term": "Username",
     "translation": "",
     "context": "caldav username field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Username (optional)",
+    "translation": "",
+    "context": "ical optional basic-auth username field label",
     "reference": "",
     "comment": ""
   },
@@ -2156,9 +2212,23 @@
     "comment": ""
   },
   {
+    "term": "iCal subscription",
+    "translation": "",
+    "context": "ical subscription provider name in account add modal",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "light",
     "translation": "",
     "context": "current scheme name in theme mode description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "only if the feed requires sign-in",
+    "translation": "",
+    "context": "ical optional password field placeholder | ical optional username field placeholder",
     "reference": "",
     "comment": ""
   },

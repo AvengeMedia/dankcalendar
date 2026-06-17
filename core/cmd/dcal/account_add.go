@@ -20,7 +20,7 @@ import (
 
 var accountAddCmd = &cobra.Command{
 	Use:   "add",
-	Short: "Add a calendar account (google, microsoft, caldav, icloud, local)",
+	Short: "Add a calendar account (google, microsoft, caldav, icloud, ical, local)",
 }
 
 var accountAddLocalCmd = &cobra.Command{
@@ -129,6 +129,45 @@ func runAddCalDAV(cmd *cobra.Command, icloud bool) error {
 	return finishAdd(ctx, st, res)
 }
 
+var accountAddICalCmd = &cobra.Command{
+	Use:   "ical <url>",
+	Short: "Subscribe to an iCal feed by URL (webcal or https)",
+	Long:  "Subscribe to a read-only external calendar feed, e.g. a university timetable or a published Google/Outlook calendar. webcal:// URLs are accepted.",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		username, _ := cmd.Flags().GetString("username")
+		password, _ := cmd.Flags().GetString("password")
+		name, _ := cmd.Flags().GetString("name")
+
+		if username != "" && password == "" {
+			var err error
+			password, err = readPassword("Password: ")
+			if err != nil {
+				return err
+			}
+		}
+
+		ctx := context.Background()
+		st, closer, err := openStores(ctx)
+		if err != nil {
+			return err
+		}
+		defer closer()
+
+		infof("fetching feed...")
+		res, err := accounts.AddICal(ctx, st.repo, st.secrets, accounts.ICalInput{
+			URL:         args[0],
+			Username:    username,
+			Password:    password,
+			DisplayName: name,
+		})
+		if err != nil {
+			return err
+		}
+		return finishAdd(ctx, st, res)
+	},
+}
+
 var accountAddGoogleCmd = &cobra.Command{
 	Use:   "google",
 	Short: "Add or re-authorize a Google account (OAuth in your browser)",
@@ -223,6 +262,10 @@ func init() {
 	}
 	accountAddCalDAVCmd.Flags().String("url", "", "Server URL (e.g. https://dav.example.com)")
 
+	accountAddICalCmd.Flags().String("username", "", "Basic-auth username (optional)")
+	accountAddICalCmd.Flags().String("password", "", "Basic-auth password (prompted if a username is given)")
+	accountAddICalCmd.Flags().String("name", "", "Display name (defaults to the feed name)")
+
 	accountAddGoogleCmd.Flags().String("client-id", "", "OAuth client ID")
 	accountAddGoogleCmd.Flags().String("client-secret", "", "OAuth client secret")
 	accountAddGoogleCmd.Flags().String("credentials", "", "Path to the client_secret_….json downloaded from Google")
@@ -233,6 +276,7 @@ func init() {
 	accountAddCmd.AddCommand(accountAddLocalCmd)
 	accountAddCmd.AddCommand(accountAddCalDAVCmd)
 	accountAddCmd.AddCommand(accountAddICloudCmd)
+	accountAddCmd.AddCommand(accountAddICalCmd)
 	accountAddCmd.AddCommand(accountAddGoogleCmd)
 	accountAddCmd.AddCommand(accountAddMicrosoftCmd)
 }

@@ -428,6 +428,9 @@
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: החלפה • F10: עזרה"
   },
+  "Feed URL": {
+    "Feed URL": ""
+  },
   "File Already Exists": {
     "File Already Exists": "הקובץ כבר קיים"
   },
@@ -653,11 +656,17 @@
   "Password": {
     "Password": "סיסמה"
   },
+  "Password (optional)": {
+    "Password (optional)": ""
+  },
   "Paste credentials": {
     "Paste credentials": "הדבק/י אישורי גישה"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "הדבק/י את ה-Application (client) ID מתוך דף הסקירה הכללית של רישום האפליקציה שלך."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
   },
   "Paste your credentials": {
     "Paste your credentials": "הדבק/י את אישורי הגישה שלך"
@@ -818,6 +827,15 @@
   "Stock palette": {
     "Stock palette": "פלטת צבעים מובנית"
   },
+  "Subscribe": {
+    "Subscribe": ""
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": ""
+  },
+  "Subscribing…": {
+    "Subscribing…": ""
+  },
   "Sync now": {
     "Sync now": "סנכרן/י עכשיו"
   },
@@ -872,6 +890,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "הקלד/י לפחות 2 תווים כדי לחפש אירועים."
   },
+  "University timetable": {
+    "University timetable": ""
+  },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": ""
   },
@@ -883,6 +904,9 @@
   },
   "Username": {
     "Username": "שם משתמש"
+  },
+  "Username (optional)": {
+    "Username (optional)": ""
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": ""
@@ -935,8 +959,14 @@
   "dark": {
     "dark": "כהה"
   },
+  "iCal subscription": {
+    "iCal subscription": ""
+  },
   "light": {
     "light": "בהיר"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": ""
   },
   "password": {
     "password": "סיסמה"

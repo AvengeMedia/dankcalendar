@@ -428,6 +428,9 @@
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Bật/tắt • F10: Trợ giúp"
   },
+  "Feed URL": {
+    "Feed URL": ""
+  },
   "File Already Exists": {
     "File Already Exists": "Tệp đã tồn tại"
   },
@@ -653,11 +656,17 @@
   "Password": {
     "Password": "Mật khẩu"
   },
+  "Password (optional)": {
+    "Password (optional)": ""
+  },
   "Paste credentials": {
     "Paste credentials": "Dán thông tin xác thực"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "Dán Application (client) ID từ trang Overview của đăng ký ứng dụng."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
   },
   "Paste your credentials": {
     "Paste your credentials": "Dán thông tin xác thực của bạn"
@@ -818,6 +827,15 @@
   "Stock palette": {
     "Stock palette": "Bảng màu mặc định"
   },
+  "Subscribe": {
+    "Subscribe": ""
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": ""
+  },
+  "Subscribing…": {
+    "Subscribing…": ""
+  },
   "Sync now": {
     "Sync now": "Đồng bộ ngay"
   },
@@ -872,6 +890,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Nhập ít nhất 2 ký tự để tìm kiếm sự kiện."
   },
+  "University timetable": {
+    "University timetable": ""
+  },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": ""
   },
@@ -883,6 +904,9 @@
   },
   "Username": {
     "Username": "Tên người dùng"
+  },
+  "Username (optional)": {
+    "Username (optional)": ""
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": ""
@@ -935,8 +959,14 @@
   "dark": {
     "dark": "tối"
   },
+  "iCal subscription": {
+    "iCal subscription": ""
+  },
   "light": {
     "light": "sáng"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": ""
   },
   "password": {
     "password": "mật khẩu"

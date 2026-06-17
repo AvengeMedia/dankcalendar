@@ -428,6 +428,9 @@
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: تبديل • F10: مساعدة"
   },
+  "Feed URL": {
+    "Feed URL": ""
+  },
   "File Already Exists": {
     "File Already Exists": "الملف موجود بالفعل"
   },
@@ -653,11 +656,17 @@
   "Password": {
     "Password": "كلمة المرور"
   },
+  "Password (optional)": {
+    "Password (optional)": ""
+  },
   "Paste credentials": {
     "Paste credentials": "لصق معلوماتك"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "لصق معرف التطبيق (العميل) من صفحة النظرة العامة الخاصة بتسجيل تطبيقك."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
   },
   "Paste your credentials": {
     "Paste your credentials": "الصق معلوماتك"
@@ -818,6 +827,15 @@
   "Stock palette": {
     "Stock palette": "لوحة الألوان الافتراضية"
   },
+  "Subscribe": {
+    "Subscribe": ""
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": ""
+  },
+  "Subscribing…": {
+    "Subscribing…": ""
+  },
   "Sync now": {
     "Sync now": "مزامنة الآن"
   },
@@ -872,6 +890,9 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "اكتب حرفين على الأقل للبحث عن الأحداث."
   },
+  "University timetable": {
+    "University timetable": ""
+  },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "استخدم لوحة ألوان مدمجة."
   },
@@ -883,6 +904,9 @@
   },
   "Username": {
     "Username": "اسم المستخدم"
+  },
+  "Username (optional)": {
+    "Username (optional)": ""
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": "يتم استخدام ألوان DankMaterialShell الديناميكية."
@@ -935,8 +959,14 @@
   "dark": {
     "dark": "داكن"
   },
+  "iCal subscription": {
+    "iCal subscription": ""
+  },
   "light": {
     "light": "فاتح"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": ""
   },
   "password": {
     "password": "كلمة المرور"

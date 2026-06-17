@@ -19,6 +19,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
+	icalprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
@@ -84,6 +85,57 @@ func AddCalDAV(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, 
 	}
 	if err := secrets.Set(ctx, accountID, caldavprovider.SecretKeyPassword, []byte(in.Password)); err != nil {
 		return Result{}, err
+	}
+	return Result{AccountID: accountID, DisplayName: displayName}, nil
+}
+
+type ICalInput struct {
+	URL         string
+	Username    string
+	Password    string
+	DisplayName string
+}
+
+// AddICal probes the feed before saving so a bad URL fails fast. The optional
+// username/password enables HTTP basic auth and is stored in the keyring.
+func AddICal(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, in ICalInput) (Result, error) {
+	username := strings.TrimSpace(in.Username)
+	displayName := strings.TrimSpace(in.DisplayName)
+
+	feedURL, feedName, err := icalprovider.Probe(ctx, in.URL, username, in.Password)
+	if err != nil {
+		return Result{}, fmt.Errorf("ical subscription failed: %w", err)
+	}
+
+	parsed, err := url.Parse(feedURL)
+	if err != nil {
+		return Result{}, err
+	}
+
+	switch {
+	case displayName != "":
+	case feedName != "":
+		displayName = feedName
+	default:
+		displayName = parsed.Host
+	}
+
+	accountID := truncateID("ical:" + parsed.Host + parsed.Path)
+	settings := map[string]any{"url": feedURL}
+	if feedName != "" {
+		settings["name"] = feedName
+	}
+	if username != "" {
+		settings["username"] = username
+	}
+
+	if err := Ensure(ctx, r, accountID, account.KindIcal, displayName, settings); err != nil {
+		return Result{}, err
+	}
+	if username != "" {
+		if err := secrets.Set(ctx, accountID, icalprovider.SecretKeyPassword, []byte(in.Password)); err != nil {
+			return Result{}, err
+		}
 	}
 	return Result{AccountID: accountID, DisplayName: displayName}, nil
 }

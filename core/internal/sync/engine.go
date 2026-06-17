@@ -17,14 +17,27 @@ import (
 
 type Notifier func(topic string, data any)
 
+const (
+	// minInterval floors how often an account may be re-synced so a provider
+	// hint can never busy-loop the engine.
+	minInterval = time.Minute
+	// maxWake caps how long the loop parks; a backstop against a missed wake or
+	// an undetected clock change, not the normal path.
+	maxWake = time.Hour
+)
+
 type Engine struct {
 	repo     *repo.Repo
 	registry *calendar.Registry
 	secrets  calendar.SecretStore
 	interval time.Duration
 	notify   Notifier
+	now      func() time.Time
+
+	wake chan struct{}
 
 	mu      sync.Mutex
+	nextDue map[string]time.Time
 	running bool
 	stop    chan struct{}
 }
@@ -38,6 +51,9 @@ func NewEngine(r *repo.Repo, registry *calendar.Registry, secrets calendar.Secre
 		registry: registry,
 		secrets:  secrets,
 		interval: interval,
+		now:      time.Now,
+		wake:     make(chan struct{}, 1),
+		nextDue:  make(map[string]time.Time),
 		stop:     make(chan struct{}),
 	}
 }
@@ -49,6 +65,29 @@ func (e *Engine) publish(topic string, data any) {
 		return
 	}
 	e.notify(topic, data)
+}
+
+// Wake triggers an immediate scheduling pass; concurrent calls coalesce.
+func (e *Engine) Wake() {
+	select {
+	case e.wake <- struct{}{}:
+	default:
+	}
+}
+
+// WatchMutations wakes the engine when accounts change so adds and removals
+// reschedule promptly. Event and calendar mutations are deliberately not
+// watched: the engine writes those, so hooking them would loop.
+func (e *Engine) WatchMutations(client *ent.Client) {
+	client.Account.Use(func(next ent.Mutator) ent.Mutator {
+		return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+			v, err := next.Mutate(ctx, m)
+			if err == nil {
+				e.Wake()
+			}
+			return v, err
+		})
+	})
 }
 
 func (e *Engine) Start(ctx context.Context) {
@@ -74,13 +113,11 @@ func (e *Engine) Stop() {
 	e.stop = make(chan struct{})
 }
 
+// loop parks a timer until the soonest account is due, waking early on demand.
+// NewTimer(0) runs the first pass immediately.
 func (e *Engine) loop(ctx context.Context) {
-	ticker := time.NewTicker(e.interval)
-	defer ticker.Stop()
-
-	if err := e.SyncAll(ctx); err != nil {
-		log.Warnf("sync error: %v", err)
-	}
+	timer := time.NewTimer(0)
+	defer timer.Stop()
 
 	for {
 		select {
@@ -88,12 +125,101 @@ func (e *Engine) loop(ctx context.Context) {
 			return
 		case <-e.stop:
 			return
-		case <-ticker.C:
-			if err := e.SyncAll(ctx); err != nil {
-				log.Warnf("sync error: %v", err)
-			}
+		case <-e.wake:
+		case <-timer.C:
+		}
+
+		e.runDue(ctx)
+		resetTimer(timer, e.untilNext())
+	}
+}
+
+// resetTimer rearms t, draining a pending fire so the next select sees only the
+// new deadline.
+func resetTimer(t *time.Timer, d time.Duration) {
+	if !t.Stop() {
+		select {
+		case <-t.C:
+		default:
 		}
 	}
+	t.Reset(d)
+}
+
+// untilNext is the delay until the soonest account is due, capped at maxWake.
+func (e *Engine) untilNext() time.Duration {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+
+	if len(e.nextDue) == 0 {
+		return maxWake
+	}
+
+	now := e.now()
+	soonest := maxWake
+	for _, due := range e.nextDue {
+		switch d := due.Sub(now); {
+		case d <= 0:
+			return 0
+		case d < soonest:
+			soonest = d
+		}
+	}
+	return soonest
+}
+
+func (e *Engine) runDue(ctx context.Context) {
+	accounts, err := e.repo.ListAccounts(ctx)
+	if err != nil {
+		log.Warnf("list accounts: %v", err)
+		return
+	}
+
+	now := e.now()
+	for _, acc := range accounts {
+		if !e.due(acc.ID, now) {
+			continue
+		}
+		if err := e.SyncAccount(ctx, acc); err != nil {
+			log.Warnf("account %s sync error: %v", acc.ID, err)
+		}
+	}
+	e.pruneSchedule(accounts)
+}
+
+func (e *Engine) due(accountID string, now time.Time) bool {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	due, ok := e.nextDue[accountID]
+	return !ok || !due.After(now)
+}
+
+func (e *Engine) schedule(accountID string, retryAfter time.Duration) {
+	interval := e.interval
+	if retryAfter > 0 {
+		interval = retryAfter
+	}
+	if interval < minInterval {
+		interval = minInterval
+	}
+	e.mu.Lock()
+	e.nextDue[accountID] = e.now().Add(interval)
+	e.mu.Unlock()
+}
+
+// pruneSchedule drops schedule entries for accounts that no longer exist.
+func (e *Engine) pruneSchedule(accounts []*ent.Account) {
+	live := make(map[string]struct{}, len(accounts))
+	for _, acc := range accounts {
+		live[acc.ID] = struct{}{}
+	}
+	e.mu.Lock()
+	for id := range e.nextDue {
+		if _, ok := live[id]; !ok {
+			delete(e.nextDue, id)
+		}
+	}
+	e.mu.Unlock()
 }
 
 func (e *Engine) SyncAll(ctx context.Context) error {
@@ -111,23 +237,25 @@ func (e *Engine) SyncAll(ctx context.Context) error {
 }
 
 func (e *Engine) SyncAccount(ctx context.Context, acc *ent.Account) error {
-	err := e.syncAccount(ctx, acc)
+	retryAfter, err := e.syncAccount(ctx, acc)
 	e.recordAuthState(ctx, acc, err)
+	e.schedule(acc.ID, retryAfter)
 	return err
 }
 
-func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) error {
+func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Duration, error) {
 	provider, err := e.registry.Build(ctx, accountToDomain(acc), e.secrets)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer provider.Close()
 
 	remoteCals, err := provider.ListCalendars(ctx)
 	if err != nil {
-		return fmt.Errorf("list calendars: %w", err)
+		return 0, fmt.Errorf("list calendars: %w", err)
 	}
 
+	var retryAfter time.Duration
 	for _, rc := range remoteCals {
 		stored, err := e.repo.UpsertCalendar(ctx, repo.UpsertCalendarInput{
 			AccountID:   acc.ID,
@@ -145,17 +273,22 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) error {
 		}
 
 		rc.ID = stored.ID
-		if err := e.syncCalendarEvents(ctx, provider, rc, stored.SyncToken); err != nil {
+		ra, err := e.syncCalendarEvents(ctx, provider, rc, stored.SyncToken)
+		if err != nil {
 			log.Warnf("sync calendar %q: %v", rc.RemoteID, err)
+			continue
+		}
+		if ra > retryAfter {
+			retryAfter = ra
 		}
 	}
 
 	e.publish("sync", map[string]any{"type": "completed", "accountId": acc.ID})
-	return nil
+	return retryAfter, nil
 }
 
-// recordAuthState flips the account's needs_reauth flag when a sync reveals
-// the credentials are dead (or recovers). It only writes on a state change so a
+// recordAuthState flips the account's needs_reauth flag when a sync reveals the
+// credentials are dead (or recovers). It only writes on a state change so a
 // revoked account does not churn the database or spam the UI every cycle.
 func (e *Engine) recordAuthState(ctx context.Context, acc *ent.Account, syncErr error) {
 	needsReauth := errors.Is(syncErr, calendar.ErrReauthRequired)
@@ -177,22 +310,24 @@ func (e *Engine) recordAuthState(ctx context.Context, acc *ent.Account, syncErr 
 	e.publish("accounts", map[string]any{"type": "changed", "accountId": acc.ID})
 }
 
-func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provider, cal calendar.Calendar, token string) error {
+func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provider, cal calendar.Calendar, token string) (time.Duration, error) {
 	cursor := calendar.SyncCursor{CalendarID: cal.ID, Token: token}
 	var (
 		snapshot     bool
 		snapshotUIDs []string
 		changed      int
+		retryAfter   time.Duration
 	)
 
 	for {
 		result, err := provider.Sync(ctx, cal, cursor)
 		if err != nil {
-			return err
+			return 0, err
 		}
+		retryAfter = result.RetryAfter
 
 		if err := e.applyChanges(ctx, cal, result.Changes); err != nil {
-			return err
+			return 0, err
 		}
 		changed += len(result.Changes)
 
@@ -206,7 +341,7 @@ func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provi
 		}
 
 		if err := e.repo.SetCalendarSyncToken(ctx, cal.ID, result.Cursor.Token); err != nil {
-			return fmt.Errorf("persist sync token: %w", err)
+			return 0, fmt.Errorf("persist sync token: %w", err)
 		}
 
 		cursor = result.Cursor
@@ -217,7 +352,7 @@ func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provi
 		if snapshot {
 			pruned, err := e.repo.DeleteEventsNotInUIDs(ctx, cal.ID, snapshotUIDs)
 			if err != nil {
-				return fmt.Errorf("prune events: %w", err)
+				return 0, fmt.Errorf("prune events: %w", err)
 			}
 			changed += pruned
 		}
@@ -225,7 +360,7 @@ func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provi
 		if changed > 0 {
 			e.publish("events", map[string]any{"type": "changed", "calendarId": cal.ID})
 		}
-		return nil
+		return retryAfter, nil
 	}
 }
 

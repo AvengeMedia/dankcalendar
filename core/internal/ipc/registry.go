@@ -40,6 +40,7 @@ var Methods = []MethodSpec{
 	{Name: "accounts.microsoft.reauth", Group: "accounts", Desc: "Re-authorize a Microsoft account", Params: []ParamSpec{req("accountId", "")}},
 	{Name: "accounts.microsoft.cancel", Group: "accounts", Desc: "Cancel a pending Microsoft flow", Params: []ParamSpec{req("state", "flow state token")}},
 	{Name: "accounts.caldav.add", Group: "accounts", Desc: "Add a CalDAV account", Params: []ParamSpec{req("url", ""), opt("username", ""), opt("password", ""), opt("displayName", "")}},
+	{Name: "accounts.ical.add", Group: "accounts", Desc: "Subscribe to an iCal feed by URL", Params: []ParamSpec{req("url", "webcal or https feed URL"), opt("username", "basic-auth user"), opt("password", "basic-auth password"), opt("displayName", "")}},
 	{Name: "accounts.local.add", Group: "accounts", Desc: "Add a local calendar store", Params: []ParamSpec{opt("root", "storage directory"), opt("displayName", "")}},
 	{Name: "accounts.delete", Group: "accounts", Desc: "Delete an account", Params: []ParamSpec{req("accountId", "")}},
 	{Name: "accounts.refresh", Group: "accounts", Desc: "Sync one account, or all if omitted", Params: []ParamSpec{opt("accountId", "empty syncs all")}},
@@ -61,6 +62,7 @@ var Methods = []MethodSpec{
 	{Name: "reminders.test", Group: "reminders", Desc: "Fire a test reminder notification"},
 
 	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window"},
+	{Name: "ui.open", Group: "ui", Desc: "Open a webcal/ICS subscription link in the UI", Params: []ParamSpec{req("url", "webcal:// or https ICS URL")}},
 	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},
 	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window"},
 	{Name: "ui.quit", Group: "ui", Desc: "Quit the running daemon"},

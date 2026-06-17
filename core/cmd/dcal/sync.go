@@ -11,6 +11,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
 	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
@@ -80,6 +81,7 @@ func providerRegistry() *calendar.Registry {
 	registry.Register(google.Factory{})
 	registry.Register(caldav.Factory{})
 	registry.Register(microsoft.Factory{})
+	registry.Register(ical.Factory{})
 	return registry
 }
 

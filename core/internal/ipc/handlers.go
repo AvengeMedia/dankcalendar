@@ -73,13 +73,26 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	}
 }
 
-func HandleSubscribe(w *ConnWriter, req Request, sub *Subscriber) {
+func HandleSubscribe(w *ConnWriter, req Request, deps Deps, sub *Subscriber) {
 	topics := ParamStringSlice(req.Params, "topics")
 	if len(topics) == 0 {
 		topics = []string{"accounts", "calendars", "events", "sync"}
 	}
 	sub.Subscribe(topics...)
 	Respond(w, req.ID, map[string]any{"topics": sub.Topics()})
+
+	if deps.Pending == nil {
+		return
+	}
+	for _, t := range topics {
+		if t != "ui" {
+			continue
+		}
+		if url := deps.Pending.Take(); url != "" {
+			deps.Bus.Publish("ui", map[string]any{"action": "subscribe", "url": url})
+		}
+		return
+	}
 }
 
 func HandleUnsubscribe(w *ConnWriter, req Request, sub *Subscriber) {

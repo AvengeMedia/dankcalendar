@@ -9,6 +9,7 @@ const (
 	AccountGoogle    AccountKind = "google"
 	AccountCalDAV    AccountKind = "caldav"
 	AccountMicrosoft AccountKind = "microsoft"
+	AccountICal      AccountKind = "ical"
 )
 
 type Account struct {
@@ -118,11 +119,15 @@ type EventChange struct {
 
 // FullSnapshot marks the result as a complete listing of the calendar:
 // after applying all pages, events absent from the snapshot are pruned.
+//
+// RetryAfter is a provider hint for when it wants to be synced next. Zero means
+// the engine picks its default interval.
 type SyncResult struct {
 	Cursor       SyncCursor    `json:"cursor"`
 	Changes      []EventChange `json:"changes"`
 	More         bool          `json:"more"`
 	FullSnapshot bool          `json:"fullSnapshot"`
+	RetryAfter   time.Duration `json:"retryAfter,omitempty"`
 }
 
 type ListEventsOptions struct {

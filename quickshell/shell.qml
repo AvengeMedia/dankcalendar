@@ -43,6 +43,8 @@ ShellRoot {
         focusRetry.restart();
     }
 
+    property string pendingSubscribeUrl: ""
+
     function handleWindowAction(action) {
         switch (action) {
         case "show":
@@ -60,10 +62,33 @@ ShellRoot {
         }
     }
 
+    function handleSubscribe(url) {
+        pendingSubscribeUrl = url;
+        showAndFocus();
+        applyPendingSubscribe();
+    }
+
+    function applyPendingSubscribe() {
+        if (!windowLoader.item || pendingSubscribeUrl === "")
+            return;
+        windowLoader.item.openSubscribe(pendingSubscribeUrl);
+        pendingSubscribeUrl = "";
+    }
+
     Connections {
         target: DankCalService
         function onWindowActionRequested(action) {
             root.handleWindowAction(action);
+        }
+        function onSubscribeRequested(url) {
+            root.handleSubscribe(url);
+        }
+    }
+
+    Connections {
+        target: windowLoader
+        function onItemChanged() {
+            root.applyPendingSubscribe();
         }
     }
 

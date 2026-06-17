@@ -24,7 +24,7 @@ require (
 	github.com/teambition/rrule-go v1.8.2
 	golang.org/x/oauth2 v0.36.0
 	golang.org/x/term v0.44.0
-	google.golang.org/api v0.284.0
+	google.golang.org/api v0.285.0
 	modernc.org/sqlite v1.52.0
 )
 

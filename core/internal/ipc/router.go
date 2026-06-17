@@ -17,7 +17,7 @@ func Route(ctx context.Context, w *ConnWriter, req Request, deps Deps, sub *Subs
 		Respond(w, req.ID, map[string]any{"apiVersion": APIVersion, "methods": Methods})
 		return
 	case "subscribe":
-		HandleSubscribe(w, req, sub)
+		HandleSubscribe(w, req, deps, sub)
 		return
 	case "unsubscribe":
 		HandleUnsubscribe(w, req, sub)
