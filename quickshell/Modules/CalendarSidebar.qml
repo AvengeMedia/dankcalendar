@@ -214,11 +214,12 @@ Item {
         anchors.rightMargin: Theme.spacingM
         anchors.bottomMargin: Theme.spacingM
         clip: true
+        contentWidth: width
         contentHeight: scrollColumn.implicitHeight
 
         Column {
             id: scrollColumn
-            width: scroll.width
+            width: parent.width
             spacing: Theme.spacingL
 
             Rectangle {
