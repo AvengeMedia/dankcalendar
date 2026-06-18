@@ -229,6 +229,36 @@ func TestEmbeddedFixedOffsetGetsEtcZone(t *testing.T) {
 	assert.Equal(t, time.Date(2026, 1, 14, 23, 0, 0, 0, time.UTC), got.Start.UTC())
 }
 
+// The real #17 payload: a Microsoft Exchange invite whose TZID is the Windows
+// name "Eastern Standard Time". go-ical cannot load that name, so the start used
+// to render as 0001-01-01. The event is in June (daylight time), so the label
+// "Standard" is a red herring -- it must resolve to EDT (UTC-4), not EST.
+func TestForwardedExchangeWindowsZone(t *testing.T) {
+	raw := "BEGIN:VCALENDAR\r\nMETHOD:REQUEST\r\nPRODID:Microsoft Exchange Server 2010\r\nVERSION:2.0\r\n" +
+		"BEGIN:VTIMEZONE\r\nTZID:Eastern Standard Time\r\n" +
+		"BEGIN:STANDARD\r\nDTSTART:16010101T020000\r\nTZOFFSETFROM:-0400\r\nTZOFFSETTO:-0500\r\nRRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11\r\nEND:STANDARD\r\n" +
+		"BEGIN:DAYLIGHT\r\nDTSTART:16010101T020000\r\nTZOFFSETFROM:-0500\r\nTZOFFSETTO:-0400\r\nRRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3\r\nEND:DAYLIGHT\r\n" +
+		"END:VTIMEZONE\r\n" +
+		"BEGIN:VEVENT\r\nUID:exchange-1\r\nSUMMARY:Testing CalDav Forwarding Dt/Tm\r\n" +
+		"DTSTART;TZID=Eastern Standard Time:20260618T070000\r\n" +
+		"DTEND;TZID=Eastern Standard Time:20260618T073000\r\n" +
+		"DTSTAMP:20260618T105420Z\r\n" +
+		"BEGIN:VALARM\r\nDESCRIPTION:REMINDER\r\nTRIGGER;RELATED=START:P\r\nACTION:DISPLAY\r\nEND:VALARM\r\n" +
+		"END:VEVENT\r\nEND:VCALENDAR\r\n"
+
+	doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+	require.NoError(t, err)
+
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
+	require.True(t, ok)
+
+	assert.False(t, got.Start.IsZero(), "start must not be the zero time")
+	assert.Equal(t, "America/New_York", got.StartTimeZone)
+	// 07:00 EDT (UTC-4 in June) is 11:00 UTC; the description says it should read 07:00.
+	assert.Equal(t, time.Date(2026, 6, 18, 11, 0, 0, 0, time.UTC), got.Start.UTC())
+	assert.Equal(t, time.Date(2026, 6, 18, 11, 30, 0, 0, time.UTC), got.End.UTC())
+}
+
 func TestStripMailto(t *testing.T) {
 	tests := []struct {
 		raw  string
