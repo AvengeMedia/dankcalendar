@@ -39,7 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "Attempting nix build to get new vendorHash..."
-          if output=$(nix build .#dcal 2>&1); then
+          if output=$(nix build .#dankcalendar 2>&1); then
             echo "Build succeeded, no hash update needed"
             exit 0
           fi
@@ -49,7 +49,7 @@ jobs:
           [ "$current_hash" = "$new_hash" ] && { echo "vendorHash already up to date"; exit 0; }
           sed -i "s|vendorHash = \"$current_hash\"|vendorHash = \"$new_hash\"|" flake.nix
           echo "Verifying build with new vendorHash..."
-          nix build .#dcal
+          nix build .#dankcalendar
           echo "vendorHash updated successfully!"
 
       - name: Commit and push vendorHash update
