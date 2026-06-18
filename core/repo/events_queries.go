@@ -120,10 +120,15 @@ func (r *Repo) listEventsExpanded(ctx context.Context, p ListEventsParams) ([]*e
 }
 
 func expandMaster(master *ent.Event, from, to time.Time, suppressed map[string]struct{}) []*ent.Event {
+	tz := master.StartTz
+	if tz == "" && master.Edges.Calendar != nil {
+		tz = master.Edges.Calendar.TimeZone
+	}
+
 	series := recurrence.Series{
 		Start:    master.Start,
 		AllDay:   master.AllDay,
-		TimeZone: master.StartTz,
+		TimeZone: tz,
 		RRule:    recurrenceStrings(master.Recurrence, "rrule"),
 		RDate:    recurrenceStrings(master.Recurrence, "rdate"),
 		ExDate:   recurrenceStrings(master.Recurrence, "exdate"),

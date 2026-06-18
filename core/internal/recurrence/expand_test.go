@@ -76,6 +76,31 @@ func TestExpandFloatingExDateUsesSeriesTimeZone(t *testing.T) {
 	assert.True(t, got[0].Equal(start))
 }
 
+// A monthly "3rd Saturday" series anchored in Sydney must keep landing on
+// Saturday 09:00 local on both sides of the DST switch. Expanding in UTC would
+// drag occurrences onto Sunday and shift the hour, the symptoms in #13 and #14.
+func TestExpandKeepsLocalWallClockAcrossDST(t *testing.T) {
+	syd, err := time.LoadLocation("Australia/Sydney")
+	require.NoError(t, err)
+
+	start := time.Date(2025, 9, 20, 9, 0, 0, 0, syd) // 3rd Saturday, AEST
+	series := recurrence.Series{
+		Start:    start.UTC(),
+		TimeZone: "Australia/Sydney",
+		RRule:    []string{"FREQ=MONTHLY;BYDAY=3SA"},
+	}
+
+	got, err := recurrence.Expand(series, start.UTC(), start.AddDate(1, 0, 0).UTC())
+	require.NoError(t, err)
+	require.NotEmpty(t, got)
+
+	for _, occ := range got {
+		local := occ.In(syd)
+		assert.Equal(t, time.Saturday, local.Weekday(), "occurrence %s", local)
+		assert.Equal(t, 9, local.Hour(), "occurrence %s", local)
+	}
+}
+
 func TestExpandErrors(t *testing.T) {
 	start := time.Date(2026, 1, 5, 9, 0, 0, 0, time.UTC)
 	tests := []struct {

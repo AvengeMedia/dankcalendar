@@ -93,6 +93,27 @@ func TestRoundTripReminders(t *testing.T) {
 	assert.Equal(t, 10, got.Reminders[0].Minutes)
 }
 
+func TestEventFromComponentCapturesTZID(t *testing.T) {
+	raw := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//test//test//EN\r\n" +
+		"BEGIN:VEVENT\r\nUID:tz-1\r\nSUMMARY:Standup\r\n" +
+		"DTSTART;TZID=Australia/Sydney:20250906T090000\r\n" +
+		"DTEND;TZID=Australia/Sydney:20250906T093000\r\n" +
+		"RRULE:FREQ=MONTHLY;BYDAY=3SA\r\n" +
+		"END:VEVENT\r\nEND:VCALENDAR\r\n"
+
+	doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+	require.NoError(t, err)
+	require.Len(t, doc.Events(), 1)
+
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component)
+	require.True(t, ok)
+
+	assert.Equal(t, "Australia/Sydney", got.StartTimeZone)
+	assert.Equal(t, "Australia/Sydney", got.EndTimeZone)
+	// 09:00 AEST (UTC+10, before DST starts in October) is 23:00 UTC the day before.
+	assert.Equal(t, time.Date(2025, 9, 5, 23, 0, 0, 0, time.UTC), got.Start.UTC())
+}
+
 func TestStripMailto(t *testing.T) {
 	tests := []struct {
 		raw  string

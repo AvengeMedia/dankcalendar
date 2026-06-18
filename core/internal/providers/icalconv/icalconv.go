@@ -83,12 +83,14 @@ func applyTimes(comp *ical.Component, ev *cal.Event) {
 			ev.Start = start
 		}
 		ev.AllDay = startProp.ValueType() == ical.ValueDate
+		ev.StartTimeZone = startProp.Params.Get(ical.ParamTimezoneID)
 	}
 
 	endProp := comp.Props.Get(ical.PropDateTimeEnd)
 	durProp := comp.Props.Get(ical.PropDuration)
 	switch {
 	case endProp != nil:
+		ev.EndTimeZone = endProp.Params.Get(ical.ParamTimezoneID)
 		if end, err := endProp.DateTime(time.UTC); err == nil {
 			ev.End = end
 			return
