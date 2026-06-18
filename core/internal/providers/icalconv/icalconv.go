@@ -42,7 +42,7 @@ func ComponentUID(comp *ical.Component) string {
 // EventFromComponent maps a VEVENT to a domain event. It reports false when the
 // component has no UID. RemoteID and Etag are left to the caller, which knows
 // the transport (a file UID or a CalDAV path/etag).
-func EventFromComponent(calID string, comp *ical.Component) (cal.Event, bool) {
+func EventFromComponent(calID string, comp *ical.Component, tz *TZResolver) (cal.Event, bool) {
 	uid := ComponentUID(comp)
 	if uid == "" {
 		return cal.Event{}, false
@@ -60,7 +60,7 @@ func EventFromComponent(calID string, comp *ical.Component) (cal.Event, bool) {
 	if rid := comp.Props.Get(ical.PropRecurrenceID); rid != nil {
 		ev.UID = uid + "/" + rid.Value
 		ev.RecurringID = uid
-		if t, err := rid.DateTime(time.UTC); err == nil {
+		if t, _, _, ok := parseDateTime(rid, tz); ok {
 			ev.OriginalStart = t
 		}
 	}
@@ -68,31 +68,28 @@ func EventFromComponent(calID string, comp *ical.Component) (cal.Event, bool) {
 		ev.URL = urlProp.Value
 	}
 
-	applyTimes(comp, &ev)
-	applyRecurrence(comp, &ev)
+	applyTimes(comp, &ev, tz)
+	applyRecurrence(comp, &ev, tz)
 	applyAttendees(comp, &ev)
 	applyAlarms(comp, &ev)
 
 	return ev, true
 }
 
-func applyTimes(comp *ical.Component, ev *cal.Event) {
-	startProp := comp.Props.Get(ical.PropDateTimeStart)
-	if startProp != nil {
-		if start, err := startProp.DateTime(time.UTC); err == nil {
-			ev.Start = start
-		}
-		ev.AllDay = startProp.ValueType() == ical.ValueDate
-		ev.StartTimeZone = startProp.Params.Get(ical.ParamTimezoneID)
+func applyTimes(comp *ical.Component, ev *cal.Event, tz *TZResolver) {
+	if start, zone, allDay, ok := parseDateTime(comp.Props.Get(ical.PropDateTimeStart), tz); ok {
+		ev.Start = start
+		ev.AllDay = allDay
+		ev.StartTimeZone = zone
 	}
 
 	endProp := comp.Props.Get(ical.PropDateTimeEnd)
 	durProp := comp.Props.Get(ical.PropDuration)
 	switch {
 	case endProp != nil:
-		ev.EndTimeZone = endProp.Params.Get(ical.ParamTimezoneID)
-		if end, err := endProp.DateTime(time.UTC); err == nil {
+		if end, zone, _, ok := parseDateTime(endProp, tz); ok {
 			ev.End = end
+			ev.EndTimeZone = zone
 			return
 		}
 		ev.End = ev.Start
@@ -110,14 +107,77 @@ func applyTimes(comp *ical.Component, ev *cal.Event) {
 	}
 }
 
-func applyRecurrence(comp *ical.Component, ev *cal.Event) {
+// parseDateTime reads a DTSTART/DTEND/RECURRENCE-ID value, resolving its TZID
+// through tz. It reports the resolved IANA zone name (empty for UTC, floating,
+// or fixed-offset values) and whether the value is an all-day date. Unlike
+// go-ical's DateTime, an unresolvable TZID never yields a zero time: the literal
+// wall-clock is kept.
+func parseDateTime(prop *ical.Prop, tz *TZResolver) (when time.Time, zone string, allDay bool, ok bool) {
+	if prop == nil {
+		return time.Time{}, "", false, false
+	}
+
+	raw := strings.TrimSpace(prop.Value)
+	switch {
+	case prop.ValueType() == ical.ValueDate || len(raw) == 8:
+		t, err := time.ParseInLocation("20060102", raw, time.UTC)
+		return t, "", true, err == nil
+	case strings.HasSuffix(raw, "Z"):
+		t, err := time.ParseInLocation("20060102T150405Z", raw, time.UTC)
+		return t, "", false, err == nil
+	}
+
+	naive, err := time.ParseInLocation("20060102T150405", raw, time.UTC)
+	if err != nil {
+		return time.Time{}, "", false, false
+	}
+
+	tzid := prop.Params.Get(ical.ParamTimezoneID)
+	loc, name := tz.floating()
+	if tzid != "" {
+		loc, name = tz.location(tzid, naive)
+	}
+	t, err := time.ParseInLocation("20060102T150405", raw, loc)
+	return t, name, false, err == nil
+}
+
+func applyRecurrence(comp *ical.Component, ev *cal.Event, tz *TZResolver) {
 	rrules := rawValues(comp, ical.PropRecurrenceRule)
-	rdates := rawValues(comp, ical.PropRecurrenceDates)
-	exdates := rawValues(comp, ical.PropExceptionDates)
+	rdates := tz.normalizeDateList(comp.Props.Values(ical.PropRecurrenceDates))
+	exdates := tz.normalizeDateList(comp.Props.Values(ical.PropExceptionDates))
 	if len(rrules)+len(rdates)+len(exdates) == 0 {
 		return
 	}
 	ev.Recurrence = &cal.Recurrence{RRule: rrules, RDate: rdates, ExDate: exdates}
+}
+
+// normalizeDateList rewrites RDATE/EXDATE values to absolute UTC instants,
+// resolving each property's own TZID. go-ical drops the TZID parameter from the
+// raw value, so without this a cross-zone exclusion would be parsed in the wrong
+// zone and miss its occurrence. DATE values and existing UTC values pass through
+// unchanged.
+func (r *TZResolver) normalizeDateList(props []ical.Prop) []string {
+	var out []string
+	for _, prop := range props {
+		tzid := prop.Params.Get(ical.ParamTimezoneID)
+		isDate := prop.ValueType() == ical.ValueDate
+		for raw := range strings.SplitSeq(prop.Value, ",") {
+			raw = strings.TrimSpace(raw)
+			switch {
+			case raw == "":
+				continue
+			case isDate || len(raw) == 8 || strings.HasSuffix(raw, "Z"):
+				out = append(out, raw)
+			default:
+				if t, ok := r.resolveValue(tzid, raw); ok {
+					out = append(out, t.UTC().Format("20060102T150405Z"))
+					continue
+				}
+				out = append(out, raw)
+			}
+		}
+	}
+	return out
 }
 
 func applyAttendees(comp *ical.Component, ev *cal.Event) {

@@ -66,9 +66,10 @@ func (p *Provider) readFile(cal calendar.Calendar, path string) ([]calendar.Even
 		return nil, err
 	}
 
+	tz := icalconv.NewTZResolver(doc, cal.TimeZone)
 	var events []calendar.Event
 	for _, comp := range doc.Events() {
-		ev, ok := icalconv.EventFromComponent(cal.ID, comp.Component)
+		ev, ok := icalconv.EventFromComponent(cal.ID, comp.Component, tz)
 		if !ok {
 			continue
 		}

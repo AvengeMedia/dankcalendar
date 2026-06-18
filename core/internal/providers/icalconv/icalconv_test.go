@@ -24,7 +24,7 @@ func roundTrip(t *testing.T, ev *cal.Event, uid string) cal.Event {
 	require.NoError(t, err)
 	require.Len(t, doc.Events(), 1)
 
-	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component)
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
 	require.True(t, ok)
 	return got
 }
@@ -105,13 +105,128 @@ func TestEventFromComponentCapturesTZID(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, doc.Events(), 1)
 
-	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component)
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
 	require.True(t, ok)
 
 	assert.Equal(t, "Australia/Sydney", got.StartTimeZone)
 	assert.Equal(t, "Australia/Sydney", got.EndTimeZone)
 	// 09:00 AEST (UTC+10, before DST starts in October) is 23:00 UTC the day before.
 	assert.Equal(t, time.Date(2025, 9, 5, 23, 0, 0, 0, time.UTC), got.Start.UTC())
+}
+
+// Forwarded invites often label DTSTART with a non-IANA TZID. go-ical can't
+// resolve those and would leave a zero time (the "Jan 01, 0001" in #17); the
+// resolver must recover a real instant from a Windows name, an embedded
+// VTIMEZONE, or at worst the literal wall-clock.
+func TestEventFromComponentResolvesForwardedZones(t *testing.T) {
+	parse := func(t *testing.T, body string) cal.Event {
+		t.Helper()
+		raw := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//x//x//EN\r\n" + body + "END:VCALENDAR\r\n"
+		doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+		require.NoError(t, err)
+		require.Len(t, doc.Events(), 1)
+		got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
+		require.True(t, ok)
+		assert.False(t, got.Start.IsZero(), "start must not be the zero time")
+		return got
+	}
+
+	t.Run("windows name", func(t *testing.T) {
+		got := parse(t, "BEGIN:VEVENT\r\nUID:w-1\r\nSUMMARY:s\r\n"+
+			"DTSTART;TZID=Eastern Standard Time:20260115T090000\r\n"+
+			"DTEND;TZID=Eastern Standard Time:20260115T100000\r\n"+
+			"END:VEVENT\r\n")
+		// 09:00 EST (UTC-5 in January) is 14:00 UTC, mapped to the IANA zone.
+		assert.Equal(t, "America/New_York", got.StartTimeZone)
+		assert.Equal(t, time.Date(2026, 1, 15, 14, 0, 0, 0, time.UTC), got.Start.UTC())
+	})
+
+	t.Run("embedded vtimezone", func(t *testing.T) {
+		got := parse(t, "BEGIN:VTIMEZONE\r\nTZID:Customized Time Zone\r\n"+
+			"BEGIN:STANDARD\r\nDTSTART:16010101T000000\r\nTZOFFSETFROM:-0500\r\nTZOFFSETTO:-0500\r\n"+
+			"END:STANDARD\r\nEND:VTIMEZONE\r\n"+
+			"BEGIN:VEVENT\r\nUID:c-1\r\nSUMMARY:s\r\n"+
+			"DTSTART;TZID=Customized Time Zone:20260115T090000\r\n"+
+			"DTEND;TZID=Customized Time Zone:20260115T100000\r\n"+
+			"END:VEVENT\r\n")
+		// Fixed -0500 offset from the VTIMEZONE: 09:00 local is 14:00 UTC.
+		assert.Equal(t, time.Date(2026, 1, 15, 14, 0, 0, 0, time.UTC), got.Start.UTC())
+	})
+
+	t.Run("unresolvable keeps wall clock", func(t *testing.T) {
+		got := parse(t, "BEGIN:VEVENT\r\nUID:u-1\r\nSUMMARY:s\r\n"+
+			"DTSTART;TZID=Totally Made Up:20260115T090000\r\n"+
+			"DTEND;TZID=Totally Made Up:20260115T100000\r\n"+
+			"END:VEVENT\r\n")
+		assert.Equal(t, 2026, got.Start.Year())
+		assert.Equal(t, 9, got.Start.UTC().Hour())
+	})
+}
+
+// A floating DTSTART (no TZID, no Z) is local time per RFC 5545 §3.3.5, not
+// UTC. It must be read in the calendar's zone so a 09:00 entry stays 09:00 local
+// and recurrence expands on that wall clock.
+func TestFloatingUsesCalendarZone(t *testing.T) {
+	raw := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//x//x//EN\r\nX-WR-TIMEZONE:Australia/Sydney\r\n" +
+		"BEGIN:VEVENT\r\nUID:f-1\r\nSUMMARY:s\r\nDTSTART:20260115T090000\r\nDTEND:20260115T100000\r\n" +
+		"RRULE:FREQ=WEEKLY;BYDAY=TH\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+
+	doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+	require.NoError(t, err)
+
+	// calTZ wins over X-WR-TIMEZONE when both are present.
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, "Australia/Sydney"))
+	require.True(t, ok)
+	assert.Equal(t, "Australia/Sydney", got.StartTimeZone)
+	// 09:00 AEDT (UTC+11 in January) is 22:00 UTC the previous day.
+	assert.Equal(t, time.Date(2026, 1, 14, 22, 0, 0, 0, time.UTC), got.Start.UTC())
+
+	// Falls back to the document's X-WR-TIMEZONE when no calendar zone is given.
+	got, ok = EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
+	require.True(t, ok)
+	assert.Equal(t, "Australia/Sydney", got.StartTimeZone)
+}
+
+// An EXDATE carrying a different TZID than the series must still exclude the
+// right occurrence: go-ical drops the TZID from the raw value, so the resolver
+// normalizes EXDATE/RDATE to absolute UTC instants at parse time.
+func TestExdateTZIDNormalizedToUTC(t *testing.T) {
+	raw := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//x//x//EN\r\n" +
+		"BEGIN:VEVENT\r\nUID:x-1\r\nSUMMARY:s\r\n" +
+		"DTSTART;TZID=Australia/Sydney:20260117T090000\r\n" +
+		"RRULE:FREQ=WEEKLY;BYDAY=SA\r\n" +
+		"EXDATE;TZID=Australia/Sydney:20260124T090000\r\n" +
+		"END:VEVENT\r\nEND:VCALENDAR\r\n"
+
+	doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+	require.NoError(t, err)
+
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
+	require.True(t, ok)
+	require.NotNil(t, got.Recurrence)
+	// 09:00 AEDT on 2026-01-24 is 22:00 UTC on the 23rd.
+	require.Len(t, got.Recurrence.ExDate, 1)
+	assert.Equal(t, "20260123T220000Z", got.Recurrence.ExDate[0])
+}
+
+// A fixed-offset zone defined only by a VTIMEZONE is named with an Etc/GMT zone
+// so recurrence can reconstruct the offset after the instant is persisted.
+func TestEmbeddedFixedOffsetGetsEtcZone(t *testing.T) {
+	raw := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//x//x//EN\r\n" +
+		"BEGIN:VTIMEZONE\r\nTZID:Customized Time Zone\r\n" +
+		"BEGIN:STANDARD\r\nDTSTART:16010101T000000\r\nTZOFFSETFROM:+1000\r\nTZOFFSETTO:+1000\r\n" +
+		"END:STANDARD\r\nEND:VTIMEZONE\r\n" +
+		"BEGIN:VEVENT\r\nUID:c-2\r\nSUMMARY:s\r\n" +
+		"DTSTART;TZID=Customized Time Zone:20260115T090000\r\n" +
+		"RRULE:FREQ=WEEKLY\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+
+	doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+	require.NoError(t, err)
+
+	got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
+	require.True(t, ok)
+	assert.Equal(t, "Etc/GMT-10", got.StartTimeZone)
+	assert.Equal(t, time.Date(2026, 1, 14, 23, 0, 0, 0, time.UTC), got.Start.UTC())
 }
 
 func TestStripMailto(t *testing.T) {

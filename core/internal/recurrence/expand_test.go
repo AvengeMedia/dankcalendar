@@ -101,6 +101,64 @@ func TestExpandKeepsLocalWallClockAcrossDST(t *testing.T) {
 	}
 }
 
+// BYDAY rules anchored in a zone east of UTC must keep their weekdays and hour
+// when expanded, regardless of which season they start in. These are the #14
+// cases (and the reviewer's requested coverage): a UTC expansion would shift
+// every occurrence to the next day.
+func TestExpandByDayStableInZone(t *testing.T) {
+	syd, err := time.LoadLocation("Australia/Sydney")
+	require.NoError(t, err)
+
+	cases := []struct {
+		name     string
+		start    time.Time
+		rrule    string
+		weekdays map[time.Weekday]bool
+	}{
+		{"weekdays", time.Date(2026, 1, 5, 9, 0, 0, 0, syd), "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR",
+			map[time.Weekday]bool{time.Monday: true, time.Tuesday: true, time.Wednesday: true, time.Thursday: true, time.Friday: true}},
+		{"mon wed fri", time.Date(2026, 1, 5, 9, 0, 0, 0, syd), "FREQ=WEEKLY;BYDAY=MO,WE,FR",
+			map[time.Weekday]bool{time.Monday: true, time.Wednesday: true, time.Friday: true}},
+		{"first friday", time.Date(2026, 1, 2, 9, 0, 0, 0, syd), "FREQ=MONTHLY;BYDAY=1FR",
+			map[time.Weekday]bool{time.Friday: true}},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			s := recurrence.Series{Start: tc.start.UTC(), TimeZone: "Australia/Sydney", RRule: []string{tc.rrule}}
+			got, err := recurrence.Expand(s, tc.start.UTC(), tc.start.AddDate(1, 0, 0).UTC())
+			require.NoError(t, err)
+			require.NotEmpty(t, got)
+			for _, occ := range got {
+				local := occ.In(syd)
+				assert.True(t, tc.weekdays[local.Weekday()], "unexpected weekday %s at %s", local.Weekday(), local)
+				assert.Equal(t, 9, local.Hour(), "occurrence %s", local)
+			}
+		})
+	}
+}
+
+// The #13 hour shift, verified in both directions across the DST boundary: a
+// weekly 09:00 series started in summer must still read 09:00 after the autumn
+// switch, and one started in winter must still read 09:00 after spring.
+func TestExpandWeeklyHourStableBothDirections(t *testing.T) {
+	syd, err := time.LoadLocation("Australia/Sydney")
+	require.NoError(t, err)
+
+	for _, start := range []time.Time{
+		time.Date(2026, 1, 6, 9, 0, 0, 0, syd), // summer (AEDT)
+		time.Date(2026, 7, 7, 9, 0, 0, 0, syd), // winter (AEST)
+	} {
+		s := recurrence.Series{Start: start.UTC(), TimeZone: "Australia/Sydney", RRule: []string{"FREQ=WEEKLY"}}
+		got, err := recurrence.Expand(s, start.UTC(), start.AddDate(1, 0, 0).UTC())
+		require.NoError(t, err)
+		require.NotEmpty(t, got)
+		for _, occ := range got {
+			assert.Equal(t, 9, occ.In(syd).Hour(), "occurrence %s", occ.In(syd))
+		}
+	}
+}
+
 func TestExpandErrors(t *testing.T) {
 	start := time.Date(2026, 1, 5, 9, 0, 0, 0, time.UTC)
 	tests := []struct {

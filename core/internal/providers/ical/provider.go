@@ -137,9 +137,10 @@ func eventsFromDoc(calID string, doc *ical.Calendar) []calendar.Event {
 		return nil
 	}
 
+	tz := icalconv.NewTZResolver(doc, "")
 	var events []calendar.Event
 	for _, comp := range doc.Events() {
-		ev, ok := icalconv.EventFromComponent(calID, comp.Component)
+		ev, ok := icalconv.EventFromComponent(calID, comp.Component, tz)
 		if !ok {
 			continue
 		}

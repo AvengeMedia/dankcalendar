@@ -12,9 +12,10 @@ func eventsFromObject(c cal.Calendar, obj caldav.CalendarObject) []cal.Event {
 		return nil
 	}
 
+	tz := icalconv.NewTZResolver(obj.Data, c.TimeZone)
 	var out []cal.Event
 	for _, comp := range obj.Data.Events() {
-		ev, ok := icalconv.EventFromComponent(c.ID, comp.Component)
+		ev, ok := icalconv.EventFromComponent(c.ID, comp.Component, tz)
 		if !ok {
 			continue
 		}
