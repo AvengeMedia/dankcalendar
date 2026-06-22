@@ -120,14 +120,16 @@ Item {
         contentItem: Text {
             id: textContent
 
+            readonly property bool multiline: tooltip.text.includes("\n")
+
             width: Math.min(implicitWidth, 500)
             text: tooltip.text
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.surfaceText
             wrapMode: Text.NoWrap
-            maximumLineCount: 1
+            maximumLineCount: multiline ? 20 : 1
             elide: Text.ElideRight
-            horizontalAlignment: Text.AlignHCenter
+            horizontalAlignment: multiline ? Text.AlignLeft : Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
 

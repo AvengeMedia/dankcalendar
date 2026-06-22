@@ -47,6 +47,7 @@ const (
 type Sender interface {
 	Send(n notify.Notification) (uint32, error)
 	Dismiss(id uint32)
+	OpenURI(uri string) error
 }
 
 type Publisher func(topic string, data any)
@@ -88,9 +89,16 @@ type Engine struct {
 	wake chan struct{}
 
 	mu      sync.Mutex
-	pending map[uint32]stateKey
+	pending map[uint32]firedReminder
 	running bool
 	stop    chan struct{}
+}
+
+// firedReminder records what a live notification needs once the user acts on it:
+// the state key to snooze/clear and the meeting link to join.
+type firedReminder struct {
+	key        stateKey
+	meetingURL string
 }
 
 func NewEngine(r *repo.Repo, sender Sender, maxWake time.Duration) *Engine {
@@ -106,7 +114,7 @@ func NewEngine(r *repo.Repo, sender Sender, maxWake time.Duration) *Engine {
 		open:     openApp,
 		maxWake:  maxWake,
 		wake:     make(chan struct{}, 1),
-		pending:  make(map[uint32]stateKey),
+		pending:  make(map[uint32]firedReminder),
 		stop:     make(chan struct{}),
 	}
 }
@@ -349,11 +357,12 @@ func (e *Engine) SendTest() error {
 // signal dispatcher.
 func (e *Engine) HandleAction(id uint32, action string) {
 	e.mu.Lock()
-	key, ok := e.pending[id]
+	fired, ok := e.pending[id]
 	e.mu.Unlock()
 	if !ok {
 		return
 	}
+	key := fired.key
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -367,6 +376,11 @@ func (e *Engine) HandleAction(id uint32, action string) {
 		until := e.now().Add(time.Duration(s.SnoozeMinutes) * time.Minute)
 		if err := e.repo.SnoozeReminder(ctx, key.calendarID, key.uid, key.start, key.minutes, until); err != nil {
 			log.Warnf("reminders: snooze: %v", err)
+		}
+		e.sender.Dismiss(id)
+	case "join":
+		if err := e.sender.OpenURI(fired.meetingURL); err != nil {
+			log.Warnf("reminders: open meeting: %v", err)
 		}
 		e.sender.Dismiss(id)
 	case "default":
@@ -444,14 +458,20 @@ func (e *Engine) stateMap(ctx context.Context, now time.Time) (map[stateKey]*ent
 }
 
 func (e *Engine) fire(ctx context.Context, ev *ent.Event, key stateKey, s settings.UISettings, now time.Time) {
+	actions := make([]notify.Action, 0, 4)
+	if ev.MeetingURL != "" {
+		actions = append(actions, notify.Action{Key: "join", Label: "Join"})
+	}
+	actions = append(actions,
+		notify.Action{Key: "default", Label: "Open"},
+		notify.Action{Key: "snooze", Label: fmt.Sprintf("Snooze %d min", s.SnoozeMinutes)},
+		notify.Action{Key: "dismiss", Label: "Dismiss"},
+	)
+
 	n := notify.Notification{
-		Summary: eventTitle(ev),
-		Body:    eventBody(ev, now, s, e.loc),
-		Actions: []notify.Action{
-			{Key: "default", Label: "Open"},
-			{Key: "snooze", Label: fmt.Sprintf("Snooze %d min", s.SnoozeMinutes)},
-			{Key: "dismiss", Label: "Dismiss"},
-		},
+		Summary:  eventTitle(ev),
+		Body:     eventBody(ev, now, s, e.loc),
+		Actions:  actions,
 		Resident: s.ReminderPersist,
 	}
 
@@ -466,7 +486,7 @@ func (e *Engine) fire(ctx context.Context, ev *ent.Event, key stateKey, s settin
 	}
 
 	e.mu.Lock()
-	e.pending[id] = key
+	e.pending[id] = firedReminder{key: key, meetingURL: ev.MeetingURL}
 	e.mu.Unlock()
 
 	if e.publish != nil {

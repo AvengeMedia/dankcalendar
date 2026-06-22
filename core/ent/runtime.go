@@ -108,15 +108,15 @@ func init() {
 	// event.UIDValidator is a validator for the "uid" field. It is called by the builders before save.
 	event.UIDValidator = eventDescUID.Validators[0].(func(string) error)
 	// eventDescAllDay is the schema descriptor for all_day field.
-	eventDescAllDay := eventFields[11].Descriptor()
+	eventDescAllDay := eventFields[12].Descriptor()
 	// event.DefaultAllDay holds the default value on creation for the all_day field.
 	event.DefaultAllDay = eventDescAllDay.Default.(bool)
 	// eventDescCreated is the schema descriptor for created field.
-	eventDescCreated := eventFields[24].Descriptor()
+	eventDescCreated := eventFields[25].Descriptor()
 	// event.DefaultCreated holds the default value on creation for the created field.
 	event.DefaultCreated = eventDescCreated.Default.(func() time.Time)
 	// eventDescUpdated is the schema descriptor for updated field.
-	eventDescUpdated := eventFields[25].Descriptor()
+	eventDescUpdated := eventFields[26].Descriptor()
 	// event.DefaultUpdated holds the default value on creation for the updated field.
 	event.DefaultUpdated = eventDescUpdated.Default.(func() time.Time)
 	// event.UpdateDefaultUpdated holds the default value on update for the updated field.

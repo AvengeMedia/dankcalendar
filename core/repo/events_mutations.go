@@ -19,6 +19,7 @@ type UpsertEventInput struct {
 	Description   string
 	Location      string
 	URL           string
+	MeetingURL    string
 	Status        event.Status
 	Start         time.Time
 	End           time.Time
@@ -65,6 +66,7 @@ func (r *Repo) UpsertEvent(ctx context.Context, in UpsertEventInput) (*ent.Event
 		SetDescription(in.Description).
 		SetLocation(in.Location).
 		SetURL(in.URL).
+		SetMeetingURL(in.MeetingURL).
 		SetStart(in.Start).
 		SetEnd(in.End).
 		SetAllDay(in.AllDay).
@@ -107,6 +109,7 @@ func (r *Repo) applyEventUpdate(ctx context.Context, id string, in UpsertEventIn
 		SetDescription(in.Description).
 		SetLocation(in.Location).
 		SetURL(in.URL).
+		SetMeetingURL(in.MeetingURL).
 		SetStart(in.Start).
 		SetEnd(in.End).
 		SetAllDay(in.AllDay).

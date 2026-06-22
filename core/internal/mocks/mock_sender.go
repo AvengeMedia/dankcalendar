@@ -53,6 +53,52 @@ func (_c *MockSender_Dismiss_Call) RunAndReturn(run func(uint32)) *MockSender_Di
 	return _c
 }
 
+// OpenURI provides a mock function with given fields: uri
+func (_m *MockSender) OpenURI(uri string) error {
+	ret := _m.Called(uri)
+
+	if len(ret) == 0 {
+		panic("no return value specified for OpenURI")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(string) error); ok {
+		r0 = rf(uri)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// MockSender_OpenURI_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'OpenURI'
+type MockSender_OpenURI_Call struct {
+	*mock.Call
+}
+
+// OpenURI is a helper method to define mock.On call
+//   - uri string
+func (_e *MockSender_Expecter) OpenURI(uri interface{}) *MockSender_OpenURI_Call {
+	return &MockSender_OpenURI_Call{Call: _e.mock.On("OpenURI", uri)}
+}
+
+func (_c *MockSender_OpenURI_Call) Run(run func(uri string)) *MockSender_OpenURI_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(string))
+	})
+	return _c
+}
+
+func (_c *MockSender_OpenURI_Call) Return(_a0 error) *MockSender_OpenURI_Call {
+	_c.Call.Return(_a0)
+	return _c
+}
+
+func (_c *MockSender_OpenURI_Call) RunAndReturn(run func(string) error) *MockSender_OpenURI_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Send provides a mock function with given fields: n
 func (_m *MockSender) Send(n notify.Notification) (uint32, error) {
 	ret := _m.Called(n)

@@ -465,6 +465,7 @@ Singleton {
             "description": e.description || "",
             "location": e.location || "",
             "url": e.url || "",
+            "meetingUrl": e.meetingUrl || "",
             "start": allDay ? _dayBoundary(e.start) : new Date(e.start),
             "end": allDay ? _dayBoundary(e.end) : new Date(e.end),
             "allDay": allDay,

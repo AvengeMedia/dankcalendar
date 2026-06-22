@@ -159,6 +159,26 @@ func (_u *EventUpdate) ClearURL() *EventUpdate {
 	return _u
 }
 
+// SetMeetingURL sets the "meeting_url" field.
+func (_u *EventUpdate) SetMeetingURL(v string) *EventUpdate {
+	_u.mutation.SetMeetingURL(v)
+	return _u
+}
+
+// SetNillableMeetingURL sets the "meeting_url" field if the given value is not nil.
+func (_u *EventUpdate) SetNillableMeetingURL(v *string) *EventUpdate {
+	if v != nil {
+		_u.SetMeetingURL(*v)
+	}
+	return _u
+}
+
+// ClearMeetingURL clears the value of the "meeting_url" field.
+func (_u *EventUpdate) ClearMeetingURL() *EventUpdate {
+	_u.mutation.ClearMeetingURL()
+	return _u
+}
+
 // SetStatus sets the "status" field.
 func (_u *EventUpdate) SetStatus(v event.Status) *EventUpdate {
 	_u.mutation.SetStatus(v)
@@ -583,6 +603,12 @@ func (_u *EventUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.URLCleared() {
 		_spec.ClearField(event.FieldURL, field.TypeString)
 	}
+	if value, ok := _u.mutation.MeetingURL(); ok {
+		_spec.SetField(event.FieldMeetingURL, field.TypeString, value)
+	}
+	if _u.mutation.MeetingURLCleared() {
+		_spec.ClearField(event.FieldMeetingURL, field.TypeString)
+	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(event.FieldStatus, field.TypeEnum, value)
 	}
@@ -864,6 +890,26 @@ func (_u *EventUpdateOne) SetNillableURL(v *string) *EventUpdateOne {
 // ClearURL clears the value of the "url" field.
 func (_u *EventUpdateOne) ClearURL() *EventUpdateOne {
 	_u.mutation.ClearURL()
+	return _u
+}
+
+// SetMeetingURL sets the "meeting_url" field.
+func (_u *EventUpdateOne) SetMeetingURL(v string) *EventUpdateOne {
+	_u.mutation.SetMeetingURL(v)
+	return _u
+}
+
+// SetNillableMeetingURL sets the "meeting_url" field if the given value is not nil.
+func (_u *EventUpdateOne) SetNillableMeetingURL(v *string) *EventUpdateOne {
+	if v != nil {
+		_u.SetMeetingURL(*v)
+	}
+	return _u
+}
+
+// ClearMeetingURL clears the value of the "meeting_url" field.
+func (_u *EventUpdateOne) ClearMeetingURL() *EventUpdateOne {
+	_u.mutation.ClearMeetingURL()
 	return _u
 }
 
@@ -1320,6 +1366,12 @@ func (_u *EventUpdateOne) sqlSave(ctx context.Context) (_node *Event, err error)
 	}
 	if _u.mutation.URLCleared() {
 		_spec.ClearField(event.FieldURL, field.TypeString)
+	}
+	if value, ok := _u.mutation.MeetingURL(); ok {
+		_spec.SetField(event.FieldMeetingURL, field.TypeString, value)
+	}
+	if _u.mutation.MeetingURLCleared() {
+		_spec.ClearField(event.FieldMeetingURL, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
 		_spec.SetField(event.FieldStatus, field.TypeEnum, value)

@@ -81,6 +81,7 @@ var (
 		{Name: "description", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "location", Type: field.TypeString, Nullable: true},
 		{Name: "url", Type: field.TypeString, Nullable: true},
+		{Name: "meeting_url", Type: field.TypeString, Nullable: true},
 		{Name: "status", Type: field.TypeEnum, Enums: []string{"confirmed", "tentative", "cancelled"}, Default: "confirmed"},
 		{Name: "start", Type: field.TypeTime},
 		{Name: "end", Type: field.TypeTime},
@@ -109,7 +110,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "events_calendars_events",
-				Columns:    []*schema.Column{EventsColumns[26]},
+				Columns:    []*schema.Column{EventsColumns[27]},
 				RefColumns: []*schema.Column{CalendarsColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
@@ -118,22 +119,22 @@ var (
 			{
 				Name:    "event_uid_calendar_events",
 				Unique:  true,
-				Columns: []*schema.Column{EventsColumns[1], EventsColumns[26]},
+				Columns: []*schema.Column{EventsColumns[1], EventsColumns[27]},
 			},
 			{
 				Name:    "event_start",
 				Unique:  false,
-				Columns: []*schema.Column{EventsColumns[9]},
+				Columns: []*schema.Column{EventsColumns[10]},
 			},
 			{
 				Name:    "event_end",
 				Unique:  false,
-				Columns: []*schema.Column{EventsColumns[10]},
+				Columns: []*schema.Column{EventsColumns[11]},
 			},
 			{
 				Name:    "event_exceptions",
 				Unique:  false,
-				Columns: []*schema.Column{EventsColumns[15]},
+				Columns: []*schema.Column{EventsColumns[16]},
 				Annotation: &entsql.IndexAnnotation{
 					Where: "recurring_id <> ''",
 				},
@@ -141,7 +142,7 @@ var (
 			{
 				Name:    "event_recurring_masters",
 				Unique:  false,
-				Columns: []*schema.Column{EventsColumns[9]},
+				Columns: []*schema.Column{EventsColumns[10]},
 				Annotation: &entsql.IndexAnnotation{
 					Where: "recurrence IS NOT NULL",
 				},

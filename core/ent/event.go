@@ -33,6 +33,8 @@ type Event struct {
 	Location string `json:"location,omitempty"`
 	// URL holds the value of the "url" field.
 	URL string `json:"url,omitempty"`
+	// MeetingURL holds the value of the "meeting_url" field.
+	MeetingURL string `json:"meeting_url,omitempty"`
 	// Status holds the value of the "status" field.
 	Status event.Status `json:"status,omitempty"`
 	// Start holds the value of the "start" field.
@@ -105,7 +107,7 @@ func (*Event) scanValues(columns []string) ([]any, error) {
 			values[i] = new([]byte)
 		case event.FieldAllDay:
 			values[i] = new(sql.NullBool)
-		case event.FieldID, event.FieldUID, event.FieldRemoteID, event.FieldEtag, event.FieldSummary, event.FieldDescription, event.FieldLocation, event.FieldURL, event.FieldStatus, event.FieldStartTz, event.FieldEndTz, event.FieldRecurringID, event.FieldTransparency, event.FieldVisibility, event.FieldRawIcs:
+		case event.FieldID, event.FieldUID, event.FieldRemoteID, event.FieldEtag, event.FieldSummary, event.FieldDescription, event.FieldLocation, event.FieldURL, event.FieldMeetingURL, event.FieldStatus, event.FieldStartTz, event.FieldEndTz, event.FieldRecurringID, event.FieldTransparency, event.FieldVisibility, event.FieldRawIcs:
 			values[i] = new(sql.NullString)
 		case event.FieldStart, event.FieldEnd, event.FieldOriginalStart, event.FieldCreated, event.FieldUpdated:
 			values[i] = new(sql.NullTime)
@@ -173,6 +175,12 @@ func (_m *Event) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field url", values[i])
 			} else if value.Valid {
 				_m.URL = value.String
+			}
+		case event.FieldMeetingURL:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field meeting_url", values[i])
+			} else if value.Valid {
+				_m.MeetingURL = value.String
 			}
 		case event.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -361,6 +369,9 @@ func (_m *Event) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("url=")
 	builder.WriteString(_m.URL)
+	builder.WriteString(", ")
+	builder.WriteString("meeting_url=")
+	builder.WriteString(_m.MeetingURL)
 	builder.WriteString(", ")
 	builder.WriteString("status=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Status))

@@ -73,6 +73,7 @@ type Event struct {
 	Description   string      `json:"description,omitempty"`
 	Location      string      `json:"location,omitempty"`
 	URL           string      `json:"url,omitempty"`
+	MeetingURL    string      `json:"meetingUrl,omitempty"`
 	Status        EventStatus `json:"status,omitempty"`
 	Start         time.Time   `json:"start"`
 	End           time.Time   `json:"end"`

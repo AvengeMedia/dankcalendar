@@ -2117,6 +2117,7 @@ type EventMutation struct {
 	description      *string
 	location         *string
 	url              *string
+	meeting_url      *string
 	status           *event.Status
 	start            *time.Time
 	end              *time.Time
@@ -2565,6 +2566,55 @@ func (m *EventMutation) URLCleared() bool {
 func (m *EventMutation) ResetURL() {
 	m.url = nil
 	delete(m.clearedFields, event.FieldURL)
+}
+
+// SetMeetingURL sets the "meeting_url" field.
+func (m *EventMutation) SetMeetingURL(s string) {
+	m.meeting_url = &s
+}
+
+// MeetingURL returns the value of the "meeting_url" field in the mutation.
+func (m *EventMutation) MeetingURL() (r string, exists bool) {
+	v := m.meeting_url
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMeetingURL returns the old "meeting_url" field's value of the Event entity.
+// If the Event object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *EventMutation) OldMeetingURL(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMeetingURL is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMeetingURL requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMeetingURL: %w", err)
+	}
+	return oldValue.MeetingURL, nil
+}
+
+// ClearMeetingURL clears the value of the "meeting_url" field.
+func (m *EventMutation) ClearMeetingURL() {
+	m.meeting_url = nil
+	m.clearedFields[event.FieldMeetingURL] = struct{}{}
+}
+
+// MeetingURLCleared returns if the "meeting_url" field was cleared in this mutation.
+func (m *EventMutation) MeetingURLCleared() bool {
+	_, ok := m.clearedFields[event.FieldMeetingURL]
+	return ok
+}
+
+// ResetMeetingURL resets all changes to the "meeting_url" field.
+func (m *EventMutation) ResetMeetingURL() {
+	m.meeting_url = nil
+	delete(m.clearedFields, event.FieldMeetingURL)
 }
 
 // SetStatus sets the "status" field.
@@ -3492,7 +3542,7 @@ func (m *EventMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *EventMutation) Fields() []string {
-	fields := make([]string, 0, 25)
+	fields := make([]string, 0, 26)
 	if m.uid != nil {
 		fields = append(fields, event.FieldUID)
 	}
@@ -3513,6 +3563,9 @@ func (m *EventMutation) Fields() []string {
 	}
 	if m.url != nil {
 		fields = append(fields, event.FieldURL)
+	}
+	if m.meeting_url != nil {
+		fields = append(fields, event.FieldMeetingURL)
 	}
 	if m.status != nil {
 		fields = append(fields, event.FieldStatus)
@@ -3590,6 +3643,8 @@ func (m *EventMutation) Field(name string) (ent.Value, bool) {
 		return m.Location()
 	case event.FieldURL:
 		return m.URL()
+	case event.FieldMeetingURL:
+		return m.MeetingURL()
 	case event.FieldStatus:
 		return m.Status()
 	case event.FieldStart:
@@ -3649,6 +3704,8 @@ func (m *EventMutation) OldField(ctx context.Context, name string) (ent.Value, e
 		return m.OldLocation(ctx)
 	case event.FieldURL:
 		return m.OldURL(ctx)
+	case event.FieldMeetingURL:
+		return m.OldMeetingURL(ctx)
 	case event.FieldStatus:
 		return m.OldStatus(ctx)
 	case event.FieldStart:
@@ -3742,6 +3799,13 @@ func (m *EventMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetURL(v)
+		return nil
+	case event.FieldMeetingURL:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMeetingURL(v)
 		return nil
 	case event.FieldStatus:
 		v, ok := value.(event.Status)
@@ -3914,6 +3978,9 @@ func (m *EventMutation) ClearedFields() []string {
 	if m.FieldCleared(event.FieldURL) {
 		fields = append(fields, event.FieldURL)
 	}
+	if m.FieldCleared(event.FieldMeetingURL) {
+		fields = append(fields, event.FieldMeetingURL)
+	}
 	if m.FieldCleared(event.FieldStartTz) {
 		fields = append(fields, event.FieldStartTz)
 	}
@@ -3979,6 +4046,9 @@ func (m *EventMutation) ClearField(name string) error {
 	case event.FieldURL:
 		m.ClearURL()
 		return nil
+	case event.FieldMeetingURL:
+		m.ClearMeetingURL()
+		return nil
 	case event.FieldStartTz:
 		m.ClearStartTz()
 		return nil
@@ -4043,6 +4113,9 @@ func (m *EventMutation) ResetField(name string) error {
 		return nil
 	case event.FieldURL:
 		m.ResetURL()
+		return nil
+	case event.FieldMeetingURL:
+		m.ResetMeetingURL()
 		return nil
 	case event.FieldStatus:
 		m.ResetStatus()

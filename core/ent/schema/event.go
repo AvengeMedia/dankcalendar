@@ -34,6 +34,8 @@ func (Event) Fields() []ent.Field {
 			Optional(),
 		field.String("url").
 			Optional(),
+		field.String("meeting_url").
+			Optional(),
 		field.Enum("status").
 			Values("confirmed", "tentative", "cancelled").
 			Default("confirmed"),

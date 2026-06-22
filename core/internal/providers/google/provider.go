@@ -213,6 +213,7 @@ func fromGoogleEvent(c cal.Calendar, item *calendar.Event) *cal.Event {
 		Description:  item.Description,
 		Location:     item.Location,
 		URL:          item.HtmlLink,
+		MeetingURL:   fromGoogleMeetingURL(item),
 		Status:       fromGoogleStatus(item.Status),
 		Recurrence:   fromGoogleRecurrence(item.Recurrence),
 		RecurringID:  item.RecurringEventId,
@@ -242,6 +243,23 @@ func fromGoogleEvent(c cal.Calendar, item *calendar.Event) *cal.Event {
 	ev.Created, _ = time.Parse(time.RFC3339, item.Created)
 	ev.Updated, _ = time.Parse(time.RFC3339, item.Updated)
 	return ev
+}
+
+// fromGoogleMeetingURL prefers a video entry point from conferenceData, then the
+// legacy hangoutLink, then a known link in the description or location (e.g. a
+// Zoom meeting added through an add-on, which leaves conferenceData empty).
+func fromGoogleMeetingURL(item *calendar.Event) string {
+	if item.ConferenceData != nil {
+		for _, ep := range item.ConferenceData.EntryPoints {
+			if ep.EntryPointType == "video" && ep.Uri != "" {
+				return ep.Uri
+			}
+		}
+	}
+	if item.HangoutLink != "" {
+		return item.HangoutLink
+	}
+	return cal.MeetingURLInText(item.Description, item.Location)
 }
 
 func fromGoogleStatus(s string) cal.EventStatus {

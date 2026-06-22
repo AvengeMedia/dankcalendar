@@ -219,6 +219,32 @@ func (s *EngineSuite) TestSnoozeRefires() {
 	s.Require().NoError(s.engine.Tick(s.ctx))
 }
 
+func (s *EngineSuite) TestJoinActionOpensMeetingURL() {
+	const url = "https://meet.google.com/abc-defg-hij"
+	s.addEvent("ev1", t0.Add(10*time.Minute), t0.Add(40*time.Minute), func(in *repo.UpsertEventInput) {
+		in.MeetingURL = url
+	})
+
+	captured := s.expectSend(9)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Require().NotEmpty(captured.Actions)
+	s.Equal("join", captured.Actions[0].Key)
+
+	s.sender.EXPECT().OpenURI(url).Return(nil).Once()
+	s.sender.EXPECT().Dismiss(uint32(9)).Once()
+	s.engine.HandleAction(9, "join")
+}
+
+func (s *EngineSuite) TestNoJoinActionWithoutMeetingURL() {
+	s.addEvent("ev1", t0.Add(10*time.Minute), t0.Add(40*time.Minute))
+
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	for _, a := range captured.Actions {
+		s.NotEqual("join", a.Key)
+	}
+}
+
 func (s *EngineSuite) TestDismissedActionDoesNotRefire() {
 	s.addEvent("ev1", t0.Add(10*time.Minute), t0.Add(40*time.Minute))
 

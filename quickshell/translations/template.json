@@ -1113,6 +1113,13 @@
     "comment": ""
   },
   {
+    "term": "Join video call",
+    "translation": "",
+    "context": "event details row that opens the meeting link",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Keep typing",
     "translation": "",
     "context": "search status title when query is too short",

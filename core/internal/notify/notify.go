@@ -19,6 +19,10 @@ const (
 	appIcon    = "dankcalendar"
 	// desktopEntry must match the installed .desktop file basename.
 	desktopEntry = "com.danklinux.dankcalendar"
+
+	portalBusName    = "org.freedesktop.portal.Desktop"
+	portalObjectPath = "/org/freedesktop/portal/desktop"
+	portalOpenURI    = "org.freedesktop.portal.OpenURI.OpenURI"
 )
 
 type Action struct {
@@ -104,6 +108,21 @@ func (c *Client) Send(n Notification) (uint32, error) {
 		return 0, fmt.Errorf("read notification id: %w", err)
 	}
 	return id, nil
+}
+
+// OpenURI hands a URI to the XDG desktop portal so the user's configured handler
+// opens it, reusing the session bus instead of spawning a helper process. The
+// empty parent-window token is valid; options are intentionally unset.
+func (c *Client) OpenURI(uri string) error {
+	if uri == "" {
+		return nil
+	}
+	obj := c.conn.Object(portalBusName, portalObjectPath)
+	call := obj.Call(portalOpenURI, 0, "", uri, map[string]dbus.Variant{})
+	if call.Err != nil {
+		return fmt.Errorf("open uri via portal: %w", call.Err)
+	}
+	return nil
 }
 
 func (c *Client) Dismiss(id uint32) {

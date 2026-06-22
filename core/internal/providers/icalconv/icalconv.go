@@ -67,6 +67,7 @@ func EventFromComponent(calID string, comp *ical.Component, tz *TZResolver) (cal
 	if urlProp := comp.Props.Get(ical.PropURL); urlProp != nil {
 		ev.URL = urlProp.Value
 	}
+	ev.MeetingURL = meetingURLFromComponent(comp)
 
 	applyTimes(comp, &ev, tz)
 	applyRecurrence(comp, &ev, tz)
@@ -219,6 +220,42 @@ func statusFromComponent(comp *ical.Component) cal.EventStatus {
 	}
 }
 
+// meetingURLFromComponent recovers a video meeting link, preferring the
+// conference properties providers emit (Google's X-GOOGLE-CONFERENCE, Outlook's
+// X-MICROSOFT-SKYPETEAMSMEETINGURL, RFC 7986 CONFERENCE) before scanning the
+// description and location for a known link.
+func meetingURLFromComponent(comp *ical.Component) string {
+	if v := propValue(comp, "X-GOOGLE-CONFERENCE"); v != "" {
+		return v
+	}
+	if v := propValue(comp, "X-MICROSOFT-SKYPETEAMSMEETINGURL"); v != "" {
+		return v
+	}
+	if v := conferencePropURL(comp); v != "" {
+		return v
+	}
+	return cal.MeetingURLInText(propText(comp, ical.PropDescription), propText(comp, ical.PropLocation))
+}
+
+// conferencePropURL returns the best RFC 7986 CONFERENCE join link: an http(s)
+// URI, preferring one advertised with the VIDEO feature. Audio-only dial-ins
+// (tel: URIs) are skipped.
+func conferencePropURL(comp *ical.Component) string {
+	var fallback string
+	for _, prop := range comp.Props.Values("CONFERENCE") {
+		if !strings.HasPrefix(prop.Value, "http://") && !strings.HasPrefix(prop.Value, "https://") {
+			continue
+		}
+		if strings.Contains(strings.ToUpper(prop.Params.Get("FEATURE")), "VIDEO") {
+			return prop.Value
+		}
+		if fallback == "" {
+			fallback = prop.Value
+		}
+	}
+	return fallback
+}
+
 func propText(comp *ical.Component, name string) string {
 	text, err := comp.Props.Text(name)
 	if err != nil {
@@ -262,6 +299,9 @@ func BuildEvent(ev *cal.Event, uid string) *ical.Event {
 	}
 	if ev.URL != "" {
 		setRaw(props, ical.PropURL, ev.URL)
+	}
+	if ev.MeetingURL != "" {
+		setRaw(props, "X-GOOGLE-CONFERENCE", ev.MeetingURL)
 	}
 	if status := statusValue(ev.Status); status != "" {
 		props.SetText(ical.PropStatus, status)

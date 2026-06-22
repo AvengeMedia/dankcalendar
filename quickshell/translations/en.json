@@ -68,7 +68,7 @@
   {
     "term": "+%1 more",
     "context": "+%1 more",
-    "reference": "Modules/views/MonthView.qml:336",
+    "reference": "Modules/views/MonthView.qml:361",
     "comment": "overflow label in month grid day cell, %1 is the number of hidden events"
   },
   {
@@ -254,7 +254,7 @@
   {
     "term": "Add a calendar",
     "context": "Add a calendar",
-    "reference": "Modals/EventDetailsModal.qml:938",
+    "reference": "Modals/EventDetailsModal.qml:955",
     "comment": "event form button to add a calendar when none exist"
   },
   {
@@ -266,13 +266,13 @@
   {
     "term": "Add description",
     "context": "Add description",
-    "reference": "Modals/EventDetailsModal.qml:1009",
+    "reference": "Modals/EventDetailsModal.qml:1026",
     "comment": "event form placeholder for description text area"
   },
   {
     "term": "Add title",
     "context": "Add title",
-    "reference": "Modals/EventDetailsModal.qml:805",
+    "reference": "Modals/EventDetailsModal.qml:822",
     "comment": "event form placeholder for title input"
   },
   {
@@ -308,7 +308,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:834, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:91",
+    "reference": "Modals/EventDetailsModal.qml:851, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:91",
     "comment": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -386,7 +386,7 @@
   {
     "term": "Attendees",
     "context": "Attendees",
-    "reference": "Modals/EventDetailsModal.qml:625",
+    "reference": "Modals/EventDetailsModal.qml:642",
     "comment": "event details section label for attendee list"
   },
   {
@@ -716,7 +716,7 @@
   {
     "term": "Description",
     "context": "Description",
-    "reference": "Modals/EventDetailsModal.qml:754",
+    "reference": "Modals/EventDetailsModal.qml:771",
     "comment": "event details section label for description"
   },
   {
@@ -954,6 +954,12 @@
     "comment": "default reminder setting description"
   },
   {
+    "term": "Join video call",
+    "context": "Join video call",
+    "reference": "Modals/EventDetailsModal.qml:589",
+    "comment": "event details row that opens the meeting link"
+  },
+  {
     "term": "Keep typing",
     "context": "Keep typing",
     "reference": "Modals/SearchModal.qml:94",
@@ -1028,7 +1034,7 @@
   {
     "term": "Location",
     "context": "Location",
-    "reference": "Modals/EventDetailsModal.qml:877",
+    "reference": "Modals/EventDetailsModal.qml:894",
     "comment": "event form placeholder for location input"
   },
   {
@@ -1166,7 +1172,7 @@
   {
     "term": "No calendars yet. Add one to start creating events.",
     "context": "No calendars yet. Add one to start creating events.",
-    "reference": "Modals/EventDetailsModal.qml:931",
+    "reference": "Modals/EventDetailsModal.qml:948",
     "comment": "event form guidance when there are no writable calendars"
   },
   {
@@ -1718,7 +1724,7 @@
   {
     "term": "This account cannot be reconnected — remove it and add it again.",
     "context": "This account cannot be reconnected — remove it and add it again.",
-    "reference": "Services/DankCalService.qml:743",
+    "reference": "Services/DankCalService.qml:744",
     "comment": "error when reconnect is unavailable for a provider"
   },
   {

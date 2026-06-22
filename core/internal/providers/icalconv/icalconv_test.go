@@ -275,6 +275,67 @@ func TestStripMailto(t *testing.T) {
 	}
 }
 
+func TestMeetingURLExtraction(t *testing.T) {
+	const head = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//test//test//EN\r\nBEGIN:VEVENT\r\nUID:m-1\r\nSUMMARY:Meeting\r\n"
+	const tail = "END:VEVENT\r\nEND:VCALENDAR\r\n"
+
+	tests := []struct {
+		name  string
+		props string
+		want  string
+	}{
+		{
+			name:  "google conference",
+			props: "X-GOOGLE-CONFERENCE:https://meet.google.com/abc-defg-hij\r\n",
+			want:  "https://meet.google.com/abc-defg-hij",
+		},
+		{
+			name:  "microsoft teams property",
+			props: "X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-join/19%3aabc\r\n",
+			want:  "https://teams.microsoft.com/l/meetup-join/19%3aabc",
+		},
+		{
+			name: "conference prop prefers video over audio dial-in",
+			props: "CONFERENCE;VALUE=URI;FEATURE=AUDIO:tel:+1-555-0100,,123456\r\n" +
+				"CONFERENCE;VALUE=URI;FEATURE=VIDEO:https://chat.example.com/video?id=42\r\n",
+			want: "https://chat.example.com/video?id=42",
+		},
+		{
+			name:  "zoom link recovered from description",
+			props: "DESCRIPTION:Join here https://us02web.zoom.us/j/87654321 see you\r\n",
+			want:  "https://us02web.zoom.us/j/87654321",
+		},
+		{
+			name:  "no meeting",
+			props: "DESCRIPTION:Just a regular event\r\n",
+			want:  "",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			doc, err := ical.NewDecoder(strings.NewReader(head + tc.props + tail)).Decode()
+			require.NoError(t, err)
+			require.Len(t, doc.Events(), 1)
+
+			got, ok := EventFromComponent("cal-1", doc.Events()[0].Component, NewTZResolver(doc, ""))
+			require.True(t, ok)
+			assert.Equal(t, tc.want, got.MeetingURL)
+		})
+	}
+}
+
+func TestMeetingURLRoundTrip(t *testing.T) {
+	src := &cal.Event{
+		Summary:    "Sprint review",
+		MeetingURL: "https://meet.google.com/xyz-abcd-efg",
+		Start:      time.Date(2026, 5, 7, 14, 0, 0, 0, time.UTC),
+		End:        time.Date(2026, 5, 7, 15, 0, 0, 0, time.UTC),
+	}
+	got := roundTrip(t, src, "rt-meeting")
+	assert.Equal(t, src.MeetingURL, got.MeetingURL)
+}
+
 func TestTriggerMinutesRoundTrip(t *testing.T) {
 	for _, minutes := range []int{0, 5, 10, 60, 1440, -30} {
 		got, ok := triggerMinutes(triggerFromMinutes(minutes))

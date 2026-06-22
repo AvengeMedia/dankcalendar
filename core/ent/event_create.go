@@ -106,6 +106,20 @@ func (_c *EventCreate) SetNillableURL(v *string) *EventCreate {
 	return _c
 }
 
+// SetMeetingURL sets the "meeting_url" field.
+func (_c *EventCreate) SetMeetingURL(v string) *EventCreate {
+	_c.mutation.SetMeetingURL(v)
+	return _c
+}
+
+// SetNillableMeetingURL sets the "meeting_url" field if the given value is not nil.
+func (_c *EventCreate) SetNillableMeetingURL(v *string) *EventCreate {
+	if v != nil {
+		_c.SetMeetingURL(*v)
+	}
+	return _c
+}
+
 // SetStatus sets the "status" field.
 func (_c *EventCreate) SetStatus(v event.Status) *EventCreate {
 	_c.mutation.SetStatus(v)
@@ -480,6 +494,10 @@ func (_c *EventCreate) createSpec() (*Event, *sqlgraph.CreateSpec) {
 		_spec.SetField(event.FieldURL, field.TypeString, value)
 		_node.URL = value
 	}
+	if value, ok := _c.mutation.MeetingURL(); ok {
+		_spec.SetField(event.FieldMeetingURL, field.TypeString, value)
+		_node.MeetingURL = value
+	}
 	if value, ok := _c.mutation.Status(); ok {
 		_spec.SetField(event.FieldStatus, field.TypeEnum, value)
 		_node.Status = value
@@ -732,6 +750,24 @@ func (u *EventUpsert) UpdateURL() *EventUpsert {
 // ClearURL clears the value of the "url" field.
 func (u *EventUpsert) ClearURL() *EventUpsert {
 	u.SetNull(event.FieldURL)
+	return u
+}
+
+// SetMeetingURL sets the "meeting_url" field.
+func (u *EventUpsert) SetMeetingURL(v string) *EventUpsert {
+	u.Set(event.FieldMeetingURL, v)
+	return u
+}
+
+// UpdateMeetingURL sets the "meeting_url" field to the value that was provided on create.
+func (u *EventUpsert) UpdateMeetingURL() *EventUpsert {
+	u.SetExcluded(event.FieldMeetingURL)
+	return u
+}
+
+// ClearMeetingURL clears the value of the "meeting_url" field.
+func (u *EventUpsert) ClearMeetingURL() *EventUpsert {
+	u.SetNull(event.FieldMeetingURL)
 	return u
 }
 
@@ -1201,6 +1237,27 @@ func (u *EventUpsertOne) UpdateURL() *EventUpsertOne {
 func (u *EventUpsertOne) ClearURL() *EventUpsertOne {
 	return u.Update(func(s *EventUpsert) {
 		s.ClearURL()
+	})
+}
+
+// SetMeetingURL sets the "meeting_url" field.
+func (u *EventUpsertOne) SetMeetingURL(v string) *EventUpsertOne {
+	return u.Update(func(s *EventUpsert) {
+		s.SetMeetingURL(v)
+	})
+}
+
+// UpdateMeetingURL sets the "meeting_url" field to the value that was provided on create.
+func (u *EventUpsertOne) UpdateMeetingURL() *EventUpsertOne {
+	return u.Update(func(s *EventUpsert) {
+		s.UpdateMeetingURL()
+	})
+}
+
+// ClearMeetingURL clears the value of the "meeting_url" field.
+func (u *EventUpsertOne) ClearMeetingURL() *EventUpsertOne {
+	return u.Update(func(s *EventUpsert) {
+		s.ClearMeetingURL()
 	})
 }
 
@@ -1885,6 +1942,27 @@ func (u *EventUpsertBulk) UpdateURL() *EventUpsertBulk {
 func (u *EventUpsertBulk) ClearURL() *EventUpsertBulk {
 	return u.Update(func(s *EventUpsert) {
 		s.ClearURL()
+	})
+}
+
+// SetMeetingURL sets the "meeting_url" field.
+func (u *EventUpsertBulk) SetMeetingURL(v string) *EventUpsertBulk {
+	return u.Update(func(s *EventUpsert) {
+		s.SetMeetingURL(v)
+	})
+}
+
+// UpdateMeetingURL sets the "meeting_url" field to the value that was provided on create.
+func (u *EventUpsertBulk) UpdateMeetingURL() *EventUpsertBulk {
+	return u.Update(func(s *EventUpsert) {
+		s.UpdateMeetingURL()
+	})
+}
+
+// ClearMeetingURL clears the value of the "meeting_url" field.
+func (u *EventUpsertBulk) ClearMeetingURL() *EventUpsertBulk {
+	return u.Update(func(s *EventUpsert) {
+		s.ClearMeetingURL()
 	})
 }
 

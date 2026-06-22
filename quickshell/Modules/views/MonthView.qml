@@ -210,6 +210,30 @@ Item {
                             return DankCalService.eventsForDay(cellDate);
                         }
 
+                        // On today, events that have already ended yield their
+                        // chip slots to ones still upcoming; they fall into the
+                        // "+N more" overflow rather than being shown first.
+                        readonly property var displayEvents: {
+                            if (!isToday)
+                                return cellEvents;
+                            const now = root.today.getTime();
+                            const upcoming = [];
+                            const ended = [];
+                            for (let i = 0; i < cellEvents.length; i++) {
+                                const ev = cellEvents[i];
+                                if (ev.allDay || ev.end.getTime() > now)
+                                    upcoming.push(ev);
+                                else
+                                    ended.push(ev);
+                            }
+                            return upcoming.concat(ended);
+                        }
+
+                        readonly property string hiddenSummary: {
+                            const hidden = displayEvents.slice(maxChips);
+                            return hidden.map(ev => ev.allDay ? ev.title : SettingsData.formatTime(ev.start) + "  " + ev.title).join("\n");
+                        }
+
                         // 36px day badge area + 14px reserved for "+N more"; 20px per chip
                         readonly property int maxChips: Math.max(0, Math.min(3, Math.floor((height - 50) / 20)))
 
@@ -277,7 +301,7 @@ Item {
 
                             Repeater {
                                 model: ScriptModel {
-                                    values: dayCell.cellEvents.slice(0, dayCell.maxChips)
+                                    values: dayCell.displayEvents.slice(0, dayCell.maxChips)
                                 }
 
                                 Rectangle {
@@ -332,11 +356,20 @@ Item {
                             }
 
                             StyledText {
-                                visible: parent.parent.cellEvents.length > parent.parent.maxChips
-                                text: I18n.tr("+%1 more", "overflow label in month grid day cell, %1 is the number of hidden events").arg(parent.parent.cellEvents.length - parent.parent.maxChips)
+                                id: moreLabel
+                                visible: dayCell.displayEvents.length > dayCell.maxChips
+                                text: I18n.tr("+%1 more", "overflow label in month grid day cell, %1 is the number of hidden events").arg(dayCell.displayEvents.length - dayCell.maxChips)
                                 font.pixelSize: 10
                                 color: Theme.surfaceVariantText
                                 width: parent.width
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.NoButton
+                                    hoverEnabled: true
+                                    onEntered: chipTooltip.show(dayCell.hiddenSummary, moreLabel)
+                                    onExited: chipTooltip.hide()
+                                }
                             }
                         }
 

@@ -29,6 +29,8 @@ const (
 	FieldLocation = "location"
 	// FieldURL holds the string denoting the url field in the database.
 	FieldURL = "url"
+	// FieldMeetingURL holds the string denoting the meeting_url field in the database.
+	FieldMeetingURL = "meeting_url"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldStart holds the string denoting the start field in the database.
@@ -88,6 +90,7 @@ var Columns = []string{
 	FieldDescription,
 	FieldLocation,
 	FieldURL,
+	FieldMeetingURL,
 	FieldStatus,
 	FieldStart,
 	FieldEnd,
@@ -212,6 +215,11 @@ func ByLocation(opts ...sql.OrderTermOption) OrderOption {
 // ByURL orders the results by the url field.
 func ByURL(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldURL, opts...).ToFunc()
+}
+
+// ByMeetingURL orders the results by the meeting_url field.
+func ByMeetingURL(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMeetingURL, opts...).ToFunc()
 }
 
 // ByStatus orders the results by the status field.

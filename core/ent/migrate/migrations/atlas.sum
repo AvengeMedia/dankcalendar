@@ -1,5 +1,6 @@
-h1:9i13/TaLEUbIz+FrfQc5ulRsgNQnq5ipj0WJjz7hCks=
+h1:tCngnrR23xrwvAj6JWWzbxZ/2jYzArUNuERhBBwI05g=
 20260615203534_initial.sql h1:qvyo54Em5G9SLnLp5eAXjsH13fAnxWTxNBt2NzVZxOQ=
 20260615203550_add_account_reauth_fields.sql h1:MJEw726QlXfv/LEge0hZc2FIOozrBbWx/5jle5yNBrY=
 20260615213446_add_calendar_reminder_overrides.sql h1:mOwabEvPxoDAF1ry3mvtlEypCYnDBnXBRAybv57KQgQ=
 20260616033958_optimize_indexes.sql h1:Mbq/OkqOYOEryA34/9LSYQ+9Nr7+swuvPLAr7N2b0sA=
+20260622015156_add_event_meeting_url.sql h1:LPe/bOD139FnsbGkF67A1OdEwi8t/qoRZuApa00tTGQ=

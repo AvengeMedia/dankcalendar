@@ -172,6 +172,7 @@ func mapEvent(e *ent.Event) map[string]any {
 		"description": e.Description,
 		"location":    e.Location,
 		"url":         e.URL,
+		"meetingUrl":  e.MeetingURL,
 		"start":       e.Start,
 		"end":         e.End,
 		"allDay":      e.AllDay,

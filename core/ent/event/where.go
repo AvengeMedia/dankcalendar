@@ -100,6 +100,11 @@ func URL(v string) predicate.Event {
 	return predicate.Event(sql.FieldEQ(FieldURL, v))
 }
 
+// MeetingURL applies equality check predicate on the "meeting_url" field. It's identical to MeetingURLEQ.
+func MeetingURL(v string) predicate.Event {
+	return predicate.Event(sql.FieldEQ(FieldMeetingURL, v))
+}
+
 // Start applies equality check predicate on the "start" field. It's identical to StartEQ.
 func Start(v time.Time) predicate.Event {
 	return predicate.Event(sql.FieldEQ(FieldStart, v))
@@ -663,6 +668,81 @@ func URLEqualFold(v string) predicate.Event {
 // URLContainsFold applies the ContainsFold predicate on the "url" field.
 func URLContainsFold(v string) predicate.Event {
 	return predicate.Event(sql.FieldContainsFold(FieldURL, v))
+}
+
+// MeetingURLEQ applies the EQ predicate on the "meeting_url" field.
+func MeetingURLEQ(v string) predicate.Event {
+	return predicate.Event(sql.FieldEQ(FieldMeetingURL, v))
+}
+
+// MeetingURLNEQ applies the NEQ predicate on the "meeting_url" field.
+func MeetingURLNEQ(v string) predicate.Event {
+	return predicate.Event(sql.FieldNEQ(FieldMeetingURL, v))
+}
+
+// MeetingURLIn applies the In predicate on the "meeting_url" field.
+func MeetingURLIn(vs ...string) predicate.Event {
+	return predicate.Event(sql.FieldIn(FieldMeetingURL, vs...))
+}
+
+// MeetingURLNotIn applies the NotIn predicate on the "meeting_url" field.
+func MeetingURLNotIn(vs ...string) predicate.Event {
+	return predicate.Event(sql.FieldNotIn(FieldMeetingURL, vs...))
+}
+
+// MeetingURLGT applies the GT predicate on the "meeting_url" field.
+func MeetingURLGT(v string) predicate.Event {
+	return predicate.Event(sql.FieldGT(FieldMeetingURL, v))
+}
+
+// MeetingURLGTE applies the GTE predicate on the "meeting_url" field.
+func MeetingURLGTE(v string) predicate.Event {
+	return predicate.Event(sql.FieldGTE(FieldMeetingURL, v))
+}
+
+// MeetingURLLT applies the LT predicate on the "meeting_url" field.
+func MeetingURLLT(v string) predicate.Event {
+	return predicate.Event(sql.FieldLT(FieldMeetingURL, v))
+}
+
+// MeetingURLLTE applies the LTE predicate on the "meeting_url" field.
+func MeetingURLLTE(v string) predicate.Event {
+	return predicate.Event(sql.FieldLTE(FieldMeetingURL, v))
+}
+
+// MeetingURLContains applies the Contains predicate on the "meeting_url" field.
+func MeetingURLContains(v string) predicate.Event {
+	return predicate.Event(sql.FieldContains(FieldMeetingURL, v))
+}
+
+// MeetingURLHasPrefix applies the HasPrefix predicate on the "meeting_url" field.
+func MeetingURLHasPrefix(v string) predicate.Event {
+	return predicate.Event(sql.FieldHasPrefix(FieldMeetingURL, v))
+}
+
+// MeetingURLHasSuffix applies the HasSuffix predicate on the "meeting_url" field.
+func MeetingURLHasSuffix(v string) predicate.Event {
+	return predicate.Event(sql.FieldHasSuffix(FieldMeetingURL, v))
+}
+
+// MeetingURLIsNil applies the IsNil predicate on the "meeting_url" field.
+func MeetingURLIsNil() predicate.Event {
+	return predicate.Event(sql.FieldIsNull(FieldMeetingURL))
+}
+
+// MeetingURLNotNil applies the NotNil predicate on the "meeting_url" field.
+func MeetingURLNotNil() predicate.Event {
+	return predicate.Event(sql.FieldNotNull(FieldMeetingURL))
+}
+
+// MeetingURLEqualFold applies the EqualFold predicate on the "meeting_url" field.
+func MeetingURLEqualFold(v string) predicate.Event {
+	return predicate.Event(sql.FieldEqualFold(FieldMeetingURL, v))
+}
+
+// MeetingURLContainsFold applies the ContainsFold predicate on the "meeting_url" field.
+func MeetingURLContainsFold(v string) predicate.Event {
+	return predicate.Event(sql.FieldContainsFold(FieldMeetingURL, v))
 }
 
 // StatusEQ applies the EQ predicate on the "status" field.

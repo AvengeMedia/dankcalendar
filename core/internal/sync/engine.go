@@ -385,6 +385,7 @@ func (e *Engine) applyChanges(ctx context.Context, cal calendar.Calendar, change
 				Description:   ev.Description,
 				Location:      ev.Location,
 				URL:           ev.URL,
+				MeetingURL:    ev.MeetingURL,
 				Status:        toEntStatus(ev.Status),
 				Start:         ev.Start,
 				End:           ev.End,

@@ -585,6 +585,23 @@ FloatingWindow {
                 }
 
                 MetaRow {
+                    iconName: "videocam"
+                    primary: I18n.tr("Join video call", "event details row that opens the meeting link")
+                    secondary: eventModal.event.meetingUrl || ""
+                    accent: Theme.primary
+                    link: true
+                    visible: secondary !== ""
+
+                    HoverHandler {
+                        cursorShape: Qt.PointingHandCursor
+                    }
+
+                    TapHandler {
+                        onTapped: Qt.openUrlExternally(eventModal.event.meetingUrl)
+                    }
+                }
+
+                MetaRow {
                     iconName: "notifications"
                     primary: eventModal.reminderSummary()
                     visible: primary !== ""
@@ -1027,7 +1044,7 @@ FloatingWindow {
 
         spacing: Theme.spacingM
         width: parent.width
-        height: 32
+        height: Math.max(32, infoColumn.implicitHeight)
 
         DankIcon {
             name: parent.iconName
@@ -1037,6 +1054,7 @@ FloatingWindow {
         }
 
         Column {
+            id: infoColumn
             anchors.verticalCenter: parent.verticalCenter
             spacing: 0
             width: parent.width - Theme.iconSize - 4 - Theme.spacingM

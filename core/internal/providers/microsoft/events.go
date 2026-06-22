@@ -48,6 +48,10 @@ type graphRemoved struct {
 	Reason string `json:"reason"`
 }
 
+type graphOnlineMeeting struct {
+	JoinURL string `json:"joinUrl,omitempty"`
+}
+
 type graphEvent struct {
 	ID                   string               `json:"id,omitempty"`
 	Type                 string               `json:"type,omitempty"`
@@ -57,6 +61,8 @@ type graphEvent struct {
 	Body                 *graphBody           `json:"body,omitempty"`
 	Location             *graphLocation       `json:"location,omitempty"`
 	WebLink              string               `json:"webLink,omitempty"`
+	OnlineMeetingURL     string               `json:"onlineMeetingUrl,omitempty"`
+	OnlineMeeting        *graphOnlineMeeting  `json:"onlineMeeting,omitempty"`
 	IsCancelled          bool                 `json:"isCancelled,omitempty"`
 	IsAllDay             bool                 `json:"isAllDay"`
 	Start                *graphDateTime       `json:"start,omitempty"`
@@ -80,6 +86,7 @@ func graphToEvent(g graphEvent) cal.Event {
 		Summary:     g.Subject,
 		Description: graphDescription(g),
 		URL:         g.WebLink,
+		MeetingURL:  graphMeetingURL(g),
 		Status:      graphStatus(g),
 		AllDay:      g.IsAllDay,
 		RecurringID: g.SeriesMasterID,
@@ -133,6 +140,23 @@ func graphToEvent(g graphEvent) cal.Event {
 		ev.Updated = t
 	}
 	return ev
+}
+
+// graphMeetingURL prefers the structured onlineMeeting.joinUrl (set only for
+// Teams), then the flat onlineMeetingUrl, then a known link in the body or
+// location — where Zoom and other add-ins put their join URL.
+func graphMeetingURL(g graphEvent) string {
+	if g.OnlineMeeting != nil && g.OnlineMeeting.JoinURL != "" {
+		return g.OnlineMeeting.JoinURL
+	}
+	if g.OnlineMeetingURL != "" {
+		return g.OnlineMeetingURL
+	}
+	var location string
+	if g.Location != nil {
+		location = g.Location.DisplayName
+	}
+	return cal.MeetingURLInText(graphDescription(g), location)
 }
 
 // graphDescription prefers the full body over bodyPreview, which Graph
