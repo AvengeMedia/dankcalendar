@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
-import Quickshell.Io
+import qs.Services
 
 Singleton {
     id: root
@@ -16,37 +16,34 @@ Singleton {
     // prefer-dark counts as dark; without a portal the app stays dark.
     readonly property bool systemPrefersLight: available && systemColorScheme !== 1
 
-    function _applyScheme(raw) {
-        const match = raw.match(/uint32 (\d+)/);
-        if (!match)
+    function _apply(data) {
+        if (!data)
             return;
-        available = true;
-        systemColorScheme = parseInt(match[1], 10);
+        available = data.available === true;
+        systemColorScheme = data.colorScheme || 0;
     }
 
-    Process {
-        id: schemeRead
-        command: ["gdbus", "call", "--session", "--dest", "org.freedesktop.portal.Desktop", "--object-path", "/org/freedesktop/portal/desktop", "--method", "org.freedesktop.portal.Settings.Read", "org.freedesktop.appearance", "color-scheme"]
-        running: true
+    function refresh() {
+        if (typeof DankCalService === "undefined")
+            return;
+        DankCalService.sendRequest("system.colorScheme.get", null, response => {
+            if (response.error)
+                return;
+            root._apply(response.result);
+        });
+    }
 
-        stdout: StdioCollector {
-            onStreamFinished: root._applyScheme(text)
+    Component.onCompleted: refresh()
+
+    Connections {
+        target: typeof DankCalService !== "undefined" ? DankCalService : null
+
+        function onColorSchemeUpdate(data) {
+            root._apply(data);
         }
-    }
 
-    Process {
-        id: schemeMonitor
-        command: ["gdbus", "monitor", "--session", "--dest", "org.freedesktop.portal.Desktop", "--object-path", "/org/freedesktop/portal/desktop"]
-        running: true
-
-        stdout: SplitParser {
-            onRead: line => {
-                if (line.indexOf("SettingChanged") === -1)
-                    return;
-                if (line.indexOf("'org.freedesktop.appearance', 'color-scheme'") === -1)
-                    return;
-                root._applyScheme(line);
-            }
+        function onConnectionStateChanged() {
+            root.refresh();
         }
     }
 }

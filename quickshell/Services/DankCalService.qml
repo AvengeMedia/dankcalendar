@@ -54,6 +54,7 @@ Singleton {
     signal eventsUpdated
     signal windowActionRequested(string action)
     signal subscribeRequested(string url)
+    signal colorSchemeUpdate(var data)
 
     onFocusDateChanged: _ensureWindow()
 
@@ -160,7 +161,7 @@ Singleton {
             "id": _nextId(),
             "method": "subscribe",
             "params": {
-                "topics": ["accounts", "calendars", "events", "sync", "ui"]
+                "topics": ["accounts", "calendars", "events", "sync", "ui", "colorScheme"]
             }
         };
         subscribeSocket.send(req);
@@ -217,6 +218,9 @@ Singleton {
                     windowActionRequested(data.action || "");
                 break;
             }
+        case "colorScheme":
+            colorSchemeUpdate(event.data || {});
+            break;
         }
     }
 

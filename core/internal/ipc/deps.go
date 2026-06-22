@@ -5,6 +5,7 @@ import (
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/colorscheme"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
@@ -21,15 +22,16 @@ type RemindersEngine interface {
 }
 
 type Deps struct {
-	Repo      *repo.Repo
-	Registry  *calendar.Registry
-	Secrets   calendar.SecretStore
-	Broker    *oauth.CallbackBroker
-	Flows     *oauth.FlowRegistry
-	HTTPAddr  string
-	Sync      SyncTrigger
-	Reminders RemindersEngine
-	Bus       *EventBus
-	Pending   *PendingOpen
-	Version   string
+	Repo        *repo.Repo
+	Registry    *calendar.Registry
+	Secrets     calendar.SecretStore
+	Broker      *oauth.CallbackBroker
+	Flows       *oauth.FlowRegistry
+	HTTPAddr    string
+	Sync        SyncTrigger
+	Reminders   RemindersEngine
+	Bus         *EventBus
+	Pending     *PendingOpen
+	Version     string
+	ColorScheme *colorscheme.Watcher
 }

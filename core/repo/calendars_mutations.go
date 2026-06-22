@@ -43,7 +43,7 @@ func (r *Repo) UpsertCalendar(ctx context.Context, in UpsertCalendarInput) (*ent
 	if id == "" {
 		id = newID()
 	}
-	return r.client.Calendar.Create().
+	cal, err := r.client.Calendar.Create().
 		SetID(id).
 		SetAccountID(in.AccountID).
 		SetRemoteID(in.RemoteID).
@@ -55,6 +55,21 @@ func (r *Repo) UpsertCalendar(ctx context.Context, in UpsertCalendarInput) (*ent
 		SetHidden(in.Hidden).
 		SetSyncToken(in.SyncToken).
 		Save(ctx)
+	if err != nil && ent.IsConstraintError(err) {
+		// A concurrent sync (e.g. the daemon and a manual `dcal sync`) inserted
+		// the same (account, remote_id) between our find and create; fall back
+		// to updating the row that now exists instead of failing the sync.
+		if existing, ferr := r.FindCalendarByRemoteID(ctx, in.AccountID, in.RemoteID); ferr == nil {
+			return r.client.Calendar.UpdateOneID(existing.ID).
+				SetName(in.Name).
+				SetDescription(in.Description).
+				SetColor(in.Color).
+				SetTimeZone(in.TimeZone).
+				SetReadOnly(in.ReadOnly).
+				Save(ctx)
+		}
+	}
+	return cal, err
 }
 
 func (r *Repo) SetCalendarSyncToken(ctx context.Context, id, token string) error {

@@ -22,6 +22,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/config"
 	"github.com/AvengeMedia/dankcalendar/core/errdefs"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/colorscheme"
 	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
 	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
@@ -128,6 +129,11 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	syncEngine.SetNotifier(bus.Publish)
 	syncEngine.WatchMutations(client)
 
+	colorSchemeWatcher := colorscheme.New(bus.Publish)
+	if err := colorSchemeWatcher.Start(); err != nil {
+		log.Warnf("color-scheme portal watcher unavailable: %v", err)
+	}
+
 	notifier, err := notify.New()
 	if err != nil {
 		log.Warnf("desktop notifications unavailable: %v", err)
@@ -151,17 +157,18 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	}
 
 	deps := ipc.Deps{
-		Repo:      r,
-		Registry:  registry,
-		Secrets:   secrets,
-		Broker:    broker,
-		Flows:     flows,
-		HTTPAddr:  httpAddr,
-		Sync:      syncEngine,
-		Reminders: remindersEngine,
-		Bus:       bus,
-		Pending:   &ipc.PendingOpen{},
-		Version:   Version,
+		Repo:        r,
+		Registry:    registry,
+		Secrets:     secrets,
+		Broker:      broker,
+		Flows:       flows,
+		HTTPAddr:    httpAddr,
+		Sync:        syncEngine,
+		Reminders:   remindersEngine,
+		Bus:         bus,
+		Pending:     &ipc.PendingOpen{},
+		Version:     Version,
+		ColorScheme: colorSchemeWatcher,
 	}
 	ipcSrv, ipcErrCh, err := startIPC(ctx, deps)
 	if err != nil {

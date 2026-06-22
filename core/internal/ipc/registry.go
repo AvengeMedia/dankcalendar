@@ -69,6 +69,7 @@ var Methods = []MethodSpec{
 
 	{Name: "system.autostart.get", Group: "system", Desc: "Report autostart status"},
 	{Name: "system.autostart.set", Group: "system", Desc: "Enable or disable autostart", Params: []ParamSpec{req("enabled", "true|false")}},
+	{Name: "system.colorScheme.get", Group: "system", Desc: "Current portal color scheme (0 no-preference, 1 dark, 2 light)"},
 }
 
 func MethodNames() []string {
