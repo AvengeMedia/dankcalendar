@@ -289,7 +289,7 @@
   {
     "term": "Add",
     "translation": "",
-    "context": "button to add local calendar account",
+    "context": "button to add evolution account | button to add local calendar account",
     "reference": "",
     "comment": ""
   },
@@ -324,7 +324,7 @@
   {
     "term": "Adding…",
     "translation": "",
-    "context": "add button while local account is created",
+    "context": "add button while evolution account is created | add button while local account is created",
     "reference": "",
     "comment": ""
   },
@@ -976,6 +976,13 @@
     "term": "Event details",
     "translation": "",
     "context": "event modal header when viewing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Evolution",
+    "translation": "",
+    "context": "evolution account display name field placeholder",
     "reference": "",
     "comment": ""
   },
@@ -2096,6 +2103,13 @@
     "term": "Use synced name",
     "translation": "",
     "context": "rename calendar dialog button to revert to provider name",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.",
+    "translation": "",
+    "context": "evolution data server account form instructions",
     "reference": "",
     "comment": ""
   },

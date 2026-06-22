@@ -29,6 +29,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
@@ -115,6 +116,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	registry.Register(caldav.Factory{})
 	registry.Register(microsoft.Factory{})
 	registry.Register(ical.Factory{})
+	registry.Register(evolution.Factory{})
 
 	keyringStore := dankkeyring.Open()
 	secrets := dankkeyring.NewSecretStore(keyringStore, repo.NewSecretStore(r))

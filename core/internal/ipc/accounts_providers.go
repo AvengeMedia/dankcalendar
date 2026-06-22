@@ -180,6 +180,20 @@ func handleLocalAdd(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 	kickAccountSync(deps, res.AccountID)
 }
 
+func handleEvolutionAdd(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	res, err := accounts.AddEvolution(ctx, deps.Repo, accounts.EvolutionInput{
+		DisplayName: ParamString(req.Params, "displayName"),
+	})
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	publishAccountsChanged(deps, res.AccountID)
+	Respond(w, req.ID, map[string]any{"accountId": res.AccountID, "displayName": res.DisplayName})
+	kickAccountSync(deps, res.AccountID)
+}
+
 func kickAccountSync(deps Deps, accountID string) {
 	if deps.Sync == nil {
 		return

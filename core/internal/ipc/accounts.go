@@ -18,7 +18,7 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 	case "accounts.list":
 		handleAccountsList(ctx, w, req, deps)
 	case "accounts.providers":
-		Respond(w, req.ID, accounts.Providers())
+		Respond(w, req.ID, accounts.AvailableProviders())
 	case "accounts.google.setupGuide":
 		Respond(w, req.ID, accounts.GoogleSetupSteps())
 	case "accounts.google.start":
@@ -43,6 +43,8 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 		handleICalAdd(ctx, w, req, deps)
 	case "accounts.local.add":
 		handleLocalAdd(ctx, w, req, deps)
+	case "accounts.evolution.add":
+		handleEvolutionAdd(ctx, w, req, deps)
 	case "accounts.delete":
 		handleAccountsDelete(ctx, w, req, deps)
 	case "accounts.refresh":

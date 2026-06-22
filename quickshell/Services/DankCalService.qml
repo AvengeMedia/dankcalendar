@@ -828,6 +828,22 @@ Singleton {
         });
     }
 
+    function addEvolutionAccount(displayName, callback) {
+        sendRequest("accounts.evolution.add", {
+            "displayName": displayName || ""
+        }, response => {
+            if (response.error) {
+                lastError = response.error;
+            } else {
+                const result = response.result || {};
+                accountAdded(result.accountId);
+                refreshAccounts();
+            }
+            if (callback)
+                callback(response);
+        });
+    }
+
     function createCalendar(accountId, name, callback) {
         sendRequest("calendars.create", {
             "accountId": accountId,
@@ -849,6 +865,8 @@ Singleton {
             if (!response.error) {
                 accountRemoved(accountId);
                 refreshAccounts();
+                refreshCalendars();
+                reloadEvents();
             }
             if (callback)
                 callback(response);

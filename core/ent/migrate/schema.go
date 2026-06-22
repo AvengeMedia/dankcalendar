@@ -12,7 +12,7 @@ var (
 	// AccountsColumns holds the columns for the "accounts" table.
 	AccountsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Unique: true, Size: 64},
-		{Name: "kind", Type: field.TypeEnum, Enums: []string{"local", "google", "caldav", "microsoft", "ical"}},
+		{Name: "kind", Type: field.TypeEnum, Enums: []string{"local", "google", "caldav", "microsoft", "ical", "evolution"}},
 		{Name: "display_name", Type: field.TypeString},
 		{Name: "settings", Type: field.TypeJSON, Nullable: true},
 		{Name: "needs_reauth", Type: field.TypeBool, Default: false},

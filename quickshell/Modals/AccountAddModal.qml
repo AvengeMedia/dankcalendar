@@ -118,6 +118,8 @@ FloatingWindow {
             return I18n.tr("iCal subscription", "ical subscription provider name in account add modal");
         case "local":
             return I18n.tr("Local", "local provider name in account add modal");
+        case "evolution":
+            return "Evolution";
         }
         return id;
     }
@@ -134,6 +136,8 @@ FloatingWindow {
             return "rss_feed";
         case "local":
             return "folder";
+        case "evolution":
+            return "calendar_month";
         default:
             return "cloud";
         }
@@ -336,6 +340,8 @@ FloatingWindow {
                         return icalForm;
                     case "local":
                         return localForm;
+                    case "evolution":
+                        return evolutionForm;
                     default:
                         return oauthWizard;
                     }
@@ -1410,6 +1416,91 @@ FloatingWindow {
                 width: parent.width
                 visible: localRoot.done
                 sourceComponent: localRoot.done ? successStep : null
+            }
+        }
+    }
+
+    Component {
+        id: evolutionForm
+
+        DankFlickable {
+            id: evolutionRoot
+            clip: true
+            contentWidth: width
+            contentHeight: evolutionColumn.implicitHeight + Theme.spacingL * 2
+
+            property string displayName: ""
+            property bool busy: false
+            property bool done: false
+            property string error: ""
+
+            Column {
+                id: evolutionColumn
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: !evolutionRoot.done
+
+                StyledText {
+                    text: I18n.tr("Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.", "evolution data server account form instructions")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                }
+
+                DankTextField {
+                    width: parent.width
+                    label: I18n.tr("Display name (optional)", "optional account display name field label")
+                    placeholderText: I18n.tr("Evolution", "evolution account display name field placeholder")
+                    iconName: "badge"
+                    text: evolutionRoot.displayName
+                    onTextChanged: evolutionRoot.displayName = text
+                }
+
+                StyledText {
+                    visible: evolutionRoot.error !== ""
+                    text: evolutionRoot.error
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.error
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                }
+
+                Row {
+                    width: parent.width
+                    spacing: Theme.spacingS
+                    layoutDirection: Qt.RightToLeft
+
+                    DankButton {
+                        text: evolutionRoot.busy ? I18n.tr("Adding…", "add button while evolution account is created") : I18n.tr("Add", "button to add evolution account")
+                        iconName: "check"
+                        buttonHeight: 40
+                        backgroundColor: Theme.primary
+                        textColor: Theme.primaryText
+                        enabled: !evolutionRoot.busy
+                        onClicked: {
+                            evolutionRoot.busy = true;
+                            evolutionRoot.error = "";
+                            DankCalService.addEvolutionAccount(evolutionRoot.displayName, response => {
+                                evolutionRoot.busy = false;
+                                if (response.error) {
+                                    evolutionRoot.error = response.error;
+                                    return;
+                                }
+                                const result = response.result || {};
+                                accountModal.completedAccountId = result.accountId || "";
+                                accountModal.completedEmail = result.displayName || result.accountId || "";
+                                evolutionRoot.done = true;
+                            });
+                        }
+                    }
+                }
+            }
+
+            Loader {
+                width: parent.width
+                visible: evolutionRoot.done
+                sourceComponent: evolutionRoot.done ? successStep : null
             }
         }
     }

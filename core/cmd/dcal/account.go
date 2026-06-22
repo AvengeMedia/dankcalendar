@@ -141,7 +141,7 @@ var accountProvidersCmd = &cobra.Command{
 	Short: "List supported account providers",
 	Args:  cobra.NoArgs,
 	RunE: func(_ *cobra.Command, _ []string) error {
-		providers := accounts.Providers()
+		providers := accounts.AvailableProviders()
 		if jsonOutput {
 			return printJSON(providers)
 		}

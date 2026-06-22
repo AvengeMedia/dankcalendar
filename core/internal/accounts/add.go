@@ -18,6 +18,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
 	icalprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
@@ -167,6 +168,36 @@ func AddLocal(ctx context.Context, r *repo.Repo, in LocalInput) (Result, error) 
 	}
 	if err := local.SeedDefaultCalendar(root, ""); err != nil {
 		return Result{}, fmt.Errorf("seed default calendar: %w", err)
+	}
+	return Result{AccountID: accountID, DisplayName: displayName}, nil
+}
+
+type EvolutionInput struct {
+	DisplayName string
+}
+
+// AddEvolution registers the single Evolution Data Server account after
+// verifying EDS is reachable on the session bus. It needs no credentials —
+// EDS owns them — so there is nothing to store in the keyring.
+func AddEvolution(ctx context.Context, r *repo.Repo, in EvolutionInput) (Result, error) {
+	const accountID = "evolution"
+	displayName := strings.TrimSpace(in.DisplayName)
+	if displayName == "" {
+		displayName = "Evolution"
+	}
+
+	domainAcc := calendar.Account{ID: accountID, Kind: calendar.AccountEvolution}
+	provider, err := evolution.Factory{}.Build(ctx, domainAcc, nil)
+	if err != nil {
+		return Result{}, fmt.Errorf("evolution data server: %w", err)
+	}
+	defer provider.Close()
+	if _, err := provider.ListCalendars(ctx); err != nil {
+		return Result{}, fmt.Errorf("evolution data server: %w", err)
+	}
+
+	if err := Ensure(ctx, r, accountID, account.KindEvolution, displayName, nil); err != nil {
+		return Result{}, err
 	}
 	return Result{AccountID: accountID, DisplayName: displayName}, nil
 }

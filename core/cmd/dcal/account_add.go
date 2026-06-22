@@ -20,7 +20,7 @@ import (
 
 var accountAddCmd = &cobra.Command{
 	Use:   "add",
-	Short: "Add a calendar account (google, microsoft, caldav, icloud, ical, local)",
+	Short: "Add a calendar account (google, microsoft, caldav, icloud, ical, evolution, local)",
 }
 
 var accountAddLocalCmd = &cobra.Command{
@@ -168,6 +168,29 @@ var accountAddICalCmd = &cobra.Command{
 	},
 }
 
+var accountAddEvolutionCmd = &cobra.Command{
+	Use:   "evolution",
+	Short: "Add calendars managed by Evolution Data Server on this machine",
+	Long:  "Use the calendars Evolution Data Server already manages (Evolution, GNOME Online Accounts, etc.). EDS owns credentials and remote sync; no configuration is required.",
+	Args:  cobra.NoArgs,
+	RunE: func(cmd *cobra.Command, _ []string) error {
+		name, _ := cmd.Flags().GetString("name")
+
+		ctx := context.Background()
+		st, closer, err := openStores(ctx)
+		if err != nil {
+			return err
+		}
+		defer closer()
+
+		res, err := accounts.AddEvolution(ctx, st.repo, accounts.EvolutionInput{DisplayName: name})
+		if err != nil {
+			return err
+		}
+		return finishAdd(ctx, st, res)
+	},
+}
+
 var accountAddGoogleCmd = &cobra.Command{
 	Use:   "google",
 	Short: "Add or re-authorize a Google account (OAuth in your browser)",
@@ -266,6 +289,8 @@ func init() {
 	accountAddICalCmd.Flags().String("password", "", "Basic-auth password (prompted if a username is given)")
 	accountAddICalCmd.Flags().String("name", "", "Display name (defaults to the feed name)")
 
+	accountAddEvolutionCmd.Flags().String("name", "", "Display name (defaults to \"Evolution\")")
+
 	accountAddGoogleCmd.Flags().String("client-id", "", "OAuth client ID")
 	accountAddGoogleCmd.Flags().String("client-secret", "", "OAuth client secret")
 	accountAddGoogleCmd.Flags().String("credentials", "", "Path to the client_secret_….json downloaded from Google")
@@ -277,6 +302,7 @@ func init() {
 	accountAddCmd.AddCommand(accountAddCalDAVCmd)
 	accountAddCmd.AddCommand(accountAddICloudCmd)
 	accountAddCmd.AddCommand(accountAddICalCmd)
+	accountAddCmd.AddCommand(accountAddEvolutionCmd)
 	accountAddCmd.AddCommand(accountAddGoogleCmd)
 	accountAddCmd.AddCommand(accountAddMicrosoftCmd)
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution/eds"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
 	icalprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
@@ -69,7 +70,33 @@ func Providers() []Provider {
 			Implemented:  true,
 			Capabilities: []string{"events", "calendars"},
 		},
+		{
+			ID:           "evolution",
+			Name:         "Evolution",
+			Description:  "Calendars managed by Evolution Data Server on this machine.",
+			Implemented:  true,
+			Capabilities: []string{"events", "calendars"},
+		},
 	}
+}
+
+// AvailableProviders is the provider list for the add-account UI, dropping
+// providers whose backing service is not present on this machine (Evolution
+// Data Server).
+func AvailableProviders() []Provider {
+	all := Providers()
+	if eds.Available() {
+		return all
+	}
+
+	out := make([]Provider, 0, len(all))
+	for _, p := range all {
+		if p.ID == "evolution" {
+			continue
+		}
+		out = append(out, p)
+	}
+	return out
 }
 
 func ProviderName(id string) string {

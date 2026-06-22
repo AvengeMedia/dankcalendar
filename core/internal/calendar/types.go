@@ -10,6 +10,7 @@ const (
 	AccountCalDAV    AccountKind = "caldav"
 	AccountMicrosoft AccountKind = "microsoft"
 	AccountICal      AccountKind = "ical"
+	AccountEvolution AccountKind = "evolution"
 )
 
 type Account struct {
