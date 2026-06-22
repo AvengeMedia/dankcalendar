@@ -273,6 +273,13 @@
     "comment": ""
   },
   {
+    "term": "Account problem — click for options",
+    "translation": "",
+    "context": "tooltip on the account warning icon for an unspecified problem",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Accounts",
     "translation": "",
     "context": "accounts settings section header | settings sidebar tab label | sidebar section header for the account list",
@@ -1393,6 +1400,13 @@
     "comment": ""
   },
   {
+    "term": "Not signed in — click to reconnect or re-add this account",
+    "translation": "",
+    "context": "tooltip on the account warning icon when credentials are missing",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Nothing scheduled in the next %1 days",
     "translation": "",
     "context": "agenda empty state, %1 is the number of days ahead",
@@ -1830,6 +1844,13 @@
     "term": "Sign in with your Google account.",
     "translation": "",
     "context": "google provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sign-in expired — click to reconnect",
+    "translation": "",
+    "context": "tooltip on the account warning icon when re-authentication is required",
     "reference": "",
     "comment": ""
   },

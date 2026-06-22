@@ -208,14 +208,15 @@ Singleton {
         case "sync":
             refreshDebounce.restart();
             break;
-        case "ui": {
-            const data = event.data || {};
-            if (data.action === "subscribe")
-                subscribeRequested(data.url || "");
-            else
-                windowActionRequested(data.action || "");
-            break;
-        }
+        case "ui":
+            {
+                const data = event.data || {};
+                if (data.action === "subscribe")
+                    subscribeRequested(data.url || "");
+                else
+                    windowActionRequested(data.action || "");
+                break;
+            }
         }
     }
 
@@ -517,6 +518,54 @@ Singleton {
         const dayStart = new Date(day.getFullYear(), day.getMonth(), day.getDate());
         const dayEnd = new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1);
         return eventsForRange(dayStart, dayEnd);
+    }
+
+    function layoutTimedEvents(events) {
+        const sorted = events.slice().sort((a, b) => {
+            if (a.startHour !== b.startHour)
+                return a.startHour - b.startHour;
+            return b.durationHours - a.durationHours;
+        });
+
+        let cluster = [];
+        let clusterEnd = -1;
+        const columnEnds = [];
+
+        const flushCluster = () => {
+            let columns = 0;
+            for (const ev of cluster)
+                columns = Math.max(columns, ev.column + 1);
+            for (const ev of cluster)
+                ev.columns = columns;
+            cluster = [];
+            columnEnds.length = 0;
+            clusterEnd = -1;
+        };
+
+        for (const ev of sorted) {
+            const start = ev.startHour;
+            const end = ev.startHour + ev.durationHours;
+
+            if (cluster.length > 0 && start >= clusterEnd)
+                flushCluster();
+
+            let column = columnEnds.findIndex(slotEnd => start >= slotEnd);
+            if (column === -1) {
+                column = columnEnds.length;
+                columnEnds.push(end);
+            } else {
+                columnEnds[column] = end;
+            }
+
+            ev.column = column;
+            cluster.push(ev);
+            clusterEnd = Math.max(clusterEnd, end);
+        }
+
+        if (cluster.length > 0)
+            flushCluster();
+
+        return sorted;
     }
 
     function searchEvents(query, callback) {

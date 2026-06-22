@@ -116,6 +116,9 @@
   "Account connected": {
     "Account connected": "Аккаунт подключён"
   },
+  "Account problem — click for options": {
+    "Account problem — click for options": ""
+  },
   "Accounts": {
     "Accounts": "Аккаунты"
   },
@@ -429,7 +432,7 @@
     "F1/I: Toggle • F10: Help": "F1/I: Переключить • F10: Справка"
   },
   "Feed URL": {
-    "Feed URL": ""
+    "Feed URL": "Ссылка на фид"
   },
   "File Already Exists": {
     "File Already Exists": "Файл уже существует"
@@ -605,6 +608,9 @@
   "Not authorized — remove this account and add it again": {
     "Not authorized — remove this account and add it again": "Не авторизован — удалите аккаунт и добавьте заново"
   },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": ""
+  },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Нет событий на ближайшие %1 дней"
   },
@@ -657,7 +663,7 @@
     "Password": "Пароль"
   },
   "Password (optional)": {
-    "Password (optional)": ""
+    "Password (optional)": "Пароль (необязательно)"
   },
   "Paste credentials": {
     "Paste credentials": "Вставить учётные данные"
@@ -666,7 +672,7 @@
     "Paste the Application (client) ID from your app registration's Overview page.": "Вставьте ID приложения (клиента) со страницы обзора регистрации приложения."
   },
   "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
-    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "Вставьте URL-адрес внешнего календаря, чтобы подписаться на него. Этот календарь доступен только для чтения и обновляется в фоновом режиме. Поддерживаются ссылки webcal://."
   },
   "Paste your credentials": {
     "Paste your credentials": "Вставьте учётные данные"
@@ -794,6 +800,9 @@
   "Sign in with your Google account.": {
     "Sign in with your Google account.": "Войдите с аккаунтом Google."
   },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": ""
+  },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "Сессия истекла — переподключитесь для синхронизации"
   },
@@ -828,13 +837,13 @@
     "Stock palette": "Стандартная палитра"
   },
   "Subscribe": {
-    "Subscribe": ""
+    "Subscribe": "Подписаться"
   },
   "Subscribe to an external calendar by URL (webcal/https).": {
-    "Subscribe to an external calendar by URL (webcal/https).": ""
+    "Subscribe to an external calendar by URL (webcal/https).": "Подписаться на внешний календарь по URL-адресу (webcal/https)."
   },
   "Subscribing…": {
-    "Subscribing…": ""
+    "Subscribing…": "Подписка…"
   },
   "Sync now": {
     "Sync now": "Синхронизировать"
@@ -891,7 +900,7 @@
     "Type at least 2 characters to search events.": "Введите не менее 2 символов для поиска событий."
   },
   "University timetable": {
-    "University timetable": ""
+    "University timetable": "Расписание университета"
   },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "Использовать встроенную палитру цветов."
@@ -906,7 +915,7 @@
     "Username": "Имя пользователя"
   },
   "Username (optional)": {
-    "Username (optional)": ""
+    "Username (optional)": "Имя пользователя (необязательно)"
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": "Используются динамические цвета DankMaterialShell."
@@ -960,13 +969,13 @@
     "dark": "тёмная"
   },
   "iCal subscription": {
-    "iCal subscription": ""
+    "iCal subscription": "Подписка iCal"
   },
   "light": {
     "light": "светлая"
   },
   "only if the feed requires sign-in": {
-    "only if the feed requires sign-in": ""
+    "only if the feed requires sign-in": "только если для фида требуется вход в систему"
   },
   "password": {
     "password": "пароль"

@@ -234,9 +234,15 @@
     "comment": "wizard success step heading"
   },
   {
+    "term": "Account problem — click for options",
+    "context": "Account problem — click for options",
+    "reference": "Modules/CalendarSidebar.qml:391",
+    "comment": "tooltip on the account warning icon for an unspecified problem"
+  },
+  {
     "term": "Accounts",
     "context": "Accounts",
-    "reference": "Modules/CalendarSidebar.qml:363, Modals/SettingsSidebar.qml:27, Modals/SettingsContent.qml:901",
+    "reference": "Modules/CalendarSidebar.qml:367, Modals/SettingsSidebar.qml:27, Modals/SettingsContent.qml:901",
     "comment": "accounts settings section header | settings sidebar tab label | sidebar section header for the account list"
   },
   {
@@ -254,7 +260,7 @@
   {
     "term": "Add account",
     "context": "Add account",
-    "reference": "Modules/CalendarSidebar.qml:478, Modals/AccountAddModal.qml:209, Modals/AccountAddModal.qml:301, Modals/SettingsContent.qml:1020",
+    "reference": "Modules/CalendarSidebar.qml:510, Modals/AccountAddModal.qml:209, Modals/AccountAddModal.qml:301, Modals/SettingsContent.qml:1020",
     "comment": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account"
   },
   {
@@ -284,7 +290,7 @@
   {
     "term": "Agenda",
     "context": "Agenda",
-    "reference": "Modules/CalendarSidebar.qml:159, Modules/CalendarContent.qml:31",
+    "reference": "Modules/CalendarSidebar.qml:163, Modules/CalendarContent.qml:31",
     "comment": "header title when the agenda view is active | view switcher option in sidebar"
   },
   {
@@ -608,7 +614,7 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modules/CalendarSidebar.qml:127, Modals/KeyboardShortcutsOverlay.qml:74",
+    "reference": "Modules/CalendarSidebar.qml:131, Modals/KeyboardShortcutsOverlay.qml:74",
     "comment": "keyboard shortcut description | sidebar button to create a new event"
   },
   {
@@ -626,7 +632,7 @@
   {
     "term": "Daemon offline",
     "context": "Daemon offline",
-    "reference": "Modules/CalendarSidebar.qml:243",
+    "reference": "Modules/CalendarSidebar.qml:247",
     "comment": "sidebar placeholder when the daemon is not connected"
   },
   {
@@ -656,7 +662,7 @@
   {
     "term": "Day",
     "context": "Day",
-    "reference": "Modules/CalendarSidebar.qml:144",
+    "reference": "Modules/CalendarSidebar.qml:148",
     "comment": "view switcher option in sidebar"
   },
   {
@@ -686,19 +692,19 @@
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modules/CalendarSidebar.qml:531, Modals/SettingsContent.qml:807",
+    "reference": "Modules/CalendarSidebar.qml:563, Modals/SettingsContent.qml:807",
     "comment": "confirm button for deleting a calendar | delete calendar confirmation button"
   },
   {
     "term": "Delete \"%1\"?",
     "context": "Delete \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:529, Modals/SettingsContent.qml:805",
+    "reference": "Modules/CalendarSidebar.qml:561, Modals/SettingsContent.qml:805",
     "comment": "confirm dialog title for deleting a calendar, %1 is the calendar name | delete calendar confirmation title"
   },
   {
     "term": "Delete…",
     "context": "Delete…",
-    "reference": "Modules/CalendarSidebar.qml:508",
+    "reference": "Modules/CalendarSidebar.qml:540",
     "comment": "calendar context menu action to delete a calendar"
   },
   {
@@ -914,7 +920,7 @@
   {
     "term": "Hide",
     "context": "Hide",
-    "reference": "Modules/CalendarSidebar.qml:498",
+    "reference": "Modules/CalendarSidebar.qml:530",
     "comment": "calendar context menu action to hide a calendar"
   },
   {
@@ -1010,7 +1016,7 @@
   {
     "term": "Local calendar",
     "context": "Local calendar",
-    "reference": "Modules/CalendarSidebar.qml:260",
+    "reference": "Modules/CalendarSidebar.qml:264",
     "comment": "fallback tooltip for a calendar without an account"
   },
   {
@@ -1052,7 +1058,7 @@
   {
     "term": "Month",
     "context": "Month",
-    "reference": "Modules/CalendarSidebar.qml:154",
+    "reference": "Modules/CalendarSidebar.qml:158",
     "comment": "view switcher option in sidebar"
   },
   {
@@ -1076,7 +1082,7 @@
   {
     "term": "My calendars",
     "context": "My calendars",
-    "reference": "Modules/CalendarSidebar.qml:236",
+    "reference": "Modules/CalendarSidebar.qml:240",
     "comment": "sidebar section header for the calendar list"
   },
   {
@@ -1106,7 +1112,7 @@
   {
     "term": "New calendar…",
     "context": "New calendar…",
-    "reference": "Modules/CalendarSidebar.qml:580",
+    "reference": "Modules/CalendarSidebar.qml:612",
     "comment": "account context menu action to create a calendar in a local folder"
   },
   {
@@ -1148,7 +1154,7 @@
   {
     "term": "No calendars yet",
     "context": "No calendars yet",
-    "reference": "Modules/CalendarSidebar.qml:243",
+    "reference": "Modules/CalendarSidebar.qml:247",
     "comment": "sidebar placeholder when the calendar list is empty"
   },
   {
@@ -1192,6 +1198,12 @@
     "context": "Not authorized — remove this account and add it again",
     "reference": "Modals/SettingsContent.qml:977",
     "comment": "account status in account list"
+  },
+  {
+    "term": "Not signed in — click to reconnect or re-add this account",
+    "context": "Not signed in — click to reconnect or re-add this account",
+    "reference": "Modules/CalendarSidebar.qml:390",
+    "comment": "tooltip on the account warning icon when credentials are missing"
   },
   {
     "term": "Nothing scheduled in the next %1 days",
@@ -1382,7 +1394,7 @@
   {
     "term": "Reconnect",
     "context": "Reconnect",
-    "reference": "Modules/CalendarSidebar.qml:574",
+    "reference": "Modules/CalendarSidebar.qml:606",
     "comment": "account context menu action to re-authorize the account"
   },
   {
@@ -1412,31 +1424,31 @@
   {
     "term": "Remove",
     "context": "Remove",
-    "reference": "Modules/CalendarSidebar.qml:616, Modals/SettingsContent.qml:1009",
+    "reference": "Modules/CalendarSidebar.qml:648, Modals/SettingsContent.qml:1009",
     "comment": "confirm button for removing an account | remove account confirmation button"
   },
   {
     "term": "Remove \"%1\"?",
     "context": "Remove \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:614, Modals/SettingsContent.qml:1007",
+    "reference": "Modules/CalendarSidebar.qml:646, Modals/SettingsContent.qml:1007",
     "comment": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title"
   },
   {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "context": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
-    "reference": "Modules/CalendarSidebar.qml:615, Modals/SettingsContent.qml:1008",
+    "reference": "Modules/CalendarSidebar.qml:647, Modals/SettingsContent.qml:1008",
     "comment": "confirm dialog body for removing an account | remove account confirmation message"
   },
   {
     "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
     "context": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
-    "reference": "Modules/CalendarSidebar.qml:530, Modals/SettingsContent.qml:806",
+    "reference": "Modules/CalendarSidebar.qml:562, Modals/SettingsContent.qml:806",
     "comment": "confirm dialog body for deleting a calendar | delete calendar confirmation message"
   },
   {
     "term": "Remove…",
     "context": "Remove…",
-    "reference": "Modules/CalendarSidebar.qml:590",
+    "reference": "Modules/CalendarSidebar.qml:622",
     "comment": "account context menu action to remove the account"
   },
   {
@@ -1448,7 +1460,7 @@
   {
     "term": "Rename…",
     "context": "Rename…",
-    "reference": "Modules/CalendarSidebar.qml:503",
+    "reference": "Modules/CalendarSidebar.qml:535",
     "comment": "calendar context menu action to rename a calendar"
   },
   {
@@ -1538,7 +1550,7 @@
   {
     "term": "Show",
     "context": "Show",
-    "reference": "Modules/CalendarSidebar.qml:498",
+    "reference": "Modules/CalendarSidebar.qml:530",
     "comment": "calendar context menu action to show a hidden calendar"
   },
   {
@@ -1570,6 +1582,12 @@
     "context": "Sign in with your Google account.",
     "reference": "Modals/AccountAddModal.qml:471",
     "comment": "google provider description in picker"
+  },
+  {
+    "term": "Sign-in expired — click to reconnect",
+    "context": "Sign-in expired — click to reconnect",
+    "reference": "Modules/CalendarSidebar.qml:386",
+    "comment": "tooltip on the account warning icon when re-authentication is required"
   },
   {
     "term": "Sign-in expired — reconnect to keep syncing",
@@ -1652,7 +1670,7 @@
   {
     "term": "Sync now",
     "context": "Sync now",
-    "reference": "Modules/CalendarSidebar.qml:585",
+    "reference": "Modules/CalendarSidebar.qml:617",
     "comment": "account context menu action to sync the account"
   },
   {
@@ -1700,7 +1718,7 @@
   {
     "term": "This account cannot be reconnected — remove it and add it again.",
     "context": "This account cannot be reconnected — remove it and add it again.",
-    "reference": "Services/DankCalService.qml:694",
+    "reference": "Services/DankCalService.qml:743",
     "comment": "error when reconnect is unavailable for a provider"
   },
   {
@@ -1844,7 +1862,7 @@
   {
     "term": "Week",
     "context": "Week",
-    "reference": "Modules/CalendarSidebar.qml:149",
+    "reference": "Modules/CalendarSidebar.qml:153",
     "comment": "view switcher option in sidebar"
   },
   {

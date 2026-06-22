@@ -116,6 +116,9 @@
   "Account connected": {
     "Account connected": "Account verbonden"
   },
+  "Account problem — click for options": {
+    "Account problem — click for options": ""
+  },
   "Accounts": {
     "Accounts": "Accounts"
   },
@@ -605,6 +608,9 @@
   "Not authorized — remove this account and add it again": {
     "Not authorized — remove this account and add it again": "Niet geautoriseerd — verwijder dit account en voeg het opnieuw toe"
   },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": ""
+  },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Niets gepland in de komende %1 dagen"
   },
@@ -793,6 +799,9 @@
   },
   "Sign in with your Google account.": {
     "Sign in with your Google account.": "Inloggen met je Google-account."
+  },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": ""
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "Inloggen verlopen — verbind opnieuw om te blijven synchroniseren"

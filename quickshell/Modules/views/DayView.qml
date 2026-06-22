@@ -64,7 +64,7 @@ Item {
             decorated.durationHours = Math.max((e - s) / 3600000, 0.5);
             out.push(decorated);
         }
-        return out;
+        return DankCalService.layoutTimedEvents(out);
     }
 
     Column {
@@ -184,9 +184,12 @@ Item {
 
                     Rectangle {
                         required property var modelData
-                        x: 8
+                        readonly property real laneGap: 3
+                        readonly property real usableWidth: parent.width - 16
+                        readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
+                        x: 8 + modelData.column * (laneWidth + laneGap)
                         y: modelData.startHour * root.hourHeight
-                        width: parent.width - 16
+                        width: laneWidth
                         height: modelData.durationHours * root.hourHeight - 4
                         radius: Theme.cornerRadiusSmall
                         clip: true

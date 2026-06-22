@@ -116,6 +116,9 @@
   "Account connected": {
     "Account connected": "Đã kết nối tài khoản"
   },
+  "Account problem — click for options": {
+    "Account problem — click for options": ""
+  },
   "Accounts": {
     "Accounts": "Tài khoản"
   },
@@ -605,6 +608,9 @@
   "Not authorized — remove this account and add it again": {
     "Not authorized — remove this account and add it again": "Chưa được xác thực — gỡ bỏ tài khoản này và thêm lại"
   },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": ""
+  },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Không có gì trong %1 ngày tới"
   },
@@ -793,6 +799,9 @@
   },
   "Sign in with your Google account.": {
     "Sign in with your Google account.": "Đăng nhập bằng tài khoản Google."
+  },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": ""
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "Phiên đăng nhập hết hạn — kết nối lại để tiếp tục đồng bộ"

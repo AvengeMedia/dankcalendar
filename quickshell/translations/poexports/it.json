@@ -116,6 +116,9 @@
   "Account connected": {
     "Account connected": "Account connesso"
   },
+  "Account problem — click for options": {
+    "Account problem — click for options": ""
+  },
   "Accounts": {
     "Accounts": "Account"
   },
@@ -234,7 +237,7 @@
     "Capabilities": "Funzionalità"
   },
   "Choose a JSON color theme file.": {
-    "Choose a JSON color theme file.": ""
+    "Choose a JSON color theme file.": "Scegli un file di tema colori JSON."
   },
   "Choose a provider": {
     "Choose a provider": "Scegli un provider"
@@ -291,13 +294,13 @@
     "Continue": "Continua"
   },
   "Copy link": {
-    "Copy link": ""
+    "Copy link": "Copia link"
   },
   "Copy path": {
     "Copy path": "Copia percorso"
   },
   "Could not read that file — expected a JSON color theme.": {
-    "Could not read that file — expected a JSON color theme.": ""
+    "Could not read that file — expected a JSON color theme.": "Impossibile leggere quel file: è previsto un tema colori JSON."
   },
   "Could not read that file.": {
     "Could not read that file.": "Impossibile leggere quel file."
@@ -312,7 +315,7 @@
     "Credentials stay on this machine": "Le credenziali rimangono su questo computer"
   },
   "Custom": {
-    "Custom": ""
+    "Custom": "Personalizzato"
   },
   "DMS dynamic": {
     "DMS dynamic": "Dinamico DMS"
@@ -330,7 +333,7 @@
     "Dank Linux Discord": "Discord di Dank Linux"
   },
   "DankMaterialShell not detected — using the %1 preset.": {
-    "DankMaterialShell not detected — using the %1 preset.": ""
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell non rilevata: uso il preset %1."
   },
   "Dark": {
     "Dark": "Scuro"
@@ -429,7 +432,7 @@
     "F1/I: Toggle • F10: Help": "F1/I: Attiva/disattiva • F10: Aiuto"
   },
   "Feed URL": {
-    "Feed URL": ""
+    "Feed URL": "URL del feed"
   },
   "File Already Exists": {
     "File Already Exists": "Il File Esiste Già"
@@ -444,7 +447,7 @@
     "First day shown in week and month views.": "Primo giorno mostrato nelle viste settimanale e mensile."
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
-    "Follow DankMaterialShell colors, falling back to a preset.": ""
+    "Follow DankMaterialShell colors, falling back to a preset.": "Segue i colori della DankMaterialShell, con fallback a un preset."
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Segue lo schema colori di sistema (attualmente %1)."
@@ -504,7 +507,7 @@
     "Light": "Chiaro"
   },
   "Load colors from your own theme file.": {
-    "Load colors from your own theme file.": ""
+    "Load colors from your own theme file.": "Carica i colori dal tuo file di tema personalizzato."
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Caricamento istruzioni di configurazione…"
@@ -594,7 +597,7 @@
     "No matching events": "Nessun evento corrispondente"
   },
   "No theme file selected": {
-    "No theme file selected": ""
+    "No theme file selected": "Nessun file di tema selezionato"
   },
   "No writable calendar available": {
     "No writable calendar available": "Nessun calendario scrivibile disponibile"
@@ -604,6 +607,9 @@
   },
   "Not authorized — remove this account and add it again": {
     "Not authorized — remove this account and add it again": "Non autorizzato: rimuovi questo account e aggiungilo di nuovo"
+  },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": ""
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Nulla in programma nei prossimi %1 giorni"
@@ -648,7 +654,7 @@
     "Overwrite": "Sovrascrivi"
   },
   "Palette: %1": {
-    "Palette: %1": ""
+    "Palette: %1": "Tavolozza: %1"
   },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Parte della suite Dank Linux."
@@ -657,7 +663,7 @@
     "Password": "Password"
   },
   "Password (optional)": {
-    "Password (optional)": ""
+    "Password (optional)": "Password (opzionale)"
   },
   "Paste credentials": {
     "Paste credentials": "Incolla credenziali"
@@ -666,13 +672,13 @@
     "Paste the Application (client) ID from your app registration's Overview page.": "Incolla l'ID applicazione (client) dalla pagina Panoramica della registrazione della tua app."
   },
   "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
-    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "Incolla l'URL di un feed calendario esterno per iscriverti. Il calendario è in sola lettura e si aggiorna in background. Sono accettati i link webcal://."
   },
   "Paste your credentials": {
     "Paste your credentials": "Incolla le tue credenziali"
   },
   "Pick a color source, palette, or your own theme file.": {
-    "Pick a color source, palette, or your own theme file.": ""
+    "Pick a color source, palette, or your own theme file.": "Scegli un'origine colore, una tavolozza o il tuo file di tema."
   },
   "Pictures": {
     "Pictures": "Immagini"
@@ -681,7 +687,7 @@
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Specifica una cartella con file .ics.  Ogni sottocartella o file .ics diventa un calendario, compatibile con i layout di vdirsyncer/khal. La cartella viene creata se non esiste."
   },
   "Preset": {
-    "Preset": ""
+    "Preset": "Preset"
   },
   "Previous day": {
     "Previous day": "Giorno precedente"
@@ -765,7 +771,7 @@
     "Select file": "Seleziona file"
   },
   "Select theme file": {
-    "Select theme file": ""
+    "Select theme file": "Seleziona file di tema"
   },
   "Send test": {
     "Send test": "Invia test"
@@ -793,6 +799,9 @@
   },
   "Sign in with your Google account.": {
     "Sign in with your Google account.": "Accedi con il tuo account Google."
+  },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": ""
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "Accesso scaduto: riconnetti per continuare la sincronizzazione"
@@ -828,13 +837,13 @@
     "Stock palette": "Tavolozza predefinita"
   },
   "Subscribe": {
-    "Subscribe": ""
+    "Subscribe": "Iscriviti"
   },
   "Subscribe to an external calendar by URL (webcal/https).": {
-    "Subscribe to an external calendar by URL (webcal/https).": ""
+    "Subscribe to an external calendar by URL (webcal/https).": "Iscriviti a un calendario esterno tramite URL (webcal/https)."
   },
   "Subscribing…": {
-    "Subscribing…": ""
+    "Subscribing…": "Iscrizione…"
   },
   "Sync now": {
     "Sync now": "Sincronizza ora"
@@ -891,10 +900,10 @@
     "Type at least 2 characters to search events.": "Digita almeno 2 caratteri per cercare eventi."
   },
   "University timetable": {
-    "University timetable": ""
+    "University timetable": "Orario Universitario"
   },
   "Use a bundled color palette.": {
-    "Use a bundled color palette.": ""
+    "Use a bundled color palette.": "Usa una tavolozza di colori inclusa."
   },
   "Use synced name": {
     "Use synced name": "Usa nome sincronizzato"
@@ -906,10 +915,10 @@
     "Username": "Nome utente"
   },
   "Username (optional)": {
-    "Username (optional)": ""
+    "Username (optional)": "Nome Utente (opzionale)"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": ""
+    "Using DankMaterialShell dynamic colors.": "Utilizzando i colori dinamici della DankMaterialShell."
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Verifica che le notifiche desktop funzionino."
@@ -960,13 +969,13 @@
     "dark": "scuro"
   },
   "iCal subscription": {
-    "iCal subscription": ""
+    "iCal subscription": "Iscrizione iCal"
   },
   "light": {
     "light": "chiaro"
   },
   "only if the feed requires sign-in": {
-    "only if the feed requires sign-in": ""
+    "only if the feed requires sign-in": "solo se il feed richiede l'accesso"
   },
   "password": {
     "password": "password"

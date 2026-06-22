@@ -108,6 +108,10 @@ Item {
         id: calTooltip
     }
 
+    DankTooltipV2 {
+        id: authTooltip
+    }
+
     Rectangle {
         anchors.fill: parent
         color: Theme.surfaceContainer
@@ -375,6 +379,17 @@ Item {
                         required property var modelData
                         readonly property bool authorized: modelData.authorized !== false && modelData.needsReauth !== true
                         readonly property string flavor: DankCalService.accountFlavor(modelData)
+                        readonly property bool reconnectable: modelData.kind === "google" || modelData.kind === "microsoft"
+                        readonly property string authReason: {
+                            const detail = (modelData.authError || "").trim();
+                            if (modelData.needsReauth === true) {
+                                const head = I18n.tr("Sign-in expired — click to reconnect", "tooltip on the account warning icon when re-authentication is required");
+                                return detail === "" ? head : head + " · " + detail;
+                            }
+                            if (modelData.authorized === false)
+                                return I18n.tr("Not signed in — click to reconnect or re-add this account", "tooltip on the account warning icon when credentials are missing");
+                            return I18n.tr("Account problem — click for options", "tooltip on the account warning icon for an unspecified problem");
+                        }
                         width: parent.width
                         height: 36
                         visible: root.accountsExpanded
@@ -401,6 +416,23 @@ Item {
                             name: "warning"
                             size: Theme.iconSize - 8
                             color: Theme.error
+
+                            MouseArea {
+                                anchors.fill: parent
+                                anchors.margins: -Theme.spacingXS
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                onEntered: authTooltip.show(accRow.authReason, authWarning)
+                                onExited: authTooltip.hide()
+                                onClicked: {
+                                    authTooltip.hide();
+                                    if (accRow.reconnectable) {
+                                        DankCalService.reconnectAccount(accRow.modelData);
+                                        return;
+                                    }
+                                    accRow.openMenu(accRow.width - accountMenu.width, accRow.height);
+                                }
+                            }
                         }
 
                         DankActionButton {
