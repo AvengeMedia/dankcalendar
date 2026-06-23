@@ -428,6 +428,9 @@
   "Event details": {
     "Event details": "פרטי אירוע"
   },
+  "Evolution": {
+    "Evolution": ""
+  },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: החלפה • F10: עזרה"
   },
@@ -484,6 +487,9 @@
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "תזכורת התחלתית המוגדרת לאירועים חדשים."
+  },
+  "Join video call": {
+    "Join video call": ""
   },
   "Keep typing": {
     "Keep typing": "המשך/המשיכי להקליד"
@@ -907,6 +913,9 @@
   },
   "Use synced name": {
     "Use synced name": "השתמש/י בשם המסונכרן"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
   },
   "Use this folder": {
     "Use this folder": "השתמש/י בתיקייה זו"

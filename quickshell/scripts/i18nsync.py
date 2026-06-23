@@ -35,7 +35,8 @@ LANGUAGES = {
     "es": "es.json",
     "uk": "uk.json",
     "ar": "ar.json",
-    "pl": "pl.json"
+    "pl": "pl.json",
+    "zh-Hans": "zh_CN.json",
 }
 
 

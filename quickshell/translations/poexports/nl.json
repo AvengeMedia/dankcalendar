@@ -428,6 +428,9 @@
   "Event details": {
     "Event details": "Afspraakdetails"
   },
+  "Evolution": {
+    "Evolution": ""
+  },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Omschakelen • F10: Help"
   },
@@ -484,6 +487,9 @@
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Initiële herinnering ingesteld bij nieuwe afspraken."
+  },
+  "Join video call": {
+    "Join video call": ""
   },
   "Keep typing": {
     "Keep typing": "Blijf typen"
@@ -907,6 +913,9 @@
   },
   "Use synced name": {
     "Use synced name": "Gesynchroniseerde naam gebruiken"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
   },
   "Use this folder": {
     "Use this folder": "Deze map gebruiken"

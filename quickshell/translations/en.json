@@ -1730,7 +1730,7 @@
   {
     "term": "This account cannot be reconnected — remove it and add it again.",
     "context": "This account cannot be reconnected — remove it and add it again.",
-    "reference": "Services/DankCalService.qml:744",
+    "reference": "Services/DankCalService.qml:748",
     "comment": "error when reconnect is unavailable for a provider"
   },
   {

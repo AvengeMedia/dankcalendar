@@ -428,6 +428,9 @@
   "Event details": {
     "Event details": "Chi tiết sự kiện"
   },
+  "Evolution": {
+    "Evolution": ""
+  },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Bật/tắt • F10: Trợ giúp"
   },
@@ -484,6 +487,9 @@
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Lời nhắc mặc định được đặt khi tạo sự kiện mới."
+  },
+  "Join video call": {
+    "Join video call": ""
   },
   "Keep typing": {
     "Keep typing": "Tiếp tục nhập"
@@ -907,6 +913,9 @@
   },
   "Use synced name": {
     "Use synced name": "Dùng tên đã đồng bộ"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
   },
   "Use this folder": {
     "Use this folder": "Dùng thư mục này"

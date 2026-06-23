@@ -428,6 +428,9 @@
   "Event details": {
     "Event details": "Деталі події"
   },
+  "Evolution": {
+    "Evolution": ""
+  },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Переключити • F10: Довідка"
   },
@@ -484,6 +487,9 @@
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Нагадування за замовчуванням для нових подій."
+  },
+  "Join video call": {
+    "Join video call": ""
   },
   "Keep typing": {
     "Keep typing": "Продовжуйте вводити"
@@ -907,6 +913,9 @@
   },
   "Use synced name": {
     "Use synced name": "Використовувати синхронізовану назву"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
   },
   "Use this folder": {
     "Use this folder": "Використовувати цю папку"
