@@ -1,15 +1,16 @@
-with-expecter: true
-dir: "internal/mocks"
-mockname: "Mock{{.InterfaceName}}"
-outpkg: "mocks"
-filename: "mock_{{.InterfaceName | snakecase}}.go"
-
+dir: internal/mocks
+structname: Mock{{.InterfaceName}}
+pkgname: mocks
+filename: 'mock_{{.InterfaceName | snakecase}}.go'
+template: testify
+template-data:
+  unroll-variadic: true
 packages:
   github.com/AvengeMedia/dankcalendar/core/internal/calendar:
     interfaces:
-      Provider:
-      ProviderFactory:
-      SecretStore:
+      Provider: {}
+      ProviderFactory: {}
+      SecretStore: {}
   github.com/AvengeMedia/dankcalendar/core/internal/reminders:
     interfaces:
-      Sender:
+      Sender: {}
