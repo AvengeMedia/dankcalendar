@@ -2,6 +2,7 @@ package calendar_handler
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"time"
 
@@ -10,6 +11,8 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/api/server"
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/errdefs"
+	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
 	"github.com/AvengeMedia/dankcalendar/core/models"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -48,6 +51,13 @@ func RegisterHandlers(srv *server.Server, grp *huma.Group) {
 		Path:        "/events/{id}",
 		Method:      http.MethodGet,
 	}, h.GetEvent)
+
+	huma.Register(grp, huma.Operation{
+		OperationID: "rsvp-event",
+		Summary:     "Respond to a Meeting Invitation",
+		Path:        "/events/{id}/rsvp",
+		Method:      http.MethodPost,
+	}, h.RSVPEvent)
 }
 
 type ListAccountsOutput struct {
@@ -175,6 +185,41 @@ func (h *HandlerGroup) GetEvent(ctx context.Context, in *GetEventInput) (*GetEve
 	return &GetEventOutput{Body: eventToDTO(event)}, nil
 }
 
+type RSVPEventInput struct {
+	ID   string `path:"id"`
+	Body struct {
+		Response string `json:"response" enum:"accept,decline,tentative" doc:"Your reply to the invitation"`
+	}
+}
+
+type RSVPEventOutput struct {
+	Body models.Event
+}
+
+func (h *HandlerGroup) RSVPEvent(ctx context.Context, in *RSVPEventInput) (*RSVPEventOutput, error) {
+	res, err := rsvp.Apply(ctx, rsvp.Stores{
+		Repo:     h.srv.Repo,
+		Registry: h.srv.Registry,
+		Secrets:  h.srv.Secrets,
+	}, in.ID, in.Body.Response)
+	if err != nil {
+		switch {
+		case errors.Is(err, rsvp.ErrNotAttendee):
+			return nil, errdefs.NewCustomError(errdefs.ErrTypeInvalidInput, err.Error())
+		case repo.IsNotFound(err):
+			return nil, errdefs.NewCustomError(errdefs.ErrTypeNotFound, "event not found")
+		default:
+			return nil, errdefs.NewCustomError(errdefs.ErrTypeProvider, err.Error())
+		}
+	}
+
+	event, err := h.srv.Repo.GetEvent(ctx, res.EventID)
+	if err != nil {
+		return nil, errdefs.NewCustomError(errdefs.ErrTypeProvider, err.Error())
+	}
+	return &RSVPEventOutput{Body: eventToDTO(event)}, nil
+}
+
 func accountToDTO(a *ent.Account) models.Account {
 	return models.Account{
 		ID:          a.ID,
@@ -225,5 +270,22 @@ func eventToDTO(e *ent.Event) models.Event {
 		StartTimeZone: e.StartTz,
 		EndTimeZone:   e.EndTz,
 		RecurringID:   e.RecurringID,
+		Attendees:     attendeesToDTO(e.Attendees),
 	}
+}
+
+func attendeesToDTO(maps []map[string]any) []models.Attendee {
+	attendees := calendar.AttendeesFromMaps(maps)
+	if len(attendees) == 0 {
+		return nil
+	}
+	out := make([]models.Attendee, 0, len(attendees))
+	for _, a := range attendees {
+		out = append(out, models.Attendee{
+			Email:       a.Email,
+			DisplayName: a.DisplayName,
+			Status:      calendar.NormalizeResponse(a.Status),
+		})
+	}
+	return out
 }

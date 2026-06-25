@@ -45,6 +45,18 @@ func (f EventFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.EventMutation", m)
 }
 
+// The InvitationStateFunc type is an adapter to allow the use of ordinary
+// function as InvitationState mutator.
+type InvitationStateFunc func(context.Context, *ent.InvitationStateMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f InvitationStateFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.InvitationStateMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.InvitationStateMutation", m)
+}
+
 // The ReminderStateFunc type is an adapter to allow the use of ordinary
 // function as ReminderState mutator.
 type ReminderStateFunc func(context.Context, *ent.ReminderStateMutation) (ent.Value, error)

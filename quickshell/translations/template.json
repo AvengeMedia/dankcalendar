@@ -266,6 +266,13 @@
     "comment": ""
   },
   {
+    "term": "Accept",
+    "translation": "",
+    "context": "RSVP accept button",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Account connected",
     "translation": "",
     "context": "wizard success step heading",
@@ -784,6 +791,13 @@
     "comment": ""
   },
   {
+    "term": "Decline",
+    "translation": "",
+    "context": "RSVP decline button",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Default event duration",
     "translation": "",
     "context": "default event duration setting label",
@@ -1214,6 +1228,13 @@
     "term": "Location",
     "translation": "",
     "context": "event form placeholder for location input",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Maybe",
+    "translation": "",
+    "context": "RSVP tentative button",
     "reference": "",
     "comment": ""
   },
@@ -2236,6 +2257,13 @@
     "term": "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.",
     "translation": "",
     "context": "security note body in oauth intro",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Your response",
+    "translation": "",
+    "context": "event details RSVP section label",
     "reference": "",
     "comment": ""
   },

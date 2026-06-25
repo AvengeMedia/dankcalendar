@@ -149,6 +149,32 @@ var (
 			},
 		},
 	}
+	// InvitationStatesColumns holds the columns for the "invitation_states" table.
+	InvitationStatesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "calendar_id", Type: field.TypeString},
+		{Name: "uid", Type: field.TypeString},
+		{Name: "event_start", Type: field.TypeTime},
+		{Name: "notified_at", Type: field.TypeTime},
+	}
+	// InvitationStatesTable holds the schema information for the "invitation_states" table.
+	InvitationStatesTable = &schema.Table{
+		Name:       "invitation_states",
+		Columns:    InvitationStatesColumns,
+		PrimaryKey: []*schema.Column{InvitationStatesColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "invitationstate_calendar_id_uid",
+				Unique:  true,
+				Columns: []*schema.Column{InvitationStatesColumns[1], InvitationStatesColumns[2]},
+			},
+			{
+				Name:    "invitationstate_event_start",
+				Unique:  false,
+				Columns: []*schema.Column{InvitationStatesColumns[3]},
+			},
+		},
+	}
 	// ReminderStatesColumns holds the columns for the "reminder_states" table.
 	ReminderStatesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
@@ -212,6 +238,7 @@ var (
 		AccountsTable,
 		CalendarsTable,
 		EventsTable,
+		InvitationStatesTable,
 		ReminderStatesTable,
 		SecretsTable,
 	}

@@ -14,6 +14,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
@@ -29,11 +30,12 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
-	TypeAccount       = "Account"
-	TypeCalendar      = "Calendar"
-	TypeEvent         = "Event"
-	TypeReminderState = "ReminderState"
-	TypeSecret        = "Secret"
+	TypeAccount         = "Account"
+	TypeCalendar        = "Calendar"
+	TypeEvent           = "Event"
+	TypeInvitationState = "InvitationState"
+	TypeReminderState   = "ReminderState"
+	TypeSecret          = "Secret"
 )
 
 // AccountMutation represents an operation that mutates the Account nodes in the graph.
@@ -4247,6 +4249,494 @@ func (m *EventMutation) ResetEdge(name string) error {
 		return nil
 	}
 	return fmt.Errorf("unknown Event edge %s", name)
+}
+
+// InvitationStateMutation represents an operation that mutates the InvitationState nodes in the graph.
+type InvitationStateMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	calendar_id   *string
+	uid           *string
+	event_start   *time.Time
+	notified_at   *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*InvitationState, error)
+	predicates    []predicate.InvitationState
+}
+
+var _ ent.Mutation = (*InvitationStateMutation)(nil)
+
+// invitationstateOption allows management of the mutation configuration using functional options.
+type invitationstateOption func(*InvitationStateMutation)
+
+// newInvitationStateMutation creates new mutation for the InvitationState entity.
+func newInvitationStateMutation(c config, op Op, opts ...invitationstateOption) *InvitationStateMutation {
+	m := &InvitationStateMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeInvitationState,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withInvitationStateID sets the ID field of the mutation.
+func withInvitationStateID(id int) invitationstateOption {
+	return func(m *InvitationStateMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *InvitationState
+		)
+		m.oldValue = func(ctx context.Context) (*InvitationState, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().InvitationState.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withInvitationState sets the old InvitationState of the mutation.
+func withInvitationState(node *InvitationState) invitationstateOption {
+	return func(m *InvitationStateMutation) {
+		m.oldValue = func(context.Context) (*InvitationState, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m InvitationStateMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m InvitationStateMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *InvitationStateMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *InvitationStateMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().InvitationState.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCalendarID sets the "calendar_id" field.
+func (m *InvitationStateMutation) SetCalendarID(s string) {
+	m.calendar_id = &s
+}
+
+// CalendarID returns the value of the "calendar_id" field in the mutation.
+func (m *InvitationStateMutation) CalendarID() (r string, exists bool) {
+	v := m.calendar_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCalendarID returns the old "calendar_id" field's value of the InvitationState entity.
+// If the InvitationState object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *InvitationStateMutation) OldCalendarID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCalendarID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCalendarID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCalendarID: %w", err)
+	}
+	return oldValue.CalendarID, nil
+}
+
+// ResetCalendarID resets all changes to the "calendar_id" field.
+func (m *InvitationStateMutation) ResetCalendarID() {
+	m.calendar_id = nil
+}
+
+// SetUID sets the "uid" field.
+func (m *InvitationStateMutation) SetUID(s string) {
+	m.uid = &s
+}
+
+// UID returns the value of the "uid" field in the mutation.
+func (m *InvitationStateMutation) UID() (r string, exists bool) {
+	v := m.uid
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUID returns the old "uid" field's value of the InvitationState entity.
+// If the InvitationState object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *InvitationStateMutation) OldUID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUID: %w", err)
+	}
+	return oldValue.UID, nil
+}
+
+// ResetUID resets all changes to the "uid" field.
+func (m *InvitationStateMutation) ResetUID() {
+	m.uid = nil
+}
+
+// SetEventStart sets the "event_start" field.
+func (m *InvitationStateMutation) SetEventStart(t time.Time) {
+	m.event_start = &t
+}
+
+// EventStart returns the value of the "event_start" field in the mutation.
+func (m *InvitationStateMutation) EventStart() (r time.Time, exists bool) {
+	v := m.event_start
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEventStart returns the old "event_start" field's value of the InvitationState entity.
+// If the InvitationState object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *InvitationStateMutation) OldEventStart(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEventStart is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEventStart requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEventStart: %w", err)
+	}
+	return oldValue.EventStart, nil
+}
+
+// ResetEventStart resets all changes to the "event_start" field.
+func (m *InvitationStateMutation) ResetEventStart() {
+	m.event_start = nil
+}
+
+// SetNotifiedAt sets the "notified_at" field.
+func (m *InvitationStateMutation) SetNotifiedAt(t time.Time) {
+	m.notified_at = &t
+}
+
+// NotifiedAt returns the value of the "notified_at" field in the mutation.
+func (m *InvitationStateMutation) NotifiedAt() (r time.Time, exists bool) {
+	v := m.notified_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldNotifiedAt returns the old "notified_at" field's value of the InvitationState entity.
+// If the InvitationState object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *InvitationStateMutation) OldNotifiedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldNotifiedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldNotifiedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldNotifiedAt: %w", err)
+	}
+	return oldValue.NotifiedAt, nil
+}
+
+// ResetNotifiedAt resets all changes to the "notified_at" field.
+func (m *InvitationStateMutation) ResetNotifiedAt() {
+	m.notified_at = nil
+}
+
+// Where appends a list predicates to the InvitationStateMutation builder.
+func (m *InvitationStateMutation) Where(ps ...predicate.InvitationState) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the InvitationStateMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *InvitationStateMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.InvitationState, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *InvitationStateMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *InvitationStateMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (InvitationState).
+func (m *InvitationStateMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *InvitationStateMutation) Fields() []string {
+	fields := make([]string, 0, 4)
+	if m.calendar_id != nil {
+		fields = append(fields, invitationstate.FieldCalendarID)
+	}
+	if m.uid != nil {
+		fields = append(fields, invitationstate.FieldUID)
+	}
+	if m.event_start != nil {
+		fields = append(fields, invitationstate.FieldEventStart)
+	}
+	if m.notified_at != nil {
+		fields = append(fields, invitationstate.FieldNotifiedAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *InvitationStateMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case invitationstate.FieldCalendarID:
+		return m.CalendarID()
+	case invitationstate.FieldUID:
+		return m.UID()
+	case invitationstate.FieldEventStart:
+		return m.EventStart()
+	case invitationstate.FieldNotifiedAt:
+		return m.NotifiedAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *InvitationStateMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case invitationstate.FieldCalendarID:
+		return m.OldCalendarID(ctx)
+	case invitationstate.FieldUID:
+		return m.OldUID(ctx)
+	case invitationstate.FieldEventStart:
+		return m.OldEventStart(ctx)
+	case invitationstate.FieldNotifiedAt:
+		return m.OldNotifiedAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown InvitationState field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *InvitationStateMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case invitationstate.FieldCalendarID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCalendarID(v)
+		return nil
+	case invitationstate.FieldUID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUID(v)
+		return nil
+	case invitationstate.FieldEventStart:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEventStart(v)
+		return nil
+	case invitationstate.FieldNotifiedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetNotifiedAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown InvitationState field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *InvitationStateMutation) AddedFields() []string {
+	return nil
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *InvitationStateMutation) AddedField(name string) (ent.Value, bool) {
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *InvitationStateMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	}
+	return fmt.Errorf("unknown InvitationState numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *InvitationStateMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *InvitationStateMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *InvitationStateMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown InvitationState nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *InvitationStateMutation) ResetField(name string) error {
+	switch name {
+	case invitationstate.FieldCalendarID:
+		m.ResetCalendarID()
+		return nil
+	case invitationstate.FieldUID:
+		m.ResetUID()
+		return nil
+	case invitationstate.FieldEventStart:
+		m.ResetEventStart()
+		return nil
+	case invitationstate.FieldNotifiedAt:
+		m.ResetNotifiedAt()
+		return nil
+	}
+	return fmt.Errorf("unknown InvitationState field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *InvitationStateMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *InvitationStateMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *InvitationStateMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *InvitationStateMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *InvitationStateMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *InvitationStateMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *InvitationStateMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown InvitationState unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *InvitationStateMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown InvitationState edge %s", name)
 }
 
 // ReminderStateMutation represents an operation that mutates the ReminderState nodes in the graph.

@@ -345,4 +345,45 @@ func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event
 	return nil
 }
 
+// RespondToEvent submits the RSVP through Graph's accept/decline/tentativelyAccept
+// actions, which also notify the organizer. They return 202 with no body, so the
+// reply is stamped locally and reconciled on the next sync.
+func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.Event, response string) (*cal.Event, error) {
+	if ev.RemoteID == "" {
+		return nil, errors.New("microsoft respond event: missing remote id")
+	}
+
+	action := graphRSVPAction(response)
+	if action == "" {
+		return nil, fmt.Errorf("microsoft respond event: unsupported response %q", response)
+	}
+
+	reqURL := graphBase + "/me/events/" + url.PathEscape(ev.RemoteID) + "/" + action
+	if err := p.doJSON(ctx, http.MethodPost, reqURL, map[string]any{"sendResponse": true}, nil); err != nil {
+		return nil, fmt.Errorf("microsoft respond event: %w", classifyAuthErr(err))
+	}
+
+	out := *ev
+	self := strings.ToLower(p.account.ID)
+	for i := range out.Attendees {
+		if strings.EqualFold(out.Attendees[i].Email, self) {
+			out.Attendees[i].Status = response
+		}
+	}
+	return &out, nil
+}
+
+func graphRSVPAction(canonical string) string {
+	switch canonical {
+	case cal.ResponseAccepted:
+		return "accept"
+	case cal.ResponseDeclined:
+		return "decline"
+	case cal.ResponseTentative:
+		return "tentativelyAccept"
+	default:
+		return ""
+	}
+}
+
 func (p *Provider) Close() error { return nil }

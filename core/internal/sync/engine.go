@@ -9,8 +9,8 @@ import (
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	entaccount "github.com/AvengeMedia/dankcalendar/core/ent/account"
-	enteventpkg "github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -372,38 +372,7 @@ func (e *Engine) applyChanges(ctx context.Context, cal calendar.Calendar, change
 				continue
 			}
 			ev := ch.Event
-			var organizer map[string]any
-			if ev.Organizer != nil {
-				organizer = ev.Organizer.ToMap()
-			}
-			_, err := e.repo.UpsertEvent(ctx, repo.UpsertEventInput{
-				CalendarID:    cal.ID,
-				UID:           ev.UID,
-				RemoteID:      ev.RemoteID,
-				Etag:          ev.Etag,
-				Summary:       ev.Summary,
-				Description:   ev.Description,
-				Location:      ev.Location,
-				URL:           ev.URL,
-				MeetingURL:    ev.MeetingURL,
-				Status:        toEntStatus(ev.Status),
-				Start:         ev.Start,
-				End:           ev.End,
-				AllDay:        ev.AllDay,
-				StartTZ:       ev.StartTimeZone,
-				EndTZ:         ev.EndTimeZone,
-				Recurrence:    ev.Recurrence.ToMap(),
-				RecurringID:   ev.RecurringID,
-				OriginalStart: ev.OriginalStart,
-				Organizer:     organizer,
-				Attendees:     calendar.AttendeesToMaps(ev.Attendees),
-				Reminders:     calendar.RemindersToMaps(ev.Reminders),
-				Categories:    ev.Categories,
-				Transparency:  ev.Transparency,
-				Visibility:    ev.Visibility,
-				RawICS:        ev.RawICS,
-			})
-			if err != nil {
+			if _, err := e.repo.UpsertEvent(ctx, eventconv.UpsertInput(cal.ID, ev)); err != nil {
 				return fmt.Errorf("upsert event %q: %w", ev.UID, err)
 			}
 		case calendar.ChangeDelete:
@@ -424,16 +393,6 @@ func accountToDomain(a *ent.Account) calendar.Account {
 		CreatedAt:   a.CreatedAt,
 		UpdatedAt:   a.UpdatedAt,
 	}
-}
-
-func toEntStatus(s calendar.EventStatus) enteventpkg.Status {
-	switch s {
-	case calendar.EventTentative:
-		return enteventpkg.StatusTentative
-	case calendar.EventCancelled:
-		return enteventpkg.StatusCancelled
-	}
-	return enteventpkg.StatusConfirmed
 }
 
 var _ = entaccount.IDEQ

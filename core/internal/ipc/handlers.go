@@ -5,8 +5,6 @@ import (
 	"time"
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
@@ -68,6 +66,8 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 		handleEventUpdate(ctx, w, req, deps)
 	case "events.delete":
 		handleEventDelete(ctx, w, req, deps)
+	case "events.rsvp":
+		handleEventRSVP(ctx, w, req, deps)
 	default:
 		RespondError(w, req.ID, "unknown events method: "+req.Method)
 	}
@@ -195,14 +195,4 @@ func mapEvent(e *ent.Event) map[string]any {
 		entry["reminders"] = e.Reminders
 	}
 	return entry
-}
-
-func toEntEventStatus(s calendar.EventStatus) event.Status {
-	switch s {
-	case calendar.EventTentative:
-		return event.StatusTentative
-	case calendar.EventCancelled:
-		return event.StatusCancelled
-	}
-	return event.StatusConfirmed
 }

@@ -18,6 +18,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
 
@@ -35,6 +36,8 @@ type Client struct {
 	Calendar *CalendarClient
 	// Event is the client for interacting with the Event builders.
 	Event *EventClient
+	// InvitationState is the client for interacting with the InvitationState builders.
+	InvitationState *InvitationStateClient
 	// ReminderState is the client for interacting with the ReminderState builders.
 	ReminderState *ReminderStateClient
 	// Secret is the client for interacting with the Secret builders.
@@ -53,6 +56,7 @@ func (c *Client) init() {
 	c.Account = NewAccountClient(c.config)
 	c.Calendar = NewCalendarClient(c.config)
 	c.Event = NewEventClient(c.config)
+	c.InvitationState = NewInvitationStateClient(c.config)
 	c.ReminderState = NewReminderStateClient(c.config)
 	c.Secret = NewSecretClient(c.config)
 }
@@ -145,13 +149,14 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:           ctx,
-		config:        cfg,
-		Account:       NewAccountClient(cfg),
-		Calendar:      NewCalendarClient(cfg),
-		Event:         NewEventClient(cfg),
-		ReminderState: NewReminderStateClient(cfg),
-		Secret:        NewSecretClient(cfg),
+		ctx:             ctx,
+		config:          cfg,
+		Account:         NewAccountClient(cfg),
+		Calendar:        NewCalendarClient(cfg),
+		Event:           NewEventClient(cfg),
+		InvitationState: NewInvitationStateClient(cfg),
+		ReminderState:   NewReminderStateClient(cfg),
+		Secret:          NewSecretClient(cfg),
 	}, nil
 }
 
@@ -169,13 +174,14 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:           ctx,
-		config:        cfg,
-		Account:       NewAccountClient(cfg),
-		Calendar:      NewCalendarClient(cfg),
-		Event:         NewEventClient(cfg),
-		ReminderState: NewReminderStateClient(cfg),
-		Secret:        NewSecretClient(cfg),
+		ctx:             ctx,
+		config:          cfg,
+		Account:         NewAccountClient(cfg),
+		Calendar:        NewCalendarClient(cfg),
+		Event:           NewEventClient(cfg),
+		InvitationState: NewInvitationStateClient(cfg),
+		ReminderState:   NewReminderStateClient(cfg),
+		Secret:          NewSecretClient(cfg),
 	}, nil
 }
 
@@ -204,21 +210,21 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.Account.Use(hooks...)
-	c.Calendar.Use(hooks...)
-	c.Event.Use(hooks...)
-	c.ReminderState.Use(hooks...)
-	c.Secret.Use(hooks...)
+	for _, n := range []interface{ Use(...Hook) }{
+		c.Account, c.Calendar, c.Event, c.InvitationState, c.ReminderState, c.Secret,
+	} {
+		n.Use(hooks...)
+	}
 }
 
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	c.Account.Intercept(interceptors...)
-	c.Calendar.Intercept(interceptors...)
-	c.Event.Intercept(interceptors...)
-	c.ReminderState.Intercept(interceptors...)
-	c.Secret.Intercept(interceptors...)
+	for _, n := range []interface{ Intercept(...Interceptor) }{
+		c.Account, c.Calendar, c.Event, c.InvitationState, c.ReminderState, c.Secret,
+	} {
+		n.Intercept(interceptors...)
+	}
 }
 
 // Mutate implements the ent.Mutator interface.
@@ -230,6 +236,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.Calendar.mutate(ctx, m)
 	case *EventMutation:
 		return c.Event.mutate(ctx, m)
+	case *InvitationStateMutation:
+		return c.InvitationState.mutate(ctx, m)
 	case *ReminderStateMutation:
 		return c.ReminderState.mutate(ctx, m)
 	case *SecretMutation:
@@ -718,6 +726,139 @@ func (c *EventClient) mutate(ctx context.Context, m *EventMutation) (Value, erro
 	}
 }
 
+// InvitationStateClient is a client for the InvitationState schema.
+type InvitationStateClient struct {
+	config
+}
+
+// NewInvitationStateClient returns a client for the InvitationState from the given config.
+func NewInvitationStateClient(c config) *InvitationStateClient {
+	return &InvitationStateClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `invitationstate.Hooks(f(g(h())))`.
+func (c *InvitationStateClient) Use(hooks ...Hook) {
+	c.hooks.InvitationState = append(c.hooks.InvitationState, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `invitationstate.Intercept(f(g(h())))`.
+func (c *InvitationStateClient) Intercept(interceptors ...Interceptor) {
+	c.inters.InvitationState = append(c.inters.InvitationState, interceptors...)
+}
+
+// Create returns a builder for creating a InvitationState entity.
+func (c *InvitationStateClient) Create() *InvitationStateCreate {
+	mutation := newInvitationStateMutation(c.config, OpCreate)
+	return &InvitationStateCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of InvitationState entities.
+func (c *InvitationStateClient) CreateBulk(builders ...*InvitationStateCreate) *InvitationStateCreateBulk {
+	return &InvitationStateCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *InvitationStateClient) MapCreateBulk(slice any, setFunc func(*InvitationStateCreate, int)) *InvitationStateCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &InvitationStateCreateBulk{err: fmt.Errorf("calling to InvitationStateClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*InvitationStateCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &InvitationStateCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for InvitationState.
+func (c *InvitationStateClient) Update() *InvitationStateUpdate {
+	mutation := newInvitationStateMutation(c.config, OpUpdate)
+	return &InvitationStateUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *InvitationStateClient) UpdateOne(_m *InvitationState) *InvitationStateUpdateOne {
+	mutation := newInvitationStateMutation(c.config, OpUpdateOne, withInvitationState(_m))
+	return &InvitationStateUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *InvitationStateClient) UpdateOneID(id int) *InvitationStateUpdateOne {
+	mutation := newInvitationStateMutation(c.config, OpUpdateOne, withInvitationStateID(id))
+	return &InvitationStateUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for InvitationState.
+func (c *InvitationStateClient) Delete() *InvitationStateDelete {
+	mutation := newInvitationStateMutation(c.config, OpDelete)
+	return &InvitationStateDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *InvitationStateClient) DeleteOne(_m *InvitationState) *InvitationStateDeleteOne {
+	return c.DeleteOneID(_m.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *InvitationStateClient) DeleteOneID(id int) *InvitationStateDeleteOne {
+	builder := c.Delete().Where(invitationstate.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &InvitationStateDeleteOne{builder}
+}
+
+// Query returns a query builder for InvitationState.
+func (c *InvitationStateClient) Query() *InvitationStateQuery {
+	return &InvitationStateQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeInvitationState},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a InvitationState entity by its id.
+func (c *InvitationStateClient) Get(ctx context.Context, id int) (*InvitationState, error) {
+	return c.Query().Where(invitationstate.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *InvitationStateClient) GetX(ctx context.Context, id int) *InvitationState {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *InvitationStateClient) Hooks() []Hook {
+	return c.hooks.InvitationState
+}
+
+// Interceptors returns the client interceptors.
+func (c *InvitationStateClient) Interceptors() []Interceptor {
+	return c.inters.InvitationState
+}
+
+func (c *InvitationStateClient) mutate(ctx context.Context, m *InvitationStateMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&InvitationStateCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&InvitationStateUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&InvitationStateUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&InvitationStateDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown InvitationState mutation op: %q", m.Op())
+	}
+}
+
 // ReminderStateClient is a client for the ReminderState schema.
 type ReminderStateClient struct {
 	config
@@ -1003,10 +1144,11 @@ func (c *SecretClient) mutate(ctx context.Context, m *SecretMutation) (Value, er
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		Account, Calendar, Event, ReminderState, Secret []ent.Hook
+		Account, Calendar, Event, InvitationState, ReminderState, Secret []ent.Hook
 	}
 	inters struct {
-		Account, Calendar, Event, ReminderState, Secret []ent.Interceptor
+		Account, Calendar, Event, InvitationState, ReminderState,
+		Secret []ent.Interceptor
 	}
 )
 

@@ -15,6 +15,9 @@ type Calendar func(*sql.Selector)
 // Event is the predicate function for event builders.
 type Event func(*sql.Selector)
 
+// InvitationState is the predicate function for invitationstate builders.
+type InvitationState func(*sql.Selector)
+
 // ReminderState is the predicate function for reminderstate builders.
 type ReminderState func(*sql.Selector)
 

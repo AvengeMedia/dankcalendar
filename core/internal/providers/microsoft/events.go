@@ -226,12 +226,31 @@ func eventToGraph(ev *cal.Event) graphEvent {
 		if a.Optional {
 			attendeeType = "optional"
 		}
-		g.Attendees = append(g.Attendees, graphAttendee{
+		ga := graphAttendee{
 			EmailAddress: graphEmailAddress{Address: a.Email, Name: a.DisplayName},
 			Type:         attendeeType,
-		})
+		}
+		if resp := graphResponse(a.Status); resp != "" {
+			ga.Status = &graphResponseStatus{Response: resp}
+		}
+		g.Attendees = append(g.Attendees, ga)
 	}
 	return g
+}
+
+// graphResponse maps a stored participation status onto the Graph response
+// vocabulary, returning "" for an unanswered status so it is left unset.
+func graphResponse(status string) string {
+	switch cal.NormalizeResponse(status) {
+	case cal.ResponseAccepted:
+		return "accepted"
+	case cal.ResponseDeclined:
+		return "declined"
+	case cal.ResponseTentative:
+		return "tentativelyAccepted"
+	default:
+		return ""
+	}
 }
 
 func midnightUTC(t time.Time) time.Time {

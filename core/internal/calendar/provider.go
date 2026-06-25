@@ -25,6 +25,14 @@ type Provider interface {
 	Close() error
 }
 
+// Responder is implemented by providers that can submit the current user's RSVP
+// response to an event independently of a full event update. response is one of
+// the canonical Response* values. Providers that do not implement it fall back
+// to a full UpdateEvent with the self attendee's status changed.
+type Responder interface {
+	RespondToEvent(ctx context.Context, cal Calendar, ev *Event, response string) (*Event, error)
+}
+
 type ProviderFactory interface {
 	Kind() AccountKind
 	Build(ctx context.Context, account Account, secrets SecretStore) (Provider, error)

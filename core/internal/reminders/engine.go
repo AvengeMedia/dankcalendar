@@ -601,7 +601,7 @@ func eventBody(ev *ent.Event, now time.Time, s settings.UISettings, loc *time.Lo
 		if start.Before(now) {
 			verb = "Started"
 		}
-		when = fmt.Sprintf("%s %s at %s", verb, dayPhrase(start, now.In(loc)), clock(start, s))
+		when = fmt.Sprintf("%s %s at %s", verb, dayPhrase(start, now.In(loc)), s.Clock(start))
 	}
 
 	if ev.Location != "" {
@@ -624,13 +624,6 @@ func dayPhrase(t, now time.Time) string {
 	default:
 		return "on " + t.Format("Mon, Jan 2")
 	}
-}
-
-func clock(t time.Time, s settings.UISettings) string {
-	if !s.Use24HourClock {
-		return t.Format("3:04 PM")
-	}
-	return t.Format("15:04")
 }
 
 func openApp() {

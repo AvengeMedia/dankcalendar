@@ -183,6 +183,48 @@ func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	return fromGoogleEvent(c, updated), nil
 }
 
+// RespondToEvent patches only the attendees collection, setting the current
+// user's responseStatus. A non-organizer attendee may change just their own
+// reply; sending the full list preserves everyone else's status.
+func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.Event, response string) (*cal.Event, error) {
+	if ev.RemoteID == "" {
+		return nil, errors.New("respond google event: missing remote id")
+	}
+
+	self := strings.ToLower(p.account.ID)
+	attendees := toGoogleAttendees(ev.Attendees)
+	found := false
+	for _, a := range attendees {
+		if !strings.EqualFold(a.Email, self) {
+			continue
+		}
+		a.ResponseStatus = toGoogleResponse(response)
+		found = true
+	}
+	if !found {
+		return nil, fmt.Errorf("respond google event: %q is not an attendee", self)
+	}
+
+	updated, err := p.svc.Events.Patch(c.RemoteID, ev.RemoteID, &calendar.Event{Attendees: attendees}).Context(ctx).Do()
+	if err != nil {
+		return nil, fmt.Errorf("respond google event: %w", err)
+	}
+	return fromGoogleEvent(c, updated), nil
+}
+
+func toGoogleResponse(canonical string) string {
+	switch canonical {
+	case cal.ResponseAccepted:
+		return "accepted"
+	case cal.ResponseDeclined:
+		return "declined"
+	case cal.ResponseTentative:
+		return "tentative"
+	default:
+		return "needsAction"
+	}
+}
+
 func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event) error {
 	if ev.RemoteID == "" {
 		return errors.New("delete google event: missing remote id")
@@ -334,6 +376,23 @@ func fromGoogleAttendees(items []*calendar.EventAttendee) []cal.Attendee {
 	return out
 }
 
+func toGoogleAttendees(attendees []cal.Attendee) []*calendar.EventAttendee {
+	if len(attendees) == 0 {
+		return nil
+	}
+	out := make([]*calendar.EventAttendee, 0, len(attendees))
+	for _, a := range attendees {
+		out = append(out, &calendar.EventAttendee{
+			Email:          a.Email,
+			DisplayName:    a.DisplayName,
+			ResponseStatus: a.Status,
+			Optional:       a.Optional,
+			Organizer:      a.Organizer,
+		})
+	}
+	return out
+}
+
 func toGoogleEvent(ev *cal.Event) *calendar.Event {
 	out := &calendar.Event{
 		Summary:     ev.Summary,
@@ -367,15 +426,7 @@ func toGoogleEvent(ev *cal.Event) *calendar.Event {
 		}
 	}
 
-	for _, a := range ev.Attendees {
-		out.Attendees = append(out.Attendees, &calendar.EventAttendee{
-			Email:          a.Email,
-			DisplayName:    a.DisplayName,
-			ResponseStatus: a.Status,
-			Optional:       a.Optional,
-			Organizer:      a.Organizer,
-		})
-	}
+	out.Attendees = toGoogleAttendees(ev.Attendees)
 
 	if len(ev.Reminders) > 0 {
 		overrides := make([]*calendar.EventReminder, 0, len(ev.Reminders))

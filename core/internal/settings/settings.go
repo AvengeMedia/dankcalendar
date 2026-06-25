@@ -29,6 +29,14 @@ type UISettings struct {
 	SnoozeMinutes            int    `json:"snoozeMinutes"`
 }
 
+// Clock formats t honoring the resolved 12/24-hour preference.
+func (s UISettings) Clock(t time.Time) string {
+	if s.Use24HourClock {
+		return t.Format("15:04")
+	}
+	return t.Format("3:04 PM")
+}
+
 // ReminderOverride holds per-calendar reminder settings. Every field is a
 // pointer: nil means "inherit the global value". It is stored on the calendar
 // row and owned locally, never touched by provider sync.

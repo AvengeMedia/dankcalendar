@@ -9,8 +9,9 @@ import (
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
+	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
 func handleEventCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
@@ -140,6 +141,38 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 
 	publishEventsChanged(deps, calendarID)
 	Respond(w, req.ID, map[string]any{"deleted": true})
+}
+
+func handleEventRSVP(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	id := ParamString(req.Params, "id")
+	if id == "" {
+		RespondError(w, req.ID, "id is required")
+		return
+	}
+	response := ParamString(req.Params, "response")
+	if response == "" {
+		RespondError(w, req.ID, "response is required (accept|decline|tentative)")
+		return
+	}
+
+	res, err := rsvp.Apply(ctx, rsvp.Stores{
+		Repo:     deps.Repo,
+		Registry: deps.Registry,
+		Secrets:  deps.Secrets,
+	}, id, response)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	publishEventsChanged(deps, res.CalendarID)
+
+	stored, err := deps.Repo.GetEvent(ctx, res.EventID)
+	if err != nil {
+		Respond(w, req.ID, map[string]any{"id": res.EventID, "response": res.Response})
+		return
+	}
+	Respond(w, req.ID, mapEvent(stored))
 }
 
 func handleCalendarSetHidden(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
@@ -419,37 +452,7 @@ func domainEventFromEnt(e *ent.Event) calendar.Event {
 }
 
 func persistEvent(ctx context.Context, deps Deps, calendarID string, ev *calendar.Event) (*ent.Event, error) {
-	var organizer map[string]any
-	if ev.Organizer != nil {
-		organizer = ev.Organizer.ToMap()
-	}
-	return deps.Repo.UpsertEvent(ctx, repo.UpsertEventInput{
-		CalendarID:    calendarID,
-		UID:           ev.UID,
-		RemoteID:      ev.RemoteID,
-		Etag:          ev.Etag,
-		Summary:       ev.Summary,
-		Description:   ev.Description,
-		Location:      ev.Location,
-		URL:           ev.URL,
-		MeetingURL:    ev.MeetingURL,
-		Status:        toEntEventStatus(ev.Status),
-		Start:         ev.Start,
-		End:           ev.End,
-		AllDay:        ev.AllDay,
-		StartTZ:       ev.StartTimeZone,
-		EndTZ:         ev.EndTimeZone,
-		Recurrence:    ev.Recurrence.ToMap(),
-		RecurringID:   ev.RecurringID,
-		OriginalStart: ev.OriginalStart,
-		Organizer:     organizer,
-		Attendees:     calendar.AttendeesToMaps(ev.Attendees),
-		Reminders:     calendar.RemindersToMaps(ev.Reminders),
-		Categories:    ev.Categories,
-		Transparency:  ev.Transparency,
-		Visibility:    ev.Visibility,
-		RawICS:        ev.RawICS,
-	})
+	return deps.Repo.UpsertEvent(ctx, eventconv.UpsertInput(calendarID, ev))
 }
 
 func publishEventsChanged(deps Deps, calendarID string) {

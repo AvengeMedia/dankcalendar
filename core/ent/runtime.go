@@ -8,6 +8,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/schema"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
@@ -139,6 +140,20 @@ func init() {
 			return nil
 		}
 	}()
+	invitationstateFields := schema.InvitationState{}.Fields()
+	_ = invitationstateFields
+	// invitationstateDescCalendarID is the schema descriptor for calendar_id field.
+	invitationstateDescCalendarID := invitationstateFields[0].Descriptor()
+	// invitationstate.CalendarIDValidator is a validator for the "calendar_id" field. It is called by the builders before save.
+	invitationstate.CalendarIDValidator = invitationstateDescCalendarID.Validators[0].(func(string) error)
+	// invitationstateDescUID is the schema descriptor for uid field.
+	invitationstateDescUID := invitationstateFields[1].Descriptor()
+	// invitationstate.UIDValidator is a validator for the "uid" field. It is called by the builders before save.
+	invitationstate.UIDValidator = invitationstateDescUID.Validators[0].(func(string) error)
+	// invitationstateDescNotifiedAt is the schema descriptor for notified_at field.
+	invitationstateDescNotifiedAt := invitationstateFields[3].Descriptor()
+	// invitationstate.DefaultNotifiedAt holds the default value on creation for the notified_at field.
+	invitationstate.DefaultNotifiedAt = invitationstateDescNotifiedAt.Default.(func() time.Time)
 	reminderstateFields := schema.ReminderState{}.Fields()
 	_ = reminderstateFields
 	// reminderstateDescCalendarID is the schema descriptor for calendar_id field.

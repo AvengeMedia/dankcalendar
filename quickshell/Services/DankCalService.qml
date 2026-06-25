@@ -481,6 +481,10 @@ Singleton {
         };
     }
 
+    function eventFromResult(raw) {
+        return decorateEvent(_normalizeEvent(raw || {}));
+    }
+
     function decorateEvent(ev) {
         const cal = calendarById(ev.calendarId);
         const out = Object.assign({}, ev);
@@ -488,6 +492,9 @@ Singleton {
         out.calendar = cal ? cal.name : "";
         out.account = cal ? (cal.accountName || cal.accountId || "") : "";
         out.readOnly = cal ? !!cal.readOnly : false;
+        const resp = selfResponse(out);
+        out.myResponse = resp.status;
+        out.canRespond = resp.canRespond;
         return out;
     }
 
@@ -638,6 +645,106 @@ Singleton {
             if (callback)
                 callback(response);
         });
+    }
+
+    function rsvpEvent(id, response, callback) {
+        sendRequest("events.rsvp", {
+            "id": id,
+            "response": response
+        }, resp => {
+            if (resp.error)
+                lastError = resp.error;
+            else
+                reloadEvents();
+            if (callback)
+                callback(resp);
+        });
+    }
+
+    function _rsvpNormalizeEmail(s) {
+        if (!s)
+            return "";
+        s = String(s).trim();
+        if (s.toLowerCase().indexOf("mailto:") === 0)
+            s = s.substring(7);
+        return s.toLowerCase();
+    }
+
+    function _rsvpNormalizeStatus(s) {
+        switch (String(s || "").toLowerCase()) {
+        case "accepted":
+        case "accept":
+            return "accepted";
+        case "declined":
+        case "decline":
+            return "declined";
+        case "tentative":
+        case "tentativelyaccepted":
+        case "maybe":
+            return "tentative";
+        case "organizer":
+            return "accepted";
+        default:
+            return "needs-action";
+        }
+    }
+
+    // selfEmailForCalendar resolves the current user's email for an account, used
+    // to find them among an event's attendees. Google and Microsoft store the
+    // email as the account id; CalDAV keeps the login in settings. Other kinds
+    // have no personal identity.
+    function selfEmailForCalendar(calendarId) {
+        const cal = calendarById(calendarId);
+        if (!cal)
+            return "";
+        const acc = accountById(cal.accountId);
+        if (!acc)
+            return "";
+        if (acc.kind === "google" || acc.kind === "microsoft")
+            return _rsvpNormalizeEmail(acc.id);
+        if (acc.kind === "caldav" && acc.settings && acc.settings.username)
+            return _rsvpNormalizeEmail(acc.settings.username);
+        return "";
+    }
+
+    // selfResponse reports the current user's RSVP status for an event and
+    // whether they may respond (a non-organizer attendee on a writable calendar).
+    function selfResponse(ev) {
+        const cal = calendarById(ev.calendarId);
+        if (!cal || cal.readOnly)
+            return {
+                "status": "",
+                "canRespond": false
+            };
+        const self = selfEmailForCalendar(ev.calendarId);
+        if (!self)
+            return {
+                "status": "",
+                "canRespond": false
+            };
+        if (ev.organizer && _rsvpNormalizeEmail(ev.organizer.email) === self)
+            return {
+                "status": "accepted",
+                "canRespond": false
+            };
+        const attendees = ev.attendees || [];
+        for (let i = 0; i < attendees.length; i++) {
+            if (_rsvpNormalizeEmail(attendees[i].email) !== self)
+                continue;
+            if (attendees[i].organizer)
+                return {
+                    "status": "accepted",
+                    "canRespond": false
+                };
+            return {
+                "status": _rsvpNormalizeStatus(attendees[i].status),
+                "canRespond": true
+            };
+        }
+        return {
+            "status": "",
+            "canRespond": false
+        };
     }
 
     function startGoogleFlow(displayName, clientId, clientSecret, callback) {

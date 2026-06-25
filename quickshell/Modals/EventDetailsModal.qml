@@ -276,6 +276,22 @@ FloatingWindow {
         });
     }
 
+    function respond(action) {
+        if (!event.id || saving)
+            return;
+        saving = true;
+        formError = "";
+        DankCalService.rsvpEvent(event.id, action, response => {
+            saving = false;
+            if (response.error) {
+                formError = response.error;
+                return;
+            }
+            if (response.result)
+                eventModal.event = DankCalService.eventFromResult(response.result);
+        });
+    }
+
     function _styleAnchors(html) {
         return html.replace(/<a\s([^>]*)>/gi, (m, attrs) => {
             const cleaned = attrs.replace(/style="[^"]*"/gi, "");
@@ -620,10 +636,72 @@ FloatingWindow {
             }
 
             Column {
-                id: attendeesBlock
+                id: rsvpBlock
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: metaBlock.bottom
+                anchors.topMargin: Theme.spacingL
+                spacing: Theme.spacingS
+                visible: !!eventModal.event.canRespond
+
+                Row {
+                    spacing: Theme.spacingS
+
+                    DankIcon {
+                        name: "event_available"
+                        size: Theme.iconSize - 4
+                        color: Theme.surfaceVariantText
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    StyledText {
+                        text: I18n.tr("Your response", "event details RSVP section label")
+                        font.pixelSize: Theme.fontSizeMedium
+                        font.weight: Font.Medium
+                        color: Theme.surfaceText
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+
+                Row {
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.spacingL + Theme.iconSize - 4
+                    spacing: Theme.spacingS
+
+                    DankButton {
+                        text: I18n.tr("Accept", "RSVP accept button")
+                        buttonHeight: 32
+                        backgroundColor: eventModal.event.myResponse === "accepted" ? Theme.success : Theme.surfaceContainer
+                        textColor: eventModal.event.myResponse === "accepted" ? Theme.primaryText : Theme.surfaceText
+                        enabled: !eventModal.saving
+                        onClicked: eventModal.respond("accept")
+                    }
+
+                    DankButton {
+                        text: I18n.tr("Maybe", "RSVP tentative button")
+                        buttonHeight: 32
+                        backgroundColor: eventModal.event.myResponse === "tentative" ? Theme.warning : Theme.surfaceContainer
+                        textColor: eventModal.event.myResponse === "tentative" ? Theme.primaryText : Theme.surfaceText
+                        enabled: !eventModal.saving
+                        onClicked: eventModal.respond("tentative")
+                    }
+
+                    DankButton {
+                        text: I18n.tr("Decline", "RSVP decline button")
+                        buttonHeight: 32
+                        backgroundColor: eventModal.event.myResponse === "declined" ? Theme.error : Theme.surfaceContainer
+                        textColor: eventModal.event.myResponse === "declined" ? Theme.primaryText : Theme.surfaceText
+                        enabled: !eventModal.saving
+                        onClicked: eventModal.respond("decline")
+                    }
+                }
+            }
+
+            Column {
+                id: attendeesBlock
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: rsvpBlock.visible ? rsvpBlock.bottom : metaBlock.bottom
                 anchors.topMargin: Theme.spacingL
                 spacing: Theme.spacingS
                 visible: (eventModal.event.attendees || []).length > 0
@@ -751,7 +829,7 @@ FloatingWindow {
                 id: descBlock
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: attendeesBlock.visible ? attendeesBlock.bottom : metaBlock.bottom
+                anchors.top: attendeesBlock.visible ? attendeesBlock.bottom : (rsvpBlock.visible ? rsvpBlock.bottom : metaBlock.bottom)
                 anchors.bottom: parent.bottom
                 anchors.topMargin: Theme.spacingL
                 spacing: Theme.spacingS

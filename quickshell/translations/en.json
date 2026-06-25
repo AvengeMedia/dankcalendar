@@ -14,7 +14,7 @@
   {
     "term": "%1 · All day",
     "context": "%1 · All day",
-    "reference": "Modals/EventDetailsModal.qml:347",
+    "reference": "Modals/EventDetailsModal.qml:377",
     "comment": "event details time label for all-day events"
   },
   {
@@ -62,13 +62,13 @@
   {
     "term": "(untitled)",
     "context": "(untitled)",
-    "reference": "Modals/EventDetailsModal.qml:547",
+    "reference": "Modals/EventDetailsModal.qml:577",
     "comment": "event details fallback title when event has no title"
   },
   {
     "term": "+%1 more",
     "context": "+%1 more",
-    "reference": "Modules/views/MonthView.qml:361",
+    "reference": "Modules/views/MonthView.qml:362",
     "comment": "overflow label in month grid day cell, %1 is the number of hidden events"
   },
   {
@@ -228,6 +228,12 @@
     "comment": "about page project section header | settings sidebar tab label"
   },
   {
+    "term": "Accept",
+    "context": "Accept",
+    "reference": "Modals/EventDetailsModal.qml:686",
+    "comment": "RSVP accept button"
+  },
+  {
     "term": "Account connected",
     "context": "Account connected",
     "reference": "Modals/AccountAddModal.qml:642",
@@ -254,7 +260,7 @@
   {
     "term": "Add a calendar",
     "context": "Add a calendar",
-    "reference": "Modals/EventDetailsModal.qml:955",
+    "reference": "Modals/EventDetailsModal.qml:1047",
     "comment": "event form button to add a calendar when none exist"
   },
   {
@@ -266,13 +272,13 @@
   {
     "term": "Add description",
     "context": "Add description",
-    "reference": "Modals/EventDetailsModal.qml:1026",
+    "reference": "Modals/EventDetailsModal.qml:1118",
     "comment": "event form placeholder for description text area"
   },
   {
     "term": "Add title",
     "context": "Add title",
-    "reference": "Modals/EventDetailsModal.qml:822",
+    "reference": "Modals/EventDetailsModal.qml:914",
     "comment": "event form placeholder for title input"
   },
   {
@@ -290,7 +296,7 @@
   {
     "term": "Agenda",
     "context": "Agenda",
-    "reference": "Modules/CalendarSidebar.qml:163, Modules/CalendarContent.qml:31",
+    "reference": "Modules/CalendarSidebar.qml:163, Modules/CalendarContent.qml:32",
     "comment": "header title when the agenda view is active | view switcher option in sidebar"
   },
   {
@@ -308,7 +314,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:851, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:91",
+    "reference": "Modals/EventDetailsModal.qml:943, Modals/SearchModal.qml:80, Modules/views/AgendaView.qml:60, Modules/views/DayView.qml:32, Modules/views/WeekView.qml:50, Modules/views/MonthView.qml:92",
     "comment": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -386,7 +392,7 @@
   {
     "term": "Attendees",
     "context": "Attendees",
-    "reference": "Modals/EventDetailsModal.qml:642",
+    "reference": "Modals/EventDetailsModal.qml:734",
     "comment": "event details section label for attendee list"
   },
   {
@@ -464,7 +470,7 @@
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/ConfirmDialog.qml:71, Modals/EventDetailsModal.qml:507, Modals/NewCalendarDialog.qml:100, Modals/RenameCalendarDialog.qml:97, Modals/AccountAddModal.qml:1089, Modals/CalendarRemindersDialog.qml:375, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
+    "reference": "Modals/ConfirmDialog.qml:71, Modals/EventDetailsModal.qml:537, Modals/NewCalendarDialog.qml:100, Modals/RenameCalendarDialog.qml:97, Modals/AccountAddModal.qml:1089, Modals/CalendarRemindersDialog.qml:375, Modals/FileBrowser/FileBrowserOverwriteDialog.qml:83",
     "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel"
   },
   {
@@ -536,7 +542,7 @@
   {
     "term": "Confirm delete",
     "context": "Confirm delete",
-    "reference": "Modals/EventDetailsModal.qml:439",
+    "reference": "Modals/EventDetailsModal.qml:469",
     "comment": "event details button to confirm deleting the event"
   },
   {
@@ -672,6 +678,12 @@
     "comment": "keyboard shortcut description"
   },
   {
+    "term": "Decline",
+    "context": "Decline",
+    "reference": "Modals/EventDetailsModal.qml:704",
+    "comment": "RSVP decline button"
+  },
+  {
     "term": "Default event duration",
     "context": "Default event duration",
     "reference": "Modals/SettingsContent.qml:387",
@@ -716,7 +728,7 @@
   {
     "term": "Description",
     "context": "Description",
-    "reference": "Modals/EventDetailsModal.qml:771",
+    "reference": "Modals/EventDetailsModal.qml:863",
     "comment": "event details section label for description"
   },
   {
@@ -782,7 +794,7 @@
   {
     "term": "Edit event",
     "context": "Edit event",
-    "reference": "Modals/EventDetailsModal.qml:363, Modals/EventDetailsModal.qml:415",
+    "reference": "Modals/EventDetailsModal.qml:393, Modals/EventDetailsModal.qml:445",
     "comment": "event modal header when editing | event modal window title when editing"
   },
   {
@@ -830,13 +842,13 @@
   {
     "term": "Event",
     "context": "Event",
-    "reference": "Modals/EventDetailsModal.qml:363",
+    "reference": "Modals/EventDetailsModal.qml:393",
     "comment": "event modal window title when viewing"
   },
   {
     "term": "Event details",
     "context": "Event details",
-    "reference": "Modals/EventDetailsModal.qml:415",
+    "reference": "Modals/EventDetailsModal.qml:445",
     "comment": "event modal header when viewing"
   },
   {
@@ -962,7 +974,7 @@
   {
     "term": "Join video call",
     "context": "Join video call",
-    "reference": "Modals/EventDetailsModal.qml:589",
+    "reference": "Modals/EventDetailsModal.qml:619",
     "comment": "event details row that opens the meeting link"
   },
   {
@@ -1040,8 +1052,14 @@
   {
     "term": "Location",
     "context": "Location",
-    "reference": "Modals/EventDetailsModal.qml:894",
+    "reference": "Modals/EventDetailsModal.qml:986",
     "comment": "event form placeholder for location input"
+  },
+  {
+    "term": "Maybe",
+    "context": "Maybe",
+    "reference": "Modals/EventDetailsModal.qml:695",
+    "comment": "RSVP tentative button"
   },
   {
     "term": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
@@ -1130,7 +1148,7 @@
   {
     "term": "New event",
     "context": "New event",
-    "reference": "Modals/EventDetailsModal.qml:363, Modals/EventDetailsModal.qml:415",
+    "reference": "Modals/EventDetailsModal.qml:393, Modals/EventDetailsModal.qml:445",
     "comment": "event modal header when creating | event modal window title when creating"
   },
   {
@@ -1178,7 +1196,7 @@
   {
     "term": "No calendars yet. Add one to start creating events.",
     "context": "No calendars yet. Add one to start creating events.",
-    "reference": "Modals/EventDetailsModal.qml:948",
+    "reference": "Modals/EventDetailsModal.qml:1040",
     "comment": "event form guidance when there are no writable calendars"
   },
   {
@@ -1484,13 +1502,13 @@
   {
     "term": "Save",
     "context": "Save",
-    "reference": "Modals/EventDetailsModal.qml:521, Modals/RenameCalendarDialog.qml:104, Modals/CalendarRemindersDialog.qml:382, Modals/FileBrowser/FileBrowserSaveRow.qml:59",
+    "reference": "Modals/EventDetailsModal.qml:551, Modals/RenameCalendarDialog.qml:104, Modals/CalendarRemindersDialog.qml:382, Modals/FileBrowser/FileBrowserSaveRow.qml:59",
     "comment": "event details button to save changes | file browser save button | per-calendar reminders dialog button to save | rename calendar dialog button to save name"
   },
   {
     "term": "Saving...",
     "context": "Saving...",
-    "reference": "Modals/EventDetailsModal.qml:521",
+    "reference": "Modals/EventDetailsModal.qml:551",
     "comment": "event details save button while saving"
   },
   {
@@ -1730,7 +1748,7 @@
   {
     "term": "This account cannot be reconnected — remove it and add it again.",
     "context": "This account cannot be reconnected — remove it and add it again.",
-    "reference": "Services/DankCalService.qml:748",
+    "reference": "Services/DankCalService.qml:851",
     "comment": "error when reconnect is unavailable for a provider"
   },
   {
@@ -1748,7 +1766,7 @@
   {
     "term": "Today",
     "context": "Today",
-    "reference": "Modules/CalendarContent.qml:52, Modals/SearchModal.qml:69, Modules/views/AgendaView.qml:29",
+    "reference": "Modules/CalendarContent.qml:53, Modals/SearchModal.qml:69, Modules/views/AgendaView.qml:29",
     "comment": "agenda section header for the current day | header button that jumps to the current date | search result date label for current day"
   },
   {
@@ -1920,6 +1938,12 @@
     "comment": "security note body in oauth intro"
   },
   {
+    "term": "Your response",
+    "context": "Your response",
+    "reference": "Modals/EventDetailsModal.qml:672",
+    "comment": "event details RSVP section label"
+  },
+  {
     "term": "all day",
     "context": "all day",
     "reference": "Modules/views/DayView.qml:100",
@@ -1976,7 +2000,7 @@
   {
     "term": "· %1 invited · %2 accepted",
     "context": "· %1 invited · %2 accepted",
-    "reference": "Modals/EventDetailsModal.qml:360",
+    "reference": "Modals/EventDetailsModal.qml:390",
     "comment": "event details attendee count summary"
   }
 ]
