@@ -58,18 +58,7 @@ Singleton {
 
     onFocusDateChanged: _ensureWindow()
 
-    // TEMP: stub account to visualize the long re-auth tooltip — remove me.
-    readonly property var _tooltipTestAccount: ({
-            "id": "tooltip-test",
-            "kind": "google",
-            "displayName": "tooltip-test@example.com",
-            "authorized": false,
-            "needsReauth": true,
-            "authError": "OAuth token refresh failed: the authorization server at https://oauth2.googleapis.com/token responded with HTTP 400 invalid_grant. The refresh token issued to client 1098234571092-a8s7d6f5g4h3j2k1l0qwertyuiop.apps.googleusercontent.com has been revoked, expired, or was issued to a different client; the account owner may have changed their password, revoked third-party access, or the token has been unused for more than six months. Additionally the device clock skew was measured at +312 seconds which exceeds the allowed 300 second tolerance for JWT assertion validation, and the requested scopes calendar, calendar.events and calendar.readonly could not be re-consented non-interactively. Remove the account and add it again, ensure the system clock is synchronized via NTP, then re-grant calendar permissions during the interactive sign-in flow. Trace ID: 4f9c1a2b-7e6d-4c3a-9b8f-1d2e3f4a5b6c — retry attempt 7 of 7 abandoned."
-        })
-
     Component.onCompleted: {
-        accounts = [_tooltipTestAccount];
         if (socketPath && socketPath.length > 0) {
             socketProbe.running = true;
         }
@@ -290,7 +279,7 @@ Singleton {
                 lastError = response.error;
                 return;
             }
-            const list = [_tooltipTestAccount, ...(response.result || [])]; // TEMP: keep stub pinned
+            const list = response.result || [];
             if (_stableStringify(list) === _stableStringify(accounts))
                 return;
             accounts = _mergeStable(list, accounts);
