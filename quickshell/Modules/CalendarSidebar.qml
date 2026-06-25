@@ -410,7 +410,7 @@ Item {
                         DankIcon {
                             id: authWarning
                             visible: !parent.authorized
-                            anchors.right: accMoreButton.visible ? accMoreButton.left : parent.right
+                            anchors.right: accMoreButton.left
                             anchors.rightMargin: Theme.spacingXS
                             anchors.verticalCenter: parent.verticalCenter
                             name: "warning"

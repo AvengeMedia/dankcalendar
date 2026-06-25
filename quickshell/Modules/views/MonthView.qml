@@ -13,6 +13,7 @@ Item {
     property int eventsVersion: 0
 
     signal daySelected(date day)
+    signal dayActivated(date day)
     signal eventClicked(var event)
     signal previousRequested
     signal nextRequested
@@ -376,6 +377,7 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: root.daySelected(parent.cellDate)
+                            onDoubleClicked: root.dayActivated(parent.cellDate)
                         }
                     }
                 }

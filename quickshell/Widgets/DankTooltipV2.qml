@@ -117,20 +117,25 @@ Item {
             border.color: Qt.rgba(Theme.outline.r, Theme.outline.g, Theme.outline.b, 0.08)
         }
 
-        contentItem: Text {
-            id: textContent
+        contentItem: Item {
+            // Bound the popup's implicit size to the wrapped text so show() places it correctly.
+            implicitWidth: textContent.width
+            implicitHeight: textContent.height
 
-            readonly property bool multiline: tooltip.text.includes("\n")
+            Text {
+                id: textContent
 
-            width: Math.min(implicitWidth, 500)
-            text: tooltip.text
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.surfaceText
-            wrapMode: Text.NoWrap
-            maximumLineCount: multiline ? 20 : 1
-            elide: Text.ElideRight
-            horizontalAlignment: multiline ? Text.AlignLeft : Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+                readonly property int maxWidth: 360
+                readonly property bool wrapped: implicitWidth > maxWidth || tooltip.text.includes("\n")
+
+                width: Math.min(implicitWidth, maxWidth)
+                text: tooltip.text
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.surfaceText
+                wrapMode: Text.Wrap
+                horizontalAlignment: wrapped ? Text.AlignLeft : Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
         }
 
         enter: Transition {

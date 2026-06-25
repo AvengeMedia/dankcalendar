@@ -133,9 +133,9 @@ FloatingWindow {
         eventLoader.item.show(event);
     }
 
-    function openCreateEvent() {
+    function openCreateEvent(date) {
         eventLoader.active = true;
-        eventLoader.item.showCreate(selectedDate);
+        eventLoader.item.showCreate(date || selectedDate);
     }
 
     function openSearch() {
@@ -459,6 +459,10 @@ FloatingWindow {
                         onSettingsRequested: window.openSettings()
                         onSearchRequested: window.openSearch()
                         onDaySelected: day => window.selectedDate = day
+                        onDayActivated: day => {
+                            window.selectedDate = day;
+                            window.openCreateEvent(day);
+                        }
                         onEventClicked: ev => window.openEventDetails(ev)
                     }
                 }
