@@ -16,6 +16,14 @@ Item {
     readonly property real hourHeight: 56
     readonly property real timeColumnWidth: 72
 
+    SystemClock {
+        id: clock
+        precision: SystemClock.Minutes
+    }
+
+    readonly property bool showsNow: clock.date.getFullYear() === displayDate.getFullYear() && clock.date.getMonth() === displayDate.getMonth() && clock.date.getDate() === displayDate.getDate()
+    readonly property real nowHour: clock.date.getHours() + clock.date.getMinutes() / 60
+
     Connections {
         target: DankCalService
         function onEventsUpdated() {
@@ -174,6 +182,31 @@ Item {
                         width: parent.width
                         height: 1
                         color: Theme.gridLine
+                    }
+                }
+
+                Item {
+                    visible: root.showsNow
+                    y: root.nowHour * root.hourHeight
+                    width: parent.width
+                    z: 10
+
+                    Rectangle {
+                        id: nowDot
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.top
+                        width: 10
+                        height: 10
+                        radius: 5
+                        color: Theme.error
+                    }
+
+                    Rectangle {
+                        anchors.left: nowDot.right
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.top
+                        height: 2
+                        color: Theme.error
                     }
                 }
 

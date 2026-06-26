@@ -42,6 +42,8 @@ Singleton {
     property alias closeBehavior: adapter.closeBehavior
     // width of the calendar sidebar in pixels, set by dragging its edge
     property alias sidebarWidth: adapter.sidebarWidth
+    // last active calendar view, restored on open: "month" | "week" | "day" | "agenda"
+    property alias lastView: adapter.lastView
 
     readonly property var locale: Qt.locale()
     // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
@@ -138,6 +140,7 @@ Singleton {
             property int snoozeMinutes: 5
             property string closeBehavior: "minimize"
             property int sidebarWidth: 240
+            property string lastView: "month"
         }
     }
 }

@@ -12,7 +12,8 @@ FloatingWindow {
 
     property bool isCompactMode: width < 760
     property bool menuVisible: !isCompactMode
-    property string currentView: "month"
+    property string currentView: SettingsData.lastView
+    onCurrentViewChanged: SettingsData.lastView = currentView
     property date displayDate: new Date()
     property date selectedDate: new Date()
     property date today: new Date()

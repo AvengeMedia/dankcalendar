@@ -25,6 +25,20 @@ Item {
         return d;
     }
 
+    SystemClock {
+        id: clock
+        precision: SystemClock.Minutes
+    }
+
+    readonly property int nowColumn: {
+        for (let i = 0; i < 7; i++) {
+            if (isSameDay(dayAt(i), clock.date))
+                return i;
+        }
+        return -1;
+    }
+    readonly property real nowHour: clock.date.getHours() + clock.date.getMinutes() / 60
+
     function hourLabel(hour) {
         if (hour === 0)
             return "";
@@ -371,6 +385,36 @@ Item {
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+
+                Item {
+                    anchors.right: parent.right
+                    width: parent.width - root.timeColumnWidth
+                    height: parent.height
+                    visible: root.nowColumn >= 0
+                    z: 10
+
+                    Item {
+                        y: root.nowHour * root.hourHeight
+                        width: parent.width
+
+                        Rectangle {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.top
+                            height: 2
+                            color: Theme.error
+                        }
+
+                        Rectangle {
+                            x: root.nowColumn * (parent.width / 7)
+                            anchors.verticalCenter: parent.top
+                            width: 10
+                            height: 10
+                            radius: 5
+                            color: Theme.error
                         }
                     }
                 }
