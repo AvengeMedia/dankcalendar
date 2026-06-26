@@ -1,20 +1,26 @@
 package keyring
 
 import (
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"path/filepath"
+	"strings"
 
 	kr "github.com/99designs/keyring"
+	"github.com/godbus/dbus/v5"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 )
 
 const (
-	serviceName    = "dankcal"
-	keychainName   = "dankcal"
-	collectionName = "login"
+	serviceName            = "dankcal"
+	keychainName           = "dankcal"
+	fallbackCollectionName = "login"
+
+	secretServiceBus  = "org.freedesktop.secrets"
+	secretServicePath = "/org/freedesktop/secrets"
 )
 
 var ErrNotFound = errors.New("keyring: key not found")
@@ -50,7 +56,7 @@ func defaultConfig() kr.Config {
 	return kr.Config{
 		ServiceName:             serviceName,
 		KeychainName:            keychainName,
-		LibSecretCollectionName: collectionName,
+		LibSecretCollectionName: resolveDefaultCollection(),
 		KWalletAppID:            serviceName,
 		KWalletFolder:           serviceName,
 		FileDir:                 fileDir,
@@ -62,6 +68,60 @@ func defaultConfig() kr.Config {
 			kr.FileBackend,
 		},
 	}
+}
+
+// resolveDefaultCollection reuses the Secret Service "default" collection
+// (e.g. KWallet's existing wallet) instead of forcing a separate "login" one.
+func resolveDefaultCollection() string {
+	conn, err := dbus.SessionBus()
+	if err != nil {
+		return fallbackCollectionName
+	}
+
+	var path dbus.ObjectPath
+	obj := conn.Object(secretServiceBus, dbus.ObjectPath(secretServicePath))
+	if err := obj.Call("org.freedesktop.Secret.Service.ReadAlias", 0, "default").Store(&path); err != nil {
+		return fallbackCollectionName
+	}
+
+	name := collectionBaseName(string(path))
+	if name == "" {
+		return fallbackCollectionName
+	}
+
+	log.Debugf("keyring using default secret collection %q", name)
+	return name
+}
+
+func collectionBaseName(path string) string {
+	decoded := decodeCollectionPath(path)
+	idx := strings.LastIndex(decoded, "/")
+	if idx < 0 || idx == len(decoded)-1 {
+		return ""
+	}
+	return decoded[idx+1:]
+}
+
+// decodeCollectionPath expands the "_XX" hex escapes the Secret Service uses in
+// object paths, matching how 99designs/keyring matches collections by name.
+func decodeCollectionPath(src string) string {
+	var b strings.Builder
+	for i := 0; i < len(src); i++ {
+		if src[i] != '_' {
+			b.WriteByte(src[i])
+			continue
+		}
+		if i+3 > len(src) {
+			return src
+		}
+		decoded, err := hex.DecodeString(src[i+1 : i+3])
+		if err != nil {
+			return src
+		}
+		b.Write(decoded)
+		i += 2
+	}
+	return b.String()
 }
 
 func filePassword(prompt string) (string, error) {

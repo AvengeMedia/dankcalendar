@@ -126,6 +126,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	registry.Register(evolution.Factory{})
 
 	keyringStore := dankkeyring.Open()
+	migrateLegacyLoginKeyring(ctx, keyringStore, r)
 	secrets := dankkeyring.NewSecretStore(keyringStore, repo.NewSecretStore(r))
 	flows := oauth.NewFlowRegistry()
 	broker := auth_handler.NewCallbackBroker()
