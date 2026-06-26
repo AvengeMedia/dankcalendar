@@ -113,6 +113,9 @@
   "About": {
     "About": "О программе"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "Аккаунт подключён"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "Режим дня"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "Длительность события по умолчанию"
   },
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "Местоположение"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft часто возвращает server_error в первые минуты после создания или изменения регистрации приложения. Подождите пару минут и попробуйте снова."
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "ID клиента, секрет и токен обновления хранятся в системной связке ключей (libsecret/kwallet), если доступна, или в зашифрованном локальном файле."
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "весь день"

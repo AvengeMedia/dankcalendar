@@ -113,6 +113,9 @@
   "About": {
     "About": "Giới thiệu"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "Đã kết nối tài khoản"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "Chế độ ngày"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "Thời lượng sự kiện mặc định"
   },
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "Địa điểm"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft thường trả về server_error trong vài phút đầu sau khi tạo hoặc thay đổi đăng ký ứng dụng. Hãy đợi một hoặc hai phút rồi thử lại."
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Client ID, secret và refresh token của bạn được lưu trong keyring hệ thống (libsecret/kwallet) nếu có, hoặc trong tệp cục bộ được mã hóa."
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "cả ngày"

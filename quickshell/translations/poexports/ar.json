@@ -113,6 +113,9 @@
   "About": {
     "About": "حول"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "تم ربط الحساب"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "عرض اليوم"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "المدة الافتراضية للحدث"
   },
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "الموقع"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "غالبًا ما تُرجع Microsoft الخطأ \"server_error\" خلال الدقائق القليلة الأولى بعد إنشاء تسجيل التطبيق أو تغييره. انتظر دقيقة أو دقيقتين ثم حاول مرة أخرى."
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "يتم حفظ معرف العميل، والسر، ورمز التحديث في سلسلة مفاتيح النظام (libsecret/kwallet) عندما تكون متاحة، أو في ملف محلي مشفر."
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "طوال اليوم"

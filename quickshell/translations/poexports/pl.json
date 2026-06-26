@@ -113,6 +113,9 @@
   "About": {
     "About": "O programie"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "Konto połączone"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "Widok dnia"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "Domyślny czas trwania wydarzenia"
   },
@@ -429,7 +435,7 @@
     "Event details": "Szczegóły wydarzenia"
   },
   "Evolution": {
-    "Evolution": ""
+    "Evolution": "Evolution"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Przełączanie • F10: Pomoc"
@@ -489,7 +495,7 @@
     "Initial reminder set on new events.": "Domyślne przypomnienie dla nowych wydarzeń."
   },
   "Join video call": {
-    "Join video call": ""
+    "Join video call": "Dołącz do spotkania wideo"
   },
   "Keep typing": {
     "Keep typing": "Wpisz więcej znaków"
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "Lokalizacja"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft często zwraca błąd „server_error” przez kilka pierwszych minut po utworzeniu lub zmianie rejestracji aplikacji. Odczekaj minutę lub dwie i spróbuj ponownie."
@@ -915,7 +924,7 @@
     "Use synced name": "Użyj zsynchronizowanej nazwy"
   },
   "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
-    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "Używaj kalendarzy już zarządzanych na tym komputerze przez Evolution Data Server (Evolution, GNOME Online Accounts i inne). Logowanie nie jest wymagane — Evolution zajmuje się uwierzytelnianiem i synchronizacją."
   },
   "Use this folder": {
     "Use this folder": "Użyj tego folderu"
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Identyfikator klienta, klucz tajny i token odświeżania są przechowywane w systemowym pęku kluczy (libsecret/kwallet), jeśli jest on dostępny, lub w zaszyfrowanym pliku lokalnym."
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "Cały dzień"

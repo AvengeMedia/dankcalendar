@@ -113,6 +113,9 @@
   "About": {
     "About": "关于"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "账户已连接"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "日视图"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "默认日程时长"
   },
@@ -429,7 +435,7 @@
     "Event details": "日程详情"
   },
   "Evolution": {
-    "Evolution": ""
+    "Evolution": "Evolution"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I：切换 • F10：帮助"
@@ -489,7 +495,7 @@
     "Initial reminder set on new events.": "新建日程的初始提醒设置。"
   },
   "Join video call": {
-    "Join video call": ""
+    "Join video call": "加入视频会议"
   },
   "Keep typing": {
     "Keep typing": "继续输入"
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "地点"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "在创建或更改应用注册后的最初几分钟内，Microsoft 经常会返回 server_error（服务器错误）。请等待一两分钟后再试。"
@@ -915,7 +924,7 @@
     "Use synced name": "使用已同步的名称"
   },
   "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
-    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "使用 Evolution Data Server 已在此计算机上管理的日历（包括 Evolution、GNOME 线上账户等）。无需登录 — 凭据和同步将由 Evolution 自行处理。"
   },
   "Use this folder": {
     "Use this folder": "使用此文件夹"
@@ -927,7 +936,7 @@
     "Username (optional)": "用户名（可选）"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": "使用DankMaterialShell动态色彩。"
+    "Using DankMaterialShell dynamic colors.": "正在使用DankMaterialShell动态色彩。"
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "验证桌面通知是否有效。"
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "在支持的情况下，您的客户端 ID、密钥及刷新令牌（Refresh Token）都将保存在系统密钥环（libsecret/kwallet）中，否则将保存在本地加密文件中。"
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "全天"

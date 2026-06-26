@@ -113,11 +113,14 @@
   "About": {
     "About": "אודות"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "החשבון חובר"
   },
   "Account problem — click for options": {
-    "Account problem — click for options": ""
+    "Account problem — click for options": "בעיה בחשבון — לחץ/י לאפשרויות"
   },
   "Accounts": {
     "Accounts": "חשבונות"
@@ -237,7 +240,7 @@
     "Capabilities": "יכולות"
   },
   "Choose a JSON color theme file.": {
-    "Choose a JSON color theme file.": ""
+    "Choose a JSON color theme file.": "בחר/י קובץ JSON של ערכת צבעים."
   },
   "Choose a provider": {
     "Choose a provider": "בחר/י ספק"
@@ -294,13 +297,13 @@
     "Continue": "המשך/המשיכי"
   },
   "Copy link": {
-    "Copy link": ""
+    "Copy link": "העתק/י קישור"
   },
   "Copy path": {
     "Copy path": "העתק/י נתיב"
   },
   "Could not read that file — expected a JSON color theme.": {
-    "Could not read that file — expected a JSON color theme.": ""
+    "Could not read that file — expected a JSON color theme.": "לא ניתן היה לקרוא קובץ זה — הציפייה הייתה לערכת צבעים מסוג JSON."
   },
   "Could not read that file.": {
     "Could not read that file.": "לא ניתן לקרוא את הקובץ הזה."
@@ -315,7 +318,7 @@
     "Credentials stay on this machine": "אישורי הגישה נשארים על מחשב זה"
   },
   "Custom": {
-    "Custom": ""
+    "Custom": "מותאם אישית"
   },
   "DMS dynamic": {
     "DMS dynamic": "דינמי של DMS"
@@ -333,7 +336,7 @@
     "Dank Linux Discord": "ה-Discord של Dank Linux"
   },
   "DankMaterialShell not detected — using the %1 preset.": {
-    "DankMaterialShell not detected — using the %1 preset.": ""
+    "DankMaterialShell not detected — using the %1 preset.": "המעטפת DankMaterialShell לא זוהתה — משתמש בהגדרה המוכנה מראש %1."
   },
   "Dark": {
     "Dark": "כהה"
@@ -343,6 +346,9 @@
   },
   "Day view": {
     "Day view": "תצוגת יום"
+  },
+  "Decline": {
+    "Decline": ""
   },
   "Default event duration": {
     "Default event duration": "משך אירוע כברירת מחדל"
@@ -429,13 +435,13 @@
     "Event details": "פרטי אירוע"
   },
   "Evolution": {
-    "Evolution": ""
+    "Evolution": "Evolution"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: החלפה • F10: עזרה"
   },
   "Feed URL": {
-    "Feed URL": ""
+    "Feed URL": "כתובת URL של הפיד"
   },
   "File Already Exists": {
     "File Already Exists": "הקובץ כבר קיים"
@@ -450,7 +456,7 @@
     "First day shown in week and month views.": "היום הראשון שמוצג בתצוגות שבוע וחודש."
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
-    "Follow DankMaterialShell colors, falling back to a preset.": ""
+    "Follow DankMaterialShell colors, falling back to a preset.": "עקוב/י אחר הצבעים של DankMaterialShell, עם גיבוי להגדרה מוכנה מראש."
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "עוקב אחר ערכת הצבעים של המערכת (כרגע %1)."
@@ -489,7 +495,7 @@
     "Initial reminder set on new events.": "תזכורת התחלתית המוגדרת לאירועים חדשים."
   },
   "Join video call": {
-    "Join video call": ""
+    "Join video call": "הצטרף/י לשיחת וידאו"
   },
   "Keep typing": {
     "Keep typing": "המשך/המשיכי להקליד"
@@ -513,7 +519,7 @@
     "Light": "בהיר"
   },
   "Load colors from your own theme file.": {
-    "Load colors from your own theme file.": ""
+    "Load colors from your own theme file.": "טען/י צבעים מקובץ ערכת הנושא שלך."
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "טוען הוראות התקנה…"
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "מיקום"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "לעיתים קרובות Microsoft מחזירה server_error בדקות הראשונות לאחר יצירת או שינוי רישום של אפליקציה. המתן/י דקה או שתיים ונסה/י שוב."
@@ -603,7 +612,7 @@
     "No matching events": "אין אירועים תואמים"
   },
   "No theme file selected": {
-    "No theme file selected": ""
+    "No theme file selected": "לא נבחר קובץ ערכת נושא"
   },
   "No writable calendar available": {
     "No writable calendar available": "אין יומן זמין לכתיבה"
@@ -615,7 +624,7 @@
     "Not authorized — remove this account and add it again": "לא מאומת — הסר/י חשבון זה והוסף/י אותו מחדש"
   },
   "Not signed in — click to reconnect or re-add this account": {
-    "Not signed in — click to reconnect or re-add this account": ""
+    "Not signed in — click to reconnect or re-add this account": "לא מחובר — לחץ/י כדי להתחבר מחדש או להוסיף חשבון זה שוב"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "אין שום דבר מתוכנן ב%1 הימים הבאים"
@@ -660,7 +669,7 @@
     "Overwrite": "דריסה"
   },
   "Palette: %1": {
-    "Palette: %1": ""
+    "Palette: %1": "פלטת צבעים: %1"
   },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "חלק מחבילת Dank Linux."
@@ -669,7 +678,7 @@
     "Password": "סיסמה"
   },
   "Password (optional)": {
-    "Password (optional)": ""
+    "Password (optional)": "סיסמה (אופציונלית)"
   },
   "Paste credentials": {
     "Paste credentials": "הדבק/י אישורי גישה"
@@ -678,13 +687,13 @@
     "Paste the Application (client) ID from your app registration's Overview page.": "הדבק/י את ה-Application (client) ID מתוך דף הסקירה הכללית של רישום האפליקציה שלך."
   },
   "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
-    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "הדבק/י את כתובת ה-URL של פיד יומן חיצוני כדי להירשם אליו. היומן הוא לקריאה בלבד ומתרענן ברקע. קישורי webcal:// נתמכים."
   },
   "Paste your credentials": {
     "Paste your credentials": "הדבק/י את אישורי הגישה שלך"
   },
   "Pick a color source, palette, or your own theme file.": {
-    "Pick a color source, palette, or your own theme file.": ""
+    "Pick a color source, palette, or your own theme file.": "בחר/י מקור צבע, פלטת צבעים או קובץ ערכת נושא משלך."
   },
   "Pictures": {
     "Pictures": "תמונות"
@@ -693,7 +702,7 @@
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "הגדר/י נתיב לתיקייה של קובצי ics. כל תת-תיקייה או קובץ ics. הופך ליומן — תואם לפריסות של vdirsyncer/khal. התיקייה תיווצר אם היא לא קיימת."
   },
   "Preset": {
-    "Preset": ""
+    "Preset": "הגדרה מוכנה מראש"
   },
   "Previous day": {
     "Previous day": "יום קודם"
@@ -777,7 +786,7 @@
     "Select file": "בחר/י קובץ"
   },
   "Select theme file": {
-    "Select theme file": ""
+    "Select theme file": "בחר/י קובץ ערכת נושא"
   },
   "Send test": {
     "Send test": "שלח/י בדיקה"
@@ -807,7 +816,7 @@
     "Sign in with your Google account.": "התחבר/י עם חשבון ה-Google שלך."
   },
   "Sign-in expired — click to reconnect": {
-    "Sign-in expired — click to reconnect": ""
+    "Sign-in expired — click to reconnect": "פג תוקף ההתחברות — לחץ/י כדי להתחבר מחדש"
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "ההתחברות פגה — התחבר/י מחדש כדי להמשיך לסנכרן"
@@ -843,13 +852,13 @@
     "Stock palette": "פלטת צבעים מובנית"
   },
   "Subscribe": {
-    "Subscribe": ""
+    "Subscribe": "הירשם/י"
   },
   "Subscribe to an external calendar by URL (webcal/https).": {
-    "Subscribe to an external calendar by URL (webcal/https).": ""
+    "Subscribe to an external calendar by URL (webcal/https).": "הירשם/י ליומן חיצוני באמצעות כתובת URL (webcal/https)."
   },
   "Subscribing…": {
-    "Subscribing…": ""
+    "Subscribing…": "נרשם…"
   },
   "Sync now": {
     "Sync now": "סנכרן/י עכשיו"
@@ -906,16 +915,16 @@
     "Type at least 2 characters to search events.": "הקלד/י לפחות 2 תווים כדי לחפש אירועים."
   },
   "University timetable": {
-    "University timetable": ""
+    "University timetable": "מערכת שעות אוניברסיטאית"
   },
   "Use a bundled color palette.": {
-    "Use a bundled color palette.": ""
+    "Use a bundled color palette.": "השתמש/י בפלטת צבעים מובנית."
   },
   "Use synced name": {
     "Use synced name": "השתמש/י בשם המסונכרן"
   },
   "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
-    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "השתמש/י ביומנים שEvolution Data Server כבר מנהל על מחשב זה (Evolution, חשבונות GNOME מקוונים ועוד). אין צורך בהתחברות — Evolution מנהל את אישורי הגישה והסנכרון."
   },
   "Use this folder": {
     "Use this folder": "השתמש/י בתיקייה זו"
@@ -924,10 +933,10 @@
     "Username": "שם משתמש"
   },
   "Username (optional)": {
-    "Username (optional)": ""
+    "Username (optional)": "שם משתמש (אופציונלי)"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": ""
+    "Using DankMaterialShell dynamic colors.": "משתמש בצבעים הדינמיים של DankMaterialShell."
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "אמת/י שהתראות שולחן העבודה עובדות."
@@ -971,6 +980,9 @@
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "ה-Client ID, ה-Secret וטוקן הרענון שלך נשמרים בצרור המפתחות של המערכת (libsecret/kwallet) כאשר הוא זמין, או בקובץ מקומי מוצפן."
   },
+  "Your response": {
+    "Your response": ""
+  },
   "all day": {
     "all day": "כל היום"
   },
@@ -978,13 +990,13 @@
     "dark": "כהה"
   },
   "iCal subscription": {
-    "iCal subscription": ""
+    "iCal subscription": "הרשמה לiCal"
   },
   "light": {
     "light": "בהיר"
   },
   "only if the feed requires sign-in": {
-    "only if the feed requires sign-in": ""
+    "only if the feed requires sign-in": "רק אם הפיד דורש התחברות"
   },
   "password": {
     "password": "סיסמה"

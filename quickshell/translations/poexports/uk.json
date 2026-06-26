@@ -113,6 +113,9 @@
   "About": {
     "About": "Про програму"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "Обліковий запис підключено"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "Режим дня"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "Тривалість події за замовчуванням"
   },
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "Місце"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft часто повертає помилку server_error в перші кілька хвилин після створення або зміни реєстрації додатка. Зачекайте хвилину-дві та спробуйте знову."
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Ваш ID клієнта, секрет та токен оновлення зберігаються в системній в'язці ключів (libsecret/kwallet) за наявності, або в зашифрованому локальному файлі."
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "весь день"

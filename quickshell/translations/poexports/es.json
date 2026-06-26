@@ -113,6 +113,9 @@
   "About": {
     "About": "Acerca de"
   },
+  "Accept": {
+    "Accept": ""
+  },
   "Account connected": {
     "Account connected": "Cuenta conectada"
   },
@@ -344,6 +347,9 @@
   "Day view": {
     "Day view": "Vista de día"
   },
+  "Decline": {
+    "Decline": ""
+  },
   "Default event duration": {
     "Default event duration": "Duración predeterminada"
   },
@@ -529,6 +535,9 @@
   },
   "Location": {
     "Location": "Ubicación"
+  },
+  "Maybe": {
+    "Maybe": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft suele devolver server_error durante los primeros minutos tras crear o modificar el registro de una aplicación. Espera un par de minutos y vuelve a intentarlo."
@@ -970,6 +979,9 @@
   },
   "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Tu ID de cliente, secreto y token de actualización se almacenan en el llavero del sistema (libsecret/kwallet) si está disponible, o en un archivo local cifrado."
+  },
+  "Your response": {
+    "Your response": ""
   },
   "all day": {
     "all day": "todo el día"
