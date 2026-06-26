@@ -52,7 +52,7 @@ Singleton {
     signal accountAdded(string accountId)
     signal accountRemoved(string accountId)
     signal eventsUpdated
-    signal windowActionRequested(string action)
+    signal windowActionRequested(string action, string view)
     signal subscribeRequested(string url)
     signal colorSchemeUpdate(var data)
 
@@ -215,7 +215,7 @@ Singleton {
                 if (data.action === "subscribe")
                     subscribeRequested(data.url || "");
                 else
-                    windowActionRequested(data.action || "");
+                    windowActionRequested(data.action || "", data.view || "");
                 break;
             }
         case "colorScheme":

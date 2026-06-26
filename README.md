@@ -127,6 +127,7 @@ User-facing strings are translatable and managed through POEditor.
 ```bash
 dcal           # launch, or show/focus the window if already running
 dcal show      # same as above
+dcal show --view day   # open (or focus) directly on a view: month|week|day|agenda
 dcal toggle    # toggle window visibility
 dcal run       # run in the foreground (logs to the terminal)
 dcal run -d    # run as a background daemon
@@ -158,6 +159,7 @@ The daemon exposes a scriptable IPC surface — handy for keybinds and automatio
 ```bash
 dcal ipc ui.toggle
 dcal ipc ui.show
+dcal ipc ui.show view=day          # open on a specific view: month|week|day|agenda
 dcal ipc events.list from=2026-06-01 to=2026-06-30
 dcal ipc accounts.list
 dcal ipc reminders.upcoming

@@ -62,10 +62,10 @@ var Methods = []MethodSpec{
 	{Name: "reminders.upcoming", Group: "reminders", Desc: "List upcoming reminders", Params: []ParamSpec{opt("limit", "default 20")}},
 	{Name: "reminders.test", Group: "reminders", Desc: "Fire a test reminder notification"},
 
-	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window"},
+	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.open", Group: "ui", Desc: "Open a webcal/ICS subscription link in the UI", Params: []ParamSpec{req("url", "webcal:// or https ICS URL")}},
 	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},
-	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window"},
+	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.quit", Group: "ui", Desc: "Quit the running daemon"},
 
 	{Name: "system.autostart.get", Group: "system", Desc: "Report autostart status"},

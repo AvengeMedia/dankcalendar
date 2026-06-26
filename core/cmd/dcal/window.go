@@ -9,6 +9,8 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
 )
 
+var windowView string
+
 var showCmd = &cobra.Command{
 	Use:     "show",
 	Short:   "Show the calendar window, launching dcal if it is not running",
@@ -41,10 +43,28 @@ var openCmd = &cobra.Command{
 }
 
 func showOrLaunch(action string) error {
-	if err := sendUIAction(action); err == nil {
+	if err := sendUIAction(action, windowView); err == nil {
 		return nil
 	}
-	return runShellDaemon(false)
+	if err := runShellDaemon(false); err != nil {
+		return err
+	}
+	if windowView == "" {
+		return nil
+	}
+
+	// A fresh window opens on its persisted view, so retry the action until the
+	// daemon's socket is up to honor the requested view on cold start.
+	deadline := time.Now().Add(15 * time.Second)
+	for {
+		if err := sendUIAction(action, windowView); err == nil {
+			return nil
+		}
+		if time.Now().After(deadline) {
+			return errors.New("timed out waiting for dcal to start")
+		}
+		time.Sleep(250 * time.Millisecond)
+	}
 }
 
 // openLink hands a subscription URL to a running instance, or cold-starts one
@@ -92,7 +112,7 @@ func sendUIOpen(url string) error {
 	return nil
 }
 
-func sendUIAction(action string) error {
+func sendUIAction(action, view string) error {
 	socketPath, err := ipc.FindRunningSocket()
 	if err != nil {
 		return err
@@ -104,7 +124,12 @@ func sendUIAction(action string) error {
 	}
 	defer client.Close()
 
-	resp, err := client.Call(ipc.Request{ID: 1, Method: "ui." + action})
+	req := ipc.Request{ID: 1, Method: "ui." + action}
+	if view != "" {
+		req.Params = map[string]any{"view": view}
+	}
+
+	resp, err := client.Call(req)
 	if err != nil {
 		return err
 	}

@@ -44,22 +44,34 @@ ShellRoot {
     }
 
     property string pendingSubscribeUrl: ""
+    property string pendingView: ""
 
-    function handleWindowAction(action) {
+    function handleWindowAction(action, view) {
         switch (action) {
         case "show":
+            pendingView = view;
             showAndFocus();
             break;
         case "hide":
             windowLoader.active = false;
             break;
         case "toggle":
-            if (windowLoader.active)
+            if (windowLoader.active) {
                 windowLoader.active = false;
-            else
-                showAndFocus();
+                return;
+            }
+            pendingView = view;
+            showAndFocus();
             break;
         }
+        applyPendingView();
+    }
+
+    function applyPendingView() {
+        if (!windowLoader.item || pendingView === "")
+            return;
+        windowLoader.item.currentView = pendingView;
+        pendingView = "";
     }
 
     function handleSubscribe(url) {
@@ -77,8 +89,8 @@ ShellRoot {
 
     Connections {
         target: DankCalService
-        function onWindowActionRequested(action) {
-            root.handleWindowAction(action);
+        function onWindowActionRequested(action, view) {
+            root.handleWindowAction(action, view);
         }
         function onSubscribeRequested(url) {
             root.handleSubscribe(url);
@@ -88,6 +100,7 @@ ShellRoot {
     Connections {
         target: windowLoader
         function onItemChanged() {
+            root.applyPendingView();
             root.applyPendingSubscribe();
         }
     }

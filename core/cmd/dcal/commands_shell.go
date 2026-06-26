@@ -19,7 +19,7 @@ var runCmd = &cobra.Command{
 		isDaemonChild, _ := cmd.Flags().GetBool("daemon-child")
 
 		if !isDaemonChild && len(getAllPIDs()) > 0 {
-			if err := sendUIAction("show"); err == nil {
+			if err := sendUIAction("show", ""); err == nil {
 				log.Info("dcal already running; showing window")
 				return nil
 			}

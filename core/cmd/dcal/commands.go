@@ -43,6 +43,9 @@ func init() {
 	rootCmd.AddCommand(restartCmd)
 	rootCmd.AddCommand(restartDetachedCmd)
 	rootCmd.AddCommand(killCmd)
+	showCmd.Flags().StringVar(&windowView, "view", "", "Open on a specific view: month|week|day|agenda")
+	toggleCmd.Flags().StringVar(&windowView, "view", "", "Open on a specific view: month|week|day|agenda")
+
 	rootCmd.AddCommand(showCmd)
 	rootCmd.AddCommand(toggleCmd)
 	rootCmd.AddCommand(openCmd)
