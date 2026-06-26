@@ -21,6 +21,7 @@ Item {
     signal searchRequested
     signal daySelected(date day)
     signal dayActivated(date day)
+    signal viewDayRequested(date day)
 
     function headerTitle() {
         switch (currentView) {
@@ -165,6 +166,7 @@ Item {
                     selectedDate: root.selectedDate
                     onDaySelected: day => root.daySelected(day)
                     onDayActivated: day => root.dayActivated(day)
+                    onViewDayRequested: day => root.viewDayRequested(day)
                     onEventClicked: ev => root.eventClicked(ev)
                     onPreviousRequested: root.previousRequested()
                     onNextRequested: root.nextRequested()

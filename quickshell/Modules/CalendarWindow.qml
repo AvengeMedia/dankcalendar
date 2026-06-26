@@ -464,6 +464,11 @@ FloatingWindow {
                             window.selectedDate = day;
                             window.openCreateEvent(day);
                         }
+                        onViewDayRequested: day => {
+                            window.selectedDate = day;
+                            window.displayDate = day;
+                            window.currentView = "day";
+                        }
                         onEventClicked: ev => window.openEventDetails(ev)
                     }
                 }

@@ -15,6 +15,7 @@ Item {
     signal daySelected(date day)
     signal dayActivated(date day)
     signal eventClicked(var event)
+    signal viewDayRequested(date day)
     signal previousRequested
     signal nextRequested
 
@@ -85,6 +86,11 @@ Item {
 
     DankTooltipV2 {
         id: chipTooltip
+    }
+
+    MonthDayPopover {
+        id: dayPopover
+        onEventClicked: ev => root.eventClicked(ev)
     }
 
     function eventTooltip(ev) {
@@ -230,11 +236,6 @@ Item {
                             return upcoming.concat(ended);
                         }
 
-                        readonly property string hiddenSummary: {
-                            const hidden = displayEvents.slice(maxChips);
-                            return hidden.map(ev => ev.allDay ? ev.title : SettingsData.formatTime(ev.start) + "  " + ev.title).join("\n");
-                        }
-
                         // 36px day badge area + 14px reserved for "+N more"; 20px per chip
                         readonly property int maxChips: Math.max(0, Math.min(3, Math.floor((height - 50) / 20)))
 
@@ -266,6 +267,7 @@ Item {
                             anchors.leftMargin: Theme.spacingS
                             width: 28
                             height: 28
+                            z: 2
 
                             Rectangle {
                                 anchors.fill: parent
@@ -287,6 +289,15 @@ Item {
                                     return Theme.surfaceText;
                                 }
                                 opacity: parent.parent.inCurrentMonth ? 1.0 : 0.5
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: mouse => {
+                                    mouse.accepted = true;
+                                    root.viewDayRequested(dayCell.cellDate);
+                                }
                             }
                         }
 
@@ -366,10 +377,11 @@ Item {
 
                                 MouseArea {
                                     anchors.fill: parent
-                                    acceptedButtons: Qt.NoButton
-                                    hoverEnabled: true
-                                    onEntered: chipTooltip.show(dayCell.hiddenSummary, moreLabel)
-                                    onExited: chipTooltip.hide()
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: mouse => {
+                                        mouse.accepted = true;
+                                        dayPopover.show(dayCell.cellDate, dayCell.displayEvents, moreLabel);
+                                    }
                                 }
                             }
                         }
