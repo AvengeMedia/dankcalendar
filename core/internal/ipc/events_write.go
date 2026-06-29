@@ -326,12 +326,13 @@ func providerForCalendar(ctx context.Context, deps Deps, calendarID string) (cal
 	}
 
 	domCal := calendar.Calendar{
-		ID:        entCal.ID,
-		AccountID: entAcc.ID,
-		RemoteID:  entCal.RemoteID,
-		Name:      entCal.Name,
-		TimeZone:  entCal.TimeZone,
-		ReadOnly:  entCal.ReadOnly,
+		ID:                  entCal.ID,
+		AccountID:           entAcc.ID,
+		RemoteID:            entCal.RemoteID,
+		Name:                entCal.Name,
+		TimeZone:            entCal.TimeZone,
+		ReadOnly:            entCal.ReadOnly,
+		SupportedComponents: entCal.SupportedComponents,
 	}
 	return provider, domCal, nil
 }

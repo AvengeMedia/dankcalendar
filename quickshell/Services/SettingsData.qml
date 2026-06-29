@@ -28,6 +28,7 @@ Singleton {
     // "auto" | "12h" | "24h"
     property alias timeFormat: adapter.timeFormat
     property alias showWeekNumbers: adapter.showWeekNumbers
+    property alias showTasks: adapter.showTasks
     property alias defaultEventDurationMinutes: adapter.defaultEventDurationMinutes
     // -1 = no reminder
     property alias defaultReminderMinutes: adapter.defaultReminderMinutes
@@ -38,6 +39,7 @@ Singleton {
     property alias allDayReminderTime: adapter.allDayReminderTime
     property alias allDayReminderDaysBefore: adapter.allDayReminderDaysBefore
     property alias snoozeMinutes: adapter.snoozeMinutes
+    property alias syncIntervalMinutes: adapter.syncIntervalMinutes
     // "minimize" = hide to tray, "quit" = stop the daemon and child
     property alias closeBehavior: adapter.closeBehavior
     // width of the calendar sidebar in pixels, set by dragging its edge
@@ -130,6 +132,7 @@ Singleton {
             property string timeFormat: "auto"
             property bool use24HourClock: true
             property bool showWeekNumbers: false
+            property bool showTasks: true
             property int defaultEventDurationMinutes: 30
             property int defaultReminderMinutes: 10
             property bool remindersEnabled: true
@@ -138,6 +141,7 @@ Singleton {
             property string allDayReminderTime: "09:00"
             property int allDayReminderDaysBefore: 0
             property int snoozeMinutes: 5
+            property int syncIntervalMinutes: 30
             property string closeBehavior: "minimize"
             property int sidebarWidth: 240
             property string lastView: "month"

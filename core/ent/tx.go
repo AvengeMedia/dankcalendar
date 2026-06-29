@@ -26,6 +26,8 @@ type Tx struct {
 	ReminderState *ReminderStateClient
 	// Secret is the client for interacting with the Secret builders.
 	Secret *SecretClient
+	// Task is the client for interacting with the Task builders.
+	Task *TaskClient
 
 	// lazily loaded.
 	client     *Client
@@ -163,6 +165,7 @@ func (tx *Tx) init() {
 	tx.InvitationState = NewInvitationStateClient(tx.config)
 	tx.ReminderState = NewReminderStateClient(tx.config)
 	tx.Secret = NewSecretClient(tx.config)
+	tx.Task = NewTaskClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

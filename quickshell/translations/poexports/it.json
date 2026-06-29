@@ -44,6 +44,9 @@
   "1 hour before": {
     "1 hour before": "1 ora prima"
   },
+  "1 minute": {
+    "1 minute": ""
+  },
   "1 week before": {
     "1 week before": "1 settimana prima"
   },
@@ -128,6 +131,9 @@
   "Add": {
     "Add": "Aggiungi"
   },
+  "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+  },
   "Add a calendar": {
     "Add a calendar": "Aggiungi un calendario"
   },
@@ -136,6 +142,9 @@
   },
   "Add description": {
     "Add description": "Aggiungi descrizione"
+  },
+  "Add task": {
+    "Add task": ""
   },
   "Add title": {
     "Add title": "Aggiungi titolo"
@@ -157,6 +166,9 @@
   },
   "All day": {
     "All day": "Tutto il giorno"
+  },
+  "All done": {
+    "All done": ""
   },
   "All-day reminder time": {
     "All-day reminder time": "Orario promemoria per eventi di tutto il giorno"
@@ -233,6 +245,9 @@
   "Calendars": {
     "Calendars": "Calendari"
   },
+  "Calendars couldn't be loaded; tasks are still syncing.": {
+    "Calendars couldn't be loaded; tasks are still syncing.": ""
+  },
   "Cancel": {
     "Cancel": "Annulla"
   },
@@ -269,6 +284,9 @@
   "Coming soon": {
     "Coming soon": "In arrivo"
   },
+  "Completed": {
+    "Completed": ""
+  },
   "Confirm": {
     "Confirm": "Conferma"
   },
@@ -296,6 +314,9 @@
   "Continue": {
     "Continue": "Continua"
   },
+  "Copied to clipboard": {
+    "Copied to clipboard": ""
+  },
   "Copy link": {
     "Copy link": "Copia link"
   },
@@ -307,6 +328,9 @@
   },
   "Could not read that file.": {
     "Could not read that file.": "Impossibile leggere quel file."
+  },
+  "Couldn't update task": {
+    "Couldn't update task": ""
   },
   "Create": {
     "Create": "Crea"
@@ -328,6 +352,9 @@
   },
   "Daemon offline": {
     "Daemon offline": "Demone offline"
+  },
+  "Daily": {
+    "Daily": ""
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar è un calendario per il moderno desktop Linux con un design ispirato a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3</a>, oltre a una CLI personalizzabile e un'API socket per le integrazioni.<br /><br/>È realizzato con <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, un framework QT6 per la creazione di shell desktop, e <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, un linguaggio di programmazione compilato a tipizzazione statica."
@@ -395,6 +422,9 @@
   "Documents": {
     "Documents": "Documenti"
   },
+  "Does not repeat": {
+    "Does not repeat": ""
+  },
   "Done": {
     "Done": "Fatto"
   },
@@ -404,8 +434,14 @@
   "Drag to pan · click to fit": {
     "Drag to pan · click to fit": "Trascina per spostare · clicca per adattare"
   },
+  "Due date": {
+    "Due date": ""
+  },
   "Edit event": {
     "Edit event": "Modifica evento"
+  },
+  "Edit task": {
+    "Edit task": ""
   },
   "Enable reminders": {
     "Enable reminders": "Attiva promemoria"
@@ -433,6 +469,9 @@
   },
   "Event details": {
     "Event details": "Dettagli evento"
+  },
+  "Every": {
+    "Every": ""
   },
   "Evolution": {
     "Evolution": ""
@@ -479,11 +518,17 @@
   "Hide": {
     "Hide": "Nascondi"
   },
+  "High": {
+    "High": ""
+  },
   "Home": {
     "Home": "Home"
   },
   "How long the snooze button postpones a reminder.": {
     "How long the snooze button postpones a reminder.": "Per quanto tempo il pulsante posticipa un promemoria."
+  },
+  "How often accounts are polled for changes.": {
+    "How often accounts are polled for changes.": ""
   },
   "Import client_secret.json": {
     "Import client_secret.json": "Importa client_secret.json"
@@ -518,6 +563,9 @@
   "Light": {
     "Light": "Chiaro"
   },
+  "List": {
+    "List": ""
+  },
   "Load colors from your own theme file.": {
     "Load colors from your own theme file.": "Carica i colori dal tuo file di tema personalizzato."
   },
@@ -536,8 +584,20 @@
   "Location": {
     "Location": "Posizione"
   },
+  "Low": {
+    "Low": ""
+  },
+  "Marked as not done": {
+    "Marked as not done": ""
+  },
   "Maybe": {
     "Maybe": ""
+  },
+  "Medium": {
+    "Medium": ""
+  },
+  "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft spesso restituisce server_error per i primi minuti dopo la creazione o la modifica della registrazione di un'app. Attendi un minuto o due e riprova."
@@ -556,6 +616,9 @@
   },
   "Month view": {
     "Month view": "Vista mese"
+  },
+  "Monthly": {
+    "Monthly": ""
   },
   "Move to Trash": {
     "Move to Trash": "Sposta nel Cestino"
@@ -584,6 +647,9 @@
   "New event": {
     "New event": "Nuovo evento"
   },
+  "New task": {
+    "New task": ""
+  },
   "Next day": {
     "Next day": "Giorno successivo"
   },
@@ -608,8 +674,17 @@
   "No calendars yet. Add one to start creating events.": {
     "No calendars yet. Add one to start creating events.": "Nessun calendario ancora. Aggiungine uno per iniziare a creare eventi."
   },
+  "No due date": {
+    "No due date": ""
+  },
   "No matching events": {
     "No matching events": "Nessun evento corrispondente"
+  },
+  "No task list available": {
+    "No task list available": ""
+  },
+  "No tasks yet": {
+    "No tasks yet": ""
   },
   "No theme file selected": {
     "No theme file selected": "Nessun file di tema selezionato"
@@ -625,6 +700,9 @@
   },
   "Not signed in — click to reconnect or re-add this account": {
     "Not signed in — click to reconnect or re-add this account": ""
+  },
+  "Notes": {
+    "Notes": ""
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Nulla in programma nei prossimi %1 giorni"
@@ -658,6 +736,9 @@
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Calendari Outlook, Office 365 ed Exchange Online."
+  },
+  "Overdue": {
+    "Overdue": ""
   },
   "Override": {
     "Override": "Personalizza"
@@ -713,6 +794,9 @@
   "Previous week": {
     "Previous week": "Settimana precedente"
   },
+  "Priority": {
+    "Priority": ""
+  },
   "Quick Access": {
     "Quick Access": "Accesso rapido"
   },
@@ -721,6 +805,9 @@
   },
   "Reconnect": {
     "Reconnect": "Riconnetti"
+  },
+  "Recurring tasks are managed in Google Tasks.": {
+    "Recurring tasks are managed in Google Tasks.": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Promemoria e avvisi desktop."
@@ -754,6 +841,18 @@
   },
   "Rename…": {
     "Rename…": "Rinomina…"
+  },
+  "Repeat": {
+    "Repeat": ""
+  },
+  "Repeats": {
+    "Repeats": ""
+  },
+  "Repeats every %1": {
+    "Repeats every %1": ""
+  },
+  "Repeats every %1 %2": {
+    "Repeats every %1 %2": ""
   },
   "Reset to global": {
     "Reset to global": "Ripristina valori globali"
@@ -802,6 +901,12 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Mostra promemoria per eventi di tutto il giorno"
+  },
+  "Show task lists and the Tasks view when an account provides them.": {
+    "Show task lists and the Tasks view when an account provides them.": ""
+  },
+  "Show tasks": {
+    "Show tasks": ""
   },
   "Show week numbers": {
     "Show week numbers": "Mostra numeri di settimana"
@@ -860,6 +965,9 @@
   "Subscribing…": {
     "Subscribing…": "Iscrizione…"
   },
+  "Sync interval": {
+    "Sync interval": ""
+  },
   "Sync now": {
     "Sync now": "Sincronizza ora"
   },
@@ -874,6 +982,18 @@
   },
   "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Maiusc+Tab: Naviga • ←→↑↓: Naviga griglia • Invio/Spazio: Seleziona"
+  },
+  "Task": {
+    "Task": ""
+  },
+  "Task completed": {
+    "Task completed": ""
+  },
+  "Task lists couldn't be loaded; calendars are still syncing.": {
+    "Task lists couldn't be loaded; calendars are still syncing.": ""
+  },
+  "Tasks": {
+    "Tasks": ""
   },
   "Test notification": {
     "Test notification": "Notifica di prova"
@@ -914,8 +1034,14 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Digita almeno 2 caratteri per cercare eventi."
   },
+  "Undo": {
+    "Undo": ""
+  },
   "University timetable": {
     "University timetable": "Orario Universitario"
+  },
+  "Upcoming": {
+    "Upcoming": ""
   },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "Usa una tavolozza di colori inclusa."
@@ -965,11 +1091,17 @@
   "Week view": {
     "Week view": "Vista settimana"
   },
+  "Weekly": {
+    "Weekly": ""
+  },
   "What the window's close button does.": {
     "What the window's close button does.": "Cosa fa il pulsante di chiusura della finestra."
   },
   "When all-day event reminders fire.": {
     "When all-day event reminders fire.": "Quando vengono attivati i promemoria per eventi di tutto il giorno."
+  },
+  "Yearly": {
+    "Yearly": ""
   },
   "Yesterday": {
     "Yesterday": "Ieri"
@@ -989,11 +1121,23 @@
   "dark": {
     "dark": "scuro"
   },
+  "day": {
+    "day": ""
+  },
+  "days": {
+    "days": ""
+  },
   "iCal subscription": {
     "iCal subscription": "Iscrizione iCal"
   },
   "light": {
     "light": "chiaro"
+  },
+  "month": {
+    "month": ""
+  },
+  "months": {
+    "months": ""
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "solo se il feed richiede l'accesso"
@@ -1009,6 +1153,18 @@
   },
   "username": {
     "username": "nome utente"
+  },
+  "week": {
+    "week": ""
+  },
+  "weeks": {
+    "weeks": ""
+  },
+  "year": {
+    "year": ""
+  },
+  "years": {
+    "years": ""
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· %1 invitati · %2 accettati"

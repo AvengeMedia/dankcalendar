@@ -55,19 +55,25 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]calendar.Calendar, erro
 	return calendars, nil
 }
 
+// localComponents is what a local store may hold: a file or directory can carry
+// both events and tasks, so every local calendar is declared as supporting both.
+var localComponents = []string{calendar.ComponentVEvent, calendar.ComponentVTodo}
+
 func (p *Provider) directoryCalendar(name string) calendar.Calendar {
 	return calendar.Calendar{
-		AccountID: p.account.ID,
-		RemoteID:  "dir:" + name,
-		Name:      name,
+		AccountID:           p.account.ID,
+		RemoteID:            "dir:" + name,
+		Name:                name,
+		SupportedComponents: localComponents,
 	}
 }
 
 func (p *Provider) fileCalendar(name string) calendar.Calendar {
 	return calendar.Calendar{
-		AccountID: p.account.ID,
-		RemoteID:  "file:" + name,
-		Name:      strings.TrimSuffix(name, filepath.Ext(name)),
+		AccountID:           p.account.ID,
+		RemoteID:            "file:" + name,
+		Name:                strings.TrimSuffix(name, filepath.Ext(name)),
+		SupportedComponents: localComponents,
 	}
 }
 
@@ -83,9 +89,20 @@ func (p *Provider) Sync(ctx context.Context, cal calendar.Calendar, cursor calen
 		changes = append(changes, calendar.EventChange{Type: calendar.ChangeUpsert, Event: &ev})
 	}
 
+	tasks, err := p.readTasks(cal)
+	if err != nil {
+		return nil, err
+	}
+	taskChanges := make([]calendar.TaskChange, 0, len(tasks))
+	for i := range tasks {
+		t := tasks[i]
+		taskChanges = append(taskChanges, calendar.TaskChange{Type: calendar.ChangeUpsert, Task: &t})
+	}
+
 	return &calendar.SyncResult{
 		Cursor:       calendar.SyncCursor{CalendarID: cal.ID},
 		Changes:      changes,
+		TaskChanges:  taskChanges,
 		FullSnapshot: true,
 	}, nil
 }

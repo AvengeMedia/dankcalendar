@@ -91,6 +91,26 @@ func (_u *AccountUpdate) ClearAuthError() *AccountUpdate {
 	return _u
 }
 
+// SetSyncNotice sets the "sync_notice" field.
+func (_u *AccountUpdate) SetSyncNotice(v string) *AccountUpdate {
+	_u.mutation.SetSyncNotice(v)
+	return _u
+}
+
+// SetNillableSyncNotice sets the "sync_notice" field if the given value is not nil.
+func (_u *AccountUpdate) SetNillableSyncNotice(v *string) *AccountUpdate {
+	if v != nil {
+		_u.SetSyncNotice(*v)
+	}
+	return _u
+}
+
+// ClearSyncNotice clears the value of the "sync_notice" field.
+func (_u *AccountUpdate) ClearSyncNotice() *AccountUpdate {
+	_u.mutation.ClearSyncNotice()
+	return _u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (_u *AccountUpdate) SetUpdatedAt(v time.Time) *AccountUpdate {
 	_u.mutation.SetUpdatedAt(v)
@@ -255,6 +275,12 @@ func (_u *AccountUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.AuthErrorCleared() {
 		_spec.ClearField(account.FieldAuthError, field.TypeString)
+	}
+	if value, ok := _u.mutation.SyncNotice(); ok {
+		_spec.SetField(account.FieldSyncNotice, field.TypeString, value)
+	}
+	if _u.mutation.SyncNoticeCleared() {
+		_spec.ClearField(account.FieldSyncNotice, field.TypeString)
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)
@@ -428,6 +454,26 @@ func (_u *AccountUpdateOne) SetNillableAuthError(v *string) *AccountUpdateOne {
 // ClearAuthError clears the value of the "auth_error" field.
 func (_u *AccountUpdateOne) ClearAuthError() *AccountUpdateOne {
 	_u.mutation.ClearAuthError()
+	return _u
+}
+
+// SetSyncNotice sets the "sync_notice" field.
+func (_u *AccountUpdateOne) SetSyncNotice(v string) *AccountUpdateOne {
+	_u.mutation.SetSyncNotice(v)
+	return _u
+}
+
+// SetNillableSyncNotice sets the "sync_notice" field if the given value is not nil.
+func (_u *AccountUpdateOne) SetNillableSyncNotice(v *string) *AccountUpdateOne {
+	if v != nil {
+		_u.SetSyncNotice(*v)
+	}
+	return _u
+}
+
+// ClearSyncNotice clears the value of the "sync_notice" field.
+func (_u *AccountUpdateOne) ClearSyncNotice() *AccountUpdateOne {
+	_u.mutation.ClearSyncNotice()
 	return _u
 }
 
@@ -625,6 +671,12 @@ func (_u *AccountUpdateOne) sqlSave(ctx context.Context) (_node *Account, err er
 	}
 	if _u.mutation.AuthErrorCleared() {
 		_spec.ClearField(account.FieldAuthError, field.TypeString)
+	}
+	if value, ok := _u.mutation.SyncNotice(); ok {
+		_spec.SetField(account.FieldSyncNotice, field.TypeString, value)
+	}
+	if _u.mutation.SyncNoticeCleared() {
+		_spec.ClearField(account.FieldSyncNotice, field.TypeString)
 	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(account.FieldUpdatedAt, field.TypeTime, value)

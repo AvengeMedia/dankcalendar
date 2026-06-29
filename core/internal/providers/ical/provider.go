@@ -32,10 +32,11 @@ func (p *Provider) Account() calendar.Account  { return p.account }
 
 func (p *Provider) ListCalendars(ctx context.Context) ([]calendar.Calendar, error) {
 	return []calendar.Calendar{{
-		AccountID: p.account.ID,
-		RemoteID:  remoteID,
-		Name:      p.calendarName(),
-		ReadOnly:  true,
+		AccountID:           p.account.ID,
+		RemoteID:            remoteID,
+		Name:                p.calendarName(),
+		ReadOnly:            true,
+		SupportedComponents: []string{calendar.ComponentVEvent, calendar.ComponentVTodo},
 	}}, nil
 }
 
@@ -72,9 +73,16 @@ func (p *Provider) Sync(ctx context.Context, cal calendar.Calendar, cursor calen
 		changes = append(changes, calendar.EventChange{Type: calendar.ChangeUpsert, Event: &events[i]})
 	}
 
+	tasks := tasksFromDoc(cal.ID, f.doc)
+	taskChanges := make([]calendar.TaskChange, 0, len(tasks))
+	for i := range tasks {
+		taskChanges = append(taskChanges, calendar.TaskChange{Type: calendar.ChangeUpsert, Task: &tasks[i]})
+	}
+
 	return &calendar.SyncResult{
 		Cursor:       calendar.SyncCursor{CalendarID: cal.ID, Token: f.cursor.encode()},
 		Changes:      changes,
+		TaskChanges:  taskChanges,
 		FullSnapshot: true,
 		RetryAfter:   f.cursor.ttl(),
 	}, nil
@@ -148,4 +156,25 @@ func eventsFromDoc(calID string, doc *ical.Calendar) []calendar.Event {
 		events = append(events, ev)
 	}
 	return events
+}
+
+func tasksFromDoc(calID string, doc *ical.Calendar) []calendar.Task {
+	if doc == nil {
+		return nil
+	}
+
+	tz := icalconv.NewTZResolver(doc, "")
+	var tasks []calendar.Task
+	for _, comp := range doc.Children {
+		if comp.Name != ical.CompToDo {
+			continue
+		}
+		t, ok := icalconv.TaskFromComponent(calID, comp, tz)
+		if !ok {
+			continue
+		}
+		t.RemoteID = icalconv.ComponentUID(comp)
+		tasks = append(tasks, t)
+	}
+	return tasks
 }

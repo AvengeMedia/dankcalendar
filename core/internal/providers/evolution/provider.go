@@ -23,10 +23,13 @@ import (
 type Provider struct {
 	account calendar.Account
 	client  *eds.Client
+	notices []string
 
 	mu   sync.Mutex
 	open map[string]*eds.Calendar
 }
+
+func (p *Provider) Notices() []string { return p.notices }
 
 func New(account calendar.Account) (*Provider, error) {
 	client, err := eds.Dial()
@@ -40,39 +43,54 @@ func (p *Provider) Kind() calendar.AccountKind { return calendar.AccountEvolutio
 func (p *Provider) Account() calendar.Account  { return p.account }
 
 func (p *Provider) ListCalendars(ctx context.Context) ([]calendar.Calendar, error) {
-	sources, err := p.client.ListCalendarSources()
+	p.notices = nil
+	calSources, err := p.client.ListCalendarSources()
 	if err != nil {
 		return nil, err
 	}
+	taskSources, err := p.client.ListTaskSources()
+	if err != nil {
+		p.notices = append(p.notices, calendar.NoticeTasksUnavailable)
+		log.Warnf("account %s: Evolution task lists unavailable, syncing calendars only: %v", p.account.ID, err)
+		taskSources = nil
+	}
 
-	out := make([]calendar.Calendar, 0, len(sources))
-	for _, s := range sources {
-		cal := calendar.Calendar{
-			AccountID: p.account.ID,
-			RemoteID:  s.UID,
-			Name:      s.DisplayName,
-			Color:     s.Color,
-			ReadOnly:  true,
-		}
-		if cal.Name == "" {
-			cal.Name = s.UID
-		}
-
-		switch c, err := p.calendar(s.UID); {
-		case err != nil:
-			log.Debugf("evolution: open calendar %q: %v", s.UID, err)
-		default:
-			if writable, err := c.Writable(); err == nil {
-				cal.ReadOnly = !writable
-			}
-		}
-		out = append(out, cal)
+	out := make([]calendar.Calendar, 0, len(calSources)+len(taskSources))
+	for _, s := range calSources {
+		out = append(out, p.sourceCalendar(s, calendar.ComponentVEvent, p.calendar))
+	}
+	for _, s := range taskSources {
+		out = append(out, p.sourceCalendar(s, calendar.ComponentVTodo, p.taskCalendar))
 	}
 	return out, nil
 }
 
+func (p *Provider) sourceCalendar(s eds.CalendarSource, component string, open func(string) (*eds.Calendar, error)) calendar.Calendar {
+	cal := calendar.Calendar{
+		AccountID:           p.account.ID,
+		RemoteID:            s.UID,
+		Name:                s.DisplayName,
+		Color:               s.Color,
+		ReadOnly:            true,
+		SupportedComponents: []string{component},
+	}
+	if cal.Name == "" {
+		cal.Name = s.UID
+	}
+
+	switch c, err := open(s.UID); {
+	case err != nil:
+		log.Debugf("evolution: open source %q: %v", s.UID, err)
+	default:
+		if writable, err := c.Writable(); err == nil {
+			cal.ReadOnly = !writable
+		}
+	}
+	return cal
+}
+
 func (p *Provider) Sync(ctx context.Context, cal calendar.Calendar, cursor calendar.SyncCursor) (*calendar.SyncResult, error) {
-	c, err := p.calendar(cal.RemoteID)
+	c, err := p.backendFor(cal)
 	if err != nil {
 		return nil, err
 	}
@@ -87,17 +105,34 @@ func (p *Provider) Sync(ctx context.Context, cal calendar.Calendar, cursor calen
 		return nil, err
 	}
 
-	events := eventsFromICS(cal.ID, objects)
-	changes := make([]calendar.EventChange, 0, len(events))
-	for i := range events {
-		changes = append(changes, calendar.EventChange{Type: calendar.ChangeUpsert, Event: &events[i]})
+	result := &calendar.SyncResult{
+		Cursor:       calendar.SyncCursor{CalendarID: cal.ID, Token: rev},
+		FullSnapshot: true,
+	}
+	if cal.HoldsTasks() {
+		tasks := tasksFromICS(cal.ID, objects)
+		result.TaskChanges = make([]calendar.TaskChange, 0, len(tasks))
+		for i := range tasks {
+			result.TaskChanges = append(result.TaskChanges, calendar.TaskChange{Type: calendar.ChangeUpsert, Task: &tasks[i]})
+		}
+		return result, nil
 	}
 
-	return &calendar.SyncResult{
-		Cursor:       calendar.SyncCursor{CalendarID: cal.ID, Token: rev},
-		Changes:      changes,
-		FullSnapshot: true,
-	}, nil
+	events := eventsFromICS(cal.ID, objects)
+	result.Changes = make([]calendar.EventChange, 0, len(events))
+	for i := range events {
+		result.Changes = append(result.Changes, calendar.EventChange{Type: calendar.ChangeUpsert, Event: &events[i]})
+	}
+	return result, nil
+}
+
+// backendFor opens the EDS backend matching the calendar's component type: task
+// lists go through OpenTaskList, event calendars through OpenCalendar.
+func (p *Provider) backendFor(cal calendar.Calendar) (*eds.Calendar, error) {
+	if cal.HoldsTasks() {
+		return p.taskCalendar(cal.RemoteID)
+	}
+	return p.calendar(cal.RemoteID)
 }
 
 func (p *Provider) ListEvents(ctx context.Context, cal calendar.Calendar, opts calendar.ListEventsOptions) ([]calendar.Event, error) {
@@ -123,16 +158,24 @@ func (p *Provider) Close() error {
 	return p.client.Close()
 }
 
-// calendar opens a backend once and reuses the handle for the provider's
-// lifetime so a sync run does not re-open the same calendar repeatedly.
 func (p *Provider) calendar(uid string) (*eds.Calendar, error) {
+	return p.openCached(uid, p.client.OpenCalendar)
+}
+
+func (p *Provider) taskCalendar(uid string) (*eds.Calendar, error) {
+	return p.openCached(uid, p.client.OpenTaskList)
+}
+
+// openCached reuses backend handles for the provider's lifetime. A source UID is
+// exclusively a calendar or a task list, so keying by UID never mixes the two.
+func (p *Provider) openCached(uid string, open func(string) (*eds.Calendar, error)) (*eds.Calendar, error) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
 	if c, ok := p.open[uid]; ok {
 		return c, nil
 	}
-	c, err := p.client.OpenCalendar(uid)
+	c, err := open(uid)
 	if err != nil {
 		return nil, err
 	}

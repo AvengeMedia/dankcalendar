@@ -53,6 +53,20 @@ func RegisterHandlers(srv *server.Server, grp *huma.Group) {
 	}, h.GetEvent)
 
 	huma.Register(grp, huma.Operation{
+		OperationID: "list-tasks",
+		Summary:     "List Tasks",
+		Path:        "/tasks",
+		Method:      http.MethodGet,
+	}, h.ListTasks)
+
+	huma.Register(grp, huma.Operation{
+		OperationID: "get-task",
+		Summary:     "Get Task",
+		Path:        "/tasks/{id}",
+		Method:      http.MethodGet,
+	}, h.GetTask)
+
+	huma.Register(grp, huma.Operation{
 		OperationID: "rsvp-event",
 		Summary:     "Respond to a Meeting Invitation",
 		Path:        "/events/{id}/rsvp",
@@ -220,6 +234,60 @@ func (h *HandlerGroup) RSVPEvent(ctx context.Context, in *RSVPEventInput) (*RSVP
 	return &RSVPEventOutput{Body: eventToDTO(event)}, nil
 }
 
+type ListTasksInput struct {
+	CalendarIDs      []string `query:"calendarId"`
+	Query            string   `query:"q"`
+	IncludeCompleted bool     `query:"includeCompleted" default:"true"`
+	Limit            int      `query:"limit"`
+	Offset           int      `query:"offset"`
+}
+
+type ListTasksOutput struct {
+	Body models.TaskList
+}
+
+func (h *HandlerGroup) ListTasks(ctx context.Context, in *ListTasksInput) (*ListTasksOutput, error) {
+	tasks, total, err := h.srv.Repo.ListTasks(ctx, repo.ListTasksParams{
+		Filter: repo.TaskFilter{
+			CalendarIDs:      in.CalendarIDs,
+			Query:            in.Query,
+			IncludeCompleted: in.IncludeCompleted,
+		},
+		Limit:  in.Limit,
+		Offset: in.Offset,
+	})
+	if err != nil {
+		return nil, errdefs.NewCustomError(errdefs.ErrTypeProvider, err.Error())
+	}
+
+	out := &ListTasksOutput{}
+	out.Body.Total = total
+	out.Body.Tasks = make([]models.Task, 0, len(tasks))
+	for _, t := range tasks {
+		out.Body.Tasks = append(out.Body.Tasks, taskToDTO(t))
+	}
+	return out, nil
+}
+
+type GetTaskInput struct {
+	ID string `path:"id"`
+}
+
+type GetTaskOutput struct {
+	Body models.Task
+}
+
+func (h *HandlerGroup) GetTask(ctx context.Context, in *GetTaskInput) (*GetTaskOutput, error) {
+	task, err := h.srv.Repo.GetTask(ctx, in.ID)
+	if err != nil {
+		if repo.IsNotFound(err) {
+			return nil, errdefs.NewCustomError(errdefs.ErrTypeNotFound, "task not found")
+		}
+		return nil, errdefs.NewCustomError(errdefs.ErrTypeProvider, err.Error())
+	}
+	return &GetTaskOutput{Body: taskToDTO(task)}, nil
+}
+
 func accountToDTO(a *ent.Account) models.Account {
 	return models.Account{
 		ID:          a.ID,
@@ -237,16 +305,17 @@ func calendarToDTO(c *ent.Calendar) models.Calendar {
 		accountID = edges.ID
 	}
 	return models.Calendar{
-		ID:          c.ID,
-		AccountID:   accountID,
-		RemoteID:    c.RemoteID,
-		Name:        c.Name,
-		Description: c.Description,
-		Color:       c.Color,
-		TimeZone:    c.TimeZone,
-		ReadOnly:    c.ReadOnly,
-		Hidden:      c.Hidden,
-		UpdatedAt:   c.UpdatedAt,
+		ID:                  c.ID,
+		AccountID:           accountID,
+		RemoteID:            c.RemoteID,
+		Name:                c.Name,
+		Description:         c.Description,
+		Color:               c.Color,
+		TimeZone:            c.TimeZone,
+		ReadOnly:            c.ReadOnly,
+		Hidden:              c.Hidden,
+		SupportedComponents: c.SupportedComponents,
+		UpdatedAt:           c.UpdatedAt,
 	}
 }
 
@@ -271,6 +340,29 @@ func eventToDTO(e *ent.Event) models.Event {
 		EndTimeZone:   e.EndTz,
 		RecurringID:   e.RecurringID,
 		Attendees:     attendeesToDTO(e.Attendees),
+	}
+}
+
+func taskToDTO(t *ent.Task) models.Task {
+	calendarID := ""
+	if edges, err := t.Edges.CalendarOrErr(); err == nil && edges != nil {
+		calendarID = edges.ID
+	}
+	return models.Task{
+		ID:              t.ID,
+		CalendarID:      calendarID,
+		UID:             t.UID,
+		Summary:         t.Summary,
+		Description:     t.Description,
+		Location:        t.Location,
+		Status:          string(t.Status),
+		Priority:        t.Priority,
+		PercentComplete: t.PercentComplete,
+		Due:             t.Due,
+		Start:           t.Start,
+		Completed:       t.Completed,
+		AllDay:          t.AllDay,
+		ParentUID:       t.ParentUID,
 	}
 }
 

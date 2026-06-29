@@ -143,13 +143,17 @@ func parseDateTime(prop *ical.Prop, tz *TZResolver) (when time.Time, zone string
 }
 
 func applyRecurrence(comp *ical.Component, ev *cal.Event, tz *TZResolver) {
+	ev.Recurrence = recurrenceFromComponent(comp, tz)
+}
+
+func recurrenceFromComponent(comp *ical.Component, tz *TZResolver) *cal.Recurrence {
 	rrules := rawValues(comp, ical.PropRecurrenceRule)
 	rdates := tz.normalizeDateList(comp.Props.Values(ical.PropRecurrenceDates))
 	exdates := tz.normalizeDateList(comp.Props.Values(ical.PropExceptionDates))
 	if len(rrules)+len(rdates)+len(exdates) == 0 {
-		return
+		return nil
 	}
-	ev.Recurrence = &cal.Recurrence{RRule: rrules, RDate: rdates, ExDate: exdates}
+	return &cal.Recurrence{RRule: rrules, RDate: rdates, ExDate: exdates}
 }
 
 // normalizeDateList rewrites RDATE/EXDATE values to absolute UTC instants,
@@ -310,7 +314,7 @@ func BuildEvent(ev *cal.Event, uid string) *ical.Event {
 	setEventTimes(props, ev)
 	setRecurrence(props, ev.Recurrence)
 	setAttendees(props, ev)
-	addAlarms(event, ev.Reminders)
+	addAlarms(event.Component, ev.Reminders)
 
 	return event
 }

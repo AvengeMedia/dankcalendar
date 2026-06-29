@@ -44,6 +44,9 @@
   "1 hour before": {
     "1 hour before": "За 1 час"
   },
+  "1 minute": {
+    "1 minute": ""
+  },
   "1 week before": {
     "1 week before": "За 1 неделю"
   },
@@ -128,6 +131,9 @@
   "Add": {
     "Add": "Добавить"
   },
+  "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+  },
   "Add a calendar": {
     "Add a calendar": "Добавить календарь"
   },
@@ -136,6 +142,9 @@
   },
   "Add description": {
     "Add description": "Добавить описание"
+  },
+  "Add task": {
+    "Add task": ""
   },
   "Add title": {
     "Add title": "Добавить название"
@@ -157,6 +166,9 @@
   },
   "All day": {
     "All day": "Весь день"
+  },
+  "All done": {
+    "All done": ""
   },
   "All-day reminder time": {
     "All-day reminder time": "Время напоминания на весь день"
@@ -233,6 +245,9 @@
   "Calendars": {
     "Calendars": "Календари"
   },
+  "Calendars couldn't be loaded; tasks are still syncing.": {
+    "Calendars couldn't be loaded; tasks are still syncing.": ""
+  },
   "Cancel": {
     "Cancel": "Отмена"
   },
@@ -269,6 +284,9 @@
   "Coming soon": {
     "Coming soon": "Скоро"
   },
+  "Completed": {
+    "Completed": ""
+  },
   "Confirm": {
     "Confirm": "Подтвердить"
   },
@@ -296,6 +314,9 @@
   "Continue": {
     "Continue": "Продолжить"
   },
+  "Copied to clipboard": {
+    "Copied to clipboard": ""
+  },
   "Copy link": {
     "Copy link": "Копировать ссылку"
   },
@@ -307,6 +328,9 @@
   },
   "Could not read that file.": {
     "Could not read that file.": "Не удалось прочитать файл."
+  },
+  "Couldn't update task": {
+    "Couldn't update task": ""
   },
   "Create": {
     "Create": "Создать"
@@ -328,6 +352,9 @@
   },
   "Daemon offline": {
     "Daemon offline": "Демон не запущен"
+  },
+  "Daily": {
+    "Daily": ""
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar — это календарь для современного Linux-десктопа с дизайном в стиле <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3</a>, а также расширяемым CLI и сокет-API для интеграций.<br /><br/>Создан с использованием <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, фреймворка QT6 для оболочек рабочего стола, и <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, статически типизированного компилируемого языка программирования."
@@ -395,6 +422,9 @@
   "Documents": {
     "Documents": "Документы"
   },
+  "Does not repeat": {
+    "Does not repeat": ""
+  },
   "Done": {
     "Done": "Готово"
   },
@@ -404,8 +434,14 @@
   "Drag to pan · click to fit": {
     "Drag to pan · click to fit": "Перетащите для прокрутки · нажмите для подгонки"
   },
+  "Due date": {
+    "Due date": ""
+  },
   "Edit event": {
     "Edit event": "Редактировать событие"
+  },
+  "Edit task": {
+    "Edit task": ""
   },
   "Enable reminders": {
     "Enable reminders": "Включить напоминания"
@@ -433,6 +469,9 @@
   },
   "Event details": {
     "Event details": "Сведения о событии"
+  },
+  "Every": {
+    "Every": ""
   },
   "Evolution": {
     "Evolution": ""
@@ -479,11 +518,17 @@
   "Hide": {
     "Hide": "Скрыть"
   },
+  "High": {
+    "High": ""
+  },
   "Home": {
     "Home": "Домашняя папка"
   },
   "How long the snooze button postpones a reminder.": {
     "How long the snooze button postpones a reminder.": "Время, на которое откладывается напоминание."
+  },
+  "How often accounts are polled for changes.": {
+    "How often accounts are polled for changes.": ""
   },
   "Import client_secret.json": {
     "Import client_secret.json": "Импортировать client_secret.json"
@@ -518,6 +563,9 @@
   "Light": {
     "Light": "Светлая"
   },
+  "List": {
+    "List": ""
+  },
   "Load colors from your own theme file.": {
     "Load colors from your own theme file.": "Загрузить цвета из вашего собственного файла темы."
   },
@@ -536,8 +584,20 @@
   "Location": {
     "Location": "Местоположение"
   },
+  "Low": {
+    "Low": ""
+  },
+  "Marked as not done": {
+    "Marked as not done": ""
+  },
   "Maybe": {
     "Maybe": ""
+  },
+  "Medium": {
+    "Medium": ""
+  },
+  "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft часто возвращает server_error в первые минуты после создания или изменения регистрации приложения. Подождите пару минут и попробуйте снова."
@@ -556,6 +616,9 @@
   },
   "Month view": {
     "Month view": "Режим месяца"
+  },
+  "Monthly": {
+    "Monthly": ""
   },
   "Move to Trash": {
     "Move to Trash": "Переместить в корзину"
@@ -584,6 +647,9 @@
   "New event": {
     "New event": "Новое событие"
   },
+  "New task": {
+    "New task": ""
+  },
   "Next day": {
     "Next day": "Следующий день"
   },
@@ -608,8 +674,17 @@
   "No calendars yet. Add one to start creating events.": {
     "No calendars yet. Add one to start creating events.": "Календарей пока нет. Создайте один, чтобы начать добавлять события."
   },
+  "No due date": {
+    "No due date": ""
+  },
   "No matching events": {
     "No matching events": "Ничего не найдено"
+  },
+  "No task list available": {
+    "No task list available": ""
+  },
+  "No tasks yet": {
+    "No tasks yet": ""
   },
   "No theme file selected": {
     "No theme file selected": "Файл темы не выбран"
@@ -625,6 +700,9 @@
   },
   "Not signed in — click to reconnect or re-add this account": {
     "Not signed in — click to reconnect or re-add this account": ""
+  },
+  "Notes": {
+    "Notes": ""
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Нет событий на ближайшие %1 дней"
@@ -658,6 +736,9 @@
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Календари Outlook, Office 365 и Exchange Online."
+  },
+  "Overdue": {
+    "Overdue": ""
   },
   "Override": {
     "Override": "Переопределить"
@@ -713,6 +794,9 @@
   "Previous week": {
     "Previous week": "Предыдущая неделя"
   },
+  "Priority": {
+    "Priority": ""
+  },
   "Quick Access": {
     "Quick Access": "Быстрый доступ"
   },
@@ -721,6 +805,9 @@
   },
   "Reconnect": {
     "Reconnect": "Переподключить"
+  },
+  "Recurring tasks are managed in Google Tasks.": {
+    "Recurring tasks are managed in Google Tasks.": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Напоминания и уведомления на рабочем столе."
@@ -754,6 +841,18 @@
   },
   "Rename…": {
     "Rename…": "Переименовать…"
+  },
+  "Repeat": {
+    "Repeat": ""
+  },
+  "Repeats": {
+    "Repeats": ""
+  },
+  "Repeats every %1": {
+    "Repeats every %1": ""
+  },
+  "Repeats every %1 %2": {
+    "Repeats every %1 %2": ""
   },
   "Reset to global": {
     "Reset to global": "Сбросить к глобальным"
@@ -802,6 +901,12 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Показывать напоминания на весь день"
+  },
+  "Show task lists and the Tasks view when an account provides them.": {
+    "Show task lists and the Tasks view when an account provides them.": ""
+  },
+  "Show tasks": {
+    "Show tasks": ""
   },
   "Show week numbers": {
     "Show week numbers": "Показывать номера недель"
@@ -860,6 +965,9 @@
   "Subscribing…": {
     "Subscribing…": "Подписка…"
   },
+  "Sync interval": {
+    "Sync interval": ""
+  },
   "Sync now": {
     "Sync now": "Синхронизировать"
   },
@@ -874,6 +982,18 @@
   },
   "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Навигация • ←→↑↓: По сетке • Enter/Space: Выбор"
+  },
+  "Task": {
+    "Task": ""
+  },
+  "Task completed": {
+    "Task completed": ""
+  },
+  "Task lists couldn't be loaded; calendars are still syncing.": {
+    "Task lists couldn't be loaded; calendars are still syncing.": ""
+  },
+  "Tasks": {
+    "Tasks": ""
   },
   "Test notification": {
     "Test notification": "Тестовое уведомление"
@@ -914,8 +1034,14 @@
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Введите не менее 2 символов для поиска событий."
   },
+  "Undo": {
+    "Undo": ""
+  },
   "University timetable": {
     "University timetable": "Расписание университета"
+  },
+  "Upcoming": {
+    "Upcoming": ""
   },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "Использовать встроенную палитру цветов."
@@ -965,11 +1091,17 @@
   "Week view": {
     "Week view": "Режим недели"
   },
+  "Weekly": {
+    "Weekly": ""
+  },
   "What the window's close button does.": {
     "What the window's close button does.": "Действие кнопки закрытия окна."
   },
   "When all-day event reminders fire.": {
     "When all-day event reminders fire.": "Когда срабатывают напоминания о событиях на весь день."
+  },
+  "Yearly": {
+    "Yearly": ""
   },
   "Yesterday": {
     "Yesterday": "Вчера"
@@ -989,11 +1121,23 @@
   "dark": {
     "dark": "тёмная"
   },
+  "day": {
+    "day": ""
+  },
+  "days": {
+    "days": ""
+  },
   "iCal subscription": {
     "iCal subscription": "Подписка iCal"
   },
   "light": {
     "light": "светлая"
+  },
+  "month": {
+    "month": ""
+  },
+  "months": {
+    "months": ""
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "только если для фида требуется вход в систему"
@@ -1009,6 +1153,18 @@
   },
   "username": {
     "username": "имя пользователя"
+  },
+  "week": {
+    "week": ""
+  },
+  "weeks": {
+    "weeks": ""
+  },
+  "year": {
+    "year": ""
+  },
+  "years": {
+    "years": ""
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· Приглашено: %1 · Принято: %2"

@@ -163,19 +163,25 @@ func graphMeetingURL(g graphEvent) string {
 // truncates to ~255 chars. HTML bodies are converted to markdown so list
 // and link structure survives; the UI renders descriptions as markdown.
 func graphDescription(g graphEvent) string {
-	if g.Body == nil {
-		return g.BodyPreview
+	if text := graphBodyText(g.Body); text != "" {
+		return text
 	}
-	content := strings.TrimSpace(g.Body.Content)
-	if content == "" {
-		return g.BodyPreview
+	return g.BodyPreview
+}
+
+// graphBodyText extracts a plain/markdown description, converting HTML bodies so
+// Outlook markup doesn't leak through. Empty on nil/blank/failed conversion.
+func graphBodyText(b *graphBody) string {
+	if b == nil {
+		return ""
 	}
-	if !strings.EqualFold(g.Body.ContentType, "html") {
+	content := strings.TrimSpace(b.Content)
+	if content == "" || !strings.EqualFold(b.ContentType, "html") {
 		return content
 	}
 	md, err := htmltomarkdown.ConvertString(content)
 	if err != nil {
-		return g.BodyPreview
+		return ""
 	}
 	return strings.TrimSpace(md)
 }

@@ -38,6 +38,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
 	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
 	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
+	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -131,7 +132,10 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	flows := oauth.NewFlowRegistry()
 	broker := auth_handler.NewCallbackBroker()
 
-	syncEngine := sync.NewEngine(r, registry, secrets, 5*time.Minute)
+	syncEngine := sync.NewEngine(r, registry, secrets, 30*time.Minute)
+	syncEngine.SetIntervalFunc(func() time.Duration {
+		return time.Duration(settings.Load().SyncIntervalMinutes) * time.Minute
+	})
 	bus := ipc.NewEventBus()
 	syncEngine.SetNotifier(bus.Publish)
 	syncEngine.WatchMutations(client)

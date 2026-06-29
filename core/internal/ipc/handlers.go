@@ -2,9 +2,11 @@ package ipc
 
 import (
 	"context"
+	"slices"
 	"time"
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
+	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
@@ -76,7 +78,7 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 func HandleSubscribe(w *ConnWriter, req Request, deps Deps, sub *Subscriber) {
 	topics := ParamStringSlice(req.Params, "topics")
 	if len(topics) == 0 {
-		topics = []string{"accounts", "calendars", "events", "sync"}
+		topics = []string{"accounts", "calendars", "events", "tasks", "sync"}
 	}
 	sub.Subscribe(topics...)
 	Respond(w, req.ID, map[string]any{"topics": sub.Topics()})
@@ -121,6 +123,7 @@ func mapAccount(a *ent.Account) map[string]any {
 		"settings":    a.Settings,
 		"needsReauth": a.NeedsReauth,
 		"authError":   a.AuthError,
+		"notice":      a.SyncNotice,
 		"createdAt":   a.CreatedAt,
 		"updatedAt":   a.UpdatedAt,
 	}
@@ -134,17 +137,19 @@ func mapCalendars(items []*ent.Calendar) []map[string]any {
 			name = c.NameOverride
 		}
 		entry := map[string]any{
-			"id":           c.ID,
-			"remoteId":     c.RemoteID,
-			"name":         name,
-			"providerName": c.Name,
-			"description":  c.Description,
-			"color":        c.Color,
-			"timeZone":     c.TimeZone,
-			"readOnly":     c.ReadOnly,
-			"hidden":       c.Hidden,
-			"reminders":    c.ReminderOverrides,
-			"updatedAt":    c.UpdatedAt,
+			"id":                  c.ID,
+			"remoteId":            c.RemoteID,
+			"name":                name,
+			"providerName":        c.Name,
+			"description":         c.Description,
+			"color":               c.Color,
+			"timeZone":            c.TimeZone,
+			"readOnly":            c.ReadOnly,
+			"hidden":              c.Hidden,
+			"reminders":           c.ReminderOverrides,
+			"supportedComponents": c.SupportedComponents,
+			"holdsTasks":          slices.Contains(c.SupportedComponents, calendar.ComponentVTodo),
+			"updatedAt":           c.UpdatedAt,
 		}
 		if acc := c.Edges.Account; acc != nil {
 			entry["accountId"] = acc.ID

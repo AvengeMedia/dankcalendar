@@ -61,7 +61,7 @@ func (p *Provider) UpdateEvent(ctx context.Context, cal calendar.Calendar, ev *c
 	var doc *ical.Calendar
 	switch {
 	case strings.HasPrefix(cal.RemoteID, "dir:"):
-		path, doc, err = findEventFile(source, ev.UID)
+		path, doc, err = findComponentFile(source, ical.CompEvent, ev.UID)
 	default:
 		doc, err = loadCalendarDoc(source)
 	}
@@ -69,7 +69,7 @@ func (p *Provider) UpdateEvent(ctx context.Context, cal calendar.Calendar, ev *c
 		return nil, err
 	}
 
-	if !replaceEvent(doc, ev.UID, ev) {
+	if !replaceComponent(doc, ical.CompEvent, ev.UID, icalconv.BuildEvent(ev, ev.UID).Component) {
 		return nil, fmt.Errorf("event not found")
 	}
 	if err := writeAtomic(path, doc); err != nil {
@@ -118,7 +118,7 @@ func createInFile(path, uid string, ev *calendar.Event) error {
 		return err
 	}
 
-	if findEvent(doc, uid) != nil {
+	if findComponent(doc, ical.CompEvent, uid) != nil {
 		return fmt.Errorf("event %q already exists", uid)
 	}
 	doc.Children = append(doc.Children, icalconv.BuildEvent(ev, uid).Component)
@@ -126,13 +126,13 @@ func createInFile(path, uid string, ev *calendar.Event) error {
 }
 
 func deleteInDirectory(dir, uid string) error {
-	path, doc, err := findEventFile(dir, uid)
+	path, doc, err := findComponentFile(dir, ical.CompEvent, uid)
 	if err != nil {
 		return err
 	}
 
-	removeEvent(doc, uid)
-	if len(doc.Events()) == 0 {
+	removeComponent(doc, ical.CompEvent, uid)
+	if len(doc.Children) == 0 {
 		return os.Remove(path)
 	}
 	return writeAtomic(path, doc)
@@ -143,15 +143,15 @@ func deleteInFile(path, uid string) error {
 	if err != nil {
 		return err
 	}
-	if !removeEvent(doc, uid) {
+	if !removeComponent(doc, ical.CompEvent, uid) {
 		return fmt.Errorf("event not found")
 	}
 	return writeAtomic(path, doc)
 }
 
-func findEventFile(dir, uid string) (string, *ical.Calendar, error) {
+func findComponentFile(dir, name, uid string) (string, *ical.Calendar, error) {
 	fast := filepath.Join(dir, filenameSanitizer.Replace(uid)+".ics")
-	if doc, err := loadCalendarDoc(fast); err == nil && findEvent(doc, uid) != nil {
+	if doc, err := loadCalendarDoc(fast); err == nil && findComponent(doc, name, uid) != nil {
 		return fast, doc, nil
 	}
 
@@ -168,11 +168,11 @@ func findEventFile(dir, uid string) (string, *ical.Calendar, error) {
 		if err != nil {
 			return "", nil, err
 		}
-		if findEvent(doc, uid) != nil {
+		if findComponent(doc, name, uid) != nil {
 			return path, doc, nil
 		}
 	}
-	return "", nil, fmt.Errorf("event not found")
+	return "", nil, fmt.Errorf("%s not found", strings.ToLower(name))
 }
 
 func loadCalendarDoc(path string) (*ical.Calendar, error) {
@@ -189,29 +189,29 @@ func loadCalendarDoc(path string) (*ical.Calendar, error) {
 	return doc, nil
 }
 
-func findEvent(doc *ical.Calendar, uid string) *ical.Component {
+func findComponent(doc *ical.Calendar, name, uid string) *ical.Component {
 	for _, child := range doc.Children {
-		if child.Name == ical.CompEvent && icalconv.ComponentUID(child) == uid {
+		if child.Name == name && icalconv.ComponentUID(child) == uid {
 			return child
 		}
 	}
 	return nil
 }
 
-func replaceEvent(doc *ical.Calendar, uid string, ev *calendar.Event) bool {
+func replaceComponent(doc *ical.Calendar, name, uid string, newChild *ical.Component) bool {
 	for i, child := range doc.Children {
-		if child.Name != ical.CompEvent || icalconv.ComponentUID(child) != uid {
+		if child.Name != name || icalconv.ComponentUID(child) != uid {
 			continue
 		}
-		doc.Children[i] = icalconv.BuildEvent(ev, uid).Component
+		doc.Children[i] = newChild
 		return true
 	}
 	return false
 }
 
-func removeEvent(doc *ical.Calendar, uid string) bool {
+func removeComponent(doc *ical.Calendar, name, uid string) bool {
 	for i, child := range doc.Children {
-		if child.Name != ical.CompEvent || icalconv.ComponentUID(child) != uid {
+		if child.Name != name || icalconv.ComponentUID(child) != uid {
 			continue
 		}
 		doc.Children = append(doc.Children[:i], doc.Children[i+1:]...)

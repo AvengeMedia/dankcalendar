@@ -14,6 +14,11 @@ import (
 var durationPattern = regexp.MustCompile(`^([+-])?P(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$`)
 
 func applyAlarms(comp *ical.Component, ev *cal.Event) {
+	ev.Reminders = append(ev.Reminders, remindersFromComponent(comp)...)
+}
+
+func remindersFromComponent(comp *ical.Component) []cal.Reminder {
+	var out []cal.Reminder
 	for _, alarm := range comp.Children {
 		if alarm.Name != ical.CompAlarm {
 			continue
@@ -27,11 +32,12 @@ func applyAlarms(comp *ical.Component, ev *cal.Event) {
 		if !ok {
 			continue
 		}
-		ev.Reminders = append(ev.Reminders, cal.Reminder{Method: "popup", Minutes: minutes})
+		out = append(out, cal.Reminder{Method: "popup", Minutes: minutes})
 	}
+	return out
 }
 
-func addAlarms(event *ical.Event, reminders []cal.Reminder) {
+func addAlarms(comp *ical.Component, reminders []cal.Reminder) {
 	for _, rem := range reminders {
 		if strings.EqualFold(rem.Method, "email") {
 			continue
@@ -41,7 +47,7 @@ func addAlarms(event *ical.Event, reminders []cal.Reminder) {
 		// DISPLAY alarms require a description per RFC 5545.
 		alarm.Props.SetText(ical.PropDescription, "Reminder")
 		setRaw(alarm.Props, ical.PropTrigger, triggerFromMinutes(rem.Minutes))
-		event.Children = append(event.Children, alarm)
+		comp.Children = append(comp.Children, alarm)
 	}
 }
 

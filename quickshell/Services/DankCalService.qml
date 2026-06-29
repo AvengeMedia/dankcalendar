@@ -32,6 +32,7 @@ Singleton {
 
     property var calendars: []
     property var events: []
+    property var tasks: []
     property bool eventsLoading: false
     property date focusDate: new Date()
     property var _loadedFrom: null
@@ -52,6 +53,7 @@ Singleton {
     signal accountAdded(string accountId)
     signal accountRemoved(string accountId)
     signal eventsUpdated
+    signal tasksUpdated
     signal windowActionRequested(string action, string view)
     signal subscribeRequested(string url)
     signal colorSchemeUpdate(var data)
@@ -104,6 +106,7 @@ Singleton {
                 root.refreshMicrosoftSetupSteps();
                 root.refreshCalendars();
                 root.reloadEvents();
+                root.reloadTasks();
                 root.refreshAutostart();
             } else {
                 root.connected = false;
@@ -161,7 +164,7 @@ Singleton {
             "id": _nextId(),
             "method": "subscribe",
             "params": {
-                "topics": ["accounts", "calendars", "events", "sync", "ui", "colorScheme"]
+                "topics": ["accounts", "calendars", "events", "tasks", "sync", "ui", "colorScheme"]
             }
         };
         subscribeSocket.send(req);
@@ -206,8 +209,14 @@ Singleton {
             refreshCalendars();
             break;
         case "events":
+            refreshDebounce.restart();
+            break;
+        case "tasks":
+            tasksDebounce.restart();
+            break;
         case "sync":
             refreshDebounce.restart();
+            tasksDebounce.restart();
             break;
         case "ui":
             {
@@ -232,6 +241,13 @@ Singleton {
             root.refreshCalendars();
             root.reloadEvents();
         }
+    }
+
+    Timer {
+        id: tasksDebounce
+        interval: 400
+        repeat: false
+        onTriggered: root.reloadTasks()
     }
 
     function sendRequest(method, params, callback) {
@@ -333,6 +349,7 @@ Singleton {
                 return;
             calendars = _mergeStable(list, calendars);
             eventsUpdated();
+            tasksUpdated();
         });
     }
 
@@ -354,6 +371,19 @@ Singleton {
 
     function writableCalendars() {
         return calendars.filter(c => !c.readOnly);
+    }
+
+    // _holdsEvents treats an empty component set as an event calendar for
+    // back-compat; a pure task list (VTODO only) is excluded from "My calendars".
+    function _holdsEvents(c) {
+        const comps = c.supportedComponents;
+        if (!comps || comps.length === 0)
+            return true;
+        return comps.indexOf("VEVENT") !== -1;
+    }
+
+    function eventCalendars() {
+        return calendars.filter(c => _holdsEvents(c));
     }
 
     function defaultCalendar() {
@@ -642,6 +672,255 @@ Singleton {
                 lastError = response.error;
             else
                 reloadEvents();
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function reloadTasks() {
+        if (!connected)
+            return;
+
+        sendRequest("tasks.list", {
+            "includeCompleted": true,
+            "limit": 5000
+        }, response => {
+            if (response.error) {
+                lastError = response.error;
+                return;
+            }
+            const raw = (response.result || {}).tasks || [];
+            tasks = raw.map(t => _normalizeTask(t));
+            tasksUpdated();
+        });
+    }
+
+    function _normalizeTask(t) {
+        const allDay = !!t.allDay;
+        let due = null;
+        if (t.due)
+            due = allDay ? _dayBoundary(t.due) : new Date(t.due);
+        return {
+            "id": t.id,
+            "uid": t.uid || "",
+            "calendarId": t.calendarId || "",
+            "title": t.summary || "(untitled)",
+            "description": t.description || "",
+            "location": t.location || "",
+            "status": t.status || "needs_action",
+            "completed": t.status === "completed",
+            "priority": t.priority || 0,
+            "percentComplete": t.percentComplete || 0,
+            "due": due,
+            "allDay": allDay,
+            "parentUid": t.parentUid || "",
+            "recurrence": t.recurrence || [],
+            "recurring": (t.recurrence || []).length > 0
+        };
+    }
+
+    // calendarAccountKind resolves a calendar's provider kind (e.g. "google",
+    // "caldav", "local"), used to gate features a provider can't support such as
+    // editing recurrence on Google task lists.
+    function calendarAccountKind(calendarId) {
+        const cal = calendarById(calendarId);
+        if (!cal)
+            return "";
+        const acc = accountById(cal.accountId);
+        return acc ? (acc.kind || "") : "";
+    }
+
+    // recurrenceLabel summarizes a task's RRULE for display. It understands the
+    // FREQ + INTERVAL subset the editor produces; anything else falls back to a
+    // generic "Repeats" so unknown rules still read sensibly.
+    function recurrenceLabel(task) {
+        const rules = task.recurrence || [];
+        if (rules.length === 0)
+            return "";
+        let freq = "";
+        let interval = 1;
+        const parts = rules[0].split(";");
+        for (let i = 0; i < parts.length; i++) {
+            const kv = parts[i].split("=");
+            if (kv[0] === "FREQ")
+                freq = kv[1];
+            else if (kv[0] === "INTERVAL")
+                interval = parseInt(kv[1]) || 1;
+        }
+        const unit = {
+            "DAILY": [I18n.tr("day", "recurrence unit singular"), I18n.tr("days", "recurrence unit plural")],
+            "WEEKLY": [I18n.tr("week", "recurrence unit singular"), I18n.tr("weeks", "recurrence unit plural")],
+            "MONTHLY": [I18n.tr("month", "recurrence unit singular"), I18n.tr("months", "recurrence unit plural")],
+            "YEARLY": [I18n.tr("year", "recurrence unit singular"), I18n.tr("years", "recurrence unit plural")]
+        }[freq];
+        if (!unit)
+            return I18n.tr("Repeats", "generic recurrence label for an unrecognized rule");
+        if (interval <= 1)
+            return I18n.tr("Repeats every %1", "recurrence label, %1 is a unit like 'day'").arg(unit[0]);
+        return I18n.tr("Repeats every %1 %2", "recurrence label, %1 is a count and %2 a unit like 'weeks'").arg(interval).arg(unit[1]);
+    }
+
+    function decorateTask(t) {
+        const cal = calendarById(t.calendarId);
+        const out = Object.assign({}, t);
+        out.color = cal ? cal.color : fallbackPalette[0];
+        out.calendar = cal ? cal.name : "";
+        out.account = cal ? (cal.accountName || cal.accountId || "") : "";
+        out.accountSummary = accountSummary(t.calendarId);
+        out.readOnly = cal ? !!cal.readOnly : false;
+        return out;
+    }
+
+    function taskListCalendars() {
+        return calendars.filter(c => c.holdsTasks && !c.readOnly);
+    }
+
+    function hasTaskLists() {
+        return calendars.some(c => c.holdsTasks);
+    }
+
+    function visibleTasks(includeCompleted) {
+        const hidden = _hiddenCalendarIds();
+        const out = [];
+        for (let i = 0; i < tasks.length; i++) {
+            const t = tasks[i];
+            if (hidden[t.calendarId])
+                continue;
+            if (!includeCompleted && t.completed)
+                continue;
+            out.push(decorateTask(t));
+        }
+        out.sort(_compareTasks);
+        return out;
+    }
+
+    // _compareTasks orders by due date (undated last), then by priority with 1
+    // highest and 0 (unset) last, then title.
+    function _compareTasks(a, b) {
+        if (!!a.due !== !!b.due)
+            return a.due ? -1 : 1;
+        if (a.due && b.due && a.due.getTime() !== b.due.getTime())
+            return a.due - b.due;
+        const pa = a.priority || 10;
+        const pb = b.priority || 10;
+        if (pa !== pb)
+            return pa - pb;
+        return a.title.localeCompare(b.title);
+    }
+
+    function taskBuckets() {
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const buckets = {
+            "overdue": [],
+            "today": [],
+            "upcoming": [],
+            "someday": []
+        };
+        const open = visibleTasks(false);
+        for (let i = 0; i < open.length; i++) {
+            const t = open[i];
+            if (!t.due)
+                buckets.someday.push(t);
+            else if (t.due < todayStart)
+                buckets.overdue.push(t);
+            else if (t.due < todayEnd)
+                buckets.today.push(t);
+            else
+                buckets.upcoming.push(t);
+        }
+        return buckets;
+    }
+
+    function createTask(fields, callback) {
+        sendRequest("tasks.create", fields, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                reloadTasks();
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function updateTask(id, fields, callback) {
+        const params = Object.assign({
+            "id": id
+        }, fields);
+        sendRequest("tasks.update", params, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                reloadTasks();
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function completeTask(id, completed, callback) {
+        sendRequest("tasks.complete", {
+            "id": id,
+            "completed": completed
+        }, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                reloadTasks();
+            if (callback)
+                callback(response);
+        });
+    }
+
+    // _patchTaskLocally optimistically updates an in-memory task so the UI
+    // reflects a change instantly while the (possibly remote, slow) request is in
+    // flight. The next reloadTasks reconciles against the server's truth.
+    function _patchTaskLocally(id, changes) {
+        const next = tasks.slice();
+        for (let i = 0; i < next.length; i++) {
+            if (next[i].id === id) {
+                next[i] = Object.assign({}, next[i], changes);
+                break;
+            }
+        }
+        tasks = next;
+        tasksUpdated();
+    }
+
+    // Optimistic toggle (providers like Google take a second to ack) with an Undo
+    // toast so an accidental tap is one click to reverse.
+    function completeTaskWithUndo(task) {
+        const id = task.id;
+        const wasDone = task.completed === true || task.status === "completed";
+        const apply = done => _patchTaskLocally(id, {
+                "completed": done,
+                "status": done ? "completed" : "needs_action"
+            });
+        apply(!wasDone);
+        completeTask(id, !wasDone, response => {
+            if (response.error) {
+                reloadTasks();
+                ToastService.show(I18n.tr("Couldn't update task", "toast when a task update fails"), {});
+                return;
+            }
+            ToastService.show(wasDone ? I18n.tr("Marked as not done", "toast after un-completing a task") : I18n.tr("Task completed", "toast after completing a task"), {
+                "actionLabel": I18n.tr("Undo", "toast undo action"),
+                "action": () => {
+                    apply(wasDone);
+                    completeTask(id, wasDone);
+                }
+            });
+        });
+    }
+
+    function deleteTask(id, callback) {
+        sendRequest("tasks.delete", {
+            "id": id
+        }, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                reloadTasks();
             if (callback)
                 callback(response);
         });
@@ -1048,5 +1327,38 @@ Singleton {
             return acc.displayName;
         const settings = acc.settings || {};
         return settings.username || acc.displayName || acc.id;
+    }
+
+    function providerLabel(flavor) {
+        switch (flavor) {
+        case "google":
+            return "Google";
+        case "microsoft":
+            return "Microsoft";
+        case "icloud":
+            return "iCloud";
+        case "caldav":
+            return "CalDAV";
+        case "local":
+            return I18n.tr("Local", "provider label for a local account");
+        default:
+            return flavor;
+        }
+    }
+
+    // accountSummary renders a calendar's owning account as "Provider · label"
+    // (e.g. "Google · me@gmail.com"), or just the provider when there's no label.
+    function accountSummary(calendarId) {
+        const cal = calendarById(calendarId);
+        if (!cal)
+            return "";
+        const acc = accountById(cal.accountId);
+        if (!acc)
+            return cal.accountName || "";
+        const provider = providerLabel(accountFlavor(acc));
+        const label = accountLabel(acc);
+        if (!label || label === provider)
+            return provider;
+        return provider + " · " + label;
     }
 }

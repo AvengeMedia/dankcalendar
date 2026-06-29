@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Window
 import qs.Common
 import qs.Widgets
 
@@ -10,10 +11,25 @@ Item {
     property int firstDayOfWeek: 0
     property string iconName: "today"
     property string dateFormat: "ddd, MMM d, yyyy"
+    property bool openUpwards: false
 
     signal dateSelected(date value)
 
     readonly property int cellSize: 36
+
+    // updateDirection flips the calendar above the field when it would clip off
+    // the bottom of the window.
+    function updateDirection() {
+        const winH = Window.height;
+        if (winH <= 0) {
+            openUpwards = false;
+            return;
+        }
+        const topInWindow = root.mapToItem(null, 0, 0).y;
+        const popH = popup.contentItem ? popup.contentItem.implicitHeight + popup.padding * 2 : 0;
+        const spaceBelow = winH - (topInWindow + root.height);
+        openUpwards = spaceBelow < popH + Theme.spacingXS && topInWindow > spaceBelow;
+    }
 
     height: 48
 
@@ -75,10 +91,13 @@ Item {
             return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
         }
 
-        y: field.height + Theme.spacingXS
+        y: root.openUpwards ? -(height + Theme.spacingXS) : (field.height + Theme.spacingXS)
         width: root.cellSize * 7 + padding * 2
         padding: Theme.spacingS
-        onAboutToShow: displayDate = root.selectedDate
+        onAboutToShow: {
+            displayDate = root.selectedDate;
+            root.updateDirection();
+        }
 
         background: Rectangle {
             color: Theme.surfaceContainerHigh

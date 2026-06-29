@@ -17,6 +17,7 @@ var (
 		{Name: "settings", Type: field.TypeJSON, Nullable: true},
 		{Name: "needs_reauth", Type: field.TypeBool, Default: false},
 		{Name: "auth_error", Type: field.TypeString, Nullable: true},
+		{Name: "sync_notice", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
@@ -46,6 +47,7 @@ var (
 		{Name: "hidden", Type: field.TypeBool, Default: false},
 		{Name: "reminder_overrides", Type: field.TypeJSON, Nullable: true},
 		{Name: "sync_token", Type: field.TypeString, Nullable: true},
+		{Name: "supported_components", Type: field.TypeJSON, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "account_calendars", Type: field.TypeString, Size: 64},
@@ -58,7 +60,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "calendars_accounts_calendars",
-				Columns:    []*schema.Column{CalendarsColumns[13]},
+				Columns:    []*schema.Column{CalendarsColumns[14]},
 				RefColumns: []*schema.Column{AccountsColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
@@ -67,7 +69,7 @@ var (
 			{
 				Name:    "calendar_remote_id_account_calendars",
 				Unique:  true,
-				Columns: []*schema.Column{CalendarsColumns[1], CalendarsColumns[13]},
+				Columns: []*schema.Column{CalendarsColumns[1], CalendarsColumns[14]},
 			},
 		},
 	}
@@ -233,6 +235,64 @@ var (
 			},
 		},
 	}
+	// TasksColumns holds the columns for the "tasks" table.
+	TasksColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Unique: true, Size: 64},
+		{Name: "uid", Type: field.TypeString},
+		{Name: "remote_id", Type: field.TypeString, Nullable: true},
+		{Name: "etag", Type: field.TypeString, Nullable: true},
+		{Name: "summary", Type: field.TypeString},
+		{Name: "description", Type: field.TypeString, Nullable: true, Size: 2147483647},
+		{Name: "location", Type: field.TypeString, Nullable: true},
+		{Name: "status", Type: field.TypeEnum, Enums: []string{"needs_action", "in_process", "completed", "cancelled"}, Default: "needs_action"},
+		{Name: "priority", Type: field.TypeInt, Default: 0},
+		{Name: "percent_complete", Type: field.TypeInt, Default: 0},
+		{Name: "due", Type: field.TypeTime, Nullable: true},
+		{Name: "start", Type: field.TypeTime, Nullable: true},
+		{Name: "completed", Type: field.TypeTime, Nullable: true},
+		{Name: "all_day", Type: field.TypeBool, Default: false},
+		{Name: "due_tz", Type: field.TypeString, Nullable: true},
+		{Name: "start_tz", Type: field.TypeString, Nullable: true},
+		{Name: "parent_uid", Type: field.TypeString, Nullable: true},
+		{Name: "recurrence", Type: field.TypeJSON, Nullable: true},
+		{Name: "reminders", Type: field.TypeJSON, Nullable: true},
+		{Name: "categories", Type: field.TypeJSON, Nullable: true},
+		{Name: "raw_ics", Type: field.TypeString, Nullable: true, Size: 2147483647},
+		{Name: "created", Type: field.TypeTime},
+		{Name: "updated", Type: field.TypeTime},
+		{Name: "calendar_tasks", Type: field.TypeString, Size: 64},
+	}
+	// TasksTable holds the schema information for the "tasks" table.
+	TasksTable = &schema.Table{
+		Name:       "tasks",
+		Columns:    TasksColumns,
+		PrimaryKey: []*schema.Column{TasksColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "tasks_calendars_tasks",
+				Columns:    []*schema.Column{TasksColumns[23]},
+				RefColumns: []*schema.Column{CalendarsColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "task_uid_calendar_tasks",
+				Unique:  true,
+				Columns: []*schema.Column{TasksColumns[1], TasksColumns[23]},
+			},
+			{
+				Name:    "task_due",
+				Unique:  false,
+				Columns: []*schema.Column{TasksColumns[10]},
+			},
+			{
+				Name:    "task_status",
+				Unique:  false,
+				Columns: []*schema.Column{TasksColumns[7]},
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		AccountsTable,
@@ -241,6 +301,7 @@ var (
 		InvitationStatesTable,
 		ReminderStatesTable,
 		SecretsTable,
+		TasksTable,
 	}
 )
 
@@ -248,4 +309,5 @@ func init() {
 	CalendarsTable.ForeignKeys[0].RefTable = AccountsTable
 	EventsTable.ForeignKeys[0].RefTable = CalendarsTable
 	SecretsTable.ForeignKeys[0].RefTable = AccountsTable
+	TasksTable.ForeignKeys[0].RefTable = CalendarsTable
 }

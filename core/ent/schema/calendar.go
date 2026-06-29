@@ -47,6 +47,11 @@ func (Calendar) Fields() []ent.Field {
 			Optional(),
 		field.String("sync_token").
 			Optional(),
+		// iCalendar component types the collection holds (VEVENT, VTODO).
+		// Empty means an event calendar, for back-compat with rows that
+		// predate task support.
+		field.JSON("supported_components", []string{}).
+			Optional(),
 		field.Time("created_at").
 			Default(time.Now).
 			Immutable(),
@@ -63,6 +68,8 @@ func (Calendar) Edges() []ent.Edge {
 			Unique().
 			Required(),
 		edge.To("events", Event.Type).
+			Annotations(entsql.OnDelete(entsql.Cascade)),
+		edge.To("tasks", Task.Type).
 			Annotations(entsql.OnDelete(entsql.Cascade)),
 	}
 }

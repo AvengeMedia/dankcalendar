@@ -12,8 +12,10 @@ import (
 	"google.golang.org/api/calendar/v3"
 	"google.golang.org/api/googleapi"
 	"google.golang.org/api/option"
+	gtasks "google.golang.org/api/tasks/v1"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
 )
@@ -21,9 +23,13 @@ import (
 const maxPageSize = 2500
 
 type Provider struct {
-	account cal.Account
-	svc     *calendar.Service
+	account  cal.Account
+	svc      *calendar.Service
+	tasksSvc *gtasks.Service
+	notices  []string
 }
+
+func (p *Provider) Notices() []string { return p.notices }
 
 func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Provider, error) {
 	src, err := oauthbase.LoadTokenSource(ctx, secrets, account, SecretKeyApp, SecretKeyToken,
@@ -36,17 +42,51 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Pr
 	if err != nil {
 		return nil, fmt.Errorf("init google calendar service: %w", err)
 	}
+	tasksSvc, err := gtasks.NewService(ctx, option.WithTokenSource(src))
+	if err != nil {
+		return nil, fmt.Errorf("init google tasks service: %w", err)
+	}
 
-	return &Provider{account: account, svc: svc}, nil
+	return &Provider{account: account, svc: svc, tasksSvc: tasksSvc}, nil
 }
 
 func (p *Provider) Kind() cal.AccountKind { return cal.AccountGoogle }
 func (p *Provider) Account() cal.Account  { return p.account }
 
+// ListCalendars discovers event calendars and task lists from two independent
+// Google APIs. Either may be disabled in the user's Cloud project, so a
+// "service disabled" failure on one degrades to a soft notice while the other
+// still syncs; only when both are unreachable does the account fail outright.
 func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
+	p.notices = nil
+
+	cals, calErr := p.listEventCalendars(ctx)
+	taskLists, taskErr := p.listTaskLists(ctx)
+
+	switch {
+	case calErr != nil && taskErr != nil:
+		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(calErr))
+	case calErr != nil && isServiceDisabled(calErr):
+		p.notices = append(p.notices, cal.NoticeCalendarsUnavailable)
+		log.Warnf("account %s: Google Calendar API disabled, syncing tasks only: %v", p.account.ID, calErr)
+		return taskLists, nil
+	case calErr != nil:
+		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(calErr))
+	case taskErr != nil && isServiceDisabled(taskErr):
+		p.notices = append(p.notices, cal.NoticeTasksUnavailable)
+		log.Warnf("account %s: Google Tasks API disabled, syncing calendars only: %v", p.account.ID, taskErr)
+		return cals, nil
+	case taskErr != nil:
+		return nil, fmt.Errorf("list google task lists: %w", classifyAuthErr(taskErr))
+	}
+
+	return append(cals, taskLists...), nil
+}
+
+func (p *Provider) listEventCalendars(ctx context.Context) ([]cal.Calendar, error) {
 	res, err := p.svc.CalendarList.List().Context(ctx).Do()
 	if err != nil {
-		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(err))
+		return nil, err
 	}
 
 	out := make([]cal.Calendar, 0, len(res.Items))
@@ -64,7 +104,31 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 	return out, nil
 }
 
+// isServiceDisabled reports whether err is Google's "API not enabled for this
+// project" 403, which is a fixable configuration issue rather than a credential
+// failure, so callers can degrade gracefully and point the user at the console.
+func isServiceDisabled(err error) bool {
+	var apiErr *googleapi.Error
+	if !errors.As(err, &apiErr) || apiErr.Code != http.StatusForbidden {
+		return false
+	}
+	for _, e := range apiErr.Errors {
+		if e.Reason == "accessNotConfigured" {
+			return true
+		}
+	}
+	return strings.Contains(apiErr.Message, "has not been used in project") ||
+		strings.Contains(apiErr.Message, "it is disabled")
+}
+
 func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {
+	if c.HoldsTasks() {
+		return p.syncTasks(ctx, c)
+	}
+	return p.syncEvents(ctx, c, cursor)
+}
+
+func (p *Provider) syncEvents(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {
 	changes, nextToken, err := p.syncPages(ctx, c, cursor.Token)
 	if err != nil {
 		var apiErr *googleapi.Error

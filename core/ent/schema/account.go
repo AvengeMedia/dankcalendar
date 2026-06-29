@@ -32,6 +32,8 @@ func (Account) Fields() []ent.Field {
 			Default(false),
 		field.String("auth_error").
 			Optional(),
+		field.String("sync_notice").
+			Optional(),
 		field.Time("created_at").
 			Default(time.Now).
 			Immutable(),

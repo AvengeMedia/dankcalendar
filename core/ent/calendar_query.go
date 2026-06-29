@@ -16,6 +16,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
+	"github.com/AvengeMedia/dankcalendar/core/ent/task"
 )
 
 // CalendarQuery is the builder for querying Calendar entities.
@@ -27,6 +28,7 @@ type CalendarQuery struct {
 	predicates  []predicate.Calendar
 	withAccount *AccountQuery
 	withEvents  *EventQuery
+	withTasks   *TaskQuery
 	withFKs     bool
 	modifiers   []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
@@ -102,6 +104,28 @@ func (_q *CalendarQuery) QueryEvents() *EventQuery {
 			sqlgraph.From(calendar.Table, calendar.FieldID, selector),
 			sqlgraph.To(event.Table, event.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, calendar.EventsTable, calendar.EventsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryTasks chains the current query on the "tasks" edge.
+func (_q *CalendarQuery) QueryTasks() *TaskQuery {
+	query := (&TaskClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(calendar.Table, calendar.FieldID, selector),
+			sqlgraph.To(task.Table, task.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, calendar.TasksTable, calendar.TasksColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
@@ -303,6 +327,7 @@ func (_q *CalendarQuery) Clone() *CalendarQuery {
 		predicates:  append([]predicate.Calendar{}, _q.predicates...),
 		withAccount: _q.withAccount.Clone(),
 		withEvents:  _q.withEvents.Clone(),
+		withTasks:   _q.withTasks.Clone(),
 		// clone intermediate query.
 		sql:       _q.sql.Clone(),
 		path:      _q.path,
@@ -329,6 +354,17 @@ func (_q *CalendarQuery) WithEvents(opts ...func(*EventQuery)) *CalendarQuery {
 		opt(query)
 	}
 	_q.withEvents = query
+	return _q
+}
+
+// WithTasks tells the query-builder to eager-load the nodes that are connected to
+// the "tasks" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *CalendarQuery) WithTasks(opts ...func(*TaskQuery)) *CalendarQuery {
+	query := (&TaskClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withTasks = query
 	return _q
 }
 
@@ -411,9 +447,10 @@ func (_q *CalendarQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Cal
 		nodes       = []*Calendar{}
 		withFKs     = _q.withFKs
 		_spec       = _q.querySpec()
-		loadedTypes = [2]bool{
+		loadedTypes = [3]bool{
 			_q.withAccount != nil,
 			_q.withEvents != nil,
+			_q.withTasks != nil,
 		}
 	)
 	if _q.withAccount != nil {
@@ -453,6 +490,13 @@ func (_q *CalendarQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Cal
 		if err := _q.loadEvents(ctx, query, nodes,
 			func(n *Calendar) { n.Edges.Events = []*Event{} },
 			func(n *Calendar, e *Event) { n.Edges.Events = append(n.Edges.Events, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := _q.withTasks; query != nil {
+		if err := _q.loadTasks(ctx, query, nodes,
+			func(n *Calendar) { n.Edges.Tasks = []*Task{} },
+			func(n *Calendar, e *Task) { n.Edges.Tasks = append(n.Edges.Tasks, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -517,6 +561,37 @@ func (_q *CalendarQuery) loadEvents(ctx context.Context, query *EventQuery, node
 		node, ok := nodeids[*fk]
 		if !ok {
 			return fmt.Errorf(`unexpected referenced foreign-key "calendar_events" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (_q *CalendarQuery) loadTasks(ctx context.Context, query *TaskQuery, nodes []*Calendar, init func(*Calendar), assign func(*Calendar, *Task)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*Calendar)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.withFKs = true
+	query.Where(predicate.Task(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(calendar.TasksColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.calendar_tasks
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "calendar_tasks" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "calendar_tasks" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

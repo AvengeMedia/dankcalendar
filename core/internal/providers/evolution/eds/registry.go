@@ -16,9 +16,22 @@ type CalendarSource struct {
 	Backend     string
 }
 
-// ListCalendarSources returns every enabled calendar source, skipping task and
-// memo lists (which live under different key-file sections).
+// ListCalendarSources returns every enabled event-calendar source, skipping task
+// and memo lists (which live under different key-file sections).
 func (c *Client) ListCalendarSources() ([]CalendarSource, error) {
+	return c.listSources("Calendar")
+}
+
+// ListTaskSources returns every enabled task-list source, the VTODO counterpart
+// of ListCalendarSources.
+func (c *Client) ListTaskSources() ([]CalendarSource, error) {
+	return c.listSources("Task List")
+}
+
+// listSources enumerates EDS sources carrying the given key-file section, the
+// section that distinguishes event calendars ("Calendar") from task lists
+// ("Task List").
+func (c *Client) listSources(section string) ([]CalendarSource, error) {
 	mgr := c.conn.Object(c.sourcesName, sourceManagerPath)
 
 	var managed map[dbus.ObjectPath]map[string]map[string]dbus.Variant
@@ -43,15 +56,15 @@ func (c *Client) ListCalendarSources() ([]CalendarSource, error) {
 		}
 
 		kf := parseKeyFile(data)
-		if !kf.hasSection("Calendar") {
+		if !kf.hasSection(section) {
 			continue
 		}
 
 		sources = append(sources, CalendarSource{
 			UID:         uid,
 			DisplayName: kf.get("Data Source", "DisplayName"),
-			Color:       kf.get("Calendar", "Color"),
-			Backend:     kf.get("Calendar", "BackendName"),
+			Color:       kf.get(section, "Color"),
+			Backend:     kf.get(section, "BackendName"),
 		})
 	}
 

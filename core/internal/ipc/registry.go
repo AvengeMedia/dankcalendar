@@ -59,6 +59,13 @@ var Methods = []MethodSpec{
 	{Name: "events.delete", Group: "events", Desc: "Delete an event", Params: []ParamSpec{req("id", "")}},
 	{Name: "events.rsvp", Group: "events", Desc: "Respond to a meeting invitation", Params: []ParamSpec{req("id", ""), req("response", "accept|decline|tentative")}},
 
+	{Name: "tasks.list", Group: "tasks", Desc: "List tasks", Params: []ParamSpec{opt("query", "text filter"), opt("calendarId", "limit to one task list"), opt("includeCompleted", "true|false, default true"), opt("limit", ""), opt("offset", "")}},
+	{Name: "tasks.get", Group: "tasks", Desc: "Get a task by id", Params: []ParamSpec{req("id", "")}},
+	{Name: "tasks.create", Group: "tasks", Desc: "Create a task", Params: []ParamSpec{req("calendarId", ""), req("summary", ""), opt("description", ""), opt("location", ""), opt("due", "RFC3339"), opt("start", "RFC3339"), opt("allDay", "true|false"), opt("priority", "0-9"), opt("status", "needs_action|in_process|completed|cancelled"), opt("parentUid", ""), opt("reminders", ""), opt("recurrence", "RRULE list")}},
+	{Name: "tasks.update", Group: "tasks", Desc: "Update a task", Params: []ParamSpec{req("id", ""), opt("summary", ""), opt("description", ""), opt("location", ""), opt("due", "RFC3339"), opt("start", "RFC3339"), opt("allDay", "true|false"), opt("priority", "0-9"), opt("percentComplete", "0-100"), opt("status", "needs_action|in_process|completed|cancelled"), opt("parentUid", ""), opt("reminders", ""), opt("recurrence", "RRULE list")}},
+	{Name: "tasks.complete", Group: "tasks", Desc: "Mark a task complete or reopen it", Params: []ParamSpec{req("id", ""), opt("completed", "true|false, default true")}},
+	{Name: "tasks.delete", Group: "tasks", Desc: "Delete a task", Params: []ParamSpec{req("id", "")}},
+
 	{Name: "reminders.upcoming", Group: "reminders", Desc: "List upcoming reminders", Params: []ParamSpec{opt("limit", "default 20")}},
 	{Name: "reminders.test", Group: "reminders", Desc: "Fire a test reminder notification"},
 

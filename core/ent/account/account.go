@@ -25,6 +25,8 @@ const (
 	FieldNeedsReauth = "needs_reauth"
 	// FieldAuthError holds the string denoting the auth_error field in the database.
 	FieldAuthError = "auth_error"
+	// FieldSyncNotice holds the string denoting the sync_notice field in the database.
+	FieldSyncNotice = "sync_notice"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -59,6 +61,7 @@ var Columns = []string{
 	FieldSettings,
 	FieldNeedsReauth,
 	FieldAuthError,
+	FieldSyncNotice,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -141,6 +144,11 @@ func ByNeedsReauth(opts ...sql.OrderTermOption) OrderOption {
 // ByAuthError orders the results by the auth_error field.
 func ByAuthError(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAuthError, opts...).ToFunc()
+}
+
+// BySyncNotice orders the results by the sync_notice field.
+func BySyncNotice(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSyncNotice, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.

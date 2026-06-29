@@ -16,6 +16,7 @@ import (
 	"golang.org/x/oauth2"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
 )
@@ -29,6 +30,17 @@ type Provider struct {
 	account    cal.Account
 	httpClient *http.Client
 	masters    map[string]graphEvent
+	notices    []string
+}
+
+func (p *Provider) Notices() []string { return p.notices }
+
+// isForbidden reports whether err is a Graph 403, i.e. the To Do permission was
+// not granted, so task discovery can degrade to a soft notice instead of
+// failing the whole account.
+func isForbidden(err error) bool {
+	var ge *graphError
+	return errors.As(err, &ge) && ge.Status == http.StatusForbidden
 }
 
 func New(ctx context.Context, account cal.Account, secrets cal.SecretStore) (*Provider, error) {
@@ -117,6 +129,7 @@ type graphCalendar struct {
 }
 
 func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
+	p.notices = nil
 	var out []cal.Calendar
 	next := graphBase + "/me/calendars?$top=100"
 	for next != "" {
@@ -142,7 +155,17 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 		}
 		next = page.NextLink
 	}
-	return out, nil
+
+	taskLists, err := p.listTodoLists(ctx)
+	switch {
+	case err != nil && isForbidden(err):
+		p.notices = append(p.notices, cal.NoticeTasksUnavailable)
+		log.Warnf("account %s: Microsoft To Do not permitted, syncing calendars only: %v", p.account.ID, err)
+		return out, nil
+	case err != nil:
+		return nil, fmt.Errorf("list microsoft todo lists: %w", classifyAuthErr(err))
+	}
+	return append(out, taskLists...), nil
 }
 
 type graphEventPage struct {
@@ -152,6 +175,9 @@ type graphEventPage struct {
 }
 
 func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {
+	if c.HoldsTasks() {
+		return p.syncTasks(ctx, c)
+	}
 	reqURL, snapshot := deltaURL(c, cursor)
 
 	var page graphEventPage

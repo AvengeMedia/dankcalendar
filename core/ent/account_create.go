@@ -71,6 +71,20 @@ func (_c *AccountCreate) SetNillableAuthError(v *string) *AccountCreate {
 	return _c
 }
 
+// SetSyncNotice sets the "sync_notice" field.
+func (_c *AccountCreate) SetSyncNotice(v string) *AccountCreate {
+	_c.mutation.SetSyncNotice(v)
+	return _c
+}
+
+// SetNillableSyncNotice sets the "sync_notice" field if the given value is not nil.
+func (_c *AccountCreate) SetNillableSyncNotice(v *string) *AccountCreate {
+	if v != nil {
+		_c.SetSyncNotice(*v)
+	}
+	return _c
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (_c *AccountCreate) SetCreatedAt(v time.Time) *AccountCreate {
 	_c.mutation.SetCreatedAt(v)
@@ -272,6 +286,10 @@ func (_c *AccountCreate) createSpec() (*Account, *sqlgraph.CreateSpec) {
 		_spec.SetField(account.FieldAuthError, field.TypeString, value)
 		_node.AuthError = value
 	}
+	if value, ok := _c.mutation.SyncNotice(); ok {
+		_spec.SetField(account.FieldSyncNotice, field.TypeString, value)
+		_node.SyncNotice = value
+	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(account.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
@@ -424,6 +442,24 @@ func (u *AccountUpsert) ClearAuthError() *AccountUpsert {
 	return u
 }
 
+// SetSyncNotice sets the "sync_notice" field.
+func (u *AccountUpsert) SetSyncNotice(v string) *AccountUpsert {
+	u.Set(account.FieldSyncNotice, v)
+	return u
+}
+
+// UpdateSyncNotice sets the "sync_notice" field to the value that was provided on create.
+func (u *AccountUpsert) UpdateSyncNotice() *AccountUpsert {
+	u.SetExcluded(account.FieldSyncNotice)
+	return u
+}
+
+// ClearSyncNotice clears the value of the "sync_notice" field.
+func (u *AccountUpsert) ClearSyncNotice() *AccountUpsert {
+	u.SetNull(account.FieldSyncNotice)
+	return u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (u *AccountUpsert) SetUpdatedAt(v time.Time) *AccountUpsert {
 	u.Set(account.FieldUpdatedAt, v)
@@ -557,6 +593,27 @@ func (u *AccountUpsertOne) UpdateAuthError() *AccountUpsertOne {
 func (u *AccountUpsertOne) ClearAuthError() *AccountUpsertOne {
 	return u.Update(func(s *AccountUpsert) {
 		s.ClearAuthError()
+	})
+}
+
+// SetSyncNotice sets the "sync_notice" field.
+func (u *AccountUpsertOne) SetSyncNotice(v string) *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetSyncNotice(v)
+	})
+}
+
+// UpdateSyncNotice sets the "sync_notice" field to the value that was provided on create.
+func (u *AccountUpsertOne) UpdateSyncNotice() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateSyncNotice()
+	})
+}
+
+// ClearSyncNotice clears the value of the "sync_notice" field.
+func (u *AccountUpsertOne) ClearSyncNotice() *AccountUpsertOne {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearSyncNotice()
 	})
 }
 
@@ -862,6 +919,27 @@ func (u *AccountUpsertBulk) UpdateAuthError() *AccountUpsertBulk {
 func (u *AccountUpsertBulk) ClearAuthError() *AccountUpsertBulk {
 	return u.Update(func(s *AccountUpsert) {
 		s.ClearAuthError()
+	})
+}
+
+// SetSyncNotice sets the "sync_notice" field.
+func (u *AccountUpsertBulk) SetSyncNotice(v string) *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.SetSyncNotice(v)
+	})
+}
+
+// UpdateSyncNotice sets the "sync_notice" field to the value that was provided on create.
+func (u *AccountUpsertBulk) UpdateSyncNotice() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.UpdateSyncNotice()
+	})
+}
+
+// ClearSyncNotice clears the value of the "sync_notice" field.
+func (u *AccountUpsertBulk) ClearSyncNotice() *AccountUpsertBulk {
+	return u.Update(func(s *AccountUpsert) {
+		s.ClearSyncNotice()
 	})
 }
 

@@ -23,6 +23,7 @@ func MicrosoftScopes() []string {
 		"email",
 		"offline_access",
 		"https://graph.microsoft.com/Calendars.ReadWrite",
+		"https://graph.microsoft.com/Tasks.ReadWrite",
 		"https://graph.microsoft.com/User.Read",
 	}
 }

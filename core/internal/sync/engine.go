@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
+	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
@@ -27,12 +29,13 @@ const (
 )
 
 type Engine struct {
-	repo     *repo.Repo
-	registry *calendar.Registry
-	secrets  calendar.SecretStore
-	interval time.Duration
-	notify   Notifier
-	now      func() time.Time
+	repo       *repo.Repo
+	registry   *calendar.Registry
+	secrets    calendar.SecretStore
+	interval   time.Duration
+	intervalFn func() time.Duration
+	notify     Notifier
+	now        func() time.Time
 
 	wake chan struct{}
 
@@ -194,8 +197,31 @@ func (e *Engine) due(accountID string, now time.Time) bool {
 	return !ok || !due.After(now)
 }
 
-func (e *Engine) schedule(accountID string, retryAfter time.Duration) {
+// SetIntervalFunc supplies a live poll interval consulted each scheduling pass;
+// a zero/negative return is ignored.
+func (e *Engine) SetIntervalFunc(fn func() time.Duration) {
+	e.mu.Lock()
+	e.intervalFn = fn
+	e.mu.Unlock()
+	e.Wake()
+}
+
+func (e *Engine) baseInterval() time.Duration {
+	e.mu.Lock()
+	fn := e.intervalFn
 	interval := e.interval
+	e.mu.Unlock()
+	if fn == nil {
+		return interval
+	}
+	if v := fn(); v > 0 {
+		interval = v
+	}
+	return interval
+}
+
+func (e *Engine) schedule(accountID string, retryAfter time.Duration) {
+	interval := e.baseInterval()
 	if retryAfter > 0 {
 		interval = retryAfter
 	}
@@ -254,18 +280,18 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 	if err != nil {
 		return 0, fmt.Errorf("list calendars: %w", err)
 	}
-
 	var retryAfter time.Duration
 	for _, rc := range remoteCals {
 		stored, err := e.repo.UpsertCalendar(ctx, repo.UpsertCalendarInput{
-			AccountID:   acc.ID,
-			RemoteID:    rc.RemoteID,
-			Name:        rc.Name,
-			Description: rc.Description,
-			Color:       rc.Color,
-			TimeZone:    rc.TimeZone,
-			ReadOnly:    rc.ReadOnly,
-			Hidden:      rc.Hidden,
+			AccountID:           acc.ID,
+			RemoteID:            rc.RemoteID,
+			Name:                rc.Name,
+			Description:         rc.Description,
+			Color:               rc.Color,
+			TimeZone:            rc.TimeZone,
+			ReadOnly:            rc.ReadOnly,
+			Hidden:              rc.Hidden,
+			SupportedComponents: rc.SupportedComponents,
 		})
 		if err != nil {
 			log.Warnf("upsert calendar %q: %v", rc.RemoteID, err)
@@ -273,7 +299,7 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		}
 
 		rc.ID = stored.ID
-		ra, err := e.syncCalendarEvents(ctx, provider, rc, stored.SyncToken)
+		ra, err := e.syncCalendar(ctx, provider, rc, stored.SyncToken)
 		if err != nil {
 			log.Warnf("sync calendar %q: %v", rc.RemoteID, err)
 			continue
@@ -283,8 +309,28 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		}
 	}
 
+	e.recordSyncNotice(ctx, acc, provider)
 	e.publish("sync", map[string]any{"type": "completed", "accountId": acc.ID})
 	return retryAfter, nil
+}
+
+// recordSyncNotice persists the provider's soft, non-fatal notices (e.g. a
+// disabled Tasks API) for the GUI. Writes only on change.
+func (e *Engine) recordSyncNotice(ctx context.Context, acc *ent.Account, provider calendar.Provider) {
+	reporter, ok := provider.(calendar.NoticeReporter)
+	if !ok {
+		return
+	}
+	notice := strings.Join(reporter.Notices(), ",")
+	if notice == acc.SyncNotice {
+		return
+	}
+	if err := e.repo.SetAccountSyncNotice(ctx, acc.ID, notice); err != nil {
+		log.Warnf("record sync notice for %s: %v", acc.ID, err)
+		return
+	}
+	acc.SyncNotice = notice
+	e.publish("accounts", map[string]any{"type": "changed", "accountId": acc.ID})
 }
 
 // recordAuthState flips the account's needs_reauth flag when a sync reveals the
@@ -310,13 +356,15 @@ func (e *Engine) recordAuthState(ctx context.Context, acc *ent.Account, syncErr 
 	e.publish("accounts", map[string]any{"type": "changed", "accountId": acc.ID})
 }
 
-func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provider, cal calendar.Calendar, token string) (time.Duration, error) {
+func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, cal calendar.Calendar, token string) (time.Duration, error) {
 	cursor := calendar.SyncCursor{CalendarID: cal.ID, Token: token}
 	var (
-		snapshot     bool
-		snapshotUIDs []string
-		changed      int
-		retryAfter   time.Duration
+		snapshot      bool
+		eventUIDs     []string
+		taskUIDs      []string
+		changedEvents int
+		changedTasks  int
+		retryAfter    time.Duration
 	)
 
 	for {
@@ -329,13 +377,23 @@ func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provi
 		if err := e.applyChanges(ctx, cal, result.Changes); err != nil {
 			return 0, err
 		}
-		changed += len(result.Changes)
+		changedEvents += len(result.Changes)
+
+		if err := e.applyTaskChanges(ctx, cal, result.TaskChanges); err != nil {
+			return 0, err
+		}
+		changedTasks += len(result.TaskChanges)
 
 		if result.FullSnapshot {
 			snapshot = true
 			for _, ch := range result.Changes {
 				if ch.Type == calendar.ChangeUpsert && ch.Event != nil {
-					snapshotUIDs = append(snapshotUIDs, ch.Event.UID)
+					eventUIDs = append(eventUIDs, ch.Event.UID)
+				}
+			}
+			for _, ch := range result.TaskChanges {
+				if ch.Type == calendar.ChangeUpsert && ch.Task != nil {
+					taskUIDs = append(taskUIDs, ch.Task.UID)
 				}
 			}
 		}
@@ -350,18 +408,49 @@ func (e *Engine) syncCalendarEvents(ctx context.Context, provider calendar.Provi
 		}
 
 		if snapshot {
-			pruned, err := e.repo.DeleteEventsNotInUIDs(ctx, cal.ID, snapshotUIDs)
+			pruned, err := e.pruneSnapshot(ctx, cal, eventUIDs, taskUIDs)
 			if err != nil {
-				return 0, fmt.Errorf("prune events: %w", err)
+				return 0, err
 			}
-			changed += pruned
+			changedEvents += pruned.events
+			changedTasks += pruned.tasks
 		}
 
-		if changed > 0 {
+		if changedEvents > 0 {
 			e.publish("events", map[string]any{"type": "changed", "calendarId": cal.ID})
+		}
+		if changedTasks > 0 {
+			e.publish("tasks", map[string]any{"type": "changed", "calendarId": cal.ID})
 		}
 		return retryAfter, nil
 	}
+}
+
+type prunedCounts struct {
+	events int
+	tasks  int
+}
+
+// pruneSnapshot removes rows absent from a full snapshot. A calendar that holds
+// only one component type has no rows of the other, so pruning it is a harmless
+// no-op rather than a special case.
+func (e *Engine) pruneSnapshot(ctx context.Context, cal calendar.Calendar, eventUIDs, taskUIDs []string) (prunedCounts, error) {
+	var out prunedCounts
+	if cal.HoldsEvents() {
+		n, err := e.repo.DeleteEventsNotInUIDs(ctx, cal.ID, eventUIDs)
+		if err != nil {
+			return out, fmt.Errorf("prune events: %w", err)
+		}
+		out.events = n
+	}
+	if cal.HoldsTasks() {
+		n, err := e.repo.DeleteTasksNotInUIDs(ctx, cal.ID, taskUIDs)
+		if err != nil {
+			return out, fmt.Errorf("prune tasks: %w", err)
+		}
+		out.tasks = n
+	}
+	return out, nil
 }
 
 func (e *Engine) applyChanges(ctx context.Context, cal calendar.Calendar, changes []calendar.EventChange) error {
@@ -378,6 +467,26 @@ func (e *Engine) applyChanges(ctx context.Context, cal calendar.Calendar, change
 		case calendar.ChangeDelete:
 			if err := e.repo.DeleteEventByUID(ctx, cal.ID, ch.RemoteID); err != nil {
 				return fmt.Errorf("delete event %q: %w", ch.RemoteID, err)
+			}
+		}
+	}
+	return nil
+}
+
+func (e *Engine) applyTaskChanges(ctx context.Context, cal calendar.Calendar, changes []calendar.TaskChange) error {
+	for _, ch := range changes {
+		switch ch.Type {
+		case calendar.ChangeUpsert:
+			if ch.Task == nil {
+				continue
+			}
+			t := ch.Task
+			if _, err := e.repo.UpsertTask(ctx, taskconv.UpsertInput(cal.ID, t)); err != nil {
+				return fmt.Errorf("upsert task %q: %w", t.UID, err)
+			}
+		case calendar.ChangeDelete:
+			if err := e.repo.DeleteTaskByUID(ctx, cal.ID, ch.RemoteID); err != nil {
+				return fmt.Errorf("delete task %q: %w", ch.RemoteID, err)
 			}
 		}
 	}

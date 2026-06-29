@@ -17,6 +17,8 @@ Item {
     signal nextRequested
     signal createEventRequested
     signal eventClicked(var event)
+    signal createTaskRequested
+    signal taskClicked(var task)
     signal settingsRequested
     signal searchRequested
     signal daySelected(date day)
@@ -31,6 +33,8 @@ Item {
             return SettingsData.monthName(displayDate.getMonth()) + " " + displayDate.getFullYear();
         case "agenda":
             return I18n.tr("Agenda", "header title when the agenda view is active");
+        case "tasks":
+            return I18n.tr("Tasks", "header title when the tasks view is active");
         default:
             return SettingsData.monthName(displayDate.getMonth()) + " " + displayDate.getFullYear();
         }
@@ -152,6 +156,8 @@ Item {
                         return weekComponent;
                     case "agenda":
                         return agendaComponent;
+                    case "tasks":
+                        return tasksComponent;
                     default:
                         return monthComponent;
                     }
@@ -196,6 +202,14 @@ Item {
                 AgendaView {
                     displayDate: root.displayDate
                     onEventClicked: ev => root.eventClicked(ev)
+                }
+            }
+
+            Component {
+                id: tasksComponent
+                TasksView {
+                    onTaskClicked: task => root.taskClicked(task)
+                    onCreateTaskRequested: root.createTaskRequested()
                 }
             }
         }

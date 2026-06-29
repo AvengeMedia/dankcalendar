@@ -10,11 +10,13 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
+	"github.com/AvengeMedia/dankcalendar/core/ent/task"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
@@ -200,6 +202,24 @@ func (_u *CalendarUpdate) ClearSyncToken() *CalendarUpdate {
 	return _u
 }
 
+// SetSupportedComponents sets the "supported_components" field.
+func (_u *CalendarUpdate) SetSupportedComponents(v []string) *CalendarUpdate {
+	_u.mutation.SetSupportedComponents(v)
+	return _u
+}
+
+// AppendSupportedComponents appends value to the "supported_components" field.
+func (_u *CalendarUpdate) AppendSupportedComponents(v []string) *CalendarUpdate {
+	_u.mutation.AppendSupportedComponents(v)
+	return _u
+}
+
+// ClearSupportedComponents clears the value of the "supported_components" field.
+func (_u *CalendarUpdate) ClearSupportedComponents() *CalendarUpdate {
+	_u.mutation.ClearSupportedComponents()
+	return _u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (_u *CalendarUpdate) SetUpdatedAt(v time.Time) *CalendarUpdate {
 	_u.mutation.SetUpdatedAt(v)
@@ -232,6 +252,21 @@ func (_u *CalendarUpdate) AddEvents(v ...*Event) *CalendarUpdate {
 	return _u.AddEventIDs(ids...)
 }
 
+// AddTaskIDs adds the "tasks" edge to the Task entity by IDs.
+func (_u *CalendarUpdate) AddTaskIDs(ids ...string) *CalendarUpdate {
+	_u.mutation.AddTaskIDs(ids...)
+	return _u
+}
+
+// AddTasks adds the "tasks" edges to the Task entity.
+func (_u *CalendarUpdate) AddTasks(v ...*Task) *CalendarUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddTaskIDs(ids...)
+}
+
 // Mutation returns the CalendarMutation object of the builder.
 func (_u *CalendarUpdate) Mutation() *CalendarMutation {
 	return _u.mutation
@@ -262,6 +297,27 @@ func (_u *CalendarUpdate) RemoveEvents(v ...*Event) *CalendarUpdate {
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveEventIDs(ids...)
+}
+
+// ClearTasks clears all "tasks" edges to the Task entity.
+func (_u *CalendarUpdate) ClearTasks() *CalendarUpdate {
+	_u.mutation.ClearTasks()
+	return _u
+}
+
+// RemoveTaskIDs removes the "tasks" edge to Task entities by IDs.
+func (_u *CalendarUpdate) RemoveTaskIDs(ids ...string) *CalendarUpdate {
+	_u.mutation.RemoveTaskIDs(ids...)
+	return _u
+}
+
+// RemoveTasks removes "tasks" edges to Task entities.
+func (_u *CalendarUpdate) RemoveTasks(v ...*Task) *CalendarUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveTaskIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -384,6 +440,17 @@ func (_u *CalendarUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.SyncTokenCleared() {
 		_spec.ClearField(calendar.FieldSyncToken, field.TypeString)
 	}
+	if value, ok := _u.mutation.SupportedComponents(); ok {
+		_spec.SetField(calendar.FieldSupportedComponents, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedSupportedComponents(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, calendar.FieldSupportedComponents, value)
+		})
+	}
+	if _u.mutation.SupportedComponentsCleared() {
+		_spec.ClearField(calendar.FieldSupportedComponents, field.TypeJSON)
+	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(calendar.FieldUpdatedAt, field.TypeTime, value)
 	}
@@ -454,6 +521,51 @@ func (_u *CalendarUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(event.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.TasksCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedTasksIDs(); len(nodes) > 0 && !_u.mutation.TasksCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.TasksIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {
@@ -651,6 +763,24 @@ func (_u *CalendarUpdateOne) ClearSyncToken() *CalendarUpdateOne {
 	return _u
 }
 
+// SetSupportedComponents sets the "supported_components" field.
+func (_u *CalendarUpdateOne) SetSupportedComponents(v []string) *CalendarUpdateOne {
+	_u.mutation.SetSupportedComponents(v)
+	return _u
+}
+
+// AppendSupportedComponents appends value to the "supported_components" field.
+func (_u *CalendarUpdateOne) AppendSupportedComponents(v []string) *CalendarUpdateOne {
+	_u.mutation.AppendSupportedComponents(v)
+	return _u
+}
+
+// ClearSupportedComponents clears the value of the "supported_components" field.
+func (_u *CalendarUpdateOne) ClearSupportedComponents() *CalendarUpdateOne {
+	_u.mutation.ClearSupportedComponents()
+	return _u
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (_u *CalendarUpdateOne) SetUpdatedAt(v time.Time) *CalendarUpdateOne {
 	_u.mutation.SetUpdatedAt(v)
@@ -683,6 +813,21 @@ func (_u *CalendarUpdateOne) AddEvents(v ...*Event) *CalendarUpdateOne {
 	return _u.AddEventIDs(ids...)
 }
 
+// AddTaskIDs adds the "tasks" edge to the Task entity by IDs.
+func (_u *CalendarUpdateOne) AddTaskIDs(ids ...string) *CalendarUpdateOne {
+	_u.mutation.AddTaskIDs(ids...)
+	return _u
+}
+
+// AddTasks adds the "tasks" edges to the Task entity.
+func (_u *CalendarUpdateOne) AddTasks(v ...*Task) *CalendarUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddTaskIDs(ids...)
+}
+
 // Mutation returns the CalendarMutation object of the builder.
 func (_u *CalendarUpdateOne) Mutation() *CalendarMutation {
 	return _u.mutation
@@ -713,6 +858,27 @@ func (_u *CalendarUpdateOne) RemoveEvents(v ...*Event) *CalendarUpdateOne {
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveEventIDs(ids...)
+}
+
+// ClearTasks clears all "tasks" edges to the Task entity.
+func (_u *CalendarUpdateOne) ClearTasks() *CalendarUpdateOne {
+	_u.mutation.ClearTasks()
+	return _u
+}
+
+// RemoveTaskIDs removes the "tasks" edge to Task entities by IDs.
+func (_u *CalendarUpdateOne) RemoveTaskIDs(ids ...string) *CalendarUpdateOne {
+	_u.mutation.RemoveTaskIDs(ids...)
+	return _u
+}
+
+// RemoveTasks removes "tasks" edges to Task entities.
+func (_u *CalendarUpdateOne) RemoveTasks(v ...*Task) *CalendarUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveTaskIDs(ids...)
 }
 
 // Where appends a list predicates to the CalendarUpdate builder.
@@ -865,6 +1031,17 @@ func (_u *CalendarUpdateOne) sqlSave(ctx context.Context) (_node *Calendar, err 
 	if _u.mutation.SyncTokenCleared() {
 		_spec.ClearField(calendar.FieldSyncToken, field.TypeString)
 	}
+	if value, ok := _u.mutation.SupportedComponents(); ok {
+		_spec.SetField(calendar.FieldSupportedComponents, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedSupportedComponents(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, calendar.FieldSupportedComponents, value)
+		})
+	}
+	if _u.mutation.SupportedComponentsCleared() {
+		_spec.ClearField(calendar.FieldSupportedComponents, field.TypeJSON)
+	}
 	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(calendar.FieldUpdatedAt, field.TypeTime, value)
 	}
@@ -935,6 +1112,51 @@ func (_u *CalendarUpdateOne) sqlSave(ctx context.Context) (_node *Calendar, err 
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(event.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.TasksCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedTasksIDs(); len(nodes) > 0 && !_u.mutation.TasksCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.TasksIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {

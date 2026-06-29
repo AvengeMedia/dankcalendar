@@ -93,7 +93,7 @@
   {
     "term": "1 hour",
     "translation": "",
-    "context": "default event duration option",
+    "context": "default event duration option | sync interval dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -101,6 +101,13 @@
     "term": "1 hour before",
     "translation": "",
     "context": "default reminder dropdown option | event reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1 minute",
+    "translation": "",
+    "context": "sync interval dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -149,7 +156,7 @@
   {
     "term": "15 minutes",
     "translation": "",
-    "context": "default event duration option | snooze duration dropdown option",
+    "context": "default event duration option | snooze duration dropdown option | sync interval dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -198,7 +205,7 @@
   {
     "term": "30 minutes",
     "translation": "",
-    "context": "default event duration option | snooze duration dropdown option",
+    "context": "default event duration option | snooze duration dropdown option | sync interval dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -219,7 +226,7 @@
   {
     "term": "5 minutes",
     "translation": "",
-    "context": "snooze duration dropdown option",
+    "context": "snooze duration dropdown option | sync interval dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -301,6 +308,13 @@
     "comment": ""
   },
   {
+    "term": "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.",
+    "translation": "",
+    "context": "task dialog hint when no task list is available",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Add a calendar",
     "translation": "",
     "context": "event form button to add a calendar when none exist",
@@ -322,9 +336,16 @@
     "comment": ""
   },
   {
+    "term": "Add task",
+    "translation": "",
+    "context": "sidebar button to add a task | tasks view button to create a new task",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Add title",
     "translation": "",
-    "context": "event form placeholder for title input",
+    "context": "event form placeholder for title input | task form placeholder for title input",
     "reference": "",
     "comment": ""
   },
@@ -366,7 +387,14 @@
   {
     "term": "All day",
     "translation": "",
-    "context": "all-day marker in event tooltip | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card",
+    "context": "all-day marker in event tooltip | all-day marker in the month day-detail popover | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "All done",
+    "translation": "",
+    "context": "sidebar placeholder when there are no open tasks",
     "reference": "",
     "comment": ""
   },
@@ -546,9 +574,16 @@
     "comment": ""
   },
   {
+    "term": "Calendars couldn't be loaded; tasks are still syncing.",
+    "translation": "",
+    "context": "account notice when calendars are unavailable but tasks sync",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Cancel",
     "translation": "",
-    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel",
+    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes",
     "reference": "",
     "comment": ""
   },
@@ -623,6 +658,13 @@
     "comment": ""
   },
   {
+    "term": "Completed",
+    "translation": "",
+    "context": "task form toggle label for marking a task done | tasks view section header for finished tasks",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Confirm",
     "translation": "",
     "context": "confirm dialog default confirm button",
@@ -632,7 +674,7 @@
   {
     "term": "Confirm delete",
     "translation": "",
-    "context": "event details button to confirm deleting the event",
+    "context": "event details button to confirm deleting the event | task form button to confirm deletion",
     "reference": "",
     "comment": ""
   },
@@ -686,6 +728,13 @@
     "comment": ""
   },
   {
+    "term": "Copied to clipboard",
+    "translation": "",
+    "context": "toast after copying text to the clipboard",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Copy link",
     "translation": "",
     "context": "button to copy a setup guide url to the clipboard",
@@ -710,6 +759,13 @@
     "term": "Could not read that file.",
     "translation": "",
     "context": "error when credentials file cannot be read",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Couldn't update task",
+    "translation": "",
+    "context": "toast when a task update fails",
     "reference": "",
     "comment": ""
   },
@@ -745,6 +801,13 @@
     "term": "Daemon offline",
     "translation": "",
     "context": "sidebar placeholder when the daemon is not connected",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Daily",
+    "translation": "",
+    "context": "task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -821,7 +884,7 @@
   {
     "term": "Delete",
     "translation": "",
-    "context": "confirm button for deleting a calendar | delete calendar confirmation button",
+    "context": "confirm button for deleting a calendar | delete calendar confirmation button | task form button to delete the task",
     "reference": "",
     "comment": ""
   },
@@ -903,6 +966,13 @@
     "comment": ""
   },
   {
+    "term": "Does not repeat",
+    "translation": "",
+    "context": "task recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Done",
     "translation": "",
     "context": "button to close modal after account added",
@@ -924,9 +994,23 @@
     "comment": ""
   },
   {
+    "term": "Due date",
+    "translation": "",
+    "context": "task form toggle label for the due date",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Edit event",
     "translation": "",
     "context": "event modal header when editing | event modal window title when editing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Edit task",
+    "translation": "",
+    "context": "header in the edit-task dialog",
     "reference": "",
     "comment": ""
   },
@@ -990,6 +1074,13 @@
     "term": "Event details",
     "translation": "",
     "context": "event modal header when viewing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Every",
+    "translation": "",
+    "context": "task form label for the recurrence interval",
     "reference": "",
     "comment": ""
   },
@@ -1099,6 +1190,13 @@
     "comment": ""
   },
   {
+    "term": "High",
+    "translation": "",
+    "context": "task priority dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Home",
     "translation": "",
     "context": "file browser quick access location",
@@ -1109,6 +1207,13 @@
     "term": "How long the snooze button postpones a reminder.",
     "translation": "",
     "context": "snooze duration setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "How often accounts are polled for changes.",
+    "translation": "",
+    "context": "sync interval setting description",
     "reference": "",
     "comment": ""
   },
@@ -1190,6 +1295,13 @@
     "comment": ""
   },
   {
+    "term": "List",
+    "translation": "",
+    "context": "task form label for the task-list dropdown",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Load colors from your own theme file.",
     "translation": "",
     "context": "color source description for custom",
@@ -1206,7 +1318,7 @@
   {
     "term": "Local",
     "translation": "",
-    "context": "local provider name in account add modal | local provider name in account list | provider label for local accounts in sidebar",
+    "context": "local provider name in account add modal | local provider name in account list | provider label for a local account",
     "reference": "",
     "comment": ""
   },
@@ -1232,9 +1344,37 @@
     "comment": ""
   },
   {
+    "term": "Low",
+    "translation": "",
+    "context": "task priority dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Marked as not done",
+    "translation": "",
+    "context": "toast after un-completing a task",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Maybe",
     "translation": "",
     "context": "RSVP tentative button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Medium",
+    "translation": "",
+    "context": "task priority dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.",
+    "translation": "",
+    "context": "account notice when microsoft to do permission is missing",
     "reference": "",
     "comment": ""
   },
@@ -1277,6 +1417,13 @@
     "term": "Month view",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Monthly",
+    "translation": "",
+    "context": "task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1344,6 +1491,13 @@
     "comment": ""
   },
   {
+    "term": "New task",
+    "translation": "",
+    "context": "header in the create-task dialog | title bar for the create-task dialog",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Next day",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -1400,9 +1554,30 @@
     "comment": ""
   },
   {
+    "term": "No due date",
+    "translation": "",
+    "context": "tasks view section header for tasks without a due date",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "No matching events",
     "translation": "",
     "context": "search status title when no results found",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No task list available",
+    "translation": "",
+    "context": "task form error when no calendar can hold tasks",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "No tasks yet",
+    "translation": "",
+    "context": "tasks view empty state",
     "reference": "",
     "comment": ""
   },
@@ -1423,7 +1598,7 @@
   {
     "term": "None",
     "translation": "",
-    "context": "default reminder dropdown option | event reminder dropdown option",
+    "context": "default reminder dropdown option | event reminder dropdown option | task priority dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1438,6 +1613,13 @@
     "term": "Not signed in — click to reconnect or re-add this account",
     "translation": "",
     "context": "tooltip on the account warning icon when credentials are missing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Notes",
+    "translation": "",
+    "context": "task form placeholder for notes input",
     "reference": "",
     "comment": ""
   },
@@ -1515,6 +1697,13 @@
     "term": "Outlook, Office 365 and Exchange Online calendars.",
     "translation": "",
     "context": "microsoft provider description in picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Overdue",
+    "translation": "",
+    "context": "tasks view section header for past-due tasks",
     "reference": "",
     "comment": ""
   },
@@ -1645,6 +1834,13 @@
     "comment": ""
   },
   {
+    "term": "Priority",
+    "translation": "",
+    "context": "task form label for the priority dropdown",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Quick Access",
     "translation": "",
     "context": "file browser sidebar section header",
@@ -1662,6 +1858,13 @@
     "term": "Reconnect",
     "translation": "",
     "context": "account context menu action to re-authorize the account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Recurring tasks are managed in Google Tasks.",
+    "translation": "",
+    "context": "task form note when recurrence cannot be edited on google",
     "reference": "",
     "comment": ""
   },
@@ -1743,6 +1946,34 @@
     "comment": ""
   },
   {
+    "term": "Repeat",
+    "translation": "",
+    "context": "task form label for the recurrence dropdown",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeats",
+    "translation": "",
+    "context": "generic recurrence label for an unrecognized rule",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeats every %1",
+    "translation": "",
+    "context": "recurrence label, %1 is a unit like 'day'",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeats every %1 %2",
+    "translation": "",
+    "context": "recurrence label, %1 is a count and %2 a unit like 'weeks'",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Reset to global",
     "translation": "",
     "context": "per-calendar reminders dialog button to clear overrides",
@@ -1752,7 +1983,7 @@
   {
     "term": "Save",
     "translation": "",
-    "context": "event details button to save changes | file browser save button | per-calendar reminders dialog button to save | rename calendar dialog button to save name",
+    "context": "event details button to save changes | file browser save button | per-calendar reminders dialog button to save | rename calendar dialog button to save name | task form button to persist the task",
     "reference": "",
     "comment": ""
   },
@@ -1851,6 +2082,20 @@
     "term": "Show all-day reminders",
     "translation": "",
     "context": "all-day reminders toggle label | per-calendar all-day reminders override label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show task lists and the Tasks view when an account provides them.",
+    "translation": "",
+    "context": "show tasks setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show tasks",
+    "translation": "",
+    "context": "show tasks setting label",
     "reference": "",
     "comment": ""
   },
@@ -1981,6 +2226,13 @@
     "comment": ""
   },
   {
+    "term": "Sync interval",
+    "translation": "",
+    "context": "sync interval setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Sync now",
     "translation": "",
     "context": "account context menu action to sync the account",
@@ -2012,6 +2264,34 @@
     "term": "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select",
     "translation": "",
     "context": "file browser keyboard shortcuts hint line",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Task",
+    "translation": "",
+    "context": "title bar for the edit-task dialog",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Task completed",
+    "translation": "",
+    "context": "toast after completing a task",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Task lists couldn't be loaded; calendars are still syncing.",
+    "translation": "",
+    "context": "account notice when task lists are unavailable but calendars sync",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Tasks",
+    "translation": "",
+    "context": "header title when the tasks view is active | sidebar section header for the task list | view switcher option in sidebar",
     "reference": "",
     "comment": ""
   },
@@ -2053,14 +2333,14 @@
   {
     "term": "Title is required",
     "translation": "",
-    "context": "event form validation error for missing title",
+    "context": "event form validation error for missing title | task form validation error for missing title",
     "reference": "",
     "comment": ""
   },
   {
     "term": "Today",
     "translation": "",
-    "context": "agenda section header for the current day | header button that jumps to the current date | search result date label for current day",
+    "context": "agenda section header for the current day | due-date label on a task card | header button that jumps to the current date | search result date label for current day | tasks view section header for tasks due today",
     "reference": "",
     "comment": ""
   },
@@ -2074,7 +2354,7 @@
   {
     "term": "Tomorrow",
     "translation": "",
-    "context": "agenda section header for the next day | search result date label for next day",
+    "context": "agenda section header for the next day | due-date label on a task card | search result date label for next day",
     "reference": "",
     "comment": ""
   },
@@ -2107,9 +2387,23 @@
     "comment": ""
   },
   {
+    "term": "Undo",
+    "translation": "",
+    "context": "toast undo action",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "University timetable",
     "translation": "",
     "context": "ical display name field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Upcoming",
+    "translation": "",
+    "context": "tasks view section header for tasks due later",
     "reference": "",
     "comment": ""
   },
@@ -2207,7 +2501,7 @@
   {
     "term": "Waiting for the dankcalendar daemon...",
     "translation": "",
-    "context": "agenda placeholder while the daemon is not connected",
+    "context": "agenda placeholder while the daemon is not connected | tasks view placeholder while the daemon is not connected",
     "reference": "",
     "comment": ""
   },
@@ -2226,6 +2520,13 @@
     "comment": ""
   },
   {
+    "term": "Weekly",
+    "translation": "",
+    "context": "task recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "What the window's close button does.",
     "translation": "",
     "context": "close behavior setting description",
@@ -2240,9 +2541,16 @@
     "comment": ""
   },
   {
+    "term": "Yearly",
+    "translation": "",
+    "context": "task recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Yesterday",
     "translation": "",
-    "context": "search result date label for previous day",
+    "context": "due-date label on a task card | search result date label for previous day",
     "reference": "",
     "comment": ""
   },
@@ -2282,6 +2590,20 @@
     "comment": ""
   },
   {
+    "term": "day",
+    "translation": "",
+    "context": "recurrence unit singular",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "days",
+    "translation": "",
+    "context": "recurrence unit plural",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "iCal subscription",
     "translation": "",
     "context": "ical subscription provider name in account add modal",
@@ -2292,6 +2614,20 @@
     "term": "light",
     "translation": "",
     "context": "current scheme name in theme mode description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "month",
+    "translation": "",
+    "context": "recurrence unit singular",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "months",
+    "translation": "",
+    "context": "recurrence unit plural",
     "reference": "",
     "comment": ""
   },
@@ -2327,6 +2663,34 @@
     "term": "username",
     "translation": "",
     "context": "caldav username field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "week",
+    "translation": "",
+    "context": "recurrence unit singular",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "weeks",
+    "translation": "",
+    "context": "recurrence unit plural",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "year",
+    "translation": "",
+    "context": "recurrence unit singular",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "years",
+    "translation": "",
+    "context": "recurrence unit plural",
     "reference": "",
     "comment": ""
   },

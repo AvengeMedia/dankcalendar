@@ -25,6 +25,32 @@ type Provider interface {
 	Close() error
 }
 
+// TaskWriter is implemented by providers that support writing tasks (VTODO).
+// Read-only providers (e.g. iCal subscriptions) omit it; callers must type-assert
+// before offering create, edit, complete, or delete. Reads flow through Sync,
+// which returns TaskChanges for task calendars.
+type TaskWriter interface {
+	CreateTask(ctx context.Context, cal Calendar, t *Task) (*Task, error)
+	UpdateTask(ctx context.Context, cal Calendar, t *Task) (*Task, error)
+	DeleteTask(ctx context.Context, cal Calendar, t Task) error
+}
+
+// Notice codes are soft, non-fatal sync warnings a provider can surface when it
+// partially degrades — e.g. a Google account whose Tasks API is disabled still
+// syncs calendars. The GUI maps these to a buried, actionable hint per account
+// kind; an account that fails entirely uses the hard ErrReauthRequired path.
+const (
+	NoticeTasksUnavailable     = "tasks_unavailable"
+	NoticeCalendarsUnavailable = "calendars_unavailable"
+)
+
+// NoticeReporter is implemented by providers that may partially degrade during a
+// sync. The engine reads the accumulated codes once the pass completes and
+// persists them as the account's sync notice (clearing them when none remain).
+type NoticeReporter interface {
+	Notices() []string
+}
+
 // Responder is implemented by providers that can submit the current user's RSVP
 // response to an event independently of a full event update. response is one of
 // the canonical Response* values. Providers that do not implement it fall back

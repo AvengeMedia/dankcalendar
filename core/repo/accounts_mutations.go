@@ -55,6 +55,15 @@ func (r *Repo) SetAccountAuthState(ctx context.Context, id string, needsReauth b
 		Exec(ctx)
 }
 
+// SetAccountSyncNotice records a soft, non-fatal sync notice (e.g. a provider
+// whose Tasks API is disabled while calendars still sync) so the GUI can show a
+// buried hint without the hard "needs reconnect" treatment.
+func (r *Repo) SetAccountSyncNotice(ctx context.Context, id, notice string) error {
+	return r.client.Account.UpdateOneID(id).
+		SetSyncNotice(notice).
+		Exec(ctx)
+}
+
 // Children are deleted explicitly so pre-cascade databases stay deletable.
 func (r *Repo) DeleteAccount(ctx context.Context, id string) error {
 	return r.WithTx(ctx, func(tx *ent.Tx) error {

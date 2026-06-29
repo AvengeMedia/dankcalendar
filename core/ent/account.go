@@ -28,6 +28,8 @@ type Account struct {
 	NeedsReauth bool `json:"needs_reauth,omitempty"`
 	// AuthError holds the value of the "auth_error" field.
 	AuthError string `json:"auth_error,omitempty"`
+	// SyncNotice holds the value of the "sync_notice" field.
+	SyncNotice string `json:"sync_notice,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -76,7 +78,7 @@ func (*Account) scanValues(columns []string) ([]any, error) {
 			values[i] = new([]byte)
 		case account.FieldNeedsReauth:
 			values[i] = new(sql.NullBool)
-		case account.FieldID, account.FieldKind, account.FieldDisplayName, account.FieldAuthError:
+		case account.FieldID, account.FieldKind, account.FieldDisplayName, account.FieldAuthError, account.FieldSyncNotice:
 			values[i] = new(sql.NullString)
 		case account.FieldCreatedAt, account.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -132,6 +134,12 @@ func (_m *Account) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field auth_error", values[i])
 			} else if value.Valid {
 				_m.AuthError = value.String
+			}
+		case account.FieldSyncNotice:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sync_notice", values[i])
+			} else if value.Valid {
+				_m.SyncNotice = value.String
 			}
 		case account.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -205,6 +213,9 @@ func (_m *Account) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("auth_error=")
 	builder.WriteString(_m.AuthError)
+	builder.WriteString(", ")
+	builder.WriteString("sync_notice=")
+	builder.WriteString(_m.SyncNotice)
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

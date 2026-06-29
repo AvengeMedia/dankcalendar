@@ -14,10 +14,13 @@ Item {
     property var actionAccount: null
     property bool calendarsExpanded: true
     property bool accountsExpanded: true
+    property bool tasksExpanded: true
 
     signal viewChanged(string view)
     signal todayRequested
     signal createEventRequested
+    signal createTaskRequested
+    signal taskClicked(var task)
     signal addAccountRequested
 
     implicitWidth: 240
@@ -40,20 +43,7 @@ Item {
     }
 
     function providerLabel(flavor) {
-        switch (flavor) {
-        case "google":
-            return "Google";
-        case "microsoft":
-            return "Microsoft";
-        case "icloud":
-            return "iCloud";
-        case "caldav":
-            return "CalDAV";
-        case "local":
-            return I18n.tr("Local", "provider label for local accounts in sidebar");
-        default:
-            return flavor;
-        }
+        return DankCalService.providerLabel(flavor);
     }
 
     component SectionHeader: StyledRect {
@@ -142,28 +132,37 @@ Item {
 
             Repeater {
                 model: ScriptModel {
-                    values: [
-                        {
-                            view: "day",
-                            label: I18n.tr("Day", "view switcher option in sidebar"),
-                            icon: "calendar_view_day"
-                        },
-                        {
-                            view: "week",
-                            label: I18n.tr("Week", "view switcher option in sidebar"),
-                            icon: "calendar_view_week"
-                        },
-                        {
-                            view: "month",
-                            label: I18n.tr("Month", "view switcher option in sidebar"),
-                            icon: "calendar_view_month"
-                        },
-                        {
-                            view: "agenda",
-                            label: I18n.tr("Agenda", "view switcher option in sidebar"),
-                            icon: "view_agenda"
-                        }
-                    ]
+                    values: {
+                        const items = [
+                            {
+                                view: "day",
+                                label: I18n.tr("Day", "view switcher option in sidebar"),
+                                icon: "calendar_view_day"
+                            },
+                            {
+                                view: "week",
+                                label: I18n.tr("Week", "view switcher option in sidebar"),
+                                icon: "calendar_view_week"
+                            },
+                            {
+                                view: "month",
+                                label: I18n.tr("Month", "view switcher option in sidebar"),
+                                icon: "calendar_view_month"
+                            },
+                            {
+                                view: "agenda",
+                                label: I18n.tr("Agenda", "view switcher option in sidebar"),
+                                icon: "view_agenda"
+                            }
+                        ];
+                        if (SettingsData.showTasks && DankCalService.hasTaskLists())
+                            items.push({
+                                view: "tasks",
+                                label: I18n.tr("Tasks", "view switcher option in sidebar"),
+                                icon: "task_alt"
+                            });
+                        return items;
+                    }
                 }
 
                 StyledRect {
@@ -243,7 +242,7 @@ Item {
                 }
 
                 StyledText {
-                    visible: root.calendarsExpanded && DankCalService.calendars.length === 0
+                    visible: root.calendarsExpanded && DankCalService.eventCalendars().length === 0
                     text: DankCalService.connected ? I18n.tr("No calendars yet", "sidebar placeholder when the calendar list is empty") : I18n.tr("Daemon offline", "sidebar placeholder when the daemon is not connected")
                     font.pixelSize: Theme.fontSizeSmall
                     color: Theme.surfaceVariantText
@@ -252,7 +251,7 @@ Item {
 
                 Repeater {
                     model: ScriptModel {
-                        values: DankCalService.calendars
+                        values: DankCalService.eventCalendars()
                     }
 
                     Item {
@@ -350,6 +349,138 @@ Item {
                             }
                         }
                     }
+                }
+            }
+
+            Rectangle {
+                visible: tasksPanel.visible
+                width: parent.width
+                height: 1
+                color: Theme.outlineLight
+            }
+
+            Column {
+                id: tasksPanel
+                width: parent.width
+                spacing: Theme.spacingS
+                visible: SettingsData.showTasks && DankCalService.hasTaskLists()
+
+                property var openTasks: {
+                    const buckets = DankCalService.taskBuckets();
+                    return buckets.overdue.concat(buckets.today, buckets.upcoming, buckets.someday);
+                }
+
+                SectionHeader {
+                    title: I18n.tr("Tasks", "sidebar section header for the task list")
+                    expanded: root.tasksExpanded
+                    onToggled: root.tasksExpanded = !root.tasksExpanded
+                }
+
+                StyledText {
+                    visible: root.tasksExpanded && tasksPanel.openTasks.length === 0
+                    text: I18n.tr("All done", "sidebar placeholder when there are no open tasks")
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.surfaceVariantText
+                    width: parent.width
+                }
+
+                Repeater {
+                    model: ScriptModel {
+                        values: tasksPanel.openTasks
+                    }
+
+                    Item {
+                        id: taskRow
+                        required property var modelData
+                        readonly property string rowTooltip: {
+                            const acct = modelData.accountSummary || "";
+                            if (modelData.calendar === "")
+                                return acct;
+                            return acct === "" ? modelData.calendar : modelData.calendar + "  —  " + acct;
+                        }
+                        width: parent.width
+                        height: 42
+                        visible: root.tasksExpanded
+
+                        Rectangle {
+                            id: taskCheck
+                            width: 16
+                            height: 16
+                            radius: 8
+                            anchors.left: parent.left
+                            anchors.leftMargin: Theme.spacingXS
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "transparent"
+                            border.color: taskRow.modelData.color
+                            border.width: 2
+
+                            StateLayer {
+                                stateColor: taskRow.modelData.color
+                                cornerRadius: parent.radius
+                                enabled: !taskRow.modelData.readOnly
+                                onClicked: DankCalService.completeTaskWithUndo(taskRow.modelData)
+                            }
+                        }
+
+                        Column {
+                            anchors.left: taskCheck.right
+                            anchors.leftMargin: Theme.spacingM
+                            anchors.right: parent.right
+                            anchors.rightMargin: Theme.spacingXS
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 1
+
+                            StyledText {
+                                width: parent.width
+                                text: taskRow.modelData.title
+                                font.pixelSize: Theme.fontSizeMedium
+                                color: Theme.surfaceText
+                                wrapMode: Text.NoWrap
+                                maximumLineCount: 1
+                                elide: Text.ElideRight
+                                horizontalAlignment: Text.AlignLeft
+                            }
+
+                            StyledText {
+                                width: parent.width
+                                visible: taskRow.modelData.calendar !== ""
+                                text: taskRow.modelData.calendar
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.surfaceVariantText
+                                wrapMode: Text.NoWrap
+                                maximumLineCount: 1
+                                elide: Text.ElideRight
+                                horizontalAlignment: Text.AlignLeft
+                            }
+                        }
+
+                        StateLayer {
+                            anchors.fill: parent
+                            anchors.leftMargin: 16 + Theme.spacingM + Theme.spacingXS
+                            stateColor: Theme.primary
+                            cornerRadius: Theme.cornerRadiusSmall
+                            onEntered: {
+                                if (taskRow.rowTooltip !== "")
+                                    calTooltip.show(taskRow.rowTooltip, taskRow);
+                            }
+                            onExited: calTooltip.hide()
+                            onClicked: {
+                                calTooltip.hide();
+                                root.taskClicked(taskRow.modelData);
+                            }
+                        }
+                    }
+                }
+
+                DankButton {
+                    visible: root.tasksExpanded && DankCalService.taskListCalendars().length > 0
+                    width: parent.width
+                    text: I18n.tr("Add task", "sidebar button to add a task")
+                    iconName: "add"
+                    buttonHeight: 36
+                    backgroundColor: "transparent"
+                    textColor: Theme.primary
+                    onClicked: root.createTaskRequested()
                 }
             }
 

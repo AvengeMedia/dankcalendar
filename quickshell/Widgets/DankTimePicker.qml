@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Window
 import qs.Common
 import qs.Widgets
 
@@ -10,8 +11,22 @@ Item {
     property bool use24Hour: false
     property int stepMinutes: 30
     property string iconName: "schedule"
+    property bool openUpwards: false
 
     signal timeSelected(int value)
+
+    // updateDirection flips the list above the field when it would clip off the
+    // bottom of the window.
+    function updateDirection() {
+        const winH = Window.height;
+        if (winH <= 0) {
+            openUpwards = false;
+            return;
+        }
+        const topInWindow = root.mapToItem(null, 0, 0).y;
+        const spaceBelow = winH - (topInWindow + root.height);
+        openUpwards = spaceBelow < popup.height + Theme.spacingXS && topInWindow > spaceBelow;
+    }
 
     readonly property int slotCount: Math.ceil(1440 / stepMinutes)
 
@@ -148,11 +163,12 @@ Item {
     Popup {
         id: popup
 
-        y: field.height + Theme.spacingXS
+        y: root.openUpwards ? -(height + Theme.spacingXS) : (field.height + Theme.spacingXS)
         width: root.width
         height: 240
         padding: Theme.spacingXS
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        onAboutToShow: root.updateDirection()
         onOpened: list.positionViewAtIndex(Math.min(Math.floor(root.minutes / root.stepMinutes), root.slotCount - 1), ListView.Center)
 
         background: Rectangle {

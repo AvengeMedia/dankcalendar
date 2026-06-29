@@ -434,6 +434,11 @@ FloatingWindow {
         z: 101
     }
 
+    Toast {
+        anchors.fill: parent
+        z: 102
+    }
+
     Component {
         id: providerPicker
 
@@ -883,8 +888,10 @@ FloatingWindow {
                     backgroundColor: Theme.surfaceContainer
                     textColor: Theme.surfaceText
                     onClicked: {
-                        if (guideColumn.step && guideColumn.step.url)
+                        if (guideColumn.step && guideColumn.step.url) {
                             Quickshell.clipboardText = guideColumn.step.url;
+                            ToastService.info(I18n.tr("Copied to clipboard", "toast after copying text to the clipboard"));
+                        }
                     }
                 }
             }
@@ -1218,7 +1225,10 @@ FloatingWindow {
                         buttonHeight: 40
                         backgroundColor: Theme.surfaceContainer
                         textColor: Theme.surfaceText
-                        onClicked: Quickshell.clipboardText = "https://account.apple.com/account/manage"
+                        onClicked: {
+                            Quickshell.clipboardText = "https://account.apple.com/account/manage";
+                            ToastService.info(I18n.tr("Copied to clipboard", "toast after copying text to the clipboard"));
+                        }
                     }
                 }
 

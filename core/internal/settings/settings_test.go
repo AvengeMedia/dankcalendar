@@ -41,7 +41,7 @@ func TestLoadFrom(t *testing.T) {
 		},
 		{
 			name:    "full file",
-			content: `{"use24HourClock": false, "remindersEnabled": true, "reminderPersist": false, "allDayReminders": true, "allDayReminderTime": "18:30", "allDayReminderDaysBefore": 1, "defaultReminderMinutes": -1, "snoozeMinutes": 30}`,
+			content: `{"use24HourClock": false, "remindersEnabled": true, "reminderPersist": false, "allDayReminders": true, "allDayReminderTime": "18:30", "allDayReminderDaysBefore": 1, "defaultReminderMinutes": -1, "snoozeMinutes": 30, "syncIntervalMinutes": 15}`,
 			want: func(d UISettings) UISettings {
 				return UISettings{
 					Use24HourClock:           false,
@@ -52,6 +52,7 @@ func TestLoadFrom(t *testing.T) {
 					AllDayReminderDaysBefore: 1,
 					DefaultReminderMinutes:   -1,
 					SnoozeMinutes:            30,
+					SyncIntervalMinutes:      15,
 				}
 			},
 		},

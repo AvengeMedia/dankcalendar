@@ -139,6 +139,16 @@ FloatingWindow {
         eventLoader.item.showCreate(date || selectedDate);
     }
 
+    function openTaskDetails(task) {
+        taskLoader.active = true;
+        taskLoader.item.show(task);
+    }
+
+    function openCreateTask() {
+        taskLoader.active = true;
+        taskLoader.item.showCreate();
+    }
+
     function openSearch() {
         searchLoader.active = true;
         searchLoader.item.show();
@@ -387,6 +397,8 @@ FloatingWindow {
                     }
                     onTodayRequested: window.goToToday()
                     onCreateEventRequested: window.openCreateEvent()
+                    onCreateTaskRequested: window.openCreateTask()
+                    onTaskClicked: task => window.openTaskDetails(task)
                     onAddAccountRequested: window.openAddAccount()
                 }
 
@@ -470,6 +482,8 @@ FloatingWindow {
                             window.currentView = "day";
                         }
                         onEventClicked: ev => window.openEventDetails(ev)
+                        onTaskClicked: task => window.openTaskDetails(task)
+                        onCreateTaskRequested: window.openCreateTask()
                     }
                 }
             }
@@ -522,6 +536,17 @@ FloatingWindow {
     }
 
     Loader {
+        id: taskLoader
+        active: false
+        sourceComponent: Component {
+            TaskDetailsModal {
+                parentWindow: window
+                onAddCalendarRequested: window.openAddAccount()
+            }
+        }
+    }
+
+    Loader {
         id: searchLoader
         active: false
         sourceComponent: Component {
@@ -529,5 +554,9 @@ FloatingWindow {
                 onEventSelected: ev => window.goToEvent(ev)
             }
         }
+    }
+
+    Toast {
+        anchors.fill: parent
     }
 }

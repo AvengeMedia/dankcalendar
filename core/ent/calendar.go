@@ -40,6 +40,8 @@ type Calendar struct {
 	ReminderOverrides *settings.ReminderOverride `json:"reminder_overrides,omitempty"`
 	// SyncToken holds the value of the "sync_token" field.
 	SyncToken string `json:"sync_token,omitempty"`
+	// SupportedComponents holds the value of the "supported_components" field.
+	SupportedComponents []string `json:"supported_components,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -57,9 +59,11 @@ type CalendarEdges struct {
 	Account *Account `json:"account,omitempty"`
 	// Events holds the value of the events edge.
 	Events []*Event `json:"events,omitempty"`
+	// Tasks holds the value of the tasks edge.
+	Tasks []*Task `json:"tasks,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
+	loadedTypes [3]bool
 }
 
 // AccountOrErr returns the Account value or an error if the edge
@@ -82,12 +86,21 @@ func (e CalendarEdges) EventsOrErr() ([]*Event, error) {
 	return nil, &NotLoadedError{edge: "events"}
 }
 
+// TasksOrErr returns the Tasks value or an error if the edge
+// was not loaded in eager-loading.
+func (e CalendarEdges) TasksOrErr() ([]*Task, error) {
+	if e.loadedTypes[2] {
+		return e.Tasks, nil
+	}
+	return nil, &NotLoadedError{edge: "tasks"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Calendar) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case calendar.FieldReminderOverrides:
+		case calendar.FieldReminderOverrides, calendar.FieldSupportedComponents:
 			values[i] = new([]byte)
 		case calendar.FieldReadOnly, calendar.FieldHidden:
 			values[i] = new(sql.NullBool)
@@ -180,6 +193,14 @@ func (_m *Calendar) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.SyncToken = value.String
 			}
+		case calendar.FieldSupportedComponents:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field supported_components", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.SupportedComponents); err != nil {
+					return fmt.Errorf("unmarshal field supported_components: %w", err)
+				}
+			}
 		case calendar.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
@@ -220,6 +241,11 @@ func (_m *Calendar) QueryAccount() *AccountQuery {
 // QueryEvents queries the "events" edge of the Calendar entity.
 func (_m *Calendar) QueryEvents() *EventQuery {
 	return NewCalendarClient(_m.config).QueryEvents(_m)
+}
+
+// QueryTasks queries the "tasks" edge of the Calendar entity.
+func (_m *Calendar) QueryTasks() *TaskQuery {
+	return NewCalendarClient(_m.config).QueryTasks(_m)
 }
 
 // Update returns a builder for updating this Calendar.
@@ -274,6 +300,9 @@ func (_m *Calendar) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("sync_token=")
 	builder.WriteString(_m.SyncToken)
+	builder.WriteString(", ")
+	builder.WriteString("supported_components=")
+	builder.WriteString(fmt.Sprintf("%v", _m.SupportedComponents))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))

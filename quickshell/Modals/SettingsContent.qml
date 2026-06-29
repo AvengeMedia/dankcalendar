@@ -28,6 +28,31 @@ Item {
 
     signal addAccountRequested
 
+    // Maps comma-joined backend sync-notice codes to a per-account hint shown when
+    // an account partially degrades (e.g. Tasks API disabled, calendars still OK).
+    function accountNotice(kind, codes) {
+        if (!codes)
+            return "";
+        const parts = codes.split(",").map(c => root._accountNoticeOne(kind, c)).filter(s => s !== "");
+        return parts.join("<br/>");
+    }
+
+    function _accountNoticeOne(kind, code) {
+        switch (code) {
+        case "tasks_unavailable":
+            if (kind === "google")
+                return I18n.tr('Google Tasks API is disabled. <a href="https://console.cloud.google.com/apis/library/tasks.googleapis.com" style="text-decoration:none; color:%1;">Enable it</a>, then refresh, to sync tasks.', "account notice when the google tasks api is not enabled").arg(Theme.primary);
+            if (kind === "microsoft")
+                return I18n.tr("Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.", "account notice when microsoft to do permission is missing");
+            return I18n.tr("Task lists couldn't be loaded; calendars are still syncing.", "account notice when task lists are unavailable but calendars sync");
+        case "calendars_unavailable":
+            if (kind === "google")
+                return I18n.tr('Google Calendar API is disabled. <a href="https://console.cloud.google.com/apis/library/calendar-json.googleapis.com" style="text-decoration:none; color:%1;">Enable it</a>, then refresh, to sync events.', "account notice when the google calendar api is not enabled").arg(Theme.primary);
+            return I18n.tr("Calendars couldn't be loaded; tasks are still syncing.", "account notice when calendars are unavailable but tasks sync");
+        }
+        return "";
+    }
+
     readonly property var weekStartOptions: [
         {
             label: I18n.tr("System default (%1)", "week start dropdown option").arg(SettingsData.dayName(SettingsData.localeFirstDayOfWeek, Locale.LongFormat)),
@@ -140,6 +165,29 @@ Item {
         {
             label: I18n.tr("1 week before", "all-day reminder day dropdown option"),
             value: 7
+        }
+    ]
+
+    readonly property var syncIntervalOptions: [
+        {
+            label: I18n.tr("1 minute", "sync interval dropdown option"),
+            value: 1
+        },
+        {
+            label: I18n.tr("5 minutes", "sync interval dropdown option"),
+            value: 5
+        },
+        {
+            label: I18n.tr("15 minutes", "sync interval dropdown option"),
+            value: 15
+        },
+        {
+            label: I18n.tr("30 minutes", "sync interval dropdown option"),
+            value: 30
+        },
+        {
+            label: I18n.tr("1 hour", "sync interval dropdown option"),
+            value: 60
         }
     ]
 
@@ -384,6 +432,17 @@ Item {
                     }
 
                     SettingsRow {
+                        label: I18n.tr("Show tasks", "show tasks setting label")
+                        description: I18n.tr("Show task lists and the Tasks view when an account provides them.", "show tasks setting description")
+
+                        DankToggle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            checked: SettingsData.showTasks
+                            onToggled: checked => SettingsData.showTasks = checked
+                        }
+                    }
+
+                    SettingsRow {
                         label: I18n.tr("Default event duration", "default event duration setting label")
                         description: I18n.tr("Length used when creating events.", "default event duration setting description")
 
@@ -406,6 +465,19 @@ Item {
                             options: root.optionLabels(root.reminderOptions)
                             currentValue: root.labelForValue(root.reminderOptions, SettingsData.defaultReminderMinutes)
                             onValueChanged: value => SettingsData.defaultReminderMinutes = root.valueForLabel(root.reminderOptions, value)
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Sync interval", "sync interval setting label")
+                        description: I18n.tr("How often accounts are polled for changes.", "sync interval setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 150
+                            options: root.optionLabels(root.syncIntervalOptions)
+                            currentValue: root.labelForValue(root.syncIntervalOptions, SettingsData.syncIntervalMinutes)
+                            onValueChanged: value => SettingsData.syncIntervalMinutes = root.valueForLabel(root.syncIntervalOptions, value)
                         }
                     }
                 }
@@ -978,6 +1050,25 @@ Item {
                                         font.pixelSize: Theme.fontSizeSmall
                                         color: (needsReauth || !authorized) ? Theme.error : Theme.surfaceVariantText
                                         width: parent.width
+                                    }
+
+                                    StyledText {
+                                        readonly property string noticeText: root.accountNotice(accountRow.modelData.kind, accountRow.modelData.notice)
+                                        visible: noticeText !== "" && accountRow.modelData.needsReauth !== true && accountRow.modelData.authorized !== false
+                                        text: noticeText
+                                        textFormat: Text.RichText
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.warning
+                                        linkColor: Theme.primary
+                                        onLinkActivated: url => Qt.openUrlExternally(url)
+                                        width: parent.width
+                                        wrapMode: Text.WordWrap
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                            acceptedButtons: Qt.NoButton
+                                        }
                                     }
                                 }
 

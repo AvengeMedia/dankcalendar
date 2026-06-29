@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Window
 import Quickshell
 import qs.Common
 import qs.Widgets
@@ -11,8 +12,23 @@ Item {
     property string currentValue: ""
     property int dropdownWidth: 180
     property int maxPopupHeight: 320
+    property bool openUpwards: false
 
     signal valueChanged(string value)
+
+    // updateDirection flips the popup above the button when there isn't room
+    // below it within the window, so it never clips off the bottom edge.
+    function updateDirection() {
+        const winH = Window.height;
+        if (winH <= 0) {
+            openUpwards = false;
+            return;
+        }
+        const topInWindow = root.mapToItem(null, 0, 0).y;
+        const needed = Math.min(optionsColumn.implicitHeight + popup.padding * 2, root.maxPopupHeight + popup.padding * 2) + Theme.spacingXS;
+        const spaceBelow = winH - (topInWindow + root.height);
+        openUpwards = spaceBelow < needed && topInWindow > spaceBelow;
+    }
 
     width: dropdownWidth
     height: 40
@@ -33,6 +49,7 @@ Item {
             text: root.currentValue
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.surfaceText
+            wrapMode: Text.NoWrap
             elide: Text.ElideRight
         }
 
@@ -55,9 +72,11 @@ Item {
 
     Popup {
         id: popup
-        y: button.height + Theme.spacingXS
+        y: root.openUpwards ? -(height + Theme.spacingXS) : (button.height + Theme.spacingXS)
         width: root.width
         padding: Theme.spacingXS
+
+        onAboutToShow: root.updateDirection()
 
         background: Rectangle {
             color: Theme.surfaceContainerHigh
@@ -101,6 +120,7 @@ Item {
                             text: parent.modelData
                             font.pixelSize: Theme.fontSizeMedium
                             color: parent.active ? Theme.primary : Theme.surfaceText
+                            wrapMode: Text.NoWrap
                             elide: Text.ElideRight
                         }
 

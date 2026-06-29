@@ -10,6 +10,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	gcalendar "google.golang.org/api/calendar/v3"
+	gtasks "google.golang.org/api/tasks/v1"
 )
 
 type GoogleAppCredentials struct {
@@ -21,6 +22,7 @@ func GoogleScopes() []string {
 	return []string{
 		gcalendar.CalendarScope,
 		gcalendar.CalendarEventsScope,
+		gtasks.TasksScope,
 		"https://www.googleapis.com/auth/userinfo.email",
 		"openid",
 	}

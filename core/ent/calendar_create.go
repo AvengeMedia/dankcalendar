@@ -15,6 +15,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/task"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 )
 
@@ -142,6 +143,12 @@ func (_c *CalendarCreate) SetNillableSyncToken(v *string) *CalendarCreate {
 	return _c
 }
 
+// SetSupportedComponents sets the "supported_components" field.
+func (_c *CalendarCreate) SetSupportedComponents(v []string) *CalendarCreate {
+	_c.mutation.SetSupportedComponents(v)
+	return _c
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (_c *CalendarCreate) SetCreatedAt(v time.Time) *CalendarCreate {
 	_c.mutation.SetCreatedAt(v)
@@ -200,6 +207,21 @@ func (_c *CalendarCreate) AddEvents(v ...*Event) *CalendarCreate {
 		ids[i] = v[i].ID
 	}
 	return _c.AddEventIDs(ids...)
+}
+
+// AddTaskIDs adds the "tasks" edge to the Task entity by IDs.
+func (_c *CalendarCreate) AddTaskIDs(ids ...string) *CalendarCreate {
+	_c.mutation.AddTaskIDs(ids...)
+	return _c
+}
+
+// AddTasks adds the "tasks" edges to the Task entity.
+func (_c *CalendarCreate) AddTasks(v ...*Task) *CalendarCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddTaskIDs(ids...)
 }
 
 // Mutation returns the CalendarMutation object of the builder.
@@ -369,6 +391,10 @@ func (_c *CalendarCreate) createSpec() (*Calendar, *sqlgraph.CreateSpec) {
 		_spec.SetField(calendar.FieldSyncToken, field.TypeString, value)
 		_node.SyncToken = value
 	}
+	if value, ok := _c.mutation.SupportedComponents(); ok {
+		_spec.SetField(calendar.FieldSupportedComponents, field.TypeJSON, value)
+		_node.SupportedComponents = value
+	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(calendar.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
@@ -403,6 +429,22 @@ func (_c *CalendarCreate) createSpec() (*Calendar, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(event.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := _c.mutation.TasksIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   calendar.TasksTable,
+			Columns: []string{calendar.TasksColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(task.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {
@@ -615,6 +657,24 @@ func (u *CalendarUpsert) UpdateSyncToken() *CalendarUpsert {
 // ClearSyncToken clears the value of the "sync_token" field.
 func (u *CalendarUpsert) ClearSyncToken() *CalendarUpsert {
 	u.SetNull(calendar.FieldSyncToken)
+	return u
+}
+
+// SetSupportedComponents sets the "supported_components" field.
+func (u *CalendarUpsert) SetSupportedComponents(v []string) *CalendarUpsert {
+	u.Set(calendar.FieldSupportedComponents, v)
+	return u
+}
+
+// UpdateSupportedComponents sets the "supported_components" field to the value that was provided on create.
+func (u *CalendarUpsert) UpdateSupportedComponents() *CalendarUpsert {
+	u.SetExcluded(calendar.FieldSupportedComponents)
+	return u
+}
+
+// ClearSupportedComponents clears the value of the "supported_components" field.
+func (u *CalendarUpsert) ClearSupportedComponents() *CalendarUpsert {
+	u.SetNull(calendar.FieldSupportedComponents)
 	return u
 }
 
@@ -860,6 +920,27 @@ func (u *CalendarUpsertOne) UpdateSyncToken() *CalendarUpsertOne {
 func (u *CalendarUpsertOne) ClearSyncToken() *CalendarUpsertOne {
 	return u.Update(func(s *CalendarUpsert) {
 		s.ClearSyncToken()
+	})
+}
+
+// SetSupportedComponents sets the "supported_components" field.
+func (u *CalendarUpsertOne) SetSupportedComponents(v []string) *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.SetSupportedComponents(v)
+	})
+}
+
+// UpdateSupportedComponents sets the "supported_components" field to the value that was provided on create.
+func (u *CalendarUpsertOne) UpdateSupportedComponents() *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.UpdateSupportedComponents()
+	})
+}
+
+// ClearSupportedComponents clears the value of the "supported_components" field.
+func (u *CalendarUpsertOne) ClearSupportedComponents() *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.ClearSupportedComponents()
 	})
 }
 
@@ -1274,6 +1355,27 @@ func (u *CalendarUpsertBulk) UpdateSyncToken() *CalendarUpsertBulk {
 func (u *CalendarUpsertBulk) ClearSyncToken() *CalendarUpsertBulk {
 	return u.Update(func(s *CalendarUpsert) {
 		s.ClearSyncToken()
+	})
+}
+
+// SetSupportedComponents sets the "supported_components" field.
+func (u *CalendarUpsertBulk) SetSupportedComponents(v []string) *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.SetSupportedComponents(v)
+	})
+}
+
+// UpdateSupportedComponents sets the "supported_components" field to the value that was provided on create.
+func (u *CalendarUpsertBulk) UpdateSupportedComponents() *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.UpdateSupportedComponents()
+	})
+}
+
+// ClearSupportedComponents clears the value of the "supported_components" field.
+func (u *CalendarUpsertBulk) ClearSupportedComponents() *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.ClearSupportedComponents()
 	})
 }
 

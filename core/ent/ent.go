@@ -18,6 +18,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
+	"github.com/AvengeMedia/dankcalendar/core/ent/task"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -84,6 +85,7 @@ func checkColumn(t, c string) error {
 			invitationstate.Table: invitationstate.ValidColumn,
 			reminderstate.Table:   reminderstate.ValidColumn,
 			secret.Table:          secret.ValidColumn,
+			task.Table:            task.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

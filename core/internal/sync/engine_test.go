@@ -168,6 +168,73 @@ func (s *EngineSuite) TestFullSnapshotPrunesMissingEvents() {
 	s.Equal([]string{"keep-1"}, s.listUIDs())
 }
 
+func upsertTaskChange(uid string) calendar.TaskChange {
+	return calendar.TaskChange{
+		Type: calendar.ChangeUpsert,
+		Task: &calendar.Task{UID: uid, Summary: uid, Status: calendar.TaskNeedsAction},
+	}
+}
+
+func (s *EngineSuite) listTaskUIDs() []string {
+	tasks, _, err := s.repo.ListTasks(s.ctx, repo.ListTasksParams{
+		Filter: repo.TaskFilter{IncludeCompleted: true},
+	})
+	s.Require().NoError(err)
+	uids := make([]string, 0, len(tasks))
+	for _, t := range tasks {
+		uids = append(uids, t.UID)
+	}
+	return uids
+}
+
+func (s *EngineSuite) TestSyncStoresTasksForTaskCalendar() {
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "tasks-1", Name: "Reminders", SupportedComponents: []string{calendar.ComponentVTodo}},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{
+		Cursor:       calendar.SyncCursor{Token: "tok-1"},
+		FullSnapshot: true,
+		TaskChanges:  []calendar.TaskChange{upsertTaskChange("todo-1")},
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.Equal([]string{"todo-1"}, s.listTaskUIDs())
+	// A task-only calendar holds no events, so none are touched.
+	s.Empty(s.listUIDs())
+}
+
+func (s *EngineSuite) TestFullSnapshotPrunesMissingTasks() {
+	cal, err := s.repo.UpsertCalendar(s.ctx, repo.UpsertCalendarInput{
+		AccountID:           s.account.ID,
+		RemoteID:            "tasks-1",
+		Name:                "Reminders",
+		SupportedComponents: []string{calendar.ComponentVTodo},
+	})
+	s.Require().NoError(err)
+	for _, uid := range []string{"stale-1", "keep-1"} {
+		_, err := s.repo.UpsertTask(s.ctx, repo.UpsertTaskInput{CalendarID: cal.ID, UID: uid, Summary: uid})
+		s.Require().NoError(err)
+	}
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "tasks-1", Name: "Reminders", SupportedComponents: []string{calendar.ComponentVTodo}},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{
+		FullSnapshot: true,
+		Cursor:       calendar.SyncCursor{Token: "snap-1"},
+		TaskChanges:  []calendar.TaskChange{upsertTaskChange("keep-1")},
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.Equal([]string{"keep-1"}, s.listTaskUIDs())
+}
+
 func (s *EngineSuite) TestDeleteChangeRemovesEvent() {
 	cal := s.seedCalendar("cal-1")
 	s.seedEvent(cal.ID, "ev-del")
@@ -300,7 +367,9 @@ func (s *EngineSuite) TestSyncAccountLeavesReauthClearOnGenericError() {
 
 func (s *EngineSuite) TestSyncAccountClearsReauthOnSuccess() {
 	s.Require().NoError(s.repo.SetAccountAuthState(s.ctx, s.account.ID, true, "stale"))
-	s.account, _ = s.repo.GetAccount(s.ctx, s.account.ID)
+	var err error
+	s.account, err = s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
 
 	provider := s.registerProvider()
 	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{

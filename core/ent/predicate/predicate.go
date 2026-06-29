@@ -23,3 +23,6 @@ type ReminderState func(*sql.Selector)
 
 // Secret is the predicate function for secret builders.
 type Secret func(*sql.Selector)
+
+// Task is the predicate function for task builders.
+type Task func(*sql.Selector)

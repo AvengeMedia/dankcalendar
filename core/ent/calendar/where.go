@@ -655,6 +655,16 @@ func SyncTokenContainsFold(v string) predicate.Calendar {
 	return predicate.Calendar(sql.FieldContainsFold(FieldSyncToken, v))
 }
 
+// SupportedComponentsIsNil applies the IsNil predicate on the "supported_components" field.
+func SupportedComponentsIsNil() predicate.Calendar {
+	return predicate.Calendar(sql.FieldIsNull(FieldSupportedComponents))
+}
+
+// SupportedComponentsNotNil applies the NotNil predicate on the "supported_components" field.
+func SupportedComponentsNotNil() predicate.Calendar {
+	return predicate.Calendar(sql.FieldNotNull(FieldSupportedComponents))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.Calendar {
 	return predicate.Calendar(sql.FieldEQ(FieldCreatedAt, v))
@@ -773,6 +783,29 @@ func HasEvents() predicate.Calendar {
 func HasEventsWith(preds ...predicate.Event) predicate.Calendar {
 	return predicate.Calendar(func(s *sql.Selector) {
 		step := newEventsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasTasks applies the HasEdge predicate on the "tasks" edge.
+func HasTasks() predicate.Calendar {
+	return predicate.Calendar(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, TasksTable, TasksColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasTasksWith applies the HasEdge predicate on the "tasks" edge with a given conditions (other predicates).
+func HasTasksWith(preds ...predicate.Task) predicate.Calendar {
+	return predicate.Calendar(func(s *sql.Selector) {
+		step := newTasksStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

@@ -24,25 +24,36 @@ type UIDRID struct {
 	RID string
 }
 
-// OpenCalendar resolves the calendar backend through the factory and opens it.
+// OpenCalendar resolves the event-calendar backend through the factory and opens
+// it.
 func (c *Client) OpenCalendar(uid string) (*Calendar, error) {
+	return c.openBackend("OpenCalendar", uid)
+}
+
+// OpenTaskList resolves the task-list backend. EDS exposes task lists over the
+// same Calendar interface, so the handle reads/writes VTODO just like VEVENT.
+func (c *Client) OpenTaskList(uid string) (*Calendar, error) {
+	return c.openBackend("OpenTaskList", uid)
+}
+
+func (c *Client) openBackend(method, uid string) (*Calendar, error) {
 	factory := c.conn.Object(c.calendarName, calendarFactoryPath)
 
 	var objPath, busName string
-	call := factory.Call(ifaceFactory+".OpenCalendar", 0, uid)
+	call := factory.Call(ifaceFactory+"."+method, 0, uid)
 	if call.Err != nil {
-		return nil, fmt.Errorf("open eds calendar %q: %w", uid, call.Err)
+		return nil, fmt.Errorf("eds %s %q: %w", method, uid, call.Err)
 	}
 	if err := call.Store(&objPath, &busName); err != nil {
-		return nil, fmt.Errorf("open eds calendar %q: %w", uid, err)
+		return nil, fmt.Errorf("eds %s %q: %w", method, uid, err)
 	}
 
 	cal := &Calendar{obj: c.conn.Object(busName, dbus.ObjectPath(objPath))}
 	var props []string
 	if call := cal.obj.Call(ifaceCalendar+".Open", 0); call.Err != nil {
-		return nil, fmt.Errorf("open eds calendar %q: %w", uid, call.Err)
+		return nil, fmt.Errorf("eds %s %q: %w", method, uid, call.Err)
 	} else if err := call.Store(&props); err != nil {
-		return nil, fmt.Errorf("open eds calendar %q: %w", uid, err)
+		return nil, fmt.Errorf("eds %s %q: %w", method, uid, err)
 	}
 	return cal, nil
 }

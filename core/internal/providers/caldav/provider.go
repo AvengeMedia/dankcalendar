@@ -77,36 +77,51 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 	out := make([]cal.Calendar, 0, len(calendars))
 	for _, c := range calendars {
 		out = append(out, cal.Calendar{
-			AccountID:   p.account.ID,
-			RemoteID:    c.Path,
-			Name:        c.Name,
-			Description: c.Description,
+			AccountID:           p.account.ID,
+			RemoteID:            c.Path,
+			Name:                c.Name,
+			Description:         c.Description,
+			SupportedComponents: c.SupportedComponentSet,
 		})
 	}
 	return out, nil
 }
 
 func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {
-	objects, err := p.queryEvents(ctx, c.RemoteID, time.Time{}, time.Time{})
-	if err != nil {
-		return nil, fmt.Errorf("query caldav calendar %q: %w", c.RemoteID, err)
-	}
-
 	result := &cal.SyncResult{
 		Cursor:       cal.SyncCursor{CalendarID: cursor.CalendarID},
 		FullSnapshot: true,
 	}
-	for _, obj := range objects {
-		for _, ev := range eventsFromObject(c, obj) {
-			ev := ev
-			result.Changes = append(result.Changes, cal.EventChange{Type: cal.ChangeUpsert, Event: &ev})
+
+	if c.HoldsEvents() {
+		objects, err := p.queryComponents(ctx, c.RemoteID, ical.CompEvent, time.Time{}, time.Time{})
+		if err != nil {
+			return nil, fmt.Errorf("query caldav events %q: %w", c.RemoteID, err)
+		}
+		for _, obj := range objects {
+			for _, ev := range eventsFromObject(c, obj) {
+				result.Changes = append(result.Changes, cal.EventChange{Type: cal.ChangeUpsert, Event: &ev})
+			}
 		}
 	}
+
+	if c.HoldsTasks() {
+		objects, err := p.queryComponents(ctx, c.RemoteID, ical.CompToDo, time.Time{}, time.Time{})
+		if err != nil {
+			return nil, fmt.Errorf("query caldav tasks %q: %w", c.RemoteID, err)
+		}
+		for _, obj := range objects {
+			for _, t := range tasksFromObject(c, obj) {
+				result.TaskChanges = append(result.TaskChanges, cal.TaskChange{Type: cal.ChangeUpsert, Task: &t})
+			}
+		}
+	}
+
 	return result, nil
 }
 
 func (p *Provider) ListEvents(ctx context.Context, c cal.Calendar, opts cal.ListEventsOptions) ([]cal.Event, error) {
-	objects, err := p.queryEvents(ctx, c.RemoteID, opts.Start, opts.End)
+	objects, err := p.queryComponents(ctx, c.RemoteID, ical.CompEvent, opts.Start, opts.End)
 	if err != nil {
 		return nil, fmt.Errorf("query caldav calendar %q: %w", c.RemoteID, err)
 	}
@@ -165,18 +180,62 @@ func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event
 	return nil
 }
 
-func (p *Provider) queryEvents(ctx context.Context, calendarPath string, start, end time.Time) ([]caldav.CalendarObject, error) {
-	eventFilter := caldav.CompFilter{Name: ical.CompEvent}
+func (p *Provider) CreateTask(ctx context.Context, c cal.Calendar, t *cal.Task) (*cal.Task, error) {
+	uid := t.UID
+	if uid == "" {
+		uid = uuid.NewString()
+	}
+
+	path := objectPath(c.RemoteID, uid)
+	obj, err := p.client.PutCalendarObject(ctx, path, icalconv.CalendarFromTask(t, uid))
+	if err != nil {
+		return nil, fmt.Errorf("put caldav task %q: %w", path, err)
+	}
+
+	out := *t
+	out.UID = uid
+	out.RemoteID = path
+	out.Etag = obj.ETag
+	return &out, nil
+}
+
+func (p *Provider) UpdateTask(ctx context.Context, c cal.Calendar, t *cal.Task) (*cal.Task, error) {
+	if t.RemoteID == "" {
+		return nil, errors.New("caldav update requires remote id")
+	}
+
+	obj, err := p.client.PutCalendarObject(ctx, t.RemoteID, icalconv.CalendarFromTask(t, t.UID))
+	if err != nil {
+		return nil, fmt.Errorf("put caldav task %q: %w", t.RemoteID, err)
+	}
+
+	out := *t
+	out.Etag = obj.ETag
+	return &out, nil
+}
+
+func (p *Provider) DeleteTask(ctx context.Context, c cal.Calendar, t cal.Task) error {
+	if t.RemoteID == "" {
+		return errors.New("caldav delete requires remote id")
+	}
+	if err := p.client.RemoveAll(ctx, t.RemoteID); err != nil {
+		return fmt.Errorf("delete caldav task %q: %w", t.RemoteID, err)
+	}
+	return nil
+}
+
+func (p *Provider) queryComponents(ctx context.Context, calendarPath, comp string, start, end time.Time) ([]caldav.CalendarObject, error) {
+	compFilter := caldav.CompFilter{Name: comp}
 	if !start.IsZero() {
-		eventFilter.Start = start
+		compFilter.Start = start
 	}
 	if !end.IsZero() {
-		eventFilter.End = end
+		compFilter.End = end
 	}
 
 	query := &caldav.CalendarQuery{
 		CompRequest: caldav.CalendarCompRequest{Name: ical.CompCalendar, AllProps: true, AllComps: true},
-		CompFilter:  caldav.CompFilter{Name: ical.CompCalendar, Comps: []caldav.CompFilter{eventFilter}},
+		CompFilter:  caldav.CompFilter{Name: ical.CompCalendar, Comps: []caldav.CompFilter{compFilter}},
 	}
 
 	objects, queryErr := p.client.QueryCalendar(ctx, calendarPath, query)

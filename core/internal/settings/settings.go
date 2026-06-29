@@ -27,6 +27,9 @@ type UISettings struct {
 	AllDayReminderDaysBefore int    `json:"allDayReminderDaysBefore"`
 	DefaultReminderMinutes   int    `json:"defaultReminderMinutes"`
 	SnoozeMinutes            int    `json:"snoozeMinutes"`
+	// SyncIntervalMinutes is how often the daemon polls each account. Zero falls
+	// back to the built-in default; the engine floors it at one minute.
+	SyncIntervalMinutes int `json:"syncIntervalMinutes"`
 }
 
 // Clock formats t honoring the resolved 12/24-hour preference.
@@ -110,6 +113,7 @@ func Defaults() UISettings {
 		AllDayReminderDaysBefore: 0,
 		DefaultReminderMinutes:   10,
 		SnoozeMinutes:            5,
+		SyncIntervalMinutes:      30,
 	}
 }
 

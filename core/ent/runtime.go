@@ -12,6 +12,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/schema"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
+	"github.com/AvengeMedia/dankcalendar/core/ent/task"
 )
 
 // The init function reads all schema descriptors with runtime code
@@ -29,11 +30,11 @@ func init() {
 	// account.DefaultNeedsReauth holds the default value on creation for the needs_reauth field.
 	account.DefaultNeedsReauth = accountDescNeedsReauth.Default.(bool)
 	// accountDescCreatedAt is the schema descriptor for created_at field.
-	accountDescCreatedAt := accountFields[6].Descriptor()
+	accountDescCreatedAt := accountFields[7].Descriptor()
 	// account.DefaultCreatedAt holds the default value on creation for the created_at field.
 	account.DefaultCreatedAt = accountDescCreatedAt.Default.(func() time.Time)
 	// accountDescUpdatedAt is the schema descriptor for updated_at field.
-	accountDescUpdatedAt := accountFields[7].Descriptor()
+	accountDescUpdatedAt := accountFields[8].Descriptor()
 	// account.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	account.DefaultUpdatedAt = accountDescUpdatedAt.Default.(func() time.Time)
 	// account.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -75,11 +76,11 @@ func init() {
 	// calendar.DefaultHidden holds the default value on creation for the hidden field.
 	calendar.DefaultHidden = calendarDescHidden.Default.(bool)
 	// calendarDescCreatedAt is the schema descriptor for created_at field.
-	calendarDescCreatedAt := calendarFields[11].Descriptor()
+	calendarDescCreatedAt := calendarFields[12].Descriptor()
 	// calendar.DefaultCreatedAt holds the default value on creation for the created_at field.
 	calendar.DefaultCreatedAt = calendarDescCreatedAt.Default.(func() time.Time)
 	// calendarDescUpdatedAt is the schema descriptor for updated_at field.
-	calendarDescUpdatedAt := calendarFields[12].Descriptor()
+	calendarDescUpdatedAt := calendarFields[13].Descriptor()
 	// calendar.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	calendar.DefaultUpdatedAt = calendarDescUpdatedAt.Default.(func() time.Time)
 	// calendar.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -189,6 +190,52 @@ func init() {
 	// secret.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	secret.IDValidator = func() func(string) error {
 		validators := secretDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	taskFields := schema.Task{}.Fields()
+	_ = taskFields
+	// taskDescUID is the schema descriptor for uid field.
+	taskDescUID := taskFields[1].Descriptor()
+	// task.UIDValidator is a validator for the "uid" field. It is called by the builders before save.
+	task.UIDValidator = taskDescUID.Validators[0].(func(string) error)
+	// taskDescPriority is the schema descriptor for priority field.
+	taskDescPriority := taskFields[8].Descriptor()
+	// task.DefaultPriority holds the default value on creation for the priority field.
+	task.DefaultPriority = taskDescPriority.Default.(int)
+	// taskDescPercentComplete is the schema descriptor for percent_complete field.
+	taskDescPercentComplete := taskFields[9].Descriptor()
+	// task.DefaultPercentComplete holds the default value on creation for the percent_complete field.
+	task.DefaultPercentComplete = taskDescPercentComplete.Default.(int)
+	// taskDescAllDay is the schema descriptor for all_day field.
+	taskDescAllDay := taskFields[13].Descriptor()
+	// task.DefaultAllDay holds the default value on creation for the all_day field.
+	task.DefaultAllDay = taskDescAllDay.Default.(bool)
+	// taskDescCreated is the schema descriptor for created field.
+	taskDescCreated := taskFields[21].Descriptor()
+	// task.DefaultCreated holds the default value on creation for the created field.
+	task.DefaultCreated = taskDescCreated.Default.(func() time.Time)
+	// taskDescUpdated is the schema descriptor for updated field.
+	taskDescUpdated := taskFields[22].Descriptor()
+	// task.DefaultUpdated holds the default value on creation for the updated field.
+	task.DefaultUpdated = taskDescUpdated.Default.(func() time.Time)
+	// task.UpdateDefaultUpdated holds the default value on update for the updated field.
+	task.UpdateDefaultUpdated = taskDescUpdated.UpdateDefault.(func() time.Time)
+	// taskDescID is the schema descriptor for id field.
+	taskDescID := taskFields[0].Descriptor()
+	// task.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	task.IDValidator = func() func(string) error {
+		validators := taskDescID.Validators
 		fns := [...]func(string) error{
 			validators[0].(func(string) error),
 			validators[1].(func(string) error),

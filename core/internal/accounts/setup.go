@@ -31,6 +31,12 @@ func GoogleSetupSteps() []SetupStep {
 			Screenshot:  "02-enable-api.png",
 		},
 		{
+			Title:       "Enable the Tasks API",
+			Description: "With the same project selected, click \"Enable\" on the Tasks API page. This lets dankcalendar sync your Google Tasks lists. You can skip this if you only want calendar events.",
+			URL:         "https://console.cloud.google.com/apis/library/tasks.googleapis.com",
+			URLLabel:    "Enable Tasks API",
+		},
+		{
 			Title:       "Configure the Google Auth Platform",
 			Description: "Click \"Get started\" on the overview page. App name: anything (e.g. \"dankcalendar\"). User support email: your own address. Audience: \"External\". Then agree and finish — nothing here is ever published.",
 			URL:         "https://console.cloud.google.com/auth/overview",
