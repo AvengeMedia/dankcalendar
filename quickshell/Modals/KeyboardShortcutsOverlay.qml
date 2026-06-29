@@ -49,20 +49,24 @@ Item {
             "title": I18n.tr("View", "keyboard shortcuts overlay section header"),
             "rows": [
                 {
-                    "keys": ["m"],
-                    "label": I18n.tr("Month view", "keyboard shortcut description")
-                },
-                {
-                    "keys": ["w"],
-                    "label": I18n.tr("Week view", "keyboard shortcut description")
-                },
-                {
-                    "keys": ["d"],
+                    "keys": ["d", "Ctrl+1"],
                     "label": I18n.tr("Day view", "keyboard shortcut description")
                 },
                 {
-                    "keys": ["a"],
+                    "keys": ["w", "Ctrl+2"],
+                    "label": I18n.tr("Week view", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["m", "Ctrl+3"],
+                    "label": I18n.tr("Month view", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["a", "Ctrl+4"],
                     "label": I18n.tr("Agenda view", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+5"],
+                    "label": I18n.tr("Tasks view", "keyboard shortcut description")
                 }
             ]
         },

@@ -250,6 +250,41 @@ FloatingWindow {
             case Qt.Key_A:
                 window.currentView = "agenda";
                 break;
+            case Qt.Key_1:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.currentView = "day";
+                break;
+            case Qt.Key_2:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.currentView = "week";
+                break;
+            case Qt.Key_3:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.currentView = "month";
+                break;
+            case Qt.Key_4:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.currentView = "agenda";
+                break;
+            case Qt.Key_5:
+                if (!ctrl || !SettingsData.showTasks || !DankCalService.hasTaskLists()) {
+                    event.accepted = false;
+                    return;
+                }
+                window.currentView = "tasks";
+                break;
             case Qt.Key_C:
                 window.openCreateEvent();
                 break;

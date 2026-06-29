@@ -470,7 +470,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:168, Modules/CalendarWindow.qml:332",
+    "reference": "Modules/CalendarWindow.qml:168, Modules/CalendarWindow.qml:367",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -668,7 +668,7 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modules/CalendarSidebar.qml:121, Modals/KeyboardShortcutsOverlay.qml:74",
+    "reference": "Modules/CalendarSidebar.qml:121, Modals/KeyboardShortcutsOverlay.qml:78",
     "comment": "keyboard shortcut description | sidebar button to create a new event"
   },
   {
@@ -728,7 +728,7 @@
   {
     "term": "Day view",
     "context": "Day view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:61",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:53",
     "comment": "keyboard shortcut description"
   },
   {
@@ -986,7 +986,7 @@
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:335, Modals/KeyboardShortcutsOverlay.qml:70",
+    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:335, Modals/KeyboardShortcutsOverlay.qml:74",
     "comment": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label"
   },
   {
@@ -1082,7 +1082,7 @@
   {
     "term": "Keyboard shortcuts",
     "context": "Keyboard shortcuts",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:139",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:143",
     "comment": "keyboard shortcuts overlay title"
   },
   {
@@ -1214,7 +1214,7 @@
   {
     "term": "Month view",
     "context": "Month view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:53",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:61",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1712,7 +1712,7 @@
   {
     "term": "Search",
     "context": "Search",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:78",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:82",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1772,7 +1772,7 @@
   {
     "term": "Settings",
     "context": "Settings",
-    "reference": "Modals/SettingsModal.qml:86, Modals/KeyboardShortcutsOverlay.qml:82",
+    "reference": "Modals/SettingsModal.qml:86, Modals/KeyboardShortcutsOverlay.qml:86",
     "comment": "keyboard shortcut description | settings window header title"
   },
   {
@@ -1968,6 +1968,12 @@
     "comment": "header title when the tasks view is active | sidebar section header for the task list | view switcher option in sidebar"
   },
   {
+    "term": "Tasks view",
+    "context": "Tasks view",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:69",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Test notification",
     "context": "Test notification",
     "reference": "Modals/SettingsContent.qml:1228",
@@ -2012,7 +2018,7 @@
   {
     "term": "Toggle this help",
     "context": "Toggle this help",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:86",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:90",
     "comment": "keyboard shortcut description"
   },
   {
