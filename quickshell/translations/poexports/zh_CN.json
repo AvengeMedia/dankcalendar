@@ -44,8 +44,11 @@
   "1 hour before": {
     "1 hour before": "1小时前"
   },
+  "1 line": {
+    "1 line": ""
+  },
   "1 minute": {
-    "1 minute": ""
+    "1 minute": "1分钟"
   },
   "1 week before": {
     "1 week before": "1周前"
@@ -80,11 +83,17 @@
   "2 hours before": {
     "2 hours before": "2小时前"
   },
+  "2 lines": {
+    "2 lines": ""
+  },
   "24-hour": {
     "24-hour": "24-小时制"
   },
   "24h": {
     "24h": "24小时"
+  },
+  "3 lines": {
+    "3 lines": ""
   },
   "30 minutes": {
     "30 minutes": "30分钟"
@@ -132,7 +141,7 @@
     "Add": "添加"
   },
   "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
-    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "添加 CalDAV，本地，谷歌或微软账户的任务列表以创建任务。"
   },
   "Add a calendar": {
     "Add a calendar": "添加日历"
@@ -144,7 +153,7 @@
     "Add description": "添加描述"
   },
   "Add task": {
-    "Add task": ""
+    "Add task": "添加任务"
   },
   "Add title": {
     "Add title": "添加标题"
@@ -168,7 +177,7 @@
     "All day": "全天"
   },
   "All done": {
-    "All done": ""
+    "All done": "全部完成"
   },
   "All-day reminder time": {
     "All-day reminder time": "全天日程提醒时间"
@@ -246,7 +255,7 @@
     "Calendars": "日历"
   },
   "Calendars couldn't be loaded; tasks are still syncing.": {
-    "Calendars couldn't be loaded; tasks are still syncing.": ""
+    "Calendars couldn't be loaded; tasks are still syncing.": "日历无法加载；仍在同步任务。"
   },
   "Cancel": {
     "Cancel": "取消"
@@ -285,7 +294,7 @@
     "Coming soon": "即将推出"
   },
   "Completed": {
-    "Completed": ""
+    "Completed": "已完成"
   },
   "Confirm": {
     "Confirm": "确认"
@@ -315,7 +324,7 @@
     "Continue": "继续"
   },
   "Copied to clipboard": {
-    "Copied to clipboard": ""
+    "Copied to clipboard": "拷贝到粘贴板"
   },
   "Copy link": {
     "Copy link": "复制链接"
@@ -330,7 +339,7 @@
     "Could not read that file.": "无法读取文件。"
   },
   "Couldn't update task": {
-    "Couldn't update task": ""
+    "Couldn't update task": "无法更新任务"
   },
   "Create": {
     "Create": "创建"
@@ -354,7 +363,7 @@
     "Daemon offline": "守护进程已离线"
   },
   "Daily": {
-    "Daily": ""
+    "Daily": "每日"
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar 是一款专为现代 Linux 桌面打造的日历软件，采用了<a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">源自 Material 3 的设计灵感</a>，同时还提供强大的 CLI（命令行界面）和 Socket API 以便进行系统集成。<br /><br/>它基于 <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>（一个用于构建桌面 Shell 的 Qt6 框架）以及 <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a> 语言（一种静态类型、编译型的编程语言）开发而成。"
@@ -512,6 +521,9 @@
   "Go to today": {
     "Go to today": "转到今天"
   },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+  },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google 要求您创建自己的 OAuth 客户端，以便代表您读取日历数据。这是一次性设置，大约需要三分钟。"
   },
@@ -590,6 +602,12 @@
   "Marked as not done": {
     "Marked as not done": ""
   },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": ""
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": ""
+  },
   "Maybe": {
     "Maybe": "或许"
   },
@@ -613,6 +631,9 @@
   },
   "Month": {
     "Month": "月"
+  },
+  "Month event title lines": {
+    "Month event title lines": ""
   },
   "Month view": {
     "Month view": "月视图"
@@ -801,7 +822,7 @@
     "Quick Access": "快速访问"
   },
   "Quit": {
-    "Quit": "离开"
+    "Quit": "退出"
   },
   "Reconnect": {
     "Reconnect": "重新连接"
@@ -995,6 +1016,9 @@
   "Tasks": {
     "Tasks": ""
   },
+  "Tasks view": {
+    "Tasks view": ""
+  },
   "Test notification": {
     "Test notification": "测试通知"
   },
@@ -1087,6 +1111,9 @@
   },
   "Week": {
     "Week": "周"
+  },
+  "Week event title lines": {
+    "Week event title lines": ""
   },
   "Week view": {
     "Week view": "周视图"

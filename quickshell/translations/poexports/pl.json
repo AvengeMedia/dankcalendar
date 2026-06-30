@@ -44,8 +44,11 @@
   "1 hour before": {
     "1 hour before": "1 godzina przed"
   },
+  "1 line": {
+    "1 line": ""
+  },
   "1 minute": {
-    "1 minute": ""
+    "1 minute": "1 minuta"
   },
   "1 week before": {
     "1 week before": "1 tydzień przed"
@@ -80,11 +83,17 @@
   "2 hours before": {
     "2 hours before": "2 godziny przed"
   },
+  "2 lines": {
+    "2 lines": ""
+  },
   "24-hour": {
     "24-hour": "24-godzinny"
   },
   "24h": {
     "24h": "24 godz."
+  },
+  "3 lines": {
+    "3 lines": ""
   },
   "30 minutes": {
     "30 minutes": "30 minut"
@@ -132,7 +141,7 @@
     "Add": "Dodaj"
   },
   "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
-    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "Dodaj konto CalDAV, lokalne, Google lub Microsoft z listą zadań, aby tworzyć zadania."
   },
   "Add a calendar": {
     "Add a calendar": "Dodaj kalendarz"
@@ -144,7 +153,7 @@
     "Add description": "Dodaj opis"
   },
   "Add task": {
-    "Add task": ""
+    "Add task": "Dodaj zadanie"
   },
   "Add title": {
     "Add title": "Dodaj tytuł"
@@ -168,7 +177,7 @@
     "All day": "Cały dzień"
   },
   "All done": {
-    "All done": ""
+    "All done": "Wszystko zrobione"
   },
   "All-day reminder time": {
     "All-day reminder time": "Czas przypomnienia całodniowego"
@@ -246,7 +255,7 @@
     "Calendars": "Kalendarze"
   },
   "Calendars couldn't be loaded; tasks are still syncing.": {
-    "Calendars couldn't be loaded; tasks are still syncing.": ""
+    "Calendars couldn't be loaded; tasks are still syncing.": "Nie udało się załadować kalendarzy; trwa synchronizacja zadań."
   },
   "Cancel": {
     "Cancel": "Anuluj"
@@ -285,7 +294,7 @@
     "Coming soon": "Wkrótce"
   },
   "Completed": {
-    "Completed": ""
+    "Completed": "Ukończono"
   },
   "Confirm": {
     "Confirm": "Potwierdź"
@@ -315,7 +324,7 @@
     "Continue": "Dalej"
   },
   "Copied to clipboard": {
-    "Copied to clipboard": ""
+    "Copied to clipboard": "Skopiowano do schowka"
   },
   "Copy link": {
     "Copy link": "Kopiuj link"
@@ -330,7 +339,7 @@
     "Could not read that file.": "Nie udało się odczytać tego pliku."
   },
   "Couldn't update task": {
-    "Couldn't update task": ""
+    "Couldn't update task": "Nie udało się zaktualizować zadania"
   },
   "Create": {
     "Create": "Utwórz"
@@ -354,7 +363,7 @@
     "Daemon offline": "Usługa w tle offline"
   },
   "Daily": {
-    "Daily": ""
+    "Daily": "Codziennie"
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar to kalendarz dla nowoczesnych pulpitów linuksowych <a href=\"https://m3.material.io/\" o wyglądzie inspirowanym Material 3</a>, wyposażony w podatne na modyfikacje CLI oraz socket API do tworzenia integracji.<br /><br />Został zbudowany przy użyciu <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a> – frameworka Qt6 do tworzenia powłok graficznych – oraz <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, statycznie typowanego i kompilowanego języka programowania."
@@ -423,7 +432,7 @@
     "Documents": "Dokumenty"
   },
   "Does not repeat": {
-    "Does not repeat": ""
+    "Does not repeat": "NIe powtarza się"
   },
   "Done": {
     "Done": "Gotowe"
@@ -435,13 +444,13 @@
     "Drag to pan · click to fit": "Przeciągnij, aby przesunąć · kliknij, aby dopasować"
   },
   "Due date": {
-    "Due date": ""
+    "Due date": "Termin wykonania"
   },
   "Edit event": {
     "Edit event": "Edytuj wydarzenie"
   },
   "Edit task": {
-    "Edit task": ""
+    "Edit task": "Edytuj zadanie"
   },
   "Enable reminders": {
     "Enable reminders": "Włącz przypomnienia"
@@ -471,7 +480,7 @@
     "Event details": "Szczegóły wydarzenia"
   },
   "Every": {
-    "Every": ""
+    "Every": "Każdego"
   },
   "Evolution": {
     "Evolution": "Evolution"
@@ -512,6 +521,9 @@
   "Go to today": {
     "Go to today": "Idź do dnia"
   },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+  },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google wymaga utworzenia własnego klienta OAuth, aby móc odczytywać dane kalendarza w Twoim imieniu. Jest to jednorazowa konfiguracja, która zajmuje około trzech minut. "
   },
@@ -519,7 +531,7 @@
     "Hide": "Ukryj"
   },
   "High": {
-    "High": ""
+    "High": "Wysoki"
   },
   "Home": {
     "Home": "Strona główna"
@@ -528,7 +540,7 @@
     "How long the snooze button postpones a reminder.": "Czas odroczenia przypomnienia przez przycisk drzemki"
   },
   "How often accounts are polled for changes.": {
-    "How often accounts are polled for changes.": ""
+    "How often accounts are polled for changes.": "Częstotliwość sprawdzania zmian na kontach."
   },
   "Import client_secret.json": {
     "Import client_secret.json": "Importuj plik client_secret.json"
@@ -564,7 +576,7 @@
     "Light": "Jasny"
   },
   "List": {
-    "List": ""
+    "List": "Lista"
   },
   "Load colors from your own theme file.": {
     "Load colors from your own theme file.": "Wczytaj kolory z własnego pliku motywu."
@@ -585,19 +597,25 @@
     "Location": "Lokalizacja"
   },
   "Low": {
-    "Low": ""
+    "Low": "Niski"
   },
   "Marked as not done": {
-    "Marked as not done": ""
+    "Marked as not done": "Oznaczono jako nieukończone"
+  },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": ""
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": ""
   },
   "Maybe": {
     "Maybe": "Może"
   },
   "Medium": {
-    "Medium": ""
+    "Medium": "Średni"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
-    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Nie udzielono dostępu do Microsoft To Do. Połącz ponownie to konto, aby zsynchronizować zadania."
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft często zwraca błąd „server_error” przez kilka pierwszych minut po utworzeniu lub zmianie rejestracji aplikacji. Odczekaj minutę lub dwie i spróbuj ponownie."
@@ -614,11 +632,14 @@
   "Month": {
     "Month": "Miesiąc"
   },
+  "Month event title lines": {
+    "Month event title lines": ""
+  },
   "Month view": {
     "Month view": "Widok miesiąca"
   },
   "Monthly": {
-    "Monthly": ""
+    "Monthly": "Co miesiąc"
   },
   "Move to Trash": {
     "Move to Trash": "Przenieś do kosza"
@@ -648,7 +669,7 @@
     "New event": "Nowe wydarzenie"
   },
   "New task": {
-    "New task": ""
+    "New task": "Nowe zadanie"
   },
   "Next day": {
     "Next day": "Następny dzień"
@@ -675,16 +696,16 @@
     "No calendars yet. Add one to start creating events.": "Brak kalendarzy. Dodaj jeden, aby zacząć tworzyć wydarzenia."
   },
   "No due date": {
-    "No due date": ""
+    "No due date": "Brak terminu"
   },
   "No matching events": {
     "No matching events": "Brak pasujących wydarzeń"
   },
   "No task list available": {
-    "No task list available": ""
+    "No task list available": "Brak dostępnych list zadań"
   },
   "No tasks yet": {
-    "No tasks yet": ""
+    "No tasks yet": "Brak zadań"
   },
   "No theme file selected": {
     "No theme file selected": "Nie wybrano pliku motywu."
@@ -702,7 +723,7 @@
     "Not signed in — click to reconnect or re-add this account": "Nie jesteś zalogowany — kliknij, aby ponownie się połączyć lub dodać konto."
   },
   "Notes": {
-    "Notes": ""
+    "Notes": "Notatki"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Brak zaplanowanych wydarzeń na najbliższe %1 dni."
@@ -738,7 +759,7 @@
     "Outlook, Office 365 and Exchange Online calendars.": "Kalendarze Outlook, Office 365 i Exchange Online."
   },
   "Overdue": {
-    "Overdue": ""
+    "Overdue": "Zaległe"
   },
   "Override": {
     "Override": "Nadpisz"
@@ -795,7 +816,7 @@
     "Previous week": "Poprzedni weekend"
   },
   "Priority": {
-    "Priority": ""
+    "Priority": "Priorytet"
   },
   "Quick Access": {
     "Quick Access": "Szybki dostęp"
@@ -807,7 +828,7 @@
     "Reconnect": "Połącz ponownie"
   },
   "Recurring tasks are managed in Google Tasks.": {
-    "Recurring tasks are managed in Google Tasks.": ""
+    "Recurring tasks are managed in Google Tasks.": "Zadaniami cyklicznymi zarządza się w Google Tasks."
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Przypomnienia i powiadomienia na pulpicie."
@@ -843,16 +864,16 @@
     "Rename…": "Zmień nazwę..."
   },
   "Repeat": {
-    "Repeat": ""
+    "Repeat": "Powtarzaj"
   },
   "Repeats": {
-    "Repeats": ""
+    "Repeats": "Powtarza"
   },
   "Repeats every %1": {
-    "Repeats every %1": ""
+    "Repeats every %1": "Powtarzaj co %1"
   },
   "Repeats every %1 %2": {
-    "Repeats every %1 %2": ""
+    "Repeats every %1 %2": "Powtarzaj co %1 %2"
   },
   "Reset to global": {
     "Reset to global": "Przywróć ustawienia globalne"
@@ -903,10 +924,10 @@
     "Show all-day reminders": "Show all-day reminders"
   },
   "Show task lists and the Tasks view when an account provides them.": {
-    "Show task lists and the Tasks view when an account provides them.": ""
+    "Show task lists and the Tasks view when an account provides them.": "Wyświetlaj listy zadań oraz widok zadań, gdy konto je udostępnia."
   },
   "Show tasks": {
-    "Show tasks": ""
+    "Show tasks": "Pokaż zadania"
   },
   "Show week numbers": {
     "Show week numbers": "Pokaż numery tygodni"
@@ -966,7 +987,7 @@
     "Subscribing…": "Subskrybowanie…"
   },
   "Sync interval": {
-    "Sync interval": ""
+    "Sync interval": "Częstotliwość synchronizacji"
   },
   "Sync now": {
     "Sync now": "Synchronizuj teraz"
@@ -984,16 +1005,19 @@
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Nawigacja • ←→↑↓: Nawigacja po siatce • Enter/Spacja: Wybierz"
   },
   "Task": {
-    "Task": ""
+    "Task": "Zadanie"
   },
   "Task completed": {
-    "Task completed": ""
+    "Task completed": "Zadanie ukończone"
   },
   "Task lists couldn't be loaded; calendars are still syncing.": {
-    "Task lists couldn't be loaded; calendars are still syncing.": ""
+    "Task lists couldn't be loaded; calendars are still syncing.": "Nie można wczytać list zadań; kalendarze są w trakcie synchronizacji."
   },
   "Tasks": {
-    "Tasks": ""
+    "Tasks": "Zadania"
+  },
+  "Tasks view": {
+    "Tasks view": ""
   },
   "Test notification": {
     "Test notification": "Powiadomienie testowe"
@@ -1035,13 +1059,13 @@
     "Type at least 2 characters to search events.": "Wpisz co najmniej 2 znaki, aby wyszukać wydarzenia. "
   },
   "Undo": {
-    "Undo": ""
+    "Undo": "Cofnij"
   },
   "University timetable": {
     "University timetable": "Plan zajęć na uczelni"
   },
   "Upcoming": {
-    "Upcoming": ""
+    "Upcoming": "Nadchodzące"
   },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "Użyj wbudowanej palety kolorów."
@@ -1088,11 +1112,14 @@
   "Week": {
     "Week": "Tydzień"
   },
+  "Week event title lines": {
+    "Week event title lines": ""
+  },
   "Week view": {
     "Week view": "Widok tygodnia"
   },
   "Weekly": {
-    "Weekly": ""
+    "Weekly": "Co tydzień"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Określa działanie przycisku zamykania okna."
@@ -1101,7 +1128,7 @@
     "When all-day event reminders fire.": "Czas przypomnień o wydarzeniach całodniowych."
   },
   "Yearly": {
-    "Yearly": ""
+    "Yearly": "Co rok"
   },
   "Yesterday": {
     "Yesterday": "Wczoraj"
@@ -1122,10 +1149,10 @@
     "dark": "ciemny"
   },
   "day": {
-    "day": ""
+    "day": "dzień"
   },
   "days": {
-    "days": ""
+    "days": "dni"
   },
   "iCal subscription": {
     "iCal subscription": "Subskrypcja kalendarza iCal"
@@ -1134,10 +1161,10 @@
     "light": "jasny"
   },
   "month": {
-    "month": ""
+    "month": "miesiąc"
   },
   "months": {
-    "months": ""
+    "months": "miesiące"
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "tylko jeśli kanał wymaga logowania"
@@ -1155,16 +1182,16 @@
     "username": "nazwa użytkownika"
   },
   "week": {
-    "week": ""
+    "week": "tydzień"
   },
   "weeks": {
-    "weeks": ""
+    "weeks": "tygodnie"
   },
   "year": {
-    "year": ""
+    "year": "rok"
   },
   "years": {
-    "years": ""
+    "years": "lata"
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· Zaproszono: %1 · Przyjęto: %2"

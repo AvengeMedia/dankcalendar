@@ -44,6 +44,9 @@
   "1 hour before": {
     "1 hour before": "1 ora prima"
   },
+  "1 line": {
+    "1 line": ""
+  },
   "1 minute": {
     "1 minute": ""
   },
@@ -80,11 +83,17 @@
   "2 hours before": {
     "2 hours before": "2 ore prima"
   },
+  "2 lines": {
+    "2 lines": ""
+  },
   "24-hour": {
     "24-hour": "24 ore"
   },
   "24h": {
     "24h": "24h"
+  },
+  "3 lines": {
+    "3 lines": ""
   },
   "30 minutes": {
     "30 minutes": "30 minuti"
@@ -512,6 +521,9 @@
   "Go to today": {
     "Go to today": "Vai a oggi"
   },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+  },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google richiede di creare un proprio client OAuth per leggere i dati del calendario per tuo conto. Si tratta di una configurazione unica che richiede circa tre minuti."
   },
@@ -590,6 +602,12 @@
   "Marked as not done": {
     "Marked as not done": ""
   },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": ""
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": ""
+  },
   "Maybe": {
     "Maybe": ""
   },
@@ -613,6 +631,9 @@
   },
   "Month": {
     "Month": "Mese"
+  },
+  "Month event title lines": {
+    "Month event title lines": ""
   },
   "Month view": {
     "Month view": "Vista mese"
@@ -995,6 +1016,9 @@
   "Tasks": {
     "Tasks": ""
   },
+  "Tasks view": {
+    "Tasks view": ""
+  },
   "Test notification": {
     "Test notification": "Notifica di prova"
   },
@@ -1087,6 +1111,9 @@
   },
   "Week": {
     "Week": "Settimana"
+  },
+  "Week event title lines": {
+    "Week event title lines": ""
   },
   "Week view": {
     "Week view": "Vista settimana"
