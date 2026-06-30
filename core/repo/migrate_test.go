@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/pressly/goose/v3"
 	_ "modernc.org/sqlite"
 )
 
@@ -96,5 +97,39 @@ func TestMigrateIsIdempotent(t *testing.T) {
 		if err := migrate(ctx, db); err != nil {
 			t.Fatalf("migrate run %d: %v", i, err)
 		}
+	}
+}
+
+func TestMeetingURLMigrationInvalidatesSyncTokens(t *testing.T) {
+	ctx := context.Background()
+	db, _ := openRaw(t, "meeting-urls.db")
+	defer db.Close()
+
+	configureGoose()
+	const previousVersion = 20260629125249
+	if err := goose.UpToContext(ctx, db, migrationsDir, previousVersion); err != nil {
+		t.Fatalf("migrate to previous version: %v", err)
+	}
+
+	_, err := db.ExecContext(ctx, `INSERT INTO accounts
+		(id, kind, display_name, created_at, updated_at)
+		VALUES ('account-1', 'google', 'Test', '2026-01-01', '2026-01-01');
+		INSERT INTO calendars
+		(id, remote_id, name, sync_token, created_at, updated_at, account_calendars)
+		VALUES ('calendar-1', 'remote-1', 'Test', 'cursor-1', '2026-01-01', '2026-01-01', 'account-1');`)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := migrate(ctx, db); err != nil {
+		t.Fatalf("migrate: %v", err)
+	}
+
+	var token sql.NullString
+	if err := db.QueryRowContext(ctx, "SELECT sync_token FROM calendars WHERE id = 'calendar-1';").Scan(&token); err != nil {
+		t.Fatal(err)
+	}
+	if token.Valid {
+		t.Fatalf("sync token was not invalidated: %q", token.String)
 	}
 }
