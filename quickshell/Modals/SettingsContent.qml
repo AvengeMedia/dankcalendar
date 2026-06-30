@@ -99,6 +99,21 @@ Item {
         }
     ]
 
+    readonly property var eventTitleLineOptions: [
+        {
+            label: I18n.tr("1 line", "event title line count dropdown option"),
+            value: 1
+        },
+        {
+            label: I18n.tr("2 lines", "event title line count dropdown option"),
+            value: 2
+        },
+        {
+            label: I18n.tr("3 lines", "event title line count dropdown option"),
+            value: 3
+        }
+    ]
+
     readonly property var reminderOptions: [
         {
             label: I18n.tr("None", "default reminder dropdown option"),
@@ -439,6 +454,32 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: SettingsData.showTasks
                             onToggled: checked => SettingsData.showTasks = checked
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Month event title lines", "month event title line count setting label")
+                        description: I18n.tr("Maximum title lines per event in month view.", "month event title line count setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 120
+                            options: root.optionLabels(root.eventTitleLineOptions)
+                            currentValue: root.labelForValue(root.eventTitleLineOptions, SettingsData.monthEventTitleLines)
+                            onValueChanged: value => SettingsData.monthEventTitleLines = root.valueForLabel(root.eventTitleLineOptions, value)
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Week event title lines", "week event title line count setting label")
+                        description: I18n.tr("Maximum title lines per event in week view.", "week event title line count setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 120
+                            options: root.optionLabels(root.eventTitleLineOptions)
+                            currentValue: root.labelForValue(root.eventTitleLineOptions, SettingsData.weekEventTitleLines)
+                            onValueChanged: value => SettingsData.weekEventTitleLines = root.valueForLabel(root.eventTitleLineOptions, value)
                         }
                     }
 

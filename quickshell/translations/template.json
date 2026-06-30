@@ -105,6 +105,13 @@
     "comment": ""
   },
   {
+    "term": "1 line",
+    "translation": "",
+    "context": "event title line count dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "1 minute",
     "translation": "",
     "context": "sync interval dropdown option",
@@ -189,6 +196,13 @@
     "comment": ""
   },
   {
+    "term": "2 lines",
+    "translation": "",
+    "context": "event title line count dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "24-hour",
     "translation": "",
     "context": "locale time format name in time format description",
@@ -199,6 +213,13 @@
     "term": "24h",
     "translation": "",
     "context": "time format button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "3 lines",
+    "translation": "",
+    "context": "event title line count dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1358,6 +1379,20 @@
     "comment": ""
   },
   {
+    "term": "Maximum title lines per event in month view.",
+    "translation": "",
+    "context": "month event title line count setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Maximum title lines per event in week view.",
+    "translation": "",
+    "context": "week event title line count setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Maybe",
     "translation": "",
     "context": "RSVP tentative button",
@@ -1410,6 +1445,13 @@
     "term": "Month",
     "translation": "",
     "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Month event title lines",
+    "translation": "",
+    "context": "month event title line count setting label",
     "reference": "",
     "comment": ""
   },
@@ -2516,6 +2558,13 @@
     "term": "Week",
     "translation": "",
     "context": "view switcher option in sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Week event title lines",
+    "translation": "",
+    "context": "week event title line count setting label",
     "reference": "",
     "comment": ""
   },
