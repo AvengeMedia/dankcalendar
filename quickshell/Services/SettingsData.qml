@@ -29,6 +29,8 @@ Singleton {
     property alias timeFormat: adapter.timeFormat
     property alias showWeekNumbers: adapter.showWeekNumbers
     property alias showTasks: adapter.showTasks
+    property alias monthEventTitleLines: adapter.monthEventTitleLines
+    property alias weekEventTitleLines: adapter.weekEventTitleLines
     property alias defaultEventDurationMinutes: adapter.defaultEventDurationMinutes
     // -1 = no reminder
     property alias defaultReminderMinutes: adapter.defaultReminderMinutes
@@ -133,6 +135,8 @@ Singleton {
             property bool use24HourClock: true
             property bool showWeekNumbers: false
             property bool showTasks: true
+            property int monthEventTitleLines: 1
+            property int weekEventTitleLines: 1
             property int defaultEventDurationMinutes: 30
             property int defaultReminderMinutes: 10
             property bool remindersEnabled: true

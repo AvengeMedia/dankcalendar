@@ -17,6 +17,7 @@ Item {
     readonly property int hourCount: 24
     readonly property real hourHeight: 48
     readonly property real timeColumnWidth: 60
+    readonly property real allDayChipHeight: Math.max(18, SettingsData.weekEventTitleLines * 13 + 4)
 
     readonly property date startOfWeek: {
         const d = new Date(displayDate);
@@ -173,7 +174,7 @@ Item {
 
         Row {
             width: parent.width
-            height: root.allDayMax > 0 ? root.allDayMax * 22 + 6 : 0
+            height: root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0
             visible: root.allDayMax > 0
 
             Item {
@@ -208,7 +209,7 @@ Item {
                             Rectangle {
                                 required property var modelData
                                 width: parent.width
-                                height: 18
+                                height: root.allDayChipHeight
                                 radius: 4
                                 clip: true
                                 color: Theme.withAlpha(modelData.color, 0.22)
@@ -224,8 +225,8 @@ Item {
                                     text: modelData.title
                                     font.pixelSize: 10
                                     color: Theme.surfaceText
-                                    wrapMode: Text.NoWrap
-                                    maximumLineCount: 1
+                                    wrapMode: Text.WordWrap
+                                    maximumLineCount: SettingsData.weekEventTitleLines
                                     elide: Text.ElideRight
                                 }
 
@@ -249,7 +250,7 @@ Item {
 
         DankFlickable {
             width: parent.width
-            height: parent.height - 56 - (root.allDayMax > 0 ? root.allDayMax * 22 + 6 : 0)
+            height: parent.height - 56 - (root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0)
             contentHeight: root.hourHeight * root.hourCount
             clip: true
 
@@ -366,8 +367,8 @@ Item {
                                             font.weight: Font.Medium
                                             color: Theme.surfaceText
                                             width: parent.width
-                                            wrapMode: Text.NoWrap
-                                            maximumLineCount: 1
+                                            wrapMode: Text.WordWrap
+                                            maximumLineCount: Math.min(SettingsData.weekEventTitleLines, Math.max(1, Math.floor(parent.height / 14)))
                                             elide: Text.ElideRight
                                         }
                                     }

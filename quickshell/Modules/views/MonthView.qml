@@ -101,6 +101,7 @@ Item {
 
     readonly property int firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
     readonly property real weekGutter: SettingsData.showWeekNumbers ? 28 : 0
+    readonly property real eventChipHeight: Math.max(18, SettingsData.monthEventTitleLines * 14 + 4)
 
     function isoWeekNumber(d) {
         const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -236,8 +237,8 @@ Item {
                             return upcoming.concat(ended);
                         }
 
-                        // 36px day badge area + 14px reserved for "+N more"; 20px per chip
-                        readonly property int maxChips: Math.max(0, Math.min(3, Math.floor((height - 50) / 20)))
+                        // 36px day badge area + 14px reserved for "+N more".
+                        readonly property int maxChips: Math.max(0, Math.min(3, Math.floor((height - 50) / (root.eventChipHeight + 2))))
 
                         width: grid.cellWidth
                         height: grid.cellHeight
@@ -319,7 +320,7 @@ Item {
                                 Rectangle {
                                     required property var modelData
                                     width: parent.width
-                                    height: 18
+                                    height: root.eventChipHeight
                                     radius: 4
                                     clip: true
                                     color: Theme.withAlpha(modelData.color, 0.18)
@@ -345,8 +346,8 @@ Item {
                                             text: parent.parent.modelData.title
                                             font.pixelSize: 11
                                             color: Theme.surfaceText
-                                            wrapMode: Text.NoWrap
-                                            maximumLineCount: 1
+                                            wrapMode: Text.WordWrap
+                                            maximumLineCount: SettingsData.monthEventTitleLines
                                             elide: Text.ElideRight
                                             width: parent.width - 10
                                         }
