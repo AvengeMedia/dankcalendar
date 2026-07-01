@@ -34,6 +34,11 @@ const (
 	// defaultMaxWake caps how long the engine parks between scans; a backstop
 	// against a missed wake signal, not the normal path.
 	defaultMaxWake = time.Hour
+	// coalesce bounds how soon a wake may force a rescan. A sync pass can
+	// rewrite thousands of Event rows individually, each firing Wake(); without
+	// this, every single row would trigger its own full recurring-event
+	// re-expansion. Wakes arriving faster than this just push the scan out.
+	coalesce = 2 * time.Second
 )
 
 // Sender is the subset of the notify client the engine needs.
@@ -157,6 +162,8 @@ func (e *Engine) loop(ctx context.Context) {
 		case <-e.stop:
 			return
 		case <-e.wake:
+			resetTimer(timer, coalesce)
+			continue
 		case <-timer.C:
 		}
 

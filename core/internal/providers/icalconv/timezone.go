@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
 	ical "github.com/emersion/go-ical"
 	"github.com/teambition/rrule-go"
 )
@@ -74,11 +75,11 @@ func loadZone(name string) (*time.Location, string) {
 	if name == "" {
 		return nil, ""
 	}
-	if loc, err := time.LoadLocation(name); err == nil {
+	if loc, err := tzcache.Load(name); err == nil {
 		return loc, name
 	}
 	if iana := windowsZones[name]; iana != "" {
-		if loc, err := time.LoadLocation(iana); err == nil {
+		if loc, err := tzcache.Load(iana); err == nil {
 			return loc, iana
 		}
 	}
@@ -122,11 +123,11 @@ func (r *TZResolver) location(tzid string, when time.Time) (*time.Location, stri
 	if tzid == "" {
 		return time.UTC, ""
 	}
-	if loc, err := time.LoadLocation(tzid); err == nil {
+	if loc, err := tzcache.Load(tzid); err == nil {
 		return loc, tzid
 	}
 	if iana := windowsZones[tzid]; iana != "" {
-		if loc, err := time.LoadLocation(iana); err == nil {
+		if loc, err := tzcache.Load(iana); err == nil {
 			return loc, iana
 		}
 	}
