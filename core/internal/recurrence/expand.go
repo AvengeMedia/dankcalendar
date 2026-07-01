@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
 	"github.com/teambition/rrule-go"
 )
 
@@ -66,7 +67,7 @@ func (s Series) location() *time.Location {
 	case s.AllDay:
 		return time.UTC
 	case s.TimeZone != "":
-		if loc, err := time.LoadLocation(s.TimeZone); err == nil {
+		if loc, err := tzcache.Load(s.TimeZone); err == nil {
 			return loc
 		}
 	}

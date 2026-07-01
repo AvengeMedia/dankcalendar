@@ -18,6 +18,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
+	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
 )
 
 const maxPageSize = 2500
@@ -510,7 +511,7 @@ func toGoogleEvent(ev *cal.Event) *calendar.Event {
 func toGoogleDateTime(t time.Time, tz string) *calendar.EventDateTime {
 	dt := &calendar.EventDateTime{}
 	if tz != "" {
-		if loc, err := time.LoadLocation(tz); err == nil {
+		if loc, err := tzcache.Load(tz); err == nil {
 			t = t.In(loc)
 		}
 		dt.TimeZone = tz

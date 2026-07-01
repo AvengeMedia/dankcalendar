@@ -39,6 +39,14 @@ const (
 	allDayLate = 24 * time.Hour
 	stateFloor = 35 * 24 * time.Hour
 	pruneAfter = 60 * 24 * time.Hour
+	// minWake floors how soon the loop may re-evaluate so an overdue or
+	// unresolved trigger can never busy-loop the engine.
+	minWake = time.Second
+	// coalesce bounds how soon a wake may force a rescan. A sync pass can
+	// rewrite thousands of Event rows individually, each firing Wake(); without
+	// this, every single row would trigger its own full recurring-event
+	// re-expansion. Wakes arriving faster than this just push the scan out.
+	coalesce = 2 * time.Second
 	// defaultMaxWake caps how long the engine parks; a backstop against a
 	// missed wake signal or an undetected clock change, not the normal path.
 	defaultMaxWake = time.Hour
@@ -191,6 +199,8 @@ func (e *Engine) loop(ctx context.Context) {
 		case <-e.stop:
 			return
 		case <-e.wake:
+			resetTimer(timer, coalesce)
+			continue
 		case <-timer.C:
 		}
 
@@ -215,8 +225,8 @@ func (e *Engine) untilNext(ctx context.Context) time.Duration {
 		return e.maxWake
 	}
 	switch d := up[0].Trigger.Sub(e.now()); {
-	case d < 0:
-		return 0
+	case d < minWake:
+		return minWake
 	case d > e.maxWake:
 		return e.maxWake
 	default:
