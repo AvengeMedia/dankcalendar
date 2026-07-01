@@ -41,7 +41,7 @@ Item {
         switch (code) {
         case "tasks_unavailable":
             if (kind === "google")
-                return I18n.tr('Google Tasks API is disabled. <a href="https://console.cloud.google.com/apis/library/tasks.googleapis.com" style="text-decoration:none; color:%1;">Enable it</a>, then refresh, to sync tasks.', "account notice when the google tasks api is not enabled").arg(Theme.primary);
+                return I18n.tr('Google Tasks is unavailable. <a href="https://console.cloud.google.com/apis/library/tasks.googleapis.com" style="text-decoration:none; color:%1;">Enable its API</a> or reconnect this account, then refresh, to sync tasks.', 'account notice when google tasks is disabled or its permission is missing').arg(Theme.primary);
             if (kind === "microsoft")
                 return I18n.tr("Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.", "account notice when microsoft to do permission is missing");
             return I18n.tr("Task lists couldn't be loaded; calendars are still syncing.", "account notice when task lists are unavailable but calendars sync");

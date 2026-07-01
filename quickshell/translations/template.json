@@ -1197,6 +1197,13 @@
     "comment": ""
   },
   {
+    "term": "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.",
+    "translation": "",
+    "context": "account notice when google tasks is disabled or its permission is missing",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.",
     "translation": "",
     "context": "google oauth setup intro text",

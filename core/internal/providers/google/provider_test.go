@@ -55,3 +55,45 @@ func TestIsServiceDisabled(t *testing.T) {
 		})
 	}
 }
+
+func TestIsOptionalServiceUnavailable(t *testing.T) {
+	cases := []struct {
+		name string
+		err  error
+		want bool
+	}{
+		{
+			name: "service disabled",
+			err:  &googleapi.Error{Code: http.StatusForbidden, Errors: []googleapi.ErrorItem{{Reason: "accessNotConfigured"}}},
+			want: true,
+		},
+		{
+			name: "missing scope reason",
+			err:  &googleapi.Error{Code: http.StatusForbidden, Errors: []googleapi.ErrorItem{{Reason: "insufficientPermissions"}}},
+			want: true,
+		},
+		{
+			name: "wrapped missing scope message",
+			err:  fmt.Errorf("list task lists: %w", &googleapi.Error{Code: http.StatusForbidden, Message: "Request had insufficient authentication scopes."}),
+			want: true,
+		},
+		{
+			name: "another forbidden error",
+			err:  &googleapi.Error{Code: http.StatusForbidden, Errors: []googleapi.ErrorItem{{Reason: "rateLimitExceeded"}}},
+			want: false,
+		},
+		{
+			name: "plain error",
+			err:  errors.New("boom"),
+			want: false,
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := isOptionalServiceUnavailable(tc.err); got != tc.want {
+				t.Fatalf("isOptionalServiceUnavailable = %v, want %v", got, tc.want)
+			}
+		})
+	}
+}

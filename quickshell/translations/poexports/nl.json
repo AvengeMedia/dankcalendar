@@ -44,6 +44,9 @@
   "1 hour before": {
     "1 hour before": "1 uur van tevoren"
   },
+  "1 line": {
+    "1 line": ""
+  },
   "1 minute": {
     "1 minute": ""
   },
@@ -80,11 +83,17 @@
   "2 hours before": {
     "2 hours before": "2 uur van tevoren"
   },
+  "2 lines": {
+    "2 lines": ""
+  },
   "24-hour": {
     "24-hour": "24-uurs"
   },
   "24h": {
     "24h": "24u"
+  },
+  "3 lines": {
+    "3 lines": ""
   },
   "30 minutes": {
     "30 minutes": "30 minuten"
@@ -512,6 +521,9 @@
   "Go to today": {
     "Go to today": "Ga naar vandaag"
   },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+  },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google vereist dat je een eigen OAuth-client aanmaakt om agendagegevens namens jou te lezen. Dit is een eenmalige installatie die ongeveer drie minuten duurt."
   },
@@ -590,6 +602,12 @@
   "Marked as not done": {
     "Marked as not done": ""
   },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": ""
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": ""
+  },
   "Maybe": {
     "Maybe": ""
   },
@@ -613,6 +631,9 @@
   },
   "Month": {
     "Month": "Maand"
+  },
+  "Month event title lines": {
+    "Month event title lines": ""
   },
   "Month view": {
     "Month view": "Maandweergave"
@@ -995,6 +1016,9 @@
   "Tasks": {
     "Tasks": ""
   },
+  "Tasks view": {
+    "Tasks view": ""
+  },
   "Test notification": {
     "Test notification": "Testnotificatie"
   },
@@ -1087,6 +1111,9 @@
   },
   "Week": {
     "Week": "Week"
+  },
+  "Week event title lines": {
+    "Week event title lines": ""
   },
   "Week view": {
     "Week view": "Weekweergave"

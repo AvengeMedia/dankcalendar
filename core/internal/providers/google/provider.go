@@ -73,9 +73,9 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 		return taskLists, nil
 	case calErr != nil:
 		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(calErr))
-	case taskErr != nil && isServiceDisabled(taskErr):
+	case taskErr != nil && isOptionalServiceUnavailable(taskErr):
 		p.notices = append(p.notices, cal.NoticeTasksUnavailable)
-		log.Warnf("account %s: Google Tasks API disabled, syncing calendars only: %v", p.account.ID, taskErr)
+		log.Warnf("account %s: Google Tasks unavailable, syncing calendars only: %v", p.account.ID, taskErr)
 		return cals, nil
 	case taskErr != nil:
 		return nil, fmt.Errorf("list google task lists: %w", classifyAuthErr(taskErr))
@@ -120,6 +120,25 @@ func isServiceDisabled(err error) bool {
 	}
 	return strings.Contains(apiErr.Message, "has not been used in project") ||
 		strings.Contains(apiErr.Message, "it is disabled")
+}
+
+// isOptionalServiceUnavailable identifies failures that should disable Google
+// Tasks without blocking Calendar. Older account tokens lack the Tasks scope
+// because it was added after Calendar support shipped.
+func isOptionalServiceUnavailable(err error) bool {
+	if isServiceDisabled(err) {
+		return true
+	}
+	var apiErr *googleapi.Error
+	if !errors.As(err, &apiErr) || apiErr.Code != http.StatusForbidden {
+		return false
+	}
+	for _, e := range apiErr.Errors {
+		if e.Reason == "insufficientPermissions" {
+			return true
+		}
+	}
+	return strings.Contains(strings.ToLower(apiErr.Message), "insufficient authentication scopes")
 }
 
 func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {

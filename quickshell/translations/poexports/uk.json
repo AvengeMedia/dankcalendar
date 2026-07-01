@@ -44,6 +44,9 @@
   "1 hour before": {
     "1 hour before": "за 1 годину"
   },
+  "1 line": {
+    "1 line": ""
+  },
   "1 minute": {
     "1 minute": ""
   },
@@ -80,11 +83,17 @@
   "2 hours before": {
     "2 hours before": "за 2 години"
   },
+  "2 lines": {
+    "2 lines": ""
+  },
   "24-hour": {
     "24-hour": "24-годинний"
   },
   "24h": {
     "24h": "24 год."
+  },
+  "3 lines": {
+    "3 lines": ""
   },
   "30 minutes": {
     "30 minutes": "30 хвилин"
@@ -512,6 +521,9 @@
   "Go to today": {
     "Go to today": "Перейти до сьогоднішнього дня"
   },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+  },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google вимагає від вас створити власний клієнт OAuth для читання даних календаря від вашого імені. Це одноразове налаштування, яке займає близько трьох хвилин."
   },
@@ -590,6 +602,12 @@
   "Marked as not done": {
     "Marked as not done": ""
   },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": ""
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": ""
+  },
   "Maybe": {
     "Maybe": ""
   },
@@ -613,6 +631,9 @@
   },
   "Month": {
     "Month": "Місяць"
+  },
+  "Month event title lines": {
+    "Month event title lines": ""
   },
   "Month view": {
     "Month view": "Режим місяця"
@@ -995,6 +1016,9 @@
   "Tasks": {
     "Tasks": ""
   },
+  "Tasks view": {
+    "Tasks view": ""
+  },
   "Test notification": {
     "Test notification": "Тестове сповіщення"
   },
@@ -1087,6 +1111,9 @@
   },
   "Week": {
     "Week": "Тиждень"
+  },
+  "Week event title lines": {
+    "Week event title lines": ""
   },
   "Week view": {
     "Week view": "Режим тижня"
