@@ -27,6 +27,9 @@ Singleton {
     property alias firstDayOfWeek: adapter.firstDayOfWeek
     // "auto" | "12h" | "24h"
     property alias timeFormat: adapter.timeFormat
+    property alias coreHoursEnabled: adapter.coreHoursEnabled
+    property alias coreHoursStart: adapter.coreHoursStart
+    property alias coreHoursEnd: adapter.coreHoursEnd
     property alias showWeekNumbers: adapter.showWeekNumbers
     property alias showTasks: adapter.showTasks
     property alias monthEventTitleLines: adapter.monthEventTitleLines
@@ -60,6 +63,9 @@ Singleton {
     }
 
     readonly property int effectiveFirstDayOfWeek: (firstDayOfWeek >= 0 && firstDayOfWeek <= 6) ? firstDayOfWeek : localeFirstDayOfWeek
+    readonly property bool coreHoursValid: coreHoursStart >= 0 && coreHoursEnd <= 24 && coreHoursEnd > coreHoursStart
+    readonly property int effectiveHourStart: (coreHoursEnabled && coreHoursValid) ? coreHoursStart : 0
+    readonly property int effectiveHourEnd: (coreHoursEnabled && coreHoursValid) ? coreHoursEnd : 24
     readonly property bool use24HourTime: {
         switch (timeFormat) {
         case "12h":
@@ -133,6 +139,9 @@ Singleton {
             property int firstDayOfWeek: -1
             property string timeFormat: "auto"
             property bool use24HourClock: true
+            property bool coreHoursEnabled: false
+            property int coreHoursStart: 9
+            property int coreHoursEnd: 17
             property bool showWeekNumbers: false
             property bool showTasks: true
             property int monthEventTitleLines: 1
