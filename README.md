@@ -160,6 +160,7 @@ The daemon exposes a scriptable IPC surface — handy for keybinds and automatio
 dcal ipc ui.toggle
 dcal ipc ui.show
 dcal ipc ui.show view=day          # open on a specific view: month|week|day|agenda
+dcal ipc ui.openEvent uid=<uid>    # open a specific event's details window
 dcal ipc events.list from=2026-06-01 to=2026-06-30
 dcal ipc accounts.list
 dcal ipc reminders.upcoming

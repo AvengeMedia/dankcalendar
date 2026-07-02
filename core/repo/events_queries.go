@@ -258,6 +258,24 @@ func recurrenceStrings(rec map[string]any, key string) []string {
 	}
 }
 
+// GetEventByUID resolves a single event by its iCal UID, optionally scoped to a
+// calendar. Recurring occurrences share their master's UID, so callers pass the
+// occurrence start to pin the returned row to that instance.
+func (r *Repo) GetEventByUID(ctx context.Context, uid, calendarID string) (*ent.Event, error) {
+	q := r.client.Event.Query().Where(event.UIDEQ(uid))
+	if calendarID != "" {
+		q = q.Where(event.HasCalendarWith(calendar.IDEQ(calendarID)))
+	}
+	e, err := q.WithCalendar().Order(ent.Asc(event.FieldStart)).First(ctx)
+	switch {
+	case ent.IsNotFound(err):
+		return nil, errdefs.NewCustomError(errdefs.ErrTypeNotFound, "event not found")
+	case err != nil:
+		return nil, err
+	}
+	return e, nil
+}
+
 func (r *Repo) FindEventByUID(ctx context.Context, calendarID, uid string) (*ent.Event, error) {
 	e, err := r.client.Event.Query().
 		Where(

@@ -19,6 +19,18 @@ func validUIView(view string) bool {
 	return false
 }
 
+// publishUI delivers a "ui" payload live when the GUI is listening, else stashes
+// it for the next "ui" subscriber so a cold-started window still honors it.
+func publishUI(deps Deps, payload map[string]any) {
+	if deps.Bus.HasSubscriber("ui") {
+		deps.Bus.Publish("ui", payload)
+		return
+	}
+	if deps.Pending != nil {
+		deps.Pending.Set(payload)
+	}
+}
+
 func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 	switch req.Method {
 	case "ui.show", "ui.hide", "ui.toggle":
@@ -40,13 +52,19 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 			RespondError(w, req.ID, "ui.open requires a url")
 			return
 		}
-		// Deliver live when the GUI is listening, else stash it for the next
-		// "ui" subscriber so a cold-started window still opens the link.
-		if deps.Bus.HasSubscriber("ui") {
-			deps.Bus.Publish("ui", map[string]any{"action": "subscribe", "url": url})
-		} else if deps.Pending != nil {
-			deps.Pending.Set(url)
+		publishUI(deps, map[string]any{"action": "subscribe", "url": url})
+		Respond(w, req.ID, map[string]any{"ok": true})
+	case "ui.openEvent":
+		uid := strings.TrimSpace(ParamString(req.Params, "uid"))
+		if uid == "" {
+			RespondError(w, req.ID, "ui.openEvent requires a uid")
+			return
 		}
+		payload := map[string]any{"action": "openEvent", "uid": uid}
+		if start := strings.TrimSpace(ParamString(req.Params, "start")); start != "" {
+			payload["start"] = start
+		}
+		publishUI(deps, payload)
 		Respond(w, req.ID, map[string]any{"ok": true})
 	case "ui.quit":
 		Respond(w, req.ID, map[string]any{"ok": true})

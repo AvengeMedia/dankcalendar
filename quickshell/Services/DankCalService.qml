@@ -56,6 +56,7 @@ Singleton {
     signal tasksUpdated
     signal windowActionRequested(string action, string view)
     signal subscribeRequested(string url)
+    signal openEventRequested(string uid, string start)
     signal colorSchemeUpdate(var data)
 
     onFocusDateChanged: _ensureWindow()
@@ -221,10 +222,17 @@ Singleton {
         case "ui":
             {
                 const data = event.data || {};
-                if (data.action === "subscribe")
+                switch (data.action) {
+                case "subscribe":
                     subscribeRequested(data.url || "");
-                else
+                    break;
+                case "openEvent":
+                    openEventRequested(data.uid || "", data.start || "");
+                    break;
+                default:
                     windowActionRequested(data.action || "", data.view || "");
+                    break;
+                }
                 break;
             }
         case "colorScheme":
@@ -350,6 +358,44 @@ Singleton {
             calendars = _mergeStable(list, calendars);
             eventsUpdated();
             tasksUpdated();
+        });
+    }
+
+    function findEvent(uid, start) {
+        if (!uid)
+            return null;
+        const want = start ? new Date(start).getTime() : NaN;
+        let fallback = null;
+        for (let i = 0; i < events.length; i++) {
+            const ev = events[i];
+            if (ev.uid !== uid)
+                continue;
+            if (isNaN(want))
+                return decorateEvent(ev);
+            if (ev.start.getTime() === want)
+                return decorateEvent(ev);
+            fallback = ev;
+        }
+        return fallback ? decorateEvent(fallback) : null;
+    }
+
+    function fetchEvent(uid, start, callback) {
+        if (!uid) {
+            callback(null);
+            return;
+        }
+        const params = {
+            "uid": uid
+        };
+        if (start)
+            params.start = start;
+        sendRequest("events.get", params, response => {
+            if (response.error) {
+                lastError = response.error;
+                callback(null);
+                return;
+            }
+            callback(eventFromResult(response.result));
         });
     }
 
@@ -494,6 +540,7 @@ Singleton {
         const allDay = !!e.allDay;
         return {
             "id": e.id,
+            "uid": e.uid || "",
             "calendarId": e.calendarId || "",
             "title": e.summary || "(untitled)",
             "description": e.description || "",

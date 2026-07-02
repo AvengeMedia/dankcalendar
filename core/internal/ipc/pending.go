@@ -2,24 +2,24 @@ package ipc
 
 import "sync"
 
-// PendingOpen holds a subscription URL captured before the GUI has subscribed
-// to the "ui" topic (e.g. a webcal:// link that cold-started the app). It is
-// flushed onto the bus the moment a "ui" subscriber appears.
+// PendingOpen holds a "ui" action captured before the GUI subscribed to the
+// "ui" topic (e.g. a webcal:// link or an event open that cold-started the
+// app). It is flushed onto the bus the moment a "ui" subscriber appears.
 type PendingOpen struct {
-	mu  sync.Mutex
-	url string
+	mu      sync.Mutex
+	payload map[string]any
 }
 
-func (p *PendingOpen) Set(url string) {
+func (p *PendingOpen) Set(payload map[string]any) {
 	p.mu.Lock()
-	p.url = url
+	p.payload = payload
 	p.mu.Unlock()
 }
 
-func (p *PendingOpen) Take() string {
+func (p *PendingOpen) Take() map[string]any {
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	url := p.url
-	p.url = ""
-	return url
+	payload := p.payload
+	p.payload = nil
+	return payload
 }

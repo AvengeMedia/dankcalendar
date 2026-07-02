@@ -9,7 +9,7 @@ import (
 
 type Client struct {
 	conn net.Conn
-	scan *bufio.Scanner
+	r    *bufio.Reader
 }
 
 func Dial(socketPath string) (*Client, error) {
@@ -18,14 +18,13 @@ func Dial(socketPath string) (*Client, error) {
 		return nil, fmt.Errorf("dial %s: %w", socketPath, err)
 	}
 
-	scan := bufio.NewScanner(conn)
-	scan.Buffer(make([]byte, 64*1024), 1024*1024)
-	if !scan.Scan() {
+	r := bufio.NewReader(conn)
+	if _, err := r.ReadBytes('\n'); err != nil {
 		conn.Close()
-		return nil, fmt.Errorf("read capabilities: %w", scan.Err())
+		return nil, fmt.Errorf("read capabilities: %w", err)
 	}
 
-	return &Client{conn: conn, scan: scan}, nil
+	return &Client{conn: conn, r: r}, nil
 }
 
 func (c *Client) Call(req Request) (*Response[any], error) {
@@ -36,11 +35,12 @@ func (c *Client) Call(req Request) (*Response[any], error) {
 	if _, err := c.conn.Write(append(data, '\n')); err != nil {
 		return nil, err
 	}
-	if !c.scan.Scan() {
-		return nil, fmt.Errorf("read response: %w", c.scan.Err())
+	line, err := c.r.ReadBytes('\n')
+	if err != nil {
+		return nil, fmt.Errorf("read response: %w", err)
 	}
 	var resp Response[any]
-	if err := json.Unmarshal(c.scan.Bytes(), &resp); err != nil {
+	if err := json.Unmarshal(line, &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil

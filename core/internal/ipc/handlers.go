@@ -62,6 +62,24 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 			return
 		}
 		Respond(w, req.ID, map[string]any{"events": mapEvents(events), "total": total})
+	case "events.get":
+		uid := ParamString(req.Params, "uid")
+		if uid == "" {
+			RespondError(w, req.ID, "events.get requires a uid")
+			return
+		}
+		e, err := deps.Repo.GetEventByUID(ctx, uid, ParamString(req.Params, "calendarId"))
+		if err != nil {
+			RespondError(w, req.ID, err.Error())
+			return
+		}
+		if start := ParamString(req.Params, "start"); start != "" && len(e.Recurrence) > 0 {
+			if t, perr := time.Parse(time.RFC3339, start); perr == nil {
+				e.End = t.Add(e.End.Sub(e.Start))
+				e.Start = t
+			}
+		}
+		Respond(w, req.ID, mapEvent(e))
 	case "events.create":
 		handleEventCreate(ctx, w, req, deps)
 	case "events.update":
@@ -90,8 +108,8 @@ func HandleSubscribe(w *ConnWriter, req Request, deps Deps, sub *Subscriber) {
 		if t != "ui" {
 			continue
 		}
-		if url := deps.Pending.Take(); url != "" {
-			deps.Bus.Publish("ui", map[string]any{"action": "subscribe", "url": url})
+		if payload := deps.Pending.Take(); payload != nil {
+			deps.Bus.Publish("ui", payload)
 		}
 		return
 	}

@@ -54,6 +54,7 @@ var Methods = []MethodSpec{
 	{Name: "calendars.delete", Group: "calendars", Desc: "Delete a calendar", Params: []ParamSpec{req("calendarId", "")}},
 
 	{Name: "events.list", Group: "events", Desc: "List events", Params: []ParamSpec{opt("query", "text filter"), opt("from", "RFC3339"), opt("to", "RFC3339"), opt("limit", ""), opt("offset", "")}},
+	{Name: "events.get", Group: "events", Desc: "Get an event by iCal UID", Params: []ParamSpec{req("uid", "event iCal UID"), opt("calendarId", "limit to one calendar"), opt("start", "occurrence start RFC3339 for recurring events")}},
 	{Name: "events.create", Group: "events", Desc: "Create an event", Params: []ParamSpec{req("calendarId", ""), req("summary", ""), req("start", "RFC3339"), req("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", "")}},
 	{Name: "events.update", Group: "events", Desc: "Update an event", Params: []ParamSpec{req("id", ""), opt("summary", ""), opt("start", "RFC3339"), opt("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", "")}},
 	{Name: "events.delete", Group: "events", Desc: "Delete an event", Params: []ParamSpec{req("id", "")}},
@@ -71,6 +72,7 @@ var Methods = []MethodSpec{
 
 	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.open", Group: "ui", Desc: "Open a webcal/ICS subscription link in the UI", Params: []ParamSpec{req("url", "webcal:// or https ICS URL")}},
+	{Name: "ui.openEvent", Group: "ui", Desc: "Open a specific event's details window", Params: []ParamSpec{req("uid", "event iCal UID"), opt("start", "occurrence start RFC3339 for recurring events")}},
 	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},
 	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.quit", Group: "ui", Desc: "Quit the running daemon"},

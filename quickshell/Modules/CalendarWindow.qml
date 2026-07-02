@@ -160,6 +160,18 @@ FloatingWindow {
         openEventDetails(event);
     }
 
+    function openEventByUid(uid, start) {
+        const loaded = DankCalService.findEvent(uid, start);
+        if (loaded) {
+            goToEvent(loaded);
+            return;
+        }
+        DankCalService.fetchEvent(uid, start, event => {
+            if (event)
+                goToEvent(event);
+        });
+    }
+
     onDisplayDateChanged: DankCalService.focusDate = displayDate
     Component.onCompleted: DankCalService.focusDate = displayDate
 
