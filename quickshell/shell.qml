@@ -35,11 +35,8 @@ ShellRoot {
     }
 
     function showAndFocus() {
-        if (windowLoader.active) {
-            focusToplevel();
-            return;
-        }
-        windowLoader.active = true;
+        windowLoader.item.visible = true;
+        focusToplevel();
         focusRetry.restart();
     }
 
@@ -53,11 +50,11 @@ ShellRoot {
             showAndFocus();
             break;
         case "hide":
-            windowLoader.active = false;
+            windowLoader.item.visible = false;
             break;
         case "toggle":
-            if (windowLoader.active) {
-                windowLoader.active = false;
+            if (windowLoader.item.visible) {
+                windowLoader.item.visible = false;
                 return;
             }
             pendingView = view;
@@ -125,10 +122,10 @@ ShellRoot {
 
     LazyLoader {
         id: windowLoader
-        active: Quickshell.env("DANKCAL_START_HIDDEN") !== "1"
+        active: true
 
         CalendarWindow {
-            onHideRequested: windowLoader.active = false
+            onHideRequested: visible = false
         }
     }
 }

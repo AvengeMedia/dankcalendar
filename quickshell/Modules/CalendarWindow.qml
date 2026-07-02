@@ -170,7 +170,7 @@ FloatingWindow {
     implicitWidth: 1100
     implicitHeight: screen ? Math.min(820, screen.height - 100) : 820
     color: Theme.surface
-    visible: true
+    visible: Quickshell.env("DANKCAL_START_HIDDEN") !== "1"
 
     onIsCompactModeChanged: {
         if (!isCompactMode)

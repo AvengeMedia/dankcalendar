@@ -11,13 +11,13 @@ Item {
     function showWindow() {
         if (!root.shell)
             return;
-        root.shell.handleWindowAction("show");
+        root.shell.handleWindowAction("show", "");
     }
 
     function toggleWindow() {
         if (!root.shell)
             return;
-        root.shell.handleWindowAction("toggle");
+        root.shell.handleWindowAction("toggle", "");
     }
 
     // The SNI item id is read from the application name at registration
