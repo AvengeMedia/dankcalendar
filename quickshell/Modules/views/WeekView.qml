@@ -14,7 +14,9 @@ Item {
 
     signal eventClicked(var event)
 
-    readonly property int hourCount: 24
+    readonly property int startHour: SettingsData.effectiveHourStart
+    readonly property int endHour: SettingsData.effectiveHourEnd
+    readonly property int hourCount: endHour - startHour
     readonly property real hourHeight: 48
     readonly property real timeColumnWidth: 60
     readonly property real allDayChipHeight: Math.max(18, SettingsData.weekEventTitleLines * 13 + 4)
@@ -85,10 +87,14 @@ Item {
             const ev = list[i];
             if (ev.allDay)
                 continue;
-            const s = Math.max(ev.start.getTime(), dayStart.getTime());
-            const e = Math.min(ev.end.getTime(), dayEnd.getTime());
+            const coreStart = dayStart.getTime() + root.startHour * 3600000;
+            const coreEnd = dayStart.getTime() + root.endHour * 3600000;
+            const s = Math.max(ev.start.getTime(), dayStart.getTime(), coreStart);
+            const e = Math.min(ev.end.getTime(), dayEnd.getTime(), coreEnd);
+            if (e <= s)
+                continue;
             const decorated = Object.assign({}, ev);
-            decorated.startHour = (s - dayStart.getTime()) / 3600000;
+            decorated.startHour = (s - dayStart.getTime()) / 3600000 - root.startHour;
             decorated.durationHours = Math.max((e - s) / 3600000, 0.5);
             out.push(decorated);
         }
@@ -107,9 +113,96 @@ Item {
         return Math.min(max, 2);
     }
 
+    function hiddenInfoFor(day) {
+        const dayStart = new Date(day.getFullYear(), day.getMonth(), day.getDate());
+        const dayEnd = new Date(dayStart.getTime() + 86400000);
+        const coreStart = dayStart.getTime() + root.startHour * 3600000;
+        const coreEnd = dayStart.getTime() + root.endHour * 3600000;
+        const list = DankCalService.eventsForDay(day);
+        let count = 0;
+        let before = false;
+        let after = false;
+        for (let i = 0; i < list.length; i++) {
+            const ev = list[i];
+            if (ev.allDay)
+                continue;
+            const s0 = Math.max(ev.start.getTime(), dayStart.getTime());
+            const e0 = Math.min(ev.end.getTime(), dayEnd.getTime());
+            if (e0 <= s0)
+                continue;
+            if (s0 < coreStart)
+                before = true;
+            if (e0 > coreEnd)
+                after = true;
+            if (s0 < coreStart || e0 > coreEnd)
+                count++;
+        }
+        return {
+            count: count,
+            before: before,
+            after: after
+        };
+    }
+
+    readonly property int hiddenEventTotal: {
+        eventsVersion;
+        let total = 0;
+        for (let i = 0; i < 7; i++)
+            total += root.hiddenInfoFor(root.dayAt(i)).count;
+        return total;
+    }
+
+    readonly property bool anyHiddenBefore: {
+        eventsVersion;
+        for (let i = 0; i < 7; i++)
+            if (root.hiddenInfoFor(root.dayAt(i)).before)
+                return true;
+        return false;
+    }
+
     Column {
         anchors.fill: parent
         spacing: 0
+
+        Rectangle {
+            id: coreHoursWarning
+            width: parent.width
+            height: visible ? 36 : 0
+            visible: root.hiddenEventTotal > 0
+            color: Theme.withAlpha(Theme.warning, 0.18)
+
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.spacingM
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: Theme.spacingS
+
+                DankIcon {
+                    name: "warning"
+                    size: Theme.iconSizeSmall
+                    color: Theme.warning
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                StyledText {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: root.hiddenEventTotal === 1 ? I18n.tr("1 appointment falls outside core hours", "core hours warning banner, singular") : I18n.tr("%1 appointments fall outside core hours", "core hours warning banner, plural").arg(root.hiddenEventTotal)
+                    font.pixelSize: Theme.fontSizeSmall
+                    color: Theme.warning
+                }
+            }
+
+            DankButton {
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.spacingM
+                anchors.verticalCenter: parent.verticalCenter
+                text: I18n.tr("Disable core hours", "core hours warning banner disable action")
+                backgroundColor: "transparent"
+                textColor: Theme.warning
+                buttonHeight: 28
+                onClicked: SettingsData.coreHoursEnabled = false
+            }
+        }
 
         Row {
             width: parent.width
@@ -248,9 +341,43 @@ Item {
             }
         }
 
+        Row {
+            id: hiddenBeforeStrip
+            width: parent.width
+            height: root.anyHiddenBefore ? 16 : 0
+            visible: root.anyHiddenBefore
+
+            Item {
+                width: root.timeColumnWidth
+                height: parent.height
+            }
+
+            Repeater {
+                model: 7
+
+                Item {
+                    required property int index
+                    readonly property date d: root.dayAt(index)
+                    width: (parent.width - root.timeColumnWidth) / 7
+                    height: parent.height
+
+                    DankIcon {
+                        visible: {
+                            root.eventsVersion;
+                            return root.hiddenInfoFor(parent.d).before;
+                        }
+                        anchors.centerIn: parent
+                        name: "keyboard_arrow_up"
+                        size: Theme.iconSizeSmall
+                        color: Theme.warning
+                    }
+                }
+            }
+        }
+
         DankFlickable {
             width: parent.width
-            height: parent.height - 56 - (root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0)
+            height: parent.height - 56 - coreHoursWarning.height - hiddenBeforeStrip.height - (root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0)
             contentHeight: root.hourHeight * root.hourCount
             clip: true
 
@@ -258,29 +385,23 @@ Item {
                 width: parent.width
                 height: root.hourHeight * root.hourCount
 
-                Column {
+                Item {
                     anchors.left: parent.left
                     width: root.timeColumnWidth
-                    spacing: 0
+                    height: parent.height
 
                     Repeater {
-                        model: root.hourCount
+                        model: root.hourCount + 1
 
-                        Item {
+                        StyledText {
                             required property int index
-                            width: parent.width
-                            height: root.hourHeight
-
-                            StyledText {
-                                anchors.right: parent.right
-                                anchors.rightMargin: Theme.spacingS
-                                anchors.top: parent.top
-                                anchors.topMargin: -6
-                                text: root.hourLabel(index)
-                                font.pixelSize: 11
-                                color: Theme.surfaceVariantText
-                                isMonospace: true
-                            }
+                            anchors.right: parent.right
+                            anchors.rightMargin: Theme.spacingS
+                            y: Math.max(0, index * root.hourHeight - 6)
+                            text: root.hourLabel(root.startHour + index)
+                            font.pixelSize: 11
+                            color: Theme.surfaceVariantText
+                            isMonospace: true
                         }
                     }
                 }
@@ -310,6 +431,14 @@ Item {
                     }
                 }
 
+                Rectangle {
+                    anchors.right: parent.right
+                    width: parent.width - root.timeColumnWidth
+                    y: root.hourCount * root.hourHeight
+                    height: 1
+                    color: Theme.gridLine
+                }
+
                 Row {
                     anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
@@ -334,6 +463,18 @@ Item {
                                 width: 1
                                 height: parent.height
                                 color: Theme.gridLine
+                            }
+
+                            DankIcon {
+                                visible: {
+                                    root.eventsVersion;
+                                    return root.hiddenInfoFor(root.dayAt(dayColumn.index)).after;
+                                }
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                y: root.hourCount * root.hourHeight + 2
+                                name: "keyboard_arrow_down"
+                                size: Theme.iconSizeSmall
+                                color: Theme.warning
                             }
 
                             Repeater {
@@ -394,11 +535,11 @@ Item {
                     anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
                     height: parent.height
-                    visible: root.nowColumn >= 0
+                    visible: root.nowColumn >= 0 && root.nowHour >= root.startHour && root.nowHour < root.endHour
                     z: 10
 
                     Item {
-                        y: root.nowHour * root.hourHeight
+                        y: (root.nowHour - root.startHour) * root.hourHeight
                         width: parent.width
 
                         Rectangle {

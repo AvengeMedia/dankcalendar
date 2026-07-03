@@ -48,9 +48,6 @@ Item {
         anchors.fill: parent
         cursorShape: root.toggleEnabled ? Qt.PointingHandCursor : Qt.ArrowCursor
         enabled: root.toggleEnabled
-        onClicked: {
-            root.checked = !root.checked;
-            root.toggled(root.checked);
-        }
+        onClicked: root.toggled(!root.checked)
     }
 }

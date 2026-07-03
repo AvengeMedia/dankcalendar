@@ -99,6 +99,22 @@ Item {
         }
     ]
 
+    function coreHourLabel(h) {
+        if (h === 24)
+            return "24:00";
+        if (SettingsData.use24HourTime)
+            return (h < 10 ? "0" + h : h) + ":00";
+        const displayH = h % 12 === 0 ? 12 : h % 12;
+        return h < 12 ? I18n.tr("%1 AM", "core hours dropdown hour label, morning").arg(displayH) : I18n.tr("%1 PM", "core hours dropdown hour label, afternoon").arg(displayH);
+    }
+
+    readonly property var coreHourOptions: Array.from({
+        length: 25
+    }, (_, h) => ({
+                label: root.coreHourLabel(h),
+                value: h
+            }))
+
     readonly property var eventTitleLineOptions: [
         {
             label: I18n.tr("1 line", "event title line count dropdown option"),
@@ -432,6 +448,49 @@ Item {
                                     break;
                                 }
                             }
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Enable core hours", "core hours toggle label")
+                        description: I18n.tr("Limit the day and week views to a set hour range.", "core hours toggle description")
+
+                        DankToggle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            checked: SettingsData.coreHoursEnabled
+                            onToggled: checked => SettingsData.coreHoursEnabled = checked
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Core hours", "core hours range setting label")
+                        description: I18n.tr("Hour range shown in day and week views.", "core hours range setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 90
+                            enabled: SettingsData.coreHoursEnabled
+                            opacity: enabled ? 1 : 0.5
+                            options: root.optionLabels(root.coreHourOptions.filter(o => o.value < SettingsData.coreHoursEnd))
+                            currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursStart)
+                            onValueChanged: value => SettingsData.coreHoursStart = root.valueForLabel(root.coreHourOptions, value)
+                        }
+
+                        StyledText {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: I18n.tr("to", "core hours range separator")
+                            color: Theme.surfaceVariantText
+                            opacity: SettingsData.coreHoursEnabled ? 1 : 0.5
+                        }
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 90
+                            enabled: SettingsData.coreHoursEnabled
+                            opacity: enabled ? 1 : 0.5
+                            options: root.optionLabels(root.coreHourOptions.filter(o => o.value > SettingsData.coreHoursStart))
+                            currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursEnd)
+                            onValueChanged: value => SettingsData.coreHoursEnd = root.valueForLabel(root.coreHourOptions, value)
                         }
                     }
 
