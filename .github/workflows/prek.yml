@@ -7,6 +7,10 @@ on:
 jobs:
   pre-commit-check:
     runs-on: ubuntu-latest
+    # prek builds the golangci-lint hook with its own toolchain; GOTOOLCHAIN=auto
+    # lets it fetch whatever Go version core/go.mod requires instead of pinning one.
+    env:
+      GOTOOLCHAIN: auto
     steps:
       - name: Checkout
         uses: actions/checkout@v6

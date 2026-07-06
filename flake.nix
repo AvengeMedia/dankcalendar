@@ -127,6 +127,10 @@
       devShells = forEachSystem (
         system: pkgs: {
           default = pkgs.mkShell {
+            # Let the golangci-lint pre-commit hook fetch the Go version core/go.mod
+            # requires rather than pinning it (prek forces GOTOOLCHAIN=local otherwise).
+            GOTOOLCHAIN = "auto";
+
             buildInputs = with pkgs; [
               (goForPkgs pkgs)
               go-mockery

@@ -4,8 +4,11 @@ repos:
     hooks:
       - id: golangci-lint-fmt
         require_serial: true
+        language_version: system
       - id: golangci-lint-full
+        language_version: system
       - id: golangci-lint-config-verify
+        language_version: system
   - repo: local
     hooks:
       - id: go-test
