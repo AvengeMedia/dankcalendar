@@ -33,6 +33,7 @@ Singleton {
     property var calendars: []
     property var events: []
     property var tasks: []
+    property var _pendingTaskState: ({})
     property bool eventsLoading: false
     property date focusDate: new Date()
     property var _loadedFrom: null
@@ -737,8 +738,27 @@ Singleton {
                 return;
             }
             const raw = (response.result || {}).tasks || [];
-            tasks = raw.map(t => _normalizeTask(t));
+            const next = raw.map(t => _applyPendingState(_normalizeTask(t)));
+            if (JSON.stringify(next) !== JSON.stringify(tasks))
+                tasks = next;
             tasksUpdated();
+        });
+    }
+
+    // A completion toggle is applied optimistically; slow providers can serve a
+    // reload that predates the write, so the desired state wins over a
+    // disagreeing reload until the daemon confirms it or the hold expires.
+    function _applyPendingState(t) {
+        const pending = _pendingTaskState[t.id];
+        if (!pending)
+            return t;
+        if (t.completed === pending.completed || Date.now() > pending.expires) {
+            delete _pendingTaskState[t.id];
+            return t;
+        }
+        return Object.assign({}, t, {
+            "completed": pending.completed,
+            "status": pending.completed ? "completed" : "needs_action"
         });
     }
 
@@ -906,14 +926,19 @@ Singleton {
     }
 
     function completeTask(id, completed, callback) {
+        _pendingTaskState[id] = {
+            "completed": completed,
+            "expires": Date.now() + 15000
+        };
         sendRequest("tasks.complete", {
             "id": id,
             "completed": completed
         }, response => {
-            if (response.error)
+            if (response.error) {
                 lastError = response.error;
-            else
+                delete _pendingTaskState[id];
                 reloadTasks();
+            }
             if (callback)
                 callback(response);
         });
