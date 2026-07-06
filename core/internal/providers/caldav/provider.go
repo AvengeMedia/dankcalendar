@@ -17,6 +17,7 @@ import (
 	"github.com/google/uuid"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
 )
 
@@ -48,7 +49,13 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 
 	principal, err := client.FindCurrentUserPrincipal(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("find caldav principal: %w", err)
+		fbClient, fbEndpoint, fbPrincipal, fbErr := wellKnownFallback(ctx, httpClient, endpoint)
+		if fbErr != nil {
+			log.Debugf("caldav: well-known fallback for %q failed: %v", baseURL, fbErr)
+			return nil, fmt.Errorf("find caldav principal: %w", err)
+		}
+		log.Debugf("caldav: principal lookup at %q failed (%v), discovered %q via well-known", baseURL, err, fbEndpoint)
+		client, endpoint, principal = fbClient, fbEndpoint, fbPrincipal
 	}
 	homeSet, err := client.FindCalendarHomeSet(ctx, principal)
 	if err != nil {
@@ -332,6 +339,42 @@ func (p *Provider) listObjectPaths(ctx context.Context, calendarPath string) ([]
 		paths = append(paths, href)
 	}
 	return paths, nil
+}
+
+// wellKnownFallback retries principal discovery through the RFC 6764
+// well-known URI. Servers like OpenCloud reject PROPFIND at arbitrary paths
+// (405 Method Not Allowed) but redirect /.well-known/caldav to their CalDAV
+// root, so a bare host URL still connects (#38). The GET follows redirects,
+// making the response's request URL the resolved CalDAV context path.
+func wellKnownFallback(ctx context.Context, hc webdav.HTTPClient, endpoint *url.URL) (*caldav.Client, *url.URL, string, error) {
+	wk := url.URL{Scheme: endpoint.Scheme, Host: endpoint.Host, Path: "/.well-known/caldav"}
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, wk.String(), nil)
+	if err != nil {
+		return nil, nil, "", err
+	}
+	resp, err := hc.Do(req)
+	if err != nil {
+		return nil, nil, "", err
+	}
+	resp.Body.Close()
+
+	target := *resp.Request.URL
+	if target.Path == wk.Path && resp.StatusCode >= http.StatusBadRequest {
+		return nil, nil, "", fmt.Errorf("well-known caldav lookup: %s", resp.Status)
+	}
+	if strings.TrimSuffix(target.Path, "/") == strings.TrimSuffix(endpoint.Path, "/") && target.Host == endpoint.Host {
+		return nil, nil, "", errors.New("well-known caldav resolves to the failing url")
+	}
+
+	client, err := caldav.NewClient(hc, target.String())
+	if err != nil {
+		return nil, nil, "", err
+	}
+	principal, err := client.FindCurrentUserPrincipal(ctx)
+	if err != nil {
+		return nil, nil, "", err
+	}
+	return client, &target, principal, nil
 }
 
 func objectPath(calendarPath, uid string) string {
