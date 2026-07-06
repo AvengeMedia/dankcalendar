@@ -159,6 +159,24 @@ func TestExpandWeeklyHourStableBothDirections(t *testing.T) {
 	}
 }
 
+// Evolution stores birthdays with no birth year as year 1604 (#39). rrule-go
+// silently ends unbounded rules ~292 years after DTSTART, so without an
+// explicit bound these series never reach the present.
+func TestExpandYearlyFromDistantPast(t *testing.T) {
+	series := recurrence.Series{
+		Start:  time.Date(1604, 3, 15, 0, 0, 0, 0, time.UTC),
+		AllDay: true,
+		RRule:  []string{"FREQ=YEARLY"},
+	}
+
+	got, err := recurrence.Expand(series,
+		time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+		time.Date(2026, 12, 31, 0, 0, 0, 0, time.UTC))
+	require.NoError(t, err)
+	require.Len(t, got, 1)
+	assert.Equal(t, time.Date(2026, 3, 15, 0, 0, 0, 0, time.UTC), got[0])
+}
+
 func TestExpandErrors(t *testing.T) {
 	start := time.Date(2026, 1, 5, 9, 0, 0, 0, time.UTC)
 	tests := []struct {

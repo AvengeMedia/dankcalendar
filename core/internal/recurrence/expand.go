@@ -39,6 +39,13 @@ func Expand(s Series, from, to time.Time) ([]time.Time, error) {
 			continue
 		}
 		opt.Dtstart = dtstart
+		// rrule-go caps unbounded rules at dtstart + ~292 years (1<<63-1 ns), so
+		// series starting far in the past (Evolution's year-1604 birthday
+		// placeholder) would never reach the window. Bounding at the window end
+		// is invisible to results within [from, to].
+		if opt.Until.IsZero() {
+			opt.Until = to.In(loc)
+		}
 		rule, err := rrule.NewRRule(*opt)
 		if err != nil {
 			continue
