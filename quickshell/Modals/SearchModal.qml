@@ -146,6 +146,10 @@ Popup {
                 _runSearch();
             event.accepted = true;
             return;
+        case Qt.Key_Escape:
+            close();
+            event.accepted = true;
+            return;
         }
         event.accepted = false;
     }
