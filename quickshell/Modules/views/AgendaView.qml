@@ -8,10 +8,22 @@ Item {
     id: root
 
     property date displayDate: new Date()
+    property string selectedEventKey: ""
     property int eventsVersion: 0
     readonly property int daysAhead: 14
 
     signal eventClicked(var event)
+
+    function revealItem(item) {
+        const y = item.mapToItem(agendaColumn, 0, 0).y;
+        if (y < agendaFlickable.contentY) {
+            agendaFlickable.contentY = Math.max(0, y - Theme.spacingM);
+            return;
+        }
+        const bottom = y + item.height;
+        if (bottom > agendaFlickable.contentY + agendaFlickable.height)
+            agendaFlickable.contentY = Math.max(0, Math.min(agendaFlickable.contentHeight - agendaFlickable.height, bottom - agendaFlickable.height + Theme.spacingM));
+    }
 
     Connections {
         target: DankCalService
@@ -70,6 +82,7 @@ Item {
     }
 
     DankFlickable {
+        id: agendaFlickable
         anchors.fill: parent
         contentWidth: width
         contentHeight: agendaColumn.implicitHeight
@@ -116,10 +129,21 @@ Item {
                         StyledRect {
                             id: card
                             required property var modelData
+                            readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                            onIsSelectedChanged: {
+                                if (!isSelected)
+                                    return;
+                                Qt.callLater(() => {
+                                    if (card && card.isSelected)
+                                        root.revealItem(card);
+                                });
+                            }
                             width: root.width
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
                             color: Theme.surfaceContainer
                             radius: Theme.cornerRadius
+                            border.color: isSelected ? Theme.primary : "transparent"
+                            border.width: isSelected ? 2 : 0
 
                             Row {
                                 id: contentRow

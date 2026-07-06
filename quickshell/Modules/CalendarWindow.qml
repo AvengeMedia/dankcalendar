@@ -20,6 +20,38 @@ FloatingWindow {
     property date displayDate: new Date()
     property date selectedDate: new Date()
     property date today: new Date()
+    property int selectedEventIndex: -1
+    property int eventsVersion: 0
+
+    readonly property bool eventNavigation: {
+        switch (currentView) {
+        case "day":
+        case "week":
+        case "agenda":
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    readonly property string selectedEventKey: {
+        eventsVersion;
+        if (selectedEventIndex < 0)
+            return "";
+        const evs = DankCalService.eventsForDay(selectedDate);
+        if (selectedEventIndex >= evs.length)
+            return "";
+        return DankCalService.eventKey(evs[selectedEventIndex]);
+    }
+
+    onSelectedDateChanged: selectedEventIndex = -1
+
+    Connections {
+        target: DankCalService
+        function onEventsUpdated() {
+            window.eventsVersion++;
+        }
+    }
 
     function shiftDisplayDate(direction) {
         const d = new Date(displayDate);
@@ -85,6 +117,48 @@ FloatingWindow {
         ensureSelectionVisible();
     }
 
+    // Walks events chronologically: within the selected day first, then into
+    // the nearest day that has events. direction is +1 or -1.
+    function moveEventSelection(direction) {
+        const evs = DankCalService.eventsForDay(selectedDate);
+        const next = selectedEventIndex + direction;
+        if (next >= 0 && next < evs.length) {
+            selectedEventIndex = next;
+            return;
+        }
+        for (let i = 1; i <= 366; i++) {
+            const d = new Date(selectedDate);
+            d.setDate(d.getDate() + direction * i);
+            const list = DankCalService.eventsForDay(d);
+            if (list.length === 0)
+                continue;
+            selectedDate = d;
+            selectedEventIndex = direction > 0 ? 0 : list.length - 1;
+            ensureSelectionVisible();
+            return;
+        }
+    }
+
+    function movePeriod(direction) {
+        switch (currentView) {
+        case "day":
+            moveSelection(direction);
+            return;
+        case "week":
+        case "agenda":
+            moveSelection(direction * 7);
+            return;
+        default:
+            {
+                const d = new Date(selectedDate);
+                d.setMonth(d.getMonth() + direction);
+                selectedDate = d;
+                ensureSelectionVisible();
+                return;
+            }
+        }
+    }
+
     function jumpToEventDay(direction) {
         for (let i = 1; i <= 366; i++) {
             const d = new Date(selectedDate);
@@ -99,6 +173,10 @@ FloatingWindow {
 
     function activateSelection() {
         const evs = DankCalService.eventsForDay(selectedDate);
+        if (selectedEventIndex >= 0 && selectedEventIndex < evs.length) {
+            openEventDetails(evs[selectedEventIndex]);
+            return;
+        }
         if (evs.length > 0) {
             openEventDetails(evs[0]);
             return;
@@ -237,11 +315,32 @@ FloatingWindow {
                 break;
             case Qt.Key_J:
             case Qt.Key_Down:
-                window.moveSelection(7);
+                if (window.eventNavigation)
+                    window.moveEventSelection(1);
+                else
+                    window.moveSelection(7);
                 break;
             case Qt.Key_K:
             case Qt.Key_Up:
-                window.moveSelection(-7);
+                if (window.eventNavigation)
+                    window.moveEventSelection(-1);
+                else
+                    window.moveSelection(-7);
+                break;
+            case Qt.Key_BracketLeft:
+            case Qt.Key_PageUp:
+                window.movePeriod(-1);
+                break;
+            case Qt.Key_BracketRight:
+            case Qt.Key_PageDown:
+                window.movePeriod(1);
+                break;
+            case Qt.Key_Escape:
+                if (window.selectedEventIndex < 0) {
+                    event.accepted = false;
+                    return;
+                }
+                window.selectedEventIndex = -1;
                 break;
             case Qt.Key_Tab:
                 window.jumpToEventDay(1);
@@ -515,6 +614,7 @@ FloatingWindow {
                         currentView: window.currentView
                         displayDate: window.displayDate
                         selectedDate: window.selectedDate
+                        selectedEventKey: window.selectedEventKey
                         today: window.today
                         onTodayRequested: window.goToToday()
                         onPreviousRequested: window.shiftDisplayDate(-1)

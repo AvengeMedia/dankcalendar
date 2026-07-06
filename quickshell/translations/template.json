@@ -2,14 +2,21 @@
   {
     "term": "%1 AM",
     "translation": "",
-    "context": "morning hour label in time gutter",
+    "context": "core hours dropdown hour label, morning | morning hour label in time gutter",
     "reference": "",
     "comment": ""
   },
   {
     "term": "%1 PM",
     "translation": "",
-    "context": "afternoon hour label in time gutter",
+    "context": "afternoon hour label in time gutter | core hours dropdown hour label, afternoon",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 appointments fall outside core hours",
+    "translation": "",
+    "context": "core hours warning banner, plural",
     "reference": "",
     "comment": ""
   },
@@ -80,6 +87,13 @@
     "term": "+%1 more",
     "translation": "",
     "context": "overflow label in month grid day cell, %1 is the number of hidden events",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1 appointment falls outside core hours",
+    "translation": "",
+    "context": "core hours warning banner, singular",
     "reference": "",
     "comment": ""
   },
@@ -637,6 +651,13 @@
     "comment": ""
   },
   {
+    "term": "Clear event selection",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Click to zoom · Esc to close",
     "translation": "",
     "context": "hint while a setup screenshot is fit to the window",
@@ -766,6 +787,13 @@
     "term": "Copy path",
     "translation": "",
     "context": "file browser item context menu action",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Core hours",
+    "translation": "",
+    "context": "core hours range setting label",
     "reference": "",
     "comment": ""
   },
@@ -959,6 +987,13 @@
     "comment": ""
   },
   {
+    "term": "Disable core hours",
+    "translation": "",
+    "context": "core hours warning banner disable action",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Display ISO week numbers in month view.",
     "translation": "",
     "context": "week numbers setting description",
@@ -1032,6 +1067,13 @@
     "term": "Edit task",
     "translation": "",
     "context": "header in the edit-task dialog",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enable core hours",
+    "translation": "",
+    "context": "core hours toggle label",
     "reference": "",
     "comment": ""
   },
@@ -1232,6 +1274,13 @@
     "comment": ""
   },
   {
+    "term": "Hour range shown in day and week views.",
+    "translation": "",
+    "context": "core hours range setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "How long the snooze button postpones a reminder.",
     "translation": "",
     "context": "snooze duration setting description",
@@ -1319,6 +1368,13 @@
     "term": "Light",
     "translation": "",
     "context": "theme mode button group option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Limit the day and week views to a set hour range.",
+    "translation": "",
+    "context": "core hours toggle description",
     "reference": "",
     "comment": ""
   },
@@ -1554,14 +1610,21 @@
     "comment": ""
   },
   {
-    "term": "Next event",
+    "term": "Next day with events",
     "translation": "",
     "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
   {
-    "term": "Next week",
+    "term": "Next day, week or month",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Next event (next week in month view)",
     "translation": "",
     "context": "keyboard shortcut description",
     "reference": "",
@@ -1869,14 +1932,21 @@
     "comment": ""
   },
   {
-    "term": "Previous event",
+    "term": "Previous day with events",
     "translation": "",
     "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
   {
-    "term": "Previous week",
+    "term": "Previous day, week or month",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Previous event (previous week in month view)",
     "translation": "",
     "context": "keyboard shortcut description",
     "reference": "",
@@ -2719,6 +2789,13 @@
     "term": "synced as \"%1\"",
     "translation": "",
     "context": "renamed calendar provider name suffix in calendar list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "to",
+    "translation": "",
+    "context": "core hours range separator",
     "reference": "",
     "comment": ""
   },

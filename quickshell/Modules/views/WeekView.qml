@@ -10,9 +10,21 @@ Item {
     property date displayDate: new Date()
     property date today: new Date()
     property date selectedDate: new Date()
+    property string selectedEventKey: ""
     property int eventsVersion: 0
 
     signal eventClicked(var event)
+
+    function revealHours(start, duration) {
+        const top = start * hourHeight;
+        const bottom = top + duration * hourHeight;
+        if (top < weekFlickable.contentY) {
+            weekFlickable.contentY = Math.max(0, top - hourHeight / 2);
+            return;
+        }
+        if (bottom > weekFlickable.contentY + weekFlickable.height)
+            weekFlickable.contentY = Math.max(0, Math.min(weekFlickable.contentHeight - weekFlickable.height, bottom - weekFlickable.height + hourHeight / 2));
+    }
 
     readonly property int startHour: SettingsData.effectiveHourStart
     readonly property int endHour: SettingsData.effectiveHourEnd
@@ -301,13 +313,14 @@ Item {
 
                             Rectangle {
                                 required property var modelData
+                                readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
                                 width: parent.width
                                 height: root.allDayChipHeight
                                 radius: 4
                                 clip: true
                                 color: Theme.withAlpha(modelData.color, 0.22)
-                                border.color: modelData.color
-                                border.width: 1
+                                border.color: isSelected ? Theme.primary : modelData.color
+                                border.width: isSelected ? 2 : 1
 
                                 StyledText {
                                     anchors.left: parent.left
@@ -376,6 +389,7 @@ Item {
         }
 
         DankFlickable {
+            id: weekFlickable
             width: parent.width
             height: parent.height - 56 - coreHoursWarning.height - hiddenBeforeStrip.height - (root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0)
             contentHeight: root.hourHeight * root.hourCount
@@ -484,6 +498,11 @@ Item {
 
                                 Rectangle {
                                     required property var modelData
+                                    readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                                    onIsSelectedChanged: {
+                                        if (isSelected)
+                                            root.revealHours(modelData.startHour, modelData.durationHours);
+                                    }
                                     readonly property real laneGap: 2
                                     readonly property real usableWidth: parent.width - 8
                                     readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
@@ -494,8 +513,8 @@ Item {
                                     radius: Theme.cornerRadiusSmall
                                     clip: true
                                     color: Theme.withAlpha(modelData.color, 0.22)
-                                    border.color: modelData.color
-                                    border.width: 1
+                                    border.color: isSelected ? Theme.primary : modelData.color
+                                    border.width: isSelected ? 2 : 1
 
                                     Column {
                                         anchors.fill: parent

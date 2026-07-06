@@ -610,6 +610,12 @@ Singleton {
         return eventsForRange(dayStart, dayEnd);
     }
 
+    // Occurrence identity for selection: recurring occurrences share a uid and
+    // may have an empty id, so both plus the start instant are needed.
+    function eventKey(ev) {
+        return ev.id + "|" + ev.uid + "|" + ev.start.getTime();
+    }
+
     function layoutTimedEvents(events) {
         const sorted = events.slice().sort((a, b) => {
             if (a.startHour !== b.startHour)

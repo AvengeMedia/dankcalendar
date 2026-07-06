@@ -45,7 +45,7 @@
     "1 hour before": "1 Stunde vorher"
   },
   "1 line": {
-    "1 line": ""
+    "1 line": "1 Zeile"
   },
   "1 minute": {
     "1 minute": "1 Minute"
@@ -84,7 +84,7 @@
     "2 hours before": "2 Stunden vorher"
   },
   "2 lines": {
-    "2 lines": ""
+    "2 lines": "2 Zeilen"
   },
   "24-hour": {
     "24-hour": "24-Stunden"
@@ -93,7 +93,7 @@
     "24h": "24 Std."
   },
   "3 lines": {
-    "3 lines": ""
+    "3 lines": "3 Zeilen"
   },
   "30 minutes": {
     "30 minutes": "30 Minuten"
@@ -522,7 +522,7 @@
     "Go to today": "Heute"
   },
   "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
-    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks ist nicht verfügbar. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Aktivieren Sie die API</a> oder verbinden Sie dieses Konto erneut und aktualisieren Sie dann, um Aufgaben zu synchronisieren."
   },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google erfordert, dass Sie einen eigenen OAuth-Client erstellen, um Kalenderdaten in Ihrem Namen zu lesen. Dies ist eine einmalige Einrichtung, die etwa drei Minuten dauert."
@@ -603,10 +603,10 @@
     "Marked as not done": "Als nicht erledigt markiert"
   },
   "Maximum title lines per event in month view.": {
-    "Maximum title lines per event in month view.": ""
+    "Maximum title lines per event in month view.": "Maximale Anzahl an Titelzeilen pro Termin in der Monatsansicht."
   },
   "Maximum title lines per event in week view.": {
-    "Maximum title lines per event in week view.": ""
+    "Maximum title lines per event in week view.": "Maximale Anzahl an Titelzeilen pro Termin in der Wochenansicht."
   },
   "Maybe": {
     "Maybe": "Vielleicht"
@@ -633,7 +633,7 @@
     "Month": "Monat"
   },
   "Month event title lines": {
-    "Month event title lines": ""
+    "Month event title lines": "Titelzeilen für Termine im Monat"
   },
   "Month view": {
     "Month view": "Monatsansicht"
@@ -1017,7 +1017,7 @@
     "Tasks": "Aufgaben"
   },
   "Tasks view": {
-    "Tasks view": ""
+    "Tasks view": "Aufgabenansicht"
   },
   "Test notification": {
     "Test notification": "Testbenachrichtigung"
@@ -1113,7 +1113,7 @@
     "Week": "Woche"
   },
   "Week event title lines": {
-    "Week event title lines": ""
+    "Week event title lines": "Titelzeilen für Termine in der Woche"
   },
   "Week view": {
     "Week view": "Wochenansicht"

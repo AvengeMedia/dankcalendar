@@ -45,10 +45,10 @@
     "1 hour before": "שעה אחת לפני"
   },
   "1 line": {
-    "1 line": ""
+    "1 line": "שורה אחת"
   },
   "1 minute": {
-    "1 minute": ""
+    "1 minute": "דקה אחת"
   },
   "1 week before": {
     "1 week before": "שבוע אחד לפני"
@@ -84,7 +84,7 @@
     "2 hours before": "שעתיים לפני"
   },
   "2 lines": {
-    "2 lines": ""
+    "2 lines": "שתי שורות"
   },
   "24-hour": {
     "24-hour": "24 שעות"
@@ -93,7 +93,7 @@
     "24h": "24h"
   },
   "3 lines": {
-    "3 lines": ""
+    "3 lines": "3 שורות"
   },
   "30 minutes": {
     "30 minutes": "30 דקות"
@@ -126,7 +126,7 @@
     "About": "אודות"
   },
   "Accept": {
-    "Accept": ""
+    "Accept": "אישור"
   },
   "Account connected": {
     "Account connected": "החשבון חובר"
@@ -141,7 +141,7 @@
     "Add": "הוספה"
   },
   "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
-    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "הוסף/י חשבון מקומי, CalDAV, Google או Microsoft עם רשימת משימות כדי ליצור משימות."
   },
   "Add a calendar": {
     "Add a calendar": "הוסף/י יומן"
@@ -153,7 +153,7 @@
     "Add description": "הוסף/י תיאור"
   },
   "Add task": {
-    "Add task": ""
+    "Add task": "הוסף/י משימה"
   },
   "Add title": {
     "Add title": "הוסף/י כותרת"
@@ -177,7 +177,7 @@
     "All day": "כל היום"
   },
   "All done": {
-    "All done": ""
+    "All done": "הכל בוצע"
   },
   "All-day reminder time": {
     "All-day reminder time": "שעת תזכורת לכל היום"
@@ -255,7 +255,7 @@
     "Calendars": "יומנים"
   },
   "Calendars couldn't be loaded; tasks are still syncing.": {
-    "Calendars couldn't be loaded; tasks are still syncing.": ""
+    "Calendars couldn't be loaded; tasks are still syncing.": "לא ניתן היה לטעון יומנים. המשימות עדיין מסתנכרנות."
   },
   "Cancel": {
     "Cancel": "ביטול"
@@ -294,7 +294,7 @@
     "Coming soon": "בקרוב"
   },
   "Completed": {
-    "Completed": ""
+    "Completed": "הושלם"
   },
   "Confirm": {
     "Confirm": "אשר/י"
@@ -324,7 +324,7 @@
     "Continue": "המשך/המשיכי"
   },
   "Copied to clipboard": {
-    "Copied to clipboard": ""
+    "Copied to clipboard": "הועתק ללוח ההעתקה"
   },
   "Copy link": {
     "Copy link": "העתק/י קישור"
@@ -339,7 +339,7 @@
     "Could not read that file.": "לא ניתן לקרוא את הקובץ הזה."
   },
   "Couldn't update task": {
-    "Couldn't update task": ""
+    "Couldn't update task": "לא ניתן היה לעדכן את המשימה"
   },
   "Create": {
     "Create": "יצירה"
@@ -363,7 +363,7 @@
     "Daemon offline": "התהליך (Daemon) לא מקוון"
   },
   "Daily": {
-    "Daily": ""
+    "Daily": "יומי"
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "הפרויקט Dank Calendar הוא יומן למחשבי לינוקס מודרניים עם עיצוב בהשראת <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material Design 3</a> של גוגל, יחד עם ממשק שורת פקודה (CLI) הניתן להתאמה וAPI של Socket לאינטגרציות.<br /><br/>הוא נבנה עם שפת התכנות <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a> ו<a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, ספריית Qt6 לבניית מעטפות לשולחן העבודה."
@@ -384,7 +384,7 @@
     "Day view": "תצוגת יום"
   },
   "Decline": {
-    "Decline": ""
+    "Decline": "דחייה"
   },
   "Default event duration": {
     "Default event duration": "משך אירוע כברירת מחדל"
@@ -432,7 +432,7 @@
     "Documents": "מסמכים"
   },
   "Does not repeat": {
-    "Does not repeat": ""
+    "Does not repeat": "ללא חזרה"
   },
   "Done": {
     "Done": "סיום"
@@ -444,13 +444,13 @@
     "Drag to pan · click to fit": "גרור/גררי להזזה · לחץ/י להתאמה"
   },
   "Due date": {
-    "Due date": ""
+    "Due date": "תאריך יעד"
   },
   "Edit event": {
     "Edit event": "ערוך/ערכי אירוע"
   },
   "Edit task": {
-    "Edit task": ""
+    "Edit task": "ערוך/ערכי משימה"
   },
   "Enable reminders": {
     "Enable reminders": "הפעלת תזכורות"
@@ -480,7 +480,7 @@
     "Event details": "פרטי אירוע"
   },
   "Every": {
-    "Every": ""
+    "Every": "כל"
   },
   "Evolution": {
     "Evolution": "Evolution"
@@ -522,7 +522,7 @@
     "Go to today": "מעבר להיום"
   },
   "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
-    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "השירות Google Tasks אינו זמין. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">הפעל/י את ה-API שלו</a> או התחבר/י מחדש לחשבון זה, ואז רענן/י, כדי לסנכרן משימות."
   },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google דורשת ממך ליצור לקוח OAuth משלך כדי לקרוא נתוני יומן בשמך. זוהי הגדרה חד-פעמית שלוקחת כ-3 דקות."
@@ -531,7 +531,7 @@
     "Hide": "הסתר/י"
   },
   "High": {
-    "High": ""
+    "High": "גבוהה"
   },
   "Home": {
     "Home": "בית"
@@ -540,7 +540,7 @@
     "How long the snooze button postpones a reminder.": "כמה זמן כפתור הנודניק ידחה את התזכורת."
   },
   "How often accounts are polled for changes.": {
-    "How often accounts are polled for changes.": ""
+    "How often accounts are polled for changes.": "באיזו תדירות חשבונות נבדקים לשינויים."
   },
   "Import client_secret.json": {
     "Import client_secret.json": "ייבא/י את client_secret.json"
@@ -576,7 +576,7 @@
     "Light": "בהיר"
   },
   "List": {
-    "List": ""
+    "List": "רשימה"
   },
   "Load colors from your own theme file.": {
     "Load colors from your own theme file.": "טען/י צבעים מקובץ ערכת הנושא שלך."
@@ -597,25 +597,25 @@
     "Location": "מיקום"
   },
   "Low": {
-    "Low": ""
+    "Low": "נמוכה"
   },
   "Marked as not done": {
-    "Marked as not done": ""
+    "Marked as not done": "סומן כלא הושלם"
   },
   "Maximum title lines per event in month view.": {
-    "Maximum title lines per event in month view.": ""
+    "Maximum title lines per event in month view.": "מספר השורות המקסימלי לכותרת אירוע בתצוגת חודש."
   },
   "Maximum title lines per event in week view.": {
-    "Maximum title lines per event in week view.": ""
+    "Maximum title lines per event in week view.": "מספר השורות המקסימלי לכותרת אירוע בתצוגת שבוע."
   },
   "Maybe": {
-    "Maybe": ""
+    "Maybe": "אולי"
   },
   "Medium": {
-    "Medium": ""
+    "Medium": "בינונית"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
-    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "לא ניתנה גישה אל Microsoft To Do. התחבר/י מחדש לחשבון זה כדי לסנכרן משימות."
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "לעיתים קרובות Microsoft מחזירה server_error בדקות הראשונות לאחר יצירת או שינוי רישום של אפליקציה. המתן/י דקה או שתיים ונסה/י שוב."
@@ -633,13 +633,13 @@
     "Month": "חודש"
   },
   "Month event title lines": {
-    "Month event title lines": ""
+    "Month event title lines": "שורות כותרת לאירוע בחודש"
   },
   "Month view": {
     "Month view": "תצוגת חודש"
   },
   "Monthly": {
-    "Monthly": ""
+    "Monthly": "חודשי"
   },
   "Move to Trash": {
     "Move to Trash": "העבר/י לאשפה"
@@ -669,7 +669,7 @@
     "New event": "אירוע חדש"
   },
   "New task": {
-    "New task": ""
+    "New task": "משימה חדשה"
   },
   "Next day": {
     "Next day": "יום הבא"
@@ -696,16 +696,16 @@
     "No calendars yet. Add one to start creating events.": "אין יומנים עדיין. הוסף/י אחד כדי להתחיל ליצור אירועים."
   },
   "No due date": {
-    "No due date": ""
+    "No due date": "ללא תאריך יעד"
   },
   "No matching events": {
     "No matching events": "אין אירועים תואמים"
   },
   "No task list available": {
-    "No task list available": ""
+    "No task list available": "אין רשימת משימות זמינה"
   },
   "No tasks yet": {
-    "No tasks yet": ""
+    "No tasks yet": "אין משימות עדיין"
   },
   "No theme file selected": {
     "No theme file selected": "לא נבחר קובץ ערכת נושא"
@@ -723,7 +723,7 @@
     "Not signed in — click to reconnect or re-add this account": "לא מחובר — לחץ/י כדי להתחבר מחדש או להוסיף חשבון זה שוב"
   },
   "Notes": {
-    "Notes": ""
+    "Notes": "הערות"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "אין שום דבר מתוכנן ב%1 הימים הבאים"
@@ -759,7 +759,7 @@
     "Outlook, Office 365 and Exchange Online calendars.": "יומני Outlook, Office 365 וExchange Online."
   },
   "Overdue": {
-    "Overdue": ""
+    "Overdue": "באיחור"
   },
   "Override": {
     "Override": "דריסה"
@@ -816,7 +816,7 @@
     "Previous week": "שבוע קודם"
   },
   "Priority": {
-    "Priority": ""
+    "Priority": "עדיפות"
   },
   "Quick Access": {
     "Quick Access": "גישה מהירה"
@@ -828,7 +828,7 @@
     "Reconnect": "התחבר/י מחדש"
   },
   "Recurring tasks are managed in Google Tasks.": {
-    "Recurring tasks are managed in Google Tasks.": ""
+    "Recurring tasks are managed in Google Tasks.": "משימות חוזרות מנוהלות ב-Google Tasks."
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "תזכורות והתראות בשולחן העבודה."
@@ -864,16 +864,16 @@
     "Rename…": "שינוי שם…"
   },
   "Repeat": {
-    "Repeat": ""
+    "Repeat": "חזרה"
   },
   "Repeats": {
-    "Repeats": ""
+    "Repeats": "חוזר"
   },
   "Repeats every %1": {
-    "Repeats every %1": ""
+    "Repeats every %1": "חוזר כל %1"
   },
   "Repeats every %1 %2": {
-    "Repeats every %1 %2": ""
+    "Repeats every %1 %2": "חוזר כל %1 %2"
   },
   "Reset to global": {
     "Reset to global": "איפוס להגדרות גלובליות"
@@ -924,10 +924,10 @@
     "Show all-day reminders": "הצג/י תזכורות לאירועים של כל היום"
   },
   "Show task lists and the Tasks view when an account provides them.": {
-    "Show task lists and the Tasks view when an account provides them.": ""
+    "Show task lists and the Tasks view when an account provides them.": "הצג/י רשימות משימות ואת תצוגת המשימות כאשר חשבון מספק אותן."
   },
   "Show tasks": {
-    "Show tasks": ""
+    "Show tasks": "הצג/י משימות"
   },
   "Show week numbers": {
     "Show week numbers": "הצג/י מספרי שבוע"
@@ -987,7 +987,7 @@
     "Subscribing…": "נרשם…"
   },
   "Sync interval": {
-    "Sync interval": ""
+    "Sync interval": "מרווח סנכרון"
   },
   "Sync now": {
     "Sync now": "סנכרן/י עכשיו"
@@ -1005,19 +1005,19 @@
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: ניווט • ←→↑↓: ניווט ברשת • Enter/Space: בחירה"
   },
   "Task": {
-    "Task": ""
+    "Task": "משימה"
   },
   "Task completed": {
-    "Task completed": ""
+    "Task completed": "המשימה הושלמה"
   },
   "Task lists couldn't be loaded; calendars are still syncing.": {
-    "Task lists couldn't be loaded; calendars are still syncing.": ""
+    "Task lists couldn't be loaded; calendars are still syncing.": "לא ניתן היה לטעון רשימות משימות; יומנים עדיין מסתנכרנים."
   },
   "Tasks": {
-    "Tasks": ""
+    "Tasks": "משימות"
   },
   "Tasks view": {
-    "Tasks view": ""
+    "Tasks view": "תצוגת משימות"
   },
   "Test notification": {
     "Test notification": "התראת בדיקה"
@@ -1059,13 +1059,13 @@
     "Type at least 2 characters to search events.": "הקלד/י לפחות 2 תווים כדי לחפש אירועים."
   },
   "Undo": {
-    "Undo": ""
+    "Undo": "ביטול"
   },
   "University timetable": {
     "University timetable": "מערכת שעות אוניברסיטאית"
   },
   "Upcoming": {
-    "Upcoming": ""
+    "Upcoming": "בקרוב"
   },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "השתמש/י בפלטת צבעים מובנית."
@@ -1113,13 +1113,13 @@
     "Week": "שבוע"
   },
   "Week event title lines": {
-    "Week event title lines": ""
+    "Week event title lines": "שורות כותרת לאירוע בשבוע"
   },
   "Week view": {
     "Week view": "תצוגת שבוע"
   },
   "Weekly": {
-    "Weekly": ""
+    "Weekly": "שבועי"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "מה כפתור הסגירה של החלון עושה."
@@ -1128,7 +1128,7 @@
     "When all-day event reminders fire.": "מתי תזכורות לאירועים של כל היום יופעלו."
   },
   "Yearly": {
-    "Yearly": ""
+    "Yearly": "שנתי"
   },
   "Yesterday": {
     "Yesterday": "אתמול"
@@ -1140,7 +1140,7 @@
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "ה-Client ID, ה-Secret וטוקן הרענון שלך נשמרים בצרור המפתחות של המערכת (libsecret/kwallet) כאשר הוא זמין, או בקובץ מקומי מוצפן."
   },
   "Your response": {
-    "Your response": ""
+    "Your response": "התגובה שלך"
   },
   "all day": {
     "all day": "כל היום"
@@ -1149,10 +1149,10 @@
     "dark": "כהה"
   },
   "day": {
-    "day": ""
+    "day": "יום"
   },
   "days": {
-    "days": ""
+    "days": "ימים"
   },
   "iCal subscription": {
     "iCal subscription": "הרשמה לiCal"
@@ -1161,10 +1161,10 @@
     "light": "בהיר"
   },
   "month": {
-    "month": ""
+    "month": "חודש"
   },
   "months": {
-    "months": ""
+    "months": "חודשים"
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "רק אם הפיד דורש התחברות"
@@ -1182,16 +1182,16 @@
     "username": "שם משתמש"
   },
   "week": {
-    "week": ""
+    "week": "שבוע"
   },
   "weeks": {
-    "weeks": ""
+    "weeks": "שבועות"
   },
   "year": {
-    "year": ""
+    "year": "שנה"
   },
   "years": {
-    "years": ""
+    "years": "שנים"
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· %1 הוזמנו · %2 אישרו"

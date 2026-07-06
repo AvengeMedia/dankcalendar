@@ -8,9 +8,21 @@ Item {
     id: root
 
     property date displayDate: new Date()
+    property string selectedEventKey: ""
     property int eventsVersion: 0
 
     signal eventClicked(var event)
+
+    function revealHours(start, duration) {
+        const top = start * hourHeight;
+        const bottom = top + duration * hourHeight;
+        if (top < dayFlickable.contentY) {
+            dayFlickable.contentY = Math.max(0, top - hourHeight / 2);
+            return;
+        }
+        if (bottom > dayFlickable.contentY + dayFlickable.height)
+            dayFlickable.contentY = Math.max(0, Math.min(dayFlickable.contentHeight - dayFlickable.height, bottom - dayFlickable.height + hourHeight / 2));
+    }
 
     readonly property int startHour: SettingsData.effectiveHourStart
     readonly property int endHour: SettingsData.effectiveHourEnd
@@ -172,13 +184,14 @@ Item {
 
             Rectangle {
                 required property var modelData
+                readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
                 width: parent.width
                 height: 22
                 radius: 4
                 clip: true
                 color: Theme.withAlpha(modelData.color, 0.22)
-                border.color: modelData.color
-                border.width: 1
+                border.color: isSelected ? Theme.primary : modelData.color
+                border.width: isSelected ? 2 : 1
 
                 StyledText {
                     anchors.left: parent.left
@@ -228,6 +241,7 @@ Item {
     }
 
     DankFlickable {
+        id: dayFlickable
         anchors.top: hiddenBeforeStrip.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -318,6 +332,11 @@ Item {
 
                     Rectangle {
                         required property var modelData
+                        readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                        onIsSelectedChanged: {
+                            if (isSelected)
+                                root.revealHours(modelData.startHour, modelData.durationHours);
+                        }
                         readonly property real laneGap: 3
                         readonly property real usableWidth: parent.width - 16
                         readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
@@ -328,8 +347,8 @@ Item {
                         radius: Theme.cornerRadiusSmall
                         clip: true
                         color: Theme.withAlpha(modelData.color, 0.22)
-                        border.color: modelData.color
-                        border.width: 1
+                        border.color: isSelected ? Theme.primary : modelData.color
+                        border.width: isSelected ? 2 : 1
 
                         Row {
                             anchors.fill: parent

@@ -45,10 +45,10 @@
     "1 hour before": "1 uur van tevoren"
   },
   "1 line": {
-    "1 line": ""
+    "1 line": "1 regel"
   },
   "1 minute": {
-    "1 minute": ""
+    "1 minute": "1 minuut"
   },
   "1 week before": {
     "1 week before": "1 week van tevoren"
@@ -84,7 +84,7 @@
     "2 hours before": "2 uur van tevoren"
   },
   "2 lines": {
-    "2 lines": ""
+    "2 lines": "2 regels"
   },
   "24-hour": {
     "24-hour": "24-uurs"
@@ -93,7 +93,7 @@
     "24h": "24u"
   },
   "3 lines": {
-    "3 lines": ""
+    "3 lines": "3 regels"
   },
   "30 minutes": {
     "30 minutes": "30 minuten"
@@ -126,13 +126,13 @@
     "About": "Over"
   },
   "Accept": {
-    "Accept": ""
+    "Accept": "Accepteren"
   },
   "Account connected": {
     "Account connected": "Account verbonden"
   },
   "Account problem — click for options": {
-    "Account problem — click for options": ""
+    "Account problem — click for options": "Accountprobleem — klik voor opties"
   },
   "Accounts": {
     "Accounts": "Accounts"
@@ -141,7 +141,7 @@
     "Add": "Toevoegen"
   },
   "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
-    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "Voeg een CalDAV-, lokaal, Google- of Microsoft-account met een takenlijst toe om taken te kunnen maken."
   },
   "Add a calendar": {
     "Add a calendar": "Agenda toevoegen"
@@ -153,7 +153,7 @@
     "Add description": "Beschrijving toevoegen"
   },
   "Add task": {
-    "Add task": ""
+    "Add task": "Taak toevoegen"
   },
   "Add title": {
     "Add title": "Titel toevoegen"
@@ -177,7 +177,7 @@
     "All day": "De hele dag"
   },
   "All done": {
-    "All done": ""
+    "All done": "Helemaal klaar"
   },
   "All-day reminder time": {
     "All-day reminder time": "Herinneringstijd voor dagafspraken"
@@ -255,7 +255,7 @@
     "Calendars": "Agenda's"
   },
   "Calendars couldn't be loaded; tasks are still syncing.": {
-    "Calendars couldn't be loaded; tasks are still syncing.": ""
+    "Calendars couldn't be loaded; tasks are still syncing.": "Agenda's konden niet worden geladen; taken worden nog gesynchroniseerd."
   },
   "Cancel": {
     "Cancel": "Annuleren"
@@ -264,7 +264,7 @@
     "Capabilities": "Mogelijkheden"
   },
   "Choose a JSON color theme file.": {
-    "Choose a JSON color theme file.": ""
+    "Choose a JSON color theme file.": "Kies een JSON-kleurenthemabestand."
   },
   "Choose a provider": {
     "Choose a provider": "Kies een aanbieder"
@@ -294,7 +294,7 @@
     "Coming soon": "Binnenkort beschikbaar"
   },
   "Completed": {
-    "Completed": ""
+    "Completed": "Voltooid"
   },
   "Confirm": {
     "Confirm": "Bevestigen"
@@ -324,22 +324,22 @@
     "Continue": "Doorgaan"
   },
   "Copied to clipboard": {
-    "Copied to clipboard": ""
+    "Copied to clipboard": "Gekopieerd naar klembord"
   },
   "Copy link": {
-    "Copy link": ""
+    "Copy link": "Link kopiëren"
   },
   "Copy path": {
     "Copy path": "Pad kopiëren"
   },
   "Could not read that file — expected a JSON color theme.": {
-    "Could not read that file — expected a JSON color theme.": ""
+    "Could not read that file — expected a JSON color theme.": "Kon dat bestand niet lezen — een JSON-kleurenthema werd verwacht."
   },
   "Could not read that file.": {
     "Could not read that file.": "Kon dat bestand niet lezen."
   },
   "Couldn't update task": {
-    "Couldn't update task": ""
+    "Couldn't update task": "Kon taak niet bijwerken"
   },
   "Create": {
     "Create": "Aanmaken"
@@ -351,7 +351,7 @@
     "Credentials stay on this machine": "Inloggegevens blijven op deze computer"
   },
   "Custom": {
-    "Custom": ""
+    "Custom": "Aangepast"
   },
   "DMS dynamic": {
     "DMS dynamic": "DMS dynamisch"
@@ -363,7 +363,7 @@
     "Daemon offline": "Daemon offline"
   },
   "Daily": {
-    "Daily": ""
+    "Daily": "Dagelijks"
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar is een agenda voor de moderne Linux-desktop met een op <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3 geïnspireerd</a> ontwerp, plus een hackbare CLI en socket-API voor integraties.<br /><br/>Het is gebouwd met <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, een QT6-framework voor het bouwen van desktop-shells, en <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, een statisch getypeerde, gecompileerde programmeertaal."
@@ -372,7 +372,7 @@
     "Dank Linux Discord": "Dank Linux Discord"
   },
   "DankMaterialShell not detected — using the %1 preset.": {
-    "DankMaterialShell not detected — using the %1 preset.": ""
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell niet gedetecteerd — de %1-preset wordt gebruikt."
   },
   "Dark": {
     "Dark": "Donker"
@@ -384,7 +384,7 @@
     "Day view": "Dagweergave"
   },
   "Decline": {
-    "Decline": ""
+    "Decline": "Weigeren"
   },
   "Default event duration": {
     "Default event duration": "Standaardduur afspraak"
@@ -432,7 +432,7 @@
     "Documents": "Documenten"
   },
   "Does not repeat": {
-    "Does not repeat": ""
+    "Does not repeat": "Herhaalt niet"
   },
   "Done": {
     "Done": "Gereed"
@@ -444,13 +444,13 @@
     "Drag to pan · click to fit": "Slepen om te pannen · klikken om passend te maken"
   },
   "Due date": {
-    "Due date": ""
+    "Due date": "Vervaldatum"
   },
   "Edit event": {
     "Edit event": "Afspraak bewerken"
   },
   "Edit task": {
-    "Edit task": ""
+    "Edit task": "Taak bewerken"
   },
   "Enable reminders": {
     "Enable reminders": "Herinneringen inschakelen"
@@ -480,16 +480,16 @@
     "Event details": "Afspraakdetails"
   },
   "Every": {
-    "Every": ""
+    "Every": "Elke"
   },
   "Evolution": {
-    "Evolution": ""
+    "Evolution": "Evolution"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Omschakelen • F10: Help"
   },
   "Feed URL": {
-    "Feed URL": ""
+    "Feed URL": "Feed-URL"
   },
   "File Already Exists": {
     "File Already Exists": "Bestand bestaat al"
@@ -504,7 +504,7 @@
     "First day shown in week and month views.": "Eerste dag getoond in week- en maandweergave."
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
-    "Follow DankMaterialShell colors, falling back to a preset.": ""
+    "Follow DankMaterialShell colors, falling back to a preset.": "Volg de kleuren van DankMaterialShell, of val terug op een preset."
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Systeemkleurenschema volgen (momenteel %1)."
@@ -522,7 +522,7 @@
     "Go to today": "Ga naar vandaag"
   },
   "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
-    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks is niet beschikbaar. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Schakel de API in</a> of verbind dit account opnieuw om taken te synchroniseren."
   },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google vereist dat je een eigen OAuth-client aanmaakt om agendagegevens namens jou te lezen. Dit is een eenmalige installatie die ongeveer drie minuten duurt."
@@ -531,7 +531,7 @@
     "Hide": "Verbergen"
   },
   "High": {
-    "High": ""
+    "High": "Hoog"
   },
   "Home": {
     "Home": "Persoonlijke map"
@@ -540,7 +540,7 @@
     "How long the snooze button postpones a reminder.": "Hoe lang de sluimerknop een herinnering uitstelt."
   },
   "How often accounts are polled for changes.": {
-    "How often accounts are polled for changes.": ""
+    "How often accounts are polled for changes.": "Hoe vaak accounts worden gecontroleerd op wijzigingen."
   },
   "Import client_secret.json": {
     "Import client_secret.json": "client_secret.json importeren"
@@ -552,7 +552,7 @@
     "Initial reminder set on new events.": "Initiële herinnering ingesteld bij nieuwe afspraken."
   },
   "Join video call": {
-    "Join video call": ""
+    "Join video call": "Deelnemen aan videogesprek"
   },
   "Keep typing": {
     "Keep typing": "Blijf typen"
@@ -576,10 +576,10 @@
     "Light": "Licht"
   },
   "List": {
-    "List": ""
+    "List": "Lijst"
   },
   "Load colors from your own theme file.": {
-    "Load colors from your own theme file.": ""
+    "Load colors from your own theme file.": "Laad kleuren uit je eigen themabestand."
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Installatie-instructies laden…"
@@ -597,25 +597,25 @@
     "Location": "Locatie"
   },
   "Low": {
-    "Low": ""
+    "Low": "Laag"
   },
   "Marked as not done": {
-    "Marked as not done": ""
+    "Marked as not done": "Gemarkeerd als niet voltooid"
   },
   "Maximum title lines per event in month view.": {
-    "Maximum title lines per event in month view.": ""
+    "Maximum title lines per event in month view.": "Maximaal aantal titelregels per gebeurtenis in de maandweergave."
   },
   "Maximum title lines per event in week view.": {
-    "Maximum title lines per event in week view.": ""
+    "Maximum title lines per event in week view.": "Maximaal aantal titelregels per gebeurtenis in de weekweergave."
   },
   "Maybe": {
-    "Maybe": ""
+    "Maybe": "Misschien"
   },
   "Medium": {
-    "Medium": ""
+    "Medium": "Gemiddeld"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
-    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Toegang tot Microsoft To Do is niet verleend. Verbind dit account opnieuw om taken te synchroniseren."
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft geeft vaak een server_error in de eerste minuten nadat een app-registratie is gemaakt of gewijzigd. Wacht een minuut of twee en probeer het opnieuw."
@@ -633,13 +633,13 @@
     "Month": "Maand"
   },
   "Month event title lines": {
-    "Month event title lines": ""
+    "Month event title lines": "Titelregels maandweergave"
   },
   "Month view": {
     "Month view": "Maandweergave"
   },
   "Monthly": {
-    "Monthly": ""
+    "Monthly": "Maandelijks"
   },
   "Move to Trash": {
     "Move to Trash": "Verplaatsen naar prullenbak"
@@ -669,7 +669,7 @@
     "New event": "Nieuwe afspraak"
   },
   "New task": {
-    "New task": ""
+    "New task": "Nieuwe taak"
   },
   "Next day": {
     "Next day": "Volgende dag"
@@ -696,19 +696,19 @@
     "No calendars yet. Add one to start creating events.": "Nog geen agenda's. Voeg er een toe om afspraken te kunnen maken."
   },
   "No due date": {
-    "No due date": ""
+    "No due date": "Geen vervaldatum"
   },
   "No matching events": {
     "No matching events": "Geen overeenkomende afspraken"
   },
   "No task list available": {
-    "No task list available": ""
+    "No task list available": "Geen takenlijst beschikbaar"
   },
   "No tasks yet": {
-    "No tasks yet": ""
+    "No tasks yet": "Nog geen taken"
   },
   "No theme file selected": {
-    "No theme file selected": ""
+    "No theme file selected": "Geen themabestand geselecteerd"
   },
   "No writable calendar available": {
     "No writable calendar available": "Geen beschrijfbare agenda beschikbaar"
@@ -720,10 +720,10 @@
     "Not authorized — remove this account and add it again": "Niet geautoriseerd — verwijder dit account en voeg het opnieuw toe"
   },
   "Not signed in — click to reconnect or re-add this account": {
-    "Not signed in — click to reconnect or re-add this account": ""
+    "Not signed in — click to reconnect or re-add this account": "Niet aangemeld — klik om opnieuw te verbinden of dit account opnieuw toe te voegen"
   },
   "Notes": {
-    "Notes": ""
+    "Notes": "Notities"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Niets gepland in de komende %1 dagen"
@@ -759,7 +759,7 @@
     "Outlook, Office 365 and Exchange Online calendars.": "Outlook-, Office 365- en Exchange Online-agenda's."
   },
   "Overdue": {
-    "Overdue": ""
+    "Overdue": "Achterstallig"
   },
   "Override": {
     "Override": "Overschrijven"
@@ -771,7 +771,7 @@
     "Overwrite": "Overschrijven"
   },
   "Palette: %1": {
-    "Palette: %1": ""
+    "Palette: %1": "Palet: %1"
   },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Onderdeel van de Dank Linux-suite."
@@ -780,7 +780,7 @@
     "Password": "Wachtwoord"
   },
   "Password (optional)": {
-    "Password (optional)": ""
+    "Password (optional)": "Wachtwoord (optioneel)"
   },
   "Paste credentials": {
     "Paste credentials": "Inloggegevens plakken"
@@ -789,13 +789,13 @@
     "Paste the Application (client) ID from your app registration's Overview page.": "Plak de Applicatie-ID (client-ID) van de overzichtspagina van je app-registratie."
   },
   "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
-    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "Plak de URL van een externe agenda-feed om je erop te abonneren. De agenda is alleen-lezen en wordt op de achtergrond vernieuwd. webcal:// links worden geaccepteerd."
   },
   "Paste your credentials": {
     "Paste your credentials": "Plak je inloggegevens"
   },
   "Pick a color source, palette, or your own theme file.": {
-    "Pick a color source, palette, or your own theme file.": ""
+    "Pick a color source, palette, or your own theme file.": "Kies een kleurbron, palet of eigen themabestand."
   },
   "Pictures": {
     "Pictures": "Afbeeldingen"
@@ -804,7 +804,7 @@
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Wijs naar een map met .ics-bestanden. Elke submap of elk .ics-bestand wordt een agenda — compatibel met vdirsyncer/khal-indelingen. De map wordt aangemaakt als deze nog niet bestaat."
   },
   "Preset": {
-    "Preset": ""
+    "Preset": "Preset"
   },
   "Previous day": {
     "Previous day": "Vorige dag"
@@ -816,7 +816,7 @@
     "Previous week": "Vorige week"
   },
   "Priority": {
-    "Priority": ""
+    "Priority": "Prioriteit"
   },
   "Quick Access": {
     "Quick Access": "Snelle toegang"
@@ -828,7 +828,7 @@
     "Reconnect": "Opnieuw verbinden"
   },
   "Recurring tasks are managed in Google Tasks.": {
-    "Recurring tasks are managed in Google Tasks.": ""
+    "Recurring tasks are managed in Google Tasks.": "Terugkerende taken worden beheerd in Google Tasks."
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Herinneringen en desktopmeldingen."
@@ -864,16 +864,16 @@
     "Rename…": "Hernoemen…"
   },
   "Repeat": {
-    "Repeat": ""
+    "Repeat": "Herhalen"
   },
   "Repeats": {
-    "Repeats": ""
+    "Repeats": "Herhaalt"
   },
   "Repeats every %1": {
-    "Repeats every %1": ""
+    "Repeats every %1": "Herhaalt elke %1"
   },
   "Repeats every %1 %2": {
-    "Repeats every %1 %2": ""
+    "Repeats every %1 %2": "Herhaalt elke %1 %2"
   },
   "Reset to global": {
     "Reset to global": "Herstellen naar globaal"
@@ -906,7 +906,7 @@
     "Select file": "Bestand selecteren"
   },
   "Select theme file": {
-    "Select theme file": ""
+    "Select theme file": "Themabestand selecteren"
   },
   "Send test": {
     "Send test": "Test verzenden"
@@ -924,10 +924,10 @@
     "Show all-day reminders": "Dagherinneringen tonen"
   },
   "Show task lists and the Tasks view when an account provides them.": {
-    "Show task lists and the Tasks view when an account provides them.": ""
+    "Show task lists and the Tasks view when an account provides them.": "Toon takenlijsten en de takenweergave wanneer een account deze aanbiedt."
   },
   "Show tasks": {
-    "Show tasks": ""
+    "Show tasks": "Taken tonen"
   },
   "Show week numbers": {
     "Show week numbers": "Weeknummers tonen"
@@ -942,7 +942,7 @@
     "Sign in with your Google account.": "Inloggen met je Google-account."
   },
   "Sign-in expired — click to reconnect": {
-    "Sign-in expired — click to reconnect": ""
+    "Sign-in expired — click to reconnect": "Aanmelding verlopen — klik om opnieuw te verbinden"
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "Inloggen verlopen — verbind opnieuw om te blijven synchroniseren"
@@ -978,16 +978,16 @@
     "Stock palette": "Standaardpalet"
   },
   "Subscribe": {
-    "Subscribe": ""
+    "Subscribe": "Abonneren"
   },
   "Subscribe to an external calendar by URL (webcal/https).": {
-    "Subscribe to an external calendar by URL (webcal/https).": ""
+    "Subscribe to an external calendar by URL (webcal/https).": "Abonneren op een externe agenda via URL (webcal/https)."
   },
   "Subscribing…": {
-    "Subscribing…": ""
+    "Subscribing…": "Abonneren…"
   },
   "Sync interval": {
-    "Sync interval": ""
+    "Sync interval": "Synchronisatie-interval"
   },
   "Sync now": {
     "Sync now": "Nu synchroniseren"
@@ -1005,19 +1005,19 @@
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Nav • ←→↑↓: Raster-nav • Enter/Spatie: Selecteren"
   },
   "Task": {
-    "Task": ""
+    "Task": "Taak"
   },
   "Task completed": {
-    "Task completed": ""
+    "Task completed": "Taak voltooid"
   },
   "Task lists couldn't be loaded; calendars are still syncing.": {
-    "Task lists couldn't be loaded; calendars are still syncing.": ""
+    "Task lists couldn't be loaded; calendars are still syncing.": "Takenlijsten konden niet worden geladen; agenda's worden nog gesynchroniseerd."
   },
   "Tasks": {
-    "Tasks": ""
+    "Tasks": "Taken"
   },
   "Tasks view": {
-    "Tasks view": ""
+    "Tasks view": "Takenweergave"
   },
   "Test notification": {
     "Test notification": "Testnotificatie"
@@ -1059,22 +1059,22 @@
     "Type at least 2 characters to search events.": "Typ ten minste 2 tekens om afspraken te zoeken."
   },
   "Undo": {
-    "Undo": ""
+    "Undo": "Ongedaan maken"
   },
   "University timetable": {
-    "University timetable": ""
+    "University timetable": "Universiteitsrooster"
   },
   "Upcoming": {
-    "Upcoming": ""
+    "Upcoming": "Binnenkort"
   },
   "Use a bundled color palette.": {
-    "Use a bundled color palette.": ""
+    "Use a bundled color palette.": "Gebruik een meegeleverd kleurenpalet."
   },
   "Use synced name": {
     "Use synced name": "Gesynchroniseerde naam gebruiken"
   },
   "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
-    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "Gebruik de agenda's die Evolution Data Server al op dit systeem beheert (Evolution, GNOME Online Accounts, enz.). Aanmelden is niet nodig — Evolution beheert de inloggegevens en synchronisatie."
   },
   "Use this folder": {
     "Use this folder": "Deze map gebruiken"
@@ -1083,10 +1083,10 @@
     "Username": "Gebruikersnaam"
   },
   "Username (optional)": {
-    "Username (optional)": ""
+    "Username (optional)": "Gebruikersnaam (optioneel)"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": ""
+    "Using DankMaterialShell dynamic colors.": "DankMaterialShell dynamische kleuren worden gebruikt."
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Controleer of desktopnotificaties werken."
@@ -1113,13 +1113,13 @@
     "Week": "Week"
   },
   "Week event title lines": {
-    "Week event title lines": ""
+    "Week event title lines": "Titelregels weekweergave"
   },
   "Week view": {
     "Week view": "Weekweergave"
   },
   "Weekly": {
-    "Weekly": ""
+    "Weekly": "Wekelijks"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Wat de sluitknop van het venster doet."
@@ -1128,7 +1128,7 @@
     "When all-day event reminders fire.": "Wanneer dagherinneringen worden gegeven."
   },
   "Yearly": {
-    "Yearly": ""
+    "Yearly": "Jaarlijks"
   },
   "Yesterday": {
     "Yesterday": "Gisteren"
@@ -1140,7 +1140,7 @@
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Je client-ID, geheim en vernieuwingstoken worden opgeslagen in de systeem-sleutelbos (libsecret/kwallet) indien beschikbaar, of in een versleuteld lokaal bestand."
   },
   "Your response": {
-    "Your response": ""
+    "Your response": "Je reactie"
   },
   "all day": {
     "all day": "hele dag"
@@ -1149,25 +1149,25 @@
     "dark": "donker"
   },
   "day": {
-    "day": ""
+    "day": "dag"
   },
   "days": {
-    "days": ""
+    "days": "dagen"
   },
   "iCal subscription": {
-    "iCal subscription": ""
+    "iCal subscription": "iCal-abonnement"
   },
   "light": {
     "light": "licht"
   },
   "month": {
-    "month": ""
+    "month": "maand"
   },
   "months": {
-    "months": ""
+    "months": "maanden"
   },
   "only if the feed requires sign-in": {
-    "only if the feed requires sign-in": ""
+    "only if the feed requires sign-in": "alleen als de feed aanmelding vereist"
   },
   "password": {
     "password": "wachtwoord"
@@ -1182,16 +1182,16 @@
     "username": "gebruikersnaam"
   },
   "week": {
-    "week": ""
+    "week": "week"
   },
   "weeks": {
-    "weeks": ""
+    "weeks": "weken"
   },
   "year": {
-    "year": ""
+    "year": "jaar"
   },
   "years": {
-    "years": ""
+    "years": "jaren"
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· %1 uitgenodigd · %2 geaccepteerd"

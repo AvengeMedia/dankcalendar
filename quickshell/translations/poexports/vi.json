@@ -45,10 +45,10 @@
     "1 hour before": "1 giờ trước"
   },
   "1 line": {
-    "1 line": ""
+    "1 line": "1 dòng"
   },
   "1 minute": {
-    "1 minute": ""
+    "1 minute": "1 phút"
   },
   "1 week before": {
     "1 week before": "1 tuần trước"
@@ -84,7 +84,7 @@
     "2 hours before": "2 giờ trước"
   },
   "2 lines": {
-    "2 lines": ""
+    "2 lines": "2 dòng"
   },
   "24-hour": {
     "24-hour": "24 giờ"
@@ -93,7 +93,7 @@
     "24h": "24h"
   },
   "3 lines": {
-    "3 lines": ""
+    "3 lines": "3 dòng"
   },
   "30 minutes": {
     "30 minutes": "30 phút"
@@ -126,13 +126,13 @@
     "About": "Giới thiệu"
   },
   "Accept": {
-    "Accept": ""
+    "Accept": "Chấp nhận"
   },
   "Account connected": {
     "Account connected": "Đã kết nối tài khoản"
   },
   "Account problem — click for options": {
-    "Account problem — click for options": ""
+    "Account problem — click for options": "Sự cố tài khoản — nhấp để có các tùy chọn"
   },
   "Accounts": {
     "Accounts": "Tài khoản"
@@ -141,7 +141,7 @@
     "Add": "Thêm"
   },
   "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
-    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "Thêm tài khoản CalDAV, cục bộ, Google hoặc Microsoft với danh sách tác vụ để tạo tác vụ."
   },
   "Add a calendar": {
     "Add a calendar": "Thêm lịch"
@@ -153,7 +153,7 @@
     "Add description": "Thêm mô tả"
   },
   "Add task": {
-    "Add task": ""
+    "Add task": "Thêm tác vụ"
   },
   "Add title": {
     "Add title": "Thêm tiêu đề"
@@ -177,7 +177,7 @@
     "All day": "Cả ngày"
   },
   "All done": {
-    "All done": ""
+    "All done": "Tất cả hoàn tất"
   },
   "All-day reminder time": {
     "All-day reminder time": "Thời điểm nhắc sự kiện cả ngày"
@@ -255,7 +255,7 @@
     "Calendars": "Lịch"
   },
   "Calendars couldn't be loaded; tasks are still syncing.": {
-    "Calendars couldn't be loaded; tasks are still syncing.": ""
+    "Calendars couldn't be loaded; tasks are still syncing.": "Không thể tải lịch; các tác vụ vẫn đang đồng bộ hóa."
   },
   "Cancel": {
     "Cancel": "Hủy"
@@ -264,7 +264,7 @@
     "Capabilities": "Tính năng hỗ trợ"
   },
   "Choose a JSON color theme file.": {
-    "Choose a JSON color theme file.": ""
+    "Choose a JSON color theme file.": "Chọn tệp chủ đề màu JSON."
   },
   "Choose a provider": {
     "Choose a provider": "Chọn nhà cung cấp"
@@ -294,7 +294,7 @@
     "Coming soon": "Sắp có"
   },
   "Completed": {
-    "Completed": ""
+    "Completed": "Hoàn thành"
   },
   "Confirm": {
     "Confirm": "Xác nhận"
@@ -324,22 +324,22 @@
     "Continue": "Tiếp tục"
   },
   "Copied to clipboard": {
-    "Copied to clipboard": ""
+    "Copied to clipboard": "Sao chép vào clipboard"
   },
   "Copy link": {
-    "Copy link": ""
+    "Copy link": "Sao chép liên kết"
   },
   "Copy path": {
     "Copy path": "Sao chép đường dẫn"
   },
   "Could not read that file — expected a JSON color theme.": {
-    "Could not read that file — expected a JSON color theme.": ""
+    "Could not read that file — expected a JSON color theme.": "Không thể đọc tệp đó — dự kiến tệp chủ đề màu JSON."
   },
   "Could not read that file.": {
     "Could not read that file.": "Không thể đọc tệp này."
   },
   "Couldn't update task": {
-    "Couldn't update task": ""
+    "Couldn't update task": "Không thể cập nhật tác vụ"
   },
   "Create": {
     "Create": "Tạo"
@@ -351,7 +351,7 @@
     "Credentials stay on this machine": "Thông tin xác thực chỉ lưu trên máy này"
   },
   "Custom": {
-    "Custom": ""
+    "Custom": "Tùy chỉnh"
   },
   "DMS dynamic": {
     "DMS dynamic": "DMS dynamic"
@@ -363,7 +363,7 @@
     "Daemon offline": "Daemon ngoại tuyến"
   },
   "Daily": {
-    "Daily": ""
+    "Daily": "Hàng ngày"
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar là ứng dụng lịch cho màn hình Linux hiện đại với thiết kế lấy cảm hứng từ <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3</a>, cùng CLI và socket API có thể tùy biến để tích hợp.<br /><br/>Ứng dụng được xây dựng bằng <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, một framework QT6 để xây dựng desktop shell, và <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, một ngôn ngữ lập trình biên dịch kiểu tĩnh."
@@ -372,7 +372,7 @@
     "Dank Linux Discord": "Dank Linux Discord"
   },
   "DankMaterialShell not detected — using the %1 preset.": {
-    "DankMaterialShell not detected — using the %1 preset.": ""
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell không được phát hiện — sử dụng cài đặt %1."
   },
   "Dark": {
     "Dark": "Tối"
@@ -384,7 +384,7 @@
     "Day view": "Chế độ ngày"
   },
   "Decline": {
-    "Decline": ""
+    "Decline": "Từ chối"
   },
   "Default event duration": {
     "Default event duration": "Thời lượng sự kiện mặc định"
@@ -432,7 +432,7 @@
     "Documents": "Tài liệu"
   },
   "Does not repeat": {
-    "Does not repeat": ""
+    "Does not repeat": "Không lặp lại"
   },
   "Done": {
     "Done": "Xong"
@@ -444,13 +444,13 @@
     "Drag to pan · click to fit": "Kéo để di chuyển · nhấn để vừa khung"
   },
   "Due date": {
-    "Due date": ""
+    "Due date": "Ngày hạn"
   },
   "Edit event": {
     "Edit event": "Chỉnh sửa sự kiện"
   },
   "Edit task": {
-    "Edit task": ""
+    "Edit task": "Chỉnh sửa tác vụ"
   },
   "Enable reminders": {
     "Enable reminders": "Bật lời nhắc"
@@ -480,16 +480,16 @@
     "Event details": "Chi tiết sự kiện"
   },
   "Every": {
-    "Every": ""
+    "Every": "Mỗi"
   },
   "Evolution": {
-    "Evolution": ""
+    "Evolution": "Evolution"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Bật/tắt • F10: Trợ giúp"
   },
   "Feed URL": {
-    "Feed URL": ""
+    "Feed URL": "URL Nguồn cấp dữ liệu"
   },
   "File Already Exists": {
     "File Already Exists": "Tệp đã tồn tại"
@@ -504,7 +504,7 @@
     "First day shown in week and month views.": "Ngày đầu tiên hiển thị trong chế độ tuần và tháng."
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
-    "Follow DankMaterialShell colors, falling back to a preset.": ""
+    "Follow DankMaterialShell colors, falling back to a preset.": "Theo dõi màu DankMaterialShell, quay lại cài đặt."
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Đang theo bảng màu hệ thống (hiện tại: %1)."
@@ -522,7 +522,7 @@
     "Go to today": "Đến hôm nay"
   },
   "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
-    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks không khả dụng. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Bật API của nó</a> hoặc kết nối lại tài khoản này, sau đó làm mới để đồng bộ hóa tác vụ."
   },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google yêu cầu bạn tạo OAuth client riêng để đọc dữ liệu lịch. Đây là thiết lập một lần, mất khoảng ba phút."
@@ -531,7 +531,7 @@
     "Hide": "Ẩn"
   },
   "High": {
-    "High": ""
+    "High": "Cao"
   },
   "Home": {
     "Home": "Thư mục gốc"
@@ -540,7 +540,7 @@
     "How long the snooze button postpones a reminder.": "Thời gian nút báo lại hoãn một lời nhắc."
   },
   "How often accounts are polled for changes.": {
-    "How often accounts are polled for changes.": ""
+    "How often accounts are polled for changes.": "Tần suất kiểm tra tài khoản để xem có thay đổi."
   },
   "Import client_secret.json": {
     "Import client_secret.json": "Nhập client_secret.json"
@@ -552,7 +552,7 @@
     "Initial reminder set on new events.": "Lời nhắc mặc định được đặt khi tạo sự kiện mới."
   },
   "Join video call": {
-    "Join video call": ""
+    "Join video call": "Tham gia cuộc gọi video"
   },
   "Keep typing": {
     "Keep typing": "Tiếp tục nhập"
@@ -576,10 +576,10 @@
     "Light": "Sáng"
   },
   "List": {
-    "List": ""
+    "List": "Danh sách"
   },
   "Load colors from your own theme file.": {
-    "Load colors from your own theme file.": ""
+    "Load colors from your own theme file.": "Tải màu từ tệp chủ đề của riêng bạn."
   },
   "Loading setup instructions…": {
     "Loading setup instructions…": "Đang tải hướng dẫn thiết lập…"
@@ -597,25 +597,25 @@
     "Location": "Địa điểm"
   },
   "Low": {
-    "Low": ""
+    "Low": "Thấp"
   },
   "Marked as not done": {
-    "Marked as not done": ""
+    "Marked as not done": "Đánh dấu chưa hoàn thành"
   },
   "Maximum title lines per event in month view.": {
-    "Maximum title lines per event in month view.": ""
+    "Maximum title lines per event in month view.": "Số dòng tiêu đề tối đa trên mỗi sự kiện trong chế độ xem tháng."
   },
   "Maximum title lines per event in week view.": {
-    "Maximum title lines per event in week view.": ""
+    "Maximum title lines per event in week view.": "Số dòng tiêu đề tối đa trên mỗi sự kiện trong chế độ xem tuần."
   },
   "Maybe": {
-    "Maybe": ""
+    "Maybe": "Có thể"
   },
   "Medium": {
-    "Medium": ""
+    "Medium": "Trung bình"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
-    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Quyền truy cập Microsoft To Do không được cấp. Kết nối lại tài khoản này để đồng bộ hóa tác vụ."
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft thường trả về server_error trong vài phút đầu sau khi tạo hoặc thay đổi đăng ký ứng dụng. Hãy đợi một hoặc hai phút rồi thử lại."
@@ -633,13 +633,13 @@
     "Month": "Tháng"
   },
   "Month event title lines": {
-    "Month event title lines": ""
+    "Month event title lines": "Dòng tiêu đề sự kiện tháng"
   },
   "Month view": {
     "Month view": "Chế độ tháng"
   },
   "Monthly": {
-    "Monthly": ""
+    "Monthly": "Hàng tháng"
   },
   "Move to Trash": {
     "Move to Trash": "Chuyển vào thùng rác"
@@ -669,7 +669,7 @@
     "New event": "Sự kiện mới"
   },
   "New task": {
-    "New task": ""
+    "New task": "Tác vụ mới"
   },
   "Next day": {
     "Next day": "Ngày tiếp theo"
@@ -696,19 +696,19 @@
     "No calendars yet. Add one to start creating events.": "Chưa có lịch. Thêm một để bắt đầu tạo sự kiện."
   },
   "No due date": {
-    "No due date": ""
+    "No due date": "Không có ngày hạn"
   },
   "No matching events": {
     "No matching events": "Không tìm thấy sự kiện"
   },
   "No task list available": {
-    "No task list available": ""
+    "No task list available": "Không có danh sách tác vụ nào khả dụng"
   },
   "No tasks yet": {
-    "No tasks yet": ""
+    "No tasks yet": "Chưa có tác vụ nào"
   },
   "No theme file selected": {
-    "No theme file selected": ""
+    "No theme file selected": "Không có tệp chủ đề nào được chọn"
   },
   "No writable calendar available": {
     "No writable calendar available": "Không có lịch nào có thể ghi"
@@ -720,10 +720,10 @@
     "Not authorized — remove this account and add it again": "Chưa được xác thực — gỡ bỏ tài khoản này và thêm lại"
   },
   "Not signed in — click to reconnect or re-add this account": {
-    "Not signed in — click to reconnect or re-add this account": ""
+    "Not signed in — click to reconnect or re-add this account": "Chưa đăng nhập — nhấp để kết nối lại hoặc thêm lại tài khoản này"
   },
   "Notes": {
-    "Notes": ""
+    "Notes": "Ghi chú"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "Không có gì trong %1 ngày tới"
@@ -759,7 +759,7 @@
     "Outlook, Office 365 and Exchange Online calendars.": "Lịch Outlook, Office 365 và Exchange Online."
   },
   "Overdue": {
-    "Overdue": ""
+    "Overdue": "Quá hạn"
   },
   "Override": {
     "Override": "Ghi đè riêng"
@@ -771,7 +771,7 @@
     "Overwrite": "Ghi đè"
   },
   "Palette: %1": {
-    "Palette: %1": ""
+    "Palette: %1": "Bảng màu: %1"
   },
   "Part of the Dank Linux suite.": {
     "Part of the Dank Linux suite.": "Một phần của bộ Dank Linux."
@@ -780,7 +780,7 @@
     "Password": "Mật khẩu"
   },
   "Password (optional)": {
-    "Password (optional)": ""
+    "Password (optional)": "Mật khẩu (tùy chọn)"
   },
   "Paste credentials": {
     "Paste credentials": "Dán thông tin xác thực"
@@ -789,13 +789,13 @@
     "Paste the Application (client) ID from your app registration's Overview page.": "Dán Application (client) ID từ trang Overview của đăng ký ứng dụng."
   },
   "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
-    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "Dán URL của một nguồn cấp dữ liệu lịch bên ngoài để đăng ký nó. Lịch chỉ đọc và làm mới trong nền. Liên kết webcal:// được chấp nhận."
   },
   "Paste your credentials": {
     "Paste your credentials": "Dán thông tin xác thực của bạn"
   },
   "Pick a color source, palette, or your own theme file.": {
-    "Pick a color source, palette, or your own theme file.": ""
+    "Pick a color source, palette, or your own theme file.": "Chọn một nguồn màu, bảng màu hoặc tệp chủ đề của riêng bạn."
   },
   "Pictures": {
     "Pictures": "Hình ảnh"
@@ -804,7 +804,7 @@
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Trỏ đến thư mục chứa các tệp .ics. Mỗi thư mục con hoặc tệp .ics sẽ thành một lịch — tương thích với cấu trúc vdirsyncer/khal. Thư mục được tạo nếu chưa tồn tại."
   },
   "Preset": {
-    "Preset": ""
+    "Preset": "Cài đặt"
   },
   "Previous day": {
     "Previous day": "Ngày trước"
@@ -816,7 +816,7 @@
     "Previous week": "Tuần trước"
   },
   "Priority": {
-    "Priority": ""
+    "Priority": "Ưu tiên"
   },
   "Quick Access": {
     "Quick Access": "Truy cập nhanh"
@@ -828,7 +828,7 @@
     "Reconnect": "Kết nối lại"
   },
   "Recurring tasks are managed in Google Tasks.": {
-    "Recurring tasks are managed in Google Tasks.": ""
+    "Recurring tasks are managed in Google Tasks.": "Các tác vụ lặp lại được quản lý trong Google Tasks."
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Lời nhắc và cảnh báo trên màn hình."
@@ -864,16 +864,16 @@
     "Rename…": "Đổi tên…"
   },
   "Repeat": {
-    "Repeat": ""
+    "Repeat": "Lặp lại"
   },
   "Repeats": {
-    "Repeats": ""
+    "Repeats": "Lặp lại"
   },
   "Repeats every %1": {
-    "Repeats every %1": ""
+    "Repeats every %1": "Lặp lại mỗi %1"
   },
   "Repeats every %1 %2": {
-    "Repeats every %1 %2": ""
+    "Repeats every %1 %2": "Lặp lại mỗi %1 %2"
   },
   "Reset to global": {
     "Reset to global": "Đặt lại về toàn cục"
@@ -906,7 +906,7 @@
     "Select file": "Chọn tệp"
   },
   "Select theme file": {
-    "Select theme file": ""
+    "Select theme file": "Chọn tệp chủ đề"
   },
   "Send test": {
     "Send test": "Gửi thử"
@@ -924,10 +924,10 @@
     "Show all-day reminders": "Hiển thị lời nhắc cả ngày"
   },
   "Show task lists and the Tasks view when an account provides them.": {
-    "Show task lists and the Tasks view when an account provides them.": ""
+    "Show task lists and the Tasks view when an account provides them.": "Hiển thị danh sách tác vụ và chế độ xem Tác vụ khi tài khoản cung cấp chúng."
   },
   "Show tasks": {
-    "Show tasks": ""
+    "Show tasks": "Hiển thị tác vụ"
   },
   "Show week numbers": {
     "Show week numbers": "Hiển thị số tuần"
@@ -942,7 +942,7 @@
     "Sign in with your Google account.": "Đăng nhập bằng tài khoản Google."
   },
   "Sign-in expired — click to reconnect": {
-    "Sign-in expired — click to reconnect": ""
+    "Sign-in expired — click to reconnect": "Đăng nhập hết hạn — nhấp để kết nối lại"
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "Phiên đăng nhập hết hạn — kết nối lại để tiếp tục đồng bộ"
@@ -978,16 +978,16 @@
     "Stock palette": "Bảng màu mặc định"
   },
   "Subscribe": {
-    "Subscribe": ""
+    "Subscribe": "Đăng ký"
   },
   "Subscribe to an external calendar by URL (webcal/https).": {
-    "Subscribe to an external calendar by URL (webcal/https).": ""
+    "Subscribe to an external calendar by URL (webcal/https).": "Đăng ký lịch bên ngoài theo URL (webcal/https)."
   },
   "Subscribing…": {
-    "Subscribing…": ""
+    "Subscribing…": "Đang đăng ký..."
   },
   "Sync interval": {
-    "Sync interval": ""
+    "Sync interval": "Khoảng thời gian đồng bộ"
   },
   "Sync now": {
     "Sync now": "Đồng bộ ngay"
@@ -1005,19 +1005,19 @@
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Di chuyển • ←→↑↓: Di chuyển lưới • Enter/Space: Chọn"
   },
   "Task": {
-    "Task": ""
+    "Task": "Tác vụ"
   },
   "Task completed": {
-    "Task completed": ""
+    "Task completed": "Tác vụ hoàn tất"
   },
   "Task lists couldn't be loaded; calendars are still syncing.": {
-    "Task lists couldn't be loaded; calendars are still syncing.": ""
+    "Task lists couldn't be loaded; calendars are still syncing.": "Không thể tải danh sách tác vụ; các lịch vẫn đang đồng bộ hóa."
   },
   "Tasks": {
-    "Tasks": ""
+    "Tasks": "Tác vụ"
   },
   "Tasks view": {
-    "Tasks view": ""
+    "Tasks view": "Chế độ xem tác vụ"
   },
   "Test notification": {
     "Test notification": "Thông báo thử nghiệm"
@@ -1059,22 +1059,22 @@
     "Type at least 2 characters to search events.": "Nhập ít nhất 2 ký tự để tìm kiếm sự kiện."
   },
   "Undo": {
-    "Undo": ""
+    "Undo": "Hoàn tác"
   },
   "University timetable": {
-    "University timetable": ""
+    "University timetable": "Thời khóa biểu đại học"
   },
   "Upcoming": {
-    "Upcoming": ""
+    "Upcoming": "Sắp tới"
   },
   "Use a bundled color palette.": {
-    "Use a bundled color palette.": ""
+    "Use a bundled color palette.": "Sử dụng bảng màu đi kèm."
   },
   "Use synced name": {
     "Use synced name": "Dùng tên đã đồng bộ"
   },
   "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
-    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "Sử dụng các lịch mà Evolution Data Server đã quản lý trên máy này (Evolution, GNOME Online Accounts và hơn thế nữa). Không cần đăng nhập — Evolution xử lý thông tin đăng nhập và đồng bộ hóa."
   },
   "Use this folder": {
     "Use this folder": "Dùng thư mục này"
@@ -1083,10 +1083,10 @@
     "Username": "Tên người dùng"
   },
   "Username (optional)": {
-    "Username (optional)": ""
+    "Username (optional)": "Tên người dùng (tùy chọn)"
   },
   "Using DankMaterialShell dynamic colors.": {
-    "Using DankMaterialShell dynamic colors.": ""
+    "Using DankMaterialShell dynamic colors.": "Sử dụng màu động của DankMaterialShell."
   },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Kiểm tra xem thông báo màn hình có hoạt động không."
@@ -1113,13 +1113,13 @@
     "Week": "Tuần"
   },
   "Week event title lines": {
-    "Week event title lines": ""
+    "Week event title lines": "Dòng tiêu đề sự kiện tuần"
   },
   "Week view": {
     "Week view": "Chế độ tuần"
   },
   "Weekly": {
-    "Weekly": ""
+    "Weekly": "Hàng tuần"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Nút đóng của cửa sổ có tác dụng gì."
@@ -1128,7 +1128,7 @@
     "When all-day event reminders fire.": "Thời điểm kích hoạt lời nhắc sự kiện cả ngày."
   },
   "Yearly": {
-    "Yearly": ""
+    "Yearly": "Hàng năm"
   },
   "Yesterday": {
     "Yesterday": "Hôm qua"
@@ -1140,7 +1140,7 @@
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Client ID, secret và refresh token của bạn được lưu trong keyring hệ thống (libsecret/kwallet) nếu có, hoặc trong tệp cục bộ được mã hóa."
   },
   "Your response": {
-    "Your response": ""
+    "Your response": "Phản hồi của bạn"
   },
   "all day": {
     "all day": "cả ngày"
@@ -1149,25 +1149,25 @@
     "dark": "tối"
   },
   "day": {
-    "day": ""
+    "day": "ngày"
   },
   "days": {
-    "days": ""
+    "days": "ngày"
   },
   "iCal subscription": {
-    "iCal subscription": ""
+    "iCal subscription": "Đăng ký iCal"
   },
   "light": {
     "light": "sáng"
   },
   "month": {
-    "month": ""
+    "month": "tháng"
   },
   "months": {
-    "months": ""
+    "months": "tháng"
   },
   "only if the feed requires sign-in": {
-    "only if the feed requires sign-in": ""
+    "only if the feed requires sign-in": "chỉ khi nguồn cấp dữ liệu yêu cầu đăng nhập"
   },
   "password": {
     "password": "mật khẩu"
@@ -1182,16 +1182,16 @@
     "username": "tên người dùng"
   },
   "week": {
-    "week": ""
+    "week": "tuần"
   },
   "weeks": {
-    "weeks": ""
+    "weeks": "tuần"
   },
   "year": {
-    "year": ""
+    "year": "năm"
   },
   "years": {
-    "years": ""
+    "years": "năm"
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· %1 được mời · %2 đã chấp nhận"

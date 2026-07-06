@@ -48,7 +48,7 @@
     "1 line": ""
   },
   "1 minute": {
-    "1 minute": ""
+    "1 minute": "1 دقيقة"
   },
   "1 week before": {
     "1 week before": "قبل اسبوع"
@@ -126,13 +126,13 @@
     "About": "حول"
   },
   "Accept": {
-    "Accept": ""
+    "Accept": "موافق"
   },
   "Account connected": {
     "Account connected": "تم ربط الحساب"
   },
   "Account problem — click for options": {
-    "Account problem — click for options": ""
+    "Account problem — click for options": "مشكلة في الحساب — اضغط للخيارات"
   },
   "Accounts": {
     "Accounts": "الحسابات"
@@ -141,7 +141,7 @@
     "Add": "اضافة"
   },
   "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
-    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": ""
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "أضف حساب CalDAV، أو حساباً محلياً، أو حساب Google، أو حساب Microsoft يتضمن قائمة مهام لإنشاء المهام."
   },
   "Add a calendar": {
     "Add a calendar": "إضافة تقويم"
@@ -153,7 +153,7 @@
     "Add description": "إضافة وصف"
   },
   "Add task": {
-    "Add task": ""
+    "Add task": "إضافة مهمة"
   },
   "Add title": {
     "Add title": "إضافة عنوان"
@@ -177,7 +177,7 @@
     "All day": "طوال اليوم"
   },
   "All done": {
-    "All done": ""
+    "All done": "تم كل شيء"
   },
   "All-day reminder time": {
     "All-day reminder time": "وقت تذكير الأحداث طوال اليوم"
@@ -255,7 +255,7 @@
     "Calendars": "التقاويم"
   },
   "Calendars couldn't be loaded; tasks are still syncing.": {
-    "Calendars couldn't be loaded; tasks are still syncing.": ""
+    "Calendars couldn't be loaded; tasks are still syncing.": "تعذر تحميل التقاويم; لا تزال المهام قيد المزامنة."
   },
   "Cancel": {
     "Cancel": "إلغاء"
@@ -294,7 +294,7 @@
     "Coming soon": "قريباً"
   },
   "Completed": {
-    "Completed": ""
+    "Completed": "مكتملة"
   },
   "Confirm": {
     "Confirm": "تأكيد"
@@ -324,7 +324,7 @@
     "Continue": "متابعة"
   },
   "Copied to clipboard": {
-    "Copied to clipboard": ""
+    "Copied to clipboard": "تم النسخ إلى الحافظة"
   },
   "Copy link": {
     "Copy link": "نسخ الرابط"
@@ -339,7 +339,7 @@
     "Could not read that file.": "تعذر قراءة هذا الملف."
   },
   "Couldn't update task": {
-    "Couldn't update task": ""
+    "Couldn't update task": "تعذر تحديث المهمة"
   },
   "Create": {
     "Create": "إنشاء"
@@ -363,7 +363,7 @@
     "Daemon offline": "العملية الخلفية غير متصلة"
   },
   "Daily": {
-    "Daily": ""
+    "Daily": "يوميًا"
   },
   "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
     "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "تطبيق Dank Calendar هو تقويم لسطح مكتب Linux الحديث بتصميم <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">مستوحى من Material 3</a>، بالإضافة إلى واجهة سطر أوامر CLI قابلة للتعديل وواجهة برمجية مأخذية Socket API للتكامل والربط.<br /><br/>تم بناؤه باستخدام <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>، وهو إطار عمل QT6 لبناء واجهات سطح المكتب، ولغة <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>، وهي لغة برمجة مجمّعة ومكتوبة بشكل ثابت."
@@ -384,7 +384,7 @@
     "Day view": "عرض اليوم"
   },
   "Decline": {
-    "Decline": ""
+    "Decline": "رفض"
   },
   "Default event duration": {
     "Default event duration": "المدة الافتراضية للحدث"
@@ -432,7 +432,7 @@
     "Documents": "المستندات"
   },
   "Does not repeat": {
-    "Does not repeat": ""
+    "Does not repeat": "لا يتكرر"
   },
   "Done": {
     "Done": "تم"
@@ -444,13 +444,13 @@
     "Drag to pan · click to fit": "اسحب للتحريك · انقر للملاءمة"
   },
   "Due date": {
-    "Due date": ""
+    "Due date": "الموعد النهائي"
   },
   "Edit event": {
     "Edit event": "تعديل الحدث"
   },
   "Edit task": {
-    "Edit task": ""
+    "Edit task": "تعديل المهمة"
   },
   "Enable reminders": {
     "Enable reminders": "تفعيل التنبيهات"
@@ -480,16 +480,16 @@
     "Event details": "تفاصيل الحدث"
   },
   "Every": {
-    "Every": ""
+    "Every": "كل"
   },
   "Evolution": {
-    "Evolution": ""
+    "Evolution": "إيفولوشن"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: تبديل • F10: مساعدة"
   },
   "Feed URL": {
-    "Feed URL": ""
+    "Feed URL": "رابط الاشتراك"
   },
   "File Already Exists": {
     "File Already Exists": "الملف موجود بالفعل"
@@ -531,7 +531,7 @@
     "Hide": "إخفاء"
   },
   "High": {
-    "High": ""
+    "High": "عالية"
   },
   "Home": {
     "Home": "الرئيسية"
@@ -540,7 +540,7 @@
     "How long the snooze button postpones a reminder.": "المدة التي يؤجلها زر الغفوة للتنبيه."
   },
   "How often accounts are polled for changes.": {
-    "How often accounts are polled for changes.": ""
+    "How often accounts are polled for changes.": "معدل فحص الحسابات بحثًا عن تغييرات."
   },
   "Import client_secret.json": {
     "Import client_secret.json": "استيراد client_secret.json"
@@ -552,7 +552,7 @@
     "Initial reminder set on new events.": "التنبيه الأولي المعين للأحداث الجديدة."
   },
   "Join video call": {
-    "Join video call": ""
+    "Join video call": "انضم لمكالمة الفيديو"
   },
   "Keep typing": {
     "Keep typing": "تابع الكتابة"
@@ -576,7 +576,7 @@
     "Light": "فاتح"
   },
   "List": {
-    "List": ""
+    "List": "قائمة"
   },
   "Load colors from your own theme file.": {
     "Load colors from your own theme file.": "تحميل الألوان من ملف المظهر الخاص بك."
@@ -597,10 +597,10 @@
     "Location": "الموقع"
   },
   "Low": {
-    "Low": ""
+    "Low": "منخفضة"
   },
   "Marked as not done": {
-    "Marked as not done": ""
+    "Marked as not done": "تَمّ تعيينها كغير منجزة"
   },
   "Maximum title lines per event in month view.": {
     "Maximum title lines per event in month view.": ""
@@ -609,13 +609,13 @@
     "Maximum title lines per event in week view.": ""
   },
   "Maybe": {
-    "Maybe": ""
+    "Maybe": "ربما"
   },
   "Medium": {
-    "Medium": ""
+    "Medium": "متوسطة"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
-    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "لم يتم منح صلاحية الوصول إلى Microsoft To Do. أعد الاتصال بهذا الحساب لمزامنة المهام."
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "غالبًا ما تُرجع Microsoft الخطأ \"server_error\" خلال الدقائق القليلة الأولى بعد إنشاء تسجيل التطبيق أو تغييره. انتظر دقيقة أو دقيقتين ثم حاول مرة أخرى."
@@ -639,7 +639,7 @@
     "Month view": "عرض الشهر"
   },
   "Monthly": {
-    "Monthly": ""
+    "Monthly": "شهريًا"
   },
   "Move to Trash": {
     "Move to Trash": "نقل إلى المهملات"
@@ -669,7 +669,7 @@
     "New event": "حدث جديد"
   },
   "New task": {
-    "New task": ""
+    "New task": "مهمة جديدة"
   },
   "Next day": {
     "Next day": "اليوم التالي"
@@ -696,16 +696,16 @@
     "No calendars yet. Add one to start creating events.": "لا توجد تقاويم بعد. أضف تقويمًا لبدء إنشاء الأحداث."
   },
   "No due date": {
-    "No due date": ""
+    "No due date": "بدون تاريخ"
   },
   "No matching events": {
     "No matching events": "لا توجد أحداث مطابقة"
   },
   "No task list available": {
-    "No task list available": ""
+    "No task list available": "لا توجد قائمة مهام متاحة"
   },
   "No tasks yet": {
-    "No tasks yet": ""
+    "No tasks yet": "لا توجد مهام بعد"
   },
   "No theme file selected": {
     "No theme file selected": "لم يتم اختيار ملف مظهر"
@@ -720,10 +720,10 @@
     "Not authorized — remove this account and add it again": "غير مصرح — احذف هذا الحساب ثم أضفه مجددًا"
   },
   "Not signed in — click to reconnect or re-add this account": {
-    "Not signed in — click to reconnect or re-add this account": ""
+    "Not signed in — click to reconnect or re-add this account": "لم يتم تسجيل الدخول — انقر لإعادة الاتصال بهذا الحساب أو إعادة إضافته"
   },
   "Notes": {
-    "Notes": ""
+    "Notes": "ملاحظات"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "لا توجد مواعيد مجدولة في الأيام %1 القادمة"
@@ -759,7 +759,7 @@
     "Outlook, Office 365 and Exchange Online calendars.": "تقاويم Outlook وOffice 365 وExchange Online."
   },
   "Overdue": {
-    "Overdue": ""
+    "Overdue": "متأخرة"
   },
   "Override": {
     "Override": "تجاوز"
@@ -780,7 +780,7 @@
     "Password": "كلمة المرور"
   },
   "Password (optional)": {
-    "Password (optional)": ""
+    "Password (optional)": "كلمة المرور (اختياري)"
   },
   "Paste credentials": {
     "Paste credentials": "لصق معلوماتك"
@@ -789,7 +789,7 @@
     "Paste the Application (client) ID from your app registration's Overview page.": "لصق معرف التطبيق (العميل) من صفحة النظرة العامة الخاصة بتسجيل تطبيقك."
   },
   "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
-    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": ""
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "الصق رابط موجز تقويم خارجي للاشتراك فيه. هذا التقويم للقراءة فقط ويتم تحديثه في الخلفية. روابط webcal:// مقبولة."
   },
   "Paste your credentials": {
     "Paste your credentials": "الصق معلوماتك"
@@ -942,7 +942,7 @@
     "Sign in with your Google account.": "سجل الدخول باستخدام حساب Google الخاص بك."
   },
   "Sign-in expired — click to reconnect": {
-    "Sign-in expired — click to reconnect": ""
+    "Sign-in expired — click to reconnect": "انتهت صلاحية تسجيل الدخول — انقر لإعادة الاتصال"
   },
   "Sign-in expired — reconnect to keep syncing": {
     "Sign-in expired — reconnect to keep syncing": "انتهت صلاحية تسجيل الدخول — أعد الاتصال لمتابعة المزامنة"
@@ -978,13 +978,13 @@
     "Stock palette": "لوحة الألوان الافتراضية"
   },
   "Subscribe": {
-    "Subscribe": ""
+    "Subscribe": "اشتراك"
   },
   "Subscribe to an external calendar by URL (webcal/https).": {
-    "Subscribe to an external calendar by URL (webcal/https).": ""
+    "Subscribe to an external calendar by URL (webcal/https).": "الاشتراك في تقويم خارجي عبر الرابط (webcal/https)."
   },
   "Subscribing…": {
-    "Subscribing…": ""
+    "Subscribing…": "جاري الاشتراك…"
   },
   "Sync interval": {
     "Sync interval": ""
@@ -1062,7 +1062,7 @@
     "Undo": ""
   },
   "University timetable": {
-    "University timetable": ""
+    "University timetable": "جدول الجامعة"
   },
   "Upcoming": {
     "Upcoming": ""
@@ -1074,7 +1074,7 @@
     "Use synced name": "استخدام الاسم المتزامن"
   },
   "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
-    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": ""
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "استخدم التقاويم التي يديرها بالفعل خادم بيانات على هذا الجهاز (إيفولوشن، وحسابات جنوم عبر الإنترنت، والمزيد). لا حاجة لتسجيل الدخول — يتولى إيفولوشن إدارة بيانات الاعتماد والمزامنة."
   },
   "Use this folder": {
     "Use this folder": "استخدام هذا المجلد"
@@ -1083,7 +1083,7 @@
     "Username": "اسم المستخدم"
   },
   "Username (optional)": {
-    "Username (optional)": ""
+    "Username (optional)": "اسم المستخدم (اختياري)"
   },
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": "يتم استخدام ألوان DankMaterialShell الديناميكية."
@@ -1140,7 +1140,7 @@
     "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "يتم حفظ معرف العميل، والسر، ورمز التحديث في سلسلة مفاتيح النظام (libsecret/kwallet) عندما تكون متاحة، أو في ملف محلي مشفر."
   },
   "Your response": {
-    "Your response": ""
+    "Your response": "استجابتك"
   },
   "all day": {
     "all day": "طوال اليوم"
@@ -1155,7 +1155,7 @@
     "days": ""
   },
   "iCal subscription": {
-    "iCal subscription": ""
+    "iCal subscription": "اشتراك iCal"
   },
   "light": {
     "light": "فاتح"
@@ -1167,7 +1167,7 @@
     "months": ""
   },
   "only if the feed requires sign-in": {
-    "only if the feed requires sign-in": ""
+    "only if the feed requires sign-in": "فقط إذا كان الموجز يتطلب تسجيل الدخول"
   },
   "password": {
     "password": "كلمة المرور"

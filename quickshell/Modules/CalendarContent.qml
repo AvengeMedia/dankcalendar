@@ -10,6 +10,7 @@ Item {
     property string currentView: "month"
     property date displayDate: new Date()
     property date selectedDate: new Date()
+    property string selectedEventKey: ""
     property date today: new Date()
 
     signal todayRequested
@@ -185,6 +186,7 @@ Item {
                     displayDate: root.displayDate
                     today: root.today
                     selectedDate: root.selectedDate
+                    selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
                 }
             }
@@ -193,6 +195,7 @@ Item {
                 id: dayComponent
                 DayView {
                     displayDate: root.displayDate
+                    selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
                 }
             }
@@ -201,6 +204,7 @@ Item {
                 id: agendaComponent
                 AgendaView {
                     displayDate: root.displayDate
+                    selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
                 }
             }

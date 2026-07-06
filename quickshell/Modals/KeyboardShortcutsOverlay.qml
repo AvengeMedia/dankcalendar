@@ -25,23 +25,35 @@ Item {
                 },
                 {
                     "keys": ["j", "↓"],
-                    "label": I18n.tr("Next week", "keyboard shortcut description")
+                    "label": I18n.tr("Next event (next week in month view)", "keyboard shortcut description")
                 },
                 {
                     "keys": ["k", "↑"],
-                    "label": I18n.tr("Previous week", "keyboard shortcut description")
+                    "label": I18n.tr("Previous event (previous week in month view)", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["[", "PgUp"],
+                    "label": I18n.tr("Previous day, week or month", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["]", "PgDn"],
+                    "label": I18n.tr("Next day, week or month", "keyboard shortcut description")
                 },
                 {
                     "keys": ["Tab"],
-                    "label": I18n.tr("Next event", "keyboard shortcut description")
+                    "label": I18n.tr("Next day with events", "keyboard shortcut description")
                 },
                 {
                     "keys": ["Shift+Tab"],
-                    "label": I18n.tr("Previous event", "keyboard shortcut description")
+                    "label": I18n.tr("Previous day with events", "keyboard shortcut description")
                 },
                 {
                     "keys": ["Enter"],
                     "label": I18n.tr("Open or create event", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Esc"],
+                    "label": I18n.tr("Clear event selection", "keyboard shortcut description")
                 }
             ]
         },
