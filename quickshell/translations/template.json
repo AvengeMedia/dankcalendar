@@ -560,6 +560,13 @@
     "comment": ""
   },
   {
+    "term": "Back to the calendar",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Backend",
     "translation": "",
     "context": "about page daemon section header",
@@ -682,6 +689,13 @@
     "term": "Close behavior",
     "translation": "",
     "context": "close behavior setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Collapse or expand a section",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1197,6 +1211,13 @@
     "comment": ""
   },
   {
+    "term": "Focus or leave the sidebar",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Follow DankMaterialShell colors, falling back to a preset.",
     "translation": "",
     "context": "color source description for auto",
@@ -1529,6 +1550,13 @@
     "term": "Monthly",
     "translation": "",
     "context": "task recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Move through sidebar items",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -2030,6 +2058,13 @@
     "comment": ""
   },
   {
+    "term": "Remove calendar or account",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "translation": "",
     "context": "confirm dialog body for removing an account | remove account confirmation message",
@@ -2053,7 +2088,7 @@
   {
     "term": "Rename calendar",
     "translation": "",
-    "context": "rename calendar dialog header",
+    "context": "keyboard shortcut description | rename calendar dialog header",
     "reference": "",
     "comment": ""
   },
@@ -2222,6 +2257,13 @@
     "term": "Show week numbers",
     "translation": "",
     "context": "week numbers setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sidebar",
+    "translation": "",
+    "context": "keyboard shortcuts overlay section header",
     "reference": "",
     "comment": ""
   },
@@ -2467,6 +2509,13 @@
     "term": "Today",
     "translation": "",
     "context": "agenda section header for the current day | due-date label on a task card | header button that jumps to the current date | search result date label for current day | tasks view section header for tasks due today",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Toggle calendar, switch view or sync account",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },

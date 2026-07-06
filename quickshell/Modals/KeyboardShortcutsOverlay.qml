@@ -83,6 +83,39 @@ Item {
             ]
         },
         {
+            "title": I18n.tr("Sidebar", "keyboard shortcuts overlay section header"),
+            "rows": [
+                {
+                    "keys": ["s"],
+                    "label": I18n.tr("Focus or leave the sidebar", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["j", "k"],
+                    "label": I18n.tr("Move through sidebar items", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["h", "l"],
+                    "label": I18n.tr("Collapse or expand a section", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Enter", "Space"],
+                    "label": I18n.tr("Toggle calendar, switch view or sync account", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Del"],
+                    "label": I18n.tr("Remove calendar or account", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["r"],
+                    "label": I18n.tr("Rename calendar", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Esc"],
+                    "label": I18n.tr("Back to the calendar", "keyboard shortcut description")
+                }
+            ]
+        },
+        {
             "title": I18n.tr("General", "keyboard shortcuts overlay section header"),
             "rows": [
                 {

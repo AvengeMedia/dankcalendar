@@ -278,13 +278,13 @@
   {
     "term": "Account problem — click for options",
     "context": "Account problem — click for options",
-    "reference": "Modules/CalendarSidebar.qml:522",
+    "reference": "Modules/CalendarSidebar.qml:820",
     "comment": "tooltip on the account warning icon for an unspecified problem"
   },
   {
     "term": "Accounts",
     "context": "Accounts",
-    "reference": "Modules/CalendarSidebar.qml:498, Modals/SettingsSidebar.qml:27, Modals/SettingsContent.qml:1073",
+    "reference": "Modules/CalendarSidebar.qml:795, Modals/SettingsSidebar.qml:27, Modals/SettingsContent.qml:1073",
     "comment": "accounts settings section header | settings sidebar tab label | sidebar section header for the account list"
   },
   {
@@ -308,7 +308,7 @@
   {
     "term": "Add account",
     "context": "Add account",
-    "reference": "Modules/CalendarSidebar.qml:641, Modals/AccountAddModal.qml:213, Modals/AccountAddModal.qml:305, Modals/SettingsContent.qml:1211",
+    "reference": "Modules/CalendarSidebar.qml:952, Modals/AccountAddModal.qml:213, Modals/AccountAddModal.qml:305, Modals/SettingsContent.qml:1211",
     "comment": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account"
   },
   {
@@ -320,7 +320,7 @@
   {
     "term": "Add task",
     "context": "Add task",
-    "reference": "Modules/CalendarSidebar.qml:478, Modules/views/TasksView.qml:91",
+    "reference": "Modules/CalendarSidebar.qml:775, Modules/views/TasksView.qml:91",
     "comment": "sidebar button to add a task | tasks view button to create a new task"
   },
   {
@@ -344,7 +344,7 @@
   {
     "term": "Agenda",
     "context": "Agenda",
-    "reference": "Modules/CalendarSidebar.qml:154, Modules/CalendarContent.qml:36",
+    "reference": "Modules/CalendarSidebar.qml:49, Modules/CalendarContent.qml:36",
     "comment": "header title when the agenda view is active | view switcher option in sidebar"
   },
   {
@@ -368,7 +368,7 @@
   {
     "term": "All done",
     "context": "All done",
-    "reference": "Modules/CalendarSidebar.qml:381",
+    "reference": "Modules/CalendarSidebar.qml:665",
     "comment": "sidebar placeholder when there are no open tasks"
   },
   {
@@ -480,6 +480,12 @@
     "comment": "back button in account setup wizard"
   },
   {
+    "term": "Back to the calendar",
+    "context": "Back to the calendar",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:114",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Backend",
     "context": "Backend",
     "reference": "Modals/SettingsAboutPage.qml:286",
@@ -500,7 +506,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:261, Modules/CalendarWindow.qml:481",
+    "reference": "Modules/CalendarWindow.qml:268, Modules/CalendarWindow.qml:504",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -586,6 +592,12 @@
     "context": "Close behavior",
     "reference": "Modals/SettingsContent.qml:387",
     "comment": "close behavior setting label"
+  },
+  {
+    "term": "Collapse or expand a section",
+    "context": "Collapse or expand a section",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:98",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Color source",
@@ -710,7 +722,7 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modules/CalendarSidebar.qml:121, Modals/KeyboardShortcutsOverlay.qml:90",
+    "reference": "Modules/CalendarSidebar.qml:417, Modals/KeyboardShortcutsOverlay.qml:123",
     "comment": "keyboard shortcut description | sidebar button to create a new event"
   },
   {
@@ -728,7 +740,7 @@
   {
     "term": "Daemon offline",
     "context": "Daemon offline",
-    "reference": "Modules/CalendarSidebar.qml:246",
+    "reference": "Modules/CalendarSidebar.qml:516",
     "comment": "sidebar placeholder when the daemon is not connected"
   },
   {
@@ -764,7 +776,7 @@
   {
     "term": "Day",
     "context": "Day",
-    "reference": "Modules/CalendarSidebar.qml:139",
+    "reference": "Modules/CalendarSidebar.qml:34",
     "comment": "view switcher option in sidebar"
   },
   {
@@ -800,19 +812,19 @@
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modules/CalendarSidebar.qml:694, Modals/TaskDetailsModal.qml:487, Modals/SettingsContent.qml:979",
+    "reference": "Modules/CalendarSidebar.qml:300, Modals/TaskDetailsModal.qml:487, Modals/SettingsContent.qml:979",
     "comment": "confirm button for deleting a calendar | delete calendar confirmation button | task form button to delete the task"
   },
   {
     "term": "Delete \"%1\"?",
     "context": "Delete \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:692, Modals/SettingsContent.qml:977",
+    "reference": "Modules/CalendarSidebar.qml:298, Modals/SettingsContent.qml:977",
     "comment": "confirm dialog title for deleting a calendar, %1 is the calendar name | delete calendar confirmation title"
   },
   {
     "term": "Delete…",
     "context": "Delete…",
-    "reference": "Modules/CalendarSidebar.qml:671",
+    "reference": "Modules/CalendarSidebar.qml:982",
     "comment": "calendar context menu action to delete a calendar"
   },
   {
@@ -1026,6 +1038,12 @@
     "comment": "week start setting description"
   },
   {
+    "term": "Focus or leave the sidebar",
+    "context": "Focus or leave the sidebar",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:90",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Follow DankMaterialShell colors, falling back to a preset.",
     "context": "Follow DankMaterialShell colors, falling back to a preset.",
     "reference": "Modals/SettingsContent.qml:674",
@@ -1040,7 +1058,7 @@
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:366, Modals/KeyboardShortcutsOverlay.qml:86",
+    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:366, Modals/KeyboardShortcutsOverlay.qml:119",
     "comment": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label"
   },
   {
@@ -1076,7 +1094,7 @@
   {
     "term": "Hide",
     "context": "Hide",
-    "reference": "Modules/CalendarSidebar.qml:661",
+    "reference": "Modules/CalendarSidebar.qml:972",
     "comment": "calendar context menu action to hide a calendar"
   },
   {
@@ -1148,7 +1166,7 @@
   {
     "term": "Keyboard shortcuts",
     "context": "Keyboard shortcuts",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:155",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:188",
     "comment": "keyboard shortcuts overlay title"
   },
   {
@@ -1208,7 +1226,7 @@
   {
     "term": "Local calendar",
     "context": "Local calendar",
-    "reference": "Modules/CalendarSidebar.qml:263",
+    "reference": "Modules/CalendarSidebar.qml:533",
     "comment": "fallback tooltip for a calendar without an account"
   },
   {
@@ -1292,7 +1310,7 @@
   {
     "term": "Month",
     "context": "Month",
-    "reference": "Modules/CalendarSidebar.qml:149",
+    "reference": "Modules/CalendarSidebar.qml:44",
     "comment": "view switcher option in sidebar"
   },
   {
@@ -1314,6 +1332,12 @@
     "comment": "task recurrence dropdown option"
   },
   {
+    "term": "Move through sidebar items",
+    "context": "Move through sidebar items",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:94",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Move to Trash",
     "context": "Move to Trash",
     "reference": "Modals/FileBrowser/FileBrowserItemContextMenu.qml:21",
@@ -1328,7 +1352,7 @@
   {
     "term": "My calendars",
     "context": "My calendars",
-    "reference": "Modules/CalendarSidebar.qml:239",
+    "reference": "Modules/CalendarSidebar.qml:508",
     "comment": "sidebar section header for the calendar list"
   },
   {
@@ -1358,7 +1382,7 @@
   {
     "term": "New calendar…",
     "context": "New calendar…",
-    "reference": "Modules/CalendarSidebar.qml:743",
+    "reference": "Modules/CalendarSidebar.qml:1047",
     "comment": "account context menu action to create a calendar in a local folder"
   },
   {
@@ -1412,7 +1436,7 @@
   {
     "term": "No calendars yet",
     "context": "No calendars yet",
-    "reference": "Modules/CalendarSidebar.qml:246",
+    "reference": "Modules/CalendarSidebar.qml:516",
     "comment": "sidebar placeholder when the calendar list is empty"
   },
   {
@@ -1478,7 +1502,7 @@
   {
     "term": "Not signed in — click to reconnect or re-add this account",
     "context": "Not signed in — click to reconnect or re-add this account",
-    "reference": "Modules/CalendarSidebar.qml:521",
+    "reference": "Modules/CalendarSidebar.qml:819",
     "comment": "tooltip on the account warning icon when credentials are missing"
   },
   {
@@ -1694,7 +1718,7 @@
   {
     "term": "Reconnect",
     "context": "Reconnect",
-    "reference": "Modules/CalendarSidebar.qml:737",
+    "reference": "Modules/CalendarSidebar.qml:1041",
     "comment": "account context menu action to re-authorize the account"
   },
   {
@@ -1730,43 +1754,49 @@
   {
     "term": "Remove",
     "context": "Remove",
-    "reference": "Modules/CalendarSidebar.qml:779, Modals/SettingsContent.qml:1200",
+    "reference": "Modules/CalendarSidebar.qml:311, Modals/SettingsContent.qml:1200",
     "comment": "confirm button for removing an account | remove account confirmation button"
   },
   {
     "term": "Remove \"%1\"?",
     "context": "Remove \"%1\"?",
-    "reference": "Modules/CalendarSidebar.qml:777, Modals/SettingsContent.qml:1198",
+    "reference": "Modules/CalendarSidebar.qml:309, Modals/SettingsContent.qml:1198",
     "comment": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title"
+  },
+  {
+    "term": "Remove calendar or account",
+    "context": "Remove calendar or account",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:106",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "context": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
-    "reference": "Modules/CalendarSidebar.qml:778, Modals/SettingsContent.qml:1199",
+    "reference": "Modules/CalendarSidebar.qml:310, Modals/SettingsContent.qml:1199",
     "comment": "confirm dialog body for removing an account | remove account confirmation message"
   },
   {
     "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
     "context": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
-    "reference": "Modules/CalendarSidebar.qml:693, Modals/SettingsContent.qml:978",
+    "reference": "Modules/CalendarSidebar.qml:299, Modals/SettingsContent.qml:978",
     "comment": "confirm dialog body for deleting a calendar | delete calendar confirmation message"
   },
   {
     "term": "Remove…",
     "context": "Remove…",
-    "reference": "Modules/CalendarSidebar.qml:753",
+    "reference": "Modules/CalendarSidebar.qml:1057",
     "comment": "account context menu action to remove the account"
   },
   {
     "term": "Rename calendar",
     "context": "Rename calendar",
-    "reference": "Modals/RenameCalendarDialog.qml:59",
-    "comment": "rename calendar dialog header"
+    "reference": "Modals/RenameCalendarDialog.qml:59, Modals/KeyboardShortcutsOverlay.qml:110",
+    "comment": "keyboard shortcut description | rename calendar dialog header"
   },
   {
     "term": "Rename…",
     "context": "Rename…",
-    "reference": "Modules/CalendarSidebar.qml:666",
+    "reference": "Modules/CalendarSidebar.qml:977",
     "comment": "calendar context menu action to rename a calendar"
   },
   {
@@ -1814,7 +1844,7 @@
   {
     "term": "Search",
     "context": "Search",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:94",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:127",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1874,13 +1904,13 @@
   {
     "term": "Settings",
     "context": "Settings",
-    "reference": "Modals/SettingsModal.qml:86, Modals/KeyboardShortcutsOverlay.qml:98",
+    "reference": "Modals/SettingsModal.qml:86, Modals/KeyboardShortcutsOverlay.qml:131",
     "comment": "keyboard shortcut description | settings window header title"
   },
   {
     "term": "Show",
     "context": "Show",
-    "reference": "Modules/CalendarSidebar.qml:661",
+    "reference": "Modules/CalendarSidebar.qml:972",
     "comment": "calendar context menu action to show a hidden calendar"
   },
   {
@@ -1908,6 +1938,12 @@
     "comment": "week numbers setting label"
   },
   {
+    "term": "Sidebar",
+    "context": "Sidebar",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:86",
+    "comment": "keyboard shortcuts overlay section header"
+  },
+  {
     "term": "Sign in with %1",
     "context": "Sign in with %1",
     "reference": "Modals/AccountAddModal.qml:641",
@@ -1928,7 +1964,7 @@
   {
     "term": "Sign-in expired — click to reconnect",
     "context": "Sign-in expired — click to reconnect",
-    "reference": "Modules/CalendarSidebar.qml:517",
+    "reference": "Modules/CalendarSidebar.qml:815",
     "comment": "tooltip on the account warning icon when re-authentication is required"
   },
   {
@@ -2018,7 +2054,7 @@
   {
     "term": "Sync now",
     "context": "Sync now",
-    "reference": "Modules/CalendarSidebar.qml:748",
+    "reference": "Modules/CalendarSidebar.qml:1052",
     "comment": "account context menu action to sync the account"
   },
   {
@@ -2066,7 +2102,7 @@
   {
     "term": "Tasks",
     "context": "Tasks",
-    "reference": "Modules/CalendarSidebar.qml:161, Modules/CalendarSidebar.qml:374, Modules/CalendarContent.qml:38",
+    "reference": "Modules/CalendarSidebar.qml:56, Modules/CalendarSidebar.qml:657, Modules/CalendarContent.qml:38",
     "comment": "header title when the tasks view is active | sidebar section header for the task list | view switcher option in sidebar"
   },
   {
@@ -2118,9 +2154,15 @@
     "comment": "agenda section header for the current day | due-date label on a task card | header button that jumps to the current date | search result date label for current day | tasks view section header for tasks due today"
   },
   {
+    "term": "Toggle calendar, switch view or sync account",
+    "context": "Toggle calendar, switch view or sync account",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:102",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Toggle this help",
     "context": "Toggle this help",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:102",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:135",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2258,7 +2300,7 @@
   {
     "term": "Week",
     "context": "Week",
-    "reference": "Modules/CalendarSidebar.qml:144",
+    "reference": "Modules/CalendarSidebar.qml:39",
     "comment": "view switcher option in sidebar"
   },
   {

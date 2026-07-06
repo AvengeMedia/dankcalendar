@@ -22,6 +22,13 @@ FloatingWindow {
     property date today: new Date()
     property int selectedEventIndex: -1
     property int eventsVersion: 0
+    property bool sidebarFocused: false
+
+    function setSidebarFocused(focused) {
+        sidebarFocused = focused;
+        if (isCompactMode)
+            menuVisible = focused;
+    }
 
     readonly property bool eventNavigation: {
         switch (currentView) {
@@ -298,6 +305,19 @@ FloatingWindow {
                 return;
             }
 
+            if (window.sidebarFocused) {
+                switch (event.key) {
+                case Qt.Key_Escape:
+                case Qt.Key_S:
+                    window.setSidebarFocused(false);
+                    event.accepted = true;
+                    return;
+                }
+                sidebar.handleKey(event);
+                if (event.accepted)
+                    return;
+            }
+
             const ctrl = event.modifiers & Qt.ControlModifier;
             const shift = event.modifiers & Qt.ShiftModifier;
 
@@ -363,6 +383,9 @@ FloatingWindow {
                 break;
             case Qt.Key_A:
                 window.currentView = "agenda";
+                break;
+            case Qt.Key_S:
+                window.setSidebarFocused(true);
                 break;
             case Qt.Key_1:
                 if (!ctrl) {
@@ -539,8 +562,10 @@ FloatingWindow {
                     visible: window.isCompactMode ? window.menuVisible : true
                     currentView: window.currentView
                     selectedDate: window.selectedDate
+                    keyboardActive: window.sidebarFocused
                     onViewChanged: view => {
                         window.currentView = view;
+                        window.sidebarFocused = false;
                         if (window.isCompactMode)
                             window.menuVisible = false;
                     }

@@ -15,6 +15,8 @@ Item {
     property bool calendarsExpanded: true
     property bool accountsExpanded: true
     property bool tasksExpanded: true
+    property bool keyboardActive: false
+    property int navIndex: -1
 
     signal viewChanged(string view)
     signal todayRequested
@@ -24,6 +26,292 @@ Item {
     signal addAccountRequested
 
     implicitWidth: 240
+
+    readonly property var viewItems: {
+        const items = [
+            {
+                view: "day",
+                label: I18n.tr("Day", "view switcher option in sidebar"),
+                icon: "calendar_view_day"
+            },
+            {
+                view: "week",
+                label: I18n.tr("Week", "view switcher option in sidebar"),
+                icon: "calendar_view_week"
+            },
+            {
+                view: "month",
+                label: I18n.tr("Month", "view switcher option in sidebar"),
+                icon: "calendar_view_month"
+            },
+            {
+                view: "agenda",
+                label: I18n.tr("Agenda", "view switcher option in sidebar"),
+                icon: "view_agenda"
+            }
+        ];
+        if (SettingsData.showTasks && DankCalService.hasTaskLists())
+            items.push({
+                view: "tasks",
+                label: I18n.tr("Tasks", "view switcher option in sidebar"),
+                icon: "task_alt"
+            });
+        return items;
+    }
+
+    // Flat keyboard navigation order: view switcher, then each section header
+    // followed by its rows when expanded.
+    readonly property var navItems: {
+        const items = [];
+        for (let i = 0; i < viewItems.length; i++)
+            items.push({
+                type: "view",
+                key: "view:" + viewItems[i].view,
+                view: viewItems[i].view
+            });
+        items.push({
+            type: "section",
+            key: "section:calendars",
+            section: "calendars"
+        });
+        if (calendarsExpanded) {
+            const cals = DankCalService.eventCalendars();
+            for (let i = 0; i < cals.length; i++)
+                items.push({
+                    type: "calendar",
+                    key: "cal:" + cals[i].id,
+                    data: cals[i]
+                });
+        }
+        if (SettingsData.showTasks && DankCalService.hasTaskLists()) {
+            items.push({
+                type: "section",
+                key: "section:tasks",
+                section: "tasks"
+            });
+            if (tasksExpanded) {
+                const tasks = tasksPanel.openTasks;
+                for (let i = 0; i < tasks.length; i++)
+                    items.push({
+                        type: "task",
+                        key: "task:" + tasks[i].id,
+                        data: tasks[i]
+                    });
+            }
+        }
+        items.push({
+            type: "section",
+            key: "section:accounts",
+            section: "accounts"
+        });
+        if (accountsExpanded) {
+            const accs = DankCalService.accounts;
+            for (let i = 0; i < accs.length; i++)
+                items.push({
+                    type: "account",
+                    key: "acc:" + accs[i].id,
+                    data: accs[i]
+                });
+        }
+        return items;
+    }
+
+    readonly property string navSelectedKey: keyboardActive && navIndex >= 0 && navIndex < navItems.length ? navItems[navIndex].key : ""
+
+    onKeyboardActiveChanged: {
+        if (keyboardActive && (navIndex < 0 || navIndex >= navItems.length))
+            navIndex = 0;
+    }
+
+    function currentNav() {
+        if (navIndex < 0 || navIndex >= navItems.length)
+            return null;
+        return navItems[navIndex];
+    }
+
+    function moveNav(delta) {
+        if (navItems.length === 0)
+            return;
+        if (navIndex < 0) {
+            navIndex = 0;
+            return;
+        }
+        navIndex = Math.max(0, Math.min(navItems.length - 1, navIndex + delta));
+    }
+
+    function sectionOf(item) {
+        switch (item.type) {
+        case "section":
+            return item.section;
+        case "calendar":
+            return "calendars";
+        case "task":
+            return "tasks";
+        case "account":
+            return "accounts";
+        default:
+            return "";
+        }
+    }
+
+    function isSectionExpanded(name) {
+        switch (name) {
+        case "calendars":
+            return calendarsExpanded;
+        case "tasks":
+            return tasksExpanded;
+        case "accounts":
+            return accountsExpanded;
+        default:
+            return false;
+        }
+    }
+
+    function setSectionExpanded(name, expanded) {
+        switch (name) {
+        case "calendars":
+            calendarsExpanded = expanded;
+            break;
+        case "tasks":
+            tasksExpanded = expanded;
+            break;
+        case "accounts":
+            accountsExpanded = expanded;
+            break;
+        default:
+            return;
+        }
+        if (!expanded)
+            navIndex = navItems.findIndex(i => i.key === "section:" + name);
+    }
+
+    function activateNav() {
+        const item = currentNav();
+        if (!item)
+            return;
+        switch (item.type) {
+        case "view":
+            viewChanged(item.view);
+            return;
+        case "section":
+            setSectionExpanded(item.section, !isSectionExpanded(item.section));
+            return;
+        case "calendar":
+            DankCalService.setCalendarHidden(item.data.id, !item.data.hidden);
+            return;
+        case "task":
+            taskClicked(item.data);
+            return;
+        case "account":
+            DankCalService.refreshAccount(item.data.id);
+            return;
+        }
+    }
+
+    function removeNav() {
+        const item = currentNav();
+        if (!item)
+            return;
+        switch (item.type) {
+        case "calendar":
+            confirmDeleteCalendar(item.data);
+            return;
+        case "account":
+            confirmRemoveAccount(item.data);
+            return;
+        }
+    }
+
+    function renameNav() {
+        const item = currentNav();
+        if (!item || item.type !== "calendar")
+            return;
+        openRenameCalendar(item.data);
+    }
+
+    function handleKey(event) {
+        switch (event.key) {
+        case Qt.Key_J:
+        case Qt.Key_Down:
+            moveNav(1);
+            break;
+        case Qt.Key_K:
+        case Qt.Key_Up:
+            moveNav(-1);
+            break;
+        case Qt.Key_H:
+        case Qt.Key_Left:
+            {
+                const item = currentNav();
+                if (item)
+                    setSectionExpanded(sectionOf(item), false);
+                break;
+            }
+        case Qt.Key_L:
+        case Qt.Key_Right:
+            {
+                const item = currentNav();
+                if (item)
+                    setSectionExpanded(sectionOf(item), true);
+                break;
+            }
+        case Qt.Key_Space:
+        case Qt.Key_Return:
+        case Qt.Key_Enter:
+            activateNav();
+            break;
+        case Qt.Key_Delete:
+        case Qt.Key_Backspace:
+            removeNav();
+            break;
+        case Qt.Key_R:
+            renameNav();
+            break;
+        default:
+            event.accepted = false;
+            return;
+        }
+        event.accepted = true;
+    }
+
+    function revealNav(item) {
+        const y = item.mapToItem(scrollColumn, 0, 0).y;
+        if (y < scroll.contentY) {
+            scroll.contentY = Math.max(0, y - Theme.spacingM);
+            return;
+        }
+        const bottom = y + item.height;
+        if (bottom > scroll.contentY + scroll.height)
+            scroll.contentY = Math.max(0, Math.min(scroll.contentHeight - scroll.height, bottom - scroll.height + Theme.spacingM));
+    }
+
+    function openRenameCalendar(cal) {
+        actionCalendar = cal;
+        renameLoader.active = true;
+        renameLoader.item.show(cal);
+    }
+
+    function confirmDeleteCalendar(cal) {
+        actionCalendar = cal;
+        deleteConfirmLoader.active = true;
+        deleteConfirmLoader.item.show({
+            title: I18n.tr("Delete \"%1\"?", "confirm dialog title for deleting a calendar, %1 is the calendar name").arg(cal.name),
+            message: I18n.tr("Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.", "confirm dialog body for deleting a calendar"),
+            confirmText: I18n.tr("Delete", "confirm button for deleting a calendar"),
+            danger: true
+        });
+    }
+
+    function confirmRemoveAccount(acc) {
+        actionAccount = acc;
+        accountRemoveLoader.active = true;
+        accountRemoveLoader.item.show({
+            title: I18n.tr("Remove \"%1\"?", "confirm dialog title for removing an account, %1 is the account label").arg(DankCalService.accountLabel(acc)),
+            message: I18n.tr("Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.", "confirm dialog body for removing an account"),
+            confirmText: I18n.tr("Remove", "confirm button for removing an account"),
+            danger: true
+        });
+    }
 
     function providerIcon(flavor) {
         switch (flavor) {
@@ -50,6 +338,12 @@ Item {
         id: sectionHeader
         property string title: ""
         property bool expanded: true
+        property string navKey: ""
+        readonly property bool navSelected: root.navSelectedKey === navKey
+        onNavSelectedChanged: {
+            if (navSelected)
+                root.revealNav(sectionHeader);
+        }
 
         signal toggled
 
@@ -57,6 +351,8 @@ Item {
         height: 28
         radius: Theme.cornerRadiusSmall
         color: "transparent"
+        border.color: navSelected ? Theme.primary : "transparent"
+        border.width: navSelected ? 2 : 0
 
         Row {
             anchors.left: parent.left
@@ -132,47 +428,20 @@ Item {
 
             Repeater {
                 model: ScriptModel {
-                    values: {
-                        const items = [
-                            {
-                                view: "day",
-                                label: I18n.tr("Day", "view switcher option in sidebar"),
-                                icon: "calendar_view_day"
-                            },
-                            {
-                                view: "week",
-                                label: I18n.tr("Week", "view switcher option in sidebar"),
-                                icon: "calendar_view_week"
-                            },
-                            {
-                                view: "month",
-                                label: I18n.tr("Month", "view switcher option in sidebar"),
-                                icon: "calendar_view_month"
-                            },
-                            {
-                                view: "agenda",
-                                label: I18n.tr("Agenda", "view switcher option in sidebar"),
-                                icon: "view_agenda"
-                            }
-                        ];
-                        if (SettingsData.showTasks && DankCalService.hasTaskLists())
-                            items.push({
-                                view: "tasks",
-                                label: I18n.tr("Tasks", "view switcher option in sidebar"),
-                                icon: "task_alt"
-                            });
-                        return items;
-                    }
+                    values: root.viewItems
                 }
 
                 StyledRect {
                     required property var modelData
                     readonly property bool active: root.currentView === modelData.view
+                    readonly property bool navSelected: root.navSelectedKey === "view:" + modelData.view
 
                     width: parent.width
                     height: 40
                     radius: Theme.cornerRadius
                     color: active ? Theme.primaryHover : "transparent"
+                    border.color: navSelected ? Theme.primary : "transparent"
+                    border.width: navSelected ? 2 : 0
 
                     Row {
                         anchors.left: parent.left
@@ -238,6 +507,7 @@ Item {
                 SectionHeader {
                     title: I18n.tr("My calendars", "sidebar section header for the calendar list")
                     expanded: root.calendarsExpanded
+                    navKey: "section:calendars"
                     onToggled: root.calendarsExpanded = !root.calendarsExpanded
                 }
 
@@ -268,6 +538,11 @@ Item {
                             return provider + " · " + label;
                         }
                         readonly property string rowTooltip: modelData.name + "  —  " + accountTooltip
+                        readonly property bool navSelected: root.navSelectedKey === "cal:" + modelData.id
+                        onNavSelectedChanged: {
+                            if (navSelected)
+                                root.revealNav(calRow);
+                        }
                         width: parent.width
                         height: 32
                         visible: root.calendarsExpanded
@@ -275,6 +550,14 @@ Item {
                         function openMenu(x, y) {
                             root.actionCalendar = modelData;
                             calendarMenu.show(calRow, x, y);
+                        }
+
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: Theme.cornerRadiusSmall
+                            color: "transparent"
+                            border.color: calRow.navSelected ? Theme.primary : "transparent"
+                            border.width: calRow.navSelected ? 2 : 0
                         }
 
                         Row {
@@ -373,6 +656,7 @@ Item {
                 SectionHeader {
                     title: I18n.tr("Tasks", "sidebar section header for the task list")
                     expanded: root.tasksExpanded
+                    navKey: "section:tasks"
                     onToggled: root.tasksExpanded = !root.tasksExpanded
                 }
 
@@ -398,9 +682,22 @@ Item {
                                 return acct;
                             return acct === "" ? modelData.calendar : modelData.calendar + "  —  " + acct;
                         }
+                        readonly property bool navSelected: root.navSelectedKey === "task:" + modelData.id
+                        onNavSelectedChanged: {
+                            if (navSelected)
+                                root.revealNav(taskRow);
+                        }
                         width: parent.width
                         height: 42
                         visible: root.tasksExpanded
+
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: Theme.cornerRadiusSmall
+                            color: "transparent"
+                            border.color: taskRow.navSelected ? Theme.primary : "transparent"
+                            border.width: taskRow.navSelected ? 2 : 0
+                        }
 
                         Rectangle {
                             id: taskCheck
@@ -497,6 +794,7 @@ Item {
                 SectionHeader {
                     title: I18n.tr("Accounts", "sidebar section header for the account list")
                     expanded: root.accountsExpanded
+                    navKey: "section:accounts"
                     onToggled: root.accountsExpanded = !root.accountsExpanded
                 }
 
@@ -521,6 +819,11 @@ Item {
                                 return I18n.tr("Not signed in — click to reconnect or re-add this account", "tooltip on the account warning icon when credentials are missing");
                             return I18n.tr("Account problem — click for options", "tooltip on the account warning icon for an unspecified problem");
                         }
+                        readonly property bool navSelected: root.navSelectedKey === "acc:" + modelData.id
+                        onNavSelectedChanged: {
+                            if (navSelected)
+                                root.revealNav(accRow);
+                        }
                         width: parent.width
                         height: 36
                         visible: root.accountsExpanded
@@ -528,6 +831,14 @@ Item {
                         function openMenu(x, y) {
                             root.actionAccount = modelData;
                             accountMenu.show(accRow, x, y);
+                        }
+
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: Theme.cornerRadiusSmall
+                            color: "transparent"
+                            border.color: accRow.navSelected ? Theme.primary : "transparent"
+                            border.width: accRow.navSelected ? 2 : 0
                         }
 
                         MouseArea {
@@ -683,17 +994,10 @@ Item {
                 DankCalService.setCalendarHidden(cal.id, !cal.hidden);
                 break;
             case "rename":
-                renameLoader.active = true;
-                renameLoader.item.show(cal);
+                root.openRenameCalendar(cal);
                 break;
             case "delete":
-                deleteConfirmLoader.active = true;
-                deleteConfirmLoader.item.show({
-                    title: I18n.tr("Delete \"%1\"?", "confirm dialog title for deleting a calendar, %1 is the calendar name").arg(cal.name),
-                    message: I18n.tr("Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.", "confirm dialog body for deleting a calendar"),
-                    confirmText: I18n.tr("Delete", "confirm button for deleting a calendar"),
-                    danger: true
-                });
+                root.confirmDeleteCalendar(cal);
                 break;
             }
         }
@@ -772,13 +1076,7 @@ Item {
                 DankCalService.refreshAccount(acc.id);
                 break;
             case "remove":
-                accountRemoveLoader.active = true;
-                accountRemoveLoader.item.show({
-                    title: I18n.tr("Remove \"%1\"?", "confirm dialog title for removing an account, %1 is the account label").arg(DankCalService.accountLabel(acc)),
-                    message: I18n.tr("Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.", "confirm dialog body for removing an account"),
-                    confirmText: I18n.tr("Remove", "confirm button for removing an account"),
-                    danger: true
-                });
+                root.confirmRemoveAccount(acc);
                 break;
             }
         }
