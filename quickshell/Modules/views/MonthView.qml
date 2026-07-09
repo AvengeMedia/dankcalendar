@@ -237,8 +237,10 @@ Item {
                             return upcoming.concat(ended);
                         }
 
-                        // 36px day badge area + 14px reserved for "+N more".
-                        readonly property int maxChips: Math.max(0, Math.min(3, Math.floor((height - 50) / (root.eventChipHeight + 2))))
+                        // When showing all events, chips fill whatever space is available
+                        // below the day badge; otherwise fall back to a 3-chip cap anchored
+                        // at the bottom, matching the classic "+N more" layout.
+                        readonly property int maxChips: SettingsData.monthShowAllEvents ? Math.max(0, Math.floor((height - 36 - Theme.spacingXS * 2 - 14) / (root.eventChipHeight + 2))) : Math.max(0, Math.min(3, Math.floor((height - 50) / (root.eventChipHeight + 2))))
 
                         width: grid.cellWidth
                         height: grid.cellHeight
@@ -305,7 +307,8 @@ Item {
                         Column {
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            anchors.bottom: parent.bottom
+                            anchors.top: SettingsData.monthShowAllEvents ? dayBadge.bottom : undefined
+                            anchors.bottom: SettingsData.monthShowAllEvents ? undefined : parent.bottom
                             anchors.margins: Theme.spacingXS
                             spacing: 2
                             clip: true

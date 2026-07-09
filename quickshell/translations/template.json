@@ -1211,6 +1211,13 @@
     "comment": ""
   },
   {
+    "term": "Expand day cells to fit every event instead of collapsing extras into \"+N more\".",
+    "translation": "",
+    "context": "show all month events setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "F1/I: Toggle • F10: Help",
     "translation": "",
     "context": "file browser info panel keyboard shortcut hint",
@@ -2303,9 +2310,9 @@
     "comment": ""
   },
   {
-    "term": "Show Dank Calendar in the system tray.",
+    "term": "Show all events in month view",
     "translation": "",
-    "context": "tray icon toggle description",
+    "context": "show all month events setting label",
     "reference": "",
     "comment": ""
   },

@@ -541,6 +541,17 @@ Item {
                     }
 
                     SettingsRow {
+                        label: I18n.tr("Show all events in month view", "show all month events setting label")
+                        description: I18n.tr("Expand day cells to fit every event instead of collapsing extras into \"+N more\".", "show all month events setting description")
+
+                        DankToggle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            checked: SettingsData.monthShowAllEvents
+                            onToggled: checked => SettingsData.monthShowAllEvents = checked
+                        }
+                    }
+
+                    SettingsRow {
                         label: I18n.tr("Week event title lines", "week event title line count setting label")
                         description: I18n.tr("Maximum title lines per event in week view.", "week event title line count setting description")
 
