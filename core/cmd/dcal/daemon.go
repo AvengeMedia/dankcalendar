@@ -40,6 +40,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
+	"github.com/AvengeMedia/dankcalendar/core/internal/uriopen"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
@@ -205,6 +206,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 		Version:     Version,
 		ColorScheme: colorSchemeWatcher,
 	}
+	deps.Opener = uriopen.Opener{}
 	ipcSrv, ipcErrCh, err := startIPC(ctx, deps)
 	if err != nil {
 		shutdownHTTP(httpSrv)

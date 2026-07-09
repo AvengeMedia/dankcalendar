@@ -285,15 +285,19 @@ func (e *Engine) notifiedSet(ctx context.Context, now time.Time) (map[stateKey]s
 }
 
 func (e *Engine) fire(ctx context.Context, ev *ent.Event, calID string, now time.Time) {
+	s := e.settings()
 	n := notify.Notification{
 		Summary: "Meeting invitation: " + eventTitle(ev),
-		Body:    invitationBody(ev, e.settings(), e.loc),
+		Body:    invitationBody(ev, s, e.loc),
 		Actions: []notify.Action{
 			{Key: "accept", Label: "Accept"},
 			{Key: "tentative", Label: "Maybe"},
 			{Key: "decline", Label: "Decline"},
 		},
-		Resident: e.settings().ReminderPersist,
+		Resident: s.ReminderPersist,
+	}
+	if s.NotificationSounds {
+		n.SoundName = notify.SoundReminder
 	}
 
 	id, err := e.sender.Send(n)

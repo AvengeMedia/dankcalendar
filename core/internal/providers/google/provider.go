@@ -508,6 +508,17 @@ func toGoogleEvent(ev *cal.Event) *calendar.Event {
 		for _, r := range ev.Recurrence.ExDate {
 			out.Recurrence = append(out.Recurrence, "EXDATE:"+r)
 		}
+		// Google requires an explicit time zone on recurring events; our
+		// times are stored UTC, so expand the series in UTC when the event
+		// carries no zone of its own.
+		if !ev.AllDay {
+			if out.Start.TimeZone == "" {
+				out.Start.TimeZone = "UTC"
+			}
+			if out.End.TimeZone == "" {
+				out.End.TimeZone = "UTC"
+			}
+		}
 	}
 
 	out.Attendees = toGoogleAttendees(ev.Attendees)

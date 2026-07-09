@@ -45,11 +45,15 @@ Singleton {
     property alias allDayReminderTime: adapter.allDayReminderTime
     property alias allDayReminderDaysBefore: adapter.allDayReminderDaysBefore
     property alias snoozeMinutes: adapter.snoozeMinutes
+    property alias notificationSounds: adapter.notificationSounds
+    property alias showTrayIcon: adapter.showTrayIcon
     property alias syncIntervalMinutes: adapter.syncIntervalMinutes
     // "minimize" = hide to tray, "quit" = stop the daemon and child
     property alias closeBehavior: adapter.closeBehavior
     // width of the calendar sidebar in pixels, set by dragging its edge
     property alias sidebarWidth: adapter.sidebarWidth
+    // whether the calendar sidebar is hidden in non-compact mode
+    property alias sidebarCollapsed: adapter.sidebarCollapsed
     // last active calendar view, restored on open: "month" | "week" | "day" | "agenda"
     property alias lastView: adapter.lastView
 
@@ -156,9 +160,12 @@ Singleton {
             property string allDayReminderTime: "09:00"
             property int allDayReminderDaysBefore: 0
             property int snoozeMinutes: 5
+            property bool notificationSounds: false
+            property bool showTrayIcon: true
             property int syncIntervalMinutes: 30
             property string closeBehavior: "minimize"
             property int sidebarWidth: 240
+            property bool sidebarCollapsed: false
             property string lastView: "month"
         }
     }

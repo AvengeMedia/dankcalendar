@@ -21,6 +21,13 @@
     "comment": ""
   },
   {
+    "term": "%1 times",
+    "translation": "",
+    "context": "recurrence label suffix for a fixed number of occurrences",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "%1 · All day",
     "translation": "",
     "context": "event details time label for all-day events",
@@ -371,6 +378,13 @@
     "comment": ""
   },
   {
+    "term": "Add reminder",
+    "translation": "",
+    "context": "event form button to add another reminder",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Add task",
     "translation": "",
     "context": "sidebar button to add a task | tasks view button to create a new task",
@@ -395,6 +409,13 @@
     "term": "Adds a calendar to \"%1\".",
     "translation": "",
     "context": "new calendar dialog subtitle naming the local account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "After",
+    "translation": "",
+    "context": "recurrence end condition dropdown option, followed by a number of times",
     "reference": "",
     "comment": ""
   },
@@ -637,6 +658,13 @@
     "comment": ""
   },
   {
+    "term": "Changes apply to the whole series",
+    "translation": "",
+    "context": "event form note when editing a recurring event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Choose a JSON color theme file.",
     "translation": "",
     "context": "custom theme hint when none selected",
@@ -689,6 +717,13 @@
     "term": "Close behavior",
     "translation": "",
     "context": "close behavior setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Closing hides the window; reopen it from your app launcher.",
+    "translation": "",
+    "context": "tray icon toggle warning when closing only minimizes",
     "reference": "",
     "comment": ""
   },
@@ -856,7 +891,7 @@
   {
     "term": "Custom",
     "translation": "",
-    "context": "color source button group option for a custom theme file",
+    "context": "color source button group option for a custom theme file | recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -870,7 +905,7 @@
   {
     "term": "Daily",
     "translation": "",
-    "context": "task recurrence dropdown option",
+    "context": "recurrence dropdown option | task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1038,7 +1073,7 @@
   {
     "term": "Does not repeat",
     "translation": "",
-    "context": "task recurrence dropdown option",
+    "context": "recurrence dropdown option | task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1095,6 +1130,13 @@
     "term": "Enable reminders",
     "translation": "",
     "context": "per-calendar enable reminders override label | reminders toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Ends",
+    "translation": "",
+    "context": "recurrence end condition label",
     "reference": "",
     "comment": ""
   },
@@ -1157,7 +1199,7 @@
   {
     "term": "Every",
     "translation": "",
-    "context": "task form label for the recurrence interval",
+    "context": "recurrence interval label, followed by a count and unit | task form label for the recurrence interval",
     "reference": "",
     "comment": ""
   },
@@ -1556,7 +1598,7 @@
   {
     "term": "Monthly",
     "translation": "",
-    "context": "task recurrence dropdown option",
+    "context": "recurrence dropdown option | task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1606,6 +1648,13 @@
     "term": "Navigation",
     "translation": "",
     "context": "keyboard shortcuts overlay section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Never",
+    "translation": "",
+    "context": "recurrence end condition dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -1778,6 +1827,13 @@
     "comment": ""
   },
   {
+    "term": "Notification sound",
+    "translation": "",
+    "context": "notification sound toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Notifications",
     "translation": "",
     "context": "notifications settings section header | settings sidebar tab label",
@@ -1795,6 +1851,13 @@
     "term": "Offline",
     "translation": "",
     "context": "about page daemon status value",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "On date",
+    "translation": "",
+    "context": "recurrence end condition dropdown option, followed by a date",
     "reference": "",
     "comment": ""
   },
@@ -1942,6 +2005,13 @@
     "term": "Pictures",
     "translation": "",
     "context": "file browser quick access location",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Play a sound when a reminder fires.",
+    "translation": "",
+    "context": "notification sound toggle description",
     "reference": "",
     "comment": ""
   },
@@ -2264,6 +2334,13 @@
     "term": "Show tasks",
     "translation": "",
     "context": "show tasks setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show tray icon",
+    "translation": "",
+    "context": "tray icon toggle label",
     "reference": "",
     "comment": ""
   },
@@ -2718,7 +2795,7 @@
   {
     "term": "Weekly",
     "translation": "",
-    "context": "task recurrence dropdown option",
+    "context": "recurrence dropdown option | task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -2739,7 +2816,7 @@
   {
     "term": "Yearly",
     "translation": "",
-    "context": "task recurrence dropdown option",
+    "context": "recurrence dropdown option | task recurrence dropdown option",
     "reference": "",
     "comment": ""
   },
@@ -2828,6 +2905,13 @@
     "comment": ""
   },
   {
+    "term": "on %1",
+    "translation": "",
+    "context": "recurrence label suffix listing weekdays, %1 like 'Mon, Wed'",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "only if the feed requires sign-in",
     "translation": "",
     "context": "ical optional password field placeholder | ical optional username field placeholder",
@@ -2856,9 +2940,23 @@
     "comment": ""
   },
   {
+    "term": "times",
+    "translation": "",
+    "context": "recurrence end condition, occurrence count unit",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "to",
     "translation": "",
     "context": "core hours range separator",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "until %1",
+    "translation": "",
+    "context": "recurrence label suffix with an end date",
     "reference": "",
     "comment": ""
   },

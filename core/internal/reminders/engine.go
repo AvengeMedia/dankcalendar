@@ -355,11 +355,18 @@ func (e *Engine) SendTest() error {
 	if e.sender == nil {
 		return fmt.Errorf("desktop notifications unavailable (no session bus)")
 	}
-	_, err := e.sender.Send(notify.Notification{
+	// The body carries a timestamp so repeated tests aren't identical —
+	// notification servers may deduplicate matching notifications.
+	s := e.settings()
+	n := notify.Notification{
 		Summary:  "Dank Calendar",
-		Body:     "Test reminder — notifications are working.",
-		Resident: e.settings().ReminderPersist,
-	})
+		Body:     fmt.Sprintf("Test reminder — notifications are working. Sent at %s.", e.now().Format("15:04:05")),
+		Resident: s.ReminderPersist,
+	}
+	if s.NotificationSounds {
+		n.SoundName = notify.SoundReminder
+	}
+	_, err := e.sender.Send(n)
 	return err
 }
 
@@ -483,6 +490,9 @@ func (e *Engine) fire(ctx context.Context, ev *ent.Event, key stateKey, s settin
 		Body:     eventBody(ev, now, s, e.loc),
 		Actions:  actions,
 		Resident: s.ReminderPersist,
+	}
+	if s.NotificationSounds {
+		n.SoundName = notify.SoundReminder
 	}
 
 	id, err := e.sender.Send(n)

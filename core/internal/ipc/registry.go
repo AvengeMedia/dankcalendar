@@ -55,8 +55,8 @@ var Methods = []MethodSpec{
 
 	{Name: "events.list", Group: "events", Desc: "List events", Params: []ParamSpec{opt("query", "text filter"), opt("from", "RFC3339"), opt("to", "RFC3339"), opt("limit", ""), opt("offset", "")}},
 	{Name: "events.get", Group: "events", Desc: "Get an event by iCal UID", Params: []ParamSpec{req("uid", "event iCal UID"), opt("calendarId", "limit to one calendar"), opt("start", "occurrence start RFC3339 for recurring events")}},
-	{Name: "events.create", Group: "events", Desc: "Create an event", Params: []ParamSpec{req("calendarId", ""), req("summary", ""), req("start", "RFC3339"), req("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", "")}},
-	{Name: "events.update", Group: "events", Desc: "Update an event", Params: []ParamSpec{req("id", ""), opt("summary", ""), opt("start", "RFC3339"), opt("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", "")}},
+	{Name: "events.create", Group: "events", Desc: "Create an event", Params: []ParamSpec{req("calendarId", ""), req("summary", ""), req("start", "RFC3339"), req("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", ""), opt("recurrence", "RRULE list")}},
+	{Name: "events.update", Group: "events", Desc: "Update an event", Params: []ParamSpec{req("id", ""), opt("summary", ""), opt("start", "RFC3339"), opt("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", ""), opt("recurrence", "RRULE list")}},
 	{Name: "events.delete", Group: "events", Desc: "Delete an event", Params: []ParamSpec{req("id", "")}},
 	{Name: "events.rsvp", Group: "events", Desc: "Respond to a meeting invitation", Params: []ParamSpec{req("id", ""), req("response", "accept|decline|tentative")}},
 
@@ -80,6 +80,7 @@ var Methods = []MethodSpec{
 	{Name: "system.autostart.get", Group: "system", Desc: "Report autostart status"},
 	{Name: "system.autostart.set", Group: "system", Desc: "Enable or disable autostart", Params: []ParamSpec{req("enabled", "true|false")}},
 	{Name: "system.colorScheme.get", Group: "system", Desc: "Current portal color scheme (0 no-preference, 1 dark, 2 light)"},
+	{Name: "system.openUri", Group: "system", Desc: "Open a URI with the default handler via the desktop portal", Params: []ParamSpec{req("uri", "")}},
 }
 
 func MethodNames() []string {

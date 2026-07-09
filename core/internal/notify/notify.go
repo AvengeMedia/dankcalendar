@@ -23,6 +23,10 @@ const (
 	portalBusName    = "org.freedesktop.portal.Desktop"
 	portalObjectPath = "/org/freedesktop/portal/desktop"
 	portalOpenURI    = "org.freedesktop.portal.OpenURI.OpenURI"
+
+	// SoundReminder is a freedesktop sound-naming-spec event name; servers
+	// that support the sound-name hint resolve it against the active theme.
+	SoundReminder = "message-new-instant"
 )
 
 type Action struct {
@@ -36,6 +40,9 @@ type Notification struct {
 	Actions    []Action
 	Resident   bool
 	ReplacesID uint32
+	// SoundName is a freedesktop sound-theme event name the server should
+	// play; empty sends no sound hints so the server's own config applies.
+	SoundName string
 }
 
 // Client owns the session bus connection. Action and close callbacks are
@@ -88,6 +95,9 @@ func (c *Client) Send(n Notification) (uint32, error) {
 	hints := map[string]dbus.Variant{
 		"desktop-entry": dbus.MakeVariant(desktopEntry),
 		"urgency":       dbus.MakeVariant(byte(1)),
+	}
+	if n.SoundName != "" {
+		hints["sound-name"] = dbus.MakeVariant(n.SoundName)
 	}
 
 	// 0 keeps the notification until dismissed; -1 uses the server default.
