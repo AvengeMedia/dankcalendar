@@ -2310,6 +2310,13 @@
     "comment": ""
   },
   {
+    "term": "Show Dank Calendar in the system tray.",
+    "translation": "",
+    "context": "tray icon toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Show all events in month view",
     "translation": "",
     "context": "show all month events setting label",
