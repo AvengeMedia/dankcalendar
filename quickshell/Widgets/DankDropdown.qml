@@ -138,9 +138,13 @@ Item {
                         StateLayer {
                             stateColor: Theme.primary
                             cornerRadius: parent.radius
+                            // Close before emitting: a handler may rebuild the
+                            // model that owns this delegate, destroying it
+                            // mid-signal.
                             onClicked: {
-                                root.valueChanged(parent.modelData);
+                                const value = parent.modelData;
                                 popup.close();
+                                root.valueChanged(value);
                             }
                         }
                     }

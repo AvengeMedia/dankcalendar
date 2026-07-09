@@ -370,6 +370,10 @@ func eventFromParams(base calendar.Event, p map[string]any) (calendar.Event, err
 		base.Reminders = rems
 	}
 
+	if raw, ok := p["recurrence"]; ok {
+		base.Recurrence = recurrenceFromParam(base.Recurrence, raw)
+	}
+
 	for key, dst := range map[string]*time.Time{"start": &base.Start, "end": &base.End} {
 		raw := ParamString(p, key)
 		if raw == "" {
@@ -431,7 +435,7 @@ func reminderMinutes(raw any) (int, bool) {
 }
 
 func domainEventFromEnt(e *ent.Event) calendar.Event {
-	return calendar.Event{
+	ev := calendar.Event{
 		ID:            e.ID,
 		UID:           e.UID,
 		RemoteID:      e.RemoteID,
@@ -447,9 +451,14 @@ func domainEventFromEnt(e *ent.Event) calendar.Event {
 		AllDay:        e.AllDay,
 		StartTimeZone: e.StartTz,
 		EndTimeZone:   e.EndTz,
+		Recurrence:    calendar.RecurrenceFromMap(e.Recurrence),
 		RecurringID:   e.RecurringID,
 		Reminders:     calendar.RemindersFromMaps(e.Reminders),
 	}
+	if e.OriginalStart != nil {
+		ev.OriginalStart = *e.OriginalStart
+	}
+	return ev
 }
 
 func persistEvent(ctx context.Context, deps Deps, calendarID string, ev *calendar.Event) (*ent.Event, error) {

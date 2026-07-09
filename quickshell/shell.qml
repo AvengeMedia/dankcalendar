@@ -138,7 +138,7 @@ ShellRoot {
 
     Loader {
         id: trayLoader
-        active: Quickshell.env("DANKCAL_NO_TRAY") !== "1"
+        active: SettingsData.showTrayIcon && Quickshell.env("DANKCAL_NO_TRAY") !== "1"
         source: Qt.resolvedUrl("Modules/TrayIcon.qml")
         onLoaded: item.shell = root
         onStatusChanged: {

@@ -416,8 +416,21 @@ Singleton {
         return null;
     }
 
+    // Pure task lists (VTODO only, e.g. Google Tasks) are writable but can't
+    // hold events; creating one there 404s at the provider.
     function writableCalendars() {
-        return calendars.filter(c => !c.readOnly);
+        return calendars.filter(c => !c.readOnly && _holdsEvents(c));
+    }
+
+    // Qt.openUrlExternally doesn't work with geo: URIs for some reason, so
+    // the daemon has its own opener.
+    function openUri(url) {
+        sendRequest("system.openUri", {
+            "uri": url
+        }, response => {
+            if (response.error)
+                Qt.openUrlExternally(url);
+        });
     }
 
     // _holdsEvents treats an empty component set as an event calendar for
@@ -552,6 +565,7 @@ Singleton {
             "end": allDay ? _dayBoundary(e.end) : new Date(e.end),
             "allDay": allDay,
             "status": e.status || "confirmed",
+            "recurrence": (e.recurrence || {}).rrule || [],
             "recurringId": e.recurringId || "",
             "attendees": e.attendees || [],
             "organizer": e.organizer || null,
@@ -803,22 +817,39 @@ Singleton {
         return acc ? (acc.kind || "") : "";
     }
 
-    // recurrenceLabel summarizes a task's RRULE for display. It understands the
-    // FREQ + INTERVAL subset the editor produces; anything else falls back to a
-    // generic "Repeats" so unknown rules still read sensibly.
-    function recurrenceLabel(task) {
-        const rules = task.recurrence || [];
+    // recurrenceLabel summarizes an event's or task's RRULE for display. It
+    // understands the FREQ/INTERVAL/BYDAY/COUNT/UNTIL subset the editors
+    // produce; anything else falls back to a generic "Repeats" so unknown
+    // rules still read sensibly.
+    function recurrenceLabel(item) {
+        const rules = item.recurrence || [];
         if (rules.length === 0)
             return "";
         let freq = "";
         let interval = 1;
+        let byDay = [];
+        let count = 0;
+        let until = null;
         const parts = rules[0].split(";");
         for (let i = 0; i < parts.length; i++) {
             const kv = parts[i].split("=");
-            if (kv[0] === "FREQ")
+            switch (kv[0]) {
+            case "FREQ":
                 freq = kv[1];
-            else if (kv[0] === "INTERVAL")
+                break;
+            case "INTERVAL":
                 interval = parseInt(kv[1]) || 1;
+                break;
+            case "BYDAY":
+                byDay = kv[1].split(",");
+                break;
+            case "COUNT":
+                count = parseInt(kv[1]) || 0;
+                break;
+            case "UNTIL":
+                until = rruleUntilDate(kv[1]);
+                break;
+            }
         }
         const unit = {
             "DAILY": [I18n.tr("day", "recurrence unit singular"), I18n.tr("days", "recurrence unit plural")],
@@ -828,9 +859,36 @@ Singleton {
         }[freq];
         if (!unit)
             return I18n.tr("Repeats", "generic recurrence label for an unrecognized rule");
-        if (interval <= 1)
-            return I18n.tr("Repeats every %1", "recurrence label, %1 is a unit like 'day'").arg(unit[0]);
-        return I18n.tr("Repeats every %1 %2", "recurrence label, %1 is a count and %2 a unit like 'weeks'").arg(interval).arg(unit[1]);
+
+        let label = interval <= 1 ? I18n.tr("Repeats every %1", "recurrence label, %1 is a unit like 'day'").arg(unit[0]) : I18n.tr("Repeats every %1 %2", "recurrence label, %1 is a count and %2 a unit like 'weeks'").arg(interval).arg(unit[1]);
+
+        if (freq === "WEEKLY" && byDay.length > 0) {
+            const codes = {
+                "SU": 0,
+                "MO": 1,
+                "TU": 2,
+                "WE": 3,
+                "TH": 4,
+                "FR": 5,
+                "SA": 6
+            };
+            const names = byDay.filter(c => codes[c] !== undefined).map(c => SettingsData.dayName(codes[c]));
+            if (names.length > 0)
+                label += " " + I18n.tr("on %1", "recurrence label suffix listing weekdays, %1 like 'Mon, Wed'").arg(names.join(", "));
+        }
+        if (count > 0)
+            label += ", " + I18n.tr("%1 times", "recurrence label suffix for a fixed number of occurrences").arg(count);
+        else if (until)
+            label += ", " + I18n.tr("until %1", "recurrence label suffix with an end date").arg(Qt.formatDate(until, "MMM d, yyyy"));
+        return label;
+    }
+
+    // rruleUntilDate parses an RRULE UNTIL value (YYYYMMDD or
+    // YYYYMMDDTHHMMSSZ) into a local date, null when unrecognized.
+    function rruleUntilDate(value) {
+        if (!/^\d{8}(T\d{6}Z?)?$/.test(value || ""))
+            return null;
+        return new Date(parseInt(value.slice(0, 4)), parseInt(value.slice(4, 6)) - 1, parseInt(value.slice(6, 8)));
     }
 
     function decorateTask(t) {

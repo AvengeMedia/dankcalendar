@@ -51,7 +51,9 @@ type graphRecurrencePattern struct {
 type graphRecurrenceRange struct {
 	Type                string `json:"type"`
 	StartDate           string `json:"startDate,omitempty"`
+	EndDate             string `json:"endDate,omitempty"`
 	NumberOfOccurrences int    `json:"numberOfOccurrences,omitempty"`
+	RecurrenceTimeZone  string `json:"recurrenceTimeZone,omitempty"`
 }
 
 func (p *Provider) listTodoLists(ctx context.Context) ([]cal.Calendar, error) {

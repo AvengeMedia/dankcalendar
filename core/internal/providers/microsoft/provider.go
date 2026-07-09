@@ -334,6 +334,9 @@ func (p *Provider) CreateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	out := graphToEvent(created)
 	out.ID = ev.ID
 	out.CalendarID = ev.CalendarID
+	if created.Recurrence != nil {
+		out.Recurrence = ev.Recurrence
+	}
 	return &out, nil
 }
 
@@ -351,6 +354,9 @@ func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	out := graphToEvent(updated)
 	out.ID = ev.ID
 	out.CalendarID = ev.CalendarID
+	if updated.Recurrence != nil {
+		out.Recurrence = ev.Recurrence
+	}
 	return &out, nil
 }
 

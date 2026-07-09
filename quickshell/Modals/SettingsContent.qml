@@ -402,6 +402,17 @@ Item {
                     }
 
                     SettingsRow {
+                        label: I18n.tr("Show tray icon", "tray icon toggle label")
+                        description: !SettingsData.showTrayIcon && SettingsData.closeBehavior === "minimize" ? I18n.tr("Closing hides the window; reopen it from your app launcher.", "tray icon toggle warning when closing only minimizes") : I18n.tr("Show Dank Calendar in the system tray.", "tray icon toggle description")
+
+                        DankToggle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            checked: SettingsData.showTrayIcon
+                            onToggled: checked => SettingsData.showTrayIcon = checked
+                        }
+                    }
+
+                    SettingsRow {
                         label: I18n.tr("Start week on", "week start setting label")
                         description: I18n.tr("First day shown in week and month views.", "week start setting description")
 
@@ -1270,6 +1281,18 @@ Item {
                             checked: SettingsData.reminderPersist
                             toggleEnabled: SettingsData.remindersEnabled
                             onToggled: checked => SettingsData.reminderPersist = checked
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Notification sound", "notification sound toggle label")
+                        description: I18n.tr("Play a sound when a reminder fires.", "notification sound toggle description")
+
+                        DankToggle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            checked: SettingsData.notificationSounds
+                            toggleEnabled: SettingsData.remindersEnabled
+                            onToggled: checked => SettingsData.notificationSounds = checked
                         }
                     }
 

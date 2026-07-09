@@ -27,7 +27,14 @@ FloatingWindow {
     property string formDescription: ""
     property bool formAllDay: false
     property int formCalendarIndex: 0
-    property int formReminderMinutes: -1
+    property var formReminders: []
+    property var recurrencePickerItem: null
+
+    // Recurrence is editable on new events and series masters; occurrence
+    // rows (recurringId set) would need per-occurrence semantics we don't
+    // model, so the control is hidden there.
+    readonly property bool recurrenceEditable: createMode || !(event.recurringId || "")
+    readonly property int maxReminders: 5
 
     readonly property var reminderOptions: [
         {
@@ -147,14 +154,46 @@ FloatingWindow {
             }
         }
 
-        formReminderMinutes = -1;
+        const popupMinutes = [];
         const reminders = event.reminders || [];
         for (let i = 0; i < reminders.length; i++) {
-            if (_isPopup(reminders[i])) {
-                formReminderMinutes = reminders[i].minutes;
-                break;
+            if (!_isPopup(reminders[i]))
+                continue;
+            if (popupMinutes.indexOf(reminders[i].minutes) === -1)
+                popupMinutes.push(reminders[i].minutes);
+        }
+        formReminders = popupMinutes;
+    }
+
+    function addReminder() {
+        const list = formReminders.slice();
+        if (list.length >= maxReminders)
+            return;
+        let candidate = SettingsData.defaultReminderMinutes >= 0 ? SettingsData.defaultReminderMinutes : 10;
+        if (list.indexOf(candidate) !== -1) {
+            for (let i = 1; i < reminderOptions.length; i++) {
+                if (list.indexOf(reminderOptions[i].value) === -1) {
+                    candidate = reminderOptions[i].value;
+                    break;
+                }
             }
         }
+        if (list.indexOf(candidate) !== -1)
+            return;
+        list.push(candidate);
+        formReminders = list;
+    }
+
+    function setReminder(index, minutes) {
+        const list = formReminders.slice();
+        list[index] = minutes;
+        formReminders = list;
+    }
+
+    function removeReminder(index) {
+        const list = formReminders.slice();
+        list.splice(index, 1);
+        formReminders = list;
     }
 
     function _isPopup(reminder) {
@@ -179,6 +218,29 @@ FloatingWindow {
     function reminderSummary() {
         const labels = (event.reminders || []).filter(r => _isPopup(r)).map(r => reminderText(r.minutes));
         return labels.join(" · ");
+    }
+
+    // locationUrl makes the location row clickable: a URL location opens
+    // directly, conference placeholders open the meeting link, and anything
+    // else opens as a geo: search in the maps app.
+    function locationUrl() {
+        const loc = (event.location || "").trim();
+        if (loc === "")
+            return "";
+        if (/^https?:\/\/\S+$/i.test(loc))
+            return loc;
+        if (/^www\.\S+$/i.test(loc))
+            return "https://" + loc;
+        if (event.meetingUrl)
+            return event.meetingUrl;
+        return "geo:0,0?q=" + encodeURIComponent(loc);
+    }
+
+    function recurrenceSummary() {
+        const label = DankCalService.recurrenceLabel(event);
+        if (label !== "")
+            return label;
+        return (event.recurringId || "") !== "" ? I18n.tr("Repeats", "generic recurrence label for an unrecognized rule") : "";
     }
 
     function reminderOptionLabel(minutes) {
@@ -221,14 +283,20 @@ FloatingWindow {
         }
         const cal = writable[Math.min(formCalendarIndex, writable.length - 1)];
 
-        // Non-popup reminders (e.g. email) are kept as-is; the dropdown only
-        // manages the popup reminder.
+        // Non-popup reminders (e.g. email) are kept as-is; the editor only
+        // manages popup reminders.
         const reminders = (event.reminders || []).filter(r => !_isPopup(r));
-        if (formReminderMinutes >= 0)
+        const seen = [];
+        for (let i = 0; i < formReminders.length; i++) {
+            const minutes = formReminders[i];
+            if (minutes < 0 || seen.indexOf(minutes) !== -1)
+                continue;
+            seen.push(minutes);
             reminders.push({
                 "method": "popup",
-                "minutes": formReminderMinutes
+                "minutes": minutes
             });
+        }
 
         const fields = {
             "summary": formTitle.trim(),
@@ -239,6 +307,8 @@ FloatingWindow {
             "allDay": formAllDay,
             "reminders": reminders
         };
+        if (recurrenceEditable && recurrencePickerItem)
+            fields.recurrence = recurrencePickerItem.currentRules();
 
         saving = true;
         formError = "";
@@ -597,6 +667,15 @@ FloatingWindow {
                 MetaRow {
                     iconName: "place"
                     primary: eventModal.event.location || ""
+                    accent: link ? Theme.primary : Theme.surfaceVariantText
+                    link: linkUrl !== ""
+                    linkUrl: eventModal.locationUrl()
+                    visible: primary !== ""
+                }
+
+                MetaRow {
+                    iconName: "repeat"
+                    primary: eventModal.recurrenceSummary()
                     visible: primary !== ""
                 }
 
@@ -606,15 +685,8 @@ FloatingWindow {
                     secondary: eventModal.event.meetingUrl || ""
                     accent: Theme.primary
                     link: true
+                    linkUrl: eventModal.event.meetingUrl || ""
                     visible: secondary !== ""
-
-                    HoverHandler {
-                        cursorShape: Qt.PointingHandCursor
-                    }
-
-                    TapHandler {
-                        onTapped: Qt.openUrlExternally(eventModal.event.meetingUrl)
-                    }
                 }
 
                 MetaRow {
@@ -626,12 +698,10 @@ FloatingWindow {
                 MetaRow {
                     iconName: "link"
                     primary: eventModal.event.url || ""
+                    accent: Theme.primary
                     link: true
+                    linkUrl: eventModal.event.url || ""
                     visible: primary !== ""
-
-                    TapHandler {
-                        onTapped: Qt.openUrlExternally(eventModal.event.url)
-                    }
                 }
             }
 
@@ -1046,25 +1116,105 @@ FloatingWindow {
             Row {
                 width: parent.width
                 spacing: Theme.spacingM
+                visible: eventModal.recurrenceEditable
+
+                DankIcon {
+                    name: "repeat"
+                    size: Theme.iconSize - 6
+                    color: Theme.surfaceVariantText
+                    anchors.top: parent.top
+                    anchors.topMargin: (40 - (Theme.iconSize - 6)) / 2
+                }
+
+                Column {
+                    width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                    spacing: Theme.spacingXS
+
+                    DankRecurrencePicker {
+                        id: recurrencePicker
+                        width: parent.width
+                        rules: eventModal.event.recurrence || []
+                        startDate: eventModal.formStartDate
+                        allDay: eventModal.formAllDay
+                        Component.onCompleted: eventModal.recurrencePickerItem = this
+                        Component.onDestruction: {
+                            if (eventModal.recurrencePickerItem === this)
+                                eventModal.recurrencePickerItem = null;
+                        }
+                    }
+
+                    StyledText {
+                        visible: !eventModal.createMode && recurrencePicker.isRecurring
+                        text: I18n.tr("Changes apply to the whole series", "event form note when editing a recurring event")
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.surfaceVariantText
+                        width: parent.width
+                        horizontalAlignment: Text.AlignLeft
+                        wrapMode: Text.WordWrap
+                    }
+                }
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
 
                 DankIcon {
                     name: "notifications"
                     size: Theme.iconSize - 6
                     color: Theme.surfaceVariantText
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: (40 - (Theme.iconSize - 6)) / 2
                 }
 
-                DankDropdown {
+                Column {
                     width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
-                    options: eventModal.reminderOptions.map(o => o.label)
-                    currentValue: eventModal.reminderOptionLabel(eventModal.formReminderMinutes)
-                    onValueChanged: value => {
-                        for (let i = 0; i < eventModal.reminderOptions.length; i++) {
-                            if (eventModal.reminderOptions[i].label === value) {
-                                eventModal.formReminderMinutes = eventModal.reminderOptions[i].value;
-                                return;
+                    spacing: Theme.spacingS
+
+                    Repeater {
+                        model: ScriptModel {
+                            values: eventModal.formReminders
+                        }
+
+                        Row {
+                            id: reminderRow
+
+                            required property int index
+                            required property var modelData
+
+                            width: parent.width
+                            spacing: Theme.spacingS
+
+                            DankDropdown {
+                                width: parent.width - removeButton.width - Theme.spacingS
+                                options: eventModal.reminderOptions.slice(1).map(o => o.label)
+                                currentValue: eventModal.reminderOptionLabel(reminderRow.modelData)
+                                onValueChanged: value => {
+                                    for (let i = 0; i < eventModal.reminderOptions.length; i++) {
+                                        if (eventModal.reminderOptions[i].label === value) {
+                                            eventModal.setReminder(reminderRow.index, eventModal.reminderOptions[i].value);
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+
+                            DankActionButton {
+                                id: removeButton
+                                iconName: "close"
+                                iconColor: Theme.surfaceVariantText
+                                onClicked: eventModal.removeReminder(reminderRow.index)
+                                anchors.verticalCenter: parent.verticalCenter
                             }
                         }
+                    }
+
+                    DankButton {
+                        text: I18n.tr("Add reminder", "event form button to add another reminder")
+                        iconName: "add"
+                        buttonHeight: 36
+                        visible: eventModal.formReminders.length < eventModal.maxReminders
+                        onClicked: eventModal.addReminder()
                     }
                 }
             }
@@ -1113,29 +1263,33 @@ FloatingWindow {
         }
     }
 
-    component MetaRow: Row {
+    component MetaRow: Item {
         property string iconName: ""
         property string primary: ""
         property string secondary: ""
         property color accent: Theme.surfaceVariantText
         property bool link: false
+        property string linkUrl: ""
 
-        spacing: Theme.spacingM
         width: parent.width
         height: Math.max(32, infoColumn.implicitHeight)
 
         DankIcon {
+            id: rowIcon
             name: parent.iconName
             size: Theme.iconSize - 4
             color: parent.accent
+            anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Column {
             id: infoColumn
+            anchors.left: rowIcon.right
+            anchors.leftMargin: Theme.spacingM
+            anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             spacing: 0
-            width: parent.width - Theme.iconSize - 4 - Theme.spacingM
 
             StyledText {
                 text: parent.parent.primary
@@ -1154,6 +1308,13 @@ FloatingWindow {
                 width: parent.width
                 elide: Text.ElideRight
             }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            enabled: parent.link && parent.linkUrl !== ""
+            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onClicked: DankCalService.openUri(parent.linkUrl)
         }
     }
 

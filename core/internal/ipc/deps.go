@@ -21,6 +21,11 @@ type RemindersEngine interface {
 	SendTest() error
 }
 
+// URIOpener opens a URI with the user's default handler.
+type URIOpener interface {
+	OpenURI(uri string) error
+}
+
 type Deps struct {
 	Repo        *repo.Repo
 	Registry    *calendar.Registry
@@ -34,4 +39,5 @@ type Deps struct {
 	Pending     *PendingOpen
 	Version     string
 	ColorScheme *colorscheme.Watcher
+	Opener      URIOpener
 }

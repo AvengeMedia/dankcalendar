@@ -44,6 +44,8 @@ Singleton {
     property alias allDayReminderTime: adapter.allDayReminderTime
     property alias allDayReminderDaysBefore: adapter.allDayReminderDaysBefore
     property alias snoozeMinutes: adapter.snoozeMinutes
+    property alias notificationSounds: adapter.notificationSounds
+    property alias showTrayIcon: adapter.showTrayIcon
     property alias syncIntervalMinutes: adapter.syncIntervalMinutes
     // "minimize" = hide to tray, "quit" = stop the daemon and child
     property alias closeBehavior: adapter.closeBehavior
@@ -154,6 +156,8 @@ Singleton {
             property string allDayReminderTime: "09:00"
             property int allDayReminderDaysBefore: 0
             property int snoozeMinutes: 5
+            property bool notificationSounds: false
+            property bool showTrayIcon: true
             property int syncIntervalMinutes: 30
             property string closeBehavior: "minimize"
             property int sidebarWidth: 240
