@@ -1169,6 +1169,13 @@
     "comment": ""
   },
   {
+    "term": "Expand day cells to fit every event instead of collapsing extras into \"+N more\".",
+    "translation": "",
+    "context": "show all month events setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "F1/I: Toggle • F10: Help",
     "translation": "",
     "context": "file browser info panel keyboard shortcut hint",
@@ -2229,6 +2236,13 @@
     "term": "Show",
     "translation": "",
     "context": "calendar context menu action to show a hidden calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show all events in month view",
+    "translation": "",
+    "context": "show all month events setting label",
     "reference": "",
     "comment": ""
   },
