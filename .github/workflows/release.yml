@@ -116,18 +116,18 @@ jobs:
       - name: Create shell tarball
         run: |
           VERSION_NUM=${GITHUB_REF_NAME#v}
-          tar -czf "dankcalendar-shell-${VERSION_NUM}.tar.gz" \
+          tar -czf "dankcalendar-qml-${VERSION_NUM}.tar.gz" \
             --transform "s,^quickshell,dankcal," \
             quickshell
-          sha256sum "dankcalendar-shell-${VERSION_NUM}.tar.gz" > "dankcalendar-shell-${VERSION_NUM}.tar.gz.sha256"
+          sha256sum "dankcalendar-qml-${VERSION_NUM}.tar.gz" > "dankcalendar-qml-${VERSION_NUM}.tar.gz.sha256"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: dankcalendar-shell
+          name: dankcalendar-qml
           path: |
-            dankcalendar-shell-*.tar.gz
-            dankcalendar-shell-*.tar.gz.sha256
+            dankcalendar-qml-*.tar.gz
+            dankcalendar-qml-*.tar.gz.sha256
 
   create_release:
     name: Create GitHub Release
@@ -179,7 +179,7 @@ jobs:
           cd core && go mod vendor && cd ..
           tar czf "dankcalendar-${VERSION_NUM}.tar.gz" \
             --transform "s,^,dankcalendar-${VERSION_NUM}/," \
-            --exclude=./artifacts --exclude=.git --exclude="dankcalendar-*.tar.gz" *
+            --exclude=artifacts --exclude="dankcalendar-*.tar.gz" *
 
       - name: Create release and upload assets
         env:

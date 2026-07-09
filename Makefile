@@ -10,6 +10,7 @@ ICON_NAME=dankcalendar
 CORE_DIR=core
 BUILD_DIR=$(CORE_DIR)/bin
 PREFIX ?= /usr/local
+DESTDIR ?=
 INSTALL_DIR=$(PREFIX)/bin
 DATA_DIR=$(PREFIX)/share
 ICON_DIR=$(DATA_DIR)/icons/hicolor/scalable/apps
@@ -78,23 +79,23 @@ i18n-check:
 
 install-bin:
 	@test -f $(BUILD_DIR)/$(BINARY_NAME) || { echo "$(BUILD_DIR)/$(BINARY_NAME) not found; run 'make' first"; exit 1; }
-	@echo "Installing $(BINARY_NAME) to $(INSTALL_DIR)..."
-	@install -D -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(INSTALL_DIR)/$(BINARY_NAME)
+	@echo "Installing $(BINARY_NAME) to $(DESTDIR)$(INSTALL_DIR)..."
+	@install -D -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(DESTDIR)$(INSTALL_DIR)/$(BINARY_NAME)
 
 install-shell:
-	@echo "Installing shell files to $(SHELL_INSTALL_DIR)..."
-	@mkdir -p $(SHELL_INSTALL_DIR)
-	@cp -r $(SHELL_DIR)/* $(SHELL_INSTALL_DIR)/
+	@echo "Installing shell files to $(DESTDIR)$(SHELL_INSTALL_DIR)..."
+	@mkdir -p $(DESTDIR)$(SHELL_INSTALL_DIR)
+	@cp -r $(SHELL_DIR)/* $(DESTDIR)$(SHELL_INSTALL_DIR)/
 
 install-icon:
 	@echo "Installing icon..."
-	@install -D -m 644 $(SHELL_DIR)/assets/$(ICON_NAME).svg $(ICON_DIR)/$(ICON_NAME).svg
-	@gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
+	@install -D -m 644 $(ASSETS_DIR)/$(ICON_NAME).svg $(DESTDIR)$(ICON_DIR)/$(ICON_NAME).svg
+	@test -n "$(DESTDIR)" || gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
 
 install-desktop:
 	@echo "Installing desktop entry..."
-	@install -D -m 644 $(ASSETS_DIR)/$(DESKTOP_ID).desktop $(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
-	@update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
+	@install -D -m 644 $(ASSETS_DIR)/$(DESKTOP_ID).desktop $(DESTDIR)$(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
+	@test -n "$(DESTDIR)" || update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
 
 install-systemd:
 	@echo "Installing systemd user service to $(SYSTEMD_USER_DIR)..."
@@ -110,18 +111,18 @@ install: install-bin install-shell install-icon install-desktop
 	@echo "Optional: 'make install-systemd' then 'systemctl --user enable --now dcal'."
 
 uninstall-bin:
-	@rm -f $(INSTALL_DIR)/$(BINARY_NAME)
+	@rm -f $(DESTDIR)$(INSTALL_DIR)/$(BINARY_NAME)
 
 uninstall-shell:
-	@rm -rf $(SHELL_INSTALL_DIR)
+	@rm -rf $(DESTDIR)$(SHELL_INSTALL_DIR)
 
 uninstall-icon:
-	@rm -f $(ICON_DIR)/$(ICON_NAME).svg
-	@gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
+	@rm -f $(DESTDIR)$(ICON_DIR)/$(ICON_NAME).svg
+	@test -n "$(DESTDIR)" || gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
 
 uninstall-desktop:
-	@rm -f $(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
-	@update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
+	@rm -f $(DESTDIR)$(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
+	@test -n "$(DESTDIR)" || update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
 
 uninstall-systemd:
 	@rm -f $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service

@@ -75,7 +75,7 @@
 
               install -Dm644 ${./assets/com.danklinux.dankcalendar.desktop} \
                 $out/share/applications/com.danklinux.dankcalendar.desktop
-              install -Dm644 ${./quickshell/assets/dankcalendar.svg} \
+              install -Dm644 ${./assets/dankcalendar.svg} \
                 $out/share/icons/hicolor/scalable/apps/dankcalendar.svg
 
               install -Dm644 ${./assets/systemd/dcal.service} \
