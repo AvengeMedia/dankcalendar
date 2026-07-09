@@ -30,6 +30,15 @@ FloatingWindow {
             menuVisible = focused;
     }
 
+    readonly property bool sidebarVisible: isCompactMode ? menuVisible : !SettingsData.sidebarCollapsed
+
+    function toggleSidebar() {
+        if (isCompactMode)
+            menuVisible = !menuVisible;
+        else
+            SettingsData.sidebarCollapsed = !SettingsData.sidebarCollapsed;
+    }
+
     readonly property bool eventNavigation: {
         switch (currentView) {
         case "day":
@@ -484,13 +493,12 @@ FloatingWindow {
                     spacing: Theme.spacingM
 
                     DankActionButton {
-                        visible: window.isCompactMode
                         circular: false
                         iconName: "menu"
                         iconSize: Theme.iconSize - 4
                         iconColor: Theme.surfaceText
                         anchors.verticalCenter: parent.verticalCenter
-                        onClicked: window.menuVisible = !window.menuVisible
+                        onClicked: window.toggleSidebar()
                     }
 
                     DankIcon {
@@ -559,7 +567,7 @@ FloatingWindow {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: window.isCompactMode ? parent.width : Math.max(bodyArea.minSidebarWidth, Math.min(bodyArea.maxSidebarWidth, bodyArea.liveSidebarWidth))
-                    visible: window.isCompactMode ? window.menuVisible : true
+                    visible: window.sidebarVisible
                     currentView: window.currentView
                     selectedDate: window.selectedDate
                     keyboardActive: window.sidebarFocused
@@ -583,7 +591,7 @@ FloatingWindow {
                     anchors.bottom: parent.bottom
                     width: Theme.spacingS
                     z: 10
-                    visible: !window.isCompactMode
+                    visible: !window.isCompactMode && window.sidebarVisible
 
                     property bool dragging: false
                     property real pressX: 0
@@ -628,7 +636,7 @@ FloatingWindow {
                 }
 
                 Item {
-                    anchors.left: window.isCompactMode ? (window.menuVisible ? sidebar.right : parent.left) : sidebar.right
+                    anchors.left: window.sidebarVisible ? sidebar.right : parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
