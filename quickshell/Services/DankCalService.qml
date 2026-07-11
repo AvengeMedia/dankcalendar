@@ -58,6 +58,7 @@ Singleton {
     signal windowActionRequested(string action, string view)
     signal subscribeRequested(string url)
     signal openEventRequested(string uid, string start)
+    signal newEventRequested(string start)
     signal colorSchemeUpdate(var data)
 
     onFocusDateChanged: _ensureWindow()
@@ -229,6 +230,9 @@ Singleton {
                     break;
                 case "openEvent":
                     openEventRequested(data.uid || "", data.start || "");
+                    break;
+                case "newEvent":
+                    newEventRequested(data.start || "");
                     break;
                 default:
                     windowActionRequested(data.action || "", data.view || "");

@@ -66,6 +66,13 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 		}
 		publishUI(deps, payload)
 		Respond(w, req.ID, map[string]any{"ok": true})
+	case "ui.newEvent":
+		payload := map[string]any{"action": "newEvent"}
+		if start := strings.TrimSpace(ParamString(req.Params, "start")); start != "" {
+			payload["start"] = start
+		}
+		publishUI(deps, payload)
+		Respond(w, req.ID, map[string]any{"ok": true})
 	case "ui.quit":
 		Respond(w, req.ID, map[string]any{"ok": true})
 		go func() {
