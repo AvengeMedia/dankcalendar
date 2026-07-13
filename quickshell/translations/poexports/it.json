@@ -1055,6 +1055,9 @@
   "Size": {
     "Size": "Dimensione"
   },
+  "Skip certificate verification": {
+    "Skip certificate verification": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Durata posticipazione"
   },
@@ -1153,6 +1156,9 @@
   },
   "Tomorrow": {
     "Tomorrow": "Domani"
+  },
+  "Trust self-signed certificates. Only enable this for servers you control.": {
+    "Trust self-signed certificates. Only enable this for servers you control.": ""
   },
   "Try a different search.": {
     "Try a different search.": "Prova una ricerca diversa."

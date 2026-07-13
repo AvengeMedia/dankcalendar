@@ -75,6 +75,32 @@ func TestNewFallsBackToWellKnown(t *testing.T) {
 	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
 }
 
+// A self-signed TLS server stands in for a Nextcloud/self-hosted instance (#50):
+// verification fails by default, and SettingInsecureSkipVerify opts out of it.
+func TestNewSkipsCertificateVerification(t *testing.T) {
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		path := strings.TrimSuffix(r.URL.Path, "/")
+		switch {
+		case r.Method == "PROPFIND" && path == "":
+			writeMultiStatus(w, principalXML)
+		case r.Method == "PROPFIND" && path == "/dav/principals/user":
+			writeMultiStatus(w, homeSetXML)
+		default:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		}
+	}))
+	defer server.Close()
+
+	_, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL, "user")
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "certificate")
+
+	insecure := cal.Account{ID: "acc", Settings: map[string]any{SettingInsecureSkipVerify: true}}
+	p, err := New(context.Background(), insecure, newSecrets(t), server.URL, "user")
+	require.NoError(t, err)
+	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+}
+
 func TestNewReportsPrincipalErrorWithoutWellKnown(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

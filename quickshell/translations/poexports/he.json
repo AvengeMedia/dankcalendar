@@ -1055,6 +1055,9 @@
   "Size": {
     "Size": "גודל"
   },
+  "Skip certificate verification": {
+    "Skip certificate verification": ""
+  },
   "Snooze duration": {
     "Snooze duration": "משך זמן לנודניק"
   },
@@ -1153,6 +1156,9 @@
   },
   "Tomorrow": {
     "Tomorrow": "מחר"
+  },
+  "Trust self-signed certificates. Only enable this for servers you control.": {
+    "Trust self-signed certificates. Only enable this for servers you control.": ""
   },
   "Try a different search.": {
     "Try a different search.": "נסה/י חיפוש שונה."

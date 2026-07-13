@@ -133,10 +133,11 @@ func handleMicrosoftComplete(ctx context.Context, w *ConnWriter, req Request, de
 
 func handleCalDAVAdd(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	res, err := accounts.AddCalDAV(ctx, deps.Repo, deps.Secrets, accounts.CalDAVInput{
-		URL:         ParamString(req.Params, "url"),
-		Username:    ParamString(req.Params, "username"),
-		Password:    ParamString(req.Params, "password"),
-		DisplayName: ParamString(req.Params, "displayName"),
+		URL:                ParamString(req.Params, "url"),
+		Username:           ParamString(req.Params, "username"),
+		Password:           ParamString(req.Params, "password"),
+		DisplayName:        ParamString(req.Params, "displayName"),
+		InsecureSkipVerify: ParamBool(req.Params, "insecureSkipVerify"),
 	})
 	if err != nil {
 		RespondError(w, req.ID, err.Error())

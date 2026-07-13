@@ -32,10 +32,11 @@ type Result struct {
 }
 
 type CalDAVInput struct {
-	URL         string
-	Username    string
-	Password    string
-	DisplayName string
+	URL                string
+	Username           string
+	Password           string
+	DisplayName        string
+	InsecureSkipVerify bool
 }
 
 // AddCalDAV verifies the connection before the account is saved. iCloud is a
@@ -67,6 +68,9 @@ func AddCalDAV(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, 
 	settings := map[string]any{"url": serverURL, "username": username}
 	if parsed.Host == "caldav.icloud.com" || strings.HasSuffix(parsed.Host, ".icloud.com") {
 		settings["preset"] = "icloud"
+	}
+	if in.InsecureSkipVerify {
+		settings[caldavprovider.SettingInsecureSkipVerify] = true
 	}
 
 	domainAcc := calendar.Account{ID: accountID, Kind: calendar.AccountCalDAV, Settings: settings}

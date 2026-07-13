@@ -73,6 +73,7 @@ func runAddCalDAV(cmd *cobra.Command, icloud bool) error {
 	username, _ := cmd.Flags().GetString("username")
 	password, _ := cmd.Flags().GetString("password")
 	name, _ := cmd.Flags().GetString("name")
+	insecure, _ := cmd.Flags().GetBool("insecure")
 	if icloud {
 		serverURL = accounts.ICloudCalDAVURL
 		infof("iCloud requires an app-specific password — regular Apple ID passwords will not work.")
@@ -118,10 +119,11 @@ func runAddCalDAV(cmd *cobra.Command, icloud bool) error {
 
 	infof("verifying connection...")
 	res, err := accounts.AddCalDAV(ctx, st.repo, st.secrets, accounts.CalDAVInput{
-		URL:         serverURL,
-		Username:    username,
-		Password:    password,
-		DisplayName: name,
+		URL:                serverURL,
+		Username:           username,
+		Password:           password,
+		DisplayName:        name,
+		InsecureSkipVerify: insecure,
 	})
 	if err != nil {
 		return err
@@ -284,6 +286,7 @@ func init() {
 		c.Flags().String("name", "", "Display name")
 	}
 	accountAddCalDAVCmd.Flags().String("url", "", "Server URL (e.g. https://dav.example.com)")
+	accountAddCalDAVCmd.Flags().Bool("insecure", false, "Skip TLS certificate verification (for self-signed servers)")
 
 	accountAddICalCmd.Flags().String("username", "", "Basic-auth username (optional)")
 	accountAddICalCmd.Flags().String("password", "", "Basic-auth password (prompted if a username is given)")

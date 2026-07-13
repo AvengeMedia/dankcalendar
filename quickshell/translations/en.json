@@ -296,7 +296,7 @@
   {
     "term": "Add",
     "context": "Add",
-    "reference": "Modals/AccountAddModal.qml:1400, Modals/AccountAddModal.qml:1485",
+    "reference": "Modals/AccountAddModal.qml:1438, Modals/AccountAddModal.qml:1523",
     "comment": "button to add evolution account | button to add local calendar account"
   },
   {
@@ -344,7 +344,7 @@
   {
     "term": "Adding…",
     "context": "Adding…",
-    "reference": "Modals/AccountAddModal.qml:1400, Modals/AccountAddModal.qml:1485",
+    "reference": "Modals/AccountAddModal.qml:1438, Modals/AccountAddModal.qml:1523",
     "comment": "add button while evolution account is created | add button while local account is created"
   },
   {
@@ -422,7 +422,7 @@
   {
     "term": "App-specific password",
     "context": "App-specific password",
-    "reference": "Modals/AccountAddModal.qml:1256",
+    "reference": "Modals/AccountAddModal.qml:1257",
     "comment": "icloud password field label"
   },
   {
@@ -434,7 +434,7 @@
   {
     "term": "Apple ID",
     "context": "Apple ID",
-    "reference": "Modals/AccountAddModal.qml:1247",
+    "reference": "Modals/AccountAddModal.qml:1248",
     "comment": "icloud username field label"
   },
   {
@@ -584,7 +584,7 @@
   {
     "term": "Choose calendar directory",
     "context": "Choose calendar directory",
-    "reference": "Modals/AccountAddModal.qml:1370",
+    "reference": "Modals/AccountAddModal.qml:1408",
     "comment": "folder picker title for local calendar directory"
   },
   {
@@ -662,7 +662,7 @@
   {
     "term": "Connect",
     "context": "Connect",
-    "reference": "Modals/AccountAddModal.qml:993, Modals/AccountAddModal.qml:1288",
+    "reference": "Modals/AccountAddModal.qml:993, Modals/AccountAddModal.qml:1326",
     "comment": "account setup button to start provider sign-in"
   },
   {
@@ -692,7 +692,7 @@
   {
     "term": "Connecting…",
     "context": "Connecting…",
-    "reference": "Modals/AccountAddModal.qml:1288",
+    "reference": "Modals/AccountAddModal.qml:1326",
     "comment": "connect button while caldav connection verifies"
   },
   {
@@ -704,13 +704,13 @@
   {
     "term": "Copied to clipboard",
     "context": "Copied to clipboard",
-    "reference": "Modals/AccountAddModal.qml:893, Modals/AccountAddModal.qml:1230",
+    "reference": "Modals/AccountAddModal.qml:893, Modals/AccountAddModal.qml:1231",
     "comment": "toast after copying text to the clipboard"
   },
   {
     "term": "Copy link",
     "context": "Copy link",
-    "reference": "Modals/AccountAddModal.qml:885, Modals/AccountAddModal.qml:1223",
+    "reference": "Modals/AccountAddModal.qml:885, Modals/AccountAddModal.qml:1224",
     "comment": "button to copy a setup guide url to the clipboard"
   },
   {
@@ -890,7 +890,7 @@
   {
     "term": "Directory",
     "context": "Directory",
-    "reference": "Modals/AccountAddModal.qml:1357",
+    "reference": "Modals/AccountAddModal.qml:1395",
     "comment": "local calendar directory field label"
   },
   {
@@ -908,7 +908,7 @@
   {
     "term": "Display name (optional)",
     "context": "Display name (optional)",
-    "reference": "Modals/AccountAddModal.qml:1266, Modals/AccountAddModal.qml:1378, Modals/AccountAddModal.qml:1463, Modals/AccountAddModal.qml:1560",
+    "reference": "Modals/AccountAddModal.qml:1267, Modals/AccountAddModal.qml:1416, Modals/AccountAddModal.qml:1501, Modals/AccountAddModal.qml:1598",
     "comment": "optional account display name field label"
   },
   {
@@ -1010,7 +1010,7 @@
   {
     "term": "Enter your CalDAV server details. The connection is verified before the account is saved.",
     "context": "Enter your CalDAV server details. The connection is verified before the account is saved.",
-    "reference": "Modals/AccountAddModal.qml:1202",
+    "reference": "Modals/AccountAddModal.qml:1203",
     "comment": "caldav sign-in form instructions"
   },
   {
@@ -1040,7 +1040,7 @@
   {
     "term": "Evolution",
     "context": "Evolution",
-    "reference": "Modals/AccountAddModal.qml:1464",
+    "reference": "Modals/AccountAddModal.qml:1502",
     "comment": "evolution account display name field placeholder"
   },
   {
@@ -1058,7 +1058,7 @@
   {
     "term": "Feed URL",
     "context": "Feed URL",
-    "reference": "Modals/AccountAddModal.qml:1551",
+    "reference": "Modals/AccountAddModal.qml:1589",
     "comment": "ical feed url field label"
   },
   {
@@ -1112,7 +1112,7 @@
   {
     "term": "Generate app-specific password",
     "context": "Generate app-specific password",
-    "reference": "Modals/AccountAddModal.qml:1214",
+    "reference": "Modals/AccountAddModal.qml:1215",
     "comment": "button to open apple app password page"
   },
   {
@@ -1268,7 +1268,7 @@
   {
     "term": "Local",
     "context": "Local",
-    "reference": "Modals/AccountAddModal.qml:120, Modals/AccountAddModal.qml:511, Modals/SettingsContent.qml:1076, Services/DankCalService.qml:1479",
+    "reference": "Modals/AccountAddModal.qml:120, Modals/AccountAddModal.qml:511, Modals/SettingsContent.qml:1076, Services/DankCalService.qml:1480",
     "comment": "local provider name in account add modal | local provider name in account list | provider label for a local account"
   },
   {
@@ -1280,7 +1280,7 @@
   {
     "term": "Local calendars",
     "context": "Local calendars",
-    "reference": "Modals/AccountAddModal.qml:1379",
+    "reference": "Modals/AccountAddModal.qml:1417",
     "comment": "local account display name field placeholder"
   },
   {
@@ -1406,7 +1406,7 @@
   {
     "term": "My server",
     "context": "My server",
-    "reference": "Modals/AccountAddModal.qml:1267",
+    "reference": "Modals/AccountAddModal.qml:1268",
     "comment": "caldav display name field placeholder"
   },
   {
@@ -1682,13 +1682,13 @@
   {
     "term": "Password",
     "context": "Password",
-    "reference": "Modals/AccountAddModal.qml:1256",
+    "reference": "Modals/AccountAddModal.qml:1257",
     "comment": "caldav password field label"
   },
   {
     "term": "Password (optional)",
     "context": "Password (optional)",
-    "reference": "Modals/AccountAddModal.qml:1578",
+    "reference": "Modals/AccountAddModal.qml:1616",
     "comment": "ical optional basic-auth password field label"
   },
   {
@@ -1706,7 +1706,7 @@
   {
     "term": "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.",
     "context": "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.",
-    "reference": "Modals/AccountAddModal.qml:1542",
+    "reference": "Modals/AccountAddModal.qml:1580",
     "comment": "ical subscription form instructions"
   },
   {
@@ -1736,7 +1736,7 @@
   {
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "context": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
-    "reference": "Modals/AccountAddModal.qml:1343",
+    "reference": "Modals/AccountAddModal.qml:1381",
     "comment": "local calendar directory form instructions"
   },
   {
@@ -1970,7 +1970,7 @@
   {
     "term": "Server URL",
     "context": "Server URL",
-    "reference": "Modals/AccountAddModal.qml:1238",
+    "reference": "Modals/AccountAddModal.qml:1239",
     "comment": "caldav server url field label"
   },
   {
@@ -2042,7 +2042,7 @@
   {
     "term": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
     "context": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
-    "reference": "Modals/AccountAddModal.qml:1202",
+    "reference": "Modals/AccountAddModal.qml:1203",
     "comment": "icloud sign-in form instructions"
   },
   {
@@ -2068,6 +2068,12 @@
     "context": "Size",
     "reference": "Modals/FileBrowser/FileBrowserSortMenu.qml:45",
     "comment": "file browser sort criterion option"
+  },
+  {
+    "term": "Skip certificate verification",
+    "context": "Skip certificate verification",
+    "reference": "Modals/AccountAddModal.qml:1292",
+    "comment": "caldav toggle label to disable tls verification"
   },
   {
     "term": "Snooze duration",
@@ -2120,7 +2126,7 @@
   {
     "term": "Subscribe",
     "context": "Subscribe",
-    "reference": "Modals/AccountAddModal.qml:1601",
+    "reference": "Modals/AccountAddModal.qml:1639",
     "comment": "button to subscribe to an ical feed"
   },
   {
@@ -2132,7 +2138,7 @@
   {
     "term": "Subscribing…",
     "context": "Subscribing…",
-    "reference": "Modals/AccountAddModal.qml:1601",
+    "reference": "Modals/AccountAddModal.qml:1639",
     "comment": "subscribe button while ical feed is verified"
   },
   {
@@ -2262,6 +2268,12 @@
     "comment": "agenda section header for the next day | due-date label on a task card | search result date label for next day"
   },
   {
+    "term": "Trust self-signed certificates. Only enable this for servers you control.",
+    "context": "Trust self-signed certificates. Only enable this for servers you control.",
+    "reference": "Modals/AccountAddModal.qml:1301",
+    "comment": "caldav toggle hint about disabling tls verification"
+  },
+  {
     "term": "Try a different search.",
     "context": "Try a different search.",
     "reference": "Modals/SearchModal.qml:105",
@@ -2294,7 +2306,7 @@
   {
     "term": "University timetable",
     "context": "University timetable",
-    "reference": "Modals/AccountAddModal.qml:1561",
+    "reference": "Modals/AccountAddModal.qml:1599",
     "comment": "ical display name field placeholder"
   },
   {
@@ -2318,7 +2330,7 @@
   {
     "term": "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.",
     "context": "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.",
-    "reference": "Modals/AccountAddModal.qml:1454",
+    "reference": "Modals/AccountAddModal.qml:1492",
     "comment": "evolution data server account form instructions"
   },
   {
@@ -2330,13 +2342,13 @@
   {
     "term": "Username",
     "context": "Username",
-    "reference": "Modals/AccountAddModal.qml:1247",
+    "reference": "Modals/AccountAddModal.qml:1248",
     "comment": "caldav username field label"
   },
   {
     "term": "Username (optional)",
     "context": "Username (optional)",
-    "reference": "Modals/AccountAddModal.qml:1569",
+    "reference": "Modals/AccountAddModal.qml:1607",
     "comment": "ical optional basic-auth username field label"
   },
   {
@@ -2510,13 +2522,13 @@
   {
     "term": "only if the feed requires sign-in",
     "context": "only if the feed requires sign-in",
-    "reference": "Modals/AccountAddModal.qml:1570, Modals/AccountAddModal.qml:1579",
+    "reference": "Modals/AccountAddModal.qml:1608, Modals/AccountAddModal.qml:1617",
     "comment": "ical optional password field placeholder | ical optional username field placeholder"
   },
   {
     "term": "password",
     "context": "password",
-    "reference": "Modals/AccountAddModal.qml:1257",
+    "reference": "Modals/AccountAddModal.qml:1258",
     "comment": "caldav password field placeholder"
   },
   {
@@ -2552,7 +2564,7 @@
   {
     "term": "username",
     "context": "username",
-    "reference": "Modals/AccountAddModal.qml:1248",
+    "reference": "Modals/AccountAddModal.qml:1249",
     "comment": "caldav username field placeholder"
   },
   {

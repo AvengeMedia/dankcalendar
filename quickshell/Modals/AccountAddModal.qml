@@ -1188,6 +1188,7 @@ FloatingWindow {
             property string username: ""
             property string password: ""
             property string displayName: ""
+            property bool insecureSkipVerify: false
             property bool busy: false
             property bool done: false
             property string error: ""
@@ -1270,6 +1271,43 @@ FloatingWindow {
                     onTextChanged: caldavRoot.displayName = text
                 }
 
+                Row {
+                    visible: !caldavRoot.isICloud
+                    width: parent.width
+                    spacing: Theme.spacingM
+
+                    DankToggle {
+                        id: insecureToggle
+                        checked: caldavRoot.insecureSkipVerify
+                        onToggled: checked => caldavRoot.insecureSkipVerify = checked
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Column {
+                        width: parent.width - insecureToggle.width - Theme.spacingM
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 2
+
+                        StyledText {
+                            text: I18n.tr("Skip certificate verification", "caldav toggle label to disable tls verification")
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: Theme.surfaceText
+                            width: parent.width
+                            horizontalAlignment: Text.AlignLeft
+                            wrapMode: Text.WordWrap
+                        }
+
+                        StyledText {
+                            text: I18n.tr("Trust self-signed certificates. Only enable this for servers you control.", "caldav toggle hint about disabling tls verification")
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.surfaceVariantText
+                            width: parent.width
+                            horizontalAlignment: Text.AlignLeft
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                }
+
                 StyledText {
                     visible: caldavRoot.error !== ""
                     text: caldavRoot.error
@@ -1294,7 +1332,7 @@ FloatingWindow {
                         onClicked: {
                             caldavRoot.busy = true;
                             caldavRoot.error = "";
-                            DankCalService.addCalDAVAccount(caldavRoot.serverUrl, caldavRoot.username, caldavRoot.password, caldavRoot.displayName, response => {
+                            DankCalService.addCalDAVAccount(caldavRoot.serverUrl, caldavRoot.username, caldavRoot.password, caldavRoot.displayName, caldavRoot.insecureSkipVerify, response => {
                                 caldavRoot.busy = false;
                                 if (response.error) {
                                     caldavRoot.error = response.error;

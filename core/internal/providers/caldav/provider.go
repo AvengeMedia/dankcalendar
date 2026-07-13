@@ -2,6 +2,7 @@ package caldav
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/xml"
 	"errors"
 	"fmt"
@@ -41,7 +42,7 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 		return nil, fmt.Errorf("parse caldav url: %w", err)
 	}
 
-	httpClient := webdav.HTTPClientWithBasicAuth(http.DefaultClient, username, string(password))
+	httpClient := webdav.HTTPClientWithBasicAuth(baseHTTPClient(account), username, string(password))
 	client, err := caldav.NewClient(httpClient, baseURL)
 	if err != nil {
 		return nil, fmt.Errorf("init caldav client: %w", err)
@@ -70,6 +71,20 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 		homeSet:    homeSet,
 		username:   username,
 	}, nil
+}
+
+// baseHTTPClient returns the HTTP client the caldav client is built on. Servers
+// with self-signed certificates opt out of TLS verification via the
+// SettingInsecureSkipVerify account setting; everything else uses the default.
+func baseHTTPClient(account cal.Account) *http.Client {
+	insecure, _ := account.Settings[SettingInsecureSkipVerify].(bool)
+	if !insecure {
+		return http.DefaultClient
+	}
+
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	return &http.Client{Transport: transport}
 }
 
 func (p *Provider) Kind() cal.AccountKind { return cal.AccountCalDAV }

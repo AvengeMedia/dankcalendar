@@ -1303,12 +1303,13 @@ Singleton {
         });
     }
 
-    function addCalDAVAccount(url, username, password, displayName, callback) {
+    function addCalDAVAccount(url, username, password, displayName, insecureSkipVerify, callback) {
         sendRequest("accounts.caldav.add", {
             "url": url,
             "username": username,
             "password": password,
-            "displayName": displayName || ""
+            "displayName": displayName || "",
+            "insecureSkipVerify": insecureSkipVerify || false
         }, response => {
             if (response.error) {
                 lastError = response.error;

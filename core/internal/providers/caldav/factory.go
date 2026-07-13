@@ -9,6 +9,10 @@ import (
 
 const (
 	SecretKeyPassword = "caldav.password"
+
+	// SettingInsecureSkipVerify, when true, disables TLS certificate
+	// verification for the account. Intended for self-signed servers.
+	SettingInsecureSkipVerify = "insecure_skip_verify"
 )
 
 type Factory struct{}

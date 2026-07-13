@@ -1055,6 +1055,9 @@
   "Size": {
     "Size": "Kích cỡ"
   },
+  "Skip certificate verification": {
+    "Skip certificate verification": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Thời gian báo lại"
   },
@@ -1153,6 +1156,9 @@
   },
   "Tomorrow": {
     "Tomorrow": "Ngày mai"
+  },
+  "Trust self-signed certificates. Only enable this for servers you control.": {
+    "Trust self-signed certificates. Only enable this for servers you control.": ""
   },
   "Try a different search.": {
     "Try a different search.": "Hãy thử tìm kiếm khác."
