@@ -52,10 +52,24 @@
           (pkgs.buildGoModule.override { go = goForPkgs pkgs; }) {
             inherit version;
             pname = "dankcalendar";
-            src = ./core;
+            src = ./.;
+            modRoot = "core";
             vendorHash = "sha256-2eBwE1jnvGDQiMD1wKDTIr2CnKWWdhNpIHhkl2R2jIQ=";
 
             subPackages = [ "cmd/dcal" ];
+
+            tags = [ "withshell" ];
+
+            # Mirror `make -C core sync-shell`: bake the quickshell UI into
+            # the binary, minus dev-only files.
+            postPatch = ''
+              rm -rf core/internal/shellembed/dist
+              cp -r quickshell core/internal/shellembed/dist
+              rm -rf core/internal/shellembed/dist/scripts \
+                core/internal/shellembed/dist/.claude
+              rm -f core/internal/shellembed/dist/.qmlls.ini \
+                core/internal/shellembed/dist/translations/extract_translations.py
+            '';
 
             ldflags = [
               "-s"
@@ -66,13 +80,9 @@
 
             nativeBuildInputs = with pkgs; [
               installShellFiles
-              makeWrapper
             ];
 
             postInstall = ''
-              mkdir -p $out/share/quickshell/dankcalendar
-              cp -r ${./quickshell}/. $out/share/quickshell/dankcalendar/
-
               install -Dm644 ${./assets/com.danklinux.dankcalendar.desktop} \
                 $out/share/applications/com.danklinux.dankcalendar.desktop
               install -Dm644 ${./assets/dankcalendar.svg} \
@@ -82,9 +92,6 @@
                 $out/lib/systemd/user/dcal.service
               substituteInPlace $out/lib/systemd/user/dcal.service \
                 --replace-fail /usr/bin/dcal $out/bin/dcal
-
-              wrapProgram $out/bin/dcal \
-                --add-flags "-c $out/share/quickshell/dankcalendar"
 
               installShellCompletion --cmd dcal \
                 --bash <($out/bin/dcal completion bash) \

@@ -71,11 +71,17 @@ sudo make install
 
 This installs:
 
-- `dcal` binary to `/usr/local/bin`
-- Quickshell config to `/usr/local/share/quickshell/dankcal`
+- `dcal` binary to `/usr/local/bin` (the Quickshell UI is embedded in the binary)
 - Desktop entry + icon
 
 Override the prefix with `PREFIX=/usr sudo make install`.
+
+At launch the embedded UI is unpacked read-only into the session runtime dir
+(`$XDG_RUNTIME_DIR/dankcal-shell/`, tmpfs) and verified against the binary on
+every start, so editing the unpacked files has no effect. To run a modified
+copy of the UI, point dcal at any directory containing a `shell.qml` with
+`dcal -c <dir>` or the `DANKCAL_SHELL_DIR` environment variable — there is no
+implicit filesystem lookup otherwise.
 
 Optional session service (starts the daemon at login, restarts on failure):
 

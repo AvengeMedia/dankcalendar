@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/AvengeMedia/dankcalendar/core/internal/shellembed"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +14,7 @@ const (
 	configStateName  = "dankcal.path"
 	pidFilePrefix    = "dankcal-"
 	pidFileExtension = ".pid"
+	shellDirEnv      = "DANKCAL_SHELL_DIR"
 )
 
 var (
@@ -31,17 +33,24 @@ func activeConfigStateFile() string {
 	return filepath.Join(runtimeDir(), configStateName)
 }
 
+// findConfig resolves the quickshell config dir. Explicit overrides win
+// (-c flag, then DANKCAL_SHELL_DIR), then the path a running instance is
+// using, then the UI embedded in the binary. There is no implicit
+// filesystem search.
 func findConfig(_ *cobra.Command, _ []string) error {
 	if customConfigPath != "" {
-		shellPath := filepath.Join(customConfigPath, "shell.qml")
-		info, err := os.Stat(shellPath)
-		if err != nil {
+		if err := validateShellDir(customConfigPath); err != nil {
 			return fmt.Errorf("custom config path: %w", err)
 		}
-		if info.IsDir() {
-			return fmt.Errorf("expected file, got directory: %s", shellPath)
-		}
 		configPath = customConfigPath
+		return nil
+	}
+
+	if dir := os.Getenv(shellDirEnv); dir != "" {
+		if err := validateShellDir(dir); err != nil {
+			return fmt.Errorf("%s: %w", shellDirEnv, err)
+		}
+		configPath = dir
 		return nil
 	}
 
@@ -51,8 +60,7 @@ func findConfig(_ *cobra.Command, _ []string) error {
 			os.Remove(activeConfigStateFile())
 		default:
 			statePath := strings.TrimSpace(string(data))
-			shellPath := filepath.Join(statePath, "shell.qml")
-			if info, statErr := os.Stat(shellPath); statErr == nil && !info.IsDir() {
+			if err := validateShellDir(statePath); err == nil {
 				configPath = statePath
 				return nil
 			}
@@ -60,48 +68,40 @@ func findConfig(_ *cobra.Command, _ []string) error {
 		}
 	}
 
-	return locateDefaultConfig()
+	return useEmbeddedShell()
 }
 
-func locateDefaultConfig() error {
-	var primary []string
+func validateShellDir(dir string) error {
+	shellPath := filepath.Join(dir, "shell.qml")
+	info, err := os.Stat(shellPath)
+	if err != nil {
+		return err
+	}
+	if info.IsDir() {
+		return fmt.Errorf("expected file, got directory: %s", shellPath)
+	}
+	return nil
+}
 
-	if home, err := os.UserConfigDir(); err == nil && home != "" {
-		primary = append(primary, filepath.Join(home, "quickshell", "dankcal"))
-	}
-
-	dataDirs := os.Getenv("XDG_DATA_DIRS")
-	if dataDirs == "" {
-		dataDirs = "/usr/local/share:/usr/share"
-	}
-	for _, dir := range strings.Split(dataDirs, ":") {
-		if dir != "" {
-			primary = append(primary, filepath.Join(dir, "quickshell", "dankcal"))
-		}
-	}
-
-	configDirs := os.Getenv("XDG_CONFIG_DIRS")
-	if configDirs == "" {
-		configDirs = "/etc/xdg"
-	}
-	for _, dir := range strings.Split(configDirs, ":") {
-		if dir != "" {
-			primary = append(primary, filepath.Join(dir, "quickshell", "dankcal"))
-		}
+// useEmbeddedShell unpacks the embedded UI into the runtime dir:
+// read-only and verified against the embedded content on every
+// resolution. Local edits never survive; use -c or DANKCAL_SHELL_DIR
+// to run a modified UI.
+func useEmbeddedShell() error {
+	if !shellembed.Available() {
+		return fmt.Errorf("this dcal build has no embedded UI; pass -c <dir> or set %s", shellDirEnv)
 	}
 
-	var search []string
-	for _, p := range primary {
-		search = append(search, p, filepath.Join(p, "quickshell"))
+	baseDir := filepath.Join(runtimeDir(), "dankcal-shell")
+	dir, err := shellembed.Extract(baseDir)
+	if err != nil {
+		return fmt.Errorf("extract embedded UI: %w", err)
 	}
 
-	for _, p := range search {
-		shellPath := filepath.Join(p, "shell.qml")
-		if info, err := os.Stat(shellPath); err == nil && !info.IsDir() {
-			configPath = p
-			return nil
-		}
+	if len(getAllPIDs()) == 0 {
+		shellembed.Prune(baseDir, dir)
 	}
 
-	return fmt.Errorf("could not find dankcalendar shell.qml in any XDG location; pass -c <dir>")
+	configPath = dir
+	return nil
 }

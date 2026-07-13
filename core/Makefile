@@ -1,6 +1,8 @@
 BINARY_NAME=dcal
 SOURCE_DIR=cmd/dcal
 BUILD_DIR=bin
+SHELL_SRC=../quickshell
+EMBED_DIR=internal/shellembed/dist
 COMPLETIONS_DIR=$(BUILD_DIR)/completions
 PREFIX ?= /usr/local
 INSTALL_DIR=$(PREFIX)/bin
@@ -19,14 +21,22 @@ COMMIT?=$(COMMIT_HASH)
 
 BUILD_LDFLAGS=-ldflags='-s -w -X main.Version=$(VERSION) -X main.BuildTime=$(BUILD_TIME) -X main.Commit=$(COMMIT)'
 
-.PHONY: all build dev completions install install-completions uninstall clean test cover fmt vet deps generate migrate migrate-checksum mocks help
+.PHONY: all build dev sync-shell completions install install-completions uninstall clean test cover fmt vet deps generate migrate migrate-checksum mocks help
 
 all: build completions
 
-build:
+# Copy the quickshell UI into the embed dir (gitignored) so tagged builds
+# can bake it into the binary. Dev-only files are stripped.
+sync-shell:
+	@rm -rf $(EMBED_DIR)
+	@cp -r $(SHELL_SRC) $(EMBED_DIR)
+	@rm -rf $(EMBED_DIR)/scripts $(EMBED_DIR)/.claude
+	@rm -f $(EMBED_DIR)/.qmlls.ini $(EMBED_DIR)/translations/extract_translations.py
+
+build: sync-shell
 	@echo "Building $(BINARY_NAME)..."
 	@mkdir -p $(BUILD_DIR)
-	CGO_ENABLED=0 $(GO) build $(BUILD_LDFLAGS) -o $(BUILD_DIR)/$(BINARY_NAME) ./$(SOURCE_DIR)
+	CGO_ENABLED=0 $(GO) build -tags withshell $(BUILD_LDFLAGS) -o $(BUILD_DIR)/$(BINARY_NAME) ./$(SOURCE_DIR)
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)"
 
 dev:
@@ -56,7 +66,7 @@ uninstall:
 	@rm -f $(DESTDIR)$(FISHCOMP_DIR)/$(BINARY_NAME).fish
 
 clean:
-	@rm -rf $(BUILD_DIR)
+	@rm -rf $(BUILD_DIR) $(EMBED_DIR)
 
 test:
 	CGO_ENABLED=0 $(GO) test ./...
@@ -91,4 +101,4 @@ mocks:
 	mockery
 
 help:
-	@echo "Targets: build dev completions install install-completions uninstall clean test cover fmt vet deps generate migrate migrate-checksum mocks"
+	@echo "Targets: build dev sync-shell completions install install-completions uninstall clean test cover fmt vet deps generate migrate migrate-checksum mocks"

@@ -34,7 +34,7 @@ var versionCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&customConfigPath, "config", "c", "", "Path to the dcal UI config dir (containing shell.qml)")
+	rootCmd.PersistentFlags().StringVarP(&customConfigPath, "config", "c", "", "Path to a UI config dir (containing shell.qml) to use instead of the embedded UI (env: DANKCAL_SHELL_DIR)")
 	rootCmd.PersistentFlags().BoolVar(&jsonOutput, "json", false, "Output JSON for programmatic usage (where supported)")
 
 	rootCmd.AddCommand(versionCmd)

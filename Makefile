@@ -1,6 +1,7 @@
 # Root Makefile for Dank Calendar
 # Orchestrates the Go core build and local installation of the
-# binary, quickshell config, icon, desktop entry, and systemd unit.
+# binary (with the quickshell UI embedded), icon, desktop entry,
+# and systemd unit.
 
 BINARY_NAME=dcal
 # Quickshell config dir name (kept as dankcal for config-path compatibility).
@@ -24,11 +25,13 @@ USER_CONFIG_HOME := $(if $(SUDO_USER),$(USER_HOME)/.config,$(or $(XDG_CONFIG_HOM
 SYSTEMD_USER_DIR=$(USER_CONFIG_HOME)/systemd/user
 
 SHELL_DIR=quickshell
+# Legacy install location, kept for uninstall cleanup only; the UI is
+# embedded in the binary since the single-binary distribution change.
 SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
 DESKTOP_ID=com.danklinux.dankcalendar
 
-.PHONY: all build dev run clean test fmt vet migrate migrate-checksum i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-shell install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
+.PHONY: all build dev run clean test fmt vet migrate migrate-checksum i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
 
 all: build
 
@@ -82,11 +85,6 @@ install-bin:
 	@echo "Installing $(BINARY_NAME) to $(DESTDIR)$(INSTALL_DIR)..."
 	@install -D -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(DESTDIR)$(INSTALL_DIR)/$(BINARY_NAME)
 
-install-shell:
-	@echo "Installing shell files to $(DESTDIR)$(SHELL_INSTALL_DIR)..."
-	@mkdir -p $(DESTDIR)$(SHELL_INSTALL_DIR)
-	@cp -r $(SHELL_DIR)/* $(DESTDIR)$(SHELL_INSTALL_DIR)/
-
 install-icon:
 	@echo "Installing icon..."
 	@install -D -m 644 $(ASSETS_DIR)/$(ICON_NAME).svg $(DESTDIR)$(ICON_DIR)/$(ICON_NAME).svg
@@ -104,7 +102,7 @@ install-systemd:
 	@chmod 644 $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service
 	@if [ -n "$(SUDO_USER)" ]; then chown $(SUDO_USER) $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service; fi
 
-install: install-bin install-shell install-icon install-desktop
+install: install-bin install-icon install-desktop
 	@echo ""
 	@echo "Installation complete."
 	@echo "Launch with 'dcal show' or the Dank Calendar desktop entry."
@@ -145,6 +143,6 @@ help:
 	@echo "  i18n-check         - Fail if local i18n is out of sync with POEditor"
 	@echo ""
 	@echo "Install (PREFIX=$(PREFIX)):"
-	@echo "  install            - Binary, shell files, icon, desktop entry"
+	@echo "  install            - Binary (UI embedded), icon, desktop entry"
 	@echo "  install-systemd    - Optional systemd user unit (autostarts with the session)"
 	@echo "  uninstall          - Remove everything"

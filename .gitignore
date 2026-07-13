@@ -115,3 +115,6 @@ quickshell/dms-plugins
 __pycache__
 
 core/dankcal
+
+# Populated from quickshell/ by `make sync-shell` for embedded builds
+core/internal/shellembed/dist/

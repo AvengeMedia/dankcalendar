@@ -54,8 +54,9 @@ jobs:
           VERSION=${{ github.ref_name }}
           BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           BINARY_NAME="dcal-linux-${{ matrix.goarch }}"
+          make -C core sync-shell
           cd core
-          go build -ldflags "-s -w -X main.Version=${VERSION#v} -X main.Commit=${{ github.sha }} -X main.BuildTime=${BUILD_TIME}" -o "../${BINARY_NAME}" ./cmd/dcal
+          go build -tags withshell -ldflags "-s -w -X main.Version=${VERSION#v} -X main.Commit=${{ github.sha }} -X main.BuildTime=${BUILD_TIME}" -o "../${BINARY_NAME}" ./cmd/dcal
           cd ..
           gzip -c "${BINARY_NAME}" > "${BINARY_NAME}.gz"
           tar -czf "${BINARY_NAME}.tar.gz" "${BINARY_NAME}"
@@ -106,33 +107,10 @@ jobs:
             dcal-completions-*.tar.gz
             dcal-completions-*.tar.gz.sha256
 
-  package_shell:
-    name: Package Shell Config
-    needs: [test]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Create shell tarball
-        run: |
-          VERSION_NUM=${GITHUB_REF_NAME#v}
-          tar -czf "dankcalendar-qml-${VERSION_NUM}.tar.gz" \
-            --transform "s,^quickshell,dankcal," \
-            quickshell
-          sha256sum "dankcalendar-qml-${VERSION_NUM}.tar.gz" > "dankcalendar-qml-${VERSION_NUM}.tar.gz.sha256"
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dankcalendar-qml
-          path: |
-            dankcalendar-qml-*.tar.gz
-            dankcalendar-qml-*.tar.gz.sha256
-
   create_release:
     name: Create GitHub Release
     runs-on: ubuntu-24.04
-    needs: [build, package_shell, package_completions]
+    needs: [build, package_completions]
     permissions:
       contents: write
     steps:
