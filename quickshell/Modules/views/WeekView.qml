@@ -14,6 +14,7 @@ Item {
     property int eventsVersion: 0
 
     signal eventClicked(var event)
+    signal shiftDaysRequested(int days)
 
     function revealHours(start, duration) {
         const top = start * hourHeight;
@@ -33,11 +34,52 @@ Item {
     readonly property real timeColumnWidth: 60
     readonly property real allDayChipHeight: Math.max(18, SettingsData.weekEventTitleLines * 13 + 4)
 
-    readonly property date startOfWeek: {
+    readonly property date firstDay: {
         const d = new Date(displayDate);
-        d.setDate(d.getDate() - ((d.getDay() - SettingsData.effectiveFirstDayOfWeek + 7) % 7));
         d.setHours(0, 0, 0, 0);
         return d;
+    }
+
+    readonly property real dayWidth: width > timeColumnWidth ? (width - timeColumnWidth) / 7 : 0
+    property real slidePx: 0
+
+    function applySlide(dx) {
+        if (dayWidth <= 0)
+            return;
+        snapAnim.stop();
+        slidePx += dx;
+        while (slidePx >= dayWidth) {
+            slidePx -= dayWidth;
+            shiftDaysRequested(I18n.isRtl ? 1 : -1);
+        }
+        while (slidePx <= -dayWidth) {
+            slidePx += dayWidth;
+            shiftDaysRequested(I18n.isRtl ? -1 : 1);
+        }
+    }
+
+    function settleSlide() {
+        if (dayWidth <= 0)
+            return;
+        if (slidePx >= dayWidth / 2) {
+            slidePx -= dayWidth;
+            shiftDaysRequested(I18n.isRtl ? 1 : -1);
+        } else if (slidePx <= -dayWidth / 2) {
+            slidePx += dayWidth;
+            shiftDaysRequested(I18n.isRtl ? -1 : 1);
+        }
+        snapAnim.restart();
+    }
+
+    function slideDays(days) {
+        if (dayWidth <= 0) {
+            shiftDaysRequested(days);
+            return;
+        }
+        snapAnim.stop();
+        shiftDaysRequested(days);
+        slidePx += (I18n.isRtl ? -1 : 1) * days * dayWidth;
+        snapAnim.restart();
     }
 
     SystemClock {
@@ -45,12 +87,9 @@ Item {
         precision: SystemClock.Minutes
     }
 
-    readonly property int nowColumn: {
-        for (let i = 0; i < 7; i++) {
-            if (isSameDay(dayAt(i), clock.date))
-                return i;
-        }
-        return -1;
+    readonly property int nowIndex: {
+        const nowDay = new Date(clock.date.getFullYear(), clock.date.getMonth(), clock.date.getDate());
+        return Math.round((nowDay.getTime() - firstDay.getTime()) / 86400000);
     }
     readonly property real nowHour: clock.date.getHours() + clock.date.getMinutes() / 60
 
@@ -81,7 +120,7 @@ Item {
     }
 
     function dayAt(index) {
-        const d = new Date(startOfWeek);
+        const d = new Date(firstDay);
         d.setDate(d.getDate() + index);
         return d;
     }
@@ -120,7 +159,7 @@ Item {
     readonly property int allDayMax: {
         eventsVersion;
         let max = 0;
-        for (let i = 0; i < 7; i++)
+        for (let i = -1; i <= 7; i++)
             max = Math.max(max, allDayEventsFor(dayAt(i)).length);
         return Math.min(max, 2);
     }
@@ -159,14 +198,14 @@ Item {
     readonly property int hiddenEventTotal: {
         eventsVersion;
         let total = 0;
-        for (let i = 0; i < 7; i++)
+        for (let i = -1; i <= 7; i++)
             total += root.hiddenInfoFor(root.dayAt(i)).count;
         return total;
     }
 
     readonly property bool anyHiddenBefore: {
         eventsVersion;
-        for (let i = 0; i < 7; i++)
+        for (let i = -1; i <= 7; i++)
             if (root.hiddenInfoFor(root.dayAt(i)).before)
                 return true;
         return false;
@@ -179,9 +218,17 @@ Item {
         Rectangle {
             id: coreHoursWarning
             width: parent.width
-            height: visible ? 36 : 0
-            visible: root.hiddenEventTotal > 0
+            height: root.hiddenEventTotal > 0 ? 36 : 0
+            visible: height > 0
+            clip: true
             color: Theme.withAlpha(Theme.warning, 0.18)
+
+            Behavior on height {
+                NumberAnimation {
+                    duration: Theme.shorterDuration
+                    easing.type: Theme.standardEasing
+                }
+            }
 
             Row {
                 anchors.left: parent.left
@@ -225,126 +272,156 @@ Item {
                 height: parent.height
             }
 
-            Repeater {
-                model: 7
+            Item {
+                width: parent.width - root.timeColumnWidth
+                height: parent.height
+                clip: true
 
-                Item {
-                    required property int index
-                    readonly property date d: root.dayAt(index)
-                    readonly property bool isToday: root.isSameDay(d, root.today)
-                    readonly property bool isSelected: root.isSameDay(d, root.selectedDate)
-
-                    width: (parent.width - root.timeColumnWidth) / 7
+                Row {
+                    x: root.slidePx - root.dayWidth
                     height: parent.height
 
-                    Column {
-                        anchors.centerIn: parent
-                        spacing: 2
+                    Repeater {
+                        model: 9
 
-                        StyledText {
-                            text: SettingsData.dayName(parent.parent.d.getDay())
-                            font.pixelSize: Theme.fontSizeSmall
-                            color: Theme.surfaceVariantText
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
+                        Item {
+                            required property int index
+                            readonly property date d: root.dayAt(index - 1)
+                            readonly property bool isToday: root.isSameDay(d, root.today)
+                            readonly property bool isSelected: root.isSameDay(d, root.selectedDate)
 
-                        Rectangle {
-                            width: 32
-                            height: 32
-                            radius: 16
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            color: parent.parent.isToday ? Theme.primary : "transparent"
-                            border.color: Theme.primary
-                            border.width: parent.parent.isSelected && !parent.parent.isToday ? 2 : 0
+                            width: root.dayWidth
+                            height: parent.height
 
-                            StyledText {
+                            Column {
                                 anchors.centerIn: parent
-                                text: parent.parent.parent.d.getDate()
-                                font.pixelSize: Theme.fontSizeMedium
-                                font.weight: Font.Medium
-                                color: parent.parent.parent.isToday ? Theme.primaryText : Theme.surfaceText
+                                spacing: 2
+
+                                StyledText {
+                                    text: SettingsData.dayName(parent.parent.d.getDay())
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.surfaceVariantText
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                }
+
+                                Rectangle {
+                                    width: 32
+                                    height: 32
+                                    radius: 16
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    color: parent.parent.isToday ? Theme.primary : "transparent"
+                                    border.color: Theme.primary
+                                    border.width: parent.parent.isSelected && !parent.parent.isToday ? 2 : 0
+
+                                    StyledText {
+                                        anchors.centerIn: parent
+                                        text: parent.parent.parent.d.getDate()
+                                        font.pixelSize: Theme.fontSizeMedium
+                                        font.weight: Font.Medium
+                                        color: parent.parent.parent.isToday ? Theme.primaryText : Theme.surfaceText
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                anchors.bottom: parent.bottom
+                                width: parent.width
+                                height: 1
+                                color: Theme.gridLine
                             }
                         }
-                    }
-
-                    Rectangle {
-                        anchors.bottom: parent.bottom
-                        width: parent.width
-                        height: 1
-                        color: Theme.gridLine
                     }
                 }
             }
         }
 
         Row {
+            id: allDayRow
             width: parent.width
-            height: root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0
-            visible: root.allDayMax > 0
+            height: Math.max(1, root.allDayMax) * (root.allDayChipHeight + 4) + 6
+            clip: true
+
+            Behavior on height {
+                NumberAnimation {
+                    duration: Theme.shorterDuration
+                    easing.type: Theme.standardEasing
+                }
+            }
 
             Item {
                 width: root.timeColumnWidth
                 height: parent.height
             }
 
-            Repeater {
-                model: 7
+            Item {
+                width: parent.width - root.timeColumnWidth
+                height: parent.height
+                clip: true
 
-                Item {
-                    id: allDayCell
-                    required property int index
-                    readonly property var dayEvents: {
-                        root.eventsVersion;
-                        return root.allDayEventsFor(root.dayAt(index));
-                    }
-
-                    width: (parent.width - root.timeColumnWidth) / 7
+                Row {
+                    x: root.slidePx - root.dayWidth
                     height: parent.height
 
-                    Column {
-                        anchors.fill: parent
-                        anchors.margins: 2
-                        spacing: 2
+                    Repeater {
+                        model: 9
 
-                        Repeater {
-                            model: ScriptModel {
-                                values: allDayCell.dayEvents.slice(0, 2)
+                        Item {
+                            id: allDayCell
+                            required property int index
+                            readonly property var dayEvents: {
+                                root.eventsVersion;
+                                return root.allDayEventsFor(root.dayAt(index - 1));
                             }
 
-                            Rectangle {
-                                required property var modelData
-                                readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
-                                width: parent.width
-                                height: root.allDayChipHeight
-                                radius: 4
-                                clip: true
-                                color: Theme.withAlpha(modelData.color, 0.22)
-                                border.color: isSelected ? Theme.primary : modelData.color
-                                border.width: isSelected ? 2 : 1
+                            width: root.dayWidth
+                            height: parent.height
 
-                                StyledText {
-                                    anchors.left: parent.left
-                                    anchors.right: parent.right
-                                    anchors.leftMargin: 4
-                                    anchors.rightMargin: 4
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    text: modelData.title
-                                    font.pixelSize: 10
-                                    color: Theme.surfaceText
-                                    wrapMode: Text.WordWrap
-                                    maximumLineCount: SettingsData.weekEventTitleLines
-                                    elide: Text.ElideRight
-                                }
+                            Column {
+                                anchors.fill: parent
+                                anchors.margins: 2
+                                spacing: 2
 
-                                MouseArea {
-                                    anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    hoverEnabled: true
-                                    onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
-                                    onExited: chipTooltip.hide()
-                                    onClicked: {
-                                        chipTooltip.hide();
-                                        root.eventClicked(parent.modelData);
+                                Repeater {
+                                    model: ScriptModel {
+                                        values: allDayCell.dayEvents.slice(0, 2)
+                                    }
+
+                                    Rectangle {
+                                        required property var modelData
+                                        readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                                        width: parent.width
+                                        height: root.allDayChipHeight
+                                        radius: 4
+                                        clip: true
+                                        color: Theme.withAlpha(modelData.color, 0.22)
+                                        border.color: isSelected ? Theme.primary : modelData.color
+                                        border.width: isSelected ? 2 : 1
+
+                                        StyledText {
+                                            anchors.left: parent.left
+                                            anchors.right: parent.right
+                                            anchors.leftMargin: 4
+                                            anchors.rightMargin: 4
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            text: modelData.title
+                                            font.pixelSize: 10
+                                            color: Theme.surfaceText
+                                            wrapMode: Text.WordWrap
+                                            maximumLineCount: SettingsData.weekEventTitleLines
+                                            elide: Text.ElideRight
+                                        }
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            cursorShape: Qt.PointingHandCursor
+                                            hoverEnabled: true
+                                            onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
+                                            onExited: chipTooltip.hide()
+                                            onClicked: {
+                                                chipTooltip.hide();
+                                                root.eventClicked(parent.modelData);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -358,31 +435,50 @@ Item {
             id: hiddenBeforeStrip
             width: parent.width
             height: root.anyHiddenBefore ? 16 : 0
-            visible: root.anyHiddenBefore
+            visible: height > 0
+            clip: true
+
+            Behavior on height {
+                NumberAnimation {
+                    duration: Theme.shorterDuration
+                    easing.type: Theme.standardEasing
+                }
+            }
 
             Item {
                 width: root.timeColumnWidth
                 height: parent.height
             }
 
-            Repeater {
-                model: 7
+            Item {
+                width: parent.width - root.timeColumnWidth
+                height: parent.height
+                clip: true
 
-                Item {
-                    required property int index
-                    readonly property date d: root.dayAt(index)
-                    width: (parent.width - root.timeColumnWidth) / 7
+                Row {
+                    x: root.slidePx - root.dayWidth
                     height: parent.height
 
-                    DankIcon {
-                        visible: {
-                            root.eventsVersion;
-                            return root.hiddenInfoFor(parent.d).before;
+                    Repeater {
+                        model: 9
+
+                        Item {
+                            required property int index
+                            readonly property date d: root.dayAt(index - 1)
+                            width: root.dayWidth
+                            height: parent.height
+
+                            DankIcon {
+                                visible: {
+                                    root.eventsVersion;
+                                    return root.hiddenInfoFor(parent.d).before;
+                                }
+                                anchors.centerIn: parent
+                                name: "keyboard_arrow_up"
+                                size: Theme.iconSizeSmall
+                                color: Theme.warning
+                            }
                         }
-                        anchors.centerIn: parent
-                        name: "keyboard_arrow_up"
-                        size: Theme.iconSizeSmall
-                        color: Theme.warning
                     }
                 }
             }
@@ -391,9 +487,13 @@ Item {
         DankFlickable {
             id: weekFlickable
             width: parent.width
-            height: parent.height - 56 - coreHoursWarning.height - hiddenBeforeStrip.height - (root.allDayMax > 0 ? root.allDayMax * (root.allDayChipHeight + 4) + 6 : 0)
+            height: parent.height - 56 - coreHoursWarning.height - hiddenBeforeStrip.height - allDayRow.height
             contentHeight: root.hourHeight * root.hourCount
             clip: true
+
+            DankSlideDragHandler {
+                slideArea: slidePager
+            }
 
             Item {
                 width: parent.width
@@ -453,95 +553,101 @@ Item {
                     color: Theme.gridLine
                 }
 
-                Row {
+                Item {
                     anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
                     height: parent.height
+                    clip: true
 
-                    Repeater {
-                        model: 7
+                    Row {
+                        x: root.slidePx - root.dayWidth
+                        height: parent.height
 
-                        Item {
-                            id: dayColumn
-                            required property int index
-                            readonly property var timedEvents: {
-                                root.eventsVersion;
-                                return root.timedEventsFor(root.dayAt(index));
-                            }
+                        Repeater {
+                            model: 9
 
-                            width: parent.width / 7
-                            height: parent.height
-
-                            Rectangle {
-                                anchors.left: parent.left
-                                width: 1
-                                height: parent.height
-                                color: Theme.gridLine
-                            }
-
-                            DankIcon {
-                                visible: {
+                            Item {
+                                id: dayColumn
+                                required property int index
+                                readonly property var timedEvents: {
                                     root.eventsVersion;
-                                    return root.hiddenInfoFor(root.dayAt(dayColumn.index)).after;
+                                    return root.timedEventsFor(root.dayAt(index - 1));
                                 }
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                y: root.hourCount * root.hourHeight + 2
-                                name: "keyboard_arrow_down"
-                                size: Theme.iconSizeSmall
-                                color: Theme.warning
-                            }
 
-                            Repeater {
-                                model: ScriptModel {
-                                    values: dayColumn.timedEvents
-                                }
+                                width: root.dayWidth
+                                height: parent.height
 
                                 Rectangle {
-                                    required property var modelData
-                                    readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
-                                    onIsSelectedChanged: {
-                                        if (isSelected)
-                                            root.revealHours(modelData.startHour, modelData.durationHours);
+                                    anchors.left: parent.left
+                                    width: 1
+                                    height: parent.height
+                                    color: Theme.gridLine
+                                }
+
+                                DankIcon {
+                                    visible: {
+                                        root.eventsVersion;
+                                        return root.hiddenInfoFor(root.dayAt(dayColumn.index - 1)).after;
                                     }
-                                    readonly property real laneGap: 2
-                                    readonly property real usableWidth: parent.width - 8
-                                    readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
-                                    x: 4 + modelData.column * (laneWidth + laneGap)
-                                    y: modelData.startHour * root.hourHeight
-                                    width: laneWidth
-                                    height: modelData.durationHours * root.hourHeight - 2
-                                    radius: Theme.cornerRadiusSmall
-                                    clip: true
-                                    color: Theme.withAlpha(modelData.color, 0.22)
-                                    border.color: isSelected ? Theme.primary : modelData.color
-                                    border.width: isSelected ? 2 : 1
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    y: root.hourCount * root.hourHeight + 2
+                                    name: "keyboard_arrow_down"
+                                    size: Theme.iconSizeSmall
+                                    color: Theme.warning
+                                }
 
-                                    Column {
-                                        anchors.fill: parent
-                                        anchors.margins: 4
-                                        spacing: 2
+                                Repeater {
+                                    model: ScriptModel {
+                                        values: dayColumn.timedEvents
+                                    }
 
-                                        StyledText {
-                                            text: modelData.title
-                                            font.pixelSize: 11
-                                            font.weight: Font.Medium
-                                            color: Theme.surfaceText
-                                            width: parent.width
-                                            wrapMode: Text.WordWrap
-                                            maximumLineCount: Math.min(SettingsData.weekEventTitleLines, Math.max(1, Math.floor(parent.height / 14)))
-                                            elide: Text.ElideRight
+                                    Rectangle {
+                                        required property var modelData
+                                        readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                                        onIsSelectedChanged: {
+                                            if (isSelected)
+                                                root.revealHours(modelData.startHour, modelData.durationHours);
                                         }
-                                    }
+                                        readonly property real laneGap: 2
+                                        readonly property real usableWidth: parent.width - 8
+                                        readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
+                                        x: 4 + modelData.column * (laneWidth + laneGap)
+                                        y: modelData.startHour * root.hourHeight
+                                        width: laneWidth
+                                        height: modelData.durationHours * root.hourHeight - 2
+                                        radius: Theme.cornerRadiusSmall
+                                        clip: true
+                                        color: Theme.withAlpha(modelData.color, 0.22)
+                                        border.color: isSelected ? Theme.primary : modelData.color
+                                        border.width: isSelected ? 2 : 1
 
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        hoverEnabled: true
-                                        onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
-                                        onExited: chipTooltip.hide()
-                                        onClicked: {
-                                            chipTooltip.hide();
-                                            root.eventClicked(parent.modelData);
+                                        Column {
+                                            anchors.fill: parent
+                                            anchors.margins: 4
+                                            spacing: 2
+
+                                            StyledText {
+                                                text: modelData.title
+                                                font.pixelSize: 11
+                                                font.weight: Font.Medium
+                                                color: Theme.surfaceText
+                                                width: parent.width
+                                                wrapMode: Text.WordWrap
+                                                maximumLineCount: Math.min(SettingsData.weekEventTitleLines, Math.max(1, Math.floor(parent.height / 14)))
+                                                elide: Text.ElideRight
+                                            }
+                                        }
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            cursorShape: Qt.PointingHandCursor
+                                            hoverEnabled: true
+                                            onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
+                                            onExited: chipTooltip.hide()
+                                            onClicked: {
+                                                chipTooltip.hide();
+                                                root.eventClicked(parent.modelData);
+                                            }
                                         }
                                     }
                                 }
@@ -554,7 +660,8 @@ Item {
                     anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
                     height: parent.height
-                    visible: root.nowColumn >= 0 && root.nowHour >= root.startHour && root.nowHour < root.endHour
+                    clip: true
+                    visible: root.nowHour >= root.startHour && root.nowHour < root.endHour
                     z: 10
 
                     Item {
@@ -570,7 +677,7 @@ Item {
                         }
 
                         Rectangle {
-                            x: root.nowColumn * (parent.width / 7)
+                            x: root.slidePx + (I18n.isRtl ? 6 - root.nowIndex : root.nowIndex) * root.dayWidth
                             anchors.verticalCenter: parent.top
                             width: 10
                             height: 10
@@ -581,5 +688,27 @@ Item {
                 }
             }
         }
+    }
+
+    NumberAnimation {
+        id: snapAnim
+        target: root
+        property: "slidePx"
+        to: 0
+        duration: Theme.shortDuration
+        easing.type: Theme.standardEasing
+    }
+
+    DankSlideArea {
+        id: slidePager
+        anchors.fill: parent
+        z: 50
+        onMoved: dx => root.applySlide(dx)
+        onStepped: direction => root.slideDays((I18n.isRtl ? 1 : -1) * direction)
+        onSettled: root.settleSlide()
+    }
+
+    DankSlideDragHandler {
+        slideArea: slidePager
     }
 }

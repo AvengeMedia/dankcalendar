@@ -15,6 +15,7 @@ FloatingWindow {
     property string currentView: SettingsData.lastView
     onCurrentViewChanged: {
         SettingsData.lastView = currentView;
+        displayDate = alignedDisplayDate(displayDate);
         ensureSelectionVisible();
     }
     property date displayDate: new Date()
@@ -88,10 +89,25 @@ FloatingWindow {
         displayDate = d;
     }
 
+    function shiftDisplayDays(days) {
+        const d = new Date(displayDate);
+        d.setDate(d.getDate() + days);
+        displayDate = d;
+    }
+
+    function alignedDisplayDate(date) {
+        switch (currentView) {
+        case "week":
+            return weekStart(date);
+        default:
+            return date;
+        }
+    }
+
     function goToToday() {
         const t = new Date();
         today = t;
-        displayDate = t;
+        displayDate = alignedDisplayDate(t);
         selectedDate = t;
     }
 
@@ -108,9 +124,14 @@ FloatingWindow {
             displayDate = selectedDate;
             return;
         case "week":
-            if (weekStart(selectedDate).getTime() !== weekStart(displayDate).getTime())
-                displayDate = selectedDate;
-            return;
+            {
+                const start = new Date(displayDate.getFullYear(), displayDate.getMonth(), displayDate.getDate());
+                const sel = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+                const diff = Math.round((sel.getTime() - start.getTime()) / 86400000);
+                if (diff < 0 || diff >= 7)
+                    displayDate = weekStart(selectedDate);
+                return;
+            }
         case "agenda":
             {
                 const start = new Date(displayDate.getFullYear(), displayDate.getMonth(), displayDate.getDate());
@@ -164,7 +185,7 @@ FloatingWindow {
 
     function goToDate(date) {
         selectedDate = date;
-        displayDate = date;
+        displayDate = alignedDisplayDate(date);
     }
 
     function movePeriod(direction) {
@@ -269,7 +290,7 @@ FloatingWindow {
     }
 
     function goToEvent(event) {
-        displayDate = event.start;
+        displayDate = alignedDisplayDate(event.start);
         selectedDate = event.start;
         openEventDetails(event);
     }
@@ -287,7 +308,10 @@ FloatingWindow {
     }
 
     onDisplayDateChanged: DankCalService.focusDate = displayDate
-    Component.onCompleted: DankCalService.focusDate = displayDate
+    Component.onCompleted: {
+        displayDate = alignedDisplayDate(displayDate);
+        DankCalService.focusDate = displayDate;
+    }
 
     onClosed: window.requestClose()
 
@@ -678,6 +702,7 @@ FloatingWindow {
                         onTodayRequested: window.goToToday()
                         onPreviousRequested: window.shiftDisplayDate(-1)
                         onNextRequested: window.shiftDisplayDate(1)
+                        onShiftDaysRequested: days => window.shiftDisplayDays(days)
                         onSettingsRequested: window.openSettings()
                         onSearchRequested: window.openSearch()
                         onGoToDateRequested: window.openGoToDate()

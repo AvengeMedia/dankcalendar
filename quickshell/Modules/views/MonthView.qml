@@ -390,14 +390,25 @@ Item {
                             }
                         }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: root.daySelected(parent.cellDate)
-                            onDoubleClicked: root.dayActivated(parent.cellDate)
+                        TapHandler {
+                            acceptedButtons: Qt.LeftButton
+                            onTapped: root.daySelected(dayCell.cellDate)
+                            onDoubleTapped: root.dayActivated(dayCell.cellDate)
                         }
                     }
                 }
             }
         }
+    }
+
+    DankSlideArea {
+        id: slidePager
+        anchors.fill: parent
+        continuous: false
+        onStepped: direction => wheelHandler.step((I18n.isRtl ? 1 : -1) * direction)
+    }
+
+    DankSlideDragHandler {
+        slideArea: slidePager
     }
 }

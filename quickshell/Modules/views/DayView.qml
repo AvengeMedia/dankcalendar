@@ -12,6 +12,8 @@ Item {
     property int eventsVersion: 0
 
     signal eventClicked(var event)
+    signal previousRequested
+    signal nextRequested
 
     function revealHours(start, duration) {
         const top = start * hourHeight;
@@ -249,6 +251,10 @@ Item {
         contentHeight: root.hourHeight * root.hourCount
         clip: true
 
+        DankSlideDragHandler {
+            slideArea: slidePager
+        }
+
         Item {
             width: parent.width
             height: root.hourHeight * root.hourCount
@@ -406,5 +412,23 @@ Item {
                 }
             }
         }
+    }
+
+    DankSlideArea {
+        id: slidePager
+        anchors.fill: parent
+        z: 50
+        continuous: false
+        onStepped: direction => {
+            const forward = (I18n.isRtl ? 1 : -1) * direction;
+            if (forward < 0)
+                root.previousRequested();
+            else
+                root.nextRequested();
+        }
+    }
+
+    DankSlideDragHandler {
+        slideArea: slidePager
     }
 }

@@ -16,6 +16,7 @@ Item {
     signal todayRequested
     signal previousRequested
     signal nextRequested
+    signal shiftDaysRequested(int days)
     signal createEventRequested
     signal eventClicked(var event)
     signal createTaskRequested
@@ -204,6 +205,7 @@ Item {
                     selectedDate: root.selectedDate
                     selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
+                    onShiftDaysRequested: days => root.shiftDaysRequested(days)
                 }
             }
 
@@ -213,6 +215,8 @@ Item {
                     displayDate: root.displayDate
                     selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
+                    onPreviousRequested: root.previousRequested()
+                    onNextRequested: root.nextRequested()
                 }
             }
 
