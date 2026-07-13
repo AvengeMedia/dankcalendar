@@ -362,13 +362,13 @@
   {
     "term": "Agenda",
     "context": "Agenda",
-    "reference": "Modules/CalendarSidebar.qml:49, Modules/CalendarContent.qml:36",
+    "reference": "Modules/CalendarSidebar.qml:49, Modules/CalendarContent.qml:37",
     "comment": "header title when the agenda view is active | view switcher option in sidebar"
   },
   {
     "term": "Agenda view",
     "context": "Agenda view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:77",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:89",
     "comment": "keyboard shortcut description"
   },
   {
@@ -500,7 +500,7 @@
   {
     "term": "Back to the calendar",
     "context": "Back to the calendar",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:114",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:126",
     "comment": "keyboard shortcut description"
   },
   {
@@ -524,7 +524,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:277, Modules/CalendarWindow.qml:512",
+    "reference": "Modules/CalendarWindow.qml:294, Modules/CalendarWindow.qml:538",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -590,7 +590,7 @@
   {
     "term": "Clear event selection",
     "context": "Clear event selection",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:56",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:68",
     "comment": "keyboard shortcut description"
   },
   {
@@ -626,7 +626,7 @@
   {
     "term": "Collapse or expand a section",
     "context": "Collapse or expand a section",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:98",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:110",
     "comment": "keyboard shortcut description"
   },
   {
@@ -752,7 +752,7 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modules/CalendarSidebar.qml:417, Modals/KeyboardShortcutsOverlay.qml:123",
+    "reference": "Modules/CalendarSidebar.qml:417, Modals/KeyboardShortcutsOverlay.qml:135",
     "comment": "keyboard shortcut description | sidebar button to create a new event"
   },
   {
@@ -812,7 +812,7 @@
   {
     "term": "Day view",
     "context": "Day view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:65",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:77",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1088,7 +1088,7 @@
   {
     "term": "Focus or leave the sidebar",
     "context": "Focus or leave the sidebar",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:90",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:102",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1106,7 +1106,7 @@
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:366, Modals/KeyboardShortcutsOverlay.qml:119",
+    "reference": "Modals/SettingsSidebar.qml:15, Modals/SettingsContent.qml:366, Modals/KeyboardShortcutsOverlay.qml:131",
     "comment": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label"
   },
   {
@@ -1120,6 +1120,12 @@
     "context": "GitHub",
     "reference": "Modals/SettingsAboutPage.qml:145",
     "comment": "about page resource button"
+  },
+  {
+    "term": "Go to date",
+    "context": "Go to date",
+    "reference": "Modals/GoToDateDialog.qml:133, Modals/KeyboardShortcutsOverlay.qml:52",
+    "comment": "go to date dialog title | keyboard shortcut description"
   },
   {
     "term": "Go to today",
@@ -1214,7 +1220,7 @@
   {
     "term": "Keyboard shortcuts",
     "context": "Keyboard shortcuts",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:188",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:200",
     "comment": "keyboard shortcuts overlay title"
   },
   {
@@ -1370,7 +1376,7 @@
   {
     "term": "Month view",
     "context": "Month view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:73",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:85",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1382,7 +1388,7 @@
   {
     "term": "Move through sidebar items",
     "context": "Move through sidebar items",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:94",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:106",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1460,7 +1466,7 @@
   {
     "term": "Next day with events",
     "context": "Next day with events",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:44",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:56",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1473,6 +1479,12 @@
     "term": "Next event (next week in month view)",
     "context": "Next event (next week in month view)",
     "reference": "Modals/KeyboardShortcutsOverlay.qml:28",
+    "comment": "keyboard shortcut description"
+  },
+  {
+    "term": "Next year",
+    "context": "Next year",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:48",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1628,7 +1640,7 @@
   {
     "term": "Open or create event",
     "context": "Open or create event",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:52",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:64",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1754,7 +1766,7 @@
   {
     "term": "Previous day with events",
     "context": "Previous day with events",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:48",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:60",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1767,6 +1779,12 @@
     "term": "Previous event (previous week in month view)",
     "context": "Previous event (previous week in month view)",
     "reference": "Modals/KeyboardShortcutsOverlay.qml:32",
+    "comment": "keyboard shortcut description"
+  },
+  {
+    "term": "Previous year",
+    "context": "Previous year",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:44",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1838,7 +1856,7 @@
   {
     "term": "Remove calendar or account",
     "context": "Remove calendar or account",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:106",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:118",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1862,7 +1880,7 @@
   {
     "term": "Rename calendar",
     "context": "Rename calendar",
-    "reference": "Modals/RenameCalendarDialog.qml:59, Modals/KeyboardShortcutsOverlay.qml:110",
+    "reference": "Modals/RenameCalendarDialog.qml:59, Modals/KeyboardShortcutsOverlay.qml:122",
     "comment": "keyboard shortcut description | rename calendar dialog header"
   },
   {
@@ -1916,7 +1934,7 @@
   {
     "term": "Search",
     "context": "Search",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:127",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:139",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1976,7 +1994,7 @@
   {
     "term": "Settings",
     "context": "Settings",
-    "reference": "Modals/SettingsModal.qml:86, Modals/KeyboardShortcutsOverlay.qml:131",
+    "reference": "Modals/SettingsModal.qml:86, Modals/KeyboardShortcutsOverlay.qml:143",
     "comment": "keyboard shortcut description | settings window header title"
   },
   {
@@ -2030,7 +2048,7 @@
   {
     "term": "Sidebar",
     "context": "Sidebar",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:86",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:98",
     "comment": "keyboard shortcuts overlay section header"
   },
   {
@@ -2198,13 +2216,13 @@
   {
     "term": "Tasks",
     "context": "Tasks",
-    "reference": "Modules/CalendarSidebar.qml:56, Modules/CalendarSidebar.qml:657, Modules/CalendarContent.qml:38",
+    "reference": "Modules/CalendarSidebar.qml:56, Modules/CalendarSidebar.qml:657, Modules/CalendarContent.qml:39",
     "comment": "header title when the tasks view is active | sidebar section header for the task list | view switcher option in sidebar"
   },
   {
     "term": "Tasks view",
     "context": "Tasks view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:81",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:93",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2246,19 +2264,19 @@
   {
     "term": "Today",
     "context": "Today",
-    "reference": "Modules/CalendarContent.qml:59, Modals/SearchModal.qml:69, Modules/views/AgendaView.qml:41, Modules/views/TasksView.qml:31, Modules/views/TasksView.qml:52",
+    "reference": "Modules/CalendarContent.qml:60, Modals/SearchModal.qml:69, Modules/views/AgendaView.qml:41, Modules/views/TasksView.qml:31, Modules/views/TasksView.qml:52",
     "comment": "agenda section header for the current day | due-date label on a task card | header button that jumps to the current date | search result date label for current day | tasks view section header for tasks due today"
   },
   {
     "term": "Toggle calendar, switch view or sync account",
     "context": "Toggle calendar, switch view or sync account",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:102",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:114",
     "comment": "keyboard shortcut description"
   },
   {
     "term": "Toggle this help",
     "context": "Toggle this help",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:135",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:147",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2378,7 +2396,7 @@
   {
     "term": "View",
     "context": "View",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:61",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:73",
     "comment": "keyboard shortcuts overlay section header"
   },
   {
@@ -2414,7 +2432,7 @@
   {
     "term": "Week view",
     "context": "Week view",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:69",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:81",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2488,6 +2506,12 @@
     "context": "days",
     "reference": "Services/DankCalService.qml:855, Widgets/DankRecurrencePicker.qml:62",
     "comment": "recurrence unit plural"
+  },
+  {
+    "term": "e.g. 2022-01-01",
+    "context": "e.g. 2022-01-01",
+    "reference": "Modals/GoToDateDialog.qml:207",
+    "comment": "go to date input placeholder example"
   },
   {
     "term": "iCal subscription",

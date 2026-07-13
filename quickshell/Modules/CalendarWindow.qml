@@ -155,6 +155,18 @@ FloatingWindow {
         }
     }
 
+    function moveYear(direction) {
+        const d = new Date(selectedDate);
+        d.setFullYear(d.getFullYear() + direction);
+        selectedDate = d;
+        ensureSelectionVisible();
+    }
+
+    function goToDate(date) {
+        selectedDate = date;
+        displayDate = date;
+    }
+
     function movePeriod(direction) {
         switch (currentView) {
         case "day":
@@ -251,6 +263,11 @@ FloatingWindow {
         searchLoader.item.show();
     }
 
+    function openGoToDate() {
+        goToLoader.active = true;
+        goToLoader.item.show(selectedDate);
+    }
+
     function goToEvent(event) {
         displayDate = event.start;
         selectedDate = event.start;
@@ -334,6 +351,9 @@ FloatingWindow {
             case Qt.Key_T:
                 window.goToToday();
                 break;
+            case Qt.Key_G:
+                window.openGoToDate();
+                break;
             case Qt.Key_H:
             case Qt.Key_Left:
                 window.moveSelection(I18n.isRtl ? 1 : -1);
@@ -363,6 +383,12 @@ FloatingWindow {
             case Qt.Key_BracketRight:
             case Qt.Key_PageDown:
                 window.movePeriod(1);
+                break;
+            case Qt.Key_BraceLeft:
+                window.moveYear(-1);
+                break;
+            case Qt.Key_BraceRight:
+                window.moveYear(1);
                 break;
             case Qt.Key_Escape:
                 if (window.selectedEventIndex < 0) {
@@ -654,6 +680,7 @@ FloatingWindow {
                         onNextRequested: window.shiftDisplayDate(1)
                         onSettingsRequested: window.openSettings()
                         onSearchRequested: window.openSearch()
+                        onGoToDateRequested: window.openGoToDate()
                         onDaySelected: day => window.selectedDate = day
                         onDayActivated: day => {
                             window.selectedDate = day;
@@ -735,6 +762,16 @@ FloatingWindow {
         sourceComponent: Component {
             SearchModal {
                 onEventSelected: ev => window.goToEvent(ev)
+            }
+        }
+    }
+
+    Loader {
+        id: goToLoader
+        active: false
+        sourceComponent: Component {
+            GoToDateDialog {
+                onDateSelected: date => window.goToDate(date)
             }
         }
     }

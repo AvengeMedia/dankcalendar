@@ -1309,6 +1309,13 @@
     "comment": ""
   },
   {
+    "term": "Go to date",
+    "translation": "",
+    "context": "go to date dialog title | keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Go to today",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -1722,6 +1729,13 @@
     "comment": ""
   },
   {
+    "term": "Next year",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.",
     "translation": "",
     "context": "error when credentials json lacks an oauth client",
@@ -2059,6 +2073,13 @@
   },
   {
     "term": "Previous event (previous week in month view)",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Previous year",
     "translation": "",
     "context": "keyboard shortcut description",
     "reference": "",
@@ -2901,6 +2922,13 @@
     "term": "days",
     "translation": "",
     "context": "recurrence unit plural",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "e.g. 2022-01-01",
+    "translation": "",
+    "context": "go to date input placeholder example",
     "reference": "",
     "comment": ""
   },

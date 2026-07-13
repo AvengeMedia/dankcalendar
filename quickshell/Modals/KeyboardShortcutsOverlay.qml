@@ -40,6 +40,18 @@ Item {
                     "label": I18n.tr("Next day, week or month", "keyboard shortcut description")
                 },
                 {
+                    "keys": ["{"],
+                    "label": I18n.tr("Previous year", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["}"],
+                    "label": I18n.tr("Next year", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["g"],
+                    "label": I18n.tr("Go to date", "keyboard shortcut description")
+                },
+                {
                     "keys": ["Tab"],
                     "label": I18n.tr("Next day with events", "keyboard shortcut description")
                 },

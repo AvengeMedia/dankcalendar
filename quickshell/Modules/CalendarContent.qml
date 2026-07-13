@@ -22,6 +22,7 @@ Item {
     signal taskClicked(var task)
     signal settingsRequested
     signal searchRequested
+    signal goToDateRequested
     signal daySelected(date day)
     signal dayActivated(date day)
     signal viewDayRequested(date day)
@@ -83,12 +84,27 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
-                StyledText {
-                    text: root.headerTitle()
-                    font.pixelSize: Theme.fontSizeXLarge
-                    font.weight: Font.Medium
-                    color: Theme.surfaceText
+                Rectangle {
+                    width: headerTitleText.implicitWidth + Theme.spacingM * 2
+                    height: 36
+                    radius: Theme.cornerRadius
+                    color: "transparent"
                     anchors.verticalCenter: parent.verticalCenter
+
+                    StyledText {
+                        id: headerTitleText
+                        anchors.centerIn: parent
+                        text: root.headerTitle()
+                        font.pixelSize: Theme.fontSizeXLarge
+                        font.weight: Font.Medium
+                        color: Theme.surfaceText
+                    }
+
+                    StateLayer {
+                        stateColor: Theme.primary
+                        cornerRadius: parent.radius
+                        onClicked: root.goToDateRequested()
+                    }
                 }
             }
 
