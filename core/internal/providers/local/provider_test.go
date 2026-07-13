@@ -16,6 +16,7 @@ import (
 const sampleICS = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//dankcal-test//EN
+COLOR:turquoise
 BEGIN:VEVENT
 UID:demo-1@dankcal
 DTSTAMP:20260506T120000Z
@@ -46,6 +47,10 @@ func TestLocalProviderListsCalendarsAndEvents(t *testing.T) {
 	require.Equal(t, "Lunch with Alice", events[0].Summary)
 	require.Equal(t, "Cafe Nord", events[0].Location)
 	require.True(t, events[0].Start.Before(events[0].End))
+
+	res, err := provider.Sync(ctx, cals[0], calendar.SyncCursor{})
+	require.NoError(t, err)
+	require.Equal(t, "turquoise", res.Color)
 }
 
 func TestLocalProviderTimeFiltering(t *testing.T) {

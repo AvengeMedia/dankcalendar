@@ -13,6 +13,8 @@ import (
 	"time"
 
 	ical "github.com/emersion/go-ical"
+
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
 )
 
 const (
@@ -95,6 +97,7 @@ func clampTTL(d time.Duration) time.Duration {
 type feed struct {
 	doc         *ical.Calendar
 	name        string
+	color       string
 	cursor      cursor
 	notModified bool
 }
@@ -136,8 +139,9 @@ func fetch(ctx context.Context, feedURL, username string, password []byte, prev 
 	}
 
 	return &feed{
-		doc:  doc,
-		name: calendarName(doc),
+		doc:   doc,
+		name:  calendarName(doc),
+		color: icalconv.CalendarColor(doc),
 		cursor: cursor{
 			ETag:         resp.Header.Get("ETag"),
 			LastModified: resp.Header.Get("Last-Modified"),

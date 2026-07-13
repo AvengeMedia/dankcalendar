@@ -39,6 +39,24 @@ func ComponentUID(comp *ical.Component) string {
 	return ""
 }
 
+// CalendarColor returns a VCALENDAR's color: RFC 7986 COLOR first, then the
+// Apple extension most calendars in the wild carry.
+func CalendarColor(doc *ical.Calendar) string {
+	if doc == nil {
+		return ""
+	}
+	for _, name := range []string{ical.PropColor, "X-APPLE-CALENDAR-COLOR"} {
+		p := doc.Props.Get(name)
+		if p == nil {
+			continue
+		}
+		if v := strings.TrimSpace(p.Value); v != "" {
+			return v
+		}
+	}
+	return ""
+}
+
 // EventFromComponent maps a VEVENT to a domain event. It reports false when the
 // component has no UID. RemoteID and Etag are left to the caller, which knows
 // the transport (a file UID or a CalDAV path/etag).

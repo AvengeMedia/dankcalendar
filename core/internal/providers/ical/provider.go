@@ -85,6 +85,7 @@ func (p *Provider) Sync(ctx context.Context, cal calendar.Calendar, cursor calen
 		TaskChanges:  taskChanges,
 		FullSnapshot: true,
 		RetryAfter:   f.cursor.ttl(),
+		Color:        f.color,
 	}, nil
 }
 

@@ -67,15 +67,17 @@ func (r *Repo) UpsertCalendar(ctx context.Context, in UpsertCalendarInput) (*ent
 }
 
 // calendarUpdate builds the update for provider-discovered fields. Components
-// are only written when the provider reported them, so a discovery that omits
-// them never clears a stored value.
+// and color are only written when the provider reported them, so a discovery
+// that omits them never clears a stored value.
 func (r *Repo) calendarUpdate(id string, in UpsertCalendarInput) *ent.CalendarUpdateOne {
 	upd := r.client.Calendar.UpdateOneID(id).
 		SetName(in.Name).
 		SetDescription(in.Description).
-		SetColor(in.Color).
 		SetTimeZone(in.TimeZone).
 		SetReadOnly(in.ReadOnly)
+	if in.Color != "" {
+		upd = upd.SetColor(in.Color)
+	}
 	if len(in.SupportedComponents) > 0 {
 		upd = upd.SetSupportedComponents(in.SupportedComponents)
 	}
@@ -88,6 +90,10 @@ func (r *Repo) SetCalendarSyncToken(ctx context.Context, id, token string) error
 
 func (r *Repo) SetCalendarHidden(ctx context.Context, id string, hidden bool) error {
 	return r.client.Calendar.UpdateOneID(id).SetHidden(hidden).Exec(ctx)
+}
+
+func (r *Repo) SetCalendarColor(ctx context.Context, id, color string) error {
+	return r.client.Calendar.UpdateOneID(id).SetColor(color).Exec(ctx)
 }
 
 func (r *Repo) SetCalendarNameOverride(ctx context.Context, id, name string) error {

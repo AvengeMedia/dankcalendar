@@ -2,6 +2,7 @@ package caldav
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -99,6 +100,91 @@ func TestNewSkipsCertificateVerification(t *testing.T) {
 	p, err := New(context.Background(), insecure, newSecrets(t), server.URL, "user")
 	require.NoError(t, err)
 	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+}
+
+const calendarsXML = `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">
+  <d:response>
+    <d:href>/dav/calendars/user/</d:href>
+    <d:propstat>
+      <d:prop><d:resourcetype><d:collection/></d:resourcetype></d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+  <d:response>
+    <d:href>/dav/calendars/user/personal/</d:href>
+    <d:propstat>
+      <d:prop>
+        <d:resourcetype><d:collection/><c:calendar/></d:resourcetype>
+        <d:displayname>Personal</d:displayname>
+      </d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+  <d:response>
+    <d:href>/dav/calendars/user/work/</d:href>
+    <d:propstat>
+      <d:prop>
+        <d:resourcetype><d:collection/><c:calendar/></d:resourcetype>
+        <d:displayname>Work</d:displayname>
+      </d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+</d:multistatus>`
+
+// Fastmail-style color response: one calendar carries the Apple extension with
+// an alpha suffix, the other reports the property as 404.
+const colorsXML = `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:" xmlns:a="http://apple.com/ns/ical/">
+  <d:response>
+    <d:href>/dav/calendars/user/personal/</d:href>
+    <d:propstat>
+      <d:prop><a:calendar-color>#3A429CFF</a:calendar-color></d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+  <d:response>
+    <d:href>/dav/calendars/user/work/</d:href>
+    <d:propstat>
+      <d:prop><a:calendar-color/></d:prop>
+      <d:status>HTTP/1.1 404 Not Found</d:status>
+    </d:propstat>
+  </d:response>
+</d:multistatus>`
+
+func TestListCalendarsReadsAppleColor(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, _ := io.ReadAll(r.Body)
+		path := strings.TrimSuffix(r.URL.Path, "/")
+		switch {
+		case r.Method == "PROPFIND" && path == "":
+			writeMultiStatus(w, principalXML)
+		case r.Method == "PROPFIND" && path == "/dav/principals/user":
+			writeMultiStatus(w, homeSetXML)
+		case r.Method == "PROPFIND" && path == "/dav/calendars/user" && strings.Contains(string(body), "calendar-color"):
+			writeMultiStatus(w, colorsXML)
+		case r.Method == "PROPFIND" && path == "/dav/calendars/user":
+			writeMultiStatus(w, calendarsXML)
+		default:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		}
+	}))
+	defer server.Close()
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL, "user")
+	require.NoError(t, err)
+
+	cals, err := p.ListCalendars(context.Background())
+	require.NoError(t, err)
+	require.Len(t, cals, 2)
+
+	byName := map[string]cal.Calendar{}
+	for _, c := range cals {
+		byName[c.Name] = c
+	}
+	assert.Equal(t, "#3A429CFF", byName["Personal"].Color)
+	assert.Empty(t, byName["Work"].Color)
 }
 
 func TestNewReportsPrincipalErrorWithoutWellKnown(t *testing.T) {

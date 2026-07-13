@@ -124,8 +124,51 @@ func (s *EngineSuite) TestSyncAccountStoresCalendarsAndEvents() {
 	s.Require().Len(calendars, 1)
 	s.Equal("Main", calendars[0].Name)
 	s.Equal("tok-1", calendars[0].SyncToken)
+	s.Equal("#ff0000", calendars[0].Color)
 
 	s.Equal([]string{"ev-1"}, s.listUIDs())
+}
+
+func (s *EngineSuite) TestSyncPersistsColorDiscoveredDuringSync() {
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{
+		Color: "#FF2968FF",
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	calendars, err := s.repo.ListCalendars(s.ctx)
+	s.Require().NoError(err)
+	s.Require().Len(calendars, 1)
+	s.Equal("#ff2968", calendars[0].Color)
+}
+
+func (s *EngineSuite) TestSyncKeepsStoredColorWhenListingReportsNone() {
+	_, err := s.repo.UpsertCalendar(s.ctx, repo.UpsertCalendarInput{
+		AccountID: s.account.ID,
+		RemoteID:  "cal-1",
+		Name:      "Main",
+		Color:     "#ff2968",
+	})
+	s.Require().NoError(err)
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	calendars, err := s.repo.ListCalendars(s.ctx)
+	s.Require().NoError(err)
+	s.Require().Len(calendars, 1)
+	s.Equal("#ff2968", calendars[0].Color)
 }
 
 func (s *EngineSuite) TestSyncMapsEventStatus() {

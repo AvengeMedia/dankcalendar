@@ -14,6 +14,7 @@ const sampleFeed = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//test//test//EN
 X-WR-CALNAME:Test Feed
+X-APPLE-CALENDAR-COLOR:#FF2968FF
 X-PUBLISHED-TTL:PT2H
 BEGIN:VEVENT
 UID:evt-1@test
@@ -106,6 +107,9 @@ func TestSyncParsesEventsAndTTL(t *testing.T) {
 	}
 	if res.RetryAfter != 2*time.Hour {
 		t.Errorf("RetryAfter = %v, want 2h", res.RetryAfter)
+	}
+	if res.Color != "#FF2968FF" {
+		t.Errorf("Color = %q, want #FF2968FF", res.Color)
 	}
 }
 

@@ -287,7 +287,7 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 			RemoteID:            rc.RemoteID,
 			Name:                rc.Name,
 			Description:         rc.Description,
-			Color:               rc.Color,
+			Color:               calendar.NormalizeColor(rc.Color),
 			TimeZone:            rc.TimeZone,
 			ReadOnly:            rc.ReadOnly,
 			Hidden:              rc.Hidden,
@@ -299,6 +299,7 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		}
 
 		rc.ID = stored.ID
+		rc.Color = stored.Color
 		ra, err := e.syncCalendar(ctx, provider, rc, stored.SyncToken)
 		if err != nil {
 			log.Warnf("sync calendar %q: %v", rc.RemoteID, err)
@@ -365,6 +366,7 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 		changedEvents int
 		changedTasks  int
 		retryAfter    time.Duration
+		color         string
 	)
 
 	for {
@@ -373,6 +375,9 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 			return 0, err
 		}
 		retryAfter = result.RetryAfter
+		if result.Color != "" {
+			color = result.Color
+		}
 
 		if err := e.applyChanges(ctx, cal, result.Changes); err != nil {
 			return 0, err
@@ -414,6 +419,13 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 			}
 			changedEvents += pruned.events
 			changedTasks += pruned.tasks
+		}
+
+		if c := calendar.NormalizeColor(color); c != "" && c != cal.Color {
+			if err := e.repo.SetCalendarColor(ctx, cal.ID, c); err != nil {
+				return 0, fmt.Errorf("persist calendar color: %w", err)
+			}
+			e.publish("calendars", map[string]any{"type": "changed", "calendarId": cal.ID})
 		}
 
 		if changedEvents > 0 {

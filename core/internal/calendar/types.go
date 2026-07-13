@@ -195,6 +195,10 @@ type TaskChange struct {
 //
 // RetryAfter is a provider hint for when it wants to be synced next. Zero means
 // the engine picks its default interval.
+//
+// Color carries a calendar color discovered while syncing, for providers whose
+// listing has no color source (ical feeds, local files). Empty leaves the
+// stored color untouched.
 type SyncResult struct {
 	Cursor       SyncCursor    `json:"cursor"`
 	Changes      []EventChange `json:"changes"`
@@ -202,6 +206,7 @@ type SyncResult struct {
 	More         bool          `json:"more"`
 	FullSnapshot bool          `json:"fullSnapshot"`
 	RetryAfter   time.Duration `json:"retryAfter,omitempty"`
+	Color        string        `json:"color,omitempty"`
 }
 
 type ListEventsOptions struct {

@@ -96,6 +96,11 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 		return nil, fmt.Errorf("find caldav calendars: %w", err)
 	}
 
+	colors, err := p.calendarColors(ctx)
+	if err != nil {
+		log.Debugf("caldav: calendar-color lookup on %q failed: %v", p.homeSet, err)
+	}
+
 	out := make([]cal.Calendar, 0, len(calendars))
 	for _, c := range calendars {
 		out = append(out, cal.Calendar{
@@ -103,10 +108,72 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 			RemoteID:            c.Path,
 			Name:                c.Name,
 			Description:         c.Description,
+			Color:               colors[strings.TrimSuffix(c.Path, "/")],
 			SupportedComponents: c.SupportedComponentSet,
 		})
 	}
 	return out, nil
+}
+
+// go-webdav's FindCalendars has no notion of the Apple calendar-color
+// extension (emersion/go-webdav#150), so colors come from a separate raw
+// PROPFIND. Servers without the property answer with 404 propstats, which
+// simply yield no map entry.
+const calendarColorsBody = `<?xml version="1.0" encoding="UTF-8"?>
+<d:propfind xmlns:d="DAV:" xmlns:a="http://apple.com/ns/ical/"><d:prop><a:calendar-color/></d:prop></d:propfind>`
+
+func (p *Provider) calendarColors(ctx context.Context) (map[string]string, error) {
+	target := p.endpoint.ResolveReference(&url.URL{Path: p.homeSet})
+	req, err := http.NewRequestWithContext(ctx, "PROPFIND", target.String(), strings.NewReader(calendarColorsBody))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Depth", "1")
+	req.Header.Set("Content-Type", "text/xml; charset=utf-8")
+
+	resp, err := p.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusMultiStatus {
+		return nil, fmt.Errorf("propfind %q: %s", p.homeSet, resp.Status)
+	}
+
+	var ms struct {
+		Responses []struct {
+			Href  string `xml:"DAV: href"`
+			Props []struct {
+				Color string `xml:"http://apple.com/ns/ical/ calendar-color"`
+			} `xml:"DAV: propstat>prop"`
+		} `xml:"DAV: response"`
+	}
+	if err := xml.NewDecoder(resp.Body).Decode(&ms); err != nil {
+		return nil, fmt.Errorf("decode propfind response: %w", err)
+	}
+
+	colors := make(map[string]string, len(ms.Responses))
+	for _, r := range ms.Responses {
+		href := strings.TrimSpace(r.Href)
+		if href == "" {
+			continue
+		}
+		if u, err := url.Parse(href); err == nil {
+			href = u.Path
+		}
+		if unescaped, err := url.PathUnescape(href); err == nil {
+			href = unescaped
+		}
+		for _, prop := range r.Props {
+			color := strings.TrimSpace(prop.Color)
+			if color == "" {
+				continue
+			}
+			colors[strings.TrimSuffix(href, "/")] = color
+			break
+		}
+	}
+	return colors, nil
 }
 
 func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCursor) (*cal.SyncResult, error) {
