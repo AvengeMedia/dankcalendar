@@ -6,10 +6,10 @@
     "%1 PM": "%1 PM"
   },
   "%1 appointments fall outside core hours": {
-    "%1 appointments fall outside core hours": ""
+    "%1 appointments fall outside core hours": "%1 פגישות חורגות משעות הפעילות המרכזיות"
   },
   "%1 times": {
-    "%1 times": ""
+    "%1 times": "%1 פעמים"
   },
   "%1 · All day": {
     "%1 · All day": "%1 · כל היום"
@@ -42,7 +42,7 @@
     "+%1 more": "+%1 נוספים"
   },
   "1 appointment falls outside core hours": {
-    "1 appointment falls outside core hours": ""
+    "1 appointment falls outside core hours": "פגישה אחת חורגת משעות הפעילות המרכזיות"
   },
   "1 day before": {
     "1 day before": "יום אחד לפני"
@@ -162,7 +162,7 @@
     "Add description": "הוסף/י תיאור"
   },
   "Add reminder": {
-    "Add reminder": ""
+    "Add reminder": "הוסף/י תזכורת"
   },
   "Add task": {
     "Add task": "הוסף/י משימה"
@@ -177,7 +177,7 @@
     "Adds a calendar to \"%1\".": "מוסיף יומן אל \"%1\"."
   },
   "After": {
-    "After": ""
+    "After": "אחרי"
   },
   "Agenda": {
     "Agenda": "סדר יום"
@@ -249,7 +249,7 @@
     "Back": "חזרה"
   },
   "Back to the calendar": {
-    "Back to the calendar": ""
+    "Back to the calendar": "חזרה ליומן"
   },
   "Backend": {
     "Backend": "Backend"
@@ -282,7 +282,7 @@
     "Capabilities": "יכולות"
   },
   "Changes apply to the whole series": {
-    "Changes apply to the whole series": ""
+    "Changes apply to the whole series": "השינויים חלים על כל הסדרה"
   },
   "Choose a JSON color theme file.": {
     "Choose a JSON color theme file.": "בחר/י קובץ JSON של ערכת צבעים."
@@ -294,7 +294,7 @@
     "Choose calendar directory": "בחר/י תיקיית יומן"
   },
   "Clear event selection": {
-    "Clear event selection": ""
+    "Clear event selection": "נקה/י בחירת אירוע"
   },
   "Click to zoom · Esc to close": {
     "Click to zoom · Esc to close": "לחץ/י להתקרבות · Esc לסגירה"
@@ -309,10 +309,10 @@
     "Close behavior": "התנהגות סגירה"
   },
   "Closing hides the window; reopen it from your app launcher.": {
-    "Closing hides the window; reopen it from your app launcher.": ""
+    "Closing hides the window; reopen it from your app launcher.": "סגירה מסתירה את החלון; פתח/י אותו מחדש ממשגר האפליקציות שלך."
   },
   "Collapse or expand a section": {
-    "Collapse or expand a section": ""
+    "Collapse or expand a section": "צמצם/י או הרחב/י קטע"
   },
   "Color source": {
     "Color source": "מקור הצבע"
@@ -363,7 +363,7 @@
     "Copy path": "העתק/י נתיב"
   },
   "Core hours": {
-    "Core hours": ""
+    "Core hours": "שעות פעילות מרכזיות"
   },
   "Could not read that file — expected a JSON color theme.": {
     "Could not read that file — expected a JSON color theme.": "לא ניתן היה לקרוא קובץ זה — הציפייה הייתה לערכת צבעים מסוג JSON."
@@ -434,6 +434,9 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "למחוק את \"%1\"?"
   },
+  "Delete series": {
+    "Delete series": ""
+  },
   "Delete…": {
     "Delete…": "מחיקה…"
   },
@@ -453,7 +456,7 @@
     "Directory": "תיקייה"
   },
   "Disable core hours": {
-    "Disable core hours": ""
+    "Disable core hours": "השבת/י שעות פעילות מרכזיות"
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "הצג/י מספרי שבוע בתקן ISO בתצוגת חודש."
@@ -489,13 +492,13 @@
     "Edit task": "ערוך/ערכי משימה"
   },
   "Enable core hours": {
-    "Enable core hours": ""
+    "Enable core hours": "הפעל/י שעות פעילות מרכזיות"
   },
   "Enable reminders": {
     "Enable reminders": "הפעלת תזכורות"
   },
   "Ends": {
-    "Ends": ""
+    "Ends": "מסתיים"
   },
   "Enlarge": {
     "Enlarge": "הגדלה"
@@ -528,7 +531,7 @@
     "Evolution": "Evolution"
   },
   "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": {
-    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": ""
+    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": "הרחב/י את תאי הימים כדי להכיל כל אירוע במקום לצמצם אירועים נוספים ל-\"+N נוספים\"."
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: החלפה • F10: עזרה"
@@ -549,7 +552,7 @@
     "First day shown in week and month views.": "היום הראשון שמוצג בתצוגות שבוע וחודש."
   },
   "Focus or leave the sidebar": {
-    "Focus or leave the sidebar": ""
+    "Focus or leave the sidebar": "התמקד/י או עזוב/עזבי את סרגל הצד"
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "עקוב/י אחר הצבעים של DankMaterialShell, עם גיבוי להגדרה מוכנה מראש."
@@ -585,7 +588,7 @@
     "Home": "בית"
   },
   "Hour range shown in day and week views.": {
-    "Hour range shown in day and week views.": ""
+    "Hour range shown in day and week views.": "טווח השעות המוצג בתצוגות יום ושבוע."
   },
   "How long the snooze button postpones a reminder.": {
     "How long the snooze button postpones a reminder.": "כמה זמן כפתור הנודניק ידחה את התזכורת."
@@ -627,7 +630,7 @@
     "Light": "בהיר"
   },
   "Limit the day and week views to a set hour range.": {
-    "Limit the day and week views to a set hour range.": ""
+    "Limit the day and week views to a set hour range.": "הגבל/י את תצוגות היום והשבוע לטווח שעות מוגדר."
   },
   "List": {
     "List": "רשימה"
@@ -696,7 +699,7 @@
     "Monthly": "חודשי"
   },
   "Move through sidebar items": {
-    "Move through sidebar items": ""
+    "Move through sidebar items": "נווט/י בין פריטי סרגל הצד"
   },
   "Move to Trash": {
     "Move to Trash": "העבר/י לאשפה"
@@ -717,7 +720,7 @@
     "Navigation": "ניווט"
   },
   "Never": {
-    "Never": ""
+    "Never": "לעולם לא"
   },
   "New calendar": {
     "New calendar": "יומן חדש"
@@ -735,16 +738,16 @@
     "Next day": "יום הבא"
   },
   "Next day with events": {
-    "Next day with events": ""
+    "Next day with events": "היום הבא עם אירועים"
   },
   "Next day, week or month": {
-    "Next day, week or month": ""
+    "Next day, week or month": "היום, השבוע או החודש הבא"
   },
   "Next event": {
     "Next event": "אירוע הבא"
   },
   "Next event (next week in month view)": {
-    "Next event (next week in month view)": ""
+    "Next event (next week in month view)": "האירוע הבא (השבוע הבא בתצוגת חודש)"
   },
   "Next week": {
     "Next week": "שבוע הבא"
@@ -798,7 +801,7 @@
     "Nothing scheduled in the next %1 days": "אין שום דבר מתוכנן ב%1 הימים הבאים"
   },
   "Notification sound": {
-    "Notification sound": ""
+    "Notification sound": "צליל התראה"
   },
   "Notifications": {
     "Notifications": "התראות"
@@ -810,7 +813,7 @@
     "Offline": "לא מקוון"
   },
   "On date": {
-    "On date": ""
+    "On date": "בתאריך"
   },
   "On the day": {
     "On the day": "ביום עצמו"
@@ -876,7 +879,7 @@
     "Pictures": "תמונות"
   },
   "Play a sound when a reminder fires.": {
-    "Play a sound when a reminder fires.": ""
+    "Play a sound when a reminder fires.": "השמע/י צליל כאשר תזכורת מופעלת."
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "הגדר/י נתיב לתיקייה של קובצי ics. כל תת-תיקייה או קובץ ics. הופך ליומן — תואם לפריסות של vdirsyncer/khal. התיקייה תיווצר אם היא לא קיימת."
@@ -888,16 +891,16 @@
     "Previous day": "יום קודם"
   },
   "Previous day with events": {
-    "Previous day with events": ""
+    "Previous day with events": "היום הקודם עם אירועים"
   },
   "Previous day, week or month": {
-    "Previous day, week or month": ""
+    "Previous day, week or month": "היום, השבוע או החודש הקודם"
   },
   "Previous event": {
     "Previous event": "אירוע קודם"
   },
   "Previous event (previous week in month view)": {
-    "Previous event (previous week in month view)": ""
+    "Previous event (previous week in month view)": "האירוע הקודם (השבוע הקודם בתצוגת חודש)"
   },
   "Previous week": {
     "Previous week": "שבוע קודם"
@@ -936,7 +939,7 @@
     "Remove \"%1\"?": "להסיר את \"%1\"?"
   },
   "Remove calendar or account": {
-    "Remove calendar or account": ""
+    "Remove calendar or account": "הסר/י יומן או חשבון"
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "מסיר את החשבון הזה ואת היומנים והאירועים שלו מ-Dank Calendar. שום דבר לא נמחק מהספק."
@@ -1011,10 +1014,10 @@
     "Show": "הצג/י"
   },
   "Show Dank Calendar in the system tray.": {
-    "Show Dank Calendar in the system tray.": ""
+    "Show Dank Calendar in the system tray.": "הצג/י את Dank Calendar במגש המערכת."
   },
   "Show all events in month view": {
-    "Show all events in month view": ""
+    "Show all events in month view": "הצג/י את כל האירועים בתצוגת חודש"
   },
   "Show all-day reminders": {
     "Show all-day reminders": "הצג/י תזכורות לאירועים של כל היום"
@@ -1026,13 +1029,13 @@
     "Show tasks": "הצג/י משימות"
   },
   "Show tray icon": {
-    "Show tray icon": ""
+    "Show tray icon": "הצג/י סמל במגש המערכת"
   },
   "Show week numbers": {
     "Show week numbers": "הצג/י מספרי שבוע"
   },
   "Sidebar": {
-    "Sidebar": ""
+    "Sidebar": "סרגל צדדי"
   },
   "Sign in with %1": {
     "Sign in with %1": "התחבר/י עם %1"
@@ -1143,7 +1146,7 @@
     "Today": "היום"
   },
   "Toggle calendar, switch view or sync account": {
-    "Toggle calendar, switch view or sync account": ""
+    "Toggle calendar, switch view or sync account": "הצג/י או הסתר/י יומן, החלף/י תצוגה או סנכרן/י חשבון"
   },
   "Toggle this help": {
     "Toggle this help": "הצג/י או הסתר/י את העזרה"
@@ -1272,7 +1275,7 @@
     "months": "חודשים"
   },
   "on %1": {
-    "on %1": ""
+    "on %1": "ב-%1"
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "רק אם הפיד דורש התחברות"
@@ -1287,13 +1290,13 @@
     "synced as \"%1\"": "מסונכרן בתור \"%1\""
   },
   "times": {
-    "times": ""
+    "times": "פעמים"
   },
   "to": {
-    "to": ""
+    "to": "עד"
   },
   "until %1": {
-    "until %1": ""
+    "until %1": "עד %1"
   },
   "username": {
     "username": "שם משתמש"

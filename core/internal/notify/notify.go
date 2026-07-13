@@ -40,8 +40,8 @@ type Notification struct {
 	Actions    []Action
 	Resident   bool
 	ReplacesID uint32
-	// SoundName is a freedesktop sound-theme event name the server should
-	// play; empty sends no sound hints so the server's own config applies.
+	// SoundName is a freedesktop sound-theme event name played on send;
+	// empty sends no sound hints so the server's own config applies.
 	SoundName string
 }
 
@@ -51,6 +51,7 @@ type Client struct {
 	conn     *dbus.Conn
 	onAction func(id uint32, action string)
 	onClosed func(id uint32)
+	sound    soundPlayer
 
 	mu     sync.Mutex
 	closed bool
@@ -97,7 +98,11 @@ func (c *Client) Send(n Notification) (uint32, error) {
 		"urgency":       dbus.MakeVariant(byte(1)),
 	}
 	if n.SoundName != "" {
-		hints["sound-name"] = dbus.MakeVariant(n.SoundName)
+		if c.sound.play() {
+			hints["suppress-sound"] = dbus.MakeVariant(true)
+		} else {
+			hints["sound-name"] = dbus.MakeVariant(n.SoundName)
+		}
 	}
 
 	// 0 keeps the notification until dismissed; -1 uses the server default.

@@ -96,15 +96,23 @@ func TestListEventsExpandsRecurring(t *testing.T) {
 	require.Equal(t, []string{"06-08 16:00"}, starts["Weekly (moved)"])
 	require.Empty(t, starts[""])
 
-	// The occurrence matching the master start keeps its row id; generated
-	// occurrences carry no id so the UI treats them as read-only.
+	// Generated occurrences carry the master's id so series-level edits can
+	// target them, and RecurringID marks them as expansion copies; the row
+	// matching the master start is the master itself.
+	var masterID string
 	for _, e := range events {
-		switch {
-		case e.Summary == "Weekly" && e.Start.Equal(weeklyStart):
-			require.NotEmpty(t, e.ID)
-		case e.Summary == "Weekly":
-			require.Empty(t, e.ID)
+		if e.Summary == "Weekly" && e.Start.Equal(weeklyStart) {
+			masterID = e.ID
+			require.Empty(t, e.RecurringID)
 		}
+	}
+	require.NotEmpty(t, masterID)
+	for _, e := range events {
+		if e.Summary != "Weekly" || e.Start.Equal(weeklyStart) {
+			continue
+		}
+		require.Equal(t, masterID, e.ID)
+		require.Equal(t, "weekly", e.RecurringID)
 	}
 }
 

@@ -53,6 +53,8 @@ Rectangle {
             width: parent.width - (root.iconName !== "" ? Theme.iconSize - 6 + Theme.spacingS : 0)
             anchors.verticalCenter: parent.verticalCenter
             background: null
+            leftPadding: 0
+            rightPadding: 0
             color: Theme.surfaceText
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSizeMedium

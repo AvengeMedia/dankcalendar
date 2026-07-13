@@ -994,6 +994,13 @@
     "comment": ""
   },
   {
+    "term": "Delete series",
+    "translation": "",
+    "context": "event details button to confirm deleting a whole recurring series",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Delete…",
     "translation": "",
     "context": "calendar context menu action to delete a calendar",

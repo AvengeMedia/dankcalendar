@@ -6,10 +6,10 @@
     "%1 PM": "%1 PM"
   },
   "%1 appointments fall outside core hours": {
-    "%1 appointments fall outside core hours": ""
+    "%1 appointments fall outside core hours": "%1 Termine liegen außerhalb der Kernarbeitszeit"
   },
   "%1 times": {
-    "%1 times": ""
+    "%1 times": "%1 Mal"
   },
   "%1 · All day": {
     "%1 · All day": "%1 · Ganztägig"
@@ -42,7 +42,7 @@
     "+%1 more": "+%1 weitere"
   },
   "1 appointment falls outside core hours": {
-    "1 appointment falls outside core hours": ""
+    "1 appointment falls outside core hours": "1 Termin liegt außerhalb der Kernarbeitszeit"
   },
   "1 day before": {
     "1 day before": "1 Tag vorher"
@@ -162,7 +162,7 @@
     "Add description": "Beschreibung hinzufügen"
   },
   "Add reminder": {
-    "Add reminder": ""
+    "Add reminder": "Erinnerung hinzufügen"
   },
   "Add task": {
     "Add task": "Aufgabe hinzufügen"
@@ -177,7 +177,7 @@
     "Adds a calendar to \"%1\".": "Fügt einen Kalender zu „%1“ hinzu."
   },
   "After": {
-    "After": ""
+    "After": "Nach"
   },
   "Agenda": {
     "Agenda": "Agenda"
@@ -249,7 +249,7 @@
     "Back": "Zurück"
   },
   "Back to the calendar": {
-    "Back to the calendar": ""
+    "Back to the calendar": "Zurück zum Kalender"
   },
   "Backend": {
     "Backend": "Backend"
@@ -282,7 +282,7 @@
     "Capabilities": "Funktionen"
   },
   "Changes apply to the whole series": {
-    "Changes apply to the whole series": ""
+    "Changes apply to the whole series": "Änderungen gelten für die gesamte Serie"
   },
   "Choose a JSON color theme file.": {
     "Choose a JSON color theme file.": "Wählen Sie eine JSON-Farbthemendatei aus."
@@ -294,7 +294,7 @@
     "Choose calendar directory": "Kalenderverzeichnis auswählen"
   },
   "Clear event selection": {
-    "Clear event selection": ""
+    "Clear event selection": "Event-Auswahl aufheben"
   },
   "Click to zoom · Esc to close": {
     "Click to zoom · Esc to close": "Zum Zoomen klicken · Esc zum Schließen"
@@ -309,10 +309,10 @@
     "Close behavior": "Schließverhalten"
   },
   "Closing hides the window; reopen it from your app launcher.": {
-    "Closing hides the window; reopen it from your app launcher.": ""
+    "Closing hides the window; reopen it from your app launcher.": "Schließen verbirgt das Fenster; öffnen Sie es erneut über Ihren App-Launcher."
   },
   "Collapse or expand a section": {
-    "Collapse or expand a section": ""
+    "Collapse or expand a section": "Abschnitt minimieren oder erweitern"
   },
   "Color source": {
     "Color source": "Farbquelle"
@@ -363,7 +363,7 @@
     "Copy path": "Pfad kopieren"
   },
   "Core hours": {
-    "Core hours": ""
+    "Core hours": "Kernarbeitszeit"
   },
   "Could not read that file — expected a JSON color theme.": {
     "Could not read that file — expected a JSON color theme.": "Datei konnte nicht gelesen werden – JSON-Farbthema erwartet."
@@ -434,6 +434,9 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "\"%1\" löschen?"
   },
+  "Delete series": {
+    "Delete series": ""
+  },
   "Delete…": {
     "Delete…": "Löschen…"
   },
@@ -453,7 +456,7 @@
     "Directory": "Verzeichnis"
   },
   "Disable core hours": {
-    "Disable core hours": ""
+    "Disable core hours": "Kernarbeitszeit deaktivieren"
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "ISO-Wochennummern in der Monatsansicht anzeigen."
@@ -489,13 +492,13 @@
     "Edit task": "Aufgabe bearbeiten"
   },
   "Enable core hours": {
-    "Enable core hours": ""
+    "Enable core hours": "Kernarbeitszeit aktivieren"
   },
   "Enable reminders": {
     "Enable reminders": "Erinnerungen aktivieren"
   },
   "Ends": {
-    "Ends": ""
+    "Ends": "Endet"
   },
   "Enlarge": {
     "Enlarge": "Vergrößern"
@@ -528,7 +531,7 @@
     "Evolution": "Evolution"
   },
   "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": {
-    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": ""
+    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": "Tageszellen erweitern, um jedes Ereignis anzuzeigen, anstatt Extras in \"+N weitere\" zu reduzieren."
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I: Umschalten • F10: Hilfe"
@@ -549,7 +552,7 @@
     "First day shown in week and month views.": "Erster angezeigter Tag in Wochen- und Monatsansichten."
   },
   "Focus or leave the sidebar": {
-    "Focus or leave the sidebar": ""
+    "Focus or leave the sidebar": "Seitenleiste fokussieren oder verlassen"
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Folgt den Farben von DankMaterialShell, mit Rückgriff auf eine Voreinstellung."
@@ -585,7 +588,7 @@
     "Home": "Persönlicher Ordner"
   },
   "Hour range shown in day and week views.": {
-    "Hour range shown in day and week views.": ""
+    "Hour range shown in day and week views.": "Stundenbereich, der in Tages- und Wochenansichten angezeigt wird."
   },
   "How long the snooze button postpones a reminder.": {
     "How long the snooze button postpones a reminder.": "Wie lange die Schlummertaste eine Erinnerung verschiebt."
@@ -627,7 +630,7 @@
     "Light": "Hell"
   },
   "Limit the day and week views to a set hour range.": {
-    "Limit the day and week views to a set hour range.": ""
+    "Limit the day and week views to a set hour range.": "Tages- und Wochenansicht auf einen bestimmten Stundenbereich beschränken."
   },
   "List": {
     "List": "Liste"
@@ -696,7 +699,7 @@
     "Monthly": "Monatlich"
   },
   "Move through sidebar items": {
-    "Move through sidebar items": ""
+    "Move through sidebar items": "Durch Seitenleistenelemente navigieren"
   },
   "Move to Trash": {
     "Move to Trash": "In den Papierkorb verschieben"
@@ -717,7 +720,7 @@
     "Navigation": "Navigation"
   },
   "Never": {
-    "Never": ""
+    "Never": "Nie"
   },
   "New calendar": {
     "New calendar": "Neuer Kalender"
@@ -735,16 +738,16 @@
     "Next day": "Nächster Tag"
   },
   "Next day with events": {
-    "Next day with events": ""
+    "Next day with events": "Nächster Tag mit Ereignissen"
   },
   "Next day, week or month": {
-    "Next day, week or month": ""
+    "Next day, week or month": "Nächster Tag, Woche oder Monat"
   },
   "Next event": {
     "Next event": "Nächstes Ereignis"
   },
   "Next event (next week in month view)": {
-    "Next event (next week in month view)": ""
+    "Next event (next week in month view)": "Nächstes Ereignis (nächste Woche in der Monatsansicht)"
   },
   "Next week": {
     "Next week": "Nächste Woche"
@@ -798,7 +801,7 @@
     "Nothing scheduled in the next %1 days": "Nichts geplant in den nächsten %1 Tagen"
   },
   "Notification sound": {
-    "Notification sound": ""
+    "Notification sound": "Benachrichtigungston"
   },
   "Notifications": {
     "Notifications": "Benachrichtigungen"
@@ -810,7 +813,7 @@
     "Offline": "Offline"
   },
   "On date": {
-    "On date": ""
+    "On date": "Am Datum"
   },
   "On the day": {
     "On the day": "Am selben Tag"
@@ -876,7 +879,7 @@
     "Pictures": "Bilder"
   },
   "Play a sound when a reminder fires.": {
-    "Play a sound when a reminder fires.": ""
+    "Play a sound when a reminder fires.": "Einen Ton abspielen, wenn eine Erinnerung fällig ist."
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Wählen Sie ein Verzeichnis mit .ics-Dateien aus. Jedes Unterverzeichnis oder jede .ics-Datei wird zu einem Kalender – kompatibel mit vdirsyncer/khal-Layouts. Das Verzeichnis wird erstellt, falls es nicht existiert."
@@ -888,16 +891,16 @@
     "Previous day": "Vorheriger Tag"
   },
   "Previous day with events": {
-    "Previous day with events": ""
+    "Previous day with events": "Vorheriger Tag mit Ereignissen"
   },
   "Previous day, week or month": {
-    "Previous day, week or month": ""
+    "Previous day, week or month": "Vorheriger Tag, Woche oder Monat"
   },
   "Previous event": {
     "Previous event": "Vorheriges Ereignis"
   },
   "Previous event (previous week in month view)": {
-    "Previous event (previous week in month view)": ""
+    "Previous event (previous week in month view)": "Vorheriges Ereignis (vorherige Woche in der Monatsansicht)"
   },
   "Previous week": {
     "Previous week": "Vorherige Woche"
@@ -936,7 +939,7 @@
     "Remove \"%1\"?": "„%1“ entfernen?"
   },
   "Remove calendar or account": {
-    "Remove calendar or account": ""
+    "Remove calendar or account": "Kalender oder Konto entfernen"
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Entfernt dieses Konto sowie dessen Kalender und Ereignisse aus Dank Calendar. Beim Anbieter wird nichts gelöscht."
@@ -1011,10 +1014,10 @@
     "Show": "Anzeigen"
   },
   "Show Dank Calendar in the system tray.": {
-    "Show Dank Calendar in the system tray.": ""
+    "Show Dank Calendar in the system tray.": "Dank Calendar im System-Tray anzeigen."
   },
   "Show all events in month view": {
-    "Show all events in month view": ""
+    "Show all events in month view": "Alle Ereignisse in der Monatsansicht anzeigen"
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Ganztägige Erinnerungen anzeigen"
@@ -1026,13 +1029,13 @@
     "Show tasks": "Aufgaben anzeigen"
   },
   "Show tray icon": {
-    "Show tray icon": ""
+    "Show tray icon": "Tray-Icon anzeigen"
   },
   "Show week numbers": {
     "Show week numbers": "Wochennummern anzeigen"
   },
   "Sidebar": {
-    "Sidebar": ""
+    "Sidebar": "Seitenleiste"
   },
   "Sign in with %1": {
     "Sign in with %1": "Mit %1 anmelden"
@@ -1143,7 +1146,7 @@
     "Today": "Heute"
   },
   "Toggle calendar, switch view or sync account": {
-    "Toggle calendar, switch view or sync account": ""
+    "Toggle calendar, switch view or sync account": "Kalender umschalten, Ansicht wechseln oder Konto synchronisieren"
   },
   "Toggle this help": {
     "Toggle this help": "Hilfe ein-/ausschalten"
@@ -1272,7 +1275,7 @@
     "months": "Monate"
   },
   "on %1": {
-    "on %1": ""
+    "on %1": "am %1"
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "nur wenn der Feed eine Anmeldung erfordert"
@@ -1287,13 +1290,13 @@
     "synced as \"%1\"": "synchronisiert als „%1“"
   },
   "times": {
-    "times": ""
+    "times": "Mal"
   },
   "to": {
-    "to": ""
+    "to": "bis"
   },
   "until %1": {
-    "until %1": ""
+    "until %1": "bis %1"
   },
   "username": {
     "username": "Benutzername"

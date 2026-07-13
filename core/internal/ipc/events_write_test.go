@@ -58,6 +58,29 @@ func TestEventFromParamsRecurrence(t *testing.T) {
 	})
 }
 
+func TestShiftSeriesTimes(t *testing.T) {
+	masterStart := time.Date(2026, 7, 6, 14, 0, 0, 0, time.UTC)
+	occStart := time.Date(2026, 7, 20, 14, 0, 0, 0, time.UTC)
+
+	t.Run("unchanged occurrence times keep the master start", func(t *testing.T) {
+		ev := shiftSeriesTimes(calendar.Event{
+			Start: occStart,
+			End:   occStart.Add(time.Hour),
+		}, masterStart, occStart)
+		assert.Equal(t, masterStart, ev.Start)
+		assert.Equal(t, masterStart.Add(time.Hour), ev.End)
+	})
+
+	t.Run("moved occurrence shifts the series by the delta", func(t *testing.T) {
+		ev := shiftSeriesTimes(calendar.Event{
+			Start: occStart.Add(90 * time.Minute),
+			End:   occStart.Add(90*time.Minute + 2*time.Hour),
+		}, masterStart, occStart)
+		assert.Equal(t, masterStart.Add(90*time.Minute), ev.Start)
+		assert.Equal(t, masterStart.Add(90*time.Minute+2*time.Hour), ev.End)
+	})
+}
+
 // Regression: domainEventFromEnt used to drop recurrence and original start,
 // so any edit of a recurring master wiped its RRULE at the provider.
 func TestDomainEventFromEntCarriesRecurrence(t *testing.T) {

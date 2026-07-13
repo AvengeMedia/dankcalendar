@@ -215,6 +215,9 @@ func (e *Engine) Tick(ctx context.Context) error {
 		if calID == "" || ev.ID == "" {
 			continue
 		}
+		if ev.RecurringID != "" && ev.Recurrence != nil {
+			continue
+		}
 		if ev.Status == entevent.StatusCancelled {
 			continue
 		}

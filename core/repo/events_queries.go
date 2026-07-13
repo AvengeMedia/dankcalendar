@@ -159,7 +159,7 @@ func expandMaster(master *ent.Event, from, to time.Time, suppressed map[string]s
 			continue
 		}
 		occ := *master
-		occ.ID = ""
+		occ.RecurringID = master.UID
 		occ.Start = start.UTC()
 		occ.End = start.Add(duration).UTC()
 		out = append(out, &occ)

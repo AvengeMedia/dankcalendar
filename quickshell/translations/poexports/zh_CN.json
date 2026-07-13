@@ -6,10 +6,10 @@
     "%1 PM": "下午 %1"
   },
   "%1 appointments fall outside core hours": {
-    "%1 appointments fall outside core hours": ""
+    "%1 appointments fall outside core hours": "%1 的预约在核心时间段外"
   },
   "%1 times": {
-    "%1 times": ""
+    "%1 times": "%1 次"
   },
   "%1 · All day": {
     "%1 · All day": "%1 · 全天"
@@ -42,7 +42,7 @@
     "+%1 more": "+%1 更多"
   },
   "1 appointment falls outside core hours": {
-    "1 appointment falls outside core hours": ""
+    "1 appointment falls outside core hours": "1 的预约在核心时间段外"
   },
   "1 day before": {
     "1 day before": "1天前"
@@ -54,7 +54,7 @@
     "1 hour before": "1小时前"
   },
   "1 line": {
-    "1 line": ""
+    "1 line": "1 行"
   },
   "1 minute": {
     "1 minute": "1分钟"
@@ -93,7 +93,7 @@
     "2 hours before": "2小时前"
   },
   "2 lines": {
-    "2 lines": ""
+    "2 lines": "2 行"
   },
   "24-hour": {
     "24-hour": "24-小时制"
@@ -102,7 +102,7 @@
     "24h": "24小时"
   },
   "3 lines": {
-    "3 lines": ""
+    "3 lines": "3 行"
   },
   "30 minutes": {
     "30 minutes": "30分钟"
@@ -162,7 +162,7 @@
     "Add description": "添加描述"
   },
   "Add reminder": {
-    "Add reminder": ""
+    "Add reminder": "添加提醒"
   },
   "Add task": {
     "Add task": "添加任务"
@@ -177,7 +177,7 @@
     "Adds a calendar to \"%1\".": "向“%1”添加日历。"
   },
   "After": {
-    "After": ""
+    "After": "累计"
   },
   "Agenda": {
     "Agenda": "日程"
@@ -186,7 +186,7 @@
     "Agenda view": "日程视图"
   },
   "All credentials are stored in your system keyring when available.": {
-    "All credentials are stored in your system keyring when available.": "所有凭据都将在可用时存储在您的系统钥匙串中。"
+    "All credentials are stored in your system keyring when available.": "所有凭据都将在可用时存储在您的系统密钥环中。"
   },
   "All day": {
     "All day": "全天"
@@ -249,7 +249,7 @@
     "Back": "返回"
   },
   "Back to the calendar": {
-    "Back to the calendar": ""
+    "Back to the calendar": "返回日历"
   },
   "Backend": {
     "Backend": "后端"
@@ -282,7 +282,7 @@
     "Capabilities": "功能支持"
   },
   "Changes apply to the whole series": {
-    "Changes apply to the whole series": ""
+    "Changes apply to the whole series": "修改将应用于整个系列"
   },
   "Choose a JSON color theme file.": {
     "Choose a JSON color theme file.": "选择 JSON 色彩主题文件。"
@@ -294,7 +294,7 @@
     "Choose calendar directory": "选择日历目录"
   },
   "Clear event selection": {
-    "Clear event selection": ""
+    "Clear event selection": "清除日程选择"
   },
   "Click to zoom · Esc to close": {
     "Click to zoom · Esc to close": "点击放大 · 点击Esc关闭"
@@ -309,10 +309,10 @@
     "Close behavior": "关闭行为"
   },
   "Closing hides the window; reopen it from your app launcher.": {
-    "Closing hides the window; reopen it from your app launcher.": ""
+    "Closing hides the window; reopen it from your app launcher.": "关闭窗口会将其隐藏；请从应用启动器重新打开它。"
   },
   "Collapse or expand a section": {
-    "Collapse or expand a section": ""
+    "Collapse or expand a section": "折叠或展开"
   },
   "Color source": {
     "Color source": "色彩来源"
@@ -363,7 +363,7 @@
     "Copy path": "复制地址"
   },
   "Core hours": {
-    "Core hours": ""
+    "Core hours": "核心时段"
   },
   "Could not read that file — expected a JSON color theme.": {
     "Could not read that file — expected a JSON color theme.": "无法读取该文件 — 应为 JSON 色彩主题文件。"
@@ -384,7 +384,7 @@
     "Credentials stay on this machine": "凭据仅保存在本机"
   },
   "Custom": {
-    "Custom": "个性化"
+    "Custom": "自定义"
   },
   "DMS dynamic": {
     "DMS dynamic": "DMS 动态色彩"
@@ -434,6 +434,9 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "确认删除\"%1\"?"
   },
+  "Delete series": {
+    "Delete series": ""
+  },
   "Delete…": {
     "Delete…": "删除中..."
   },
@@ -453,7 +456,7 @@
     "Directory": "目录"
   },
   "Disable core hours": {
-    "Disable core hours": ""
+    "Disable core hours": "禁用核心时段"
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "在月视图中显示 ISO 周数。"
@@ -468,7 +471,7 @@
     "Documents": "文档"
   },
   "Does not repeat": {
-    "Does not repeat": ""
+    "Does not repeat": "不重复"
   },
   "Done": {
     "Done": "完成"
@@ -480,22 +483,22 @@
     "Drag to pan · click to fit": "拖动以平移 · 点击以适应大小"
   },
   "Due date": {
-    "Due date": ""
+    "Due date": "到期日"
   },
   "Edit event": {
     "Edit event": "编辑日程"
   },
   "Edit task": {
-    "Edit task": ""
+    "Edit task": "编辑任务"
   },
   "Enable core hours": {
-    "Enable core hours": ""
+    "Enable core hours": "启用核心时段"
   },
   "Enable reminders": {
     "Enable reminders": "启用提醒"
   },
   "Ends": {
-    "Ends": ""
+    "Ends": "结束"
   },
   "Enlarge": {
     "Enlarge": "放大"
@@ -522,13 +525,13 @@
     "Event details": "日程详情"
   },
   "Every": {
-    "Every": ""
+    "Every": "每"
   },
   "Evolution": {
     "Evolution": "Evolution"
   },
   "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": {
-    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": ""
+    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": "展开日期单元格以完整显示所有日程，不折叠超出项。"
   },
   "F1/I: Toggle • F10: Help": {
     "F1/I: Toggle • F10: Help": "F1/I：切换 • F10：帮助"
@@ -549,7 +552,7 @@
     "First day shown in week and month views.": "周视图和月视图中显示的一周首日。"
   },
   "Focus or leave the sidebar": {
-    "Focus or leave the sidebar": ""
+    "Focus or leave the sidebar": "聚焦或离开侧边栏"
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "跟随 DankMaterialShell 色彩方案，若不可用则回退至预设。"
@@ -570,7 +573,7 @@
     "Go to today": "转到今天"
   },
   "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
-    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": ""
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks 不可用。<a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">启用其 API</a> 或重新连接此帐户后，刷新以同步任务。"
   },
   "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
     "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google 要求您创建自己的 OAuth 客户端，以便代表您读取日历数据。这是一次性设置，大约需要三分钟。"
@@ -579,19 +582,19 @@
     "Hide": "隐藏"
   },
   "High": {
-    "High": ""
+    "High": "高"
   },
   "Home": {
     "Home": "家目录"
   },
   "Hour range shown in day and week views.": {
-    "Hour range shown in day and week views.": ""
+    "Hour range shown in day and week views.": "在日视图和周视图中显示的时间范围。"
   },
   "How long the snooze button postpones a reminder.": {
     "How long the snooze button postpones a reminder.": "稍后提醒按钮将通知延迟多久。"
   },
   "How often accounts are polled for changes.": {
-    "How often accounts are polled for changes.": ""
+    "How often accounts are polled for changes.": "账户变更的轮询频率。"
   },
   "Import client_secret.json": {
     "Import client_secret.json": "导入 client_secret.json"
@@ -618,7 +621,7 @@
     "Ko-fi": "Ko-fi"
   },
   "Launch Dank Calendar in the background when you log in.": {
-    "Launch Dank Calendar in the background when you log in.": "登录系统时在后台启动 Dank Calendar。"
+    "Launch Dank Calendar in the background when you log in.": "登录系统时在后台启动 Dank Calendar日历。"
   },
   "Length used when creating events.": {
     "Length used when creating events.": "创建事件时的默认时长。"
@@ -627,10 +630,10 @@
     "Light": "浅色"
   },
   "Limit the day and week views to a set hour range.": {
-    "Limit the day and week views to a set hour range.": ""
+    "Limit the day and week views to a set hour range.": "将日视图和周视图限制在设定的时间范围内。"
   },
   "List": {
-    "List": ""
+    "List": "列表"
   },
   "Load colors from your own theme file.": {
     "Load colors from your own theme file.": "从您自己的主题文件中加载色彩。"
@@ -651,25 +654,25 @@
     "Location": "地点"
   },
   "Low": {
-    "Low": ""
+    "Low": "低"
   },
   "Marked as not done": {
-    "Marked as not done": ""
+    "Marked as not done": "标记为未完成"
   },
   "Maximum title lines per event in month view.": {
-    "Maximum title lines per event in month view.": ""
+    "Maximum title lines per event in month view.": "月视图中日程标题显示的最大行数。"
   },
   "Maximum title lines per event in week view.": {
-    "Maximum title lines per event in week view.": ""
+    "Maximum title lines per event in week view.": "周视图中日程标题显示的最大行数。"
   },
   "Maybe": {
     "Maybe": "或许"
   },
   "Medium": {
-    "Medium": ""
+    "Medium": "中"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
-    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": ""
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "您未获得 Microsoft To Do 访问权限。请重新连接此帐户以同步任务。"
   },
   "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
     "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "在创建或更改应用注册后的最初几分钟内，Microsoft 经常会返回 server_error（服务器错误）。请等待一两分钟后再试。"
@@ -687,16 +690,16 @@
     "Month": "月"
   },
   "Month event title lines": {
-    "Month event title lines": ""
+    "Month event title lines": "月视图日程标题行数"
   },
   "Month view": {
     "Month view": "月视图"
   },
   "Monthly": {
-    "Monthly": ""
+    "Monthly": "每月"
   },
   "Move through sidebar items": {
-    "Move through sidebar items": ""
+    "Move through sidebar items": "浏览侧边栏项目"
   },
   "Move to Trash": {
     "Move to Trash": "移至垃圾桶"
@@ -717,7 +720,7 @@
     "Navigation": "导航"
   },
   "Never": {
-    "Never": ""
+    "Never": "从不"
   },
   "New calendar": {
     "New calendar": "新建日历"
@@ -735,16 +738,16 @@
     "Next day": "下一天"
   },
   "Next day with events": {
-    "Next day with events": ""
+    "Next day with events": "下一个有日程的日期"
   },
   "Next day, week or month": {
-    "Next day, week or month": ""
+    "Next day, week or month": "后一天/周/月"
   },
   "Next event": {
     "Next event": "下一日程"
   },
   "Next event (next week in month view)": {
-    "Next event (next week in month view)": ""
+    "Next event (next week in month view)": "下一日程（月视图中的下一周）"
   },
   "Next week": {
     "Next week": "下一周"
@@ -765,7 +768,7 @@
     "No calendars yet. Add one to start creating events.": "暂无日历。请先添加一个日历以开始创建事件。"
   },
   "No due date": {
-    "No due date": ""
+    "No due date": "无截止日期"
   },
   "No matching events": {
     "No matching events": "未找到匹配的日程"
@@ -792,13 +795,13 @@
     "Not signed in — click to reconnect or re-add this account": "未登录 — 点击重新连接或重新添加此帐户"
   },
   "Notes": {
-    "Notes": ""
+    "Notes": "注释"
   },
   "Nothing scheduled in the next %1 days": {
     "Nothing scheduled in the next %1 days": "未来 %1 天内暂无日程"
   },
   "Notification sound": {
-    "Notification sound": ""
+    "Notification sound": "通知声音"
   },
   "Notifications": {
     "Notifications": "通知"
@@ -810,7 +813,7 @@
     "Offline": "离线"
   },
   "On date": {
-    "On date": ""
+    "On date": "于指定日期"
   },
   "On the day": {
     "On the day": "当天"
@@ -834,7 +837,7 @@
     "Outlook, Office 365 and Exchange Online calendars.": "Outlook, Office 365和Exchange Online 日历。"
   },
   "Overdue": {
-    "Overdue": ""
+    "Overdue": "逾期"
   },
   "Override": {
     "Override": "覆盖"
@@ -876,7 +879,7 @@
     "Pictures": "图片"
   },
   "Play a sound when a reminder fires.": {
-    "Play a sound when a reminder fires.": ""
+    "Play a sound when a reminder fires.": "提醒触发时播放声音。"
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "指向一个包含 .ics 文件的目录。每个子目录或 .ics 文件都将作为一个日历——该结构兼容 vdirsyncer/khal 布局。如果目录不存在，系统将自动创建。"
@@ -888,22 +891,22 @@
     "Previous day": "前一天"
   },
   "Previous day with events": {
-    "Previous day with events": ""
+    "Previous day with events": "前一个有日程的日期"
   },
   "Previous day, week or month": {
-    "Previous day, week or month": ""
+    "Previous day, week or month": "前一天/周/月"
   },
   "Previous event": {
     "Previous event": "前一日程"
   },
   "Previous event (previous week in month view)": {
-    "Previous event (previous week in month view)": ""
+    "Previous event (previous week in month view)": "前一日程（月视图中的前一周）"
   },
   "Previous week": {
     "Previous week": "前一周"
   },
   "Priority": {
-    "Priority": ""
+    "Priority": "优先级"
   },
   "Quick Access": {
     "Quick Access": "快速访问"
@@ -915,7 +918,7 @@
     "Reconnect": "重新连接"
   },
   "Recurring tasks are managed in Google Tasks.": {
-    "Recurring tasks are managed in Google Tasks.": ""
+    "Recurring tasks are managed in Google Tasks.": "周期性任务通过 Google Tasks 进行管理。"
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "提醒和桌面通知。"
@@ -936,7 +939,7 @@
     "Remove \"%1\"?": "确认删除 \"%1\"?"
   },
   "Remove calendar or account": {
-    "Remove calendar or account": ""
+    "Remove calendar or account": "删除日历或账户"
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "从 Dank Calendar 中移除此帐户及其日历和日程。不会从服务商处删除任何内容。"
@@ -954,16 +957,16 @@
     "Rename…": "重命名中..."
   },
   "Repeat": {
-    "Repeat": ""
+    "Repeat": "重复"
   },
   "Repeats": {
-    "Repeats": ""
+    "Repeats": "重复"
   },
   "Repeats every %1": {
-    "Repeats every %1": ""
+    "Repeats every %1": "每 %1"
   },
   "Repeats every %1 %2": {
-    "Repeats every %1 %2": ""
+    "Repeats every %1 %2": "每隔 %1 %2 重复"
   },
   "Reset to global": {
     "Reset to global": "重置为全局设置"
@@ -1011,28 +1014,28 @@
     "Show": "显示"
   },
   "Show Dank Calendar in the system tray.": {
-    "Show Dank Calendar in the system tray.": ""
+    "Show Dank Calendar in the system tray.": "在系统托盘中显示Dank Calendar 日历。"
   },
   "Show all events in month view": {
-    "Show all events in month view": ""
+    "Show all events in month view": "在月视图中显示所有项目"
   },
   "Show all-day reminders": {
     "Show all-day reminders": "显示全天日程提醒"
   },
   "Show task lists and the Tasks view when an account provides them.": {
-    "Show task lists and the Tasks view when an account provides them.": ""
+    "Show task lists and the Tasks view when an account provides them.": "当帐户提供任务列表和任务视图时，显示它们。"
   },
   "Show tasks": {
-    "Show tasks": ""
+    "Show tasks": "显示任务"
   },
   "Show tray icon": {
-    "Show tray icon": ""
+    "Show tray icon": "显示托盘图标"
   },
   "Show week numbers": {
     "Show week numbers": "显示周数"
   },
   "Sidebar": {
-    "Sidebar": ""
+    "Sidebar": "侧栏"
   },
   "Sign in with %1": {
     "Sign in with %1": "使用 %1 登录"
@@ -1089,7 +1092,7 @@
     "Subscribing…": "订阅中..."
   },
   "Sync interval": {
-    "Sync interval": ""
+    "Sync interval": "同步间隔"
   },
   "Sync now": {
     "Sync now": "立即同步"
@@ -1107,19 +1110,19 @@
     "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: 导航 • ←→↑↓: 网格导航 • Enter/空格: 选择"
   },
   "Task": {
-    "Task": ""
+    "Task": "任务"
   },
   "Task completed": {
-    "Task completed": ""
+    "Task completed": "完成的任务"
   },
   "Task lists couldn't be loaded; calendars are still syncing.": {
-    "Task lists couldn't be loaded; calendars are still syncing.": ""
+    "Task lists couldn't be loaded; calendars are still syncing.": "任务列表无法加载；日历仍在同步中。"
   },
   "Tasks": {
     "Tasks": "任务"
   },
   "Tasks view": {
-    "Tasks view": ""
+    "Tasks view": "任务视图"
   },
   "Test notification": {
     "Test notification": "测试通知"
@@ -1143,7 +1146,7 @@
     "Today": "今天"
   },
   "Toggle calendar, switch view or sync account": {
-    "Toggle calendar, switch view or sync account": ""
+    "Toggle calendar, switch view or sync account": "切换日历、切换视图或同步帐户"
   },
   "Toggle this help": {
     "Toggle this help": "切换帮助显示"
@@ -1164,13 +1167,13 @@
     "Type at least 2 characters to search events.": "请输入至少 2 个字符以搜索日程。"
   },
   "Undo": {
-    "Undo": ""
+    "Undo": "撤回"
   },
   "University timetable": {
     "University timetable": "大学课程表"
   },
   "Upcoming": {
-    "Upcoming": ""
+    "Upcoming": "即将到来"
   },
   "Use a bundled color palette.": {
     "Use a bundled color palette.": "使用内置的配色方案。"
@@ -1218,13 +1221,13 @@
     "Week": "周"
   },
   "Week event title lines": {
-    "Week event title lines": ""
+    "Week event title lines": "周视图日程标题行数"
   },
   "Week view": {
     "Week view": "周视图"
   },
   "Weekly": {
-    "Weekly": ""
+    "Weekly": "每周"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "设置点击窗口关闭按钮时的行为。"
@@ -1233,7 +1236,7 @@
     "When all-day event reminders fire.": "全天事件提醒的触发时间。"
   },
   "Yearly": {
-    "Yearly": ""
+    "Yearly": "每年"
   },
   "Yesterday": {
     "Yesterday": "昨天"
@@ -1254,10 +1257,10 @@
     "dark": "深色"
   },
   "day": {
-    "day": ""
+    "day": "天"
   },
   "days": {
-    "days": ""
+    "days": "天"
   },
   "iCal subscription": {
     "iCal subscription": "iCal订阅"
@@ -1266,13 +1269,13 @@
     "light": "浅色"
   },
   "month": {
-    "month": ""
+    "month": "月"
   },
   "months": {
-    "months": ""
+    "months": "月"
   },
   "on %1": {
-    "on %1": ""
+    "on %1": "的 %1"
   },
   "only if the feed requires sign-in": {
     "only if the feed requires sign-in": "仅在订阅源需要登录时"
@@ -1287,28 +1290,28 @@
     "synced as \"%1\"": "同步为 \"%1\""
   },
   "times": {
-    "times": ""
+    "times": "次"
   },
   "to": {
-    "to": ""
+    "to": "到"
   },
   "until %1": {
-    "until %1": ""
+    "until %1": "重复，直至 %1"
   },
   "username": {
     "username": "用户名"
   },
   "week": {
-    "week": ""
+    "week": "周"
   },
   "weeks": {
-    "weeks": ""
+    "weeks": "周"
   },
   "year": {
-    "year": ""
+    "year": "年"
   },
   "years": {
-    "years": ""
+    "years": "年"
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· %1 已邀请 · %2 已接受"

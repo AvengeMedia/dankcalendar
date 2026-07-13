@@ -82,6 +82,15 @@ func handleEventUpdate(ctx context.Context, w *ConnWriter, req Request, deps Dep
 		return
 	}
 
+	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" && len(entEv.Recurrence) > 0 {
+		occStart, perr := time.Parse(time.RFC3339, raw)
+		if perr != nil {
+			RespondError(w, req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
+			return
+		}
+		ev = shiftSeriesTimes(ev, entEv.Start, occStart)
+	}
+
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
 	if err != nil {
 		RespondError(w, req.ID, err.Error())
@@ -335,6 +344,13 @@ func providerForCalendar(ctx context.Context, deps Deps, calendarID string) (cal
 		SupportedComponents: entCal.SupportedComponents,
 	}
 	return provider, domCal, nil
+}
+
+func shiftSeriesTimes(ev calendar.Event, masterStart, occurrenceStart time.Time) calendar.Event {
+	duration := ev.End.Sub(ev.Start)
+	ev.Start = masterStart.Add(ev.Start.Sub(occurrenceStart))
+	ev.End = ev.Start.Add(duration)
+	return ev
 }
 
 // eventFromParams overlays request params onto base; only provided keys win.
