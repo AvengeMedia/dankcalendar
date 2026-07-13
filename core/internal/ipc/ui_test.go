@@ -70,3 +70,17 @@ func TestUIOpenEventPublishesToSubscriber(t *testing.T) {
 	assert.Equal(t, map[string]any{"action": "openEvent", "uid": "evt-2"}, env["data"])
 	assert.Nil(t, deps.Pending.Take())
 }
+
+func TestUINewEventStashesWithoutSubscriber(t *testing.T) {
+	deps := Deps{Bus: NewEventBus(), Pending: &PendingOpen{}}
+	out := routeAndRead(t, Request{ID: 3, Method: "ui.newEvent", Params: map[string]any{"start": "2026-07-01T09:00:00Z"}}, deps)
+
+	result, ok := out["result"].(map[string]any)
+	require.True(t, ok)
+	assert.Equal(t, true, result["ok"])
+
+	payload := deps.Pending.Take()
+	require.NotNil(t, payload)
+	assert.Equal(t, "newEvent", payload["action"])
+	assert.Equal(t, "2026-07-01T09:00:00Z", payload["start"])
+}

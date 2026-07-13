@@ -46,6 +46,7 @@ ShellRoot {
     property string pendingSubscribeUrl: ""
     property string pendingView: ""
     property var pendingEvent: null
+    property var pendingNewEvent: null
 
     function handleWindowAction(action, view) {
         view = view || "";
@@ -107,6 +108,29 @@ ShellRoot {
         pendingEvent = null;
     }
 
+    function handleNewEvent(start) {
+        pendingNewEvent = {
+            "start": start || ""
+        };
+        showAndFocus();
+        applyPendingNewEvent();
+    }
+
+    function applyPendingNewEvent() {
+        if (!windowLoader.item || !pendingNewEvent)
+            return;
+        const start = pendingNewEvent.start;
+        pendingNewEvent = null;
+        if (start !== "") {
+            const d = new Date(start);
+            if (!isNaN(d.getTime())) {
+                windowLoader.item.openCreateEvent(d);
+                return;
+            }
+        }
+        windowLoader.item.openCreateEvent();
+    }
+
     Connections {
         target: DankCalService
         function onWindowActionRequested(action, view) {
@@ -118,6 +142,9 @@ ShellRoot {
         function onOpenEventRequested(uid, start) {
             root.handleOpenEvent(uid, start);
         }
+        function onNewEventRequested(start) {
+            root.handleNewEvent(start);
+        }
     }
 
     Connections {
@@ -126,6 +153,7 @@ ShellRoot {
             root.applyPendingView();
             root.applyPendingSubscribe();
             root.applyPendingEvent();
+            root.applyPendingNewEvent();
         }
     }
 
