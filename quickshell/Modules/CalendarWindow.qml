@@ -15,6 +15,7 @@ FloatingWindow {
     property string currentView: SettingsData.lastView
     onCurrentViewChanged: {
         SettingsData.lastView = currentView;
+        rangeAnchorTime = 0;
         displayDate = alignedDisplayDate(displayDate);
         ensureSelectionVisible();
     }
@@ -24,6 +25,11 @@ FloatingWindow {
     property int selectedEventIndex: -1
     property int eventsVersion: 0
     property bool sidebarFocused: false
+    property real rangeAnchorTime: 0
+
+    readonly property real selectedDayTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()).getTime()
+    readonly property real rangeStartTime: rangeAnchorTime > 0 ? Math.min(rangeAnchorTime, selectedDayTime) : 0
+    readonly property real rangeEndTime: rangeAnchorTime > 0 ? Math.max(rangeAnchorTime, selectedDayTime) : 0
 
     function setSidebarFocused(focused) {
         sidebarFocused = focused;
@@ -105,6 +111,7 @@ FloatingWindow {
     }
 
     function goToToday() {
+        rangeAnchorTime = 0;
         const t = new Date();
         today = t;
         displayDate = alignedDisplayDate(t);
@@ -147,7 +154,11 @@ FloatingWindow {
         }
     }
 
-    function moveSelection(days) {
+    function moveSelection(days, extend) {
+        if (!extend)
+            rangeAnchorTime = 0;
+        else if (currentView === "month" && rangeAnchorTime === 0)
+            rangeAnchorTime = selectedDayTime;
         const d = new Date(selectedDate);
         d.setDate(d.getDate() + days);
         selectedDate = d;
@@ -157,6 +168,7 @@ FloatingWindow {
     // Walks events chronologically: within the selected day first, then into
     // the nearest day that has events. direction is +1 or -1.
     function moveEventSelection(direction) {
+        rangeAnchorTime = 0;
         const evs = DankCalService.eventsForDay(selectedDate);
         const next = selectedEventIndex + direction;
         if (next >= 0 && next < evs.length) {
@@ -177,6 +189,7 @@ FloatingWindow {
     }
 
     function moveYear(direction) {
+        rangeAnchorTime = 0;
         const d = new Date(selectedDate);
         d.setFullYear(d.getFullYear() + direction);
         selectedDate = d;
@@ -184,11 +197,13 @@ FloatingWindow {
     }
 
     function goToDate(date) {
+        rangeAnchorTime = 0;
         selectedDate = date;
         displayDate = alignedDisplayDate(date);
     }
 
     function movePeriod(direction) {
+        rangeAnchorTime = 0;
         switch (currentView) {
         case "day":
             moveSelection(direction);
@@ -209,6 +224,7 @@ FloatingWindow {
     }
 
     function jumpToEventDay(direction) {
+        rangeAnchorTime = 0;
         for (let i = 1; i <= 366; i++) {
             const d = new Date(selectedDate);
             d.setDate(d.getDate() + direction * i);
@@ -221,6 +237,13 @@ FloatingWindow {
     }
 
     function activateSelection() {
+        if (rangeAnchorTime > 0) {
+            const start = new Date(rangeStartTime);
+            const end = new Date(rangeEndTime);
+            rangeAnchorTime = 0;
+            openCreateEvent(start, end);
+            return;
+        }
         const evs = DankCalService.eventsForDay(selectedDate);
         if (selectedEventIndex >= 0 && selectedEventIndex < evs.length) {
             openEventDetails(evs[selectedEventIndex]);
@@ -264,9 +287,9 @@ FloatingWindow {
         eventLoader.item.show(event);
     }
 
-    function openCreateEvent(date) {
+    function openCreateEvent(date, endDate) {
         eventLoader.active = true;
-        eventLoader.item.showCreate(date || selectedDate);
+        eventLoader.item.showCreate(date || selectedDate, endDate);
     }
 
     function openTaskDetails(task) {
@@ -380,25 +403,25 @@ FloatingWindow {
                 break;
             case Qt.Key_H:
             case Qt.Key_Left:
-                window.moveSelection(I18n.isRtl ? 1 : -1);
+                window.moveSelection(I18n.isRtl ? 1 : -1, shift);
                 break;
             case Qt.Key_L:
             case Qt.Key_Right:
-                window.moveSelection(I18n.isRtl ? -1 : 1);
+                window.moveSelection(I18n.isRtl ? -1 : 1, shift);
                 break;
             case Qt.Key_J:
             case Qt.Key_Down:
                 if (window.eventNavigation)
                     window.moveEventSelection(1);
                 else
-                    window.moveSelection(7);
+                    window.moveSelection(7, shift);
                 break;
             case Qt.Key_K:
             case Qt.Key_Up:
                 if (window.eventNavigation)
                     window.moveEventSelection(-1);
                 else
-                    window.moveSelection(-7);
+                    window.moveSelection(-7, shift);
                 break;
             case Qt.Key_BracketLeft:
             case Qt.Key_PageUp:
@@ -415,6 +438,10 @@ FloatingWindow {
                 window.moveYear(1);
                 break;
             case Qt.Key_Escape:
+                if (window.rangeAnchorTime > 0) {
+                    window.rangeAnchorTime = 0;
+                    break;
+                }
                 if (window.selectedEventIndex < 0) {
                     event.accepted = false;
                     return;
@@ -699,6 +726,8 @@ FloatingWindow {
                         selectedDate: window.selectedDate
                         selectedEventKey: window.selectedEventKey
                         today: window.today
+                        rangeStartTime: window.rangeStartTime
+                        rangeEndTime: window.rangeEndTime
                         onTodayRequested: window.goToToday()
                         onPreviousRequested: window.shiftDisplayDate(-1)
                         onNextRequested: window.shiftDisplayDate(1)
@@ -706,10 +735,18 @@ FloatingWindow {
                         onSettingsRequested: window.openSettings()
                         onSearchRequested: window.openSearch()
                         onGoToDateRequested: window.openGoToDate()
-                        onDaySelected: day => window.selectedDate = day
+                        onDaySelected: day => {
+                            window.rangeAnchorTime = 0;
+                            window.selectedDate = day;
+                        }
                         onDayActivated: day => {
+                            window.rangeAnchorTime = 0;
                             window.selectedDate = day;
                             window.openCreateEvent(day);
+                        }
+                        onCreateRangeRequested: (startDay, endDay) => {
+                            window.selectedDate = startDay;
+                            window.openCreateEvent(startDay, endDay);
                         }
                         onViewDayRequested: day => {
                             window.selectedDate = day;

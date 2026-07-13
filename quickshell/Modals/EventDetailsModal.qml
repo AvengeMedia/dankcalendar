@@ -21,6 +21,7 @@ FloatingWindow {
 
     property string formTitle: ""
     property date formStartDate: new Date()
+    property date formEndDate: new Date()
     property int formStartMinutes: 600
     property int formEndMinutes: 660
     property string formLocation: ""
@@ -94,17 +95,25 @@ FloatingWindow {
         visible = true;
     }
 
-    function showCreate(day) {
+    function showCreate(day, endDay) {
         const base = day ? new Date(day) : new Date();
         base.setHours(10, 0, 0, 0);
-        const end = new Date(base.getTime() + SettingsData.defaultEventDurationMinutes * 60000);
+        let end = new Date(base.getTime() + SettingsData.defaultEventDurationMinutes * 60000);
+        let allDay = false;
+        if (endDay) {
+            base.setHours(0, 0, 0, 0);
+            end = new Date(endDay);
+            end.setHours(0, 0, 0, 0);
+            end.setDate(end.getDate() + 1);
+            allDay = true;
+        }
         event = {
             "title": "",
             "description": "",
             "location": "",
             "start": base,
             "end": end,
-            "allDay": false,
+            "allDay": allDay,
             "attendees": [],
             "reminders": SettingsData.defaultReminderMinutes >= 0 ? [
                 {
@@ -143,7 +152,13 @@ FloatingWindow {
         formStartDate = start;
         formStartMinutes = start.getHours() * 60 + start.getMinutes();
         formEndMinutes = end.getHours() * 60 + end.getMinutes();
-        if (!formAllDay && formEndMinutes <= formStartMinutes)
+        let endDate = new Date(end);
+        if (formAllDay)
+            endDate.setDate(endDate.getDate() - 1);
+        if (endDate.getTime() < start.getTime())
+            endDate = new Date(start);
+        formEndDate = endDate;
+        if (!formAllDay && end.getTime() <= start.getTime())
             formEndMinutes = formStartMinutes + 60;
 
         const writable = DankCalService.writableCalendars();
@@ -252,22 +267,41 @@ FloatingWindow {
         return reminderText(minutes);
     }
 
+    function setFormStartDate(value) {
+        const startMidnight = new Date(formStartDate.getFullYear(), formStartDate.getMonth(), formStartDate.getDate());
+        const endMidnight = new Date(formEndDate.getFullYear(), formEndDate.getMonth(), formEndDate.getDate());
+        const spanDays = Math.round((endMidnight.getTime() - startMidnight.getTime()) / 86400000);
+        formStartDate = value;
+        const end = new Date(value);
+        end.setDate(end.getDate() + Math.max(spanDays, 0));
+        formEndDate = end;
+    }
+
     function _formRange() {
         const y = formStartDate.getFullYear();
         const mo = formStartDate.getMonth();
         const d = formStartDate.getDate();
-        if (formAllDay)
+        const ey = formEndDate.getFullYear();
+        const emo = formEndDate.getMonth();
+        const ed = formEndDate.getDate();
+        if (formAllDay) {
+            const start = new Date(y, mo, d);
+            let end = new Date(ey, emo, ed + 1);
+            if (end.getTime() <= start.getTime())
+                end = new Date(y, mo, d + 1);
             return {
-                "start": new Date(y, mo, d),
-                "end": new Date(y, mo, d + 1)
+                "start": start,
+                "end": end
             };
+        }
 
-        let endMinutes = formEndMinutes;
-        if (endMinutes <= formStartMinutes)
-            endMinutes = formStartMinutes + 60;
+        const start = new Date(y, mo, d, Math.floor(formStartMinutes / 60), formStartMinutes % 60);
+        let end = new Date(ey, emo, ed, Math.floor(formEndMinutes / 60), formEndMinutes % 60);
+        if (end.getTime() <= start.getTime())
+            end = new Date(y, mo, d, Math.floor((formStartMinutes + 60) / 60), (formStartMinutes + 60) % 60);
         return {
-            "start": new Date(y, mo, d, Math.floor(formStartMinutes / 60), formStartMinutes % 60),
-            "end": new Date(y, mo, d, Math.floor(endMinutes / 60), endMinutes % 60)
+            "start": start,
+            "end": end
         };
     }
 
@@ -987,10 +1021,25 @@ FloatingWindow {
                     spacing: Theme.spacingM
 
                     DankDatePicker {
-                        width: parent.width - allDayRow.width - Theme.spacingM
+                        width: (parent.width - allDayRow.width - dateDash.width - Theme.spacingM * 3) / 2
                         firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
                         selectedDate: eventModal.formStartDate
-                        onDateSelected: value => eventModal.formStartDate = value
+                        onDateSelected: value => eventModal.setFormStartDate(value)
+                    }
+
+                    StyledText {
+                        id: dateDash
+
+                        text: "–"
+                        color: Theme.surfaceVariantText
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    DankDatePicker {
+                        width: (parent.width - allDayRow.width - dateDash.width - Theme.spacingM * 3) / 2
+                        firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
+                        selectedDate: eventModal.formEndDate
+                        onDateSelected: value => eventModal.formEndDate = value
                     }
 
                     Row {

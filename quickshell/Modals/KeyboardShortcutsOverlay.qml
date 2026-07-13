@@ -60,6 +60,10 @@ Item {
                     "label": I18n.tr("Previous day with events", "keyboard shortcut description")
                 },
                 {
+                    "keys": ["Shift+←→↑↓"],
+                    "label": I18n.tr("Select days for a new event (month view)", "keyboard shortcut description")
+                },
+                {
                     "keys": ["Enter"],
                     "label": I18n.tr("Open or create event", "keyboard shortcut description")
                 },

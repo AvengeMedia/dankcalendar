@@ -435,7 +435,7 @@
     "Delete \"%1\"?": "\"%1\" löschen?"
   },
   "Delete series": {
-    "Delete series": ""
+    "Delete series": "Serie löschen"
   },
   "Delete…": {
     "Delete…": "Löschen…"
@@ -568,6 +568,9 @@
   },
   "GitHub": {
     "GitHub": "GitHub"
+  },
+  "Go to date": {
+    "Go to date": ""
   },
   "Go to today": {
     "Go to today": "Heute"
@@ -752,6 +755,9 @@
   "Next week": {
     "Next week": "Nächste Woche"
   },
+  "Next year": {
+    "Next year": ""
+  },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "Kein OAuth-Client in dieser Datei gefunden – die von Google heruntergeladene Datei client_secret_….json wurde erwartet."
   },
@@ -905,6 +911,9 @@
   "Previous week": {
     "Previous week": "Vorherige Woche"
   },
+  "Previous year": {
+    "Previous year": ""
+  },
   "Priority": {
     "Priority": "Priorität"
   },
@@ -995,6 +1004,9 @@
   "Select client_secret.json": {
     "Select client_secret.json": "client_secret.json auswählen"
   },
+  "Select days for a new event (month view)": {
+    "Select days for a new event (month view)": ""
+  },
   "Select file": {
     "Select file": "Datei auswählen"
   },
@@ -1056,7 +1068,7 @@
     "Size": "Größe"
   },
   "Skip certificate verification": {
-    "Skip certificate verification": ""
+    "Skip certificate verification": "Zertifikatsverifizierung überspringen"
   },
   "Snooze duration": {
     "Snooze duration": "Schlummerdauer"
@@ -1158,7 +1170,7 @@
     "Tomorrow": "Morgen"
   },
   "Trust self-signed certificates. Only enable this for servers you control.": {
-    "Trust self-signed certificates. Only enable this for servers you control.": ""
+    "Trust self-signed certificates. Only enable this for servers you control.": "Selbstsignierten Zertifikaten vertrauen. Aktiviere dies nur für Server, die du kontrollierst."
   },
   "Try a different search.": {
     "Try a different search.": "Versuchen Sie eine andere Suche."
@@ -1267,6 +1279,9 @@
   },
   "days": {
     "days": "Tage"
+  },
+  "e.g. 2022-01-01": {
+    "e.g. 2022-01-01": ""
   },
   "iCal subscription": {
     "iCal subscription": "iCal-Abonnement"

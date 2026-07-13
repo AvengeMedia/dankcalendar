@@ -18,6 +18,18 @@ Item {
     signal viewDayRequested(date day)
     signal previousRequested
     signal nextRequested
+    signal createRangeRequested(date startDay, date endDay)
+
+    property bool dragSelecting: false
+    property real dragAnchorTime: 0
+    property real dragRangeStart: 0
+    property real dragRangeEnd: 0
+    property real keyRangeStart: 0
+    property real keyRangeEnd: 0
+
+    readonly property bool previewActive: dragSelecting || keyRangeStart > 0
+    readonly property real previewStart: dragSelecting ? dragRangeStart : keyRangeStart
+    readonly property real previewEnd: dragSelecting ? dragRangeEnd : keyRangeEnd
 
     Timer {
         id: scrollCooldown
@@ -202,6 +214,47 @@ Item {
                 readonly property real cellWidth: width / columns
                 readonly property real cellHeight: height / rows
 
+                DragHandler {
+                    id: rangeDrag
+
+                    function dateAt(pos) {
+                        const x = Math.min(Math.max(pos.x, 0), grid.width - 1);
+                        const y = Math.min(Math.max(pos.y, 0), grid.height - 1);
+                        const cell = grid.childAt(x, y);
+                        if (!cell || cell.cellDate === undefined)
+                            return null;
+                        return cell.cellDate;
+                    }
+
+                    target: null
+
+                    onActiveChanged: {
+                        if (active) {
+                            const anchor = dateAt(centroid.pressPosition);
+                            if (!anchor)
+                                return;
+                            root.dragAnchorTime = anchor.getTime();
+                            root.dragRangeStart = root.dragAnchorTime;
+                            root.dragRangeEnd = root.dragAnchorTime;
+                            root.dragSelecting = true;
+                            return;
+                        }
+                        if (!root.dragSelecting)
+                            return;
+                        root.dragSelecting = false;
+                        root.createRangeRequested(new Date(root.dragRangeStart), new Date(root.dragRangeEnd));
+                    }
+                    onTranslationChanged: {
+                        if (!active || !root.dragSelecting)
+                            return;
+                        const hover = dateAt(centroid.position);
+                        if (!hover)
+                            return;
+                        root.dragRangeStart = Math.min(root.dragAnchorTime, hover.getTime());
+                        root.dragRangeEnd = Math.max(root.dragAnchorTime, hover.getTime());
+                    }
+                }
+
                 Repeater {
                     model: 42
 
@@ -213,6 +266,9 @@ Item {
                         readonly property bool inCurrentMonth: cellDate.getMonth() === root.gridMonth
                         readonly property bool isToday: root.isSameDay(cellDate, root.today)
                         readonly property bool isSelected: root.isSameDay(cellDate, root.selectedDate)
+                        readonly property bool inPreviewRange: root.previewActive && cellDate.getTime() >= root.previewStart && cellDate.getTime() <= root.previewEnd
+                        readonly property bool previewLeading: inPreviewRange && cellDate.getTime() === (I18n.isRtl ? root.previewEnd : root.previewStart)
+                        readonly property bool previewTrailing: inPreviewRange && cellDate.getTime() === (I18n.isRtl ? root.previewStart : root.previewEnd)
                         readonly property var cellEvents: {
                             root.eventsVersion;
                             return DankCalService.eventsForDay(cellDate);
@@ -260,6 +316,35 @@ Item {
                             border.color: Theme.primary
                             border.width: 1
                             radius: Theme.cornerRadiusSmall
+                        }
+
+                        Rectangle {
+                            visible: dayCell.inPreviewRange
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.topMargin: 38
+                            anchors.leftMargin: dayCell.previewLeading ? 2 : 0
+                            anchors.rightMargin: dayCell.previewTrailing ? 2 : 0
+                            height: root.eventChipHeight
+                            color: Theme.primary
+                            topLeftRadius: dayCell.previewLeading ? 4 : 0
+                            bottomLeftRadius: dayCell.previewLeading ? 4 : 0
+                            topRightRadius: dayCell.previewTrailing ? 4 : 0
+                            bottomRightRadius: dayCell.previewTrailing ? 4 : 0
+                            z: 3
+
+                            StyledText {
+                                visible: dayCell.cellDate.getTime() === root.previewStart
+                                anchors.left: parent.left
+                                anchors.leftMargin: 6
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: I18n.tr("New event", "placeholder label on the event span shown while selecting days in the month grid")
+                                font.pixelSize: 11
+                                color: Theme.primaryText
+                                elide: Text.ElideRight
+                                width: Math.max(0, parent.width - 12)
+                            }
                         }
 
                         Item {
@@ -405,10 +490,7 @@ Item {
         id: slidePager
         anchors.fill: parent
         continuous: false
+        dragEnabled: false
         onStepped: direction => wheelHandler.step((I18n.isRtl ? 1 : -1) * direction)
-    }
-
-    DankSlideDragHandler {
-        slideArea: slidePager
     }
 }

@@ -5,6 +5,7 @@ Item {
     id: root
 
     property bool continuous: true
+    property bool dragEnabled: true
     property real pageThresholdPx: 200
     property int stepCooldownMs: 100
     property real touchpadFactor: Scroll.touchpadSpeed
@@ -157,6 +158,7 @@ Item {
     }
 
     DragHandler {
+        enabled: root.dragEnabled
         acceptedDevices: PointerDevice.TouchScreen
         target: null
         xAxis.enabled: true

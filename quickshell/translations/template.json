@@ -1689,7 +1689,7 @@
   {
     "term": "New event",
     "translation": "",
-    "context": "event modal header when creating | event modal window title when creating",
+    "context": "event modal header when creating | event modal window title when creating | placeholder label on the event span shown while selecting days in the month grid",
     "reference": "",
     "comment": ""
   },
@@ -2292,6 +2292,13 @@
     "term": "Select client_secret.json",
     "translation": "",
     "context": "file picker title for google client json",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Select days for a new event (month view)",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },

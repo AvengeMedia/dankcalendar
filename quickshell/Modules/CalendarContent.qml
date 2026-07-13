@@ -12,6 +12,8 @@ Item {
     property date selectedDate: new Date()
     property string selectedEventKey: ""
     property date today: new Date()
+    property real rangeStartTime: 0
+    property real rangeEndTime: 0
 
     signal todayRequested
     signal previousRequested
@@ -27,6 +29,7 @@ Item {
     signal daySelected(date day)
     signal dayActivated(date day)
     signal viewDayRequested(date day)
+    signal createRangeRequested(date startDay, date endDay)
 
     function headerTitle() {
         switch (currentView) {
@@ -188,9 +191,12 @@ Item {
                     displayDate: root.displayDate
                     today: root.today
                     selectedDate: root.selectedDate
+                    keyRangeStart: root.rangeStartTime
+                    keyRangeEnd: root.rangeEndTime
                     onDaySelected: day => root.daySelected(day)
                     onDayActivated: day => root.dayActivated(day)
                     onViewDayRequested: day => root.viewDayRequested(day)
+                    onCreateRangeRequested: (startDay, endDay) => root.createRangeRequested(startDay, endDay)
                     onEventClicked: ev => root.eventClicked(ev)
                     onPreviousRequested: root.previousRequested()
                     onNextRequested: root.nextRequested()

@@ -569,6 +569,9 @@
   "GitHub": {
     "GitHub": "GitHub"
   },
+  "Go to date": {
+    "Go to date": ""
+  },
   "Go to today": {
     "Go to today": "Đến hôm nay"
   },
@@ -752,6 +755,9 @@
   "Next week": {
     "Next week": "Tuần tiếp theo"
   },
+  "Next year": {
+    "Next year": ""
+  },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "Không tìm thấy OAuth client trong tệp — cần tệp client_secret_….json tải từ Google."
   },
@@ -905,6 +911,9 @@
   "Previous week": {
     "Previous week": "Tuần trước"
   },
+  "Previous year": {
+    "Previous year": ""
+  },
   "Priority": {
     "Priority": "Ưu tiên"
   },
@@ -994,6 +1003,9 @@
   },
   "Select client_secret.json": {
     "Select client_secret.json": "Chọn client_secret.json"
+  },
+  "Select days for a new event (month view)": {
+    "Select days for a new event (month view)": ""
   },
   "Select file": {
     "Select file": "Chọn tệp"
@@ -1267,6 +1279,9 @@
   },
   "days": {
     "days": "ngày"
+  },
+  "e.g. 2022-01-01": {
+    "e.g. 2022-01-01": ""
   },
   "iCal subscription": {
     "iCal subscription": "Đăng ký iCal"
