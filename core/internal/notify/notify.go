@@ -27,6 +27,15 @@ const (
 	// SoundReminder is a freedesktop sound-naming-spec event name; servers
 	// that support the sound-name hint resolve it against the active theme.
 	SoundReminder = "message-new-instant"
+	// SoundTask is intentionally alarm-like so a due task is more noticeable
+	// than an ordinary calendar reminder.
+	SoundTask = "alarm-clock-elapsed"
+)
+
+const (
+	UrgencyLow byte = iota
+	UrgencyNormal
+	UrgencyCritical
 )
 
 type Action struct {
@@ -43,6 +52,10 @@ type Notification struct {
 	// SoundName is a freedesktop sound-theme event name played on send;
 	// empty sends no sound hints so the server's own config applies.
 	SoundName string
+	// Urgency follows the freedesktop notification specification. A zero value
+	// is low urgency, so callers should explicitly use UrgencyNormal when the
+	// notification is not priority-sensitive.
+	Urgency byte
 }
 
 // Client owns the session bus connection. Action and close callbacks are
@@ -95,10 +108,10 @@ func (c *Client) Send(n Notification) (uint32, error) {
 
 	hints := map[string]dbus.Variant{
 		"desktop-entry": dbus.MakeVariant(desktopEntry),
-		"urgency":       dbus.MakeVariant(byte(1)),
+		"urgency":       dbus.MakeVariant(n.Urgency),
 	}
 	if n.SoundName != "" {
-		if c.sound.play() {
+		if c.sound.play(n.SoundName) {
 			hints["suppress-sound"] = dbus.MakeVariant(true)
 		} else {
 			hints["sound-name"] = dbus.MakeVariant(n.SoundName)

@@ -297,6 +297,7 @@ func (e *Engine) fire(ctx context.Context, ev *ent.Event, calID string, now time
 			{Key: "tentative", Label: "Maybe"},
 			{Key: "decline", Label: "Decline"},
 		},
+		Urgency:  notify.UrgencyNormal,
 		Resident: s.ReminderPersist,
 	}
 	if s.NotificationSounds {

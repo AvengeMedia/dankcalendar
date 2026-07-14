@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/adrg/xdg"
 
@@ -21,17 +22,41 @@ import (
 var reminderChime []byte
 
 type soundPlayer struct {
-	once sync.Once
-	argv []string
+	mu   sync.Mutex
+	argv map[string][]string
 }
 
-func (p *soundPlayer) play() bool {
-	p.once.Do(func() { p.argv = resolveArgv() })
+func (p *soundPlayer) play(name string) bool {
+	p.mu.Lock()
 	if p.argv == nil {
+		p.argv = make(map[string][]string)
+	}
+	argv, resolved := p.argv[name]
+	if !resolved {
+		argv = resolveArgv(name)
+		p.argv[name] = argv
+	}
+	p.mu.Unlock()
+	if argv == nil {
 		return false
 	}
 
-	cmd := exec.Command(p.argv[0], p.argv[1:]...)
+	if !startSound(argv) {
+		return false
+	}
+	// A two-pulse alarm is both more audible and recognizably different from
+	// the single chime used for calendar events.
+	if name == SoundTask {
+		go func() {
+			time.Sleep(400 * time.Millisecond)
+			startSound(argv)
+		}()
+	}
+	return true
+}
+
+func startSound(argv []string) bool {
+	cmd := exec.Command(argv[0], argv[1:]...)
 	if err := cmd.Start(); err != nil {
 		log.Debugf("notify: play sound: %v", err)
 		return false
@@ -40,8 +65,8 @@ func (p *soundPlayer) play() bool {
 	return true
 }
 
-func resolveArgv() []string {
-	file := themeSoundFile(SoundReminder)
+func resolveArgv(name string) []string {
+	file := themeSoundFile(name)
 	if file == "" {
 		extracted, err := chimeFile()
 		if err != nil {

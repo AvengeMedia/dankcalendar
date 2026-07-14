@@ -30,6 +30,8 @@ func TestThemeSoundFile(t *testing.T) {
 
 	fallback := writeSound(t, dataDir, "freedesktop", "message-new-instant.oga")
 	assert.Equal(t, fallback, themeSoundFile("message-new-instant"))
+	alarm := writeSound(t, dataDir, "freedesktop", "alarm-clock-elapsed.oga")
+	assert.Equal(t, alarm, themeSoundFile(SoundTask))
 	assert.Empty(t, themeSoundFile("no-such-event"))
 }
 

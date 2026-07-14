@@ -12,6 +12,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/AvengeMedia/dankcalendar/core/ent/task"
 	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
 	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
@@ -85,6 +86,21 @@ func (s *EngineSuite) addEvent(uid string, start, end time.Time, mutate ...func(
 	return ev
 }
 
+func (s *EngineSuite) addTask(uid string, mutate ...func(*repo.UpsertTaskInput)) *ent.Task {
+	in := repo.UpsertTaskInput{
+		CalendarID: "cal",
+		UID:        uid,
+		Summary:    "Task " + uid,
+		Status:     task.StatusNeedsAction,
+	}
+	for _, m := range mutate {
+		m(&in)
+	}
+	got, err := s.repo.UpsertTask(s.ctx, in)
+	s.Require().NoError(err)
+	return got
+}
+
 func (s *EngineSuite) expectSend(id uint32) *notify.Notification {
 	captured := &notify.Notification{}
 	s.sender.EXPECT().Send(mock.Anything).Run(func(n notify.Notification) {
@@ -102,6 +118,48 @@ func (s *EngineSuite) TestDefaultReminderFiresOnce() {
 	s.Equal("Starts today at 12:10", captured.Body)
 
 	// Already recorded as fired: no second notification.
+	s.Require().NoError(s.engine.Tick(s.ctx))
+}
+
+func (s *EngineSuite) TestHighPriorityTaskDueUsesCriticalAlarm() {
+	s.cfg.NotificationSounds = true
+	s.addTask("task1", func(in *repo.UpsertTaskInput) {
+		in.Due = t0
+		in.Priority = 2
+	})
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Task task1", captured.Summary)
+	s.Equal("Due today at 12:00", captured.Body)
+	s.Equal(notify.UrgencyCritical, captured.Urgency)
+	s.Equal(notify.SoundTask, captured.SoundName)
+
+	// The reminder state prevents a second notification for the same task time.
+	s.Require().NoError(s.engine.Tick(s.ctx))
+}
+
+func (s *EngineSuite) TestTaskStartAndDueBothNotifyWithMappedPriority() {
+	s.addTask("task1", func(in *repo.UpsertTaskInput) {
+		in.Start = t0
+		in.Due = t0.Add(2 * time.Minute)
+		in.Priority = 8
+	})
+	started := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Starts today at 12:00", started.Body)
+	s.Equal(notify.UrgencyLow, started.Urgency)
+
+	s.clock = t0.Add(2 * time.Minute)
+	due := s.expectSend(2)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Due today at 12:02", due.Body)
+}
+
+func (s *EngineSuite) TestCompletedTaskDoesNotNotify() {
+	s.addTask("task1", func(in *repo.UpsertTaskInput) {
+		in.Due = t0
+		in.Status = task.StatusCompleted
+	})
 	s.Require().NoError(s.engine.Tick(s.ctx))
 }
 

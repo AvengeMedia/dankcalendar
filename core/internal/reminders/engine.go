@@ -1,9 +1,8 @@
-// Package reminders schedules desktop notifications for upcoming events.
-// It expands events over a lookahead window, derives trigger times from each
-// event's reminders (or the configured default), and fires each trigger
-// exactly once per occurrence, tracked via ReminderState rows. Evaluation is
-// event-driven: the engine parks until the next trigger is due and wakes
-// early when calendar data changes or the system resumes from suspend.
+// Package reminders schedules desktop notifications for upcoming events and
+// task start/due times. It fires each trigger exactly once, tracked via
+// ReminderState rows. Evaluation is event-driven: the engine parks until the
+// next trigger is due and wakes early when calendar data changes or the system
+// resumes from suspend.
 package reminders
 
 import (
@@ -74,6 +73,7 @@ type trigger struct {
 
 type Upcoming struct {
 	EventID    string    `json:"eventId,omitempty"`
+	TaskID     string    `json:"taskId,omitempty"`
 	CalendarID string    `json:"calendarId"`
 	UID        string    `json:"uid"`
 	Summary    string    `json:"summary"`
@@ -82,6 +82,7 @@ type Upcoming struct {
 	Trigger    time.Time `json:"trigger"`
 	Minutes    int       `json:"minutes"`
 	Snoozed    bool      `json:"snoozed,omitempty"`
+	Priority   int       `json:"priority,omitempty"`
 }
 
 type Engine struct {
@@ -168,6 +169,7 @@ func (e *Engine) WatchMutations(client *ent.Client) {
 		})
 	}
 	client.Event.Use(wake)
+	client.Task.Use(wake)
 	client.Calendar.Use(wake)
 	client.Account.Use(wake)
 }
@@ -290,6 +292,33 @@ func (e *Engine) Tick(ctx context.Context) error {
 			e.fire(ctx, ev, key, cs, now)
 		}
 	}
+
+	tasks, err := e.taskCandidates(ctx, resolved)
+	if err != nil {
+		return err
+	}
+	for _, task := range tasks {
+		calID := taskCalendarID(task)
+		cs := resolvedFor(resolved, calID, s)
+		if !cs.RemindersEnabled {
+			continue
+		}
+		for _, timed := range taskTriggersFor(task, cs, e.loc) {
+			key := stateKey{calendarID: calID, uid: task.UID, start: timed.base.UTC(), minutes: timed.trigger.minutes}
+			st, seen := states[key]
+			switch {
+			case !seen:
+				if !taskDue(timed.trigger, task.AllDay, now) {
+					continue
+				}
+			case st.SnoozedUntil == nil:
+				continue
+			case st.SnoozedUntil.After(now):
+				continue
+			}
+			e.fireTask(ctx, task, timed, key, cs, now)
+		}
+	}
 	return nil
 }
 
@@ -342,6 +371,30 @@ func (e *Engine) Upcoming(ctx context.Context, limit int) ([]Upcoming, error) {
 			out = append(out, entry)
 		}
 	}
+	tasks, err := e.taskCandidates(ctx, resolved)
+	if err != nil {
+		return nil, err
+	}
+	for _, task := range tasks {
+		calID := taskCalendarID(task)
+		cs := resolvedFor(resolved, calID, s)
+		if !cs.RemindersEnabled {
+			continue
+		}
+		for _, timed := range taskTriggersFor(task, cs, e.loc) {
+			key := stateKey{calendarID: calID, uid: task.UID, start: timed.base.UTC(), minutes: timed.trigger.minutes}
+			entry := Upcoming{TaskID: task.ID, CalendarID: calID, UID: task.UID, Summary: taskTitle(task), Start: timed.base, AllDay: task.AllDay, Trigger: timed.trigger.at, Minutes: timed.trigger.minutes, Priority: task.Priority}
+			switch st, seen := states[key]; {
+			case seen && st.SnoozedUntil != nil && st.SnoozedUntil.After(now):
+				entry.Trigger, entry.Snoozed = *st.SnoozedUntil, true
+			case seen:
+				continue
+			case !entry.Trigger.After(now):
+				continue
+			}
+			out = append(out, entry)
+		}
+	}
 
 	sort.Slice(out, func(i, j int) bool { return out[i].Trigger.Before(out[j].Trigger) })
 	if limit > 0 && len(out) > limit {
@@ -362,6 +415,7 @@ func (e *Engine) SendTest() error {
 		Summary:  "Dank Calendar",
 		Body:     fmt.Sprintf("Test reminder — notifications are working. Sent at %s.", e.now().Format("15:04:05")),
 		Resident: s.ReminderPersist,
+		Urgency:  notify.UrgencyNormal,
 	}
 	if s.NotificationSounds {
 		n.SoundName = notify.SoundReminder
@@ -453,6 +507,27 @@ func (e *Engine) candidates(ctx context.Context, now time.Time, base settings.UI
 	return out, resolved, nil
 }
 
+// taskCandidates returns unfinished tasks with a start or due time from visible
+// calendars. Task lists are normally small, so nullable time filtering stays
+// here instead of adding provider-specific logic to repository queries.
+func (e *Engine) taskCandidates(ctx context.Context, resolved map[string]settings.UISettings) ([]*ent.Task, error) {
+	tasks, _, err := e.repo.ListTasks(ctx, repo.ListTasksParams{})
+	if err != nil {
+		return nil, err
+	}
+	out := tasks[:0]
+	for _, task := range tasks {
+		if task.Edges.Calendar == nil || task.Edges.Calendar.Hidden {
+			continue
+		}
+		if _, ok := resolved[task.Edges.Calendar.ID]; !ok || (task.Due == nil && task.Start == nil) {
+			continue
+		}
+		out = append(out, task)
+	}
+	return out, nil
+}
+
 // resolvedFor returns the calendar's resolved settings, falling back to the
 // global base when the calendar is unknown.
 func resolvedFor(resolved map[string]settings.UISettings, calID string, base settings.UISettings) settings.UISettings {
@@ -490,6 +565,7 @@ func (e *Engine) fire(ctx context.Context, ev *ent.Event, key stateKey, s settin
 		Body:     eventBody(ev, now, s, e.loc),
 		Actions:  actions,
 		Resident: s.ReminderPersist,
+		Urgency:  notify.UrgencyNormal,
 	}
 	if s.NotificationSounds {
 		n.SoundName = notify.SoundReminder
@@ -520,6 +596,129 @@ func (e *Engine) fire(ctx context.Context, ev *ent.Event, key stateKey, s settin
 			"minutes":    key.minutes,
 		})
 	}
+}
+
+func (e *Engine) fireTask(ctx context.Context, task *ent.Task, timed taskTrigger, key stateKey, s settings.UISettings, now time.Time) {
+	actions := []notify.Action{
+		{Key: "default", Label: "Open"},
+		{Key: "snooze", Label: fmt.Sprintf("Snooze %d min", s.SnoozeMinutes)},
+		{Key: "dismiss", Label: "Dismiss"},
+	}
+	n := notify.Notification{
+		Summary:  taskTitle(task),
+		Body:     taskBody(task, timed, now, s, e.loc),
+		Actions:  actions,
+		Resident: s.ReminderPersist,
+		Urgency:  taskUrgency(task.Priority),
+	}
+	if s.NotificationSounds {
+		n.SoundName = notify.SoundTask
+	}
+	id, err := e.sender.Send(n)
+	if err != nil {
+		log.Warnf("reminders: send task: %v", err)
+		return
+	}
+	if err := e.repo.SetReminderFired(ctx, key.calendarID, key.uid, key.start, key.minutes, now); err != nil {
+		log.Warnf("reminders: record task fired: %v", err)
+	}
+	e.mu.Lock()
+	e.pending[id] = firedReminder{key: key}
+	e.mu.Unlock()
+	if e.publish != nil {
+		e.publish("reminders", map[string]any{"type": "fired", "taskId": task.ID, "calendarId": key.calendarID, "uid": key.uid, "summary": task.Summary, "start": timed.base, "minutes": key.minutes, "priority": task.Priority})
+	}
+}
+
+type taskTrigger struct {
+	base    time.Time
+	kind    string
+	trigger trigger
+}
+
+func taskTriggersFor(task *ent.Task, s settings.UISettings, loc *time.Location) []taskTrigger {
+	var times []struct {
+		at   time.Time
+		kind string
+	}
+	if task.Start != nil {
+		times = append(times, struct {
+			at   time.Time
+			kind string
+		}{*task.Start, "Starts"})
+	}
+	if task.Due != nil && (task.Start == nil || !task.Due.Equal(*task.Start)) {
+		times = append(times, struct {
+			at   time.Time
+			kind string
+		}{*task.Due, "Due"})
+	}
+	minutes := popupMinutes(task.Reminders)
+	out := make([]taskTrigger, 0, len(times))
+	for _, item := range times {
+		base := item.at
+		if task.AllDay {
+			day := localMidnight(item.at, loc)
+			hour, minute := s.AllDayClock()
+			base = time.Date(day.Year(), day.Month(), day.Day(), hour, minute, 0, 0, loc)
+		}
+		if len(minutes) == 0 {
+			out = append(out, taskTrigger{base: item.at, kind: item.kind, trigger: trigger{at: base}})
+			continue
+		}
+		for _, offset := range minutes {
+			out = append(out, taskTrigger{base: item.at, kind: item.kind, trigger: trigger{at: base.Add(-time.Duration(offset) * time.Minute), minutes: offset}})
+		}
+	}
+	return out
+}
+
+func taskDue(tr trigger, allDay bool, now time.Time) bool {
+	if tr.at.After(now) {
+		return false
+	}
+	grace := startGrace
+	if allDay {
+		grace = allDayLate
+	}
+	return tr.at.After(now.Add(-grace))
+}
+
+func taskCalendarID(task *ent.Task) string {
+	if task.Edges.Calendar == nil {
+		return ""
+	}
+	return task.Edges.Calendar.ID
+}
+
+func taskTitle(task *ent.Task) string {
+	if task.Summary == "" {
+		return "(untitled task)"
+	}
+	return task.Summary
+}
+
+func taskUrgency(priority int) byte {
+	switch {
+	case priority >= 1 && priority <= 4:
+		return notify.UrgencyCritical
+	case priority >= 6 && priority <= 9:
+		return notify.UrgencyLow
+	default:
+		return notify.UrgencyNormal
+	}
+}
+
+func taskBody(task *ent.Task, timed taskTrigger, now time.Time, s settings.UISettings, loc *time.Location) string {
+	when := dayPhrase(timed.base.In(loc), now.In(loc))
+	if !task.AllDay {
+		when += " at " + s.Clock(timed.base.In(loc))
+	}
+	body := timed.kind + " " + when
+	if task.Location != "" {
+		body += "\n" + task.Location
+	}
+	return body
 }
 
 func due(tr trigger, ev *ent.Event, now time.Time) bool {
