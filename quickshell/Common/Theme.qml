@@ -4,28 +4,15 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.DankCommon.Common
 import qs.Services
 import "StockTheme.js" as StockTheme
 
 Singleton {
     id: root
 
-    // Register the bundled fonts application-wide so the family names resolve
-    // even when the user has neither installed system-wide. Without this, Qt
-    // falls back per-glyph and bare digits can land on a color-emoji font
-    // (e.g. Twemoji), rendering numbers blank.
-    FontLoader {
-        id: interFont
-        source: Qt.resolvedUrl("../assets/fonts/inter/InterVariable.ttf")
-    }
-
-    FontLoader {
-        id: firaCodeFont
-        source: Qt.resolvedUrl("../assets/fonts/nerd-fonts/FiraCodeNerdFont-Regular.ttf")
-    }
-
-    readonly property string defaultFontFamily: interFont.name || "Inter Variable"
-    readonly property string defaultMonoFontFamily: firaCodeFont.name || "Fira Code"
+    readonly property string defaultFontFamily: Fonts.sans
+    readonly property string defaultMonoFontFamily: Fonts.mono
 
     // "auto" follows the desktop portal color-scheme; no preference falls back to dark
     readonly property bool isLightMode: {
@@ -192,6 +179,7 @@ Singleton {
     property color outlineLight: Qt.rgba(outline.r, outline.g, outline.b, 0.05)
     property color outlineMedium: Qt.rgba(outline.r, outline.g, outline.b, 0.12)
     property color outlineStrong: Qt.rgba(outline.r, outline.g, outline.b, 0.18)
+    property color outlineHeavy: Qt.rgba(outline.r, outline.g, outline.b, 0.2)
     property color gridLine: Qt.rgba(outline.r, outline.g, outline.b, 0.25)
 
     property color errorHover: Qt.rgba(error.r, error.g, error.b, 0.12)
@@ -205,6 +193,7 @@ Singleton {
     property color buttonHover: primaryHover
     property color buttonPressed: primaryPressed
 
+    property real spacingXXS: 2
     property real spacingXS: 4
     property real spacingS: 8
     property real spacingM: 12
@@ -232,6 +221,7 @@ Singleton {
     property real popupTransparency: 1.0
 
     readonly property color floatingSurface: withAlpha(surfaceContainer, popupTransparency)
+    readonly property color nestedSurface: withAlpha(surfaceContainerHigh, popupTransparency)
 
     property color widgetBaseHoverColor: {
         const blended = blend(surfaceContainerHigh, primary, 0.1);
@@ -245,7 +235,43 @@ Singleton {
     property int standardEasing: Easing.OutCubic
     property int emphasizedEasing: Easing.OutQuart
 
+    readonly property int currentAnimationSpeed: SettingsData.animationSpeed
+    readonly property int currentAnimationBaseDuration: [0, 250, 500, 750][SettingsData.animationSpeed] ?? 500
+    readonly property bool elevationEnabled: true
+
+    readonly property var elevationLevel2: ({
+            blurPx: 8,
+            offsetX: 4,
+            offsetY: 4,
+            spreadPx: 0,
+            alpha: 0.25
+        })
+
+    readonly property var expressiveCurves: ({
+            "emphasized": [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1],
+            "emphasizedAccel": [0.3, 0, 0.8, 0.15, 1, 1],
+            "emphasizedDecel": [0.05, 0.7, 0.1, 1, 1, 1],
+            "standard": [0.2, 0, 0, 1, 1, 1],
+            "standardAccel": [0.3, 0, 1, 1, 1, 1],
+            "standardDecel": [0, 0, 0, 1, 1, 1],
+            "expressiveFastSpatial": [0.42, 1.67, 0.21, 0.9, 1, 1],
+            "expressiveDefaultSpatial": [0.38, 1.21, 0.22, 1, 1, 1],
+            "expressiveEffects": [0.34, 0.8, 0.34, 1, 1, 1]
+        })
+
+    readonly property var expressiveDurations: ({
+            "fast": currentAnimationBaseDuration * 0.4,
+            "normal": currentAnimationBaseDuration * 0.8,
+            "large": currentAnimationBaseDuration * 1.2,
+            "extraLarge": currentAnimationBaseDuration * 2.0,
+            "expressiveFastSpatial": currentAnimationBaseDuration * 0.7,
+            "expressiveDefaultSpatial": currentAnimationBaseDuration,
+            "expressiveEffects": currentAnimationBaseDuration * 0.4
+        })
+
     function withAlpha(c, a) {
+        if (!c || c.r === undefined)
+            return Qt.rgba(0, 0, 0, 0);
         return Qt.rgba(c.r, c.g, c.b, a);
     }
 

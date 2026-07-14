@@ -26,14 +26,18 @@ Singleton {
     readonly property bool isRtl: _rtlLanguages.includes(_lang)
 
     readonly property url translationsFolder: Qt.resolvedUrl("../translations/poexports")
+    readonly property url commonTranslationsFolder: Qt.resolvedUrl("../DankCommon/translations/poexports")
 
     property var presentLocales: ({
             "en": Qt.locale("en")
         })
     property var translations: ({})
     property bool translationsLoaded: false
+    property var commonTranslations: ({})
+    property bool commonTranslationsLoaded: false
 
     property url _selectedPath: ""
+    property url _commonSelectedPath: ""
 
     FolderListModel {
         id: dir
@@ -45,6 +49,18 @@ Singleton {
         onStatusChanged: if (status === FolderListModel.Ready) {
             root._loadPresentLocales();
             root._pickTranslation();
+        }
+    }
+
+    FolderListModel {
+        id: commonDir
+        folder: root.commonTranslationsFolder
+        nameFilters: ["*.json"]
+        showDirs: false
+        showDotAndDotDot: false
+
+        onStatusChanged: if (status === FolderListModel.Ready) {
+            root._pickCommonTranslation();
         }
     }
 
@@ -66,6 +82,22 @@ Singleton {
         onLoadFailed: error => {
             root.log.warn(`Failed to load '${root._resolvedLocale}' (${error}), falling back to English`);
             root._fallbackToEnglish();
+        }
+    }
+
+    FileView {
+        id: commonTranslationLoader
+        path: root._commonSelectedPath
+        printErrors: false
+
+        onLoaded: {
+            try {
+                root.commonTranslations = JSON.parse(text());
+                root.commonTranslationsLoaded = true;
+                root.log.info(`Loaded DankCommon translations (${Object.keys(root.commonTranslations).length} contexts)`);
+            } catch (e) {
+                root.log.warn("Error parsing DankCommon translations:", e);
+            }
         }
     }
 
@@ -109,24 +141,53 @@ Singleton {
         translations = ({});
     }
 
-    function tr(term, context) {
-        if (!translationsLoaded || !translations)
-            return term;
+    function _pickCommonTranslation() {
+        const present = {};
+        for (let i = 0; i < commonDir.count; i++) {
+            const name = commonDir.get(i, "fileName");
+            if (name && name.endsWith(".json"))
+                present[name.slice(0, -5)] = true;
+        }
+        for (let i = 0; i < _candidates.length; i++) {
+            if (!present[_candidates[i]])
+                continue;
+            _commonSelectedPath = commonTranslationsFolder + "/" + _candidates[i] + ".json";
+            return;
+        }
+    }
+
+    function _lookup(table, term, context) {
+        if (!table)
+            return "";
         const ctx = context || term;
-        if (translations[ctx] && translations[ctx][term])
-            return translations[ctx][term];
-        for (const c in translations) {
-            if (translations[c] && translations[c][term])
-                return translations[c][term];
+        if (table[ctx] && table[ctx][term])
+            return table[ctx][term];
+        for (const c in table) {
+            if (table[c] && table[c][term])
+                return table[c][term];
+        }
+        return "";
+    }
+
+    function tr(term, context) {
+        if (translationsLoaded) {
+            const hit = _lookup(translations, term, context);
+            if (hit)
+                return hit;
+        }
+        if (commonTranslationsLoaded) {
+            const hit = _lookup(commonTranslations, term, context);
+            if (hit)
+                return hit;
         }
         return term;
     }
 
     function trContext(context, term) {
-        if (!translationsLoaded || !translations)
-            return term;
-        if (translations[context] && translations[context][term])
+        if (translationsLoaded && translations[context] && translations[context][term])
             return translations[context][term];
+        if (commonTranslationsLoaded && commonTranslations[context] && commonTranslations[context][term])
+            return commonTranslations[context][term];
         return term;
     }
 }

@@ -3,9 +3,10 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.Common
-import qs.Modals.FileBrowser
+import qs.DankCommon.Modals.FileBrowser
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 FloatingWindow {
     id: accountModal
@@ -954,10 +955,11 @@ FloatingWindow {
 
             DankTextField {
                 width: parent.width
-                label: I18n.tr("Client ID", "oauth client id field label")
+                labelText: I18n.tr("Client ID", "oauth client id field label")
                 placeholderText: accountModal.isMicrosoft ? "00000000-0000-0000-0000-000000000000" : "xxxxxxxxxxxx.apps.googleusercontent.com"
-                iconName: "key"
+                leftIconName: "key"
                 onTextChanged: accountModal.clientId = text
+                Component.onCompleted: forceActiveFocus()
 
                 Binding on text {
                     value: accountModal.clientId
@@ -967,9 +969,9 @@ FloatingWindow {
             DankTextField {
                 visible: !accountModal.isMicrosoft
                 width: parent.width
-                label: I18n.tr("Client Secret", "oauth client secret field label")
+                labelText: I18n.tr("Client Secret", "oauth client secret field label")
                 placeholderText: "GOCSPX-…"
-                iconName: "lock"
+                leftIconName: "lock"
                 echoMode: TextInput.Password
                 onTextChanged: accountModal.clientSecret = text
 
@@ -1239,27 +1241,35 @@ FloatingWindow {
                 DankTextField {
                     visible: !caldavRoot.isICloud
                     width: parent.width
-                    label: I18n.tr("Server URL", "caldav server url field label")
+                    labelText: I18n.tr("Server URL", "caldav server url field label")
                     placeholderText: "https://dav.example.com"
-                    iconName: "cloud"
+                    leftIconName: "cloud"
                     text: caldavRoot.serverUrl
                     onTextChanged: caldavRoot.serverUrl = text
+                    Component.onCompleted: {
+                        if (!caldavRoot.isICloud)
+                            forceActiveFocus();
+                    }
                 }
 
                 DankTextField {
                     width: parent.width
-                    label: caldavRoot.isICloud ? I18n.tr("Apple ID", "icloud username field label") : I18n.tr("Username", "caldav username field label")
+                    labelText: caldavRoot.isICloud ? I18n.tr("Apple ID", "icloud username field label") : I18n.tr("Username", "caldav username field label")
                     placeholderText: caldavRoot.isICloud ? "you@icloud.com" : I18n.tr("username", "caldav username field placeholder")
-                    iconName: "person"
+                    leftIconName: "person"
                     text: caldavRoot.username
                     onTextChanged: caldavRoot.username = text
+                    Component.onCompleted: {
+                        if (caldavRoot.isICloud)
+                            forceActiveFocus();
+                    }
                 }
 
                 DankTextField {
                     width: parent.width
-                    label: caldavRoot.isICloud ? I18n.tr("App-specific password", "icloud password field label") : I18n.tr("Password", "caldav password field label")
+                    labelText: caldavRoot.isICloud ? I18n.tr("App-specific password", "icloud password field label") : I18n.tr("Password", "caldav password field label")
                     placeholderText: caldavRoot.isICloud ? "xxxx-xxxx-xxxx-xxxx" : I18n.tr("password", "caldav password field placeholder")
-                    iconName: "lock"
+                    leftIconName: "lock"
                     echoMode: TextInput.Password
                     text: caldavRoot.password
                     onTextChanged: caldavRoot.password = text
@@ -1267,9 +1277,9 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Display name (optional)", "optional account display name field label")
+                    labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: caldavRoot.isICloud ? "iCloud" : I18n.tr("My server", "caldav display name field placeholder")
-                    iconName: "badge"
+                    leftIconName: "badge"
                     text: caldavRoot.displayName
                     onTextChanged: caldavRoot.displayName = text
                 }
@@ -1395,11 +1405,12 @@ FloatingWindow {
                     DankTextField {
                         id: localDirField
                         width: parent.width - 44 - Theme.spacingS
-                        label: I18n.tr("Directory", "local calendar directory field label")
+                        labelText: I18n.tr("Directory", "local calendar directory field label")
                         placeholderText: "/home/you/.local/share/calendars"
-                        iconName: "folder"
+                        leftIconName: "folder"
                         text: localRoot.rootPath
                         onTextChanged: localRoot.rootPath = text
+                        Component.onCompleted: forceActiveFocus()
                     }
 
                     DankActionButton {
@@ -1416,9 +1427,9 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Display name (optional)", "optional account display name field label")
+                    labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: I18n.tr("Local calendars", "local account display name field placeholder")
-                    iconName: "badge"
+                    leftIconName: "badge"
                     text: localRoot.displayName
                     onTextChanged: localRoot.displayName = text
                 }
@@ -1501,11 +1512,12 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Display name (optional)", "optional account display name field label")
+                    labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: I18n.tr("Evolution", "evolution account display name field placeholder")
-                    iconName: "badge"
+                    leftIconName: "badge"
                     text: evolutionRoot.displayName
                     onTextChanged: evolutionRoot.displayName = text
+                    Component.onCompleted: forceActiveFocus()
                 }
 
                 StyledText {
@@ -1589,36 +1601,37 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Feed URL", "ical feed url field label")
+                    labelText: I18n.tr("Feed URL", "ical feed url field label")
                     placeholderText: "https://example.com/calendar.ics"
-                    iconName: "rss_feed"
+                    leftIconName: "rss_feed"
                     text: icalRoot.feedUrl
                     onTextChanged: icalRoot.feedUrl = text
+                    Component.onCompleted: forceActiveFocus()
                 }
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Display name (optional)", "optional account display name field label")
+                    labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: I18n.tr("University timetable", "ical display name field placeholder")
-                    iconName: "badge"
+                    leftIconName: "badge"
                     text: icalRoot.displayName
                     onTextChanged: icalRoot.displayName = text
                 }
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Username (optional)", "ical optional basic-auth username field label")
+                    labelText: I18n.tr("Username (optional)", "ical optional basic-auth username field label")
                     placeholderText: I18n.tr("only if the feed requires sign-in", "ical optional username field placeholder")
-                    iconName: "person"
+                    leftIconName: "person"
                     text: icalRoot.username
                     onTextChanged: icalRoot.username = text
                 }
 
                 DankTextField {
                     width: parent.width
-                    label: I18n.tr("Password (optional)", "ical optional basic-auth password field label")
+                    labelText: I18n.tr("Password (optional)", "ical optional basic-auth password field label")
                     placeholderText: I18n.tr("only if the feed requires sign-in", "ical optional password field placeholder")
-                    iconName: "lock"
+                    leftIconName: "lock"
                     echoMode: TextInput.Password
                     text: icalRoot.password
                     onTextChanged: icalRoot.password = text

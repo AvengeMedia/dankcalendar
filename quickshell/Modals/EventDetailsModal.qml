@@ -4,6 +4,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 FloatingWindow {
     id: eventModal
@@ -1031,6 +1032,7 @@ FloatingWindow {
                     placeholderText: I18n.tr("Add title", "event form placeholder for title input")
                     text: eventModal.formTitle
                     onTextChanged: eventModal.formTitle = text
+                    Component.onCompleted: forceActiveFocus()
                 }
 
                 Row {
@@ -1114,7 +1116,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
-                    iconName: "place"
+                    leftIconName: "place"
                     placeholderText: I18n.tr("Location", "event form placeholder for location input")
                     text: eventModal.formLocation
                     onTextChanged: eventModal.formLocation = text

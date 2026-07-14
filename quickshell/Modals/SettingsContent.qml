@@ -1,9 +1,10 @@
 import QtQuick
 import Quickshell
 import qs.Common
-import qs.Modals.FileBrowser
+import qs.DankCommon.Modals.FileBrowser
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 Item {
     id: root
@@ -378,7 +379,7 @@ Item {
                         DankToggle {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: DankCalService.autostartEnabled
-                            toggleEnabled: DankCalService.connected
+                            enabled: DankCalService.connected
                             onToggled: checked => DankCalService.setAutostart(checked)
                         }
                     }
@@ -1290,7 +1291,7 @@ Item {
                         DankToggle {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: SettingsData.reminderPersist
-                            toggleEnabled: SettingsData.remindersEnabled
+                            enabled: SettingsData.remindersEnabled
                             onToggled: checked => SettingsData.reminderPersist = checked
                         }
                     }
@@ -1302,7 +1303,7 @@ Item {
                         DankToggle {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: SettingsData.notificationSounds
-                            toggleEnabled: SettingsData.remindersEnabled
+                            enabled: SettingsData.remindersEnabled
                             onToggled: checked => SettingsData.notificationSounds = checked
                         }
                     }
@@ -1329,7 +1330,7 @@ Item {
                         DankToggle {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: SettingsData.allDayReminders
-                            toggleEnabled: SettingsData.remindersEnabled
+                            enabled: SettingsData.remindersEnabled
                             onToggled: checked => SettingsData.allDayReminders = checked
                         }
                     }

@@ -3,6 +3,7 @@ import QtQuick.Controls
 import qs.Common
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 Popup {
     id: root
@@ -275,7 +276,7 @@ Popup {
 
             DankToggle {
                 checked: root.ovrEnabled ? root.valEnabled : SettingsData.remindersEnabled
-                toggleEnabled: root.ovrEnabled
+                enabled: root.ovrEnabled
                 onToggled: checked => root.valEnabled = checked
             }
         }
@@ -287,7 +288,7 @@ Popup {
 
             DankToggle {
                 checked: root.ovrPersist ? root.valPersist : SettingsData.reminderPersist
-                toggleEnabled: root.ovrPersist
+                enabled: root.ovrPersist
                 onToggled: checked => root.valPersist = checked
             }
         }
@@ -325,7 +326,7 @@ Popup {
 
             DankToggle {
                 checked: root.ovrAllDay ? root.valAllDay : SettingsData.allDayReminders
-                toggleEnabled: root.ovrAllDay
+                enabled: root.ovrAllDay
                 onToggled: checked => root.valAllDay = checked
             }
         }

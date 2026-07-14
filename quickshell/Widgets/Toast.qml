@@ -2,6 +2,7 @@ import QtQuick
 import qs.Common
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 // Toast renders ToastService's current message as a bottom-centered snackbar
 // within whatever window mounts it. Mount it last (high z) with anchors.fill so

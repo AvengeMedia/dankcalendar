@@ -26,10 +26,12 @@ BUILD_LDFLAGS=-ldflags='-s -w -X main.Version=$(VERSION) -X main.BuildTime=$(BUI
 all: build completions
 
 # Copy the quickshell UI into the embed dir (gitignored) so tagged builds
-# can bake it into the binary. Dev-only files are stripped.
+# can bake it into the binary. Dev-only files are stripped. -L dereferences
+# the DankCommon submodule symlink; go:embed rejects symlinks.
 sync-shell:
+	@test -f $(SHELL_SRC)/DankCommon/Widgets/DankIcon.qml || { echo "DankCommon missing: run git submodule update --init"; exit 1; }
 	@rm -rf $(EMBED_DIR)
-	@cp -r $(SHELL_SRC) $(EMBED_DIR)
+	@cp -rL $(SHELL_SRC) $(EMBED_DIR)
 	@rm -rf $(EMBED_DIR)/scripts $(EMBED_DIR)/.claude
 	@rm -f $(EMBED_DIR)/.qmlls.ini $(EMBED_DIR)/translations/extract_translations.py
 

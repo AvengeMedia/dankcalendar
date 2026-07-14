@@ -4,6 +4,7 @@ import qs.Common
 import qs.Modals
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 FloatingWindow {
     id: window

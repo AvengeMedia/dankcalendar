@@ -6,6 +6,14 @@ To contribute fork this repository, make your changes, and open a pull request.
 
 ## Setup
 
+Clone with submodules — the shared widget library ([dank-qml-common](https://github.com/AvengeMedia/dank-qml-common)) is vendored at `dank-qml-common/` and symlinked into `quickshell/DankCommon`:
+
+```bash
+git clone --recurse-submodules https://github.com/AvengeMedia/dankcalendar.git
+# or, in an existing clone:
+git submodule update --init
+```
+
 Install [prek](https://prek.j178.dev/) then activate pre-commit hooks:
 
 ```bash
@@ -13,6 +21,16 @@ prek install
 ```
 
 The hooks run `gofmt -s`, `go vet`, `go mod tidy`, and the Go test suite for changes under `core/`, plus generic whitespace/YAML checks.
+
+## Shared widgets (dank-qml-common)
+
+Everything under `quickshell/DankCommon/` (core widgets, the file browser, scroll physics) is shared across the DMS suite and lives in the `dank-qml-common` submodule. It is a normal git worktree:
+
+1. Edit files under `dank-qml-common/` (or through the `quickshell/DankCommon` symlink — same files) and test in the running app; hot reload works as usual. For isolated widget work, the library is its own runnable config with a gallery: `qs -c dank-qml-common`.
+2. Commit and PR those changes in the `dank-qml-common` repo: `cd dank-qml-common && git switch -c my-change`, push, open the PR there.
+3. Once merged, bump the pointer here: `make update-common` (updates the submodule and the nix flake input together), then commit alongside any dankcalendar-side changes. If you only bump the submodule, CI syncs `flake.lock` to it automatically on master.
+
+Shared widgets read app-provided singletons (`Theme`, `SettingsData`, ...) through a documented contract — see the dank-qml-common README. If your change needs a new contract property, add it to the library's stub singletons in the same PR, then to `quickshell/Common/` here when you bump.
 
 ## VSCode Setup
 
@@ -98,6 +116,8 @@ After adding or changing strings, regenerate the translation template from the r
 ```bash
 make i18n-extract
 ```
+
+Strings inside `quickshell/DankCommon/` are owned by the dank-qml-common repo and synced through the DMS POEditor project, not this one — extraction here deliberately skips them. At runtime `I18n` merges both catalogs (app terms win), with the shared translations shipping inside the submodule at `DankCommon/translations/poexports/`.
 
 ### GO (`core` directory)
 

@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Quickshell
 import qs.Common
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 Popup {
     id: root

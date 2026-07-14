@@ -9,6 +9,34 @@ import qs.Common
 Singleton {
     id: root
 
+    enum AnimationSpeed {
+        None,
+        Short,
+        Medium,
+        Long,
+        Custom
+    }
+
+    enum TextRenderType {
+        Qt,
+        Native,
+        Curve
+    }
+
+    enum TextRenderQuality {
+        Default,
+        Low,
+        Normal,
+        High,
+        VeryHigh
+    }
+
+    property int animationSpeed: SettingsData.AnimationSpeed.Short
+    property bool enableRippleEffects: true
+    property bool popoutElevationEnabled: true
+    property int textRenderType: SettingsData.TextRenderType.Qt
+    property int textRenderQuality: SettingsData.TextRenderQuality.Default
+
     readonly property string configDir: {
         const xdg = Quickshell.env("XDG_CONFIG_HOME");
         const base = (xdg && xdg !== "") ? xdg : Quickshell.env("HOME") + "/.config";

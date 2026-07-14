@@ -3,10 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    dank-qml-common = {
+      url = "github:AvengeMedia/dank-qml-common";
+      flake = false;
+    };
   };
 
   outputs =
-    { self, nixpkgs, ... }:
+    { self, nixpkgs, dank-qml-common, ... }:
     let
       goModVersion =
         let
@@ -61,10 +65,15 @@
             tags = [ "withshell" ];
 
             # Mirror `make -C core sync-shell`: bake the quickshell UI into
-            # the binary, minus dev-only files.
+            # the binary, minus dev-only files. The flake src excludes
+            # submodule content, so the DankCommon symlink is replaced with
+            # the pinned dank-qml-common input.
             postPatch = ''
               rm -rf core/internal/shellembed/dist
               cp -r quickshell core/internal/shellembed/dist
+              rm -f core/internal/shellembed/dist/DankCommon
+              cp -r ${dank-qml-common}/DankCommon core/internal/shellembed/dist/DankCommon
+              chmod -R u+w core/internal/shellembed/dist/DankCommon
               rm -rf core/internal/shellembed/dist/scripts \
                 core/internal/shellembed/dist/.claude
               rm -f core/internal/shellembed/dist/.qmlls.ini \

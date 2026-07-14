@@ -287,13 +287,6 @@
     "comment": ""
   },
   {
-    "term": "A file with this name already exists. Do you want to overwrite it?",
-    "translation": "",
-    "context": "file browser overwrite dialog message",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "A folder of .ics files on this machine.",
     "translation": "",
     "context": "local provider description in picker",
@@ -469,13 +462,6 @@
     "comment": ""
   },
   {
-    "term": "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close",
-    "translation": "",
-    "context": "file browser keyboard shortcuts hint line",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Always use the dark theme.",
     "translation": "",
     "context": "theme mode setting description",
@@ -521,13 +507,6 @@
     "term": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
     "translation": "",
     "context": "browser step body while waiting for oauth",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Ascending",
-    "translation": "",
-    "context": "file browser sort order option",
     "reference": "",
     "comment": ""
   },
@@ -646,7 +625,7 @@
   {
     "term": "Cancel",
     "translation": "",
-    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | file browser overwrite dialog cancel button | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes",
+    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes",
     "reference": "",
     "comment": ""
   },
@@ -833,13 +812,6 @@
     "comment": ""
   },
   {
-    "term": "Copy path",
-    "translation": "",
-    "context": "file browser item context menu action",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Core hours",
     "translation": "",
     "context": "core hours range setting label",
@@ -1008,23 +980,9 @@
     "comment": ""
   },
   {
-    "term": "Descending",
-    "translation": "",
-    "context": "file browser sort order option",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Description",
     "translation": "",
     "context": "event details section label for description",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Desktop",
-    "translation": "",
-    "context": "file browser quick access location",
     "reference": "",
     "comment": ""
   },
@@ -1071,13 +1029,6 @@
     "comment": ""
   },
   {
-    "term": "Documents",
-    "translation": "",
-    "context": "file browser quick access location",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Does not repeat",
     "translation": "",
     "context": "recurrence dropdown option | task recurrence dropdown option",
@@ -1088,13 +1039,6 @@
     "term": "Done",
     "translation": "",
     "context": "button to close modal after account added",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Downloads",
-    "translation": "",
-    "context": "file browser quick access location",
     "reference": "",
     "comment": ""
   },
@@ -1169,13 +1113,6 @@
     "comment": ""
   },
   {
-    "term": "Enter filename...",
-    "translation": "",
-    "context": "file browser save filename input placeholder",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Enter your CalDAV server details. The connection is verified before the account is saved.",
     "translation": "",
     "context": "caldav sign-in form instructions",
@@ -1225,37 +1162,9 @@
     "comment": ""
   },
   {
-    "term": "F1/I: Toggle • F10: Help",
-    "translation": "",
-    "context": "file browser info panel keyboard shortcut hint",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Feed URL",
     "translation": "",
     "context": "ical feed url field label",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "File Already Exists",
-    "translation": "",
-    "context": "file browser overwrite dialog title",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "File Information",
-    "translation": "",
-    "context": "file browser info panel header",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Files - %1",
-    "translation": "",
-    "context": "file browser window title, %1 is the picker purpose",
     "reference": "",
     "comment": ""
   },
@@ -1347,13 +1256,6 @@
     "term": "High",
     "translation": "",
     "context": "task priority dropdown option",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Home",
-    "translation": "",
-    "context": "file browser quick access location",
     "reference": "",
     "comment": ""
   },
@@ -1582,13 +1484,6 @@
     "comment": ""
   },
   {
-    "term": "Modified",
-    "translation": "",
-    "context": "file browser sort criterion option",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Month",
     "translation": "",
     "context": "view switcher option in sidebar",
@@ -1624,20 +1519,6 @@
     "comment": ""
   },
   {
-    "term": "Move to Trash",
-    "translation": "",
-    "context": "file browser item context menu action",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Music",
-    "translation": "",
-    "context": "file browser quick access location",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "My calendars",
     "translation": "",
     "context": "sidebar section header for the calendar list",
@@ -1648,13 +1529,6 @@
     "term": "My server",
     "translation": "",
     "context": "caldav display name field placeholder",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Name",
-    "translation": "",
-    "context": "file browser sort criterion option",
     "reference": "",
     "comment": ""
   },
@@ -1918,13 +1792,6 @@
     "comment": ""
   },
   {
-    "term": "Order",
-    "translation": "",
-    "context": "file browser sort menu section header",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Outlook, Office 365 and Exchange Online calendars.",
     "translation": "",
     "context": "microsoft provider description in picker",
@@ -1949,13 +1816,6 @@
     "term": "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.",
     "translation": "",
     "context": "per-calendar reminders dialog subtitle",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Overwrite",
-    "translation": "",
-    "context": "file browser overwrite dialog confirm button",
     "reference": "",
     "comment": ""
   },
@@ -2023,13 +1883,6 @@
     "comment": ""
   },
   {
-    "term": "Pictures",
-    "translation": "",
-    "context": "file browser quick access location",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Play a sound when a reminder fires.",
     "translation": "",
     "context": "notification sound toggle description",
@@ -2089,13 +1942,6 @@
     "term": "Priority",
     "translation": "",
     "context": "task form label for the priority dropdown",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Quick Access",
-    "translation": "",
-    "context": "file browser sidebar section header",
     "reference": "",
     "comment": ""
   },
@@ -2242,7 +2088,7 @@
   {
     "term": "Save",
     "translation": "",
-    "context": "event details button to save changes | file browser save button | per-calendar reminders dialog button to save | rename calendar dialog button to save name | task form button to persist the task",
+    "context": "event details button to save changes | per-calendar reminders dialog button to save | rename calendar dialog button to save name | task form button to persist the task",
     "reference": "",
     "comment": ""
   },
@@ -2278,13 +2124,6 @@
     "term": "Searching",
     "translation": "",
     "context": "search status title while search is running",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Select File",
-    "translation": "",
-    "context": "default file browser window title",
     "reference": "",
     "comment": ""
   },
@@ -2436,13 +2275,6 @@
     "comment": ""
   },
   {
-    "term": "Size",
-    "translation": "",
-    "context": "file browser sort criterion option",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Skip certificate verification",
     "translation": "",
     "context": "caldav toggle label to disable tls verification",
@@ -2453,13 +2285,6 @@
     "term": "Snooze duration",
     "translation": "",
     "context": "per-calendar snooze override label | snooze duration setting label",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Sort By",
-    "translation": "",
-    "context": "file browser sort menu section header",
     "reference": "",
     "comment": ""
   },
@@ -2558,13 +2383,6 @@
     "term": "System preference unavailable — using dark.",
     "translation": "",
     "context": "theme mode setting description",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select",
-    "translation": "",
-    "context": "file browser keyboard shortcuts hint line",
     "reference": "",
     "comment": ""
   },
@@ -2695,13 +2513,6 @@
     "comment": ""
   },
   {
-    "term": "Type",
-    "translation": "",
-    "context": "file browser sort criterion option",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Type at least 2 characters to search events.",
     "translation": "",
     "context": "search status hint when query is too short",
@@ -2751,13 +2562,6 @@
     "comment": ""
   },
   {
-    "term": "Use this folder",
-    "translation": "",
-    "context": "file browser folder selection confirm button",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Username",
     "translation": "",
     "context": "caldav username field label",
@@ -2789,13 +2593,6 @@
     "term": "Version",
     "translation": "",
     "context": "about page daemon version column label",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Videos",
-    "translation": "",
-    "context": "file browser quick access location",
     "reference": "",
     "comment": ""
   },

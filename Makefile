@@ -31,7 +31,7 @@ SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
 DESKTOP_ID=com.danklinux.dankcalendar
 
-.PHONY: all build dev run clean test fmt vet migrate migrate-checksum i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
+.PHONY: all build dev run clean test fmt vet migrate migrate-checksum update-common i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
 
 all: build
 
@@ -61,6 +61,12 @@ migrate:
 
 migrate-checksum:
 	@$(MAKE) -C $(CORE_DIR) migrate-checksum
+
+# Pull the latest dank-qml-common and pin it everywhere it is consumed
+# (submodule pointer + nix flake input). Commit both in one change.
+update-common:
+	git submodule update --remote --merge dank-qml-common
+	nix flake update dank-qml-common
 
 i18n-extract:
 	@python3 $(SHELL_DIR)/translations/extract_translations.py
@@ -135,6 +141,7 @@ help:
 	@echo "  dev                - Fast development build"
 	@echo "  run                - Build and run against the in-repo quickshell config"
 	@echo "  clean / test / fmt / vet"
+	@echo "  update-common      - Bump the dank-qml-common submodule + flake input"
 	@echo "  i18n-extract       - Regenerate translations/en.json from I18n.tr() calls"
 	@echo "  i18n-local         - Re-extract and show added/removed terms (no POEditor)"
 	@echo "  i18n-test          - Extract and validate, no POEditor calls"

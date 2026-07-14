@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Window
 import qs.Common
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 Item {
     id: root

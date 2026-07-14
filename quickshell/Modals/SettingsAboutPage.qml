@@ -4,6 +4,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 Item {
     id: aboutPage
@@ -87,14 +88,9 @@ Item {
                             text: "DANK CALENDAR"
                             font.pixelSize: parent.compactLogo ? 26 : 38
                             font.weight: Font.Bold
-                            font.family: interFont.name
+                            font.family: Theme.defaultFontFamily
                             color: Theme.surfaceText
                             antialiasing: true
-
-                            FontLoader {
-                                id: interFont
-                                source: Qt.resolvedUrl("../assets/fonts/inter/InterVariable.ttf")
-                            }
                         }
                     }
 

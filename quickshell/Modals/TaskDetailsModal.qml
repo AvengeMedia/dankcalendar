@@ -3,6 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Widgets
 
 FloatingWindow {
     id: taskModal
@@ -85,6 +86,7 @@ FloatingWindow {
         createMode = false;
         _loadForm();
         visible = true;
+        titleField.forceActiveFocus();
     }
 
     function showCreate() {
@@ -92,6 +94,7 @@ FloatingWindow {
         createMode = true;
         _loadForm();
         visible = true;
+        titleField.forceActiveFocus();
     }
 
     function hide() {
@@ -298,6 +301,7 @@ FloatingWindow {
             }
 
             DankTextField {
+                id: titleField
                 width: parent.width
                 placeholderText: I18n.tr("Add title", "task form placeholder for title input")
                 text: taskModal.formTitle
@@ -306,7 +310,7 @@ FloatingWindow {
 
             DankTextField {
                 width: parent.width
-                iconName: "notes"
+                leftIconName: "notes"
                 placeholderText: I18n.tr("Notes", "task form placeholder for notes input")
                 text: taskModal.formNotes
                 onTextChanged: taskModal.formNotes = text

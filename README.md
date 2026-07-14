@@ -30,9 +30,11 @@ dankcalendar/
 │   ├── Modules/        # UI components (calendar views, sidebar, tray)
 │   ├── Modals/         # Settings, account, event, and search dialogs
 │   ├── Services/       # IPC bridge and shell-side state
-│   ├── Widgets/        # Reusable Dank UI controls
+│   ├── Widgets/        # Calendar-specific Dank UI controls
 │   ├── Common/         # Shared resources, themes, and i18n
+│   ├── DankCommon/     # → symlink into the dank-qml-common submodule
 │   └── translations/   # POEditor-managed string catalogs
+├── dank-qml-common/    # Shared DMS widget library (git submodule)
 ├── core/               # Go backend, daemon, and CLI
 │   ├── cmd/dcal/       # dcal CLI and daemon entrypoint
 │   ├── internal/       # Providers, sync engine, reminders, IPC, OAuth
@@ -66,8 +68,14 @@ yay -S dankcalendar-git
 ### From Source
 
 ```bash
+git clone --recurse-submodules https://github.com/AvengeMedia/dankcalendar.git
+cd dankcalendar
 sudo make install
 ```
+
+Already cloned without submodules? Run `git submodule update --init` first —
+the shared widget library ([dank-qml-common](https://github.com/AvengeMedia/dank-qml-common))
+is vendored as a submodule and the build fails without it.
 
 This installs:
 
@@ -176,10 +184,18 @@ dcal ipc system.autostart
 ## Development
 
 ```bash
-make run    # build and run against the in-repo quickshell config
-make test   # run the Go test suite
-make fmt    # format Go code
+git submodule update --init   # once after clone (or clone with --recurse-submodules)
+
+make run            # build and run against the in-repo quickshell config
+make test           # run the Go test suite
+make fmt            # format Go code
+make update-common  # bump the dank-qml-common submodule + nix flake input together
 ```
+
+Shared widgets (`quickshell/DankCommon/`) live in the
+[dank-qml-common](https://github.com/AvengeMedia/dank-qml-common) submodule —
+edit them in place, they hot-reload like any other QML, but they are committed
+and PR'd in that repo. See CONTRIBUTING for the workflow.
 
 > **Tip:** Run with hot reload to pick up QML changes without restarting:
 >
