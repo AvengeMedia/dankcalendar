@@ -66,7 +66,7 @@ migrate-checksum:
 # (submodule pointer + nix flake input). Commit both in one change.
 update-common:
 	git submodule update --remote --merge dank-qml-common
-	nix flake update dank-qml-common
+	nix --extra-experimental-features 'nix-command flakes' flake update dank-qml-common
 
 i18n-extract:
 	@python3 $(SHELL_DIR)/translations/extract_translations.py
