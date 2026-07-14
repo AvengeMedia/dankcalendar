@@ -38,7 +38,7 @@ Popup {
     parent: Overlay.overlay
     anchors.centerIn: parent
     modal: true
-    width: 400
+    width: Math.min(400, parent.width - Theme.spacingXL * 2)
     padding: Theme.spacingL
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 

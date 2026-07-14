@@ -256,223 +256,235 @@ FloatingWindow {
         });
     }
 
-    implicitWidth: 520
-    implicitHeight: 600
+    readonly property real contentNaturalHeight: formColumn.implicitHeight + 40 + Theme.spacingL * 3
+
+    minimumSize: Qt.size(440, 400)
+    implicitWidth: Math.max(minimumSize.width, Theme.modalWidth(parentWindow, screen, 520))
+    implicitHeight: Math.max(minimumSize.height, Theme.modalHeight(parentWindow, screen, contentNaturalHeight))
     visible: false
     title: taskModal.createMode ? I18n.tr("New task", "title bar for the create-task dialog") : I18n.tr("Task", "title bar for the edit-task dialog")
     color: Theme.surface
 
-    Column {
+    DankFlickable {
         anchors.fill: parent
         anchors.margins: Theme.spacingL
-        spacing: Theme.spacingM
+        anchors.bottomMargin: Theme.spacingL * 2 + 40
+        clip: true
+        contentWidth: width
+        contentHeight: formColumn.implicitHeight
 
-        StyledText {
-            text: taskModal.createMode ? I18n.tr("New task", "header in the create-task dialog") : I18n.tr("Edit task", "header in the edit-task dialog")
-            font.pixelSize: Theme.fontSizeXLarge
-            font.weight: Font.Medium
-            color: Theme.surfaceText
-            width: parent.width
-            horizontalAlignment: Text.AlignLeft
-        }
-
-        StyledText {
-            visible: taskModal.createMode && taskModal.noTaskLists
-            text: I18n.tr("Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.", "task dialog hint when no task list is available")
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.surfaceVariantText
-            width: parent.width
-            horizontalAlignment: Text.AlignLeft
-            wrapMode: Text.WordWrap
-        }
-
-        DankTextField {
-            width: parent.width
-            placeholderText: I18n.tr("Add title", "task form placeholder for title input")
-            text: taskModal.formTitle
-            onTextChanged: taskModal.formTitle = text
-        }
-
-        DankTextField {
-            width: parent.width
-            iconName: "notes"
-            placeholderText: I18n.tr("Notes", "task form placeholder for notes input")
-            text: taskModal.formNotes
-            onTextChanged: taskModal.formNotes = text
-        }
-
-        Row {
-            width: parent.width
-            spacing: Theme.spacingM
-
-            DankToggle {
-                id: dueToggle
-                checked: taskModal.formHasDue
-                onToggled: checked => taskModal.formHasDue = checked
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            StyledText {
-                text: I18n.tr("Due date", "task form toggle label for the due date")
-                font.pixelSize: Theme.fontSizeMedium
-                color: Theme.surfaceText
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            DankDatePicker {
-                visible: taskModal.formHasDue
-                width: parent.width - dueToggle.width - Theme.spacingM * 3 - 80
-                firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
-                selectedDate: taskModal.formDueDate
-                onDateSelected: value => taskModal.formDueDate = value
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
-
-        Row {
+        Column {
+            id: formColumn
             width: parent.width
             spacing: Theme.spacingM
 
             StyledText {
-                text: I18n.tr("Priority", "task form label for the priority dropdown")
-                font.pixelSize: Theme.fontSizeMedium
+                text: taskModal.createMode ? I18n.tr("New task", "header in the create-task dialog") : I18n.tr("Edit task", "header in the edit-task dialog")
+                font.pixelSize: Theme.fontSizeXLarge
+                font.weight: Font.Medium
                 color: Theme.surfaceText
-                width: 80
-                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                horizontalAlignment: Text.AlignLeft
             }
-
-            DankDropdown {
-                dropdownWidth: 220
-                options: taskModal.priorityOptions.map(o => o.label)
-                currentValue: taskModal._priorityLabel(taskModal.formPriority)
-                onValueChanged: value => {
-                    for (let i = 0; i < taskModal.priorityOptions.length; i++) {
-                        if (taskModal.priorityOptions[i].label === value) {
-                            taskModal.formPriority = taskModal.priorityOptions[i].value;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        Row {
-            width: parent.width
-            spacing: Theme.spacingM
-            visible: taskModal.recurrenceSupported
 
             StyledText {
-                text: I18n.tr("Repeat", "task form label for the recurrence dropdown")
-                font.pixelSize: Theme.fontSizeMedium
-                color: Theme.surfaceText
-                width: 80
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            DankDropdown {
-                dropdownWidth: 180
-                options: taskModal.repeatOptions.map(o => o.label)
-                currentValue: taskModal._repeatLabel(taskModal.formRepeatFreq)
-                onValueChanged: value => {
-                    for (let i = 0; i < taskModal.repeatOptions.length; i++) {
-                        if (taskModal.repeatOptions[i].label === value) {
-                            taskModal.formRepeatFreq = taskModal.repeatOptions[i].value;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        Row {
-            width: parent.width
-            spacing: Theme.spacingM
-            visible: taskModal.recurrenceSupported && taskModal.formRepeatFreq !== ""
-
-            StyledText {
-                text: I18n.tr("Every", "task form label for the recurrence interval")
-                font.pixelSize: Theme.fontSizeMedium
-                color: Theme.surfaceText
-                width: 80
-                anchors.verticalCenter: parent.verticalCenter
+                visible: taskModal.createMode && taskModal.noTaskLists
+                text: I18n.tr("Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.", "task dialog hint when no task list is available")
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.surfaceVariantText
+                width: parent.width
+                horizontalAlignment: Text.AlignLeft
+                wrapMode: Text.WordWrap
             }
 
             DankTextField {
-                width: 80
-                text: String(taskModal.formRepeatInterval)
-                onTextChanged: {
-                    const n = parseInt(text);
-                    taskModal.formRepeatInterval = isNaN(n) || n < 1 ? 1 : n;
+                width: parent.width
+                placeholderText: I18n.tr("Add title", "task form placeholder for title input")
+                text: taskModal.formTitle
+                onTextChanged: taskModal.formTitle = text
+            }
+
+            DankTextField {
+                width: parent.width
+                iconName: "notes"
+                placeholderText: I18n.tr("Notes", "task form placeholder for notes input")
+                text: taskModal.formNotes
+                onTextChanged: taskModal.formNotes = text
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+
+                DankToggle {
+                    id: dueToggle
+                    checked: taskModal.formHasDue
+                    onToggled: checked => taskModal.formHasDue = checked
+                    anchors.verticalCenter: parent.verticalCenter
                 }
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
 
-        StyledText {
-            visible: !taskModal.recurrenceSupported
-            text: I18n.tr("Recurring tasks are managed in Google Tasks.", "task form note when recurrence cannot be edited on google")
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.surfaceVariantText
-            width: parent.width
-            horizontalAlignment: Text.AlignLeft
-            wrapMode: Text.WordWrap
-        }
+                StyledText {
+                    text: I18n.tr("Due date", "task form toggle label for the due date")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    anchors.verticalCenter: parent.verticalCenter
+                }
 
-        Row {
-            width: parent.width
-            spacing: Theme.spacingM
-            visible: taskModal.createMode && !taskModal.noTaskLists
-
-            StyledText {
-                text: I18n.tr("List", "task form label for the task-list dropdown")
-                font.pixelSize: Theme.fontSizeMedium
-                color: Theme.surfaceText
-                width: 80
-                anchors.verticalCenter: parent.verticalCenter
+                DankDatePicker {
+                    visible: taskModal.formHasDue
+                    width: parent.width - dueToggle.width - Theme.spacingM * 3 - 80
+                    firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
+                    selectedDate: taskModal.formDueDate
+                    onDateSelected: value => taskModal.formDueDate = value
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
 
-            DankDropdown {
-                dropdownWidth: parent.width - 80 - Theme.spacingM
-                options: taskModal.taskLists.map(c => taskModal._listLabel(c))
-                currentValue: taskModal.taskLists.length > 0 ? taskModal._listLabel(taskModal.taskLists[Math.min(taskModal.formCalendarIndex, taskModal.taskLists.length - 1)]) : ""
-                onValueChanged: value => {
-                    for (let i = 0; i < taskModal.taskLists.length; i++) {
-                        if (taskModal._listLabel(taskModal.taskLists[i]) === value) {
-                            taskModal.formCalendarIndex = i;
-                            break;
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+
+                StyledText {
+                    text: I18n.tr("Priority", "task form label for the priority dropdown")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    width: 80
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                DankDropdown {
+                    dropdownWidth: 220
+                    options: taskModal.priorityOptions.map(o => o.label)
+                    currentValue: taskModal._priorityLabel(taskModal.formPriority)
+                    onValueChanged: value => {
+                        for (let i = 0; i < taskModal.priorityOptions.length; i++) {
+                            if (taskModal.priorityOptions[i].label === value) {
+                                taskModal.formPriority = taskModal.priorityOptions[i].value;
+                                break;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        Row {
-            width: parent.width
-            spacing: Theme.spacingM
-            visible: !taskModal.createMode
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: taskModal.recurrenceSupported
 
-            DankToggle {
-                checked: taskModal.formCompleted
-                onToggled: checked => taskModal.formCompleted = checked
-                anchors.verticalCenter: parent.verticalCenter
+                StyledText {
+                    text: I18n.tr("Repeat", "task form label for the recurrence dropdown")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    width: 80
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                DankDropdown {
+                    dropdownWidth: 180
+                    options: taskModal.repeatOptions.map(o => o.label)
+                    currentValue: taskModal._repeatLabel(taskModal.formRepeatFreq)
+                    onValueChanged: value => {
+                        for (let i = 0; i < taskModal.repeatOptions.length; i++) {
+                            if (taskModal.repeatOptions[i].label === value) {
+                                taskModal.formRepeatFreq = taskModal.repeatOptions[i].value;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: taskModal.recurrenceSupported && taskModal.formRepeatFreq !== ""
+
+                StyledText {
+                    text: I18n.tr("Every", "task form label for the recurrence interval")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    width: 80
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                DankTextField {
+                    width: 80
+                    text: String(taskModal.formRepeatInterval)
+                    onTextChanged: {
+                        const n = parseInt(text);
+                        taskModal.formRepeatInterval = isNaN(n) || n < 1 ? 1 : n;
+                    }
+                    anchors.verticalCenter: parent.verticalCenter
+                }
             }
 
             StyledText {
-                text: I18n.tr("Completed", "task form toggle label for marking a task done")
-                font.pixelSize: Theme.fontSizeMedium
-                color: Theme.surfaceText
-                anchors.verticalCenter: parent.verticalCenter
+                visible: !taskModal.recurrenceSupported
+                text: I18n.tr("Recurring tasks are managed in Google Tasks.", "task form note when recurrence cannot be edited on google")
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.surfaceVariantText
+                width: parent.width
+                horizontalAlignment: Text.AlignLeft
+                wrapMode: Text.WordWrap
             }
-        }
 
-        StyledText {
-            visible: taskModal.formError !== ""
-            text: taskModal.formError
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.error
-            width: parent.width
-            horizontalAlignment: Text.AlignLeft
-            wrapMode: Text.WordWrap
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: taskModal.createMode && !taskModal.noTaskLists
+
+                StyledText {
+                    text: I18n.tr("List", "task form label for the task-list dropdown")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    width: 80
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                DankDropdown {
+                    dropdownWidth: parent.width - 80 - Theme.spacingM
+                    options: taskModal.taskLists.map(c => taskModal._listLabel(c))
+                    currentValue: taskModal.taskLists.length > 0 ? taskModal._listLabel(taskModal.taskLists[Math.min(taskModal.formCalendarIndex, taskModal.taskLists.length - 1)]) : ""
+                    onValueChanged: value => {
+                        for (let i = 0; i < taskModal.taskLists.length; i++) {
+                            if (taskModal._listLabel(taskModal.taskLists[i]) === value) {
+                                taskModal.formCalendarIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingM
+                visible: !taskModal.createMode
+
+                DankToggle {
+                    checked: taskModal.formCompleted
+                    onToggled: checked => taskModal.formCompleted = checked
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                StyledText {
+                    text: I18n.tr("Completed", "task form toggle label for marking a task done")
+                    font.pixelSize: Theme.fontSizeMedium
+                    color: Theme.surfaceText
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            StyledText {
+                visible: taskModal.formError !== ""
+                text: taskModal.formError
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.error
+                width: parent.width
+                horizontalAlignment: Text.AlignLeft
+                wrapMode: Text.WordWrap
+            }
         }
     }
 

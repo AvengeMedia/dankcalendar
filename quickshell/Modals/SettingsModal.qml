@@ -22,8 +22,8 @@ FloatingWindow {
 
     title: I18n.tr("Calendar Settings", "settings window title")
     minimumSize: Qt.size(520, 420)
-    implicitWidth: 880
-    implicitHeight: screen ? Math.min(720, screen.height - 120) : 720
+    implicitWidth: Math.max(minimumSize.width, Theme.modalWidth(parentWindow, screen, 880))
+    implicitHeight: Math.max(minimumSize.height, Theme.modalHeight(parentWindow, screen, 720))
     color: Theme.surface
     visible: false
 

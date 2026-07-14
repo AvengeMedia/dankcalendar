@@ -483,10 +483,13 @@ FloatingWindow {
         return I18n.tr("· %1 invited · %2 accepted", "event details attendee count summary").arg(list.length).arg(accepted);
     }
 
+    readonly property real contentNaturalHeight: contentLoader.item ? contentLoader.item.naturalHeight : 0
+    readonly property real chromeHeight: 48 + Theme.spacingL * 2 + (editMode ? 60 : 0)
+
     title: createMode ? I18n.tr("New event", "event modal window title when creating") : (editMode ? I18n.tr("Edit event", "event modal window title when editing") : I18n.tr("Event", "event modal window title when viewing"))
     minimumSize: Qt.size(460, 560)
-    implicitWidth: 560
-    implicitHeight: 720
+    implicitWidth: Math.max(minimumSize.width, Theme.modalWidth(parentWindow, screen, 560))
+    implicitHeight: Math.max(minimumSize.height, Theme.modalHeight(parentWindow, screen, Math.max(720, chromeHeight + contentNaturalHeight)))
     color: Theme.surface
     visible: false
 
@@ -589,6 +592,7 @@ FloatingWindow {
             height: parent.height - 48 - (footer.visible ? footer.height + 1 : 0)
 
             Loader {
+                id: contentLoader
                 anchors.fill: parent
                 anchors.margins: Theme.spacingL
                 sourceComponent: eventModal.editMode ? editComponent : detailComponent
@@ -659,6 +663,17 @@ FloatingWindow {
         id: detailComponent
 
         Item {
+            readonly property real naturalHeight: {
+                var h = titleBlock.implicitHeight + Theme.spacingL + metaBlock.implicitHeight;
+                if (rsvpBlock.visible)
+                    h += Theme.spacingL + rsvpBlock.implicitHeight;
+                if (attendeesBlock.visible)
+                    h += Theme.spacingL + attendeesBlock.implicitHeight;
+                if (descBlock.visible)
+                    h += Theme.spacingL + 24 + descBlock.spacing + descriptionText.implicitHeight + Theme.spacingM * 2;
+                return h;
+            }
+
             Column {
                 id: titleBlock
                 anchors.left: parent.left
@@ -1000,6 +1015,8 @@ FloatingWindow {
         id: editComponent
 
         DankFlickable {
+            readonly property real naturalHeight: editColumn.implicitHeight
+
             clip: true
             contentWidth: width
             contentHeight: editColumn.implicitHeight

@@ -210,10 +210,12 @@ FloatingWindow {
         }
     }
 
+    readonly property real contentNaturalHeight: stepLoader.item ? stepLoader.item.contentHeight : 0
+
     title: I18n.tr("Add account", "account add modal window title")
     minimumSize: Qt.size(560, 540)
-    implicitWidth: 640
-    implicitHeight: 620
+    implicitWidth: Math.max(minimumSize.width, Theme.modalWidth(parentWindow, screen, 640))
+    implicitHeight: Math.max(minimumSize.height, Theme.modalHeight(parentWindow, screen, Math.max(620, 48 + Theme.spacingL * 2 + contentNaturalHeight)))
     color: Theme.surface
     visible: false
 
@@ -327,6 +329,7 @@ FloatingWindow {
             clip: true
 
             Loader {
+                id: stepLoader
                 anchors.fill: parent
                 anchors.margins: Theme.spacingL
                 sourceComponent: {
