@@ -1,78 +1,37 @@
 package ipc
 
 import (
-	"strconv"
-
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
+	dankipc "github.com/AvengeMedia/dankgo/ipc"
+	"github.com/AvengeMedia/dankgo/ipc/params"
 )
 
 const APIVersion = 1
 
-type Capabilities struct {
-	APIVersion   int      `json:"apiVersion"`
-	Capabilities []string `json:"capabilities"`
-}
+type (
+	Request         = dankipc.Request
+	Response[T any] = dankipc.Response[T]
+	ConnWriter      = dankipc.ConnWriter
+	Subscriber      = dankipc.Subscriber
+	EventBus        = dankipc.EventBus
+	Client          = dankipc.Client
+)
 
-type Request struct {
-	ID     int            `json:"id,omitempty"`
-	Method string         `json:"method"`
-	Params map[string]any `json:"params,omitempty"`
-}
+var (
+	NewEventBus   = dankipc.NewEventBus
+	NewConnWriter = dankipc.NewConnWriter
+	Dial          = dankipc.Dial
+)
 
-type Response[T any] struct {
-	ID     int    `json:"id,omitempty"`
-	Result *T     `json:"result,omitempty"`
-	Error  string `json:"error,omitempty"`
-}
+func Respond[T any](w *ConnWriter, id int, result T) { dankipc.Respond(w, id, result) }
 
-func RespondError(w *ConnWriter, id int, msg string) {
-	log.Errorf("ipc error: id=%d method-error=%s", id, msg)
-	w.WriteResponse(Response[any]{ID: id, Error: msg})
-}
+func RespondError(w *ConnWriter, id int, msg string) { dankipc.RespondError(w, id, msg) }
 
-func Respond[T any](w *ConnWriter, id int, result T) {
-	w.WriteResponse(Response[T]{ID: id, Result: &result})
-}
+func FindRunningSocket() (string, error) { return dankipc.FindRunningSocket("dankcal") }
 
-func ParamString(p map[string]any, key string) string {
-	v, ok := p[key].(string)
-	if !ok {
-		return ""
-	}
-	return v
-}
+func ParamString(p map[string]any, key string) string { return params.StringOpt(p, key, "") }
 
-func ParamInt(p map[string]any, key string) int {
-	switch v := p[key].(type) {
-	case float64:
-		return int(v)
-	case int:
-		return v
-	}
-	return 0
-}
+func ParamInt(p map[string]any, key string) int { return params.IntOpt(p, key, 0) }
 
-func ParamBool(p map[string]any, key string) bool {
-	switch v := p[key].(type) {
-	case bool:
-		return v
-	case string:
-		b, _ := strconv.ParseBool(v)
-		return b
-	}
-	return false
-}
+func ParamBool(p map[string]any, key string) bool { return params.BoolLoose(p, key) }
 
-func ParamStringSlice(p map[string]any, key string) []string {
-	raw, ok := p[key].([]any)
-	if !ok {
-		return nil
-	}
-	out := make([]string, 0, len(raw))
-	for _, v := range raw {
-		if s, ok := v.(string); ok {
-			out = append(out, s)
-		}
-	}
-	return out
-}
+func ParamStringSlice(p map[string]any, key string) []string { return params.StringSlice(p, key) }

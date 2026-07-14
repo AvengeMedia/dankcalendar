@@ -1,46 +1,20 @@
 package paths
 
 import (
-	"fmt"
-	"os"
 	"path/filepath"
 
-	"github.com/adrg/xdg"
+	dankpaths "github.com/AvengeMedia/dankgo/paths"
 )
 
-const appName = "dankcal"
+var app = dankpaths.New("dankcal")
 
-func ConfigDir() (string, error) {
-	dir := filepath.Join(xdg.ConfigHome, appName)
-	if err := os.MkdirAll(dir, 0o755); err != nil {
-		return "", fmt.Errorf("create config dir: %w", err)
-	}
-	return dir, nil
-}
+func ConfigDir() (string, error) { return app.ConfigDir() }
 
-func DataDir() (string, error) {
-	dir := filepath.Join(xdg.DataHome, appName)
-	if err := os.MkdirAll(dir, 0o700); err != nil {
-		return "", fmt.Errorf("create data dir: %w", err)
-	}
-	return dir, nil
-}
+func DataDir() (string, error) { return app.DataDir() }
 
-func CacheDir() (string, error) {
-	dir := filepath.Join(xdg.CacheHome, appName)
-	if err := os.MkdirAll(dir, 0o755); err != nil {
-		return "", fmt.Errorf("create cache dir: %w", err)
-	}
-	return dir, nil
-}
+func CacheDir() (string, error) { return app.CacheDir() }
 
-func StateDir() (string, error) {
-	dir := filepath.Join(xdg.StateHome, appName)
-	if err := os.MkdirAll(dir, 0o755); err != nil {
-		return "", fmt.Errorf("create state dir: %w", err)
-	}
-	return dir, nil
-}
+func StateDir() (string, error) { return app.StateDir() }
 
 func DatabasePath() (string, error) {
 	dir, err := DataDir()
@@ -50,13 +24,6 @@ func DatabasePath() (string, error) {
 	return filepath.Join(dir, "dankcal.db"), nil
 }
 
-func SocketDir() string {
-	if runtimeDir := os.Getenv("XDG_RUNTIME_DIR"); runtimeDir != "" {
-		return runtimeDir
-	}
-	return os.TempDir()
-}
+func SocketDir() string { return app.SocketDir() }
 
-func SocketPath() string {
-	return filepath.Join(SocketDir(), fmt.Sprintf("dankcal-%d.sock", os.Getpid()))
-}
+func SocketPath() string { return app.SocketPath() }

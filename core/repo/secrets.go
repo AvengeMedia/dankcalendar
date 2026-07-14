@@ -6,7 +6,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
+	"github.com/AvengeMedia/dankgo/errdefs"
 )
 
 func (r *Repo) GetSecret(ctx context.Context, accountID, key string) ([]byte, error) {

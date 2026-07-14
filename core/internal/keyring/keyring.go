@@ -10,8 +10,8 @@ import (
 	kr "github.com/99designs/keyring"
 	"github.com/godbus/dbus/v5"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 const (

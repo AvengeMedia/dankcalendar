@@ -18,8 +18,8 @@ import (
 	"github.com/google/uuid"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 type Provider struct {

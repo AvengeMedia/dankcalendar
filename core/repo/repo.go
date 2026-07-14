@@ -10,7 +10,7 @@ import (
 	entsql "entgo.io/ent/dialect/sql"
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
+	"github.com/AvengeMedia/dankgo/log"
 	_ "modernc.org/sqlite"
 )
 

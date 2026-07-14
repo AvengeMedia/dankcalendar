@@ -7,7 +7,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
 	"github.com/AvengeMedia/dankcalendar/core/ent/task"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
+	"github.com/AvengeMedia/dankgo/errdefs"
 )
 
 type TaskFilter struct {

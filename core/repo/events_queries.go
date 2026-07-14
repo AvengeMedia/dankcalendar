@@ -11,8 +11,8 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
 	"github.com/AvengeMedia/dankcalendar/core/internal/recurrence"
+	"github.com/AvengeMedia/dankgo/errdefs"
 )
 
 type EventFilter struct {

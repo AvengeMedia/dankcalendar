@@ -16,9 +16,9 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/api/server"
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
 	"github.com/AvengeMedia/dankcalendar/core/models"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/AvengeMedia/dankgo/errdefs/humaerr"
 )
 
 type HandlersSuite struct {
@@ -40,7 +40,7 @@ func (s *HandlersSuite) SetupTest() {
 	s.repo = repo.New(client)
 	s.T().Cleanup(func() { _ = s.repo.Close() })
 
-	huma.NewError = errdefs.HumaErrorFunc
+	huma.NewError = humaerr.HumaErrorFunc
 	_, s.api = humatest.New(s.T())
 	calendar_handler.RegisterHandlers(&server.Server{Repo: s.repo}, huma.NewGroup(s.api))
 }

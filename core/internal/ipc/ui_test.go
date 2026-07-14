@@ -45,7 +45,7 @@ func TestUIOpenEventPublishesToSubscriber(t *testing.T) {
 		_ = client.Close()
 		_ = srv.Close()
 	})
-	sub := bus.NewSubscriber(context.Background(), newConnWriter(srv))
+	sub := bus.NewSubscriber(context.Background(), NewConnWriter(srv))
 	sub.Subscribe("ui")
 	t.Cleanup(sub.Close)
 

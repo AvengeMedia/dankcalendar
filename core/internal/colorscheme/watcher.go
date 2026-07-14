@@ -3,7 +3,7 @@ package colorscheme
 import (
 	"sync"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
+	"github.com/AvengeMedia/dankgo/log"
 	"github.com/godbus/dbus/v5"
 )
 

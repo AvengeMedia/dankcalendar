@@ -10,11 +10,11 @@ import (
 
 	"github.com/AvengeMedia/dankcalendar/core/api/server"
 	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
 	"github.com/AvengeMedia/dankcalendar/core/models"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/AvengeMedia/dankgo/errdefs"
 )
 
 type HandlerGroup struct {

@@ -20,10 +20,10 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	entevent "github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 const (

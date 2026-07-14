@@ -5,22 +5,13 @@ import (
 	"strings"
 )
 
-func Route(ctx context.Context, w *ConnWriter, req Request, deps Deps, sub *Subscriber) {
+func Route(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	switch req.Method {
-	case "ping":
-		Respond(w, req.ID, map[string]any{"pong": true})
-		return
 	case "version":
 		Respond(w, req.ID, map[string]any{"version": deps.Version, "apiVersion": APIVersion})
 		return
 	case "describe":
 		Respond(w, req.ID, map[string]any{"apiVersion": APIVersion, "methods": Methods})
-		return
-	case "subscribe":
-		HandleSubscribe(w, req, deps, sub)
-		return
-	case "unsubscribe":
-		HandleUnsubscribe(w, req, sub)
 		return
 	}
 

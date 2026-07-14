@@ -93,38 +93,6 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	}
 }
 
-func HandleSubscribe(w *ConnWriter, req Request, deps Deps, sub *Subscriber) {
-	topics := ParamStringSlice(req.Params, "topics")
-	if len(topics) == 0 {
-		topics = []string{"accounts", "calendars", "events", "tasks", "sync"}
-	}
-	sub.Subscribe(topics...)
-	Respond(w, req.ID, map[string]any{"topics": sub.Topics()})
-
-	if deps.Pending == nil {
-		return
-	}
-	for _, t := range topics {
-		if t != "ui" {
-			continue
-		}
-		if payload := deps.Pending.Take(); payload != nil {
-			deps.Bus.Publish("ui", payload)
-		}
-		return
-	}
-}
-
-func HandleUnsubscribe(w *ConnWriter, req Request, sub *Subscriber) {
-	topics := ParamStringSlice(req.Params, "topics")
-	if len(topics) == 0 {
-		Respond(w, req.ID, map[string]any{"topics": sub.Topics()})
-		return
-	}
-	sub.Unsubscribe(topics...)
-	Respond(w, req.ID, map[string]any{"topics": sub.Topics()})
-}
-
 func mapAccounts(items []*ent.Account) []map[string]any {
 	out := make([]map[string]any, 0, len(items))
 	for _, a := range items {

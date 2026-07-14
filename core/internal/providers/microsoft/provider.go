@@ -16,9 +16,9 @@ import (
 	"golang.org/x/oauth2"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 const (

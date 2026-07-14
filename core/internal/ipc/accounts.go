@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

@@ -11,9 +11,9 @@ var rootCmd = &cobra.Command{
 	Short:   "Dank Calendar CLI",
 	Long:    "Dank Calendar — local, Google, Microsoft, CalDAV, and iCloud calendars in one standalone app.",
 	Args:    cobra.NoArgs,
-	PreRunE: findConfig,
+	PreRunE: shellApp.ResolveConfig,
 	RunE: func(_ *cobra.Command, _ []string) error {
-		return showOrLaunch("show")
+		return shellApp.CallOrLaunch("ui.show", nil)
 	},
 }
 
@@ -34,15 +34,12 @@ var versionCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&customConfigPath, "config", "c", "", "Path to a UI config dir (containing shell.qml) to use instead of the embedded UI (env: DANKCAL_SHELL_DIR)")
+	rootCmd.PersistentFlags().StringVarP(shellApp.CustomConfigVar(), "config", "c", "", "Path to a UI config dir (containing shell.qml) to use instead of the embedded UI (env: DANKCAL_SHELL_DIR)")
 	rootCmd.PersistentFlags().BoolVar(&jsonOutput, "json", false, "Output JSON for programmatic usage (where supported)")
 
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(daemonCmd)
-	rootCmd.AddCommand(runCmd)
-	rootCmd.AddCommand(restartCmd)
-	rootCmd.AddCommand(restartDetachedCmd)
-	rootCmd.AddCommand(killCmd)
+	rootCmd.AddCommand(shellApp.Commands()...)
 	showCmd.Flags().StringVar(&windowView, "view", "", "Open on a specific view: month|week|day|agenda")
 	toggleCmd.Flags().StringVar(&windowView, "view", "", "Open on a specific view: month|week|day|agenda")
 

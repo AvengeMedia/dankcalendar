@@ -6,7 +6,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
+	"github.com/AvengeMedia/dankgo/errdefs"
 )
 
 func (r *Repo) GetCalendar(ctx context.Context, id string) (*ent.Calendar, error) {

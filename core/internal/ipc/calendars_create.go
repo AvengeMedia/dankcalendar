@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 func handleCalendarCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

@@ -11,8 +11,8 @@ import (
 
 	"github.com/adrg/xdg"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 // Fallback chime for systems without a sound theme installed (see assets/CREDITS).

@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
+	"github.com/AvengeMedia/dankgo/log"
 	"github.com/caarlos0/env/v11"
 )
 

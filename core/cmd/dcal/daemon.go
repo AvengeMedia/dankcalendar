@@ -17,16 +17,13 @@ import (
 
 	auth_handler "github.com/AvengeMedia/dankcalendar/core/api/auth"
 	calendar_handler "github.com/AvengeMedia/dankcalendar/core/api/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/api/middleware"
 	"github.com/AvengeMedia/dankcalendar/core/api/server"
 	"github.com/AvengeMedia/dankcalendar/core/config"
-	"github.com/AvengeMedia/dankcalendar/core/errdefs"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/colorscheme"
 	"github.com/AvengeMedia/dankcalendar/core/internal/invitations"
 	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
 	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/log"
 	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
@@ -42,6 +39,10 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
 	"github.com/AvengeMedia/dankcalendar/core/internal/uriopen"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/AvengeMedia/dankgo/errdefs/humaerr"
+	"github.com/AvengeMedia/dankgo/httpapi"
+	"github.com/AvengeMedia/dankgo/httpapi/middleware"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 var daemonCmd = &cobra.Command{
@@ -67,14 +68,14 @@ type daemonServices struct {
 	httpErrCh   <-chan error
 }
 
-func (s *daemonServices) socketPath() string {
+func (s *daemonServices) SocketPath() string {
 	if s == nil || s.ipc == nil {
 		return ""
 	}
 	return s.ipc.SocketPath()
 }
 
-func (s *daemonServices) close() {
+func (s *daemonServices) Close() {
 	if s == nil {
 		return
 	}
@@ -244,9 +245,9 @@ func runDaemon(_ *cobra.Command, _ []string) error {
 	if err != nil {
 		return err
 	}
-	defer svc.close()
+	defer svc.Close()
 
-	log.Infof("dcal daemon ready (ipc=%s http=%s)", svc.socketPath(), svc.httpAddr)
+	log.Infof("dcal daemon ready (ipc=%s http=%s)", svc.SocketPath(), svc.httpAddr)
 
 	signalCh := make(chan os.Signal, 1)
 	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM)
@@ -309,19 +310,16 @@ func startHTTP(ctx context.Context, cfg *config.Config, r *repo.Repo, registry *
 	router.Group(func(rt chi.Router) {
 		rt.Use(middleware.Logger)
 
-		huma.NewError = errdefs.HumaErrorFunc
+		huma.NewError = humaerr.HumaErrorFunc
 
-		humaCfg := server.NewHumaConfig("Dank Calendar API", Version)
+		humaCfg := httpapi.NewHumaConfig("Dank Calendar API", Version)
 		humaCfg.DocsPath = ""
 		api := humachi.New(rt, humaCfg)
 
-		mw := middleware.NewMiddleware(cfg, api)
+		mw := middleware.NewMiddleware(api)
 		api.UseMiddleware(mw.Recoverer)
 
-		rt.Get("/docs", func(w http.ResponseWriter, _ *http.Request) {
-			w.Header().Set("Content-Type", "text/html; charset=utf-8")
-			_, _ = w.Write([]byte(`<!doctype html><html><head><title>Dank Calendar API</title><meta charset="utf-8"/></head><body><script id="api-reference" data-url="/openapi.json"></script><script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script></body></html>`))
-		})
+		rt.Get("/docs", httpapi.DocsHandler("Dank Calendar API"))
 
 		srvImpl := &server.Server{
 			Cfg:      cfg,

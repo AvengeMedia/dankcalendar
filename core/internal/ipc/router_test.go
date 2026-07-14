@@ -19,7 +19,7 @@ func routeAndRead(t *testing.T, req Request, deps Deps) map[string]any {
 		_ = srv.Close()
 	})
 
-	go Route(context.Background(), newConnWriter(srv), req, deps, nil)
+	go Route(context.Background(), NewConnWriter(srv), req, deps)
 
 	line, err := bufio.NewReader(client).ReadBytes('\n')
 	require.NoError(t, err)
@@ -27,15 +27,6 @@ func routeAndRead(t *testing.T, req Request, deps Deps) map[string]any {
 	var out map[string]any
 	require.NoError(t, json.Unmarshal(line, &out))
 	return out
-}
-
-func TestRoutePing(t *testing.T) {
-	out := routeAndRead(t, Request{ID: 7, Method: "ping"}, Deps{})
-
-	assert.Equal(t, float64(7), out["id"])
-	result, ok := out["result"].(map[string]any)
-	require.True(t, ok)
-	assert.Equal(t, true, result["pong"])
 }
 
 func TestRouteVersion(t *testing.T) {

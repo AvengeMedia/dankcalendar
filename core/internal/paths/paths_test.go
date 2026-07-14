@@ -7,7 +7,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/adrg/xdg"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -16,12 +15,10 @@ import (
 
 func setXDGHome(t *testing.T, root string) {
 	t.Helper()
-	t.Cleanup(xdg.Reload)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(root, "config"))
 	t.Setenv("XDG_DATA_HOME", filepath.Join(root, "data"))
 	t.Setenv("XDG_CACHE_HOME", filepath.Join(root, "cache"))
 	t.Setenv("XDG_STATE_HOME", filepath.Join(root, "state"))
-	xdg.Reload()
 }
 
 func TestDirsCreatedUnderXDGHome(t *testing.T) {
