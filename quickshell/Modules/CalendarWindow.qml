@@ -603,6 +603,15 @@ FloatingWindow {
                     spacing: Theme.spacingXS
 
                     DankActionButton {
+                        visible: windowControls.canMinimize
+                        circular: false
+                        iconName: "minimize"
+                        iconSize: Theme.iconSize - 4
+                        iconColor: Theme.surfaceText
+                        onClicked: windowControls.tryMinimize()
+                    }
+
+                    DankActionButton {
                         visible: windowControls.supported
                         circular: false
                         iconName: window.maximized ? "fullscreen_exit" : "fullscreen"

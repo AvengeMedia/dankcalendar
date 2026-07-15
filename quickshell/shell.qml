@@ -21,17 +21,25 @@ ShellRoot {
         Quickshell.watchFiles = enableHotReload;
     }
 
-    function focusToplevel() {
+    function ownToplevel() {
         const toplevels = ToplevelManager.toplevels;
         if (!toplevels || !toplevels.values)
-            return;
+            return null;
 
         for (const t of toplevels.values) {
-            if (t.appId === "com.danklinux.dankcalendar") {
-                t.activate();
-                return;
-            }
+            if (t.appId === "com.danklinux.dankcalendar")
+                return t;
         }
+        return null;
+    }
+
+    function focusToplevel() {
+        const t = ownToplevel();
+        if (!t)
+            return;
+        if (t.minimized)
+            t.minimized = false;
+        t.activate();
     }
 
     function showAndFocus() {
@@ -59,13 +67,16 @@ ShellRoot {
             windowLoader.active = false;
             break;
         case "toggle":
-            if (windowLoader.active) {
-                windowLoader.active = false;
-                return;
+            {
+                const t = windowLoader.active ? ownToplevel() : null;
+                if (t && !t.minimized) {
+                    windowLoader.active = false;
+                    return;
+                }
+                pendingView = view;
+                showAndFocus();
+                break;
             }
-            pendingView = view;
-            showAndFocus();
-            break;
         }
         applyPendingView();
     }
