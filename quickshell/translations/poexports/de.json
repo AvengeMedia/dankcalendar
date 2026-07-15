@@ -570,7 +570,7 @@
     "GitHub": "GitHub"
   },
   "Go to date": {
-    "Go to date": ""
+    "Go to date": "Gehe zu Datum"
   },
   "Go to today": {
     "Go to today": "Heute"
@@ -756,7 +756,7 @@
     "Next week": "Nächste Woche"
   },
   "Next year": {
-    "Next year": ""
+    "Next year": "Nächstes Jahr"
   },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "Kein OAuth-Client in dieser Datei gefunden – die von Google heruntergeladene Datei client_secret_….json wurde erwartet."
@@ -912,7 +912,7 @@
     "Previous week": "Vorherige Woche"
   },
   "Previous year": {
-    "Previous year": ""
+    "Previous year": "Vorheriges Jahr"
   },
   "Priority": {
     "Priority": "Priorität"
@@ -1005,7 +1005,7 @@
     "Select client_secret.json": "client_secret.json auswählen"
   },
   "Select days for a new event (month view)": {
-    "Select days for a new event (month view)": ""
+    "Select days for a new event (month view)": "Tage für ein neues Ereignis auswählen (Monatsansicht)"
   },
   "Select file": {
     "Select file": "Datei auswählen"
@@ -1281,7 +1281,7 @@
     "days": "Tage"
   },
   "e.g. 2022-01-01": {
-    "e.g. 2022-01-01": ""
+    "e.g. 2022-01-01": "z. B. 2022-01-01"
   },
   "iCal subscription": {
     "iCal subscription": "iCal-Abonnement"

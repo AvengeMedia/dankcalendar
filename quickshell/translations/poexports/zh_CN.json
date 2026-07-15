@@ -435,7 +435,7 @@
     "Delete \"%1\"?": "确认删除\"%1\"?"
   },
   "Delete series": {
-    "Delete series": ""
+    "Delete series": "删除系列"
   },
   "Delete…": {
     "Delete…": "删除中..."
@@ -570,7 +570,7 @@
     "GitHub": "GitHub"
   },
   "Go to date": {
-    "Go to date": ""
+    "Go to date": "前往日期"
   },
   "Go to today": {
     "Go to today": "转到今天"
@@ -756,7 +756,7 @@
     "Next week": "下一周"
   },
   "Next year": {
-    "Next year": ""
+    "Next year": "下一年"
   },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "该文件中未找到 OAuth 客户端——应为从 Google 下载的 client_secret_….json 文件。"
@@ -912,7 +912,7 @@
     "Previous week": "前一周"
   },
   "Previous year": {
-    "Previous year": ""
+    "Previous year": "前一年"
   },
   "Priority": {
     "Priority": "优先级"
@@ -1005,7 +1005,7 @@
     "Select client_secret.json": "选择 client_secret.json"
   },
   "Select days for a new event (month view)": {
-    "Select days for a new event (month view)": ""
+    "Select days for a new event (month view)": "选择日期以创建新活动（月视图）"
   },
   "Select file": {
     "Select file": "选择文件"
@@ -1068,7 +1068,7 @@
     "Size": "大小"
   },
   "Skip certificate verification": {
-    "Skip certificate verification": ""
+    "Skip certificate verification": "跳过证书验证"
   },
   "Snooze duration": {
     "Snooze duration": "稍后提醒时长"
@@ -1170,7 +1170,7 @@
     "Tomorrow": "明天"
   },
   "Trust self-signed certificates. Only enable this for servers you control.": {
-    "Trust self-signed certificates. Only enable this for servers you control.": ""
+    "Trust self-signed certificates. Only enable this for servers you control.": "信任自签名证书。仅对您控制的服务器启用此功能。"
   },
   "Try a different search.": {
     "Try a different search.": "请尝试其他搜索词。"
@@ -1281,7 +1281,7 @@
     "days": "天"
   },
   "e.g. 2022-01-01": {
-    "e.g. 2022-01-01": ""
+    "e.g. 2022-01-01": "例如：2022-01-01"
   },
   "iCal subscription": {
     "iCal subscription": "iCal订阅"

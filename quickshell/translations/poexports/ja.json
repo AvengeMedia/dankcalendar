@@ -1,0 +1,1340 @@
+{
+  "%1 AM": {
+    "%1 AM": "午前 %1"
+  },
+  "%1 PM": {
+    "%1 PM": "午後 %1"
+  },
+  "%1 appointments fall outside core hours": {
+    "%1 appointments fall outside core hours": ""
+  },
+  "%1 times": {
+    "%1 times": ""
+  },
+  "%1 · All day": {
+    "%1 · All day": "終日 · %1"
+  },
+  "%1d before": {
+    "%1d before": "%1d 日前"
+  },
+  "%1h": {
+    "%1h": "%1h"
+  },
+  "%1h before": {
+    "%1h before": "%1h 時間前"
+  },
+  "%1h%2m": {
+    "%1h%2m": "%1h%2m"
+  },
+  "%1m": {
+    "%1m": "%1m"
+  },
+  "%1m before": {
+    "%1m before": "%1 分前"
+  },
+  "%1w before": {
+    "%1w before": "%1w 週前"
+  },
+  "(untitled)": {
+    "(untitled)": "(無題)"
+  },
+  "+%1 more": {
+    "+%1 more": "%1 以上"
+  },
+  "1 appointment falls outside core hours": {
+    "1 appointment falls outside core hours": ""
+  },
+  "1 day before": {
+    "1 day before": "1 日前"
+  },
+  "1 hour": {
+    "1 hour": "1 時間"
+  },
+  "1 hour before": {
+    "1 hour before": "1 時間前"
+  },
+  "1 line": {
+    "1 line": "1 行"
+  },
+  "1 minute": {
+    "1 minute": "1 分"
+  },
+  "1 week before": {
+    "1 week before": "1 週間前"
+  },
+  "1.5 hours": {
+    "1.5 hours": "1.5 時間"
+  },
+  "10 minutes": {
+    "10 minutes": "10 分"
+  },
+  "10 minutes before": {
+    "10 minutes before": "10 分前"
+  },
+  "12-hour": {
+    "12-hour": "12 時間"
+  },
+  "12h": {
+    "12h": "12時間"
+  },
+  "15 minutes": {
+    "15 minutes": "15 分"
+  },
+  "15 minutes before": {
+    "15 minutes before": "15 分前"
+  },
+  "2 days before": {
+    "2 days before": "2 日前"
+  },
+  "2 hours": {
+    "2 hours": "2 時間"
+  },
+  "2 hours before": {
+    "2 hours before": "2 時間前"
+  },
+  "2 lines": {
+    "2 lines": "2 行"
+  },
+  "24-hour": {
+    "24-hour": "24 時間"
+  },
+  "24h": {
+    "24h": "24時間"
+  },
+  "3 lines": {
+    "3 lines": "3 行"
+  },
+  "30 minutes": {
+    "30 minutes": "30 分"
+  },
+  "30 minutes before": {
+    "30 minutes before": "30 分前"
+  },
+  "45 minutes": {
+    "45 minutes": "45 分"
+  },
+  "5 minutes": {
+    "5 minutes": "5 分"
+  },
+  "5 minutes before": {
+    "5 minutes before": "5 分前"
+  },
+  "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
+    "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT ライセンス</a>"
+  },
+  "A file with this name already exists. Do you want to overwrite it?": {
+    "A file with this name already exists. Do you want to overwrite it?": "同じ名前のファイルがすでに存在します。上書きしますか？"
+  },
+  "A folder of .ics files on this machine.": {
+    "A folder of .ics files on this machine.": "このマシン上の .ics ファイルのフォルダーです。"
+  },
+  "API": {
+    "API": "API"
+  },
+  "About": {
+    "About": "このアプリについて"
+  },
+  "Accept": {
+    "Accept": "承諾"
+  },
+  "Account connected": {
+    "Account connected": "アカウントを接続しました"
+  },
+  "Account problem — click for options": {
+    "Account problem — click for options": "アカウントに問題があります。クリックしてオプションを表示"
+  },
+  "Accounts": {
+    "Accounts": "アカウント"
+  },
+  "Add": {
+    "Add": "追加"
+  },
+  "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "タスクを作成するには、タスクリストを持つ CalDAV、ローカル、Google、または Microsoft アカウントを追加してください。"
+  },
+  "Add a calendar": {
+    "Add a calendar": "カレンダーを追加"
+  },
+  "Add account": {
+    "Add account": "アカウントを追加"
+  },
+  "Add description": {
+    "Add description": "説明を追加"
+  },
+  "Add reminder": {
+    "Add reminder": ""
+  },
+  "Add task": {
+    "Add task": "タスクを追加"
+  },
+  "Add title": {
+    "Add title": "タイトルを追加"
+  },
+  "Adding…": {
+    "Adding…": "追加中…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": "\"%1\" にカレンダーを追加します。"
+  },
+  "After": {
+    "After": ""
+  },
+  "Agenda": {
+    "Agenda": "予定リスト"
+  },
+  "Agenda view": {
+    "Agenda view": "予定リスト表示"
+  },
+  "All credentials are stored in your system keyring when available.": {
+    "All credentials are stored in your system keyring when available.": "利用可能な場合、すべての認証情報はシステムキーリングに保存されます。"
+  },
+  "All day": {
+    "All day": "終日"
+  },
+  "All done": {
+    "All done": "すべて完了"
+  },
+  "All-day reminder time": {
+    "All-day reminder time": "終日リマインダーの時刻"
+  },
+  "All-day reminder timing": {
+    "All-day reminder timing": "終日リマインダーのタイミング"
+  },
+  "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
+    "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: 戻る • F1/I: ファイル情報 • F10: ヘルプ • Esc: 閉じる"
+  },
+  "Always use the dark theme.": {
+    "Always use the dark theme.": "常にダークテーマを使います。"
+  },
+  "Always use the light theme.": {
+    "Always use the light theme.": "常にライトテーマを使います。"
+  },
+  "App-specific password": {
+    "App-specific password": "App 用パスワード"
+  },
+  "Appearance": {
+    "Appearance": "外観"
+  },
+  "Apple ID": {
+    "Apple ID": "Apple ID"
+  },
+  "Apple iCloud calendars via app-specific password.": {
+    "Apple iCloud calendars via app-specific password.": "App 用パスワードで Apple iCloud カレンダーに接続します。"
+  },
+  "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": {
+    "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": "ブラウザーでアクセスを承認してください。%1 から認証コードが返されると、このウィンドウに自動で戻ります。"
+  },
+  "Ascending": {
+    "Ascending": "昇順"
+  },
+  "At start": {
+    "At start": "開始時"
+  },
+  "Attendees": {
+    "Attendees": "参加者"
+  },
+  "Authorization failed": {
+    "Authorization failed": "認証失敗"
+  },
+  "Authorize in your browser": {
+    "Authorize in your browser": "ブラウザで認証"
+  },
+  "Auto": {
+    "Auto": "自動"
+  },
+  "Auto follows your locale (%1).": {
+    "Auto follows your locale (%1).": "自動ではロケール（%1）に従います。"
+  },
+  "Back": {
+    "Back": "戻る"
+  },
+  "Back to the calendar": {
+    "Back to the calendar": ""
+  },
+  "Backend": {
+    "Backend": "バックエンド"
+  },
+  "Backend not connected.": {
+    "Backend not connected.": "バックエンドに接続されていません。"
+  },
+  "Begin setup": {
+    "Begin setup": "セットアップを開始"
+  },
+  "Calendar": {
+    "Calendar": "カレンダー"
+  },
+  "Calendar Settings": {
+    "Calendar Settings": "カレンダー設定"
+  },
+  "Calendar name": {
+    "Calendar name": "カレンダー名"
+  },
+  "Calendars": {
+    "Calendars": "カレンダー"
+  },
+  "Calendars couldn't be loaded; tasks are still syncing.": {
+    "Calendars couldn't be loaded; tasks are still syncing.": "カレンダーを読み込めませんでした。タスクは同期中です。"
+  },
+  "Cancel": {
+    "Cancel": "キャンセル"
+  },
+  "Capabilities": {
+    "Capabilities": "機能"
+  },
+  "Changes apply to the whole series": {
+    "Changes apply to the whole series": ""
+  },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": "JSON カラーテーマファイルを選択してください。"
+  },
+  "Choose a provider": {
+    "Choose a provider": "プロバイダーを選択"
+  },
+  "Choose calendar directory": {
+    "Choose calendar directory": "カレンダーディレクトリを選択"
+  },
+  "Clear event selection": {
+    "Clear event selection": ""
+  },
+  "Click to zoom · Esc to close": {
+    "Click to zoom · Esc to close": "クリックでズーム · Esc で閉じる"
+  },
+  "Client ID": {
+    "Client ID": "クライアント ID"
+  },
+  "Client Secret": {
+    "Client Secret": "クライアントシークレット"
+  },
+  "Close behavior": {
+    "Close behavior": "閉じる動作"
+  },
+  "Closing hides the window; reopen it from your app launcher.": {
+    "Closing hides the window; reopen it from your app launcher.": ""
+  },
+  "Collapse or expand a section": {
+    "Collapse or expand a section": ""
+  },
+  "Color source": {
+    "Color source": "色のソース"
+  },
+  "Colors are shared with DankMaterialShell when available.": {
+    "Colors are shared with DankMaterialShell when available.": "利用可能な場合、色は DankMaterialShell と共有されます。"
+  },
+  "Coming soon": {
+    "Coming soon": "近日対応"
+  },
+  "Completed": {
+    "Completed": "完了"
+  },
+  "Confirm": {
+    "Confirm": "確認"
+  },
+  "Confirm delete": {
+    "Confirm delete": "削除を確認"
+  },
+  "Connect": {
+    "Connect": "接続"
+  },
+  "Connect %1": {
+    "Connect %1": "%1 に接続"
+  },
+  "Connect any CalDAV-compatible server.": {
+    "Connect any CalDAV-compatible server.": "任意の CalDAV 対応サーバーに接続します。"
+  },
+  "Connected": {
+    "Connected": "接続済み"
+  },
+  "Connected calendar providers.": {
+    "Connected calendar providers.": "接続済みのカレンダープロバイダーです。"
+  },
+  "Connecting…": {
+    "Connecting…": "接続中…"
+  },
+  "Continue": {
+    "Continue": "続ける"
+  },
+  "Copied to clipboard": {
+    "Copied to clipboard": "クリップボードにコピーしました"
+  },
+  "Copy link": {
+    "Copy link": "リンクをコピー"
+  },
+  "Copy path": {
+    "Copy path": "パスをコピー"
+  },
+  "Core hours": {
+    "Core hours": ""
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": "そのファイルを読み取れませんでした。JSON カラーテーマが必要です。"
+  },
+  "Could not read that file.": {
+    "Could not read that file.": "そのファイルを読み取れませんでした。"
+  },
+  "Couldn't update task": {
+    "Couldn't update task": "タスクを更新できませんでした"
+  },
+  "Create": {
+    "Create": "作成"
+  },
+  "Create event": {
+    "Create event": "予定を作成"
+  },
+  "Credentials stay on this machine": {
+    "Credentials stay on this machine": "認証情報はこのマシンに保存されます"
+  },
+  "Custom": {
+    "Custom": "カスタム"
+  },
+  "DMS dynamic": {
+    "DMS dynamic": "DMS 動的"
+  },
+  "DMS dynamic colors detected when available.": {
+    "DMS dynamic colors detected when available.": "利用可能な場合、DMS の動的色を検出します。"
+  },
+  "Daemon offline": {
+    "Daemon offline": "デーモンはオフラインです"
+  },
+  "Daily": {
+    "Daily": "毎日"
+  },
+  "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
+    "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar は、<a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">Material 3 風</a>デザインを備えたモダンな Linux デスクトップ向けカレンダーです。連携用にハックしやすい CLI とソケット API も備えています。<br /><br/>デスクトップシェル構築用の QT6 フレームワーク <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a> と、静的型付けのコンパイル言語 <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a> で作られています。"
+  },
+  "Dank Linux Discord": {
+    "Dank Linux Discord": "Dank Linux Discord"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell が検出されません。%1 プリセットを使います。"
+  },
+  "Dark": {
+    "Dark": "ダーク"
+  },
+  "Day": {
+    "Day": "日"
+  },
+  "Day view": {
+    "Day view": "日表示"
+  },
+  "Decline": {
+    "Decline": "辞退"
+  },
+  "Default event duration": {
+    "Default event duration": "既定の予定時間"
+  },
+  "Default reminder": {
+    "Default reminder": "既定のリマインダー"
+  },
+  "Defaults follow your locale unless overridden.": {
+    "Defaults follow your locale unless overridden.": "上書きしない限り、既定値はロケールに従います。"
+  },
+  "Delete": {
+    "Delete": "削除"
+  },
+  "Delete \"%1\"?": {
+    "Delete \"%1\"?": "\"%1\" を削除しますか？"
+  },
+  "Delete series": {
+    "Delete series": ""
+  },
+  "Delete…": {
+    "Delete…": "削除…"
+  },
+  "Descending": {
+    "Descending": "降順"
+  },
+  "Description": {
+    "Description": "説明"
+  },
+  "Desktop": {
+    "Desktop": "デスクトップ"
+  },
+  "Desktop notifications for upcoming events.": {
+    "Desktop notifications for upcoming events.": "近づいている予定をデスクトップ通知します。"
+  },
+  "Directory": {
+    "Directory": "ディレクトリ"
+  },
+  "Disable core hours": {
+    "Disable core hours": ""
+  },
+  "Display ISO week numbers in month view.": {
+    "Display ISO week numbers in month view.": "月表示で ISO 週番号を表示します。"
+  },
+  "Display name (optional)": {
+    "Display name (optional)": "表示名（任意）"
+  },
+  "Docs": {
+    "Docs": "ドキュメント"
+  },
+  "Documents": {
+    "Documents": "ドキュメント"
+  },
+  "Does not repeat": {
+    "Does not repeat": "繰り返さない"
+  },
+  "Done": {
+    "Done": "完了"
+  },
+  "Downloads": {
+    "Downloads": "ダウンロード"
+  },
+  "Drag to pan · click to fit": {
+    "Drag to pan · click to fit": "ドラッグで移動 · クリックで全体表示"
+  },
+  "Due date": {
+    "Due date": "期限日"
+  },
+  "Edit event": {
+    "Edit event": "予定を編集"
+  },
+  "Edit task": {
+    "Edit task": "タスクを編集"
+  },
+  "Enable core hours": {
+    "Enable core hours": ""
+  },
+  "Enable reminders": {
+    "Enable reminders": "リマインダーを有効化"
+  },
+  "Ends": {
+    "Ends": ""
+  },
+  "Enlarge": {
+    "Enlarge": "拡大"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": "カレンダー名を入力してください。"
+  },
+  "Enter client ID": {
+    "Enter client ID": "クライアント ID を入力"
+  },
+  "Enter filename...": {
+    "Enter filename...": "ファイル名を入力..."
+  },
+  "Enter your CalDAV server details. The connection is verified before the account is saved.": {
+    "Enter your CalDAV server details. The connection is verified before the account is saved.": "CalDAV サーバーの詳細を入力してください。アカウントを保存する前に接続を確認します。"
+  },
+  "Enter your client ID": {
+    "Enter your client ID": "クライアント ID を入力"
+  },
+  "Event": {
+    "Event": "予定"
+  },
+  "Event details": {
+    "Event details": "予定の詳細"
+  },
+  "Every": {
+    "Every": "間隔"
+  },
+  "Evolution": {
+    "Evolution": "Evolution"
+  },
+  "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": {
+    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": ""
+  },
+  "F1/I: Toggle • F10: Help": {
+    "F1/I: Toggle • F10: Help": "F1/I: 切替 • F10: ヘルプ"
+  },
+  "Feed URL": {
+    "Feed URL": "フィード URL"
+  },
+  "File Already Exists": {
+    "File Already Exists": "ファイルはすでに存在します"
+  },
+  "File Information": {
+    "File Information": "ファイル情報"
+  },
+  "Files - %1": {
+    "Files - %1": "ファイル - %1"
+  },
+  "First day shown in week and month views.": {
+    "First day shown in week and month views.": "週表示と月表示で最初に表示する曜日です。"
+  },
+  "Focus or leave the sidebar": {
+    "Focus or leave the sidebar": ""
+  },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": "DankMaterialShell の色に従い、使えない場合はプリセットに戻します。"
+  },
+  "Following the system color scheme (currently %1).": {
+    "Following the system color scheme (currently %1).": "システムの配色に従います（現在は %1）。"
+  },
+  "General": {
+    "General": "一般"
+  },
+  "Generate app-specific password": {
+    "Generate app-specific password": "App 用パスワードを生成"
+  },
+  "GitHub": {
+    "GitHub": "GitHub"
+  },
+  "Go to date": {
+    "Go to date": ""
+  },
+  "Go to today": {
+    "Go to today": "今日へ移動"
+  },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks を利用できません。タスクを同期するには、<a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">API を有効化</a>するか、このアカウントを再接続してから更新してください。"
+  },
+  "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
+    "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google のカレンダーデータを読み取るには、自分用の OAuth クライアントを作成する必要があります。これは一度だけの設定で、約 3 分かかります。"
+  },
+  "Hide": {
+    "Hide": "隠す"
+  },
+  "High": {
+    "High": "高"
+  },
+  "Home": {
+    "Home": "ホーム"
+  },
+  "Hour range shown in day and week views.": {
+    "Hour range shown in day and week views.": ""
+  },
+  "How long the snooze button postpones a reminder.": {
+    "How long the snooze button postpones a reminder.": "スヌーズボタンでリマインダーを延期する時間です。"
+  },
+  "How often accounts are polled for changes.": {
+    "How often accounts are polled for changes.": "アカウントの変更を確認する頻度です。"
+  },
+  "Import client_secret.json": {
+    "Import client_secret.json": "client_secret.json をインポート"
+  },
+  "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
+    "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "クライアント作成時にダウンロードした client_secret_….json をインポートするか、クライアント ID とシークレットを手動で貼り付けてください。"
+  },
+  "Initial reminder set on new events.": {
+    "Initial reminder set on new events.": "新しい予定に最初から設定するリマインダーです。"
+  },
+  "Join video call": {
+    "Join video call": "ビデオ通話に参加"
+  },
+  "Keep typing": {
+    "Keep typing": "入力を続けてください"
+  },
+  "Keep until dismissed": {
+    "Keep until dismissed": "閉じるまで表示"
+  },
+  "Keyboard shortcuts": {
+    "Keyboard shortcuts": "キーボードショートカット"
+  },
+  "Ko-fi": {
+    "Ko-fi": "Ko-fi"
+  },
+  "Launch Dank Calendar in the background when you log in.": {
+    "Launch Dank Calendar in the background when you log in.": "ログイン時に Dank Calendar をバックグラウンドで起動します。"
+  },
+  "Length used when creating events.": {
+    "Length used when creating events.": "予定作成時に使う長さです。"
+  },
+  "Light": {
+    "Light": "ライト"
+  },
+  "Limit the day and week views to a set hour range.": {
+    "Limit the day and week views to a set hour range.": ""
+  },
+  "List": {
+    "List": "リスト"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": "自分のテーマファイルから色を読み込みます。"
+  },
+  "Loading setup instructions…": {
+    "Loading setup instructions…": "セットアップ手順を読み込み中…"
+  },
+  "Local": {
+    "Local": "ローカル"
+  },
+  "Local calendar": {
+    "Local calendar": "ローカルカレンダー"
+  },
+  "Local calendars": {
+    "Local calendars": "ローカルカレンダー"
+  },
+  "Location": {
+    "Location": "場所"
+  },
+  "Low": {
+    "Low": "低"
+  },
+  "Marked as not done": {
+    "Marked as not done": "未完了に戻しました"
+  },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": "月表示で予定タイトルに使う最大行数です。"
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": "週表示で予定タイトルに使う最大行数です。"
+  },
+  "Maybe": {
+    "Maybe": "未定"
+  },
+  "Medium": {
+    "Medium": "中"
+  },
+  "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Microsoft To Do へのアクセスが許可されていません。タスクを同期するには、このアカウントを再接続してください。"
+  },
+  "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
+    "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft はアプリ登録の作成または変更直後の数分間、server_error を返すことがあります。1、2 分待ってから再試行してください。"
+  },
+  "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": {
+    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft のカレンダーデータを読み取るには、自分用のアプリ登録が必要です。これは一度だけの設定で、約 2 分かかります。クライアントシークレットは不要です。"
+  },
+  "Minimize": {
+    "Minimize": "最小化"
+  },
+  "Modified": {
+    "Modified": "更新日時"
+  },
+  "Month": {
+    "Month": "月"
+  },
+  "Month event title lines": {
+    "Month event title lines": "月表示の予定タイトル行数"
+  },
+  "Month view": {
+    "Month view": "月表示"
+  },
+  "Monthly": {
+    "Monthly": "毎月"
+  },
+  "Move through sidebar items": {
+    "Move through sidebar items": ""
+  },
+  "Move to Trash": {
+    "Move to Trash": "ゴミ箱に移動"
+  },
+  "Music": {
+    "Music": "ミュージック"
+  },
+  "My calendars": {
+    "My calendars": "自分のカレンダー"
+  },
+  "My server": {
+    "My server": "自分のサーバー"
+  },
+  "Name": {
+    "Name": "名前"
+  },
+  "Navigation": {
+    "Navigation": "ナビゲーション"
+  },
+  "Never": {
+    "Never": ""
+  },
+  "New calendar": {
+    "New calendar": "新しいカレンダー"
+  },
+  "New calendar…": {
+    "New calendar…": "新しいカレンダー…"
+  },
+  "New event": {
+    "New event": "新しい予定"
+  },
+  "New task": {
+    "New task": "新しいタスク"
+  },
+  "Next day": {
+    "Next day": "翌日"
+  },
+  "Next day with events": {
+    "Next day with events": ""
+  },
+  "Next day, week or month": {
+    "Next day, week or month": ""
+  },
+  "Next event": {
+    "Next event": "次の予定"
+  },
+  "Next event (next week in month view)": {
+    "Next event (next week in month view)": ""
+  },
+  "Next week": {
+    "Next week": "翌週"
+  },
+  "Next year": {
+    "Next year": ""
+  },
+  "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
+    "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "そのファイルに OAuth クライアントが見つかりません。Google からダウンロードした client_secret_….json が必要です。"
+  },
+  "No accounts yet. Click \"Add account\" to connect one.": {
+    "No accounts yet. Click \"Add account\" to connect one.": "アカウントはまだありません。「アカウントを追加」をクリックして接続してください。"
+  },
+  "No calendars yet": {
+    "No calendars yet": "カレンダーはまだありません"
+  },
+  "No calendars yet. Add an account first.": {
+    "No calendars yet. Add an account first.": "カレンダーはまだありません。先にアカウントを追加してください。"
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": "カレンダーはまだありません。予定を作成するにはカレンダーを追加してください。"
+  },
+  "No due date": {
+    "No due date": "期限なし"
+  },
+  "No matching events": {
+    "No matching events": "一致する予定はありません"
+  },
+  "No task list available": {
+    "No task list available": "利用できるタスクリストがありません"
+  },
+  "No tasks yet": {
+    "No tasks yet": "タスクはまだありません"
+  },
+  "No theme file selected": {
+    "No theme file selected": "テーマファイルが選択されていません"
+  },
+  "No writable calendar available": {
+    "No writable calendar available": "書き込み可能なカレンダーがありません"
+  },
+  "None": {
+    "None": "なし"
+  },
+  "Not authorized — remove this account and add it again": {
+    "Not authorized — remove this account and add it again": "認証されていません。このアカウントを削除して追加し直してください"
+  },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": "サインインしていません。クリックして再接続するか、このアカウントを追加し直してください"
+  },
+  "Notes": {
+    "Notes": "メモ"
+  },
+  "Nothing scheduled in the next %1 days": {
+    "Nothing scheduled in the next %1 days": "今後 %1 日間に予定はありません"
+  },
+  "Notification sound": {
+    "Notification sound": ""
+  },
+  "Notifications": {
+    "Notifications": "通知"
+  },
+  "Notify for all-day events without their own reminders.": {
+    "Notify for all-day events without their own reminders.": "個別のリマインダーがない終日予定を通知します。"
+  },
+  "Offline": {
+    "Offline": "オフライン"
+  },
+  "On date": {
+    "On date": ""
+  },
+  "On the day": {
+    "On the day": "当日"
+  },
+  "Open": {
+    "Open": "開く"
+  },
+  "Open Calendar": {
+    "Open Calendar": "カレンダーを開く"
+  },
+  "Open browser again": {
+    "Open browser again": "ブラウザーをもう一度開く"
+  },
+  "Open or create event": {
+    "Open or create event": "予定を開く/作成"
+  },
+  "Order": {
+    "Order": "順序"
+  },
+  "Outlook, Office 365 and Exchange Online calendars.": {
+    "Outlook, Office 365 and Exchange Online calendars.": "Outlook、Office 365、Exchange Online カレンダーです。"
+  },
+  "Overdue": {
+    "Overdue": "期限切れ"
+  },
+  "Override": {
+    "Override": "上書き"
+  },
+  "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "このカレンダーのグローバルなリマインダー設定を上書きします。変更していない項目はグローバル既定値に従います。"
+  },
+  "Overwrite": {
+    "Overwrite": "上書き"
+  },
+  "Palette: %1": {
+    "Palette: %1": "パレット: %1"
+  },
+  "Part of the Dank Linux suite.": {
+    "Part of the Dank Linux suite.": "Dank Linux スイートの一部です。"
+  },
+  "Password": {
+    "Password": "パスワード"
+  },
+  "Password (optional)": {
+    "Password (optional)": "パスワード（任意）"
+  },
+  "Paste credentials": {
+    "Paste credentials": "認証情報を貼り付け"
+  },
+  "Paste the Application (client) ID from your app registration's Overview page.": {
+    "Paste the Application (client) ID from your app registration's Overview page.": "アプリ登録の概要ページから Application（client）ID を貼り付けてください。"
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "購読する外部カレンダーフィードの URL を貼り付けてください。カレンダーは読み取り専用で、バックグラウンドで更新されます。webcal:// リンクも使えます。"
+  },
+  "Paste your credentials": {
+    "Paste your credentials": "認証情報を貼り付け"
+  },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": "色のソース、パレット、または自分のテーマファイルを選択します。"
+  },
+  "Pictures": {
+    "Pictures": "画像"
+  },
+  "Play a sound when a reminder fires.": {
+    "Play a sound when a reminder fires.": ""
+  },
+  "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": ".ics ファイルのディレクトリを指定します。各サブディレクトリまたは .ics ファイルがカレンダーになります。vdirsyncer/khal のレイアウトと互換性があります。ディレクトリがなければ作成されます。"
+  },
+  "Preset": {
+    "Preset": "プリセット"
+  },
+  "Previous day": {
+    "Previous day": "前日"
+  },
+  "Previous day with events": {
+    "Previous day with events": ""
+  },
+  "Previous day, week or month": {
+    "Previous day, week or month": ""
+  },
+  "Previous event": {
+    "Previous event": "前の予定"
+  },
+  "Previous event (previous week in month view)": {
+    "Previous event (previous week in month view)": ""
+  },
+  "Previous week": {
+    "Previous week": "前週"
+  },
+  "Previous year": {
+    "Previous year": ""
+  },
+  "Priority": {
+    "Priority": "優先度"
+  },
+  "Quick Access": {
+    "Quick Access": "クイックアクセス"
+  },
+  "Quit": {
+    "Quit": "終了"
+  },
+  "Reconnect": {
+    "Reconnect": "再接続"
+  },
+  "Recurring tasks are managed in Google Tasks.": {
+    "Recurring tasks are managed in Google Tasks.": "繰り返しタスクは Google Tasks で管理されます。"
+  },
+  "Reminders and desktop alerts.": {
+    "Reminders and desktop alerts.": "リマインダーとデスクトップアラートです。"
+  },
+  "Reminders are disabled globally, so nothing fires until you re-enable them.": {
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "リマインダーは全体で無効です。再度有効にするまで通知は出ません。"
+  },
+  "Reminders for \"%1": {
+    "Reminders for \"%1\"": "\"%1\" のリマインダー"
+  },
+  "Reminders stay on screen until you act on them.": {
+    "Reminders stay on screen until you act on them.": "操作するまでリマインダーを画面に残します。"
+  },
+  "Remove": {
+    "Remove": "削除"
+  },
+  "Remove \"%1\"?": {
+    "Remove \"%1\"?": "\"%1\" を削除しますか？"
+  },
+  "Remove calendar or account": {
+    "Remove calendar or account": ""
+  },
+  "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
+    "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "このアカウントとそのカレンダー、予定を Dank Calendar から削除します。プロバイダー側からは何も削除されません。"
+  },
+  "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": {
+    "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": "このカレンダーとその予定を Dank Calendar から削除します。プロバイダー側に残っている場合、次回同期時に戻ってきます。"
+  },
+  "Remove…": {
+    "Remove…": "削除…"
+  },
+  "Rename calendar": {
+    "Rename calendar": "カレンダー名を変更"
+  },
+  "Rename…": {
+    "Rename…": "名前を変更…"
+  },
+  "Repeat": {
+    "Repeat": "繰り返し"
+  },
+  "Repeats": {
+    "Repeats": "繰り返し"
+  },
+  "Repeats every %1": {
+    "Repeats every %1": "%1 ごとに繰り返し"
+  },
+  "Repeats every %1 %2": {
+    "Repeats every %1 %2": "%1 %2 ごとに繰り返し"
+  },
+  "Reset to global": {
+    "Reset to global": "グローバル設定に戻す"
+  },
+  "Save": {
+    "Save": "保存"
+  },
+  "Saving...": {
+    "Saving...": "保存中..."
+  },
+  "Search": {
+    "Search": "検索"
+  },
+  "Search events": {
+    "Search events": "予定を検索"
+  },
+  "Search failed": {
+    "Search failed": "検索に失敗しました"
+  },
+  "Searching": {
+    "Searching": "検索中"
+  },
+  "Select File": {
+    "Select File": "ファイルを選択"
+  },
+  "Select client_secret.json": {
+    "Select client_secret.json": "client_secret.json を選択"
+  },
+  "Select days for a new event (month view)": {
+    "Select days for a new event (month view)": ""
+  },
+  "Select file": {
+    "Select file": "ファイルを選択"
+  },
+  "Select theme file": {
+    "Select theme file": "テーマファイルを選択"
+  },
+  "Send test": {
+    "Send test": "テスト送信"
+  },
+  "Server URL": {
+    "Server URL": "サーバー URL"
+  },
+  "Settings": {
+    "Settings": "設定"
+  },
+  "Show": {
+    "Show": "表示"
+  },
+  "Show Dank Calendar in the system tray.": {
+    "Show Dank Calendar in the system tray.": ""
+  },
+  "Show all events in month view": {
+    "Show all events in month view": ""
+  },
+  "Show all-day reminders": {
+    "Show all-day reminders": "終日リマインダーを表示"
+  },
+  "Show task lists and the Tasks view when an account provides them.": {
+    "Show task lists and the Tasks view when an account provides them.": "アカウントが対応している場合、タスクリストとタスク表示を表示します。"
+  },
+  "Show tasks": {
+    "Show tasks": "タスクを表示"
+  },
+  "Show tray icon": {
+    "Show tray icon": ""
+  },
+  "Show week numbers": {
+    "Show week numbers": "週番号を表示"
+  },
+  "Sidebar": {
+    "Sidebar": ""
+  },
+  "Sign in with %1": {
+    "Sign in with %1": "%1 でサインイン"
+  },
+  "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
+    "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Apple ID と App 用パスワードでサインインしてください。通常の Apple ID パスワードは使えません。"
+  },
+  "Sign in with your Google account.": {
+    "Sign in with your Google account.": "Google アカウントでサインインしてください。"
+  },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": "サインインの期限切れ。クリックして再接続"
+  },
+  "Sign-in expired — reconnect to keep syncing": {
+    "Sign-in expired — reconnect to keep syncing": "サインインの期限が切れました。同期を続けるには再接続してください"
+  },
+  "Size": {
+    "Size": "サイズ"
+  },
+  "Skip certificate verification": {
+    "Skip certificate verification": ""
+  },
+  "Snooze duration": {
+    "Snooze duration": "スヌーズ時間"
+  },
+  "Sort By": {
+    "Sort By": "並び替え"
+  },
+  "Start at login": {
+    "Start at login": "ログイン時に起動"
+  },
+  "Start week on": {
+    "Start week on": "週の開始曜日"
+  },
+  "Starting…": {
+    "Starting…": "開始中…"
+  },
+  "Status": {
+    "Status": "状態"
+  },
+  "Step %1": {
+    "Step %1": "手順 %1"
+  },
+  "Step %1: %2": {
+    "Step %1: %2": "手順 %1: %2"
+  },
+  "Stock palette": {
+    "Stock palette": "標準パレット"
+  },
+  "Subscribe": {
+    "Subscribe": "購読"
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": "URL（webcal/https）で外部カレンダーを購読します。"
+  },
+  "Subscribing…": {
+    "Subscribing…": "購読中…"
+  },
+  "Sync interval": {
+    "Sync interval": "同期間隔"
+  },
+  "Sync now": {
+    "Sync now": "今すぐ同期"
+  },
+  "Synced as \"%1\". The name only changes in Dank Calendar.": {
+    "Synced as \"%1\". The name only changes in Dank Calendar.": "\"%1\" として同期されています。名前の変更は Dank Calendar 内だけに反映されます。"
+  },
+  "System default (%1)": {
+    "System default (%1)": "システム既定（%1）"
+  },
+  "System preference unavailable — using dark.": {
+    "System preference unavailable — using dark.": "システム設定を利用できません。ダークを使います。"
+  },
+  "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
+    "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: 移動 • ←→↑↓: グリッド移動 • Enter/Space: 選択"
+  },
+  "Task": {
+    "Task": "タスク"
+  },
+  "Task completed": {
+    "Task completed": "タスクを完了しました"
+  },
+  "Task lists couldn't be loaded; calendars are still syncing.": {
+    "Task lists couldn't be loaded; calendars are still syncing.": "タスクリストを読み込めませんでした。カレンダーは同期中です。"
+  },
+  "Tasks": {
+    "Tasks": "タスク"
+  },
+  "Tasks view": {
+    "Tasks view": "タスク表示"
+  },
+  "Test notification": {
+    "Test notification": "通知テスト"
+  },
+  "That file is not valid JSON.": {
+    "That file is not valid JSON.": "そのファイルは有効な JSON ではありません。"
+  },
+  "Theme": {
+    "Theme": "テーマ"
+  },
+  "This account cannot be reconnected — remove it and add it again.": {
+    "This account cannot be reconnected — remove it and add it again.": "このアカウントは再接続できません。削除して追加し直してください。"
+  },
+  "Time format": {
+    "Time format": "時刻形式"
+  },
+  "Title is required": {
+    "Title is required": "タイトルは必須です"
+  },
+  "Today": {
+    "Today": "今日"
+  },
+  "Toggle calendar, switch view or sync account": {
+    "Toggle calendar, switch view or sync account": ""
+  },
+  "Toggle this help": {
+    "Toggle this help": "このヘルプを切り替え"
+  },
+  "Tomorrow": {
+    "Tomorrow": "明日"
+  },
+  "Trust self-signed certificates. Only enable this for servers you control.": {
+    "Trust self-signed certificates. Only enable this for servers you control.": ""
+  },
+  "Try a different search.": {
+    "Try a different search.": "別の検索を試してください。"
+  },
+  "Try again": {
+    "Try again": "再試行"
+  },
+  "Type": {
+    "Type": "種類"
+  },
+  "Type at least 2 characters to search events.": {
+    "Type at least 2 characters to search events.": "予定を検索するには 2 文字以上入力してください。"
+  },
+  "Undo": {
+    "Undo": "元に戻す"
+  },
+  "University timetable": {
+    "University timetable": "大学の時間割"
+  },
+  "Upcoming": {
+    "Upcoming": "今後の予定"
+  },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": "同梱のカラーパレットを使います。"
+  },
+  "Use synced name": {
+    "Use synced name": "同期された名前を使う"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "このマシンで Evolution Data Server がすでに管理しているカレンダー（Evolution、GNOME Online Accounts など）を使います。サインインは不要です。認証情報と同期は Evolution が処理します。"
+  },
+  "Use this folder": {
+    "Use this folder": "このフォルダーを使う"
+  },
+  "Username": {
+    "Username": "ユーザー名"
+  },
+  "Username (optional)": {
+    "Username (optional)": "ユーザー名（任意）"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": "DankMaterialShell の動的色を使用中です。"
+  },
+  "Verify desktop notifications are working.": {
+    "Verify desktop notifications are working.": "デスクトップ通知が動作するか確認します。"
+  },
+  "Version": {
+    "Version": "バージョン"
+  },
+  "Videos": {
+    "Videos": "動画"
+  },
+  "View": {
+    "View": "表示"
+  },
+  "Visibility, names, and removal per calendar.": {
+    "Visibility, names, and removal per calendar.": "カレンダーごとの表示、名前、削除です。"
+  },
+  "Waiting for browser…": {
+    "Waiting for browser…": "ブラウザーを待機中…"
+  },
+  "Waiting for the dankcalendar daemon...": {
+    "Waiting for the dankcalendar daemon...": "dankcalendar デーモンを待機中..."
+  },
+  "Week": {
+    "Week": "週"
+  },
+  "Week event title lines": {
+    "Week event title lines": "週表示の予定タイトル行数"
+  },
+  "Week view": {
+    "Week view": "週表示"
+  },
+  "Weekly": {
+    "Weekly": "毎週"
+  },
+  "What the window's close button does.": {
+    "What the window's close button does.": "ウィンドウの閉じるボタンの動作です。"
+  },
+  "When all-day event reminders fire.": {
+    "When all-day event reminders fire.": "終日予定のリマインダーを出すタイミングです。"
+  },
+  "Yearly": {
+    "Yearly": "毎年"
+  },
+  "Yesterday": {
+    "Yesterday": "昨日"
+  },
+  "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": {
+    "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": "カレンダーはバックグラウンドで同期されます。このアカウントは 設定 → アカウント から管理できます。"
+  },
+  "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
+    "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "クライアント ID、シークレット、リフレッシュトークンは、利用可能な場合はシステムキーリング（libsecret/kwallet）に、そうでない場合は暗号化されたローカルファイルに保存されます。"
+  },
+  "Your response": {
+    "Your response": "あなたの返答"
+  },
+  "all day": {
+    "all day": "終日"
+  },
+  "dark": {
+    "dark": "ダーク"
+  },
+  "day": {
+    "day": "日"
+  },
+  "days": {
+    "days": "日"
+  },
+  "e.g. 2022-01-01": {
+    "e.g. 2022-01-01": ""
+  },
+  "iCal subscription": {
+    "iCal subscription": "iCal 購読"
+  },
+  "light": {
+    "light": "ライト"
+  },
+  "month": {
+    "month": "月"
+  },
+  "months": {
+    "months": "か月"
+  },
+  "on %1": {
+    "on %1": ""
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": "フィードにサインインが必要な場合のみ"
+  },
+  "password": {
+    "password": "パスワード"
+  },
+  "read-only": {
+    "read-only": "読み取り専用"
+  },
+  "synced as \"%1": {
+    "synced as \"%1\"": "\"%1\" として同期"
+  },
+  "times": {
+    "times": ""
+  },
+  "to": {
+    "to": ""
+  },
+  "until %1": {
+    "until %1": ""
+  },
+  "username": {
+    "username": "ユーザー名"
+  },
+  "week": {
+    "week": "週"
+  },
+  "weeks": {
+    "weeks": "週"
+  },
+  "year": {
+    "year": "年"
+  },
+  "years": {
+    "years": "年"
+  },
+  "· %1 invited · %2 accepted": {
+    "· %1 invited · %2 accepted": "· 招待 %1 人 · 承諾 %2 人"
+  }
+}

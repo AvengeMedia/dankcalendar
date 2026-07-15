@@ -242,7 +242,7 @@
   {
     "term": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>",
     "context": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>",
-    "reference": "Modals/SettingsAboutPage.qml:419",
+    "reference": "Modals/SettingsAboutPage.qml:414",
     "comment": "about page license footer link, %2 is the license url"
   },
   {
@@ -254,13 +254,13 @@
   {
     "term": "API",
     "context": "API",
-    "reference": "Modals/SettingsAboutPage.qml:326",
+    "reference": "Modals/SettingsAboutPage.qml:321",
     "comment": "about page daemon api version column label"
   },
   {
     "term": "About",
     "context": "About",
-    "reference": "Modals/SettingsSidebar.qml:36, Modals/SettingsAboutPage.qml:234",
+    "reference": "Modals/SettingsSidebar.qml:36, Modals/SettingsAboutPage.qml:229",
     "comment": "about page project section header | settings sidebar tab label"
   },
   {
@@ -290,19 +290,19 @@
   {
     "term": "Add",
     "context": "Add",
-    "reference": "Modals/AccountAddModal.qml:1442, Modals/AccountAddModal.qml:1527",
+    "reference": "Modals/AccountAddModal.qml:1452, Modals/AccountAddModal.qml:1538",
     "comment": "button to add evolution account | button to add local calendar account"
   },
   {
     "term": "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.",
     "context": "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.",
-    "reference": "Modals/TaskDetailsModal.qml:293",
+    "reference": "Modals/TaskDetailsModal.qml:295",
     "comment": "task dialog hint when no task list is available"
   },
   {
     "term": "Add a calendar",
     "context": "Add a calendar",
-    "reference": "Modals/EventDetailsModal.qml:1180",
+    "reference": "Modals/EventDetailsModal.qml:1181",
     "comment": "event form button to add a calendar when none exist"
   },
   {
@@ -314,13 +314,13 @@
   {
     "term": "Add description",
     "context": "Add description",
-    "reference": "Modals/EventDetailsModal.qml:1367",
+    "reference": "Modals/EventDetailsModal.qml:1368",
     "comment": "event form placeholder for description text area"
   },
   {
     "term": "Add reminder",
     "context": "Add reminder",
-    "reference": "Modals/EventDetailsModal.qml:1326",
+    "reference": "Modals/EventDetailsModal.qml:1327",
     "comment": "event form button to add another reminder"
   },
   {
@@ -332,13 +332,13 @@
   {
     "term": "Add title",
     "context": "Add title",
-    "reference": "Modals/EventDetailsModal.qml:1032, Modals/TaskDetailsModal.qml:303",
+    "reference": "Modals/EventDetailsModal.qml:1032, Modals/TaskDetailsModal.qml:306",
     "comment": "event form placeholder for title input | task form placeholder for title input"
   },
   {
     "term": "Adding…",
     "context": "Adding…",
-    "reference": "Modals/AccountAddModal.qml:1442, Modals/AccountAddModal.qml:1527",
+    "reference": "Modals/AccountAddModal.qml:1452, Modals/AccountAddModal.qml:1538",
     "comment": "add button while evolution account is created | add button while local account is created"
   },
   {
@@ -374,7 +374,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/EventDetailsModal.qml:1076, Modals/SearchModal.qml:81, Modules/views/AgendaView.qml:73, Modules/views/DayView.qml:57, Modules/views/WeekView.qml:119, Modules/views/MonthView.qml:111, Modules/views/MonthDayPopover.qml:158",
+    "reference": "Modals/EventDetailsModal.qml:1077, Modals/SearchModal.qml:81, Modules/views/AgendaView.qml:73, Modules/views/DayView.qml:57, Modules/views/WeekView.qml:119, Modules/views/MonthView.qml:111, Modules/views/MonthDayPopover.qml:158",
     "comment": "all-day marker in event tooltip | all-day marker in the month day-detail popover | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -410,7 +410,7 @@
   {
     "term": "App-specific password",
     "context": "App-specific password",
-    "reference": "Modals/AccountAddModal.qml:1261",
+    "reference": "Modals/AccountAddModal.qml:1270",
     "comment": "icloud password field label"
   },
   {
@@ -422,7 +422,7 @@
   {
     "term": "Apple ID",
     "context": "Apple ID",
-    "reference": "Modals/AccountAddModal.qml:1252",
+    "reference": "Modals/AccountAddModal.qml:1257",
     "comment": "icloud username field label"
   },
   {
@@ -434,7 +434,7 @@
   {
     "term": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
     "context": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
-    "reference": "Modals/AccountAddModal.qml:1045",
+    "reference": "Modals/AccountAddModal.qml:1046",
     "comment": "browser step body while waiting for oauth"
   },
   {
@@ -452,7 +452,7 @@
   {
     "term": "Authorization failed",
     "context": "Authorization failed",
-    "reference": "Modals/AccountAddModal.qml:1036",
+    "reference": "Modals/AccountAddModal.qml:1037",
     "comment": "browser step heading on oauth error"
   },
   {
@@ -476,7 +476,7 @@
   {
     "term": "Back",
     "context": "Back",
-    "reference": "Modals/AccountAddModal.qml:918, Modals/AccountAddModal.qml:1007",
+    "reference": "Modals/AccountAddModal.qml:918, Modals/AccountAddModal.qml:1008",
     "comment": "back button in account setup wizard"
   },
   {
@@ -488,7 +488,7 @@
   {
     "term": "Backend",
     "context": "Backend",
-    "reference": "Modals/SettingsAboutPage.qml:287",
+    "reference": "Modals/SettingsAboutPage.qml:282",
     "comment": "about page daemon section header"
   },
   {
@@ -536,19 +536,19 @@
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/ConfirmDialog.qml:72, Modals/EventDetailsModal.qml:635, Modals/NewCalendarDialog.qml:101, Modals/RenameCalendarDialog.qml:98, Modals/TaskDetailsModal.qml:510, Modals/AccountAddModal.qml:1100, Modals/CalendarRemindersDialog.qml:376",
+    "reference": "Modals/ConfirmDialog.qml:72, Modals/EventDetailsModal.qml:635, Modals/NewCalendarDialog.qml:101, Modals/RenameCalendarDialog.qml:98, Modals/TaskDetailsModal.qml:513, Modals/AccountAddModal.qml:1101, Modals/CalendarRemindersDialog.qml:376",
     "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes"
   },
   {
     "term": "Capabilities",
     "context": "Capabilities",
-    "reference": "Modals/SettingsAboutPage.qml:381",
+    "reference": "Modals/SettingsAboutPage.qml:376",
     "comment": "about page daemon capabilities label"
   },
   {
     "term": "Changes apply to the whole series",
     "context": "Changes apply to the whole series",
-    "reference": "Modals/EventDetailsModal.qml:1225, Modals/EventDetailsModal.qml:1261",
+    "reference": "Modals/EventDetailsModal.qml:1226, Modals/EventDetailsModal.qml:1262",
     "comment": "event form note when editing a recurring event"
   },
   {
@@ -566,7 +566,7 @@
   {
     "term": "Choose calendar directory",
     "context": "Choose calendar directory",
-    "reference": "Modals/AccountAddModal.qml:1412",
+    "reference": "Modals/AccountAddModal.qml:1422",
     "comment": "folder picker title for local calendar directory"
   },
   {
@@ -590,7 +590,7 @@
   {
     "term": "Client Secret",
     "context": "Client Secret",
-    "reference": "Modals/AccountAddModal.qml:971",
+    "reference": "Modals/AccountAddModal.qml:972",
     "comment": "oauth client secret field label"
   },
   {
@@ -626,7 +626,7 @@
   {
     "term": "Completed",
     "context": "Completed",
-    "reference": "Modals/TaskDetailsModal.qml:473, Modules/views/TasksView.qml:81",
+    "reference": "Modals/TaskDetailsModal.qml:476, Modules/views/TasksView.qml:81",
     "comment": "task form toggle label for marking a task done | tasks view section header for finished tasks"
   },
   {
@@ -638,13 +638,13 @@
   {
     "term": "Confirm delete",
     "context": "Confirm delete",
-    "reference": "Modals/EventDetailsModal.qml:566, Modals/TaskDetailsModal.qml:500",
+    "reference": "Modals/EventDetailsModal.qml:566, Modals/TaskDetailsModal.qml:503",
     "comment": "event details button to confirm deleting the event | task form button to confirm deletion"
   },
   {
     "term": "Connect",
     "context": "Connect",
-    "reference": "Modals/AccountAddModal.qml:997, Modals/AccountAddModal.qml:1330",
+    "reference": "Modals/AccountAddModal.qml:998, Modals/AccountAddModal.qml:1339",
     "comment": "account setup button to start provider sign-in"
   },
   {
@@ -662,7 +662,7 @@
   {
     "term": "Connected",
     "context": "Connected",
-    "reference": "Modals/AccountAddModal.qml:1142, Modals/SettingsContent.qml:1172, Modals/SettingsAboutPage.qml:366",
+    "reference": "Modals/AccountAddModal.qml:1143, Modals/SettingsContent.qml:1172, Modals/SettingsAboutPage.qml:361",
     "comment": "about page daemon status value | account status in account list | success step status heading"
   },
   {
@@ -674,7 +674,7 @@
   {
     "term": "Connecting…",
     "context": "Connecting…",
-    "reference": "Modals/AccountAddModal.qml:1330",
+    "reference": "Modals/AccountAddModal.qml:1339",
     "comment": "connect button while caldav connection verifies"
   },
   {
@@ -686,13 +686,13 @@
   {
     "term": "Copied to clipboard",
     "context": "Copied to clipboard",
-    "reference": "Modals/AccountAddModal.qml:897, Modals/AccountAddModal.qml:1235",
+    "reference": "Modals/AccountAddModal.qml:897, Modals/AccountAddModal.qml:1236",
     "comment": "toast after copying text to the clipboard"
   },
   {
     "term": "Copy link",
     "context": "Copy link",
-    "reference": "Modals/AccountAddModal.qml:889, Modals/AccountAddModal.qml:1228",
+    "reference": "Modals/AccountAddModal.qml:889, Modals/AccountAddModal.qml:1229",
     "comment": "button to copy a setup guide url to the clipboard"
   },
   {
@@ -758,13 +758,13 @@
   {
     "term": "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.",
     "context": "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.",
-    "reference": "Modals/SettingsAboutPage.qml:243",
+    "reference": "Modals/SettingsAboutPage.qml:238",
     "comment": "about page project description with embedded links"
   },
   {
     "term": "Dank Linux Discord",
     "context": "Dank Linux Discord",
-    "reference": "Modals/SettingsAboutPage.qml:201",
+    "reference": "Modals/SettingsAboutPage.qml:196",
     "comment": "about page community icon tooltip"
   },
   {
@@ -818,7 +818,7 @@
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modules/CalendarSidebar.qml:301, Modals/TaskDetailsModal.qml:500, Modals/SettingsContent.qml:1002",
+    "reference": "Modules/CalendarSidebar.qml:301, Modals/TaskDetailsModal.qml:503, Modals/SettingsContent.qml:1002",
     "comment": "confirm button for deleting a calendar | delete calendar confirmation button | task form button to delete the task"
   },
   {
@@ -854,7 +854,7 @@
   {
     "term": "Directory",
     "context": "Directory",
-    "reference": "Modals/AccountAddModal.qml:1399",
+    "reference": "Modals/AccountAddModal.qml:1408",
     "comment": "local calendar directory field label"
   },
   {
@@ -872,13 +872,13 @@
   {
     "term": "Display name (optional)",
     "context": "Display name (optional)",
-    "reference": "Modals/AccountAddModal.qml:1271, Modals/AccountAddModal.qml:1420, Modals/AccountAddModal.qml:1505, Modals/AccountAddModal.qml:1602",
+    "reference": "Modals/AccountAddModal.qml:1280, Modals/AccountAddModal.qml:1430, Modals/AccountAddModal.qml:1515, Modals/AccountAddModal.qml:1614",
     "comment": "optional account display name field label"
   },
   {
     "term": "Docs",
     "context": "Docs",
-    "reference": "Modals/SettingsAboutPage.qml:129, Modals/SettingsAboutPage.qml:137",
+    "reference": "Modals/SettingsAboutPage.qml:124, Modals/SettingsAboutPage.qml:132",
     "comment": "about page resource button"
   },
   {
@@ -890,7 +890,7 @@
   {
     "term": "Done",
     "context": "Done",
-    "reference": "Modals/AccountAddModal.qml:1170",
+    "reference": "Modals/AccountAddModal.qml:1171",
     "comment": "button to close modal after account added"
   },
   {
@@ -902,7 +902,7 @@
   {
     "term": "Due date",
     "context": "Due date",
-    "reference": "Modals/TaskDetailsModal.qml:328",
+    "reference": "Modals/TaskDetailsModal.qml:331",
     "comment": "task form toggle label for the due date"
   },
   {
@@ -914,7 +914,7 @@
   {
     "term": "Edit task",
     "context": "Edit task",
-    "reference": "Modals/TaskDetailsModal.qml:283",
+    "reference": "Modals/TaskDetailsModal.qml:285",
     "comment": "header in the edit-task dialog"
   },
   {
@@ -956,7 +956,7 @@
   {
     "term": "Enter your CalDAV server details. The connection is verified before the account is saved.",
     "context": "Enter your CalDAV server details. The connection is verified before the account is saved.",
-    "reference": "Modals/AccountAddModal.qml:1207",
+    "reference": "Modals/AccountAddModal.qml:1208",
     "comment": "caldav sign-in form instructions"
   },
   {
@@ -980,13 +980,13 @@
   {
     "term": "Every",
     "context": "Every",
-    "reference": "Modals/TaskDetailsModal.qml:405, Widgets/DankRecurrencePicker.qml:269",
+    "reference": "Modals/TaskDetailsModal.qml:408, Widgets/DankRecurrencePicker.qml:269",
     "comment": "recurrence interval label, followed by a count and unit | task form label for the recurrence interval"
   },
   {
     "term": "Evolution",
     "context": "Evolution",
-    "reference": "Modals/AccountAddModal.qml:1506",
+    "reference": "Modals/AccountAddModal.qml:1516",
     "comment": "evolution account display name field placeholder"
   },
   {
@@ -998,7 +998,7 @@
   {
     "term": "Feed URL",
     "context": "Feed URL",
-    "reference": "Modals/AccountAddModal.qml:1593",
+    "reference": "Modals/AccountAddModal.qml:1604",
     "comment": "ical feed url field label"
   },
   {
@@ -1034,13 +1034,13 @@
   {
     "term": "Generate app-specific password",
     "context": "Generate app-specific password",
-    "reference": "Modals/AccountAddModal.qml:1219",
+    "reference": "Modals/AccountAddModal.qml:1220",
     "comment": "button to open apple app password page"
   },
   {
     "term": "GitHub",
     "context": "GitHub",
-    "reference": "Modals/SettingsAboutPage.qml:146",
+    "reference": "Modals/SettingsAboutPage.qml:141",
     "comment": "about page resource button"
   },
   {
@@ -1142,7 +1142,7 @@
   {
     "term": "Ko-fi",
     "context": "Ko-fi",
-    "reference": "Modals/SettingsAboutPage.qml:163, Modals/SettingsAboutPage.qml:171",
+    "reference": "Modals/SettingsAboutPage.qml:158, Modals/SettingsAboutPage.qml:166",
     "comment": "about page resource button"
   },
   {
@@ -1172,7 +1172,7 @@
   {
     "term": "List",
     "context": "List",
-    "reference": "Modals/TaskDetailsModal.qml:439",
+    "reference": "Modals/TaskDetailsModal.qml:442",
     "comment": "task form label for the task-list dropdown"
   },
   {
@@ -1202,13 +1202,13 @@
   {
     "term": "Local calendars",
     "context": "Local calendars",
-    "reference": "Modals/AccountAddModal.qml:1421",
+    "reference": "Modals/AccountAddModal.qml:1431",
     "comment": "local account display name field placeholder"
   },
   {
     "term": "Location",
     "context": "Location",
-    "reference": "Modals/EventDetailsModal.qml:1119",
+    "reference": "Modals/EventDetailsModal.qml:1120",
     "comment": "event form placeholder for location input"
   },
   {
@@ -1256,7 +1256,7 @@
   {
     "term": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
     "context": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
-    "reference": "Modals/AccountAddModal.qml:1063",
+    "reference": "Modals/AccountAddModal.qml:1064",
     "comment": "hint about microsoft server_error during oauth"
   },
   {
@@ -1310,7 +1310,7 @@
   {
     "term": "My server",
     "context": "My server",
-    "reference": "Modals/AccountAddModal.qml:1272",
+    "reference": "Modals/AccountAddModal.qml:1281",
     "comment": "caldav display name field placeholder"
   },
   {
@@ -1346,7 +1346,7 @@
   {
     "term": "New task",
     "context": "New task",
-    "reference": "Modals/TaskDetailsModal.qml:266, Modals/TaskDetailsModal.qml:283",
+    "reference": "Modals/TaskDetailsModal.qml:268, Modals/TaskDetailsModal.qml:285",
     "comment": "header in the create-task dialog | title bar for the create-task dialog"
   },
   {
@@ -1406,7 +1406,7 @@
   {
     "term": "No calendars yet. Add one to start creating events.",
     "context": "No calendars yet. Add one to start creating events.",
-    "reference": "Modals/EventDetailsModal.qml:1173",
+    "reference": "Modals/EventDetailsModal.qml:1174",
     "comment": "event form guidance when there are no writable calendars"
   },
   {
@@ -1424,7 +1424,7 @@
   {
     "term": "No task list available",
     "context": "No task list available",
-    "reference": "Modals/TaskDetailsModal.qml:226",
+    "reference": "Modals/TaskDetailsModal.qml:228",
     "comment": "task form error when no calendar can hold tasks"
   },
   {
@@ -1466,7 +1466,7 @@
   {
     "term": "Notes",
     "context": "Notes",
-    "reference": "Modals/TaskDetailsModal.qml:311",
+    "reference": "Modals/TaskDetailsModal.qml:314",
     "comment": "task form placeholder for notes input"
   },
   {
@@ -1496,7 +1496,7 @@
   {
     "term": "Offline",
     "context": "Offline",
-    "reference": "Modals/SettingsAboutPage.qml:366",
+    "reference": "Modals/SettingsAboutPage.qml:361",
     "comment": "about page daemon status value"
   },
   {
@@ -1526,7 +1526,7 @@
   {
     "term": "Open browser again",
     "context": "Open browser again",
-    "reference": "Modals/AccountAddModal.qml:1072",
+    "reference": "Modals/AccountAddModal.qml:1073",
     "comment": "button to reopen oauth url in browser"
   },
   {
@@ -1568,19 +1568,19 @@
   {
     "term": "Part of the Dank Linux suite.",
     "context": "Part of the Dank Linux suite.",
-    "reference": "Modals/SettingsAboutPage.qml:112",
+    "reference": "Modals/SettingsAboutPage.qml:107",
     "comment": "app tagline on about page"
   },
   {
     "term": "Password",
     "context": "Password",
-    "reference": "Modals/AccountAddModal.qml:1261",
+    "reference": "Modals/AccountAddModal.qml:1270",
     "comment": "caldav password field label"
   },
   {
     "term": "Password (optional)",
     "context": "Password (optional)",
-    "reference": "Modals/AccountAddModal.qml:1620",
+    "reference": "Modals/AccountAddModal.qml:1632",
     "comment": "ical optional basic-auth password field label"
   },
   {
@@ -1598,7 +1598,7 @@
   {
     "term": "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.",
     "context": "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.",
-    "reference": "Modals/AccountAddModal.qml:1584",
+    "reference": "Modals/AccountAddModal.qml:1595",
     "comment": "ical subscription form instructions"
   },
   {
@@ -1622,7 +1622,7 @@
   {
     "term": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
     "context": "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.",
-    "reference": "Modals/AccountAddModal.qml:1385",
+    "reference": "Modals/AccountAddModal.qml:1394",
     "comment": "local calendar directory form instructions"
   },
   {
@@ -1664,7 +1664,7 @@
   {
     "term": "Priority",
     "context": "Priority",
-    "reference": "Modals/TaskDetailsModal.qml:349",
+    "reference": "Modals/TaskDetailsModal.qml:352",
     "comment": "task form label for the priority dropdown"
   },
   {
@@ -1682,7 +1682,7 @@
   {
     "term": "Recurring tasks are managed in Google Tasks.",
     "context": "Recurring tasks are managed in Google Tasks.",
-    "reference": "Modals/TaskDetailsModal.qml:425",
+    "reference": "Modals/TaskDetailsModal.qml:428",
     "comment": "task form note when recurrence cannot be edited on google"
   },
   {
@@ -1760,7 +1760,7 @@
   {
     "term": "Repeat",
     "context": "Repeat",
-    "reference": "Modals/TaskDetailsModal.qml:377",
+    "reference": "Modals/TaskDetailsModal.qml:380",
     "comment": "task form label for the recurrence dropdown"
   },
   {
@@ -1790,7 +1790,7 @@
   {
     "term": "Save",
     "context": "Save",
-    "reference": "Modals/EventDetailsModal.qml:649, Modals/RenameCalendarDialog.qml:105, Modals/TaskDetailsModal.qml:519, Modals/CalendarRemindersDialog.qml:383",
+    "reference": "Modals/EventDetailsModal.qml:649, Modals/RenameCalendarDialog.qml:105, Modals/TaskDetailsModal.qml:522, Modals/CalendarRemindersDialog.qml:383",
     "comment": "event details button to save changes | per-calendar reminders dialog button to save | rename calendar dialog button to save name | task form button to persist the task"
   },
   {
@@ -1856,7 +1856,7 @@
   {
     "term": "Server URL",
     "context": "Server URL",
-    "reference": "Modals/AccountAddModal.qml:1243",
+    "reference": "Modals/AccountAddModal.qml:1244",
     "comment": "caldav server url field label"
   },
   {
@@ -1928,7 +1928,7 @@
   {
     "term": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
     "context": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
-    "reference": "Modals/AccountAddModal.qml:1207",
+    "reference": "Modals/AccountAddModal.qml:1208",
     "comment": "icloud sign-in form instructions"
   },
   {
@@ -1952,7 +1952,7 @@
   {
     "term": "Skip certificate verification",
     "context": "Skip certificate verification",
-    "reference": "Modals/AccountAddModal.qml:1296",
+    "reference": "Modals/AccountAddModal.qml:1305",
     "comment": "caldav toggle label to disable tls verification"
   },
   {
@@ -1976,13 +1976,13 @@
   {
     "term": "Starting…",
     "context": "Starting…",
-    "reference": "Modals/AccountAddModal.qml:997",
+    "reference": "Modals/AccountAddModal.qml:998",
     "comment": "connect button while oauth flow starts"
   },
   {
     "term": "Status",
     "context": "Status",
-    "reference": "Modals/SettingsAboutPage.qml:349",
+    "reference": "Modals/SettingsAboutPage.qml:344",
     "comment": "about page daemon status column label"
   },
   {
@@ -2000,7 +2000,7 @@
   {
     "term": "Subscribe",
     "context": "Subscribe",
-    "reference": "Modals/AccountAddModal.qml:1643",
+    "reference": "Modals/AccountAddModal.qml:1655",
     "comment": "button to subscribe to an ical feed"
   },
   {
@@ -2012,7 +2012,7 @@
   {
     "term": "Subscribing…",
     "context": "Subscribing…",
-    "reference": "Modals/AccountAddModal.qml:1643",
+    "reference": "Modals/AccountAddModal.qml:1655",
     "comment": "subscribe button while ical feed is verified"
   },
   {
@@ -2048,7 +2048,7 @@
   {
     "term": "Task",
     "context": "Task",
-    "reference": "Modals/TaskDetailsModal.qml:266",
+    "reference": "Modals/TaskDetailsModal.qml:268",
     "comment": "title bar for the edit-task dialog"
   },
   {
@@ -2108,7 +2108,7 @@
   {
     "term": "Title is required",
     "context": "Title is required",
-    "reference": "Modals/EventDetailsModal.qml:311, Modals/TaskDetailsModal.qml:192",
+    "reference": "Modals/EventDetailsModal.qml:311, Modals/TaskDetailsModal.qml:194",
     "comment": "event form validation error for missing title | task form validation error for missing title"
   },
   {
@@ -2138,7 +2138,7 @@
   {
     "term": "Trust self-signed certificates. Only enable this for servers you control.",
     "context": "Trust self-signed certificates. Only enable this for servers you control.",
-    "reference": "Modals/AccountAddModal.qml:1305",
+    "reference": "Modals/AccountAddModal.qml:1314",
     "comment": "caldav toggle hint about disabling tls verification"
   },
   {
@@ -2150,7 +2150,7 @@
   {
     "term": "Try again",
     "context": "Try again",
-    "reference": "Modals/AccountAddModal.qml:1087",
+    "reference": "Modals/AccountAddModal.qml:1088",
     "comment": "button to retry oauth after failure"
   },
   {
@@ -2168,7 +2168,7 @@
   {
     "term": "University timetable",
     "context": "University timetable",
-    "reference": "Modals/AccountAddModal.qml:1603",
+    "reference": "Modals/AccountAddModal.qml:1615",
     "comment": "ical display name field placeholder"
   },
   {
@@ -2192,19 +2192,19 @@
   {
     "term": "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.",
     "context": "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.",
-    "reference": "Modals/AccountAddModal.qml:1496",
+    "reference": "Modals/AccountAddModal.qml:1506",
     "comment": "evolution data server account form instructions"
   },
   {
     "term": "Username",
     "context": "Username",
-    "reference": "Modals/AccountAddModal.qml:1252",
+    "reference": "Modals/AccountAddModal.qml:1257",
     "comment": "caldav username field label"
   },
   {
     "term": "Username (optional)",
     "context": "Username (optional)",
-    "reference": "Modals/AccountAddModal.qml:1611",
+    "reference": "Modals/AccountAddModal.qml:1623",
     "comment": "ical optional basic-auth username field label"
   },
   {
@@ -2222,7 +2222,7 @@
   {
     "term": "Version",
     "context": "Version",
-    "reference": "Modals/SettingsAboutPage.qml:303",
+    "reference": "Modals/SettingsAboutPage.qml:298",
     "comment": "about page daemon version column label"
   },
   {
@@ -2240,7 +2240,7 @@
   {
     "term": "Waiting for browser…",
     "context": "Waiting for browser…",
-    "reference": "Modals/AccountAddModal.qml:1036",
+    "reference": "Modals/AccountAddModal.qml:1037",
     "comment": "browser step heading while waiting for oauth"
   },
   {
@@ -2300,7 +2300,7 @@
   {
     "term": "Your calendars will sync in the background. You can manage this account from Settings → Accounts.",
     "context": "Your calendars will sync in the background. You can manage this account from Settings → Accounts.",
-    "reference": "Modals/AccountAddModal.qml:1157",
+    "reference": "Modals/AccountAddModal.qml:1158",
     "comment": "success step body about background sync"
   },
   {
@@ -2378,13 +2378,13 @@
   {
     "term": "only if the feed requires sign-in",
     "context": "only if the feed requires sign-in",
-    "reference": "Modals/AccountAddModal.qml:1612, Modals/AccountAddModal.qml:1621",
+    "reference": "Modals/AccountAddModal.qml:1624, Modals/AccountAddModal.qml:1633",
     "comment": "ical optional password field placeholder | ical optional username field placeholder"
   },
   {
     "term": "password",
     "context": "password",
-    "reference": "Modals/AccountAddModal.qml:1262",
+    "reference": "Modals/AccountAddModal.qml:1271",
     "comment": "caldav password field placeholder"
   },
   {
@@ -2420,7 +2420,7 @@
   {
     "term": "username",
     "context": "username",
-    "reference": "Modals/AccountAddModal.qml:1253",
+    "reference": "Modals/AccountAddModal.qml:1258",
     "comment": "caldav username field placeholder"
   },
   {

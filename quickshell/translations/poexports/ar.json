@@ -435,7 +435,7 @@
     "Delete \"%1\"?": "هل تريد حذف \"%1\"؟"
   },
   "Delete series": {
-    "Delete series": ""
+    "Delete series": "حذف السلسلة"
   },
   "Delete…": {
     "Delete…": "حذف…"
@@ -570,7 +570,7 @@
     "GitHub": "GitHub"
   },
   "Go to date": {
-    "Go to date": ""
+    "Go to date": "انتقل إلى التاريخ"
   },
   "Go to today": {
     "Go to today": "الانتقال إلى اليوم"
@@ -756,7 +756,7 @@
     "Next week": "الأسبوع التالي"
   },
   "Next year": {
-    "Next year": ""
+    "Next year": "السنة المقبلة"
   },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "لم يتم العثور على عميل OAuth في هذا الملف — الملف المتوقع هو client_secret_….json الذي تم تنزيله من Google."
@@ -912,7 +912,7 @@
     "Previous week": "الأسبوع السابق"
   },
   "Previous year": {
-    "Previous year": ""
+    "Previous year": "السنة السابقة"
   },
   "Priority": {
     "Priority": "أولوية"
@@ -1005,7 +1005,7 @@
     "Select client_secret.json": "اختر ملف client_secret.json"
   },
   "Select days for a new event (month view)": {
-    "Select days for a new event (month view)": ""
+    "Select days for a new event (month view)": "اختر أياماً لحدث جديد (عرض الشهر)"
   },
   "Select file": {
     "Select file": "اختر ملف"
@@ -1068,7 +1068,7 @@
     "Size": "الحجم"
   },
   "Skip certificate verification": {
-    "Skip certificate verification": ""
+    "Skip certificate verification": "تخطي التحقق من الشهادة"
   },
   "Snooze duration": {
     "Snooze duration": "مدة الغفو"
@@ -1170,7 +1170,7 @@
     "Tomorrow": "غداََ"
   },
   "Trust self-signed certificates. Only enable this for servers you control.": {
-    "Trust self-signed certificates. Only enable this for servers you control.": ""
+    "Trust self-signed certificates. Only enable this for servers you control.": "ثق بالشهادات الموقعة ذاتياً. لا تفعل هذا إلا للخوادم التي تتحكم بها."
   },
   "Try a different search.": {
     "Try a different search.": "جرّب بحثاً آخر."
@@ -1281,7 +1281,7 @@
     "days": "أيام"
   },
   "e.g. 2022-01-01": {
-    "e.g. 2022-01-01": ""
+    "e.g. 2022-01-01": "مثال: 2022-01-01"
   },
   "iCal subscription": {
     "iCal subscription": "اشتراك iCal"
