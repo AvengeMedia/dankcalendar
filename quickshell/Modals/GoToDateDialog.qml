@@ -52,9 +52,9 @@ Popup {
         if (/^\d{4}$/.test(s))
             return validDate(parseInt(s, 10), 0, 1);
 
-        const native = new Date(s);
-        if (!isNaN(native.getTime()))
-            return validDate(native.getFullYear(), native.getMonth(), native.getDate());
+        const parsedDate = new Date(s);
+        if (!isNaN(parsedDate.getTime()))
+            return validDate(parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate());
 
         return null;
     }
