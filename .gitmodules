@@ -1,3 +1,4 @@
 [submodule "dank-qml-common"]
 	path = dank-qml-common
 	url = https://github.com/AvengeMedia/dank-qml-common.git
+	branch = master
