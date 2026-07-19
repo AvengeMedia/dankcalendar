@@ -12,12 +12,20 @@ import (
 	entaccount "github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
+	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 	"github.com/AvengeMedia/dankgo/log"
 )
 
 type Notifier func(topic string, data any)
+
+// Sender delivers a desktop popup when an account newly requires
+// reauthentication, since the IPC "accounts" event alone only reaches the
+// Settings UI when it happens to be open.
+type Sender interface {
+	Send(n notify.Notification) (uint32, error)
+}
 
 const (
 	// minInterval floors how often an account may be re-synced so a provider
@@ -35,6 +43,7 @@ type Engine struct {
 	interval   time.Duration
 	intervalFn func() time.Duration
 	notify     Notifier
+	sender     Sender
 	now        func() time.Time
 
 	wake chan struct{}
@@ -62,6 +71,10 @@ func NewEngine(r *repo.Repo, registry *calendar.Registry, secrets calendar.Secre
 }
 
 func (e *Engine) SetNotifier(n Notifier) { e.notify = n }
+
+// SetSender wires a desktop notifier used to alert the user when an account
+// needs reauthentication. Optional: a nil sender leaves that popup silent.
+func (e *Engine) SetSender(s Sender) { e.sender = s }
 
 func (e *Engine) publish(topic string, data any) {
 	if e.notify == nil {
@@ -355,6 +368,16 @@ func (e *Engine) recordAuthState(ctx context.Context, acc *ent.Account, syncErr 
 	acc.NeedsReauth = needsReauth
 	acc.AuthError = authError
 	e.publish("accounts", map[string]any{"type": "changed", "accountId": acc.ID})
+
+	if needsReauth && e.sender != nil {
+		if _, err := e.sender.Send(notify.Notification{
+			Summary: "Dank Calendar",
+			Body:    fmt.Sprintf("%s needs to sign in again to keep syncing.", acc.DisplayName),
+			Urgency: notify.UrgencyNormal,
+		}); err != nil {
+			log.Warnf("send reauth notification for %s: %v", acc.ID, err)
+		}
+	}
 }
 
 func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, cal calendar.Calendar, token string) (time.Duration, error) {

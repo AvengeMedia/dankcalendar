@@ -152,6 +152,9 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 		log.Warnf("desktop notifications unavailable: %v", err)
 		notifier = nil
 	}
+	if notifier != nil {
+		syncEngine.SetSender(notifier)
+	}
 	var sender reminders.Sender
 	if notifier != nil {
 		sender = notifier

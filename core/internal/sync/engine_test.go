@@ -15,9 +15,20 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent/event"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
+	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	enginesync "github.com/AvengeMedia/dankcalendar/core/internal/sync"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
+
+// fakeSender records notifications instead of touching D-Bus.
+type fakeSender struct {
+	sent []notify.Notification
+}
+
+func (f *fakeSender) Send(n notify.Notification) (uint32, error) {
+	f.sent = append(f.sent, n)
+	return uint32(len(f.sent)), nil
+}
 
 type EngineSuite struct {
 	suite.Suite
@@ -406,6 +417,49 @@ func (s *EngineSuite) TestSyncAccountLeavesReauthClearOnGenericError() {
 	acc, err := s.repo.GetAccount(s.ctx, s.account.ID)
 	s.Require().NoError(err)
 	s.False(acc.NeedsReauth)
+}
+
+func (s *EngineSuite) TestSyncAccountNotifiesOnReauthTransition() {
+	sender := &fakeSender{}
+	s.engine.SetSender(sender)
+
+	provider := s.registerProvider()
+	authErr := fmt.Errorf("list google calendars: %w", calendar.ErrReauthRequired)
+	provider.EXPECT().ListCalendars(mock.Anything).Return(nil, authErr)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().Error(s.engine.SyncAccount(s.ctx, s.account))
+	s.Require().Len(sender.sent, 1)
+	s.Contains(sender.sent[0].Body, s.account.DisplayName)
+}
+
+func (s *EngineSuite) TestSyncAccountDoesNotRenotifyOnRepeatedReauthFailure() {
+	sender := &fakeSender{}
+	s.engine.SetSender(sender)
+
+	provider := s.registerProvider()
+	authErr := fmt.Errorf("list google calendars: %w", calendar.ErrReauthRequired)
+	provider.EXPECT().ListCalendars(mock.Anything).Return(nil, authErr).Twice()
+	provider.EXPECT().Close().Return(nil).Twice()
+
+	acc, err := s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
+
+	s.Require().Error(s.engine.SyncAccount(s.ctx, acc))
+	s.Require().Error(s.engine.SyncAccount(s.ctx, acc))
+	s.Require().Len(sender.sent, 1)
+}
+
+func (s *EngineSuite) TestSyncAccountDoesNotNotifyOnGenericError() {
+	sender := &fakeSender{}
+	s.engine.SetSender(sender)
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return(nil, errors.New("upstream down"))
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().Error(s.engine.SyncAccount(s.ctx, s.account))
+	s.Empty(sender.sent)
 }
 
 func (s *EngineSuite) TestSyncAccountClearsReauthOnSuccess() {
