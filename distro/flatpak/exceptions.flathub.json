@@ -1,0 +1,8 @@
+{
+  "com.danklinux.dankcalendar": {
+    "*": {
+      "finish-args-home-filesystem-access": "Local calendars use ICS directories chosen anywhere under the user's home.",
+      "finish-args-login1-system-talk-name": "Watch PrepareForSleep so reminders fire correctly after suspend."
+    }
+  }
+}

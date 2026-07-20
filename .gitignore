@@ -28,6 +28,11 @@ ui_*.h
 *.qmlc
 *.jsc
 *build-*
+builddir/
+.flatpak-builder/
+repo/
+repo-flatpak/
+DankCalendar-*.flatpak
 *.qm
 *.prl
 

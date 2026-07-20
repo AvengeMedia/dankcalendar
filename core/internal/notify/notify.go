@@ -5,6 +5,7 @@ package notify
 
 import (
 	"fmt"
+	"os"
 	"sync"
 
 	"github.com/godbus/dbus/v5"
@@ -31,6 +32,18 @@ const (
 	// than an ordinary calendar reminder.
 	SoundTask = "alarm-clock-elapsed"
 )
+
+func notificationIcon() string {
+	return iconForEnv(os.Getenv("FLATPAK_ID"))
+}
+
+// Flatpak only exports icons named after the app ID.
+func iconForEnv(flatpakID string) string {
+	if flatpakID != "" {
+		return desktopEntry
+	}
+	return appIcon
+}
 
 const (
 	UrgencyLow byte = iota
@@ -126,7 +139,7 @@ func (c *Client) Send(n Notification) (uint32, error) {
 
 	obj := c.conn.Object(busName, objectPath)
 	call := obj.Call(busName+".Notify", 0,
-		appName, n.ReplacesID, appIcon, n.Summary, n.Body, actions, hints, timeout)
+		appName, n.ReplacesID, notificationIcon(), n.Summary, n.Body, actions, hints, timeout)
 	if call.Err != nil {
 		return 0, fmt.Errorf("send notification: %w", call.Err)
 	}

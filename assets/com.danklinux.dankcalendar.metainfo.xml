@@ -6,11 +6,11 @@
   <summary>Calendar from the Dank Linux Suite</summary>
 
   <description>
-    <p>DankCalendar is a standalone calendar app that brings your Local, Google, Microsoft, CalDAV, and iCloud calendars together in one place. It runs as a lightweight daemon with a tray icon, keeps your accounts in sync, and reminds you about events — all with the look and feel of DankMaterialShell.</p>
+    <p>DankCalendar is a standalone calendar app that brings your Local, Google, Microsoft, CalDAV, and iCloud calendars together in one place. It runs as a lightweight daemon with a tray icon, keeps your accounts in sync, and reminds you about events. It is optionally paired with DankMaterialShell for a more integrated experience.</p>
   </description>
 
   <developer id="com.danklinux">
-    <name>Avenge Media LLC</name>
+    <name>Dank Linux</name>
   </developer>
 
   <metadata_license>CC0-1.0</metadata_license>
@@ -18,6 +18,45 @@
 
   <url type="homepage">https://danklinux.com</url>
   <url type="bugtracker">https://github.com/AvengeMedia/dankcalendar/issues</url>
+  <url type="vcs-browser">https://github.com/AvengeMedia/dankcalendar</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/AvengeMedia/dankcalendar/master/assets/screenshots/01_dankcalendar_main.png</image>
+      <caption>Month view with calendar sidebar</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/AvengeMedia/dankcalendar/master/assets/screenshots/02_dankcalendar_about.png</image>
+      <caption>About and settings</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/AvengeMedia/dankcalendar/master/assets/screenshots/03_dankcalendar_themes.png</image>
+      <caption>Theme selection</caption>
+    </screenshot>
+  </screenshots>
+
+  <releases>
+    <release version="0.2.3" date="2026-07-13">
+      <description>
+        <p>Sync calendar colors from more CalDAV and iCal providers.</p>
+      </description>
+    </release>
+    <release version="0.2.2" date="2026-07-09">
+      <description>
+        <p>Translation updates.</p>
+      </description>
+    </release>
+    <release version="0.2.1" date="2026-07-06">
+      <description>
+        <p>Toolchain and packaging fixes.</p>
+      </description>
+    </release>
+    <release version="0.2.0" date="2026-06-29">
+      <description>
+        <p>Navigation improvements, core hours, meeting URL refresh, and embedded UI packaging.</p>
+      </description>
+    </release>
+  </releases>
 
   <content_rating type="oars-1.1" />
 </component>
