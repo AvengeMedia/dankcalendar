@@ -5,9 +5,10 @@
   <name>DankCalendar</name>
   <summary>Calendar from the Dank Linux Suite</summary>
 
-  <description>
-    <p>DankCalendar is a standalone calendar app that brings your Local, Google, Microsoft, CalDAV, and iCloud calendars together in one place. It runs as a lightweight daemon with a tray icon, keeps your accounts in sync, and reminds you about events. It is optionally paired with DankMaterialShell for a more integrated experience.</p>
-  </description>
+<description>
+  <p>Dank Calendar is a standalone calendar app for the modern Linux desktop with a Material Design 3 inspired UI. It brings your Local, Google, Microsoft, CalDAV, and iCloud calendars together in one place. It runs as a lightweight daemon with a tray icon, keeps your accounts in sync, and reminds you about events.</p>
+  <p>It's one of the first to be built with <em>Quickshell</em>, Qt6, and Go. You can optionally pair it with <em>DankMaterialShell (DMS)</em> for a more integrated and streamlined experience.</p>
+</description>
 
   <developer id="com.danklinux">
     <name>Dank Linux</name>
