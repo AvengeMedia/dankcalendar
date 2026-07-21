@@ -171,7 +171,7 @@ jobs:
           VERSION_NUM=${GITHUB_REF_NAME#v}
           cd core && go mod vendor && cd ..
           tar czf "dankcalendar-${VERSION_NUM}.tar.gz" \
-            --transform "s,^,dankcalendar-${VERSION_NUM}/," \
+            --transform "s,^,dankcalendar-${VERSION_NUM}/,S" \
             --exclude=artifacts --exclude="dankcalendar-*.tar.gz" *
 
       - name: Create release and upload assets
