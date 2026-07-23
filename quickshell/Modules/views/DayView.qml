@@ -53,9 +53,10 @@ Item {
     }
 
     function eventTooltip(ev) {
+        const suffix = (ev.location ? " · " + ev.location : "") + (ev.calendar ? " · " + ev.calendar : "");
         if (ev.allDay)
-            return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + (ev.calendar ? " · " + ev.calendar : "");
-        return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + (ev.calendar ? " · " + ev.calendar : "");
+            return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + suffix;
+        return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + suffix;
     }
 
     function hourLabel(hour) {
@@ -393,6 +394,28 @@ Item {
                                     width: parent.width
                                     wrapMode: Text.NoWrap
                                     maximumLineCount: 1
+                                    elide: Text.ElideRight
+                                }
+
+                                StyledText {
+                                    visible: text !== "" && parent.parent.parent.modelData.durationHours >= 1.25
+                                    text: parent.parent.parent.modelData.location
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.surfaceVariantText
+                                    width: parent.width
+                                    wrapMode: Text.NoWrap
+                                    maximumLineCount: 1
+                                    elide: Text.ElideRight
+                                }
+
+                                StyledText {
+                                    visible: text !== "" && parent.parent.parent.modelData.durationHours >= 2
+                                    text: DankCalService.descriptionPreview(parent.parent.parent.modelData)
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.surfaceVariantText
+                                    width: parent.width
+                                    wrapMode: Text.WordWrap
+                                    maximumLineCount: 2
                                     elide: Text.ElideRight
                                 }
                             }

@@ -582,6 +582,20 @@ Singleton {
         return decorateEvent(_normalizeEvent(raw || {}));
     }
 
+    // Card previews need plain text: descriptions arrive as HTML (Google web
+    // UI) or markdown/plain text (Microsoft, CalDAV, local).
+    function descriptionPreview(ev) {
+        const raw = (ev.description || "").trim();
+        if (raw === "")
+            return "";
+        let plain = raw;
+        if (/<[a-z][^>]*>/i.test(raw))
+            plain = raw.replace(/<(style|script)[\s\S]*?<\/\1>/gi, " ").replace(/<(br|\/p|\/div|\/li|\/tr)[^>]*>/gi, "\n").replace(/<[^>]+>/g, " ");
+        plain = plain.replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/&lt;/gi, "<").replace(/&gt;/gi, ">").replace(/&quot;/gi, "\"").replace(/&#39;/g, "'");
+        // Separator-only lines ("---" footers) would waste the short preview.
+        return plain.split("\n").map(line => line.replace(/[ \t]+/g, " ").trim()).filter(line => line !== "" && !/^[-_=*~—–·•.]{2,}$/.test(line)).join("\n");
+    }
+
     function decorateEvent(ev) {
         const cal = calendarById(ev.calendarId);
         const out = Object.assign({}, ev);

@@ -72,6 +72,7 @@ Item {
                 const card = Object.assign({}, ev);
                 card.time = ev.allDay ? I18n.tr("All day", "time column label for all-day events on agenda card") : SettingsData.formatTime(ev.start);
                 card.duration = durationLabel(ev);
+                card.preview = DankCalService.descriptionPreview(ev);
                 return card;
             });
             out.push({
@@ -196,6 +197,42 @@ Item {
                                         font.pixelSize: Theme.fontSizeLarge
                                         font.weight: Font.Medium
                                         color: Theme.surfaceText
+                                        width: parent.width
+                                        wrapMode: Text.WordWrap
+                                        maximumLineCount: 2
+                                        elide: Text.ElideRight
+                                    }
+
+                                    Row {
+                                        width: parent.width
+                                        spacing: Theme.spacingXS
+                                        visible: card.modelData.location !== ""
+
+                                        DankIcon {
+                                            id: locationIcon
+                                            name: "place"
+                                            size: Theme.iconSizeSmall
+                                            color: Theme.surfaceVariantText
+                                            anchors.verticalCenter: parent.verticalCenter
+                                        }
+
+                                        StyledText {
+                                            text: card.modelData.location
+                                            font.pixelSize: Theme.fontSizeSmall
+                                            color: Theme.surfaceVariantText
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            width: parent.width - locationIcon.width - Theme.spacingXS
+                                            wrapMode: Text.NoWrap
+                                            maximumLineCount: 1
+                                            elide: Text.ElideRight
+                                        }
+                                    }
+
+                                    StyledText {
+                                        text: card.modelData.preview
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceVariantText
+                                        visible: text !== ""
                                         width: parent.width
                                         wrapMode: Text.WordWrap
                                         maximumLineCount: 2

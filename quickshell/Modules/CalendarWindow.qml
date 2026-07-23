@@ -82,6 +82,8 @@ FloatingWindow {
         switch (currentView) {
         case "day":
             d.setDate(d.getDate() + direction);
+            // The shown day is the selection; view switches re-anchor on it.
+            selectedDate = d;
             break;
         case "week":
             d.setDate(d.getDate() + direction * 7);

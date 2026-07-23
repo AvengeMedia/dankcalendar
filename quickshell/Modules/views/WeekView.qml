@@ -115,9 +115,10 @@ Item {
     }
 
     function eventTooltip(ev) {
+        const suffix = (ev.location ? " · " + ev.location : "") + (ev.calendar ? " · " + ev.calendar : "");
         if (ev.allDay)
-            return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + (ev.calendar ? " · " + ev.calendar : "");
-        return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + (ev.calendar ? " · " + ev.calendar : "");
+            return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + suffix;
+        return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + suffix;
     }
 
     function dayAt(index) {
@@ -635,6 +636,17 @@ Item {
                                                 width: parent.width
                                                 wrapMode: Text.WordWrap
                                                 maximumLineCount: Math.min(SettingsData.weekEventTitleLines, Math.max(1, Math.floor(parent.height / 14)))
+                                                elide: Text.ElideRight
+                                            }
+
+                                            StyledText {
+                                                visible: text !== "" && modelData.durationHours >= 1
+                                                text: modelData.location
+                                                font.pixelSize: 10
+                                                color: Theme.surfaceVariantText
+                                                width: parent.width
+                                                wrapMode: Text.NoWrap
+                                                maximumLineCount: 1
                                                 elide: Text.ElideRight
                                             }
                                         }
