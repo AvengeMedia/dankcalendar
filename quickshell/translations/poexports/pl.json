@@ -434,8 +434,11 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "Usuń \"%1\"?"
   },
+  "Delete occurrence": {
+    "Delete occurrence": ""
+  },
   "Delete series": {
-    "Delete series": ""
+    "Delete series": "Usuń serię"
   },
   "Delete…": {
     "Delete…": "Usuń..."
@@ -570,7 +573,7 @@
     "GitHub": "GitHub"
   },
   "Go to date": {
-    "Go to date": ""
+    "Go to date": "Idź do dnia"
   },
   "Go to today": {
     "Go to today": "Idź do dnia"
@@ -756,7 +759,7 @@
     "Next week": "Następny tydzień"
   },
   "Next year": {
-    "Next year": ""
+    "Next year": "Następny rok"
   },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "W tym pliku nie znaleziono klienta OAuth — oczekiwano pliku client_secret_….json pobranego z Google."
@@ -912,7 +915,7 @@
     "Previous week": "Poprzedni weekend"
   },
   "Previous year": {
-    "Previous year": ""
+    "Previous year": "Poprzedni rok"
   },
   "Priority": {
     "Priority": "Priorytet"
@@ -1005,7 +1008,7 @@
     "Select client_secret.json": "Wybierz plik client_secret.json"
   },
   "Select days for a new event (month view)": {
-    "Select days for a new event (month view)": ""
+    "Select days for a new event (month view)": "Wybierz dni dla nowego zdarzenia (widok miesiąca)"
   },
   "Select file": {
     "Select file": "Wybierz plik"
@@ -1068,7 +1071,7 @@
     "Size": "Rozmiar"
   },
   "Skip certificate verification": {
-    "Skip certificate verification": ""
+    "Skip certificate verification": "Pomiń weryfikację certyfikatu"
   },
   "Snooze duration": {
     "Snooze duration": "Czas trwania drzemki"
@@ -1170,7 +1173,7 @@
     "Tomorrow": "Jutro"
   },
   "Trust self-signed certificates. Only enable this for servers you control.": {
-    "Trust self-signed certificates. Only enable this for servers you control.": ""
+    "Trust self-signed certificates. Only enable this for servers you control.": "Ufaj certyfikatom z podpisem własnym. Włączaj tylko dla serwerów pod Twoją kontrolą."
   },
   "Try a different search.": {
     "Try a different search.": "Spróbuj wyszukać coś innego."
@@ -1281,7 +1284,7 @@
     "days": "dni"
   },
   "e.g. 2022-01-01": {
-    "e.g. 2022-01-01": ""
+    "e.g. 2022-01-01": "np. 2022-01-01"
   },
   "iCal subscription": {
     "iCal subscription": "Subskrypcja kalendarza iCal"

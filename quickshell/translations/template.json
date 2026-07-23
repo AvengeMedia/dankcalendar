@@ -966,6 +966,13 @@
     "comment": ""
   },
   {
+    "term": "Delete occurrence",
+    "translation": "",
+    "context": "event details button to delete only this occurrence of a recurring event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Delete series",
     "translation": "",
     "context": "event details button to confirm deleting a whole recurring series",

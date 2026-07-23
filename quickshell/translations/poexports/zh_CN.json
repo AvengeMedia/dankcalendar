@@ -434,6 +434,9 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "确认删除\"%1\"?"
   },
+  "Delete occurrence": {
+    "Delete occurrence": ""
+  },
   "Delete series": {
     "Delete series": "删除系列"
   },

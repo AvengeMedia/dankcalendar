@@ -434,6 +434,9 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "\"%1\" を削除しますか？"
   },
+  "Delete occurrence": {
+    "Delete occurrence": ""
+  },
   "Delete series": {
     "Delete series": ""
   },

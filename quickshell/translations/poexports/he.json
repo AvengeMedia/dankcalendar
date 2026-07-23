@@ -434,8 +434,11 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "למחוק את \"%1\"?"
   },
+  "Delete occurrence": {
+    "Delete occurrence": ""
+  },
   "Delete series": {
-    "Delete series": ""
+    "Delete series": "מחק/י סדרה"
   },
   "Delete…": {
     "Delete…": "מחיקה…"
@@ -570,7 +573,7 @@
     "GitHub": "GitHub"
   },
   "Go to date": {
-    "Go to date": ""
+    "Go to date": "מעבר לתאריך"
   },
   "Go to today": {
     "Go to today": "מעבר להיום"
@@ -756,7 +759,7 @@
     "Next week": "שבוע הבא"
   },
   "Next year": {
-    "Next year": ""
+    "Next year": "השנה הבאה"
   },
   "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
     "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "לא נמצא לקוח OAuth בקובץ זה — הציפייה היא לקובץ client_secret_….json שהורד מ-Google."
@@ -912,7 +915,7 @@
     "Previous week": "שבוע קודם"
   },
   "Previous year": {
-    "Previous year": ""
+    "Previous year": "השנה הקודמת"
   },
   "Priority": {
     "Priority": "עדיפות"
@@ -1005,7 +1008,7 @@
     "Select client_secret.json": "בחר/י בclient_secret.json"
   },
   "Select days for a new event (month view)": {
-    "Select days for a new event (month view)": ""
+    "Select days for a new event (month view)": "בחר/י ימים לאירוע חדש (בתצוגת חודש)"
   },
   "Select file": {
     "Select file": "בחר/י קובץ"
@@ -1068,7 +1071,7 @@
     "Size": "גודל"
   },
   "Skip certificate verification": {
-    "Skip certificate verification": ""
+    "Skip certificate verification": "דלג/י על אימות אישורים"
   },
   "Snooze duration": {
     "Snooze duration": "משך זמן לנודניק"
@@ -1170,7 +1173,7 @@
     "Tomorrow": "מחר"
   },
   "Trust self-signed certificates. Only enable this for servers you control.": {
-    "Trust self-signed certificates. Only enable this for servers you control.": ""
+    "Trust self-signed certificates. Only enable this for servers you control.": "סמוך/סמכי על אישורים בחתימה עצמית. מומלץ להפעיל את האפשרות אך ורק עבור שרתים שבשליטתך."
   },
   "Try a different search.": {
     "Try a different search.": "נסה/י חיפוש שונה."
@@ -1281,7 +1284,7 @@
     "days": "ימים"
   },
   "e.g. 2022-01-01": {
-    "e.g. 2022-01-01": ""
+    "e.g. 2022-01-01": "לדוגמה 2022-01-01"
   },
   "iCal subscription": {
     "iCal subscription": "הרשמה לiCal"
