@@ -16,6 +16,7 @@ INSTALL_DIR=$(PREFIX)/bin
 DATA_DIR=$(PREFIX)/share
 ICON_DIR=$(DATA_DIR)/icons/hicolor/scalable/apps
 APPLICATIONS_DIR=$(DATA_DIR)/applications
+METAINFO_DIR=$(DATA_DIR)/metainfo
 
 USER_HOME := $(if $(SUDO_USER),$(shell getent passwd $(SUDO_USER) | cut -d: -f6),$(HOME))
 # Honor XDG_CONFIG_HOME for the user systemd unit (NixOS and custom setups);
@@ -126,6 +127,10 @@ install-desktop:
 	@install -D -m 644 $(ASSETS_DIR)/$(DESKTOP_ID).desktop $(DESTDIR)$(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
 	@test -n "$(DESTDIR)" || update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
 
+install-metainfo:
+	@echo "Installing AppStream metainfo..."
+	@install -D -m 644 $(ASSETS_DIR)/$(DESKTOP_ID).metainfo.xml $(DESTDIR)$(METAINFO_DIR)/$(DESKTOP_ID).metainfo.xml
+
 install-systemd:
 	@echo "Installing systemd user service to $(SYSTEMD_USER_DIR)..."
 	@mkdir -p $(SYSTEMD_USER_DIR)
@@ -133,7 +138,7 @@ install-systemd:
 	@chmod 644 $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service
 	@if [ -n "$(SUDO_USER)" ]; then chown $(SUDO_USER) $(SYSTEMD_USER_DIR)/$(BINARY_NAME).service; fi
 
-install: install-bin install-icon install-desktop
+install: install-bin install-icon install-desktop install-metainfo
 	@echo ""
 	@echo "Installation complete."
 	@echo "Launch with 'dcal show' or the Dank Calendar desktop entry."
