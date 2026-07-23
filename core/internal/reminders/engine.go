@@ -449,6 +449,16 @@ func (e *Engine) HandleAction(id uint32, action string) {
 			log.Warnf("reminders: snooze: %v", err)
 		}
 		e.sender.Dismiss(id)
+	case "snooze_start":
+		e.sender.Dismiss(id)
+		// The start may have passed while the notification sat on screen;
+		// snoozing to a past instant would refire immediately.
+		if !key.start.After(e.now()) {
+			return
+		}
+		if err := e.repo.SnoozeReminder(ctx, key.calendarID, key.uid, key.start, key.minutes, key.start); err != nil {
+			log.Warnf("reminders: snooze until start: %v", err)
+		}
 	case "join":
 		if err := e.sender.OpenURI(fired.meetingURL); err != nil {
 			log.Warnf("reminders: open meeting: %v", err)
@@ -550,15 +560,18 @@ func (e *Engine) stateMap(ctx context.Context, now time.Time) (map[stateKey]*ent
 }
 
 func (e *Engine) fire(ctx context.Context, ev *ent.Event, key stateKey, s settings.UISettings, now time.Time) {
-	actions := make([]notify.Action, 0, 4)
+	actions := make([]notify.Action, 0, 5)
 	if ev.MeetingURL != "" {
 		actions = append(actions, notify.Action{Key: "join", Label: "Join"})
 	}
 	actions = append(actions,
 		notify.Action{Key: "default", Label: "Open"},
 		notify.Action{Key: "snooze", Label: fmt.Sprintf("Snooze %d min", s.SnoozeMinutes)},
-		notify.Action{Key: "dismiss", Label: "Dismiss"},
 	)
+	if !ev.AllDay && ev.Start.After(now) {
+		actions = append(actions, notify.Action{Key: "snooze_start", Label: "Snooze until start"})
+	}
+	actions = append(actions, notify.Action{Key: "dismiss", Label: "Dismiss"})
 
 	n := notify.Notification{
 		Summary:  eventTitle(ev),

@@ -277,6 +277,71 @@ func (s *EngineSuite) TestSnoozeRefires() {
 	s.Require().NoError(s.engine.Tick(s.ctx))
 }
 
+func (s *EngineSuite) TestSnoozeUntilStartRefiresAtStart() {
+	s.addEvent("ev1", t0.Add(10*time.Minute), t0.Add(40*time.Minute))
+
+	s.expectSend(7)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+
+	s.sender.EXPECT().Dismiss(uint32(7)).Once()
+	s.engine.HandleAction(7, "snooze_start")
+
+	// Not yet due again.
+	s.clock = t0.Add(5 * time.Minute)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+
+	s.clock = t0.Add(10 * time.Minute)
+	captured := s.expectSend(8)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Starts today at 12:10", captured.Body)
+
+	// Refire cleared the snooze: no further notifications.
+	s.clock = t0.Add(12 * time.Minute)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+}
+
+func (s *EngineSuite) TestSnoozeUntilStartAbsentOnceStarted() {
+	s.addEvent("ev1", t0.Add(-2*time.Minute), t0.Add(time.Hour))
+
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	for _, a := range captured.Actions {
+		s.NotEqual("snooze_start", a.Key)
+	}
+}
+
+func (s *EngineSuite) TestSnoozeUntilStartAbsentForAllDay() {
+	s.cfg.AllDayReminders = true
+	s.cfg.AllDayReminderDaysBefore = 1
+	s.cfg.AllDayReminderTime = "18:00"
+	dayStart := time.Date(2026, 6, 13, 0, 0, 0, 0, time.UTC)
+	s.addEvent("ev1", dayStart, dayStart.AddDate(0, 0, 1), func(in *repo.UpsertEventInput) {
+		in.AllDay = true
+	})
+
+	// Past the 18:00 day-before trigger, before the event starts.
+	s.clock = time.Date(2026, 6, 12, 18, 30, 0, 0, time.UTC)
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	for _, a := range captured.Actions {
+		s.NotEqual("snooze_start", a.Key)
+	}
+}
+
+func (s *EngineSuite) TestSnoozeUntilStartAfterStartOnlyDismisses() {
+	s.addEvent("ev1", t0.Add(10*time.Minute), t0.Add(40*time.Minute))
+
+	s.expectSend(7)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+
+	// The event began while the notification sat on screen: no snooze row is
+	// written, so nothing refires.
+	s.clock = t0.Add(11 * time.Minute)
+	s.sender.EXPECT().Dismiss(uint32(7)).Once()
+	s.engine.HandleAction(7, "snooze_start")
+	s.Require().NoError(s.engine.Tick(s.ctx))
+}
+
 func (s *EngineSuite) TestJoinActionOpensMeetingURL() {
 	const url = "https://meet.google.com/abc-defg-hij"
 	s.addEvent("ev1", t0.Add(10*time.Minute), t0.Add(40*time.Minute), func(in *repo.UpsertEventInput) {
@@ -407,8 +472,9 @@ func (s *EngineSuite) TestNotificationCarriesSettings() {
 	s.Require().NoError(s.engine.Tick(s.ctx))
 	s.False(captured.Resident)
 	s.Equal("Starts today at 12:10\nConference Room", captured.Body)
-	s.Require().Len(captured.Actions, 3)
+	s.Require().Len(captured.Actions, 4)
 	s.Equal("Snooze 15 min", captured.Actions[1].Label)
+	s.Equal("snooze_start", captured.Actions[2].Key)
 }
 
 func TestTriggersFor(t *testing.T) {
