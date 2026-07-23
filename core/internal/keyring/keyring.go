@@ -30,8 +30,9 @@ const (
 var ErrNotFound = errors.New("keyring: key not found")
 
 type Store struct {
-	ring      kr.Keyring
-	available bool
+	ring          kr.Keyring
+	secretService *secretServiceKeyring
+	available     bool
 }
 
 func Open() *Store {
@@ -42,6 +43,17 @@ func Open() *Store {
 			return &Store{available: false}
 		}
 		cfg = flatpakConfig()
+	} else {
+		service, err := openSecretService(resolveDefaultCollection())
+		if err == nil {
+			if _, probeErr := service.Get("__dankcal_probe__"); probeErr == nil || errors.Is(probeErr, kr.ErrKeyNotFound) {
+				log.Debugf("Secret Service keyring backend ready")
+				return &Store{secretService: service, available: true}
+			} else {
+				err = probeErr
+			}
+		}
+		log.Debugf("Secret Service keyring unavailable, trying fallback backends (%v)", err)
 	}
 
 	ring, err := kr.Open(cfg)
@@ -74,7 +86,6 @@ func defaultConfig() kr.Config {
 		FileDir:                 fileDir,
 		FilePasswordFunc:        filePassword,
 		AllowedBackends: []kr.BackendType{
-			kr.SecretServiceBackend,
 			kr.KWalletBackend,
 			kr.PassBackend,
 			kr.FileBackend,
@@ -190,7 +201,19 @@ func (s *Store) Get(accountID, key string) ([]byte, error) {
 		return nil, ErrNotFound
 	}
 
-	item, err := s.ring.Get(entryKey(accountID, key))
+	entry := entryKey(accountID, key)
+	if s.secretService != nil {
+		value, err := s.secretService.Get(entry)
+		switch {
+		case errors.Is(err, kr.ErrKeyNotFound):
+			return nil, ErrNotFound
+		case err != nil:
+			return nil, fmt.Errorf("keyring get: %w", err)
+		}
+		return value, nil
+	}
+
+	item, err := s.ring.Get(entry)
 	switch {
 	case errors.Is(err, kr.ErrKeyNotFound):
 		return nil, ErrNotFound
@@ -203,6 +226,13 @@ func (s *Store) Get(accountID, key string) ([]byte, error) {
 func (s *Store) Set(accountID, key string, value []byte) error {
 	if !s.available {
 		return ErrNotFound
+	}
+
+	if s.secretService != nil {
+		if err := s.secretService.Set(entryKey(accountID, key), value, "dankcal: "+accountID+" ("+key+")"); err != nil {
+			return fmt.Errorf("keyring set: %w", err)
+		}
+		return nil
 	}
 
 	err := s.ring.Set(kr.Item{
@@ -219,6 +249,17 @@ func (s *Store) Set(accountID, key string, value []byte) error {
 
 func (s *Store) Delete(accountID, key string) error {
 	if !s.available {
+		return nil
+	}
+
+	if s.secretService != nil {
+		err := s.secretService.Remove(entryKey(accountID, key))
+		switch {
+		case errors.Is(err, kr.ErrKeyNotFound):
+			return nil
+		case err != nil:
+			return fmt.Errorf("keyring delete: %w", err)
+		}
 		return nil
 	}
 

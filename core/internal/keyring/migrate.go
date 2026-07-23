@@ -25,11 +25,7 @@ func (s *Store) MigrateLoginCollection(refs []SecretRef) (int, error) {
 		return 0, nil
 	}
 
-	login, err := kr.Open(kr.Config{
-		ServiceName:             serviceName,
-		LibSecretCollectionName: legacyLoginCollection,
-		AllowedBackends:         []kr.BackendType{kr.SecretServiceBackend},
-	})
+	login, err := openSecretService(legacyLoginCollection)
 	if err != nil {
 		return 0, fmt.Errorf("open legacy login collection: %w", err)
 	}
@@ -45,7 +41,7 @@ func (s *Store) MigrateLoginCollection(refs []SecretRef) (int, error) {
 			return migrated, fmt.Errorf("read %s from login: %w", ek, err)
 		}
 
-		if err := s.Set(ref.AccountID, ref.Key, item.Data); err != nil {
+		if err := s.Set(ref.AccountID, ref.Key, item); err != nil {
 			return migrated, err
 		}
 		_ = login.Remove(ek)
