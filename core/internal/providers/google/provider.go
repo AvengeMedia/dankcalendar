@@ -425,14 +425,14 @@ func fromGoogleRecurrence(lines []string) *cal.Recurrence {
 		}
 		// RDATE/EXDATE may carry params (e.g. ;TZID=), so match the
 		// property name before any parameters.
-		prop, _, _ := strings.Cut(name, ";")
+		prop, params, _ := strings.Cut(name, ";")
 		switch strings.ToUpper(prop) {
 		case "RRULE":
 			rec.RRule = append(rec.RRule, value)
 		case "RDATE":
-			rec.RDate = append(rec.RDate, value)
+			rec.RDate = append(rec.RDate, normalizeDateValues(params, value))
 		case "EXDATE":
-			rec.ExDate = append(rec.ExDate, value)
+			rec.ExDate = append(rec.ExDate, normalizeDateValues(params, value))
 		}
 	}
 
@@ -440,6 +440,40 @@ func fromGoogleRecurrence(lines []string) *cal.Recurrence {
 		return nil
 	}
 	return rec
+}
+
+// normalizeDateValues rewrites a TZID-qualified RDATE/EXDATE value list to
+// absolute UTC instants; the expander reads bare values in the series zone,
+// which need not match the TZID Google reports.
+func normalizeDateValues(params, value string) string {
+	tzid := ""
+	for param := range strings.SplitSeq(params, ";") {
+		if v, ok := strings.CutPrefix(param, "TZID="); ok {
+			tzid = v
+		}
+	}
+	if tzid == "" {
+		return value
+	}
+	loc, err := tzcache.Load(tzid)
+	if err != nil {
+		return value
+	}
+
+	parts := strings.Split(value, ",")
+	for i, raw := range parts {
+		raw = strings.TrimSpace(raw)
+		parts[i] = raw
+		if len(raw) == 8 || strings.HasSuffix(raw, "Z") {
+			continue
+		}
+		t, perr := time.ParseInLocation("20060102T150405", raw, loc)
+		if perr != nil {
+			continue
+		}
+		parts[i] = t.UTC().Format("20060102T150405Z")
+	}
+	return strings.Join(parts, ",")
 }
 
 func fromGoogleAttendees(items []*calendar.EventAttendee) []cal.Attendee {

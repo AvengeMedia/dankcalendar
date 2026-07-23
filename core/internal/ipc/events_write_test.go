@@ -9,6 +9,7 @@ import (
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/recurrence"
 )
 
 func TestEventFromParamsRecurrence(t *testing.T) {
@@ -79,6 +80,47 @@ func TestShiftSeriesTimes(t *testing.T) {
 		assert.Equal(t, masterStart.Add(90*time.Minute), ev.Start)
 		assert.Equal(t, masterStart.Add(90*time.Minute+2*time.Hour), ev.End)
 	})
+}
+
+func TestExDateValue(t *testing.T) {
+	occ := time.Date(2026, 7, 23, 19, 0, 0, 0, time.UTC)
+
+	t.Run("timed uses UTC date-time form", func(t *testing.T) {
+		assert.Equal(t, "20260723T190000Z", exDateValue(occ, false))
+	})
+
+	t.Run("zoned instant normalizes to UTC", func(t *testing.T) {
+		ny, err := time.LoadLocation("America/New_York")
+		require.NoError(t, err)
+		assert.Equal(t, "20260723T190000Z", exDateValue(occ.In(ny), false))
+	})
+
+	t.Run("all day uses date form", func(t *testing.T) {
+		assert.Equal(t, "20260723", exDateValue(occ, true))
+	})
+}
+
+// The exclusion written by deleteEventOccurrence must suppress exactly that
+// occurrence when the series expands again.
+func TestExDateValueExcludesOccurrence(t *testing.T) {
+	series := recurrence.Series{
+		Start: time.Date(2026, 7, 20, 9, 0, 0, 0, time.UTC),
+		RRule: []string{"FREQ=DAILY"},
+	}
+	from := series.Start
+	to := series.Start.AddDate(0, 0, 4)
+
+	starts, err := recurrence.Expand(series, from, to)
+	require.NoError(t, err)
+	require.Len(t, starts, 5)
+
+	series.ExDate = []string{exDateValue(starts[2], false)}
+	starts, err = recurrence.Expand(series, from, to)
+	require.NoError(t, err)
+	require.Len(t, starts, 4)
+	for _, s := range starts {
+		assert.NotEqual(t, time.Date(2026, 7, 22, 9, 0, 0, 0, time.UTC), s.UTC())
+	}
 }
 
 // Regression: domainEventFromEnt used to drop recurrence and original start,

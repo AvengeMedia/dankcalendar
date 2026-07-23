@@ -37,6 +37,7 @@ FloatingWindow {
     // model, so the control is hidden there.
     readonly property bool recurrenceEditable: createMode || !(event.recurringId || "")
     readonly property bool isOccurrence: (event.recurringId || "") !== "" && (event.recurrence || []).length > 0
+    readonly property bool isRecurring: (event.recurrence || []).length > 0
     readonly property int maxReminders: 5
 
     readonly property var reminderOptions: [
@@ -367,7 +368,7 @@ FloatingWindow {
         }
     }
 
-    function removeEvent() {
+    function removeEvent(occurrenceOnly) {
         if (!confirmDelete) {
             confirmDelete = true;
             return;
@@ -381,7 +382,7 @@ FloatingWindow {
                 return;
             }
             hide();
-        });
+        }, occurrenceOnly ? new Date(event.start).toISOString() : undefined);
     }
 
     function respond(action) {
@@ -562,11 +563,21 @@ FloatingWindow {
                 }
 
                 DankButton {
-                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete
-                    text: (eventModal.event.recurrence || []).length > 0 ? I18n.tr("Delete series", "event details button to confirm deleting a whole recurring series") : I18n.tr("Confirm delete", "event details button to confirm deleting the event")
+                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete && eventModal.isRecurring
+                    text: I18n.tr("Delete occurrence", "event details button to delete only this occurrence of a recurring event")
                     buttonHeight: 32
                     backgroundColor: Theme.error
                     textColor: Theme.primaryText
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: eventModal.removeEvent(true)
+                }
+
+                DankButton {
+                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete
+                    text: eventModal.isRecurring ? I18n.tr("Delete series", "event details button to confirm deleting a whole recurring series") : I18n.tr("Confirm delete", "event details button to confirm deleting the event")
+                    buttonHeight: 32
+                    backgroundColor: eventModal.isRecurring ? "transparent" : Theme.error
+                    textColor: eventModal.isRecurring ? Theme.error : Theme.primaryText
                     anchors.verticalCenter: parent.verticalCenter
                     onClicked: eventModal.removeEvent()
                 }

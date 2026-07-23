@@ -751,10 +751,13 @@ Singleton {
         });
     }
 
-    function deleteEvent(id, callback) {
-        sendRequest("events.delete", {
+    function deleteEvent(id, callback, occurrenceStart) {
+        const params = {
             "id": id
-        }, response => {
+        };
+        if (occurrenceStart)
+            params.occurrenceStart = occurrenceStart;
+        sendRequest("events.delete", params, response => {
             if (response.error)
                 lastError = response.error;
             else

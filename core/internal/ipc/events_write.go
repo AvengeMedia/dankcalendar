@@ -132,6 +132,16 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 	}
 	calendarID := entEv.Edges.Calendar.ID
 
+	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" {
+		occStart, perr := time.Parse(time.RFC3339, raw)
+		if perr != nil {
+			RespondError(w, req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
+			return
+		}
+		deleteEventOccurrence(ctx, w, req, deps, entEv, calendarID, occStart)
+		return
+	}
+
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
 	if err != nil {
 		RespondError(w, req.ID, err.Error())
@@ -144,6 +154,38 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 		return
 	}
 	if err := deps.Repo.DeleteEvent(ctx, id); err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	publishEventsChanged(deps, calendarID)
+	Respond(w, req.ID, map[string]any{"deleted": true})
+}
+
+// deleteEventOccurrence removes one instance of a recurring series by adding
+// an EXDATE to the master and updating it in place.
+func deleteEventOccurrence(ctx context.Context, w *ConnWriter, req Request, deps Deps, entEv *ent.Event, calendarID string, occStart time.Time) {
+	ev := domainEventFromEnt(entEv)
+	if ev.Recurrence == nil || len(ev.Recurrence.RRule)+len(ev.Recurrence.RDate) == 0 {
+		RespondError(w, req.ID, "event is not recurring")
+		return
+	}
+
+	ev.Recurrence.ExDate = append(ev.Recurrence.ExDate, exDateValue(occStart, ev.AllDay))
+
+	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+	defer provider.Close()
+
+	updated, err := provider.UpdateEvent(ctx, domCal, &ev)
+	if err != nil {
+		RespondError(w, req.ID, fmt.Sprintf("delete occurrence: %v", err))
+		return
+	}
+	if _, err := persistEvent(ctx, deps, domCal.ID, updated); err != nil {
 		RespondError(w, req.ID, err.Error())
 		return
 	}
@@ -344,6 +386,15 @@ func providerForCalendar(ctx context.Context, deps Deps, calendarID string) (cal
 		SupportedComponents: entCal.SupportedComponents,
 	}
 	return provider, domCal, nil
+}
+
+// exDateValue formats an occurrence start as an EXDATE property value in the
+// UTC forms the expander compares against.
+func exDateValue(occStart time.Time, allDay bool) string {
+	if allDay {
+		return occStart.UTC().Format("20060102")
+	}
+	return occStart.UTC().Format("20060102T150405Z")
 }
 
 func shiftSeriesTimes(ev calendar.Event, masterStart, occurrenceStart time.Time) calendar.Event {

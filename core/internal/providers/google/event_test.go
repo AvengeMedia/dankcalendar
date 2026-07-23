@@ -41,6 +41,33 @@ func TestToGoogleEventNonRecurringLeavesTimeZoneEmpty(t *testing.T) {
 	assert.Empty(t, out.Recurrence)
 }
 
+// Google echoes exclusions in the event's zone (EXDATE;TZID=...) while our
+// expander reads bare values in the series zone; parsing must pin them to UTC.
+func TestFromGoogleRecurrenceNormalizesZonedDates(t *testing.T) {
+	rec := fromGoogleRecurrence([]string{
+		"RRULE:FREQ=DAILY",
+		"EXDATE;TZID=America/New_York:20260728T090000",
+		"RDATE;TZID=America/New_York:20260801T090000,20260802T090000",
+		"EXDATE:20260730T130000Z",
+	})
+
+	require.NotNil(t, rec)
+	assert.Equal(t, []string{"FREQ=DAILY"}, rec.RRule)
+	assert.Equal(t, []string{"20260728T130000Z", "20260730T130000Z"}, rec.ExDate)
+	assert.Equal(t, []string{"20260801T130000Z,20260802T130000Z"}, rec.RDate)
+}
+
+func TestFromGoogleRecurrenceKeepsFloatingAndDateValues(t *testing.T) {
+	rec := fromGoogleRecurrence([]string{
+		"RRULE:FREQ=DAILY",
+		"EXDATE:20260728T090000",
+		"EXDATE;VALUE=DATE;TZID=America/New_York:20260729",
+	})
+
+	require.NotNil(t, rec)
+	assert.Equal(t, []string{"20260728T090000", "20260729"}, rec.ExDate)
+}
+
 func TestToGoogleEventRecurringExistingZoneKept(t *testing.T) {
 	ev := &cal.Event{
 		Summary:       "standup",
