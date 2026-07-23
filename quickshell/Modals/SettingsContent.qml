@@ -617,6 +617,16 @@ Item {
             contentHeight: appearanceColumn.implicitHeight
 
             function openThemeFilePicker() {
+                if (DankCalService.runningInFlatpak) {
+                    DankCalService.pickPath({
+                        "title": I18n.tr("Select theme file", "custom theme file picker title"),
+                        "extensions": ["*.json"]
+                    }, path => {
+                        if (path)
+                            SettingsData.customThemeFile = path;
+                    });
+                    return;
+                }
                 themePickerLoader.active = true;
                 const picker = themePickerLoader.item;
                 picker.browserTitle = I18n.tr("Select theme file", "custom theme file picker title");

@@ -155,6 +155,17 @@ FloatingWindow {
     property string expandedScreenshot: ""
 
     function openFilePicker(opts, callback) {
+        if (DankCalService.runningInFlatpak) {
+            DankCalService.pickPath({
+                "directory": !!opts.folderMode,
+                "title": opts.title || I18n.tr("Select file", "default title for file picker in account add modal"),
+                "extensions": opts.folderMode ? [] : (opts.extensions || ["*.*"])
+            }, path => {
+                if (path && callback)
+                    callback(path);
+            });
+            return;
+        }
         pickerCallback = callback;
         pickerLoader.active = true;
         const picker = pickerLoader.item;

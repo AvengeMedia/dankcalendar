@@ -128,9 +128,19 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 	registry.Register(ical.Factory{})
 	registry.Register(evolution.Factory{})
 
-	keyringStore := dankkeyring.Open()
-	migrateLegacyLoginKeyring(ctx, keyringStore, r)
-	secrets := dankkeyring.NewSecretStore(keyringStore, repo.NewSecretStore(r))
+	var secrets calendar.SecretStore
+	if dankkeyring.InFlatpak() {
+		var serr error
+		secrets, serr = dankkeyring.OpenSecretStore(r)
+		if serr != nil {
+			r.Close()
+			return nil, fmt.Errorf("open secrets: %w", serr)
+		}
+	} else {
+		keyringStore := dankkeyring.Open()
+		migrateLegacyLoginKeyring(ctx, keyringStore, r)
+		secrets = dankkeyring.NewSecretStore(keyringStore, repo.NewSecretStore(r))
+	}
 	flows := oauth.NewFlowRegistry()
 	broker := auth_handler.NewCallbackBroker()
 

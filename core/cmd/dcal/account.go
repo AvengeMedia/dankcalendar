@@ -226,7 +226,11 @@ func openStores(ctx context.Context) (*cliStores, func(), error) {
 		return nil, nil, err
 	}
 	r := repo.New(client)
-	secrets := dankkeyring.NewSecretStore(dankkeyring.Open(), repo.NewSecretStore(r))
+	secrets, err := dankkeyring.OpenSecretStore(r)
+	if err != nil {
+		_ = r.Close()
+		return nil, nil, err
+	}
 	return &cliStores{repo: r, secrets: secrets}, func() { _ = r.Close() }, nil
 }
 

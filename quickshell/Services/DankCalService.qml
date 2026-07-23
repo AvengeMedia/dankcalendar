@@ -438,6 +438,25 @@ Singleton {
         });
     }
 
+    readonly property bool runningInFlatpak: Quickshell.env("FLATPAK_ID") !== ""
+
+    // Flatpak: FileChooser portal. Native: caller should use FileBrowserModal.
+    function pickPath(opts, callback) {
+        sendRequest("system.pickPath", {
+            "directory": !!opts.directory,
+            "title": opts.title || "",
+            "filters": opts.extensions || []
+        }, response => {
+            if (!callback)
+                return;
+            if (response.error || !response.result || response.result.cancelled) {
+                callback(null);
+                return;
+            }
+            callback(response.result.path || null);
+        });
+    }
+
     // _holdsEvents treats an empty component set as an event calendar for
     // back-compat; a pure task list (VTODO only) is excluded from "My calendars".
     function _holdsEvents(c) {

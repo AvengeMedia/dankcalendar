@@ -5,6 +5,7 @@ sdk: org.kde.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.golang
 command: dcal
+rename-icon: dankcalendar
 
 finish-args:
   - --share=ipc
@@ -13,11 +14,8 @@ finish-args:
   - --socket=fallback-x11
   - --socket=pulseaudio
   - --device=dri
-  - --talk-name=org.freedesktop.Notifications
-  - --talk-name=org.freedesktop.secrets
   - --talk-name=org.kde.StatusNotifierWatcher
   - --system-talk-name=org.freedesktop.login1
-  - --filesystem=home
 
 cleanup:
   - /include
@@ -113,14 +111,11 @@ modules:
         install -Dm644 assets/com.danklinux.dankcalendar.desktop
         /app/share/applications/com.danklinux.dankcalendar.desktop
       - >-
-        sed -i s/^Icon=dankcalendar$/Icon=com.danklinux.dankcalendar/
-        /app/share/applications/com.danklinux.dankcalendar.desktop
-      - >-
         install -Dm644 assets/com.danklinux.dankcalendar.metainfo.xml
         /app/share/metainfo/com.danklinux.dankcalendar.metainfo.xml
       - >-
         install -Dm644 assets/dankcalendar.svg
-        /app/share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg
+        /app/share/icons/hicolor/scalable/apps/dankcalendar.svg
       - >-
         install -Dm644 LICENSE
         /app/share/licenses/com.danklinux.dankcalendar/LICENSE

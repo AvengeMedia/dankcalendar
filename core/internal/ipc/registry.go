@@ -82,6 +82,12 @@ var Methods = []MethodSpec{
 	{Name: "system.autostart.set", Group: "system", Desc: "Enable or disable autostart", Params: []ParamSpec{req("enabled", "true|false")}},
 	{Name: "system.colorScheme.get", Group: "system", Desc: "Current portal color scheme (0 no-preference, 1 dark, 2 light)"},
 	{Name: "system.openUri", Group: "system", Desc: "Open a URI with the default handler via the desktop portal", Params: []ParamSpec{req("uri", "")}},
+	{Name: "system.isFlatpak", Group: "system", Desc: "Whether the daemon is running inside Flatpak"},
+	{Name: "system.pickPath", Group: "system", Desc: "Pick a file or directory via the FileChooser portal (Flatpak)", Params: []ParamSpec{
+		opt("directory", "true to pick a folder"),
+		opt("title", "dialog title"),
+		opt("filters", "glob list e.g. [\"*.json\"]"),
+	}},
 }
 
 func MethodNames() []string {
