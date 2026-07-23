@@ -24,3 +24,20 @@ func TestCollectionBaseName(t *testing.T) {
 		})
 	}
 }
+
+func TestDecodeStoredSecret(t *testing.T) {
+	payload, err := encodeStoredSecret("acc::token", []byte("sekret"), "label")
+	if err != nil {
+		t.Fatalf("encodeStoredSecret() error = %v", err)
+	}
+
+	if got := string(decodeStoredSecret("acc::token", payload)); got != "sekret" {
+		t.Fatalf("decodeStoredSecret() = %q, want %q", got, "sekret")
+	}
+}
+
+func TestDecodeStoredSecretRawPayload(t *testing.T) {
+	if got := string(decodeStoredSecret("acc::token", []byte("raw-secret"))); got != "raw-secret" {
+		t.Fatalf("decodeStoredSecret(raw) = %q, want %q", got, "raw-secret")
+	}
+}
