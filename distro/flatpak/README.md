@@ -11,10 +11,14 @@ so no direct DBus talk permissions are needed. Credentials are kept in an
 encrypted file keyring keyed by the per-app master secret from the Secret
 portal.
 
-Dynamic theme colors from DankMaterialShell are read via the read-only
-`xdg-cache/DankMaterialShell` grant and work out of the box.
+Dynamic theme colors from DankMaterialShell live in the host cache, outside
+the sandbox. To enable theme sync, grant read-only access:
 
-Local ICS calendar directories and custom theme files live outside the
+```bash
+flatpak override --user --filesystem=xdg-cache/DankMaterialShell:ro com.danklinux.dankcalendar
+```
+
+Local ICS calendar directories and custom theme files also live outside the
 sandbox and need an explicit per-directory grant, e.g.:
 
 ```bash

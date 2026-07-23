@@ -14,11 +14,10 @@ finish-args:
   - --socket=pulseaudio
   - --device=dri
   - --talk-name=org.kde.StatusNotifierWatcher
-  # Read-only signal subscription (PrepareForSleep) so reminder timers re-arm
-  # after suspend; no methods are called.
+  # Subscribes to PrepareForSleep so reminder timers re-arm on resume from suspend
+  # GO uses the monotonic clock so during suspend scheduled reminders will fall out of sync otherwise
+  # Read-only, no methods are called
   - --system-talk-name=org.freedesktop.login1
-  # DankMaterialShell publishes dynamic theme colors here; read-only.
-  - --filesystem=xdg-cache/DankMaterialShell:ro
 
 cleanup:
   - /include

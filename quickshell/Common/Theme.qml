@@ -26,12 +26,17 @@ Singleton {
         }
     }
 
+    // DMS publishes to the host cache. Inside Flatpak, StandardPaths resolve
+    // to the sandbox cache while a user-granted xdg-cache override mounts at
+    // the host path, which only HOST_XDG_CACHE_HOME (or HOME) locates.
     readonly property string xdgCacheDir: {
-        const xdg = Quickshell.env("XDG_CACHE_HOME");
-        if (xdg && xdg !== "")
-            return xdg;
-        const home = Quickshell.env("HOME");
-        return home + "/.cache";
+        const flatpakId = Quickshell.env("FLATPAK_ID");
+        if (!flatpakId || flatpakId === "")
+            return Paths.strip(Paths.xdgCache);
+        const hostXdg = Quickshell.env("HOST_XDG_CACHE_HOME");
+        if (hostXdg && hostXdg !== "")
+            return hostXdg;
+        return Paths.strip(Paths.home) + "/.cache";
     }
 
     readonly property string dmsColorsPath: xdgCacheDir + "/DankMaterialShell/dms-colors.json"
