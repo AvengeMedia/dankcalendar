@@ -1,17 +1,21 @@
 package keyring
 
 import (
+	"context"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"path/filepath"
 	"strings"
+	"sync"
+	"time"
 
 	kr "github.com/99designs/keyring"
 	"github.com/godbus/dbus/v5"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 	"github.com/AvengeMedia/dankgo/log"
+	"github.com/AvengeMedia/dankgo/portal"
 )
 
 const (
@@ -32,6 +36,14 @@ type Store struct {
 
 func Open() *Store {
 	cfg := defaultConfig()
+	if portal.InFlatpak() {
+		if _, err := portalSecret(); err != nil {
+			log.Warnf("secret portal unavailable, falling back to encrypted db (%v)", err)
+			return &Store{available: false}
+		}
+		cfg = flatpakConfig()
+	}
+
 	ring, err := kr.Open(cfg)
 	if err != nil {
 		log.Warnf("keyring unavailable, falling back to encrypted db (%v)", err)
@@ -126,6 +138,45 @@ func decodeCollectionPath(src string) string {
 
 func filePassword(prompt string) (string, error) {
 	return "dankcal-local", nil
+}
+
+// flatpakConfig avoids org.freedesktop.secrets entirely: the sandbox has no
+// talk permission for it, so the encrypted file backend is keyed with the
+// per-app master secret from the XDG Secret portal instead.
+func flatpakConfig() kr.Config {
+	fileDir := ""
+	if dir, err := paths.DataDir(); err == nil {
+		fileDir = filepath.Join(dir, "keyring")
+	}
+
+	return kr.Config{
+		ServiceName:      serviceName,
+		FileDir:          fileDir,
+		FilePasswordFunc: portalFilePassword,
+		AllowedBackends:  []kr.BackendType{kr.FileBackend},
+	}
+}
+
+var portalSecret = sync.OnceValues(func() (string, error) {
+	conn, err := dbus.SessionBus()
+	if err != nil {
+		return "", fmt.Errorf("connect session bus: %w", err)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	res, err := portal.RetrieveSecret(ctx, conn, portal.SecretOptions{})
+	if err != nil {
+		return "", err
+	}
+	if len(res.Secret) == 0 {
+		return "", errors.New("secret portal returned an empty secret")
+	}
+	return hex.EncodeToString(res.Secret), nil
+})
+
+func portalFilePassword(prompt string) (string, error) {
+	return portalSecret()
 }
 
 func entryKey(accountID, key string) string {

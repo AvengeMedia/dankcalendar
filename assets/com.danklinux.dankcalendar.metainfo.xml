@@ -37,6 +37,21 @@
   </screenshots>
 
   <releases>
+    <release version="0.2.6" date="2026-07-23">
+      <description>
+        <p>Use the XDG notification and secret portals when sandboxed, and align the icon name with the application ID.</p>
+      </description>
+    </release>
+    <release version="0.2.5" date="2026-07-21">
+      <description>
+        <p>Packaging and CI fixes.</p>
+      </description>
+    </release>
+    <release version="0.2.4" date="2026-07-20">
+      <description>
+        <p>Initial Flatpak support.</p>
+      </description>
+    </release>
     <release version="0.2.3" date="2026-07-13">
       <description>
         <p>Sync calendar colors from more CalDAV and iCal providers.</p>

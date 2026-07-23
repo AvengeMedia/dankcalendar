@@ -47,12 +47,35 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]calendar.Calendar, erro
 	for _, entry := range entries {
 		switch {
 		case entry.IsDir():
+			// Arbitrary subdirectories (caches, configs) are not calendars;
+			// only directories that hold events qualify, matching vdirsyncer
+			// collection layouts.
+			if !hasICSFiles(filepath.Join(p.root, entry.Name())) {
+				continue
+			}
 			calendars = append(calendars, p.directoryCalendar(entry.Name()))
-		case strings.HasSuffix(strings.ToLower(entry.Name()), ".ics"):
+		case isICSFile(entry.Name()):
 			calendars = append(calendars, p.fileCalendar(entry.Name()))
 		}
 	}
 	return calendars, nil
+}
+
+func isICSFile(name string) bool {
+	return strings.HasSuffix(strings.ToLower(name), ".ics")
+}
+
+func hasICSFiles(dir string) bool {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return false
+	}
+	for _, entry := range entries {
+		if !entry.IsDir() && isICSFile(entry.Name()) {
+			return true
+		}
+	}
+	return false
 }
 
 // localComponents is what a local store may hold: a file or directory can carry

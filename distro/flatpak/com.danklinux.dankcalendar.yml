@@ -13,11 +13,12 @@ finish-args:
   - --socket=fallback-x11
   - --socket=pulseaudio
   - --device=dri
-  - --talk-name=org.freedesktop.Notifications
-  - --talk-name=org.freedesktop.secrets
   - --talk-name=org.kde.StatusNotifierWatcher
+  # Read-only signal subscription (PrepareForSleep) so reminder timers re-arm
+  # after suspend; no methods are called.
   - --system-talk-name=org.freedesktop.login1
-  - --filesystem=home
+  # DankMaterialShell publishes dynamic theme colors here; read-only.
+  - --filesystem=xdg-cache/DankMaterialShell:ro
 
 cleanup:
   - /include
@@ -106,20 +107,17 @@ modules:
       - make -C core sync-shell
       - >-
         go build -C core -mod=vendor -tags withshell
-        -ldflags=-s\ -w\ -X\ main.Version=0.2.4\ -X\ main.Commit=d5afff61
+        -ldflags=-s\ -w\ -X\ main.Version=0.2.6\ -X\ main.Commit=TODO8HEX
         -o dcal ./cmd/dcal
       - install -Dm755 core/dcal /app/bin/dcal
       - >-
         install -Dm644 assets/com.danklinux.dankcalendar.desktop
         /app/share/applications/com.danklinux.dankcalendar.desktop
       - >-
-        sed -i s/^Icon=dankcalendar$/Icon=com.danklinux.dankcalendar/
-        /app/share/applications/com.danklinux.dankcalendar.desktop
-      - >-
         install -Dm644 assets/com.danklinux.dankcalendar.metainfo.xml
         /app/share/metainfo/com.danklinux.dankcalendar.metainfo.xml
       - >-
-        install -Dm644 assets/dankcalendar.svg
+        install -Dm644 assets/com.danklinux.dankcalendar.svg
         /app/share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg
       - >-
         install -Dm644 LICENSE
@@ -127,6 +125,6 @@ modules:
     sources:
       - type: git
         url: https://github.com/AvengeMedia/dankcalendar.git
-        tag: v0.2.4
-        commit: d5afff616bc327578e0645c4ef1caf0bbcaa6c2a
+        tag: v0.2.6
+        commit: TODO-FULL-COMMIT-OF-v0.2.6-TAG
       - go.mod.yml

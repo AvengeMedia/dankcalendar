@@ -5,7 +5,7 @@ go 1.26.4
 require (
 	entgo.io/ent v0.14.6
 	github.com/99designs/keyring v1.2.2
-	github.com/AvengeMedia/dankgo v0.0.0-20260714205715-37751ad4fa70
+	github.com/AvengeMedia/dankgo v0.0.0-20260723140649-8720f7c4d074
 	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.2
 	github.com/adrg/xdg v0.5.3
 	github.com/caarlos0/env/v11 v11.4.1

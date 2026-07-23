@@ -12,8 +12,8 @@ github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 h1:/vQbFIOMb
 github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4/go.mod h1:hN7oaIRCjzsZ2dE+yG5k+rsdt3qcwykqK6HVGcKwsw4=
 github.com/99designs/keyring v1.2.2 h1:pZd3neh/EmUzWONb35LxQfvuY7kiSXAq3HQd97+XBn0=
 github.com/99designs/keyring v1.2.2/go.mod h1:wes/FrByc8j7lFOAGLGSNEg8f/PaI3cgTBqhFkHUrPk=
-github.com/AvengeMedia/dankgo v0.0.0-20260714205715-37751ad4fa70 h1:agUNZYdOVbRnZTq88I8mRlXe+SbS6hhBLRgbBdShBt4=
-github.com/AvengeMedia/dankgo v0.0.0-20260714205715-37751ad4fa70/go.mod h1:Mq97qMSEhNxCaYIxfqlh9DsnBTythvYIj0RNqx35i20=
+github.com/AvengeMedia/dankgo v0.0.0-20260723140649-8720f7c4d074 h1:KoPNgo7AGjq9KLB4VEY4Kt/PXTk5U0BafVQ3UpwVEjI=
+github.com/AvengeMedia/dankgo v0.0.0-20260723140649-8720f7c4d074/go.mod h1:7p7cfydr4WM1G6eOPFlANXF3IV5du3FoA4CbDPprHAo=
 github.com/DATA-DOG/go-sqlmock v1.5.0 h1:Shsta01QNfFxHCfpW6YH2STWB0MudeXXEWMr20OEh60=
 github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
 github.com/JohannesKaufmann/dom v0.3.1 h1:J16l9JAHWgkFPR3VIPbQ1gvS0cWab6laK1q7PFL3qh0=

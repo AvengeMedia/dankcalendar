@@ -197,4 +197,4 @@ jobs:
           VERSION_NUM=${VERSION#v}
           gh release upload "$VERSION" "dankcalendar-${VERSION_NUM}.tar.gz" --clobber
 
-          gh release upload "$VERSION" "assets/dankcalendar.svg" --clobber
+          gh release upload "$VERSION" "assets/com.danklinux.dankcalendar.svg" --clobber

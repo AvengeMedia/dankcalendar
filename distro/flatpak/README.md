@@ -3,12 +3,32 @@
 The build provides `dcal` and the Quickshell runtime.
 It installs the desktop file, metainfo, and icon as `com.danklinux.dankcalendar`.
 
+## Sandbox permissions
+
+Notifications and credential storage go through the XDG desktop portals
+(`org.freedesktop.portal.Notification` and `org.freedesktop.portal.Secret`),
+so no direct DBus talk permissions are needed. Credentials are kept in an
+encrypted file keyring keyed by the per-app master secret from the Secret
+portal.
+
+Dynamic theme colors from DankMaterialShell are read via the read-only
+`xdg-cache/DankMaterialShell` grant and work out of the box.
+
+Local ICS calendar directories and custom theme files live outside the
+sandbox and need an explicit per-directory grant, e.g.:
+
+```bash
+flatpak override --user --filesystem=~/calendars com.danklinux.dankcalendar
+```
+
+or the equivalent in Flatseal.
+
 ## Build and install
 
 From the repository root:
 
 ```bash
-flatpak run --user org.flatpak.Builder \
+flatpak run org.flatpak.Builder \
   --force-clean --user --install --repo=repo \
   --mirror-screenshots-url=https://dl.flathub.org/media \
   --compose-url-policy=full \
@@ -22,7 +42,7 @@ flatpak run com.danklinux.dankcalendar
 To rebuild cached modules & tools:
 
 ```bash
-flatpak run --user org.flatpak.Builder \
+flatpak run org.flatpak.Builder \
   --force-clean --disable-cache --user --install --repo=repo \
   --mirror-screenshots-url=https://dl.flathub.org/media \
   --compose-url-policy=full \

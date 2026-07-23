@@ -6,8 +6,8 @@
 BINARY_NAME=dcal
 # Quickshell config dir name (kept as dankcal for config-path compatibility).
 SHELL_NAME=dankcal
-# Icon / app name (matches the desktop AppId com.danklinux.dankcalendar).
-ICON_NAME=dankcalendar
+# Icon name matches the desktop AppId so sandboxed and native installs agree.
+ICON_NAME=com.danklinux.dankcalendar
 CORE_DIR=core
 BUILD_DIR=$(CORE_DIR)/bin
 PREFIX ?= /usr/local
@@ -31,7 +31,32 @@ SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
 DESKTOP_ID=com.danklinux.dankcalendar
 
-.PHONY: all build dev run clean test fmt vet migrate migrate-checksum update-common i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd help
+.PHONY: all build dev run clean test fmt vet migrate migrate-checksum update-common i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd flatpak-build flatpak-run flatpak-lint flatpak-modules help
+
+FLATPAK_MANIFEST=distro/flatpak/$(DESKTOP_ID).yml
+FLATPAK_EXCEPTIONS=distro/flatpak/exceptions.json
+
+flatpak-build:
+	flatpak run org.flatpak.Builder \
+		--force-clean --user --install --repo=repo \
+		--mirror-screenshots-url=https://dl.flathub.org/media \
+		--compose-url-policy=full \
+		builddir $(FLATPAK_MANIFEST)
+
+flatpak-run:
+	flatpak run $(DESKTOP_ID)
+
+flatpak-lint:
+	flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
+		--exceptions --user-exceptions $(FLATPAK_EXCEPTIONS) \
+		manifest $(FLATPAK_MANIFEST)
+	flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
+		--exceptions --user-exceptions $(FLATPAK_EXCEPTIONS) \
+		repo repo
+
+flatpak-modules:
+	cd $(CORE_DIR) && GOWORK=off go run github.com/dennwc/flatpak-go-mod@latest \
+		-dest-pref $(CORE_DIR)/ -out ../distro/flatpak .
 
 all: build
 
@@ -153,3 +178,9 @@ help:
 	@echo "  install            - Binary (UI embedded), icon, desktop entry"
 	@echo "  install-systemd    - Optional systemd user unit (autostarts with the session)"
 	@echo "  uninstall          - Remove everything"
+	@echo ""
+	@echo "Flatpak:"
+	@echo "  flatpak-build      - Build and install the Flatpak locally (org.flatpak.Builder)"
+	@echo "  flatpak-run        - Run the installed Flatpak"
+	@echo "  flatpak-lint       - Lint the manifest and built repo"
+	@echo "  flatpak-modules    - Regenerate distro/flatpak/go.mod.yml + modules.txt from core/go.mod"

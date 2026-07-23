@@ -9,6 +9,8 @@ import (
 
 	"github.com/adrg/xdg"
 	"github.com/godbus/dbus/v5"
+
+	"github.com/AvengeMedia/dankgo/portal"
 )
 
 const (
@@ -21,14 +23,6 @@ const (
 )
 
 var daemonArgs = []string{"run", "-d", "--hidden"}
-
-func inFlatpak() bool {
-	if os.Getenv("FLATPAK_ID") != "" {
-		return true
-	}
-	_, err := os.Stat("/.flatpak-info")
-	return err == nil
-}
 
 func EntryPath() string {
 	return filepath.Join(xdg.ConfigHome, "autostart", entryName)
@@ -46,14 +40,14 @@ Type=Application
 Name=Dank Calendar
 Comment=Dank Calendar background service
 Exec=%s
-Icon=dankcalendar
+Icon=com.danklinux.dankcalendar
 Terminal=false
 X-GNOME-Autostart-enabled=true
 `, exec)
 }
 
 func Enabled() bool {
-	if inFlatpak() {
+	if portal.InFlatpak() {
 		info, err := os.Stat(flatpakMarkerPath())
 		return err == nil && !info.IsDir()
 	}
@@ -62,14 +56,14 @@ func Enabled() bool {
 }
 
 func Enable() error {
-	if inFlatpak() {
+	if portal.InFlatpak() {
 		return enableFlatpak()
 	}
 	return enableHost()
 }
 
 func Disable() error {
-	if inFlatpak() {
+	if portal.InFlatpak() {
 		return disableFlatpak()
 	}
 	return disableHost()

@@ -53,6 +53,23 @@ func TestLocalProviderListsCalendarsAndEvents(t *testing.T) {
 	require.Equal(t, "turquoise", res.Color)
 }
 
+func TestLocalProviderIgnoresDirectoriesWithoutICS(t *testing.T) {
+	dir := t.TempDir()
+	require.NoError(t, os.MkdirAll(filepath.Join(dir, ".cache", "stuff"), 0o755))
+	require.NoError(t, os.MkdirAll(filepath.Join(dir, "notes"), 0o755))
+	require.NoError(t, os.WriteFile(filepath.Join(dir, "notes", "todo.txt"), []byte("x"), 0o600))
+	require.NoError(t, os.MkdirAll(filepath.Join(dir, ".hidden-calendars"), 0o755))
+	require.NoError(t, os.WriteFile(filepath.Join(dir, ".hidden-calendars", "meeting.ics"), []byte(sampleICS), 0o600))
+
+	provider, err := local.New(calendar.Account{ID: "test"}, dir)
+	require.NoError(t, err)
+
+	cals, err := provider.ListCalendars(context.Background())
+	require.NoError(t, err)
+	require.Len(t, cals, 1)
+	require.Equal(t, ".hidden-calendars", cals[0].Name)
+}
+
 func TestLocalProviderTimeFiltering(t *testing.T) {
 	dir := t.TempDir()
 	require.NoError(t, os.WriteFile(filepath.Join(dir, "p.ics"), []byte(sampleICS), 0o600))

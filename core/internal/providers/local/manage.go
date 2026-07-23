@@ -29,8 +29,10 @@ func SeedDefaultCalendar(root, name string) error {
 	for _, e := range entries {
 		switch {
 		case e.IsDir():
-			return nil
-		case strings.HasSuffix(strings.ToLower(e.Name()), ".ics"):
+			if hasICSFiles(filepath.Join(abs, e.Name())) {
+				return nil
+			}
+		case isICSFile(e.Name()):
 			return nil
 		}
 	}

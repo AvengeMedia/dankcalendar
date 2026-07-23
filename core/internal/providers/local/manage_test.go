@@ -33,6 +33,15 @@ func TestSeedDefaultCalendarSkipsPopulatedDir(t *testing.T) {
 	require.NoFileExists(t, filepath.Join(root, "Personal.ics"))
 }
 
+func TestSeedDefaultCalendarIgnoresNonCalendarDirs(t *testing.T) {
+	root := t.TempDir()
+	require.NoError(t, os.MkdirAll(filepath.Join(root, ".config"), 0o755))
+
+	require.NoError(t, local.SeedDefaultCalendar(root, ""))
+
+	require.FileExists(t, filepath.Join(root, "Personal.ics"))
+}
+
 func TestCreateCalendar(t *testing.T) {
 	root := t.TempDir()
 
