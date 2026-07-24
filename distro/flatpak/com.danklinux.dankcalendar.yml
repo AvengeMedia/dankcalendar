@@ -14,10 +14,6 @@ finish-args:
   - --socket=pulseaudio
   - --device=dri
   - --talk-name=org.kde.StatusNotifierWatcher
-  # Subscribes to PrepareForSleep so reminder timers re-arm on resume from suspend
-  # GO uses the monotonic clock so during suspend scheduled reminders will fall out of sync otherwise
-  # Read-only, no methods are called
-  - --system-talk-name=org.freedesktop.login1
 
 cleanup:
   - /include

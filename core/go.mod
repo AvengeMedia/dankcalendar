@@ -5,7 +5,7 @@ go 1.26.4
 require (
 	entgo.io/ent v0.14.6
 	github.com/99designs/keyring v1.2.2
-	github.com/AvengeMedia/dankgo v0.0.0-20260723140649-8720f7c4d074
+	github.com/AvengeMedia/dankgo v0.0.0-20260724133713-a4ef23371e05
 	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.2
 	github.com/adrg/xdg v0.5.3
 	github.com/caarlos0/env/v11 v11.4.1
@@ -102,3 +102,5 @@ require (
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 )
+
+// Use replace => /path/to/dankgo if working on the local dankgo module

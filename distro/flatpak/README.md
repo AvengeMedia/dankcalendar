@@ -65,12 +65,10 @@ flatpak uninstall --delete-data com.danklinux.dankcalendar
 
 ```bash
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
-  --exceptions --user-exceptions distro/flatpak/exceptions.json \
   manifest distro/flatpak/com.danklinux.dankcalendar.yml
 ```
 
 ```bash
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
-  --exceptions --user-exceptions distro/flatpak/exceptions.json \
   repo repo
 ```

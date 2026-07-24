@@ -57,8 +57,9 @@ github.com/99designs/go-keychain
 # github.com/99designs/keyring v1.2.2
 ## explicit; go 1.19
 github.com/99designs/keyring
-# github.com/AvengeMedia/dankgo v0.0.0-20260723140649-8720f7c4d074
+# github.com/AvengeMedia/dankgo v0.0.0-20260724133713-a4ef23371e05
 ## explicit; go 1.26
+github.com/AvengeMedia/dankgo/boottimer
 github.com/AvengeMedia/dankgo/dbusutil
 github.com/AvengeMedia/dankgo/errdefs
 github.com/AvengeMedia/dankgo/errdefs/humaerr

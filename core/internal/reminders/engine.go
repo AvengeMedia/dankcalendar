@@ -1,8 +1,8 @@
 // Package reminders schedules desktop notifications for upcoming events and
 // task start/due times. It fires each trigger exactly once, tracked via
 // ReminderState rows. Evaluation is event-driven: the engine parks until the
-// next trigger is due and wakes early when calendar data changes or the system
-// resumes from suspend.
+// next trigger is due and wakes early when calendar data changes. The park is
+// suspend-aware, so a trigger that comes due mid-sleep fires on resume.
 package reminders
 
 import (
@@ -22,6 +22,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/AvengeMedia/dankgo/boottimer"
 	"github.com/AvengeMedia/dankgo/log"
 )
 
@@ -145,7 +146,6 @@ func (e *Engine) Start(ctx context.Context) {
 	e.mu.Unlock()
 
 	go e.loop(ctx)
-	go e.watchSuspend(ctx)
 }
 
 // Wake triggers a reschedule; concurrent calls coalesce.
@@ -190,8 +190,10 @@ func (e *Engine) loop(ctx context.Context) {
 		log.Debugf("reminders: pruned %d stale states", n)
 	}
 
-	// NewTimer(0) evaluates immediately, then loop() parks it on the next due trigger.
-	timer := time.NewTimer(0)
+	// New(0) evaluates immediately, then loop() parks it on the next due
+	// trigger. The park counts suspended time, so a trigger passed while
+	// asleep fires right on resume.
+	timer := boottimer.New(0)
 	defer timer.Stop()
 
 	for {
@@ -201,7 +203,7 @@ func (e *Engine) loop(ctx context.Context) {
 		case <-e.stop:
 			return
 		case <-e.wake:
-			resetTimer(timer, coalesce)
+			timer.Reset(coalesce)
 			continue
 		case <-timer.C:
 		}
@@ -209,7 +211,7 @@ func (e *Engine) loop(ctx context.Context) {
 		if err := e.Tick(ctx); err != nil {
 			log.Warnf("reminders: %v", err)
 		}
-		resetTimer(timer, e.untilNext(ctx))
+		timer.Reset(e.untilNext(ctx))
 	}
 }
 
@@ -234,18 +236,6 @@ func (e *Engine) untilNext(ctx context.Context) time.Duration {
 	default:
 		return d
 	}
-}
-
-// resetTimer rearms t, draining a pending fire so the next select sees only
-// the new deadline.
-func resetTimer(t *time.Timer, d time.Duration) {
-	if !t.Stop() {
-		select {
-		case <-t.C:
-		default:
-		}
-	}
-	t.Reset(d)
 }
 
 func (e *Engine) Tick(ctx context.Context) error {

@@ -35,7 +35,6 @@ DESKTOP_ID=com.danklinux.dankcalendar
 .PHONY: all build dev run clean test fmt vet migrate migrate-checksum update-common i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd flatpak-build flatpak-run flatpak-lint flatpak-modules help
 
 FLATPAK_MANIFEST=distro/flatpak/$(DESKTOP_ID).yml
-FLATPAK_EXCEPTIONS=distro/flatpak/exceptions.json
 
 flatpak-build:
 	flatpak run org.flatpak.Builder \
@@ -49,10 +48,8 @@ flatpak-run:
 
 flatpak-lint:
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
-		--exceptions --user-exceptions $(FLATPAK_EXCEPTIONS) \
 		manifest $(FLATPAK_MANIFEST)
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
-		--exceptions --user-exceptions $(FLATPAK_EXCEPTIONS) \
 		repo repo
 
 flatpak-modules:
