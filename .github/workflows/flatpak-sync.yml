@@ -1,0 +1,104 @@
+name: Flatpak Sync
+
+on:
+  workflow_run:
+    workflows: ["Create Release"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flatpak-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      startsWith(github.event.workflow_run.head_branch, 'v') &&
+      !contains(github.event.workflow_run.head_branch, '-')
+    runs-on: ubuntu-24.04
+    env:
+      TAG: ${{ github.event.workflow_run.head_branch }}
+      FLATHUB_TOKEN: ${{ secrets.FLATHUB_PUSH_TOKEN }}
+    steps:
+      - name: Create GitHub App token
+        id: app_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: master
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ steps.app_token.outputs.token }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: ./core/go.mod
+
+      - name: Update metainfo and module manifests
+        run: |
+          set -euo pipefail
+          python3 scripts/flatpak-sync.py metainfo "$TAG"
+          make flatpak-modules
+
+      - name: Commit source updates
+        id: source
+        run: |
+          set -euo pipefail
+          git config user.name "dms-ci[bot]"
+          git config user.email "dms-ci[bot]@users.noreply.github.com"
+          git add assets/com.danklinux.dankcalendar.metainfo.xml distro/flatpak/go.mod.yml distro/flatpak/modules.txt
+          if git diff --cached --quiet; then
+            echo "pin=$(git rev-parse "${TAG}^{commit}")" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "flatpak: sync metainfo and module manifests for ${TAG}"
+          if ! git push origin HEAD:master; then
+            git pull --rebase origin master
+            git push origin HEAD:master
+          fi
+          echo "pin=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Pin manifest
+        run: |
+          set -euo pipefail
+          python3 scripts/flatpak-sync.py pin "$TAG" "${{ steps.source.outputs.pin }}"
+          git add distro/flatpak/com.danklinux.dankcalendar.yml
+          if git diff --cached --quiet; then
+            echo "manifest already pinned"
+            exit 0
+          fi
+          git commit -m "flatpak: pin manifest to ${TAG}"
+          if ! git push origin HEAD:master; then
+            git pull --rebase origin master
+            git push origin HEAD:master
+          fi
+
+      - name: Update Flathub branch
+        if: env.FLATHUB_TOKEN != ''
+        env:
+          FLATHUB_REPO: ${{ vars.FLATHUB_REPO || 'Purian23/flathub' }}
+          FLATHUB_BRANCH: ${{ vars.FLATHUB_BRANCH || 'add-com.danklinux.dankcalendar' }}
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch "$FLATHUB_BRANCH" \
+            "https://x-access-token:${FLATHUB_TOKEN}@github.com/${FLATHUB_REPO}.git" /tmp/flathub
+          cp distro/flatpak/com.danklinux.dankcalendar.yml distro/flatpak/go.mod.yml distro/flatpak/modules.txt /tmp/flathub/
+          cd /tmp/flathub
+          git config user.name "dms-ci[bot]"
+          git config user.email "dms-ci[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "flathub branch already current"
+            exit 0
+          fi
+          git commit -m "Update to ${TAG}"
+          git push origin "HEAD:${FLATHUB_BRANCH}"
