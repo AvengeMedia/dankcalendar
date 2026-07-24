@@ -37,6 +37,11 @@
   </screenshots>
 
   <releases>
+    <release version="0.2.7" date="2026-07-24">
+      <description>
+        <p>Fix credential storage hanging against KeePassXC, remove the login1 permission in favor of suspend-aware timers, and delete single occurrences of recurring events.</p>
+      </description>
+    </release>
     <release version="0.2.6" date="2026-07-23">
       <description>
         <p>Use the XDG notification and secret portals when sandboxed, and align the icon name with the application ID.</p>
