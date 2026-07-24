@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       TAG: ${{ github.event.workflow_run.head_branch }}
-      FLATHUB_TOKEN: ${{ secrets.FLATHUB_PUSH_TOKEN }}
     steps:
       - name: Create GitHub App token
         id: app_token
@@ -81,24 +80,3 @@ jobs:
             git pull --rebase origin master
             git push origin HEAD:master
           fi
-
-      - name: Update Flathub branch
-        if: env.FLATHUB_TOKEN != ''
-        env:
-          FLATHUB_REPO: ${{ vars.FLATHUB_REPO || 'Purian23/flathub' }}
-          FLATHUB_BRANCH: ${{ vars.FLATHUB_BRANCH || 'add-com.danklinux.dankcalendar' }}
-        run: |
-          set -euo pipefail
-          git clone --depth 1 --branch "$FLATHUB_BRANCH" \
-            "https://x-access-token:${FLATHUB_TOKEN}@github.com/${FLATHUB_REPO}.git" /tmp/flathub
-          cp distro/flatpak/com.danklinux.dankcalendar.yml distro/flatpak/go.mod.yml distro/flatpak/modules.txt /tmp/flathub/
-          cd /tmp/flathub
-          git config user.name "dms-ci[bot]"
-          git config user.email "dms-ci[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "flathub branch already current"
-            exit 0
-          fi
-          git commit -m "Update to ${TAG}"
-          git push origin "HEAD:${FLATHUB_BRANCH}"
