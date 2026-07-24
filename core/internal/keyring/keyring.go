@@ -5,104 +5,124 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
-	kr "github.com/99designs/keyring"
 	"github.com/godbus/dbus/v5"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 	"github.com/AvengeMedia/dankgo/log"
 	"github.com/AvengeMedia/dankgo/portal"
 )
 
 const (
-	serviceName            = "dankcal"
-	keychainName           = "dankcal"
-	fallbackCollectionName = "login"
+	credentialDescription = "Dank Calendar credential"
 
-	secretServiceBus  = "org.freedesktop.secrets"
-	secretServicePath = "/org/freedesktop/secrets"
+	secretServiceBus    = "org.freedesktop.secrets"
+	secretServicePath   = "/org/freedesktop/secrets"
+	serviceInterface    = "org.freedesktop.Secret.Service"
+	collectionInterface = "org.freedesktop.Secret.Collection"
+	itemInterface       = "org.freedesktop.Secret.Item"
+	promptInterface     = "org.freedesktop.Secret.Prompt"
+	sessionInterface    = "org.freedesktop.Secret.Session"
+
+	loginCollectionPath = dbus.ObjectPath("/org/freedesktop/secrets/collection/login")
+
+	// promptTimeout bounds how long a Secret Service prompt may stay open; it
+	// includes the user typing a keyring or KeePassXC master password.
+	promptTimeout = 2 * time.Minute
 )
 
 var ErrNotFound = errors.New("keyring: key not found")
 
+type backend interface {
+	Get(key string) ([]byte, error)
+	Set(key string, value []byte, label string) error
+	Delete(key string) error
+}
+
 type Store struct {
-	ring      kr.Keyring
-	available bool
+	backend backend
 }
 
 func Open() *Store {
-	cfg := defaultConfig()
 	if portal.InFlatpak() {
-		if _, err := portalSecret(); err != nil {
+		// The sandbox has no org.freedesktop.secrets talk permission; the
+		// encrypted file store is keyed with the per-app master secret from
+		// the XDG Secret portal instead.
+		file, err := openFileStore(portalSecret)
+		if err != nil {
 			log.Warnf("secret portal unavailable, falling back to encrypted db (%v)", err)
-			return &Store{available: false}
+			return &Store{}
 		}
-		cfg = flatpakConfig()
+		return &Store{backend: file}
 	}
 
-	ring, err := kr.Open(cfg)
-	if err != nil {
-		log.Warnf("keyring unavailable, falling back to encrypted db (%v)", err)
-		return &Store{available: false}
+	service, serviceErr := openSecretService()
+	if serviceErr == nil {
+		log.Debugf("keyring using secret collection %q", collectionBaseName(string(service.collection)))
+		return &Store{backend: service}
 	}
 
-	if _, probeErr := ring.Get("__dankcal_probe__"); probeErr != nil && !errors.Is(probeErr, kr.ErrKeyNotFound) {
-		log.Warnf("keyring probe failed, falling back to encrypted db (%v)", probeErr)
-		return &Store{available: false}
+	file, fileErr := openFileStore(localFilePassword)
+	if fileErr != nil {
+		log.Warnf("keyring unavailable, falling back to encrypted db (%v)", errors.Join(serviceErr, fileErr))
+		return &Store{}
 	}
 
-	log.Debugf("keyring backend ready")
-	return &Store{ring: ring, available: true}
+	log.Warnf("secret service unavailable, using local encrypted keyring (%v)", serviceErr)
+	return &Store{backend: file}
 }
 
-func defaultConfig() kr.Config {
-	fileDir := ""
-	if dir, err := paths.DataDir(); err == nil {
-		fileDir = filepath.Join(dir, "keyring")
+func (s *Store) Available() bool { return s.backend != nil }
+
+func (s *Store) Get(accountID, key string) ([]byte, error) {
+	if s.backend == nil {
+		return nil, ErrNotFound
 	}
 
-	return kr.Config{
-		ServiceName:             serviceName,
-		KeychainName:            keychainName,
-		LibSecretCollectionName: resolveDefaultCollection(),
-		KWalletAppID:            serviceName,
-		KWalletFolder:           serviceName,
-		FileDir:                 fileDir,
-		FilePasswordFunc:        filePassword,
-		AllowedBackends: []kr.BackendType{
-			kr.SecretServiceBackend,
-			kr.KWalletBackend,
-			kr.PassBackend,
-			kr.FileBackend,
-		},
+	value, err := s.backend.Get(entryKey(accountID, key))
+	switch {
+	case errors.Is(err, ErrNotFound):
+		return nil, ErrNotFound
+	case err != nil:
+		return nil, fmt.Errorf("keyring get: %w", err)
 	}
+	return value, nil
 }
 
-// resolveDefaultCollection reuses the Secret Service "default" collection
-// (e.g. KWallet's existing wallet) instead of forcing a separate "login" one.
-func resolveDefaultCollection() string {
-	conn, err := dbus.SessionBus()
-	if err != nil {
-		return fallbackCollectionName
+func (s *Store) Set(accountID, key string, value []byte) error {
+	if s.backend == nil {
+		return ErrNotFound
 	}
 
-	var path dbus.ObjectPath
-	obj := conn.Object(secretServiceBus, dbus.ObjectPath(secretServicePath))
-	if err := obj.Call("org.freedesktop.Secret.Service.ReadAlias", 0, "default").Store(&path); err != nil {
-		return fallbackCollectionName
+	if err := s.backend.Set(entryKey(accountID, key), value, entryLabel(accountID, key)); err != nil {
+		return fmt.Errorf("keyring set: %w", err)
+	}
+	return nil
+}
+
+func (s *Store) Delete(accountID, key string) error {
+	if s.backend == nil {
+		return nil
 	}
 
-	name := collectionBaseName(string(path))
-	if name == "" {
-		return fallbackCollectionName
+	err := s.backend.Delete(entryKey(accountID, key))
+	switch {
+	case errors.Is(err, ErrNotFound):
+		return nil
+	case err != nil:
+		return fmt.Errorf("keyring delete: %w", err)
 	}
+	return nil
+}
 
-	log.Debugf("keyring using default secret collection %q", name)
-	return name
+func entryKey(accountID, key string) string {
+	return accountID + "::" + key
+}
+
+func entryLabel(accountID, key string) string {
+	return "dankcal: " + accountID + " (" + key + ")"
 }
 
 func collectionBaseName(path string) string {
@@ -114,8 +134,8 @@ func collectionBaseName(path string) string {
 	return decoded[idx+1:]
 }
 
-// decodeCollectionPath expands the "_XX" hex escapes the Secret Service uses in
-// object paths, matching how 99designs/keyring matches collections by name.
+// decodeCollectionPath expands the "_XX" hex escapes the Secret Service uses
+// in object paths.
 func decodeCollectionPath(src string) string {
 	var b strings.Builder
 	for i := 0; i < len(src); i++ {
@@ -136,25 +156,8 @@ func decodeCollectionPath(src string) string {
 	return b.String()
 }
 
-func filePassword(prompt string) (string, error) {
+func localFilePassword() (string, error) {
 	return "dankcal-local", nil
-}
-
-// flatpakConfig avoids org.freedesktop.secrets entirely: the sandbox has no
-// talk permission for it, so the encrypted file backend is keyed with the
-// per-app master secret from the XDG Secret portal instead.
-func flatpakConfig() kr.Config {
-	fileDir := ""
-	if dir, err := paths.DataDir(); err == nil {
-		fileDir = filepath.Join(dir, "keyring")
-	}
-
-	return kr.Config{
-		ServiceName:      serviceName,
-		FileDir:          fileDir,
-		FilePasswordFunc: portalFilePassword,
-		AllowedBackends:  []kr.BackendType{kr.FileBackend},
-	}
 }
 
 var portalSecret = sync.OnceValues(func() (string, error) {
@@ -174,60 +177,3 @@ var portalSecret = sync.OnceValues(func() (string, error) {
 	}
 	return hex.EncodeToString(res.Secret), nil
 })
-
-func portalFilePassword(prompt string) (string, error) {
-	return portalSecret()
-}
-
-func entryKey(accountID, key string) string {
-	return accountID + "::" + key
-}
-
-func (s *Store) Available() bool { return s.available }
-
-func (s *Store) Get(accountID, key string) ([]byte, error) {
-	if !s.available {
-		return nil, ErrNotFound
-	}
-
-	item, err := s.ring.Get(entryKey(accountID, key))
-	switch {
-	case errors.Is(err, kr.ErrKeyNotFound):
-		return nil, ErrNotFound
-	case err != nil:
-		return nil, fmt.Errorf("keyring get: %w", err)
-	}
-	return item.Data, nil
-}
-
-func (s *Store) Set(accountID, key string, value []byte) error {
-	if !s.available {
-		return ErrNotFound
-	}
-
-	err := s.ring.Set(kr.Item{
-		Key:         entryKey(accountID, key),
-		Data:        value,
-		Label:       "dankcal: " + accountID + " (" + key + ")",
-		Description: "Dank Calendar credential",
-	})
-	if err != nil {
-		return fmt.Errorf("keyring set: %w", err)
-	}
-	return nil
-}
-
-func (s *Store) Delete(accountID, key string) error {
-	if !s.available {
-		return nil
-	}
-
-	err := s.ring.Remove(entryKey(accountID, key))
-	switch {
-	case errors.Is(err, kr.ErrKeyNotFound):
-		return nil
-	case err != nil:
-		return fmt.Errorf("keyring delete: %w", err)
-	}
-	return nil
-}

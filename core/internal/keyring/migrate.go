@@ -3,11 +3,7 @@ package keyring
 import (
 	"errors"
 	"fmt"
-
-	kr "github.com/99designs/keyring"
 )
-
-const legacyLoginCollection = "login"
 
 type SecretRef struct {
 	AccountID string
@@ -18,37 +14,29 @@ type SecretRef struct {
 // Secret Service collection into the resolved default one. It is a no-op when
 // login is already the default, no refs are given, or an entry isn't present.
 func (s *Store) MigrateLoginCollection(refs []SecretRef) (int, error) {
-	if !s.available || len(refs) == 0 {
+	service, ok := s.backend.(*secretService)
+	if !ok || len(refs) == 0 {
 		return 0, nil
 	}
-	if resolveDefaultCollection() == legacyLoginCollection {
+	if service.collection == loginCollectionPath {
 		return 0, nil
-	}
-
-	login, err := kr.Open(kr.Config{
-		ServiceName:             serviceName,
-		LibSecretCollectionName: legacyLoginCollection,
-		AllowedBackends:         []kr.BackendType{kr.SecretServiceBackend},
-	})
-	if err != nil {
-		return 0, fmt.Errorf("open legacy login collection: %w", err)
 	}
 
 	migrated := 0
 	for _, ref := range refs {
-		ek := entryKey(ref.AccountID, ref.Key)
-		item, err := login.Get(ek)
+		key := entryKey(ref.AccountID, ref.Key)
+		value, err := service.getFrom(loginCollectionPath, key)
 		switch {
-		case errors.Is(err, kr.ErrKeyNotFound):
+		case errors.Is(err, ErrNotFound):
 			continue
 		case err != nil:
-			return migrated, fmt.Errorf("read %s from login: %w", ek, err)
+			return migrated, fmt.Errorf("read %s from login: %w", key, err)
 		}
 
-		if err := s.Set(ref.AccountID, ref.Key, item.Data); err != nil {
+		if err := s.Set(ref.AccountID, ref.Key, value); err != nil {
 			return migrated, err
 		}
-		_ = login.Remove(ek)
+		_ = service.deleteFrom(loginCollectionPath, key)
 		migrated++
 	}
 	return migrated, nil
