@@ -13,6 +13,7 @@ Built with [Quickshell](https://quickshell.org/) and [Go](https://go.dev/)
 [![GitHub License](https://img.shields.io/github/license/AvengeMedia/dankcalendar?style=for-the-badge&labelColor=101418&color=b9c8da)](https://github.com/AvengeMedia/dankcalendar/blob/master/LICENSE)
 [![AUR version (bin)](<https://img.shields.io/aur/version/dankcalendar-bin?style=for-the-badge&labelColor=101418&color=9ccbfb&label=AUR%20(bin)>)](https://aur.archlinux.org/packages/dankcalendar-bin)
 [![AUR version (git)](<https://img.shields.io/aur/version/dankcalendar-git?style=for-the-badge&labelColor=101418&color=9ccbfb&label=AUR%20(git)>)](https://aur.archlinux.org/packages/dankcalendar-git)
+[![Flathub version](https://img.shields.io/flathub/v/com.danklinux.dankcalendar?style=for-the-badge&labelColor=101418&color=9ccbfb&label=Flathub)](https://flathub.org/apps/com.danklinux.dankcalendar)
 [![Discord](https://img.shields.io/badge/discord-join?style=for-the-badge&logo=discord&logoColor=ffffff&label=discord&labelColor=101418&color=5865f2)](https://discord.gg/ppWTpKmPgT)
 [![Ko-Fi donate](https://img.shields.io/badge/donate-kofi?style=for-the-badge&logo=ko-fi&logoColor=ffffff&label=ko-fi&labelColor=101418&color=f16061&link=https%3A%2F%2Fko-fi.com%2Fdanklinux)](https://ko-fi.com/danklinux)
 
@@ -54,6 +55,13 @@ dankcalendar/
 </div>
 
 ## Installation
+
+### Flatpak
+
+```bash
+flatpak install flathub com.danklinux.dankcalendar
+flatpak run com.danklinux.dankcalendar
+```
 
 ### Arch Linux (AUR)
 
