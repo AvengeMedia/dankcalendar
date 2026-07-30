@@ -122,12 +122,15 @@ func parseGoogleStartParams(p map[string]any) (googleStartParams, error) {
 		ClientID:     strings.TrimSpace(ParamString(p, "clientId")),
 		ClientSecret: strings.TrimSpace(ParamString(p, "clientSecret")),
 	}
-	switch {
-	case out.ClientID == "":
-		return out, errors.New("clientId is required")
-	case out.ClientSecret == "":
-		return out, errors.New("clientSecret is required")
+	creds, err := accounts.ResolveGoogleClient(oauth.GoogleAppCredentials{
+		ClientID:     out.ClientID,
+		ClientSecret: out.ClientSecret,
+	})
+	if err != nil {
+		return out, err
 	}
+	out.ClientID = creds.ClientID
+	out.ClientSecret = creds.ClientSecret
 	return out, nil
 }
 

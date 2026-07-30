@@ -80,3 +80,45 @@ jobs:
             git pull --rebase origin master
             git push origin HEAD:master
           fi
+
+      # The metainfo changelog rides along with the pinned git source, so only
+      # the build files need to reach Flathub. Their buildbot tests the PR;
+      # merging it publishes.
+      - name: Open Flathub PR
+        env:
+          GH_TOKEN: ${{ secrets.FLATHUB_TOKEN }}
+          APP_ID: com.danklinux.dankcalendar
+        run: |
+          set -euo pipefail
+          version="${TAG#v}"
+          branch="release/${TAG}"
+
+          git clone --depth 1 \
+            "https://x-access-token:${GH_TOKEN}@github.com/flathub/${APP_ID}.git" _flathub
+          cp "distro/flatpak/${APP_ID}.yml" distro/flatpak/go.mod.yml distro/flatpak/modules.txt _flathub/
+
+          cd _flathub
+          if git diff --quiet; then
+            echo "Flathub already matches ${TAG}" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          git config user.name "dms-ci[bot]"
+          git config user.email "dms-ci[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git commit -am "Update to ${version}"
+          git push -f origin "$branch"
+
+          existing=$(gh pr list --repo "flathub/${APP_ID}" --head "$branch" \
+            --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "Updated existing Flathub PR #${existing}" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          url=$(gh pr create --repo "flathub/${APP_ID}" --head "$branch" --base master \
+            --title "Update to ${version}" \
+            --body "Update to ${version}.
+
+          Release notes: https://github.com/${{ github.repository }}/releases/tag/${TAG}")
+          echo "Opened Flathub PR ${url}" >> "$GITHUB_STEP_SUMMARY"

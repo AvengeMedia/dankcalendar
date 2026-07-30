@@ -338,6 +338,12 @@
   "Connect %1": {
     "Connect %1": "Kết nối %1"
   },
+  "Connect Google Account": {
+    "Connect Google Account": ""
+  },
+  "Connect Microsoft Account": {
+    "Connect Microsoft Account": ""
+  },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "Kết nối bất kỳ máy chủ tương thích CalDAV nào."
   },
@@ -1055,6 +1061,12 @@
   "Sign in with %1": {
     "Sign in with %1": "Đăng nhập bằng %1"
   },
+  "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+  },
+  "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+  },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Đăng nhập bằng Apple ID và mật khẩu dành riêng cho ứng dụng. Mật khẩu Apple ID thông thường sẽ không hoạt động."
   },
@@ -1207,6 +1219,9 @@
   },
   "Use this folder": {
     "Use this folder": "Dùng thư mục này"
+  },
+  "Use your own OAuth client": {
+    "Use your own OAuth client": ""
   },
   "Username": {
     "Username": "Tên người dùng"

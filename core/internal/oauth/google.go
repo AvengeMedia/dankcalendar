@@ -20,8 +20,8 @@ type GoogleAppCredentials struct {
 
 func GoogleScopes() []string {
 	return []string{
-		gcalendar.CalendarScope,
 		gcalendar.CalendarEventsScope,
+		gcalendar.CalendarCalendarlistReadonlyScope,
 		gtasks.TasksScope,
 		"https://www.googleapis.com/auth/userinfo.email",
 		"openid",

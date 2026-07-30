@@ -22,6 +22,9 @@ func GoogleAppCreds(ctx context.Context, secrets calendar.SecretStore, accountID
 	if err := json.Unmarshal(appBytes, &creds); err != nil {
 		return oauth.GoogleAppCredentials{}, fmt.Errorf("decode google credentials: %w", err)
 	}
+	if builtin, ok := oauth.BuiltinGoogleCredentials(); ok && creds.ClientID == builtin.ClientID {
+		return builtin, nil
+	}
 	return creds, nil
 }
 

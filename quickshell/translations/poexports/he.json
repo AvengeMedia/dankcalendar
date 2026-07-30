@@ -338,6 +338,12 @@
   "Connect %1": {
     "Connect %1": "התחבר/י אל %1"
   },
+  "Connect Google Account": {
+    "Connect Google Account": ""
+  },
+  "Connect Microsoft Account": {
+    "Connect Microsoft Account": ""
+  },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "התחבר/י לכל שרת תואם CalDAV."
   },
@@ -1055,6 +1061,12 @@
   "Sign in with %1": {
     "Sign in with %1": "התחבר/י עם %1"
   },
+  "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+  },
+  "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+  },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "התחבר/י עם ה-Apple ID שלך ועם סיסמה ספציפית לאפליקציה. סיסמאות רגילות של Apple ID לא יעבדו."
   },
@@ -1207,6 +1219,9 @@
   },
   "Use this folder": {
     "Use this folder": "השתמש/י בתיקייה זו"
+  },
+  "Use your own OAuth client": {
+    "Use your own OAuth client": ""
   },
   "Username": {
     "Username": "שם משתמש"

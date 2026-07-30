@@ -338,6 +338,12 @@
   "Connect %1": {
     "Connect %1": "%1 verbinden"
   },
+  "Connect Google Account": {
+    "Connect Google Account": ""
+  },
+  "Connect Microsoft Account": {
+    "Connect Microsoft Account": ""
+  },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "Verbinden Sie einen beliebigen CalDAV-kompatiblen Server."
   },
@@ -435,7 +441,7 @@
     "Delete \"%1\"?": "\"%1\" löschen?"
   },
   "Delete occurrence": {
-    "Delete occurrence": ""
+    "Delete occurrence": "Vorkommen löschen"
   },
   "Delete series": {
     "Delete series": "Serie löschen"
@@ -1055,6 +1061,12 @@
   "Sign in with %1": {
     "Sign in with %1": "Mit %1 anmelden"
   },
+  "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+  },
+  "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+  },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Melden Sie sich mit Ihrer Apple-ID und einem anwendungsspezifischen Passwort an. Normale Apple-ID-Passwörter funktionieren nicht."
   },
@@ -1207,6 +1219,9 @@
   },
   "Use this folder": {
     "Use this folder": "Diesen Ordner verwenden"
+  },
+  "Use your own OAuth client": {
+    "Use your own OAuth client": ""
   },
   "Username": {
     "Username": "Benutzername"

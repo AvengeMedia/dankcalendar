@@ -338,6 +338,12 @@
   "Connect %1": {
     "Connect %1": "%1 verbinden"
   },
+  "Connect Google Account": {
+    "Connect Google Account": ""
+  },
+  "Connect Microsoft Account": {
+    "Connect Microsoft Account": ""
+  },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "Verbind met elke CalDAV-compatibele server."
   },
@@ -1055,6 +1061,12 @@
   "Sign in with %1": {
     "Sign in with %1": "Inloggen met %1"
   },
+  "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+  },
+  "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+  },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Log in met je Apple ID en een app-specifiek wachtwoord. Normale Apple ID-wachtwoorden werken niet."
   },
@@ -1207,6 +1219,9 @@
   },
   "Use this folder": {
     "Use this folder": "Deze map gebruiken"
+  },
+  "Use your own OAuth client": {
+    "Use your own OAuth client": ""
   },
   "Username": {
     "Username": "Gebruikersnaam"

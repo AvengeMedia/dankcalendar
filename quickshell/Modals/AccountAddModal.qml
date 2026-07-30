@@ -22,6 +22,7 @@ FloatingWindow {
     property string completedEmail: ""
     property string flowError: ""
     property bool flowInProgress: false
+    property int flowReturnStep: 0
 
     readonly property var providers: DankCalService.providers
     readonly property bool isMicrosoft: selectedProvider === "microsoft"
@@ -61,6 +62,7 @@ FloatingWindow {
         completedEmail = "";
         flowError = "";
         flowInProgress = false;
+        flowReturnStep = 0;
         expandedScreenshot = "";
     }
 
@@ -72,11 +74,13 @@ FloatingWindow {
         else
             DankCalService.cancelGoogleFlow(pendingState);
         pendingState = "";
+        flowInProgress = false;
     }
 
     function startOAuthFlow() {
         flowError = "";
         flowInProgress = true;
+        flowReturnStep = wizardStep;
 
         const onStarted = response => {
             if (response.error) {
@@ -288,12 +292,17 @@ FloatingWindow {
                     iconColor: Theme.surfaceText
                     anchors.verticalCenter: parent.verticalCenter
                     onClicked: {
+                        const fromBrowser = accountModal.wizardStep === accountModal.browserStepIndex;
                         accountModal.cancelPendingFlow();
+                        if (fromBrowser) {
+                            accountModal.wizardStep = accountModal.flowReturnStep;
+                            return;
+                        }
                         if (accountModal.wizardStep > 0) {
                             accountModal.wizardStep -= 1;
-                        } else {
-                            accountModal.selectedProvider = "";
+                            return;
                         }
+                        accountModal.selectedProvider = "";
                     }
                 }
 
@@ -691,7 +700,7 @@ FloatingWindow {
             width: parent.width
 
             StyledText {
-                text: accountModal.isMicrosoft ? I18n.tr("Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.", "microsoft oauth setup intro text") : I18n.tr("Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.", "google oauth setup intro text")
+                text: accountModal.isMicrosoft ? I18n.tr("Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.", "microsoft one-click sign-in intro text") : I18n.tr("Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.", "google one-click sign-in intro text")
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.surfaceText
                 width: parent.width
@@ -737,13 +746,37 @@ FloatingWindow {
                 }
             }
 
-            DankButton {
-                text: I18n.tr("Begin setup", "button to start oauth setup guide")
-                iconName: "arrow_forward"
-                buttonHeight: 44
-                backgroundColor: Theme.primary
-                textColor: Theme.primaryText
-                onClicked: accountModal.wizardStep = 1
+            StyledText {
+                visible: accountModal.flowError !== ""
+                text: accountModal.flowError
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.error
+                width: parent.width
+                wrapMode: Text.WordWrap
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.spacingS
+
+                DankButton {
+                    text: accountModal.isMicrosoft ? I18n.tr("Connect Microsoft Account", "button to start the one-click microsoft sign-in") : I18n.tr("Connect Google Account", "button to start the one-click google sign-in")
+                    iconName: "open_in_new"
+                    buttonHeight: 44
+                    backgroundColor: Theme.primary
+                    textColor: Theme.primaryText
+                    enabled: !accountModal.flowInProgress
+                    onClicked: accountModal.startOAuthFlow()
+                }
+
+                DankButton {
+                    text: I18n.tr("Use your own OAuth client", "button to open the advanced custom google client setup")
+                    buttonHeight: 44
+                    backgroundColor: "transparent"
+                    textColor: Theme.surfaceVariantText
+                    enabled: !accountModal.flowInProgress
+                    onClicked: accountModal.wizardStep = 1
+                }
             }
         }
     }
@@ -1093,7 +1126,7 @@ FloatingWindow {
                     onClicked: {
                         accountModal.cancelPendingFlow();
                         accountModal.flowError = "";
-                        accountModal.wizardStep = accountModal.credsStep;
+                        accountModal.wizardStep = accountModal.flowReturnStep;
                     }
                 }
 
@@ -1104,7 +1137,7 @@ FloatingWindow {
                     textColor: Theme.surfaceText
                     onClicked: {
                         accountModal.cancelPendingFlow();
-                        accountModal.wizardStep = accountModal.credsStep;
+                        accountModal.wizardStep = accountModal.flowReturnStep;
                     }
                 }
             }

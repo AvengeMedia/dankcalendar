@@ -17,6 +17,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
 	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
+	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
@@ -157,7 +158,7 @@ var accountProvidersCmd = &cobra.Command{
 
 var accountSetupCmd = &cobra.Command{
 	Use:       "setup <google|microsoft>",
-	Short:     "Print step-by-step instructions for creating an OAuth app",
+	Short:     "Print instructions for creating your own OAuth app (optional for Google)",
 	Args:      cobra.ExactArgs(1),
 	ValidArgs: []string{"google", "microsoft"},
 	RunE: func(_ *cobra.Command, args []string) error {
@@ -175,6 +176,19 @@ var accountSetupCmd = &cobra.Command{
 			return printJSON(steps)
 		}
 
+		builtin := false
+		switch args[0] {
+		case "google":
+			_, builtin = oauth.BuiltinGoogleCredentials()
+		case "microsoft":
+			_, builtin = oauth.BuiltinMicrosoftCredentials()
+		}
+		if builtin {
+			fmt.Printf("Dank Calendar ships with a built-in %s client — `dcal account add %s` just works.\n", accounts.ProviderName(args[0]), args[0])
+			fmt.Println("Follow these steps only if you want to use your own OAuth client.")
+			fmt.Println()
+		}
+
 		fmt.Printf("%s setup (one-time)\n\n", accounts.ProviderName(args[0]))
 		for i, s := range steps {
 			fmt.Printf("%d. %s\n", i+1, s.Title)
@@ -187,7 +201,15 @@ var accountSetupCmd = &cobra.Command{
 			}
 			fmt.Println()
 		}
-		fmt.Printf("Then run:  dcal account add %s\n", args[0])
+		switch args[0] {
+		case "google":
+			fmt.Println("Then run:  dcal account add google --client-id <id> --client-secret <secret>")
+			fmt.Println("      or:  dcal account add google --credentials client_secret.json")
+		case "microsoft":
+			fmt.Println("Then run:  dcal account add microsoft --client-id <id>")
+		default:
+			fmt.Printf("Then run:  dcal account add %s\n", args[0])
+		}
 		return nil
 	},
 }

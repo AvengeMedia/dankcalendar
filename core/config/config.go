@@ -6,13 +6,14 @@ import (
 )
 
 type Config struct {
-	APIAddr        string `env:"DANKCAL_API_ADDR" envDefault:"127.0.0.1:0"`
-	OAuthBindAddr  string `env:"DANKCAL_OAUTH_ADDR" envDefault:"127.0.0.1:0"`
-	DatabasePath   string `env:"DANKCAL_DB_PATH"`
-	GoogleClientID string `env:"DANKCAL_GOOGLE_CLIENT_ID"`
-	GoogleSecret   string `env:"DANKCAL_GOOGLE_CLIENT_SECRET"`
-	DisableHTTP    bool   `env:"DANKCAL_DISABLE_HTTP" envDefault:"false"`
-	DisableIPC     bool   `env:"DANKCAL_DISABLE_IPC" envDefault:"false"`
+	APIAddr           string `env:"DANKCAL_API_ADDR" envDefault:"127.0.0.1:0"`
+	OAuthBindAddr     string `env:"DANKCAL_OAUTH_ADDR" envDefault:"127.0.0.1:0"`
+	DatabasePath      string `env:"DANKCAL_DB_PATH"`
+	GoogleClientID    string `env:"DANKCAL_GOOGLE_CLIENT_ID"`
+	GoogleSecret      string `env:"DANKCAL_GOOGLE_CLIENT_SECRET"`
+	MicrosoftClientID string `env:"DANKCAL_MICROSOFT_CLIENT_ID"`
+	DisableHTTP       bool   `env:"DANKCAL_DISABLE_HTTP" envDefault:"false"`
+	DisableIPC        bool   `env:"DANKCAL_DISABLE_IPC" envDefault:"false"`
 }
 
 func New() *Config {

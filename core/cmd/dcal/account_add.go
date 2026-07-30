@@ -238,21 +238,14 @@ var accountAddMicrosoftCmd = &cobra.Command{
 		clientID, _ := cmd.Flags().GetString("client-id")
 		tenant, _ := cmd.Flags().GetString("tenant")
 
-		if clientID == "" {
-			infof("A Microsoft app registration is required.")
-			infof("Run `dcal account setup microsoft` for step-by-step instructions.")
-			infof("")
-			var err error
-			clientID, err = readPrompt(bufio.NewReader(os.Stdin), "Application (client) ID: ")
-			if err != nil {
-				return err
-			}
+		creds, err := accounts.ResolveMicrosoftClient(oauth.MicrosoftAppCredentials{ClientID: clientID, Tenant: tenant})
+		if err != nil {
+			return err
 		}
 
 		ctx, cancel := oauthContext()
 		defer cancel()
 
-		creds := oauth.MicrosoftAppCredentials{ClientID: clientID, Tenant: tenant}
 		flow, err := oauth.StartMicrosoftLoopbackFlow(ctx, creds, config.New().OAuthBindAddr)
 		if err != nil {
 			return err
@@ -330,36 +323,7 @@ func resolveGoogleCreds(cmd *cobra.Command) (oauth.GoogleAppCredentials, error) 
 		}
 	}
 
-	cfg := config.New()
-	if creds.ClientID == "" {
-		creds.ClientID = cfg.GoogleClientID
-	}
-	if creds.ClientSecret == "" {
-		creds.ClientSecret = cfg.GoogleSecret
-	}
-	if creds.ClientID != "" && creds.ClientSecret != "" {
-		return creds, nil
-	}
-
-	infof("Google OAuth client credentials are required.")
-	infof("Run `dcal account setup google` for step-by-step instructions.")
-	infof("")
-
-	reader := bufio.NewReader(os.Stdin)
-	var err error
-	if creds.ClientID == "" {
-		creds.ClientID, err = readPrompt(reader, "Client ID: ")
-		if err != nil {
-			return creds, err
-		}
-	}
-	if creds.ClientSecret == "" {
-		creds.ClientSecret, err = readPrompt(reader, "Client Secret: ")
-		if err != nil {
-			return creds, err
-		}
-	}
-	return creds, nil
+	return accounts.ResolveGoogleClient(creds)
 }
 
 func readGoogleCredentialsFile(path string) (oauth.GoogleAppCredentials, error) {

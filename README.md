@@ -167,8 +167,10 @@ Manage accounts and sync from the command line:
 dcal account list                 # list connected accounts
 dcal account add local ~/cal      # add a local calendar directory
 dcal account add caldav           # add a CalDAV / iCloud account
-dcal account setup google         # OAuth setup for Google
-dcal account setup microsoft      # OAuth setup for Microsoft
+dcal account add google           # sign in with Google (opens your browser)
+dcal account add microsoft        # sign in with Microsoft (opens your browser)
+dcal account setup google         # optional: use your own Google OAuth client
+dcal account setup microsoft      # optional: use your own Microsoft app registration
 dcal account remove <account-id>  # remove an account
 dcal sync [account-id]            # force a sync
 dcal reminders                    # list upcoming reminders
@@ -246,3 +248,19 @@ Include screenshots or video in your PR when the change is user-facing.
 ## License
 
 MIT License - See [LICENSE](LICENSE) for details.
+
+### OAuth client credentials
+
+This repository includes a Google OAuth client and a Microsoft app registration so
+`dcal account add google` and `dcal account add microsoft` work out of the box.
+Distribution packages built from this repository (AUR, Flathub, Fedora, Debian, Nix,
+and the like) are welcome to ship them unchanged — no special permission is needed to
+package or redistribute DankCalendar.
+
+These credential strings identify the upstream DankCalendar application to Google and
+Microsoft. They are not authorized for use by forks, rebranded builds, or unrelated
+applications — under [Google's API Services Terms](https://developers.google.com/terms)
+and Microsoft's identity platform terms, such projects must register their own OAuth
+clients and supply them at build time via `-ldflags -X`, at runtime via
+`DANKCAL_GOOGLE_CLIENT_ID` / `DANKCAL_GOOGLE_CLIENT_SECRET` /
+`DANKCAL_MICROSOFT_CLIENT_ID`, or in-app via the custom OAuth client option.

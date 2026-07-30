@@ -11,9 +11,13 @@ import (
 )
 
 func handleMicrosoftStart(_ context.Context, w *ConnWriter, req Request, deps Deps) {
-	clientID := strings.TrimSpace(ParamString(req.Params, "clientId"))
-	if clientID == "" {
-		RespondError(w, req.ID, "clientId is required")
+	creds, err := accounts.ResolveMicrosoftClient(oauth.MicrosoftAppCredentials{
+		ClientID:     strings.TrimSpace(ParamString(req.Params, "clientId")),
+		ClientSecret: strings.TrimSpace(ParamString(req.Params, "clientSecret")),
+		Tenant:       strings.TrimSpace(ParamString(req.Params, "tenant")),
+	})
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
 		return
 	}
 
@@ -27,12 +31,6 @@ func handleMicrosoftStart(_ context.Context, w *ConnWriter, req Request, deps De
 	if err != nil {
 		RespondError(w, req.ID, err.Error())
 		return
-	}
-
-	creds := oauth.MicrosoftAppCredentials{
-		ClientID:     clientID,
-		ClientSecret: strings.TrimSpace(ParamString(req.Params, "clientSecret")),
-		Tenant:       strings.TrimSpace(ParamString(req.Params, "tenant")),
 	}
 
 	flow, err := oauth.NewMicrosoftFlow(creds, brokerFlow)

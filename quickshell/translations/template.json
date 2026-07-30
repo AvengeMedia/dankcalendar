@@ -581,13 +581,6 @@
     "comment": ""
   },
   {
-    "term": "Begin setup",
-    "translation": "",
-    "context": "button to start oauth setup guide",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Calendar",
     "translation": "",
     "context": "main window title | main window title bar text",
@@ -759,6 +752,20 @@
     "term": "Connect %1",
     "translation": "",
     "context": "account add header when a provider is selected",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connect Google Account",
+    "translation": "",
+    "context": "button to start the one-click google sign-in",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connect Microsoft Account",
+    "translation": "",
+    "context": "button to start the one-click microsoft sign-in",
     "reference": "",
     "comment": ""
   },
@@ -1246,13 +1253,6 @@
     "comment": ""
   },
   {
-    "term": "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.",
-    "translation": "",
-    "context": "google oauth setup intro text",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Hide",
     "translation": "",
     "context": "calendar context menu action to hide a calendar",
@@ -1473,13 +1473,6 @@
     "term": "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.",
     "translation": "",
     "context": "hint about microsoft server_error during oauth",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.",
-    "translation": "",
-    "context": "microsoft oauth setup intro text",
     "reference": "",
     "comment": ""
   },
@@ -2254,6 +2247,20 @@
     "comment": ""
   },
   {
+    "term": "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.",
+    "translation": "",
+    "context": "google one-click sign-in intro text",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.",
+    "translation": "",
+    "context": "microsoft one-click sign-in intro text",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.",
     "translation": "",
     "context": "icloud sign-in form instructions",
@@ -2565,6 +2572,13 @@
     "term": "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.",
     "translation": "",
     "context": "evolution data server account form instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Use your own OAuth client",
+    "translation": "",
+    "context": "button to open the advanced custom google client setup",
     "reference": "",
     "comment": ""
   },
