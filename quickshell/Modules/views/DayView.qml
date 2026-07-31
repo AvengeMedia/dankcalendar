@@ -9,6 +9,7 @@ Item {
     id: root
 
     property date displayDate: new Date()
+    property date today: new Date()
     property string selectedEventKey: ""
     property int eventsVersion: 0
 
@@ -33,13 +34,8 @@ Item {
     readonly property real hourHeight: 56
     readonly property real timeColumnWidth: 72
 
-    SystemClock {
-        id: clock
-        precision: SystemClock.Minutes
-    }
-
-    readonly property bool showsNow: clock.date.getFullYear() === displayDate.getFullYear() && clock.date.getMonth() === displayDate.getMonth() && clock.date.getDate() === displayDate.getDate()
-    readonly property real nowHour: clock.date.getHours() + clock.date.getMinutes() / 60
+    readonly property bool showsNow: today.getFullYear() === displayDate.getFullYear() && today.getMonth() === displayDate.getMonth() && today.getDate() === displayDate.getDate()
+    readonly property real nowHour: today.getHours() + today.getMinutes() / 60
 
     Connections {
         target: DankCalService

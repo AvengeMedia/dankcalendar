@@ -11,6 +11,7 @@ Item {
 
     property string currentView: "month"
     property date selectedDate: new Date()
+    property date today: new Date()
     property var actionCalendar: null
     property var actionAccount: null
     property bool calendarsExpanded: true
@@ -650,6 +651,7 @@ Item {
                 visible: SettingsData.showTasks && DankCalService.hasTaskLists()
 
                 property var openTasks: {
+                    root.today;
                     const buckets = DankCalService.taskBuckets();
                     return buckets.overdue.concat(buckets.today, buckets.upcoming, buckets.someday);
                 }

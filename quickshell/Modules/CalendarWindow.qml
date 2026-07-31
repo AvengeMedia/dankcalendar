@@ -22,7 +22,11 @@ FloatingWindow {
     }
     property date displayDate: new Date()
     property date selectedDate: new Date()
-    property date today: new Date()
+    // Live clock so the today highlight rolls over at midnight and after a
+    // suspend/resume that crosses it. todayStart only changes on rollover,
+    // so day-granular consumers don't recompute every minute.
+    property date today: clock.date
+    readonly property date todayStart: new Date(today.getFullYear(), today.getMonth(), today.getDate())
     property int selectedEventIndex: -1
     property int eventsVersion: 0
     property bool sidebarFocused: false
@@ -70,6 +74,11 @@ FloatingWindow {
 
     onSelectedDateChanged: selectedEventIndex = -1
 
+    SystemClock {
+        id: clock
+        precision: SystemClock.Minutes
+    }
+
     Connections {
         target: DankCalService
         function onEventsUpdated() {
@@ -116,7 +125,6 @@ FloatingWindow {
     function goToToday() {
         rangeAnchorTime = 0;
         const t = new Date();
-        today = t;
         displayDate = alignedDisplayDate(t);
         selectedDate = t;
     }
@@ -659,6 +667,7 @@ FloatingWindow {
                     visible: window.sidebarVisible
                     currentView: window.currentView
                     selectedDate: window.selectedDate
+                    today: window.todayStart
                     keyboardActive: window.sidebarFocused
                     onViewChanged: view => {
                         window.currentView = view;
@@ -738,6 +747,7 @@ FloatingWindow {
                         selectedDate: window.selectedDate
                         selectedEventKey: window.selectedEventKey
                         today: window.today
+                        todayStart: window.todayStart
                         rangeStartTime: window.rangeStartTime
                         rangeEndTime: window.rangeEndTime
                         onTodayRequested: window.goToToday()

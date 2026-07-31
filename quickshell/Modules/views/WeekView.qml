@@ -83,16 +83,11 @@ Item {
         snapAnim.restart();
     }
 
-    SystemClock {
-        id: clock
-        precision: SystemClock.Minutes
-    }
-
     readonly property int nowIndex: {
-        const nowDay = new Date(clock.date.getFullYear(), clock.date.getMonth(), clock.date.getDate());
+        const nowDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
         return Math.round((nowDay.getTime() - firstDay.getTime()) / 86400000);
     }
-    readonly property real nowHour: clock.date.getHours() + clock.date.getMinutes() / 60
+    readonly property real nowHour: today.getHours() + today.getMinutes() / 60
 
     function hourLabel(hour) {
         if (hour === 0)

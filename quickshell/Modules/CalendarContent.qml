@@ -13,6 +13,7 @@ Item {
     property date selectedDate: new Date()
     property string selectedEventKey: ""
     property date today: new Date()
+    property date todayStart: new Date()
     property real rangeStartTime: 0
     property real rangeEndTime: 0
 
@@ -220,6 +221,7 @@ Item {
                 id: dayComponent
                 DayView {
                     displayDate: root.displayDate
+                    today: root.today
                     selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
                     onPreviousRequested: root.previousRequested()
@@ -231,6 +233,7 @@ Item {
                 id: agendaComponent
                 AgendaView {
                     displayDate: root.displayDate
+                    today: root.todayStart
                     selectedEventKey: root.selectedEventKey
                     onEventClicked: ev => root.eventClicked(ev)
                 }
@@ -239,6 +242,7 @@ Item {
             Component {
                 id: tasksComponent
                 TasksView {
+                    today: root.todayStart
                     onTaskClicked: task => root.taskClicked(task)
                     onCreateTaskRequested: root.createTaskRequested()
                 }

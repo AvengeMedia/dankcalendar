@@ -9,6 +9,7 @@ Item {
     id: root
 
     property date displayDate: new Date()
+    property date today: new Date()
     property int tasksVersion: 0
 
     signal taskClicked(var task)
@@ -24,9 +25,8 @@ Item {
     function dueLabel(task) {
         if (!task.due)
             return "";
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const diff = Math.round((task.due.getTime() - today.getTime()) / 86400000);
+        const todayStart = new Date(root.today.getFullYear(), root.today.getMonth(), root.today.getDate());
+        const diff = Math.round((task.due.getTime() - todayStart.getTime()) / 86400000);
         switch (diff) {
         case 0:
             return I18n.tr("Today", "due-date label on a task card");
@@ -41,6 +41,7 @@ Item {
 
     readonly property var sections: {
         tasksVersion;
+        today;
         const buckets = DankCalService.taskBuckets();
         const order = [
             {

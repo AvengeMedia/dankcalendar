@@ -9,6 +9,7 @@ Item {
     id: root
 
     property date displayDate: new Date()
+    property date today: new Date()
     property string selectedEventKey: ""
     property int eventsVersion: 0
     readonly property int daysAhead: 14
@@ -34,9 +35,8 @@ Item {
     }
 
     function dayLabel(d) {
-        const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const diff = Math.round((d.getTime() - today.getTime()) / 86400000);
+        const todayStart = new Date(root.today.getFullYear(), root.today.getMonth(), root.today.getDate());
+        const diff = Math.round((d.getTime() - todayStart.getTime()) / 86400000);
         switch (diff) {
         case 0:
             return I18n.tr("Today", "agenda section header for the current day");
