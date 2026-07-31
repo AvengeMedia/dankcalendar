@@ -29,7 +29,10 @@ type Provider struct {
 	endpoint   *url.URL
 	homeSet    string
 	username   string
+	notices    []string
 }
+
+func (p *Provider) Notices() []string { return p.notices }
 
 func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, baseURL, username string) (*Provider, error) {
 	password, err := secrets.Get(ctx, account.ID, SecretKeyPassword)
@@ -91,6 +94,7 @@ func (p *Provider) Kind() cal.AccountKind { return cal.AccountCalDAV }
 func (p *Provider) Account() cal.Account  { return p.account }
 
 func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
+	p.notices = nil
 	calendars, err := p.client.FindCalendars(ctx, p.homeSet)
 	if err != nil {
 		return nil, fmt.Errorf("find caldav calendars: %w", err)
@@ -201,12 +205,29 @@ func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCurs
 		}
 		for _, obj := range objects {
 			for _, t := range tasksFromObject(c, obj) {
+				p.noticeUpgradedReminders(t)
 				result.TaskChanges = append(result.TaskChanges, cal.TaskChange{Type: cal.ChangeUpsert, Task: &t})
 			}
 		}
 	}
 
 	return result, nil
+}
+
+// noticeUpgradedReminders flags Apple's placeholder VTODO ("The creator of
+// this list has upgraded these reminders.") that iCloud serves instead of
+// Reminders lists upgraded past CalDAV access. The support URL in the
+// description is the locale-independent marker.
+func (p *Provider) noticeUpgradedReminders(t cal.Task) {
+	switch {
+	case !strings.HasSuffix(p.endpoint.Hostname(), "icloud.com"):
+		return
+	case !strings.Contains(t.Description, "support.apple.com/HT210220"):
+		return
+	case slices.Contains(p.notices, cal.NoticeICloudRemindersUpgraded):
+		return
+	}
+	p.notices = append(p.notices, cal.NoticeICloudRemindersUpgraded)
 }
 
 func (p *Provider) ListEvents(ctx context.Context, c cal.Calendar, opts cal.ListEventsOptions) ([]cal.Event, error) {

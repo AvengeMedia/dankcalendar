@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
 
@@ -202,4 +203,28 @@ func TestNewReportsPrincipalErrorWithoutWellKnown(t *testing.T) {
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "find caldav principal")
 	assert.Contains(t, err.Error(), "405")
+}
+
+func TestNoticeUpgradedReminders(t *testing.T) {
+	placeholder := cal.Task{
+		Summary:     "The creator of this list has upgraded these reminders.",
+		Description: "Learn more here: https://support.apple.com/HT210220",
+	}
+
+	icloud, err := url.Parse("https://p147-caldav.icloud.com")
+	require.NoError(t, err)
+	p := &Provider{endpoint: icloud}
+
+	p.noticeUpgradedReminders(cal.Task{Summary: "Buy milk"})
+	assert.Empty(t, p.Notices())
+
+	p.noticeUpgradedReminders(placeholder)
+	p.noticeUpgradedReminders(placeholder)
+	assert.Equal(t, []string{cal.NoticeICloudRemindersUpgraded}, p.Notices())
+
+	other, err := url.Parse("https://dav.example.com")
+	require.NoError(t, err)
+	p = &Provider{endpoint: other}
+	p.noticeUpgradedReminders(placeholder)
+	assert.Empty(t, p.Notices())
 }

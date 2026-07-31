@@ -31,11 +31,15 @@ Item {
 
     // Maps comma-joined backend sync-notice codes to a per-account hint shown when
     // an account partially degrades (e.g. Tasks API disabled, calendars still OK).
-    function accountNotice(kind, codes) {
-        if (!codes)
+    function accountNotice(account) {
+        if (!account.notice)
             return "";
-        const parts = codes.split(",").map(c => root._accountNoticeOne(kind, c)).filter(s => s !== "");
+        const parts = account.notice.split(",").filter(c => !SettingsData.isNoticeDismissed(account.id, c)).map(c => root._accountNoticeOne(account.kind, c)).filter(s => s !== "");
         return parts.join("<br/>");
+    }
+
+    function dismissAccountNotice(account) {
+        account.notice.split(",").forEach(c => SettingsData.dismissNotice(account.id, c));
     }
 
     function _accountNoticeOne(kind, code) {
@@ -50,6 +54,8 @@ Item {
             if (kind === "google")
                 return I18n.tr('Google Calendar API is disabled. <a href="https://console.cloud.google.com/apis/library/calendar-json.googleapis.com" style="text-decoration:none; color:%1;">Enable it</a>, then refresh, to sync events.', "account notice when the google calendar api is not enabled").arg(Theme.primary);
             return I18n.tr("Calendars couldn't be loaded; tasks are still syncing.", "account notice when calendars are unavailable but tasks sync");
+        case "icloud_reminders_upgraded":
+            return I18n.tr('Apple no longer provides upgraded iCloud reminders to third-party apps, so these lists only contain placeholder items. <a href="https://support.apple.com/HT210220" style="text-decoration:none; color:%1;">Learn more</a>', "account notice when apple serves placeholder items instead of upgraded icloud reminders").arg(Theme.primary);
         }
         return "";
     }
@@ -1191,22 +1197,37 @@ Item {
                                         width: parent.width
                                     }
 
-                                    StyledText {
-                                        readonly property string noticeText: root.accountNotice(accountRow.modelData.kind, accountRow.modelData.notice)
+                                    Row {
+                                        readonly property string noticeText: root.accountNotice(accountRow.modelData)
                                         visible: noticeText !== "" && accountRow.modelData.needsReauth !== true && accountRow.modelData.authorized !== false
-                                        text: noticeText
-                                        textFormat: Text.RichText
-                                        font.pixelSize: Theme.fontSizeSmall
-                                        color: Theme.warning
-                                        linkColor: Theme.primary
-                                        onLinkActivated: url => Qt.openUrlExternally(url)
                                         width: parent.width
-                                        wrapMode: Text.WordWrap
+                                        spacing: Theme.spacingXS
 
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                            acceptedButtons: Qt.NoButton
+                                        StyledText {
+                                            text: parent.noticeText
+                                            textFormat: Text.RichText
+                                            font.pixelSize: Theme.fontSizeSmall
+                                            color: Theme.warning
+                                            linkColor: Theme.primary
+                                            onLinkActivated: url => Qt.openUrlExternally(url)
+                                            width: parent.width - 20 - Theme.spacingXS
+                                            wrapMode: Text.WordWrap
+
+                                            MouseArea {
+                                                anchors.fill: parent
+                                                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                                acceptedButtons: Qt.NoButton
+                                            }
+                                        }
+
+                                        DankActionButton {
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            buttonSize: 20
+                                            iconSize: Theme.fontSizeMedium
+                                            iconName: "close"
+                                            iconColor: Theme.surfaceVariantText
+                                            tooltipText: I18n.tr("Dismiss", "account notice dismiss button tooltip")
+                                            onClicked: root.dismissAccountNotice(accountRow.modelData)
                                         }
                                     }
                                 }

@@ -84,6 +84,18 @@ Singleton {
     property alias sidebarCollapsed: adapter.sidebarCollapsed
     // last active calendar view, restored on open: "month" | "week" | "day" | "agenda"
     property alias lastView: adapter.lastView
+    // "accountId:noticeCode" entries the user closed in the accounts list
+    property alias dismissedAccountNotices: adapter.dismissedAccountNotices
+
+    function isNoticeDismissed(accountId, code) {
+        return dismissedAccountNotices.indexOf(accountId + ":" + code) !== -1;
+    }
+
+    function dismissNotice(accountId, code) {
+        if (isNoticeDismissed(accountId, code))
+            return;
+        dismissedAccountNotices = dismissedAccountNotices.concat([accountId + ":" + code]);
+    }
 
     readonly property var locale: Qt.locale()
     // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
@@ -195,6 +207,7 @@ Singleton {
             property int sidebarWidth: 240
             property bool sidebarCollapsed: false
             property string lastView: "month"
+            property var dismissedAccountNotices: []
         }
     }
 }
