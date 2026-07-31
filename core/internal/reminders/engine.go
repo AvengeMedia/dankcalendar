@@ -737,15 +737,16 @@ func due(tr trigger, ev *ent.Event, now time.Time) bool {
 }
 
 // triggersFor derives the trigger times for one occurrence. Explicit popup
-// reminders win; otherwise the configured defaults apply. All-day triggers
-// are computed against local midnight of the start date so "09:00 the day
-// before" means wall-clock time, not UTC.
+// reminders win; otherwise the configured defaults apply. The all-day toggle
+// only governs the default trigger — an alarm set on the event itself still
+// fires with it off (issue #75). All-day triggers are computed against local
+// midnight of the start date so "09:00 the day before" means wall-clock time,
+// not UTC.
 func triggersFor(ev *ent.Event, s settings.UISettings, loc *time.Location) []trigger {
-	if ev.AllDay && !s.AllDayReminders {
+	explicit := popupMinutes(ev.Reminders)
+	if ev.AllDay && !s.AllDayReminders && len(explicit) == 0 {
 		return nil
 	}
-
-	explicit := popupMinutes(ev.Reminders)
 	base := ev.Start
 	if ev.AllDay {
 		base = localMidnight(ev.Start, loc)

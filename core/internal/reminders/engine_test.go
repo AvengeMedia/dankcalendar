@@ -560,6 +560,14 @@ func TestTriggersFor(t *testing.T) {
 			cfg:  cfg,
 			want: []trigger{{at: time.Date(2026, 6, 11, 14, 0, 0, 0, time.UTC), minutes: 600}},
 		},
+		{
+			name: "all day disabled still fires explicit alarm",
+			ev: withReminders(allDay, []map[string]any{
+				{"method": "popup", "minutes": 600},
+			}),
+			cfg:  allDayOff,
+			want: []trigger{{at: time.Date(2026, 6, 11, 14, 0, 0, 0, time.UTC), minutes: 600}},
+		},
 	}
 
 	for _, tt := range tests {
