@@ -123,6 +123,20 @@ func (_c *CalendarCreate) SetNillableHidden(v *bool) *CalendarCreate {
 	return _c
 }
 
+// SetSyncDisabled sets the "sync_disabled" field.
+func (_c *CalendarCreate) SetSyncDisabled(v bool) *CalendarCreate {
+	_c.mutation.SetSyncDisabled(v)
+	return _c
+}
+
+// SetNillableSyncDisabled sets the "sync_disabled" field if the given value is not nil.
+func (_c *CalendarCreate) SetNillableSyncDisabled(v *bool) *CalendarCreate {
+	if v != nil {
+		_c.SetSyncDisabled(*v)
+	}
+	return _c
+}
+
 // SetReminderOverrides sets the "reminder_overrides" field.
 func (_c *CalendarCreate) SetReminderOverrides(v *settings.ReminderOverride) *CalendarCreate {
 	_c.mutation.SetReminderOverrides(v)
@@ -267,6 +281,10 @@ func (_c *CalendarCreate) defaults() {
 		v := calendar.DefaultHidden
 		_c.mutation.SetHidden(v)
 	}
+	if _, ok := _c.mutation.SyncDisabled(); !ok {
+		v := calendar.DefaultSyncDisabled
+		_c.mutation.SetSyncDisabled(v)
+	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := calendar.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
@@ -300,6 +318,9 @@ func (_c *CalendarCreate) check() error {
 	}
 	if _, ok := _c.mutation.Hidden(); !ok {
 		return &ValidationError{Name: "hidden", err: errors.New(`ent: missing required field "Calendar.hidden"`)}
+	}
+	if _, ok := _c.mutation.SyncDisabled(); !ok {
+		return &ValidationError{Name: "sync_disabled", err: errors.New(`ent: missing required field "Calendar.sync_disabled"`)}
 	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Calendar.created_at"`)}
@@ -382,6 +403,10 @@ func (_c *CalendarCreate) createSpec() (*Calendar, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Hidden(); ok {
 		_spec.SetField(calendar.FieldHidden, field.TypeBool, value)
 		_node.Hidden = value
+	}
+	if value, ok := _c.mutation.SyncDisabled(); ok {
+		_spec.SetField(calendar.FieldSyncDisabled, field.TypeBool, value)
+		_node.SyncDisabled = value
 	}
 	if value, ok := _c.mutation.ReminderOverrides(); ok {
 		_spec.SetField(calendar.FieldReminderOverrides, field.TypeJSON, value)
@@ -621,6 +646,18 @@ func (u *CalendarUpsert) SetHidden(v bool) *CalendarUpsert {
 // UpdateHidden sets the "hidden" field to the value that was provided on create.
 func (u *CalendarUpsert) UpdateHidden() *CalendarUpsert {
 	u.SetExcluded(calendar.FieldHidden)
+	return u
+}
+
+// SetSyncDisabled sets the "sync_disabled" field.
+func (u *CalendarUpsert) SetSyncDisabled(v bool) *CalendarUpsert {
+	u.Set(calendar.FieldSyncDisabled, v)
+	return u
+}
+
+// UpdateSyncDisabled sets the "sync_disabled" field to the value that was provided on create.
+func (u *CalendarUpsert) UpdateSyncDisabled() *CalendarUpsert {
+	u.SetExcluded(calendar.FieldSyncDisabled)
 	return u
 }
 
@@ -878,6 +915,20 @@ func (u *CalendarUpsertOne) SetHidden(v bool) *CalendarUpsertOne {
 func (u *CalendarUpsertOne) UpdateHidden() *CalendarUpsertOne {
 	return u.Update(func(s *CalendarUpsert) {
 		s.UpdateHidden()
+	})
+}
+
+// SetSyncDisabled sets the "sync_disabled" field.
+func (u *CalendarUpsertOne) SetSyncDisabled(v bool) *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.SetSyncDisabled(v)
+	})
+}
+
+// UpdateSyncDisabled sets the "sync_disabled" field to the value that was provided on create.
+func (u *CalendarUpsertOne) UpdateSyncDisabled() *CalendarUpsertOne {
+	return u.Update(func(s *CalendarUpsert) {
+		s.UpdateSyncDisabled()
 	})
 }
 
@@ -1313,6 +1364,20 @@ func (u *CalendarUpsertBulk) SetHidden(v bool) *CalendarUpsertBulk {
 func (u *CalendarUpsertBulk) UpdateHidden() *CalendarUpsertBulk {
 	return u.Update(func(s *CalendarUpsert) {
 		s.UpdateHidden()
+	})
+}
+
+// SetSyncDisabled sets the "sync_disabled" field.
+func (u *CalendarUpsertBulk) SetSyncDisabled(v bool) *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.SetSyncDisabled(v)
+	})
+}
+
+// UpdateSyncDisabled sets the "sync_disabled" field to the value that was provided on create.
+func (u *CalendarUpsertBulk) UpdateSyncDisabled() *CalendarUpsertBulk {
+	return u.Update(func(s *CalendarUpsert) {
+		s.UpdateSyncDisabled()
 	})
 }
 

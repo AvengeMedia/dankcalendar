@@ -41,6 +41,10 @@ func (Calendar) Fields() []ent.Field {
 			Default(false),
 		field.Bool("hidden").
 			Default(false),
+		// Excluded from provider sync; owned locally like hidden. Disabling
+		// purges the local events/tasks, re-enabling resyncs from scratch.
+		field.Bool("sync_disabled").
+			Default(false),
 		// Per-calendar reminder overrides; owned locally like hidden,
 		// nil means the calendar follows the global reminder settings.
 		field.JSON("reminder_overrides", &settings.ReminderOverride{}).

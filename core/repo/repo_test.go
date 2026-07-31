@@ -138,6 +138,74 @@ func TestCalendarNameOverrideSurvivesSync(t *testing.T) {
 	require.Empty(t, cleared.NameOverride)
 }
 
+func TestSetCalendarSyncDisabled(t *testing.T) {
+	r, ctx := newTestRepo(t)
+
+	_, err := r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "personal",
+		Kind:        account.KindLocal,
+		DisplayName: "Personal",
+	})
+	require.NoError(t, err)
+
+	cal, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "personal",
+		RemoteID:  "file:work.ics",
+		Name:      "Work",
+		SyncToken: "tok-1",
+	})
+	require.NoError(t, err)
+
+	now := time.Now().UTC().Truncate(time.Second)
+	_, err = r.UpsertEvent(ctx, repo.UpsertEventInput{
+		CalendarID: cal.ID,
+		UID:        "evt-1",
+		Summary:    "Standup",
+		Start:      now,
+		End:        now.Add(30 * time.Minute),
+		Status:     event.StatusConfirmed,
+	})
+	require.NoError(t, err)
+	_, err = r.UpsertTask(ctx, repo.UpsertTaskInput{
+		CalendarID: cal.ID,
+		UID:        "task-1",
+		Summary:    "Prep notes",
+	})
+	require.NoError(t, err)
+
+	require.NoError(t, r.SetCalendarSyncDisabled(ctx, cal.ID, true))
+
+	disabled, err := r.GetCalendar(ctx, cal.ID)
+	require.NoError(t, err)
+	require.True(t, disabled.SyncDisabled)
+	require.Empty(t, disabled.SyncToken)
+
+	_, total, err := r.ListEvents(ctx, repo.ListEventsParams{
+		Filter: repo.EventFilter{CalendarIDs: []string{cal.ID}},
+	})
+	require.NoError(t, err)
+	require.Zero(t, total)
+
+	_, taskTotal, err := r.ListTasks(ctx, repo.ListTasksParams{
+		Filter: repo.TaskFilter{CalendarIDs: []string{cal.ID}},
+	})
+	require.NoError(t, err)
+	require.Zero(t, taskTotal)
+
+	synced, err := r.UpsertCalendar(ctx, repo.UpsertCalendarInput{
+		AccountID: "personal",
+		RemoteID:  "file:work.ics",
+		Name:      "Work",
+	})
+	require.NoError(t, err)
+	require.True(t, synced.SyncDisabled)
+
+	require.NoError(t, r.SetCalendarSyncDisabled(ctx, cal.ID, false))
+	enabled, err := r.GetCalendar(ctx, cal.ID)
+	require.NoError(t, err)
+	require.False(t, enabled.SyncDisabled)
+}
+
 func TestSecrets(t *testing.T) {
 	r, ctx := newTestRepo(t)
 

@@ -1000,6 +1000,7 @@ type CalendarMutation struct {
 	time_zone                  *string
 	read_only                  *bool
 	hidden                     *bool
+	sync_disabled              *bool
 	reminder_overrides         **settings.ReminderOverride
 	sync_token                 *string
 	supported_components       *[]string
@@ -1464,6 +1465,42 @@ func (m *CalendarMutation) ResetHidden() {
 	m.hidden = nil
 }
 
+// SetSyncDisabled sets the "sync_disabled" field.
+func (m *CalendarMutation) SetSyncDisabled(b bool) {
+	m.sync_disabled = &b
+}
+
+// SyncDisabled returns the value of the "sync_disabled" field in the mutation.
+func (m *CalendarMutation) SyncDisabled() (r bool, exists bool) {
+	v := m.sync_disabled
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSyncDisabled returns the old "sync_disabled" field's value of the Calendar entity.
+// If the Calendar object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CalendarMutation) OldSyncDisabled(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSyncDisabled is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSyncDisabled requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSyncDisabled: %w", err)
+	}
+	return oldValue.SyncDisabled, nil
+}
+
+// ResetSyncDisabled resets all changes to the "sync_disabled" field.
+func (m *CalendarMutation) ResetSyncDisabled() {
+	m.sync_disabled = nil
+}
+
 // SetReminderOverrides sets the "reminder_overrides" field.
 func (m *CalendarMutation) SetReminderOverrides(so *settings.ReminderOverride) {
 	m.reminder_overrides = &so
@@ -1880,7 +1917,7 @@ func (m *CalendarMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CalendarMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 14)
 	if m.remote_id != nil {
 		fields = append(fields, calendar.FieldRemoteID)
 	}
@@ -1904,6 +1941,9 @@ func (m *CalendarMutation) Fields() []string {
 	}
 	if m.hidden != nil {
 		fields = append(fields, calendar.FieldHidden)
+	}
+	if m.sync_disabled != nil {
+		fields = append(fields, calendar.FieldSyncDisabled)
 	}
 	if m.reminder_overrides != nil {
 		fields = append(fields, calendar.FieldReminderOverrides)
@@ -1944,6 +1984,8 @@ func (m *CalendarMutation) Field(name string) (ent.Value, bool) {
 		return m.ReadOnly()
 	case calendar.FieldHidden:
 		return m.Hidden()
+	case calendar.FieldSyncDisabled:
+		return m.SyncDisabled()
 	case calendar.FieldReminderOverrides:
 		return m.ReminderOverrides()
 	case calendar.FieldSyncToken:
@@ -1979,6 +2021,8 @@ func (m *CalendarMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldReadOnly(ctx)
 	case calendar.FieldHidden:
 		return m.OldHidden(ctx)
+	case calendar.FieldSyncDisabled:
+		return m.OldSyncDisabled(ctx)
 	case calendar.FieldReminderOverrides:
 		return m.OldReminderOverrides(ctx)
 	case calendar.FieldSyncToken:
@@ -2053,6 +2097,13 @@ func (m *CalendarMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetHidden(v)
+		return nil
+	case calendar.FieldSyncDisabled:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSyncDisabled(v)
 		return nil
 	case calendar.FieldReminderOverrides:
 		v, ok := value.(*settings.ReminderOverride)
@@ -2206,6 +2257,9 @@ func (m *CalendarMutation) ResetField(name string) error {
 		return nil
 	case calendar.FieldHidden:
 		m.ResetHidden()
+		return nil
+	case calendar.FieldSyncDisabled:
+		m.ResetSyncDisabled()
 		return nil
 	case calendar.FieldReminderOverrides:
 		m.ResetReminderOverrides()

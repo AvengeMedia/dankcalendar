@@ -182,6 +182,24 @@ func (s *EngineSuite) TestSyncKeepsStoredColorWhenListingReportsNone() {
 	s.Equal("#ff2968", calendars[0].Color)
 }
 
+func (s *EngineSuite) TestSyncSkipsDisabledCalendar() {
+	cal := s.seedCalendar("cal-1")
+	s.Require().NoError(s.repo.SetCalendarSyncDisabled(s.ctx, cal.ID, true))
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.Empty(s.listUIDs())
+	stored, err := s.repo.GetCalendar(s.ctx, cal.ID)
+	s.Require().NoError(err)
+	s.True(stored.SyncDisabled)
+}
+
 func (s *EngineSuite) TestSyncMapsEventStatus() {
 	s.seedCalendar("cal-1")
 	provider := s.registerProvider()

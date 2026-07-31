@@ -170,6 +170,20 @@ func (_u *CalendarUpdate) SetNillableHidden(v *bool) *CalendarUpdate {
 	return _u
 }
 
+// SetSyncDisabled sets the "sync_disabled" field.
+func (_u *CalendarUpdate) SetSyncDisabled(v bool) *CalendarUpdate {
+	_u.mutation.SetSyncDisabled(v)
+	return _u
+}
+
+// SetNillableSyncDisabled sets the "sync_disabled" field if the given value is not nil.
+func (_u *CalendarUpdate) SetNillableSyncDisabled(v *bool) *CalendarUpdate {
+	if v != nil {
+		_u.SetSyncDisabled(*v)
+	}
+	return _u
+}
+
 // SetReminderOverrides sets the "reminder_overrides" field.
 func (_u *CalendarUpdate) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpdate {
 	_u.mutation.SetReminderOverrides(v)
@@ -427,6 +441,9 @@ func (_u *CalendarUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if value, ok := _u.mutation.Hidden(); ok {
 		_spec.SetField(calendar.FieldHidden, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.SyncDisabled(); ok {
+		_spec.SetField(calendar.FieldSyncDisabled, field.TypeBool, value)
 	}
 	if value, ok := _u.mutation.ReminderOverrides(); ok {
 		_spec.SetField(calendar.FieldReminderOverrides, field.TypeJSON, value)
@@ -731,6 +748,20 @@ func (_u *CalendarUpdateOne) SetNillableHidden(v *bool) *CalendarUpdateOne {
 	return _u
 }
 
+// SetSyncDisabled sets the "sync_disabled" field.
+func (_u *CalendarUpdateOne) SetSyncDisabled(v bool) *CalendarUpdateOne {
+	_u.mutation.SetSyncDisabled(v)
+	return _u
+}
+
+// SetNillableSyncDisabled sets the "sync_disabled" field if the given value is not nil.
+func (_u *CalendarUpdateOne) SetNillableSyncDisabled(v *bool) *CalendarUpdateOne {
+	if v != nil {
+		_u.SetSyncDisabled(*v)
+	}
+	return _u
+}
+
 // SetReminderOverrides sets the "reminder_overrides" field.
 func (_u *CalendarUpdateOne) SetReminderOverrides(v *settings.ReminderOverride) *CalendarUpdateOne {
 	_u.mutation.SetReminderOverrides(v)
@@ -1018,6 +1049,9 @@ func (_u *CalendarUpdateOne) sqlSave(ctx context.Context) (_node *Calendar, err 
 	}
 	if value, ok := _u.mutation.Hidden(); ok {
 		_spec.SetField(calendar.FieldHidden, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.SyncDisabled(); ok {
+		_spec.SetField(calendar.FieldSyncDisabled, field.TypeBool, value)
 	}
 	if value, ok := _u.mutation.ReminderOverrides(); ok {
 		_spec.SetField(calendar.FieldReminderOverrides, field.TypeJSON, value)

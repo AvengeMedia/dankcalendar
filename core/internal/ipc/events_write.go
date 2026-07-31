@@ -12,6 +12,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
 	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
+	"github.com/AvengeMedia/dankgo/log"
 )
 
 func handleEventCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
@@ -246,6 +247,48 @@ func handleCalendarSetHidden(ctx context.Context, w *ConnWriter, req Request, de
 		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
 	}
 	Respond(w, req.ID, map[string]any{"calendarId": id, "hidden": ParamBool(req.Params, "hidden")})
+}
+
+func handleCalendarSetSyncDisabled(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
+	id := ParamString(req.Params, "calendarId")
+	if id == "" {
+		RespondError(w, req.ID, "calendarId is required")
+		return
+	}
+	if _, ok := req.Params["disabled"]; !ok {
+		RespondError(w, req.ID, "disabled is required")
+		return
+	}
+
+	cal, err := deps.Repo.GetCalendar(ctx, id)
+	if err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	disabled := ParamBool(req.Params, "disabled")
+	if err := deps.Repo.SetCalendarSyncDisabled(ctx, id, disabled); err != nil {
+		RespondError(w, req.ID, err.Error())
+		return
+	}
+
+	// Re-enabling resyncs in the background so the calendar's events come
+	// back without waiting for the next scheduled pass; the response must
+	// not block on a full account sync.
+	if !disabled && deps.Sync != nil && cal.Edges.Account != nil {
+		acc := cal.Edges.Account
+		go func() {
+			if err := deps.Sync.SyncAccount(context.Background(), acc); err != nil {
+				log.Warnf("sync after calendar enable: %v", err)
+			}
+		}()
+	}
+
+	if deps.Bus != nil {
+		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
+		deps.Bus.Publish("events", map[string]any{"type": "changed", "calendarId": id})
+	}
+	Respond(w, req.ID, map[string]any{"calendarId": id, "syncDisabled": disabled})
 }
 
 func handleCalendarRename(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

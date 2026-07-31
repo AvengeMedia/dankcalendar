@@ -311,6 +311,10 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 			continue
 		}
 
+		if stored.SyncDisabled {
+			continue
+		}
+
 		rc.ID = stored.ID
 		rc.Color = stored.Color
 		ra, err := e.syncCalendar(ctx, provider, rc, stored.SyncToken)

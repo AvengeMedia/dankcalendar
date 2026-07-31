@@ -36,6 +36,8 @@ type Calendar struct {
 	ReadOnly bool `json:"read_only,omitempty"`
 	// Hidden holds the value of the "hidden" field.
 	Hidden bool `json:"hidden,omitempty"`
+	// SyncDisabled holds the value of the "sync_disabled" field.
+	SyncDisabled bool `json:"sync_disabled,omitempty"`
 	// ReminderOverrides holds the value of the "reminder_overrides" field.
 	ReminderOverrides *settings.ReminderOverride `json:"reminder_overrides,omitempty"`
 	// SyncToken holds the value of the "sync_token" field.
@@ -102,7 +104,7 @@ func (*Calendar) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case calendar.FieldReminderOverrides, calendar.FieldSupportedComponents:
 			values[i] = new([]byte)
-		case calendar.FieldReadOnly, calendar.FieldHidden:
+		case calendar.FieldReadOnly, calendar.FieldHidden, calendar.FieldSyncDisabled:
 			values[i] = new(sql.NullBool)
 		case calendar.FieldID, calendar.FieldRemoteID, calendar.FieldName, calendar.FieldNameOverride, calendar.FieldDescription, calendar.FieldColor, calendar.FieldTimeZone, calendar.FieldSyncToken:
 			values[i] = new(sql.NullString)
@@ -178,6 +180,12 @@ func (_m *Calendar) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field hidden", values[i])
 			} else if value.Valid {
 				_m.Hidden = value.Bool
+			}
+		case calendar.FieldSyncDisabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field sync_disabled", values[i])
+			} else if value.Valid {
+				_m.SyncDisabled = value.Bool
 			}
 		case calendar.FieldReminderOverrides:
 			if value, ok := values[i].(*[]byte); !ok {
@@ -294,6 +302,9 @@ func (_m *Calendar) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("hidden=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Hidden))
+	builder.WriteString(", ")
+	builder.WriteString("sync_disabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.SyncDisabled))
 	builder.WriteString(", ")
 	builder.WriteString("reminder_overrides=")
 	builder.WriteString(fmt.Sprintf("%v", _m.ReminderOverrides))

@@ -424,7 +424,7 @@ Singleton {
     // Pure task lists (VTODO only, e.g. Google Tasks) are writable but can't
     // hold events; creating one there 404s at the provider.
     function writableCalendars() {
-        return calendars.filter(c => !c.readOnly && _holdsEvents(c));
+        return calendars.filter(c => !c.readOnly && !c.syncDisabled && _holdsEvents(c));
     }
 
     // Qt.openUrlExternally doesn't work with geo: URIs for some reason, so
@@ -448,7 +448,7 @@ Singleton {
     }
 
     function eventCalendars() {
-        return calendars.filter(c => _holdsEvents(c));
+        return calendars.filter(c => !c.syncDisabled && _holdsEvents(c));
     }
 
     function defaultCalendar() {
@@ -463,6 +463,23 @@ Singleton {
         }, response => {
             if (!response.error)
                 refreshCalendars();
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function setCalendarSyncDisabled(calendarId, disabled, callback) {
+        sendRequest("calendars.setSyncDisabled", {
+            "calendarId": calendarId,
+            "disabled": disabled
+        }, response => {
+            if (response.error) {
+                lastError = response.error;
+            } else {
+                refreshCalendars();
+                reloadEvents();
+                reloadTasks();
+            }
             if (callback)
                 callback(response);
         });
@@ -925,11 +942,11 @@ Singleton {
     }
 
     function taskListCalendars() {
-        return calendars.filter(c => c.holdsTasks && !c.readOnly);
+        return calendars.filter(c => c.holdsTasks && !c.readOnly && !c.syncDisabled);
     }
 
     function hasTaskLists() {
-        return calendars.some(c => c.holdsTasks);
+        return calendars.some(c => c.holdsTasks && !c.syncDisabled);
     }
 
     function visibleTasks(includeCompleted) {

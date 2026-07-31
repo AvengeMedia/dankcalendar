@@ -92,6 +92,31 @@ func (r *Repo) SetCalendarHidden(ctx context.Context, id string, hidden bool) er
 	return r.client.Calendar.UpdateOneID(id).SetHidden(hidden).Exec(ctx)
 }
 
+// SetCalendarSyncDisabled excludes a calendar from provider sync. Disabling
+// purges its local events and tasks and drops the sync token so a later
+// re-enable starts from a fresh snapshot.
+func (r *Repo) SetCalendarSyncDisabled(ctx context.Context, id string, disabled bool) error {
+	if !disabled {
+		return r.client.Calendar.UpdateOneID(id).SetSyncDisabled(false).Exec(ctx)
+	}
+	return r.WithTx(ctx, func(tx *ent.Tx) error {
+		if _, err := tx.Event.Delete().
+			Where(event.HasCalendarWith(calendar.IDEQ(id))).
+			Exec(ctx); err != nil {
+			return err
+		}
+		if _, err := tx.Task.Delete().
+			Where(task.HasCalendarWith(calendar.IDEQ(id))).
+			Exec(ctx); err != nil {
+			return err
+		}
+		return tx.Calendar.UpdateOneID(id).
+			SetSyncDisabled(true).
+			ClearSyncToken().
+			Exec(ctx)
+	})
+}
+
 func (r *Repo) SetCalendarColor(ctx context.Context, id, color string) error {
 	return r.client.Calendar.UpdateOneID(id).SetColor(color).Exec(ctx)
 }

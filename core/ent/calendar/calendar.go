@@ -30,6 +30,8 @@ const (
 	FieldReadOnly = "read_only"
 	// FieldHidden holds the string denoting the hidden field in the database.
 	FieldHidden = "hidden"
+	// FieldSyncDisabled holds the string denoting the sync_disabled field in the database.
+	FieldSyncDisabled = "sync_disabled"
 	// FieldReminderOverrides holds the string denoting the reminder_overrides field in the database.
 	FieldReminderOverrides = "reminder_overrides"
 	// FieldSyncToken holds the string denoting the sync_token field in the database.
@@ -82,6 +84,7 @@ var Columns = []string{
 	FieldTimeZone,
 	FieldReadOnly,
 	FieldHidden,
+	FieldSyncDisabled,
 	FieldReminderOverrides,
 	FieldSyncToken,
 	FieldSupportedComponents,
@@ -119,6 +122,8 @@ var (
 	DefaultReadOnly bool
 	// DefaultHidden holds the default value on creation for the "hidden" field.
 	DefaultHidden bool
+	// DefaultSyncDisabled holds the default value on creation for the "sync_disabled" field.
+	DefaultSyncDisabled bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -175,6 +180,11 @@ func ByReadOnly(opts ...sql.OrderTermOption) OrderOption {
 // ByHidden orders the results by the hidden field.
 func ByHidden(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldHidden, opts...).ToFunc()
+}
+
+// BySyncDisabled orders the results by the sync_disabled field.
+func BySyncDisabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSyncDisabled, opts...).ToFunc()
 }
 
 // BySyncToken orders the results by the sync_token field.

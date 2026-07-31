@@ -967,7 +967,7 @@ Item {
             const cal = root.actionCalendar;
             if (!cal)
                 return [];
-            return [
+            const entries = [
                 {
                     id: "toggle",
                     label: cal.hidden ? I18n.tr("Show", "calendar context menu action to show a hidden calendar") : I18n.tr("Hide", "calendar context menu action to hide a calendar"),
@@ -977,14 +977,22 @@ Item {
                     id: "rename",
                     label: I18n.tr("Rename…", "calendar context menu action to rename a calendar"),
                     icon: "edit"
-                },
-                {
-                    id: "delete",
-                    label: I18n.tr("Delete…", "calendar context menu action to delete a calendar"),
-                    icon: "delete_outline",
-                    danger: true
                 }
             ];
+            if (cal.accountKind !== "local") {
+                entries.push({
+                    id: "sync",
+                    label: cal.syncDisabled ? I18n.tr("Enable sync", "calendar context menu action to resume syncing a calendar") : I18n.tr("Disable sync", "calendar context menu action to stop syncing a calendar"),
+                    icon: cal.syncDisabled ? "cloud" : "cloud_off"
+                });
+            }
+            entries.push({
+                id: "delete",
+                label: I18n.tr("Delete…", "calendar context menu action to delete a calendar"),
+                icon: "delete_outline",
+                danger: true
+            });
+            return entries;
         }
         onTriggered: itemId => {
             const cal = root.actionCalendar;
@@ -993,6 +1001,9 @@ Item {
             switch (itemId) {
             case "toggle":
                 DankCalService.setCalendarHidden(cal.id, !cal.hidden);
+                break;
+            case "sync":
+                DankCalService.setCalendarSyncDisabled(cal.id, !cal.syncDisabled);
                 break;
             case "rename":
                 root.openRenameCalendar(cal);

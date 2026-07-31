@@ -314,6 +314,7 @@ func calendarToDTO(c *ent.Calendar) models.Calendar {
 		TimeZone:            c.TimeZone,
 		ReadOnly:            c.ReadOnly,
 		Hidden:              c.Hidden,
+		SyncDisabled:        c.SyncDisabled,
 		SupportedComponents: c.SupportedComponents,
 		UpdatedAt:           c.UpdatedAt,
 	}

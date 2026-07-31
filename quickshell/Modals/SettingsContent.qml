@@ -940,11 +940,13 @@ Item {
                                     radius: 5
                                     anchors.verticalCenter: parent.verticalCenter
                                     color: calendarRow.modelData.color
+                                    opacity: calendarRow.modelData.syncDisabled ? 0.4 : 1
                                 }
 
                                 Column {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    width: parent.width - 18 - 168 - Theme.spacingM * 2
+                                    width: parent.width - 18 - calendarActions.width - Theme.spacingM * 2
+                                    opacity: calendarRow.modelData.syncDisabled ? 0.6 : 1
 
                                     StyledText {
                                         text: calendarRow.modelData.name
@@ -964,6 +966,8 @@ Item {
                                                 line += " · " + I18n.tr("synced as \"%1\"", "renamed calendar provider name suffix in calendar list").arg(calendarRow.modelData.providerName);
                                             if (calendarRow.modelData.readOnly)
                                                 line += " · " + I18n.tr("read-only", "read-only suffix in calendar list");
+                                            if (calendarRow.modelData.syncDisabled)
+                                                line += " · " + I18n.tr("sync off", "sync disabled suffix in calendar list");
                                             return line;
                                         }
                                         font.pixelSize: Theme.fontSizeSmall
@@ -976,24 +980,36 @@ Item {
                                 }
 
                                 Row {
+                                    id: calendarActions
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: Theme.spacingXS
 
                                     DankActionButton {
                                         iconName: "edit"
                                         iconColor: Theme.surfaceText
+                                        tooltipText: I18n.tr("Rename", "calendar row action tooltip")
                                         onClicked: calendarRenameDialog.show(calendarRow.modelData)
                                     }
 
                                     DankActionButton {
                                         iconName: !!calendarRow.modelData.reminders ? "notifications_active" : "notifications"
                                         iconColor: !!calendarRow.modelData.reminders ? Theme.primary : Theme.surfaceText
+                                        tooltipText: I18n.tr("Reminders", "calendar row action tooltip")
                                         onClicked: calendarRemindersDialog.show(calendarRow.modelData)
+                                    }
+
+                                    DankActionButton {
+                                        visible: calendarRow.modelData.accountKind !== "local"
+                                        iconName: calendarRow.modelData.syncDisabled ? "cloud_off" : "cloud"
+                                        iconColor: calendarRow.modelData.syncDisabled ? Theme.error : Theme.surfaceText
+                                        tooltipText: calendarRow.modelData.syncDisabled ? I18n.tr("Sync is off — click to re-enable", "calendar row action tooltip") : I18n.tr("Disable sync", "calendar row action tooltip")
+                                        onClicked: DankCalService.setCalendarSyncDisabled(calendarRow.modelData.id, !calendarRow.modelData.syncDisabled)
                                     }
 
                                     DankActionButton {
                                         iconName: "delete_outline"
                                         iconColor: Theme.error
+                                        tooltipText: I18n.tr("Delete", "calendar row action tooltip")
                                         onClicked: {
                                             calendarsFlickable.actionCalendar = calendarRow.modelData;
                                             calendarDeleteConfirm.show({

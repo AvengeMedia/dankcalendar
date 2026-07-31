@@ -105,6 +105,11 @@ func Hidden(v bool) predicate.Calendar {
 	return predicate.Calendar(sql.FieldEQ(FieldHidden, v))
 }
 
+// SyncDisabled applies equality check predicate on the "sync_disabled" field. It's identical to SyncDisabledEQ.
+func SyncDisabled(v bool) predicate.Calendar {
+	return predicate.Calendar(sql.FieldEQ(FieldSyncDisabled, v))
+}
+
 // SyncToken applies equality check predicate on the "sync_token" field. It's identical to SyncTokenEQ.
 func SyncToken(v string) predicate.Calendar {
 	return predicate.Calendar(sql.FieldEQ(FieldSyncToken, v))
@@ -568,6 +573,16 @@ func HiddenEQ(v bool) predicate.Calendar {
 // HiddenNEQ applies the NEQ predicate on the "hidden" field.
 func HiddenNEQ(v bool) predicate.Calendar {
 	return predicate.Calendar(sql.FieldNEQ(FieldHidden, v))
+}
+
+// SyncDisabledEQ applies the EQ predicate on the "sync_disabled" field.
+func SyncDisabledEQ(v bool) predicate.Calendar {
+	return predicate.Calendar(sql.FieldEQ(FieldSyncDisabled, v))
+}
+
+// SyncDisabledNEQ applies the NEQ predicate on the "sync_disabled" field.
+func SyncDisabledNEQ(v bool) predicate.Calendar {
+	return predicate.Calendar(sql.FieldNEQ(FieldSyncDisabled, v))
 }
 
 // ReminderOverridesIsNil applies the IsNil predicate on the "reminder_overrides" field.
