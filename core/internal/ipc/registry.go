@@ -74,7 +74,7 @@ var Methods = []MethodSpec{
 	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.open", Group: "ui", Desc: "Open a webcal/ICS subscription link in the UI", Params: []ParamSpec{req("url", "webcal:// or https ICS URL")}},
 	{Name: "ui.openEvent", Group: "ui", Desc: "Open a specific event's details window", Params: []ParamSpec{req("uid", "event iCal UID"), opt("start", "occurrence start RFC3339 for recurring events")}},
-	{Name: "ui.newEvent", Group: "ui", Desc: "Open the new-event editor", Params: []ParamSpec{opt("start", "prefill start RFC3339 (defaults to the next full hour)")}},
+	{Name: "ui.newEvent", Group: "ui", Desc: "Open the new-event editor", Params: []ParamSpec{opt("start", "prefill start RFC3339 (defaults to the next half-hour slot)")}},
 	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},
 	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.quit", Group: "ui", Desc: "Quit the running daemon"},

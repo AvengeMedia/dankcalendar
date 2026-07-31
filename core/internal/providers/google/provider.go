@@ -560,7 +560,13 @@ func toGoogleEvent(ev *cal.Event) *calendar.Event {
 	if len(ev.Reminders) > 0 {
 		overrides := make([]*calendar.EventReminder, 0, len(ev.Reminders))
 		for _, r := range ev.Reminders {
-			overrides = append(overrides, &calendar.EventReminder{Method: r.Method, Minutes: int64(r.Minutes)})
+			overrides = append(overrides, &calendar.EventReminder{
+				Method:  r.Method,
+				Minutes: int64(r.Minutes),
+				// Minutes is required on every override but JSON-omits at 0
+				// ("at start"), which the API rejects with a 400.
+				ForceSendFields: []string{"Minutes"},
+			})
 		}
 		out.Reminders = &calendar.EventReminders{
 			Overrides: overrides,

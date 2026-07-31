@@ -97,9 +97,29 @@ FloatingWindow {
         visible = true;
     }
 
-    function showCreate(day, endDay) {
-        const base = day ? new Date(day) : new Date();
+    function _nextHalfHour() {
+        const slot = 30 * 60000;
+        return new Date(Math.ceil(Date.now() / slot) * slot);
+    }
+
+    // Prefill start: an explicit time is honored (ui.newEvent start=...); a
+    // bare day (midnight) gets 10:00, except today, which rounds up to the
+    // next half-hour slot so the prefill is never in the past.
+    function _defaultStart(day) {
+        if (!day)
+            return _nextHalfHour();
+        const base = new Date(day);
+        if (base.getHours() !== 0 || base.getMinutes() !== 0 || base.getSeconds() !== 0)
+            return base;
+        const next = _nextHalfHour();
+        if (base.getFullYear() === next.getFullYear() && base.getMonth() === next.getMonth() && base.getDate() === next.getDate())
+            return next;
         base.setHours(10, 0, 0, 0);
+        return base;
+    }
+
+    function showCreate(day, endDay) {
+        const base = _defaultStart(day);
         let end = new Date(base.getTime() + SettingsData.defaultEventDurationMinutes * 60000);
         let allDay = false;
         if (endDay) {

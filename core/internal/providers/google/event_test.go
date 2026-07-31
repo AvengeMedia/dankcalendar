@@ -82,3 +82,23 @@ func TestToGoogleEventRecurringExistingZoneKept(t *testing.T) {
 	assert.Equal(t, "America/New_York", out.Start.TimeZone)
 	assert.Equal(t, "America/New_York", out.End.TimeZone)
 }
+
+// The API requires minutes on every override, but the SDK JSON-omits the zero
+// value ("at start") unless forced, yielding "Missing override reminder
+// minutes." 400s.
+func TestToGoogleEventReminderAtStartSerializesMinutes(t *testing.T) {
+	ev := &cal.Event{
+		Summary:   "standup",
+		Start:     time.Date(2026, 7, 10, 16, 0, 0, 0, time.UTC),
+		End:       time.Date(2026, 7, 10, 16, 30, 0, 0, time.UTC),
+		Reminders: []cal.Reminder{{Method: "popup", Minutes: 0}},
+	}
+
+	out := toGoogleEvent(ev)
+	require.NotNil(t, out.Reminders)
+	require.Len(t, out.Reminders.Overrides, 1)
+
+	data, err := out.Reminders.Overrides[0].MarshalJSON()
+	require.NoError(t, err)
+	assert.Contains(t, string(data), `"minutes":0`)
+}
