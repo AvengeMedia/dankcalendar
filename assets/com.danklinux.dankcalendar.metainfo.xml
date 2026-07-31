@@ -37,6 +37,20 @@
   </screenshots>
 
   <releases>
+    <release version="0.3.0" date="2026-07-31">
+      <description>
+        <ul>
+          <li>bump flake ver</li>
+          <li>notifications: respect event alarms on all-day events regardless of global toggle</li>
+          <li>providers/google: fix serialization of at start reminders</li>
+          <li>providers/iCloud: show reminders not available notice when users upgraded to EventKit</li>
+          <li>ui: fix &quot;today&quot; getting stale</li>
+          <li>core: add ability to disable sync per-provider</li>
+          <li>providers: add built-in google and m$ credentials</li>
+          <li>docs: add Flathub version badge and installation instructions to README</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.2.7" date="2026-07-24">
       <description>
         <p>Fix credential storage hanging against KeePassXC, remove the login1 permission in favor of suspend-aware timers, and delete single occurrences of recurring events.</p>
