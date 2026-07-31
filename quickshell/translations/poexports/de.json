@@ -339,10 +339,10 @@
     "Connect %1": "%1 verbinden"
   },
   "Connect Google Account": {
-    "Connect Google Account": ""
+    "Connect Google Account": "Google-Konto verbinden"
   },
   "Connect Microsoft Account": {
-    "Connect Microsoft Account": ""
+    "Connect Microsoft Account": "Microsoft-Konto verbinden"
   },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "Verbinden Sie einen beliebigen CalDAV-kompatiblen Server."
@@ -467,6 +467,12 @@
   "Disable core hours": {
     "Disable core hours": "Kernarbeitszeit deaktivieren"
   },
+  "Disable sync": {
+    "Disable sync": ""
+  },
+  "Dismiss": {
+    "Dismiss": ""
+  },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "ISO-Wochennummern in der Monatsansicht anzeigen."
   },
@@ -505,6 +511,9 @@
   },
   "Enable reminders": {
     "Enable reminders": "Erinnerungen aktivieren"
+  },
+  "Enable sync": {
+    "Enable sync": ""
   },
   "Ends": {
     "Ends": "Endet"
@@ -938,6 +947,9 @@
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Wiederkehrende Aufgaben werden in Google Tasks verwaltet."
   },
+  "Reminders": {
+    "Reminders": ""
+  },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Erinnerungen und Desktop-Benachrichtigungen."
   },
@@ -967,6 +979,9 @@
   },
   "Remove…": {
     "Remove…": "Entfernen …"
+  },
+  "Rename": {
+    "Rename": ""
   },
   "Rename calendar": {
     "Rename calendar": "Kalender umbenennen"
@@ -1062,10 +1077,10 @@
     "Sign in with %1": "Mit %1 anmelden"
   },
   "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
-    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "Melden Sie sich in Ihrem Browser bei Google an und schon sind Sie fertig – keine Einrichtung erforderlich. Dank Calendar synchronisiert Ihre Kalender, Ereignisse und Aufgaben."
   },
   "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
-    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "Melden Sie sich in Ihrem Browser bei Microsoft an und schon sind Sie fertig – keine Einrichtung erforderlich. Dank Calendar synchronisiert Ihre Outlook-Kalender, Ereignisse und Aufgaben."
   },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Melden Sie sich mit Ihrer Apple-ID und einem anwendungsspezifischen Passwort an. Normale Apple-ID-Passwörter funktionieren nicht."
@@ -1123,6 +1138,9 @@
   },
   "Sync interval": {
     "Sync interval": "Synchronisierungsintervall"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": ""
   },
   "Sync now": {
     "Sync now": "Jetzt synchronisieren"
@@ -1221,7 +1239,7 @@
     "Use this folder": "Diesen Ordner verwenden"
   },
   "Use your own OAuth client": {
-    "Use your own OAuth client": ""
+    "Use your own OAuth client": "Eigenen OAuth-Client verwenden"
   },
   "Username": {
     "Username": "Benutzername"
@@ -1324,6 +1342,9 @@
   },
   "read-only": {
     "read-only": "schreibgeschützt"
+  },
+  "sync off": {
+    "sync off": ""
   },
   "synced as \"%1": {
     "synced as \"%1\"": "synchronisiert als „%1“"

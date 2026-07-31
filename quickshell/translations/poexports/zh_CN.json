@@ -339,10 +339,10 @@
     "Connect %1": "连接 %1"
   },
   "Connect Google Account": {
-    "Connect Google Account": ""
+    "Connect Google Account": "连接 Google 帐户"
   },
   "Connect Microsoft Account": {
-    "Connect Microsoft Account": ""
+    "Connect Microsoft Account": "连接 Microsoft 帐户"
   },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "连接任何兼容 CalDAV 的服务器。"
@@ -441,7 +441,7 @@
     "Delete \"%1\"?": "确认删除\"%1\"?"
   },
   "Delete occurrence": {
-    "Delete occurrence": ""
+    "Delete occurrence": "删除该项"
   },
   "Delete series": {
     "Delete series": "删除系列"
@@ -466,6 +466,12 @@
   },
   "Disable core hours": {
     "Disable core hours": "禁用核心时段"
+  },
+  "Disable sync": {
+    "Disable sync": ""
+  },
+  "Dismiss": {
+    "Dismiss": ""
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "在月视图中显示 ISO 周数。"
@@ -505,6 +511,9 @@
   },
   "Enable reminders": {
     "Enable reminders": "启用提醒"
+  },
+  "Enable sync": {
+    "Enable sync": ""
   },
   "Ends": {
     "Ends": "结束"
@@ -938,6 +947,9 @@
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "周期性任务通过 Google Tasks 进行管理。"
   },
+  "Reminders": {
+    "Reminders": ""
+  },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "提醒和桌面通知。"
   },
@@ -967,6 +979,9 @@
   },
   "Remove…": {
     "Remove…": "删除中..."
+  },
+  "Rename": {
+    "Rename": ""
   },
   "Rename calendar": {
     "Rename calendar": "重命名日历"
@@ -1062,10 +1077,10 @@
     "Sign in with %1": "使用 %1 登录"
   },
   "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
-    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "在浏览器中使用 Google 帐户登录即可，无需任何设置。Dank Calendar 会自动同步您的日历、事件和任务。"
   },
   "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
-    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "在浏览器中使用 Microsoft 帐户登录即可，无需任何设置。Dank Calendar 可同步您的 Outlook 日历、事件和任务。"
   },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "请使用您的 Apple ID 和 App 专用密码登录。普通的 Apple ID 密码将无法正常工作。"
@@ -1123,6 +1138,9 @@
   },
   "Sync interval": {
     "Sync interval": "同步间隔"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": ""
   },
   "Sync now": {
     "Sync now": "立即同步"
@@ -1221,7 +1239,7 @@
     "Use this folder": "使用此文件夹"
   },
   "Use your own OAuth client": {
-    "Use your own OAuth client": ""
+    "Use your own OAuth client": "使用您自己的 OAuth 客户端"
   },
   "Username": {
     "Username": "用户名"
@@ -1324,6 +1342,9 @@
   },
   "read-only": {
     "read-only": "只读"
+  },
+  "sync off": {
+    "sync off": ""
   },
   "synced as \"%1": {
     "synced as \"%1\"": "同步为 \"%1\""

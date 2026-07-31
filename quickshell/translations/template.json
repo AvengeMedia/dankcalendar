@@ -961,7 +961,7 @@
   {
     "term": "Delete",
     "translation": "",
-    "context": "confirm button for deleting a calendar | delete calendar confirmation button | task form button to delete the task",
+    "context": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | task form button to delete the task",
     "reference": "",
     "comment": ""
   },
@@ -1018,6 +1018,20 @@
     "term": "Disable core hours",
     "translation": "",
     "context": "core hours warning banner disable action",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Disable sync",
+    "translation": "",
+    "context": "calendar context menu action to stop syncing a calendar | calendar row action tooltip",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dismiss",
+    "translation": "",
+    "context": "account notice dismiss button tooltip",
     "reference": "",
     "comment": ""
   },
@@ -1095,6 +1109,13 @@
     "term": "Enable reminders",
     "translation": "",
     "context": "per-calendar enable reminders override label | reminders toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Enable sync",
+    "translation": "",
+    "context": "calendar context menu action to resume syncing a calendar",
     "reference": "",
     "comment": ""
   },
@@ -1967,6 +1988,13 @@
     "comment": ""
   },
   {
+    "term": "Reminders",
+    "translation": "",
+    "context": "calendar row action tooltip",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Reminders and desktop alerts.",
     "translation": "",
     "context": "notifications settings section subtitle",
@@ -2033,6 +2061,13 @@
     "term": "Remove…",
     "translation": "",
     "context": "account context menu action to remove the account",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Rename",
+    "translation": "",
+    "context": "calendar row action tooltip",
     "reference": "",
     "comment": ""
   },
@@ -2369,6 +2404,13 @@
     "term": "Sync interval",
     "translation": "",
     "context": "sync interval setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Sync is off — click to re-enable",
+    "translation": "",
+    "context": "calendar row action tooltip",
     "reference": "",
     "comment": ""
   },
@@ -2810,6 +2852,13 @@
     "term": "read-only",
     "translation": "",
     "context": "read-only suffix in calendar list",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "sync off",
+    "translation": "",
+    "context": "sync disabled suffix in calendar list",
     "reference": "",
     "comment": ""
   },

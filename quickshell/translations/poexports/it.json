@@ -467,6 +467,12 @@
   "Disable core hours": {
     "Disable core hours": "Disattiva orario principale"
   },
+  "Disable sync": {
+    "Disable sync": ""
+  },
+  "Dismiss": {
+    "Dismiss": ""
+  },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "Mostra i numeri di settimana ISO nella vista mensile."
   },
@@ -505,6 +511,9 @@
   },
   "Enable reminders": {
     "Enable reminders": "Attiva promemoria"
+  },
+  "Enable sync": {
+    "Enable sync": ""
   },
   "Ends": {
     "Ends": "Termina"
@@ -938,6 +947,9 @@
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Le attività ricorrenti vengono gestite in Google Tasks."
   },
+  "Reminders": {
+    "Reminders": ""
+  },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Promemoria e avvisi desktop."
   },
@@ -967,6 +979,9 @@
   },
   "Remove…": {
     "Remove…": "Rimuovi…"
+  },
+  "Rename": {
+    "Rename": ""
   },
   "Rename calendar": {
     "Rename calendar": "Rinomina calendario"
@@ -1123,6 +1138,9 @@
   },
   "Sync interval": {
     "Sync interval": "Intervallo di sincronizzazione"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": ""
   },
   "Sync now": {
     "Sync now": "Sincronizza ora"
@@ -1324,6 +1342,9 @@
   },
   "read-only": {
     "read-only": "solo lettura"
+  },
+  "sync off": {
+    "sync off": ""
   },
   "synced as \"%1": {
     "synced as \"%1\"": "sincronizzato come \"%1\""

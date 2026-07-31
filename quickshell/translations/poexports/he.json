@@ -339,10 +339,10 @@
     "Connect %1": "התחבר/י אל %1"
   },
   "Connect Google Account": {
-    "Connect Google Account": ""
+    "Connect Google Account": "התחבר/י לחשבון Google"
   },
   "Connect Microsoft Account": {
-    "Connect Microsoft Account": ""
+    "Connect Microsoft Account": "התחבר/י לחשבון Microsoft"
   },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "התחבר/י לכל שרת תואם CalDAV."
@@ -441,7 +441,7 @@
     "Delete \"%1\"?": "למחוק את \"%1\"?"
   },
   "Delete occurrence": {
-    "Delete occurrence": ""
+    "Delete occurrence": "מחק/י מופע"
   },
   "Delete series": {
     "Delete series": "מחק/י סדרה"
@@ -466,6 +466,12 @@
   },
   "Disable core hours": {
     "Disable core hours": "השבת/י שעות פעילות מרכזיות"
+  },
+  "Disable sync": {
+    "Disable sync": ""
+  },
+  "Dismiss": {
+    "Dismiss": ""
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "הצג/י מספרי שבוע בתקן ISO בתצוגת חודש."
@@ -505,6 +511,9 @@
   },
   "Enable reminders": {
     "Enable reminders": "הפעלת תזכורות"
+  },
+  "Enable sync": {
+    "Enable sync": ""
   },
   "Ends": {
     "Ends": "מסתיים"
@@ -938,6 +947,9 @@
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "משימות חוזרות מנוהלות ב-Google Tasks."
   },
+  "Reminders": {
+    "Reminders": ""
+  },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "תזכורות והתראות בשולחן העבודה."
   },
@@ -967,6 +979,9 @@
   },
   "Remove…": {
     "Remove…": "הסרה…"
+  },
+  "Rename": {
+    "Rename": ""
   },
   "Rename calendar": {
     "Rename calendar": "שנה/י שם יומן"
@@ -1062,10 +1077,10 @@
     "Sign in with %1": "התחבר/י עם %1"
   },
   "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
-    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "התחבר/י עם Google בדפדפן שלך וסיימת — אין צורך בהגדרה נוספת. Dank Calendar מסנכרן את היומנים, האירועים והמשימות שלך."
   },
   "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
-    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "התחבר/י עם Microsoft בדפדפן שלך וסיימת — אין צורך בהגדרה נוספת. Dank Calendar מסנכרן את יומני הOutlook, האירועים והמשימות שלך."
   },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "התחבר/י עם ה-Apple ID שלך ועם סיסמה ספציפית לאפליקציה. סיסמאות רגילות של Apple ID לא יעבדו."
@@ -1123,6 +1138,9 @@
   },
   "Sync interval": {
     "Sync interval": "מרווח סנכרון"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": ""
   },
   "Sync now": {
     "Sync now": "סנכרן/י עכשיו"
@@ -1221,7 +1239,7 @@
     "Use this folder": "השתמש/י בתיקייה זו"
   },
   "Use your own OAuth client": {
-    "Use your own OAuth client": ""
+    "Use your own OAuth client": "השתמש/י בלקוח OAuth משלך"
   },
   "Username": {
     "Username": "שם משתמש"
@@ -1324,6 +1342,9 @@
   },
   "read-only": {
     "read-only": "לקריאה בלבד"
+  },
+  "sync off": {
+    "sync off": ""
   },
   "synced as \"%1": {
     "synced as \"%1\"": "מסונכרן בתור \"%1\""

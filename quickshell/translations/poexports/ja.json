@@ -467,6 +467,12 @@
   "Disable core hours": {
     "Disable core hours": ""
   },
+  "Disable sync": {
+    "Disable sync": ""
+  },
+  "Dismiss": {
+    "Dismiss": ""
+  },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "月表示で ISO 週番号を表示します。"
   },
@@ -505,6 +511,9 @@
   },
   "Enable reminders": {
     "Enable reminders": "リマインダーを有効化"
+  },
+  "Enable sync": {
+    "Enable sync": ""
   },
   "Ends": {
     "Ends": ""
@@ -938,6 +947,9 @@
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "繰り返しタスクは Google Tasks で管理されます。"
   },
+  "Reminders": {
+    "Reminders": ""
+  },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "リマインダーとデスクトップアラートです。"
   },
@@ -967,6 +979,9 @@
   },
   "Remove…": {
     "Remove…": "削除…"
+  },
+  "Rename": {
+    "Rename": ""
   },
   "Rename calendar": {
     "Rename calendar": "カレンダー名を変更"
@@ -1123,6 +1138,9 @@
   },
   "Sync interval": {
     "Sync interval": "同期間隔"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": ""
   },
   "Sync now": {
     "Sync now": "今すぐ同期"
@@ -1324,6 +1342,9 @@
   },
   "read-only": {
     "read-only": "読み取り専用"
+  },
+  "sync off": {
+    "sync off": ""
   },
   "synced as \"%1": {
     "synced as \"%1\"": "\"%1\" として同期"

@@ -467,6 +467,12 @@
   "Disable core hours": {
     "Disable core hours": ""
   },
+  "Disable sync": {
+    "Disable sync": ""
+  },
+  "Dismiss": {
+    "Dismiss": ""
+  },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "Hiển thị số tuần ISO trong chế độ tháng."
   },
@@ -505,6 +511,9 @@
   },
   "Enable reminders": {
     "Enable reminders": "Bật lời nhắc"
+  },
+  "Enable sync": {
+    "Enable sync": ""
   },
   "Ends": {
     "Ends": ""
@@ -938,6 +947,9 @@
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Các tác vụ lặp lại được quản lý trong Google Tasks."
   },
+  "Reminders": {
+    "Reminders": ""
+  },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Lời nhắc và cảnh báo trên màn hình."
   },
@@ -967,6 +979,9 @@
   },
   "Remove…": {
     "Remove…": "Gỡ bỏ…"
+  },
+  "Rename": {
+    "Rename": ""
   },
   "Rename calendar": {
     "Rename calendar": "Đổi tên lịch"
@@ -1123,6 +1138,9 @@
   },
   "Sync interval": {
     "Sync interval": "Khoảng thời gian đồng bộ"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": ""
   },
   "Sync now": {
     "Sync now": "Đồng bộ ngay"
@@ -1324,6 +1342,9 @@
   },
   "read-only": {
     "read-only": "chỉ đọc"
+  },
+  "sync off": {
+    "sync off": ""
   },
   "synced as \"%1": {
     "synced as \"%1\"": "đồng bộ với tên \"%1\""
