@@ -1,9 +1,9 @@
 {
   "%1 AM": {
-    "%1 AM": "上午 %1"
+    "%1 AM": "上午 %1 点"
   },
   "%1 PM": {
-    "%1 PM": "下午 %1"
+    "%1 PM": "下午 %1 点"
   },
   "%1 appointments fall outside core hours": {
     "%1 appointments fall outside core hours": "%1 的预约在核心时间段外"
@@ -468,10 +468,10 @@
     "Disable core hours": "禁用核心时段"
   },
   "Disable sync": {
-    "Disable sync": ""
+    "Disable sync": "禁用同步"
   },
   "Dismiss": {
-    "Dismiss": ""
+    "Dismiss": "忽略"
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "在月视图中显示 ISO 周数。"
@@ -513,7 +513,7 @@
     "Enable reminders": "启用提醒"
   },
   "Enable sync": {
-    "Enable sync": ""
+    "Enable sync": "启用同步"
   },
   "Ends": {
     "Ends": "结束"
@@ -948,7 +948,7 @@
     "Recurring tasks are managed in Google Tasks.": "周期性任务通过 Google Tasks 进行管理。"
   },
   "Reminders": {
-    "Reminders": ""
+    "Reminders": "提醒"
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "提醒和桌面通知。"
@@ -981,7 +981,7 @@
     "Remove…": "删除中..."
   },
   "Rename": {
-    "Rename": ""
+    "Rename": "重命名"
   },
   "Rename calendar": {
     "Rename calendar": "重命名日历"
@@ -1140,7 +1140,7 @@
     "Sync interval": "同步间隔"
   },
   "Sync is off — click to re-enable": {
-    "Sync is off — click to re-enable": ""
+    "Sync is off — click to re-enable": "同步已关闭——点击重新启用"
   },
   "Sync now": {
     "Sync now": "立即同步"
@@ -1344,7 +1344,7 @@
     "read-only": "只读"
   },
   "sync off": {
-    "sync off": ""
+    "sync off": "同步关闭"
   },
   "synced as \"%1": {
     "synced as \"%1\"": "同步为 \"%1\""
