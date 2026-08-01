@@ -57,7 +57,14 @@ func Open(ctx context.Context, dsn string) (*ent.Client, error) {
 		return nil, fmt.Errorf("open sqlite at %q: %w", dsn, err)
 	}
 
-	if err := migrate(ctx, db); err != nil {
+	// Hold an open connection before migrating so a shared-cache memory
+	// database survives the migration connection closing.
+	if err := db.PingContext(ctx); err != nil {
+		db.Close()
+		return nil, fmt.Errorf("connect sqlite at %q: %w", dsn, err)
+	}
+
+	if err := migrate(ctx, dsn); err != nil {
 		db.Close()
 		return nil, err
 	}

@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/pressly/goose/v3"
@@ -30,8 +31,19 @@ func configureGoose() {
 // migrate brings the database up to the latest schema. Databases created before
 // versioned migrations existed are baselined first so goose applies only the
 // newer migrations instead of recreating tables that are already there.
-func migrate(ctx context.Context, db *sql.DB) error {
+//
+// Migrations run on their own connection with foreign keys disabled: goose
+// wraps each migration in a transaction, where SQLite silently ignores
+// foreign_keys PRAGMAs, so a table-rebuild migration's DROP TABLE would
+// otherwise fire ON DELETE CASCADE and wipe child rows (issue #76).
+func migrate(ctx context.Context, dsn string) error {
 	configureGoose()
+
+	db, err := sql.Open("sqlite", migrationDSN(dsn))
+	if err != nil {
+		return fmt.Errorf("open migration connection: %w", err)
+	}
+	defer db.Close()
 
 	if err := baselineLegacyDB(ctx, db); err != nil {
 		return fmt.Errorf("baseline database: %w", err)
@@ -40,6 +52,27 @@ func migrate(ctx context.Context, db *sql.DB) error {
 		return fmt.Errorf("apply migrations: %w", err)
 	}
 	return nil
+}
+
+// migrationDSN replaces any foreign_keys pragma with foreign_keys(OFF). The
+// driver does not honor a later duplicate pragma, so the original must be
+// dropped rather than overridden.
+func migrationDSN(dsn string) string {
+	base, query, found := strings.Cut(dsn, "?")
+	if !found {
+		return dsn + "?_pragma=foreign_keys(OFF)"
+	}
+
+	params := strings.Split(query, "&")
+	kept := params[:0]
+	for _, param := range params {
+		if strings.HasPrefix(param, "_pragma=foreign_keys") {
+			continue
+		}
+		kept = append(kept, param)
+	}
+	kept = append(kept, "_pragma=foreign_keys(OFF)")
+	return base + "?" + strings.Join(kept, "&")
 }
 
 // baselineLegacyDB stamps the version history for a database that was created by

@@ -22,10 +22,10 @@ func openRaw(t *testing.T, name string) (*sql.DB, string) {
 
 func TestMigrateFreshDatabase(t *testing.T) {
 	ctx := context.Background()
-	db, _ := openRaw(t, "fresh.db")
+	db, dsn := openRaw(t, "fresh.db")
 	defer db.Close()
 
-	if err := migrate(ctx, db); err != nil {
+	if err := migrate(ctx, dsn); err != nil {
 		t.Fatalf("migrate: %v", err)
 	}
 
@@ -41,7 +41,7 @@ func TestMigrateFreshDatabase(t *testing.T) {
 // goose history; it must be baselined and then upgraded without losing rows.
 func TestMigrateBaselinesLegacyDatabase(t *testing.T) {
 	ctx := context.Background()
-	db, _ := openRaw(t, "legacy.db")
+	db, dsn := openRaw(t, "legacy.db")
 	defer db.Close()
 
 	_, err := db.ExecContext(ctx, `CREATE TABLE accounts (
@@ -74,7 +74,7 @@ func TestMigrateBaselinesLegacyDatabase(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := migrate(ctx, db); err != nil {
+	if err := migrate(ctx, dsn); err != nil {
 		t.Fatalf("migrate legacy: %v", err)
 	}
 
@@ -90,19 +90,72 @@ func TestMigrateBaselinesLegacyDatabase(t *testing.T) {
 
 func TestMigrateIsIdempotent(t *testing.T) {
 	ctx := context.Background()
-	db, _ := openRaw(t, "idem.db")
+	db, dsn := openRaw(t, "idem.db")
 	defer db.Close()
 
 	for i := 0; i < 3; i++ {
-		if err := migrate(ctx, db); err != nil {
+		if err := migrate(ctx, dsn); err != nil {
 			t.Fatalf("migrate run %d: %v", i, err)
 		}
 	}
 }
 
+// The sync_disabled migration rebuilds the calendars table. Run with foreign
+// keys enforced, its DROP TABLE would cascade-delete every event and task
+// (issue #76); this pins the fix that migrations run on a keys-off connection.
+func TestCalendarRebuildPreservesChildRows(t *testing.T) {
+	ctx := context.Background()
+	db, dsn := openRaw(t, "rebuild.db")
+	defer db.Close()
+
+	configureGoose()
+	const beforeRebuild = 20260630202500
+	if err := goose.UpToContext(ctx, db, migrationsDir, beforeRebuild); err != nil {
+		t.Fatalf("migrate to pre-rebuild version: %v", err)
+	}
+
+	_, err := db.ExecContext(ctx, `INSERT INTO accounts
+		(id, kind, display_name, created_at, updated_at)
+		VALUES ('account-1', 'ical', 'Feed', '2026-01-01', '2026-01-01');
+		INSERT INTO calendars
+		(id, remote_id, name, sync_token, created_at, updated_at, account_calendars)
+		VALUES ('calendar-1', 'feed', 'Feed', 'cursor-1', '2026-01-01', '2026-01-01', 'account-1');
+		INSERT INTO events
+		(id, uid, summary, start, end, created, updated, calendar_events)
+		VALUES ('event-1', 'uid-1', 'Holiday', '2026-01-01', '2026-01-02', '2026-01-01', '2026-01-01', 'calendar-1');
+		INSERT INTO tasks
+		(id, uid, summary, created, updated, calendar_tasks)
+		VALUES ('task-1', 'uid-2', 'Todo', '2026-01-01', '2026-01-01', 'calendar-1');`)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := migrate(ctx, dsn); err != nil {
+		t.Fatalf("migrate: %v", err)
+	}
+
+	for _, table := range []string{"events", "tasks"} {
+		var n int
+		if err := db.QueryRowContext(ctx, "SELECT count(*) FROM "+table+";").Scan(&n); err != nil {
+			t.Fatal(err)
+		}
+		if n != 1 {
+			t.Fatalf("%s rows lost during calendars rebuild: got %d, want 1", table, n)
+		}
+	}
+
+	var token sql.NullString
+	if err := db.QueryRowContext(ctx, "SELECT sync_token FROM calendars WHERE id = 'calendar-1';").Scan(&token); err != nil {
+		t.Fatal(err)
+	}
+	if token.Valid {
+		t.Fatalf("sync token should be invalidated for a full refetch: %q", token.String)
+	}
+}
+
 func TestMeetingURLMigrationInvalidatesSyncTokens(t *testing.T) {
 	ctx := context.Background()
-	db, _ := openRaw(t, "meeting-urls.db")
+	db, dsn := openRaw(t, "meeting-urls.db")
 	defer db.Close()
 
 	configureGoose()
@@ -121,7 +174,7 @@ func TestMeetingURLMigrationInvalidatesSyncTokens(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := migrate(ctx, db); err != nil {
+	if err := migrate(ctx, dsn); err != nil {
 		t.Fatalf("migrate: %v", err)
 	}
 
