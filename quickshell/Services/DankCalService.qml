@@ -7,6 +7,7 @@ import Quickshell.Io
 import qs.Common
 import qs.DankCommon.Common
 import qs.Services
+import "../Common/EventUtils.js" as EventUtils
 
 Singleton {
     id: root
@@ -671,7 +672,28 @@ Singleton {
     // Occurrence identity for selection: recurring occurrences share a uid and
     // may have an empty id, so both plus the start instant are needed.
     function eventKey(ev) {
-        return ev.id + "|" + ev.uid + "|" + ev.start.getTime();
+        return EventUtils.eventKey(ev);
+    }
+
+    function visibleEvents() {
+        const hidden = _hiddenCalendarIds();
+        return events.filter(ev => !hidden[ev.calendarId] && ev.status !== "cancelled").map(ev => decorateEvent(ev)).sort((left, right) => {
+            const startDelta = left.start.getTime() - right.start.getTime();
+            if (startDelta !== 0)
+                return startDelta;
+            if (left.allDay !== right.allDay)
+                return left.allDay ? -1 : 1;
+            return eventKey(left).localeCompare(eventKey(right));
+        });
+    }
+
+    function eventsByKeys(keys) {
+        if (!keys || keys.length === 0)
+            return [];
+        const wanted = {};
+        for (let i = 0; i < keys.length; i++)
+            wanted[keys[i]] = true;
+        return visibleEvents().filter(ev => wanted[eventKey(ev)]);
     }
 
     function layoutTimedEvents(events) {
@@ -790,6 +812,75 @@ Singleton {
             if (callback)
                 callback(response);
         });
+    }
+
+    function mutateEvents(method, paramsList, callback) {
+        const queue = paramsList || [];
+        const results = [];
+        const errors = [];
+        let index = 0;
+
+        const finish = () => {
+            reloadEvents();
+            const response = {
+                "results": results,
+                "errors": errors
+            };
+            if (errors.length > 0) {
+                response.error = errors[0];
+                lastError = errors[0];
+            }
+            if (callback)
+                callback(response);
+        };
+
+        const sendNext = () => {
+            if (index >= queue.length) {
+                finish();
+                return;
+            }
+            sendRequest(method, queue[index], response => {
+                if (response.error)
+                    errors.push(response.error);
+                else
+                    results.push(response.result);
+                index++;
+                sendNext();
+            });
+        };
+
+        if (queue.length === 0) {
+            if (callback)
+                callback({
+                    "results": [],
+                    "errors": []
+                });
+            return;
+        }
+        sendNext();
+    }
+
+    function createEvents(fields, callback) {
+        mutateEvents("events.create", fields, callback);
+    }
+
+    function moveEvents(eventsToMove, dayOffset, callback) {
+        const params = eventsToMove.map(event => Object.assign({
+            "id": event.id
+        }, EventUtils.moveFields(event, dayOffset)));
+        mutateEvents("events.update", params, callback);
+    }
+
+    function deleteEvents(eventsToDelete, callback) {
+        const params = eventsToDelete.map(event => {
+            const fields = {
+                "id": event.id
+            };
+            if ((event.recurringId || "") !== "" || (event.recurrence || []).length > 0)
+                fields.occurrenceStart = new Date(event.start).toISOString();
+            return fields;
+        });
+        mutateEvents("events.delete", params, callback);
     }
 
     function reloadTasks() {
