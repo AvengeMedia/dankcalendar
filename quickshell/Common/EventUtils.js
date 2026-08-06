@@ -87,7 +87,7 @@ function clipboardText(events) {
     const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:" + clipboardProductId, "CALSCALE:GREGORIAN"]
     for (let i = 0; i < ordered.length; i++) {
         const event = ordered[i]
-        const fields = createFields(event, 0, event.calendarId, true)
+        const fields = createFields(event, 0, event.calendarId, false)
         lines.push("BEGIN:VEVENT")
         lines.push("SUMMARY:" + escapeICal(event.title))
         if (event.description)

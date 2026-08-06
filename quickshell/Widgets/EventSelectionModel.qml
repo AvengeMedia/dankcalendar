@@ -1,5 +1,8 @@
 import QtQuick
+import Quickshell
+import qs.Common
 import qs.Services
+import "../Common/EventUtils.js" as EventUtils
 
 Item {
     id: root
@@ -10,6 +13,8 @@ Item {
 
     readonly property int count: selectedKeys.length
     readonly property bool hasSelection: count > 0
+    readonly property var clipboardEvents: EventUtils.clipboardEvents(Quickshell.clipboardText)
+    readonly property int clipboardCount: clipboardEvents.length
 
     visible: false
     width: 0
@@ -106,6 +111,111 @@ Item {
     function allWritable(fallback) {
         const selected = events(fallback);
         return selected.length > 0 && selected.every(event => !event.readOnly);
+    }
+
+    function writableCalendarId(preferredId) {
+        const writable = DankCalService.writableCalendars();
+        for (let i = 0; i < writable.length; i++) {
+            if (writable[i].id === preferredId)
+                return preferredId;
+        }
+        const fallback = DankCalService.defaultCalendar();
+        return fallback ? fallback.id : "";
+    }
+
+    function finishOperation(verb, total, response) {
+        busy = false;
+        const completed = (response.results || []).length;
+        if (response.error) {
+            ToastService.info(I18n.tr("%1 of %2 events %3", "partial batch event action result; %1 completed count, %2 total count, %3 action verb").arg(completed).arg(total).arg(verb));
+            return;
+        }
+        ToastService.info(total === 1 ? I18n.tr("1 event %1", "single event action result; %1 is an action verb").arg(verb) : I18n.tr("%1 events %2", "multiple event action result; %1 is event count, %2 is an action verb").arg(total).arg(verb));
+    }
+
+    function copy(fallback) {
+        if (fallback)
+            ensureSelected(fallback);
+        const selected = events(fallback);
+        if (selected.length === 0)
+            return;
+        Quickshell.clipboardText = EventUtils.clipboardText(selected);
+        ToastService.info(selected.length === 1 ? I18n.tr("Copied 1 event", "clipboard confirmation for one event") : I18n.tr("Copied %1 events", "clipboard confirmation for multiple events; %1 is event count").arg(selected.length));
+    }
+
+    function paste(targetDay) {
+        const copied = EventUtils.clipboardEvents(Quickshell.clipboardText);
+        if (copied.length === 0 || busy)
+            return;
+        const fallbackId = writableCalendarId("");
+        if (fallbackId === "") {
+            ToastService.info(I18n.tr("No writable calendar available", "event paste error when no calendar allows creating events"));
+            return;
+        }
+        const fields = EventUtils.pasteFields(copied, targetDay, fallbackId);
+        for (let i = 0; i < fields.length; i++)
+            fields[i].calendarId = writableCalendarId(fields[i].calendarId);
+        busy = true;
+        DankCalService.createEvents(fields, response => {
+            root.finishOperation(I18n.tr("pasted", "past-tense event action used in a result message"), fields.length, response);
+            root.clear();
+        });
+    }
+
+    function duplicate(dayOffset, fallback) {
+        if (busy)
+            return;
+        if (fallback)
+            ensureSelected(fallback);
+        const selected = events(fallback);
+        const fields = [];
+        for (let i = 0; i < selected.length; i++) {
+            const calendarId = writableCalendarId(selected[i].calendarId);
+            if (calendarId !== "")
+                fields.push(EventUtils.createFields(selected[i], dayOffset, calendarId, false));
+        }
+        if (fields.length === 0) {
+            ToastService.info(I18n.tr("No writable calendar available", "event duplicate error when no calendar allows creating events"));
+            return;
+        }
+        busy = true;
+        DankCalService.createEvents(fields, response => root.finishOperation(I18n.tr("created", "past-tense event action used in a result message"), fields.length, response));
+    }
+
+    function moveTo(anchorEvent, targetDay) {
+        if (busy)
+            return;
+        ensureSelected(anchorEvent);
+        const selected = events(anchorEvent);
+        if (!allWritable(anchorEvent)) {
+            ToastService.info(I18n.tr("Read-only events can't be moved", "event move error for a read-only calendar"));
+            return;
+        }
+        const offset = EventUtils.daysBetween(anchorEvent.start, targetDay);
+        if (offset === 0)
+            return;
+        busy = true;
+        DankCalService.moveEvents(selected, offset, response => {
+            root.finishOperation(I18n.tr("moved", "past-tense event action used in a result message"), selected.length, response);
+            root.clear();
+        });
+    }
+
+    function remove(fallback) {
+        if (busy)
+            return;
+        if (fallback)
+            ensureSelected(fallback);
+        const selected = events(fallback);
+        if (!allWritable(fallback)) {
+            ToastService.info(I18n.tr("Read-only events can't be deleted", "event delete error for a read-only calendar"));
+            return;
+        }
+        busy = true;
+        DankCalService.deleteEvents(selected, response => {
+            root.finishOperation(I18n.tr("deleted", "past-tense event action used in a result message"), selected.length, response);
+            root.clear();
+        });
     }
 
     Connections {
