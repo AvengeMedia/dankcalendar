@@ -339,10 +339,10 @@
     "Connect %1": "%1 verbinden"
   },
   "Connect Google Account": {
-    "Connect Google Account": ""
+    "Connect Google Account": "Google-account koppelen"
   },
   "Connect Microsoft Account": {
-    "Connect Microsoft Account": ""
+    "Connect Microsoft Account": "Microsoft-account koppelen"
   },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "Verbind met elke CalDAV-compatibele server."
@@ -441,7 +441,7 @@
     "Delete \"%1\"?": "\"%1\" verwijderen?"
   },
   "Delete occurrence": {
-    "Delete occurrence": ""
+    "Delete occurrence": "Exemplaar verwijderen"
   },
   "Delete series": {
     "Delete series": "Reeks verwijderen"
@@ -468,10 +468,10 @@
     "Disable core hours": "Kernuren uitschakelen"
   },
   "Disable sync": {
-    "Disable sync": ""
+    "Disable sync": "Synchronisatie uitschakelen"
   },
   "Dismiss": {
-    "Dismiss": ""
+    "Dismiss": "Negeren"
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "ISO-weeknummers weergeven in maandweergave."
@@ -513,7 +513,7 @@
     "Enable reminders": "Herinneringen inschakelen"
   },
   "Enable sync": {
-    "Enable sync": ""
+    "Enable sync": "Synchronisatie inschakelen"
   },
   "Ends": {
     "Ends": "Eindigt"
@@ -948,7 +948,7 @@
     "Recurring tasks are managed in Google Tasks.": "Terugkerende taken worden beheerd in Google Tasks."
   },
   "Reminders": {
-    "Reminders": ""
+    "Reminders": "Herinneringen"
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Herinneringen en desktopmeldingen."
@@ -981,7 +981,7 @@
     "Remove…": "Verwijderen…"
   },
   "Rename": {
-    "Rename": ""
+    "Rename": "Hernoemen"
   },
   "Rename calendar": {
     "Rename calendar": "Agenda hernoemen"
@@ -1077,10 +1077,10 @@
     "Sign in with %1": "Inloggen met %1"
   },
   "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
-    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "Log in met Google in je browser en je bent klaar — geen configuratie nodig. Dank Calendar synchroniseert je agenda's, afspraken en taken."
   },
   "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
-    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "Log in met Microsoft in je browser en je bent klaar — geen configuratie nodig. Dank Calendar synchroniseert je Outlook-agenda's, afspraken en taken."
   },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Log in met je Apple ID en een app-specifiek wachtwoord. Normale Apple ID-wachtwoorden werken niet."
@@ -1140,7 +1140,7 @@
     "Sync interval": "Synchronisatie-interval"
   },
   "Sync is off — click to re-enable": {
-    "Sync is off — click to re-enable": ""
+    "Sync is off — click to re-enable": "Synchronisatie staat uit — klik om opnieuw in te schakelen"
   },
   "Sync now": {
     "Sync now": "Nu synchroniseren"
@@ -1239,7 +1239,7 @@
     "Use this folder": "Deze map gebruiken"
   },
   "Use your own OAuth client": {
-    "Use your own OAuth client": ""
+    "Use your own OAuth client": "Gebruik je eigen OAuth-client"
   },
   "Username": {
     "Username": "Gebruikersnaam"
@@ -1344,7 +1344,7 @@
     "read-only": "alleen-lezen"
   },
   "sync off": {
-    "sync off": ""
+    "sync off": "synchronisatie uit"
   },
   "synced as \"%1": {
     "synced as \"%1\"": "gesynchroniseerd als \"%1\""

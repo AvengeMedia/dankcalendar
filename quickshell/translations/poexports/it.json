@@ -339,10 +339,10 @@
     "Connect %1": "Connetti %1"
   },
   "Connect Google Account": {
-    "Connect Google Account": ""
+    "Connect Google Account": "Connetti account Google"
   },
   "Connect Microsoft Account": {
-    "Connect Microsoft Account": ""
+    "Connect Microsoft Account": "Connetti account Microsoft"
   },
   "Connect any CalDAV-compatible server.": {
     "Connect any CalDAV-compatible server.": "Connetti un qualsiasi server compatibile con CalDAV."
@@ -468,10 +468,10 @@
     "Disable core hours": "Disattiva orario principale"
   },
   "Disable sync": {
-    "Disable sync": ""
+    "Disable sync": "Disattiva sincronizzazione"
   },
   "Dismiss": {
-    "Dismiss": ""
+    "Dismiss": "Ignora"
   },
   "Display ISO week numbers in month view.": {
     "Display ISO week numbers in month view.": "Mostra i numeri di settimana ISO nella vista mensile."
@@ -513,7 +513,7 @@
     "Enable reminders": "Attiva promemoria"
   },
   "Enable sync": {
-    "Enable sync": ""
+    "Enable sync": "Attiva sincronizzazione"
   },
   "Ends": {
     "Ends": "Termina"
@@ -948,7 +948,7 @@
     "Recurring tasks are managed in Google Tasks.": "Le attività ricorrenti vengono gestite in Google Tasks."
   },
   "Reminders": {
-    "Reminders": ""
+    "Reminders": "Promemoria"
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Promemoria e avvisi desktop."
@@ -981,7 +981,7 @@
     "Remove…": "Rimuovi…"
   },
   "Rename": {
-    "Rename": ""
+    "Rename": "Rinomina"
   },
   "Rename calendar": {
     "Rename calendar": "Rinomina calendario"
@@ -1077,10 +1077,10 @@
     "Sign in with %1": "Accedi con %1"
   },
   "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
-    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": ""
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "Accedi con Google nel tuo browser ed è fatto: nessuna configurazione necessaria. Dank Calendar sincronizza i tuoi calendari, eventi e attività."
   },
   "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
-    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": ""
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "Accedi con Microsoft nel tuo browser ed è fatto: nessuna configurazione necessaria. Dank Calendar sincronizza i tuoi calendari, eventi e attività di Outlook."
   },
   "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
     "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Accedi con il tuo ID Apple e una password specifica per l'app. Le normali password ID Apple non funzioneranno."
@@ -1140,7 +1140,7 @@
     "Sync interval": "Intervallo di sincronizzazione"
   },
   "Sync is off — click to re-enable": {
-    "Sync is off — click to re-enable": ""
+    "Sync is off — click to re-enable": "Sincronizzazione disattivata — clicca per riattivarla"
   },
   "Sync now": {
     "Sync now": "Sincronizza ora"
@@ -1239,7 +1239,7 @@
     "Use this folder": "Usa questa cartella"
   },
   "Use your own OAuth client": {
-    "Use your own OAuth client": ""
+    "Use your own OAuth client": "Usa un client OAuth personale"
   },
   "Username": {
     "Username": "Nome utente"
@@ -1344,7 +1344,7 @@
     "read-only": "solo lettura"
   },
   "sync off": {
-    "sync off": ""
+    "sync off": "sincronizzazione disattivata"
   },
   "synced as \"%1": {
     "synced as \"%1\"": "sincronizzato come \"%1\""
