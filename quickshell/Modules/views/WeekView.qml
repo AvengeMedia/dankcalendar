@@ -12,9 +12,13 @@ Item {
     property date today: new Date()
     property date selectedDate: new Date()
     property string selectedEventKey: ""
+    property var selectedEventKeys: []
     property int eventsVersion: 0
 
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
+    signal dayContextRequested(date day, var anchorItem, real x, real y)
+    signal eventDropRequested(var event, date targetDay)
     signal shiftDaysRequested(int days)
 
     function revealHours(start, duration) {

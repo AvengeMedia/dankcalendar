@@ -12,10 +12,14 @@ Item {
     property date today: new Date()
     property date selectedDate: new Date()
     property int eventsVersion: 0
+    property var selectedEventKeys: []
 
     signal daySelected(date day)
     signal dayActivated(date day)
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
+    signal dayContextRequested(date day, var anchorItem, real x, real y)
+    signal eventDropRequested(var event, date targetDay)
     signal viewDayRequested(date day)
     signal previousRequested
     signal nextRequested

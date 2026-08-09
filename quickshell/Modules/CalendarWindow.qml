@@ -32,6 +32,10 @@ FloatingWindow {
     property bool sidebarFocused: false
     property real rangeAnchorTime: 0
 
+    EventSelectionModel {
+        id: eventSelection
+    }
+
     readonly property real selectedDayTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()).getTime()
     readonly property real rangeStartTime: rangeAnchorTime > 0 ? Math.min(rangeAnchorTime, selectedDayTime) : 0
     readonly property real rangeEndTime: rangeAnchorTime > 0 ? Math.max(rangeAnchorTime, selectedDayTime) : 0
@@ -296,6 +300,28 @@ FloatingWindow {
     function openEventDetails(event) {
         eventLoader.active = true;
         eventLoader.item.show(event);
+    }
+
+    function handleEventClick(event, modifiers) {
+        const selectionModifiers = modifiers || Qt.NoModifier;
+        eventSelection.select(event, selectionModifiers);
+        if ((selectionModifiers & (Qt.ControlModifier | Qt.MetaModifier | Qt.ShiftModifier)) === 0)
+            openEventDetails(event);
+    }
+
+    function handleEventContext(event, anchorItem, x, y) {
+        eventMenu.showForEvent(event, anchorItem, x, y);
+    }
+
+    function requestEventDelete(event) {
+        eventSelection.ensureSelected(event);
+        const count = eventSelection.count;
+        deleteEventsConfirm.show({
+            title: count === 1 ? I18n.tr("Delete event?", "confirmation title for deleting one event") : I18n.tr("Delete %1 events?", "confirmation title for deleting multiple events; %1 is event count").arg(count),
+            message: count === 1 ? I18n.tr("This event will be deleted from its calendar.", "confirmation body for deleting one event") : I18n.tr("These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.", "confirmation body for deleting multiple events"),
+            confirmText: count === 1 ? I18n.tr("Delete event", "confirmation button for deleting one event") : I18n.tr("Delete %1 events", "confirmation button for deleting multiple events; %1 is event count").arg(count),
+            danger: true
+        });
     }
 
     function openCreateEvent(date, endDate) {
@@ -746,6 +772,7 @@ FloatingWindow {
                         displayDate: window.displayDate
                         selectedDate: window.selectedDate
                         selectedEventKey: window.selectedEventKey
+                        selectedEventKeys: eventSelection.selectedKeys
                         today: window.today
                         todayStart: window.todayStart
                         rangeStartTime: window.rangeStartTime
@@ -775,7 +802,10 @@ FloatingWindow {
                             window.displayDate = day;
                             window.currentView = "day";
                         }
-                        onEventClicked: ev => window.openEventDetails(ev)
+                        onEventClicked: (ev, modifiers) => window.handleEventClick(ev, modifiers)
+                        onEventContextRequested: (ev, anchorItem, x, y) => window.handleEventContext(ev, anchorItem, x, y)
+                        onDayContextRequested: (day, anchorItem, x, y) => eventMenu.showForDay(day, anchorItem, x, y)
+                        onEventDropRequested: (ev, targetDay) => eventSelection.moveTo(ev, targetDay)
                         onTaskClicked: task => window.openTaskDetails(task)
                         onCreateTaskRequested: window.openCreateTask()
                     }
@@ -858,6 +888,20 @@ FloatingWindow {
                 onDateSelected: date => window.goToDate(date)
             }
         }
+    }
+
+    EventContextMenu {
+        id: eventMenu
+        controller: eventSelection
+        selectedDay: window.selectedDate
+        onOpenRequested: event => window.openEventDetails(event)
+        onCreateRequested: day => window.openCreateEvent(day)
+        onDeleteRequested: event => window.requestEventDelete(event)
+    }
+
+    ConfirmDialog {
+        id: deleteEventsConfirm
+        onConfirmed: eventSelection.remove()
     }
 
     Toast {
