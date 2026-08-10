@@ -107,7 +107,9 @@ Item {
 
     MonthDayPopover {
         id: dayPopover
-        onEventClicked: ev => root.eventClicked(ev)
+        selectedEventKeys: root.selectedEventKeys
+        onEventClicked: (ev, modifiers) => root.eventClicked(ev, modifiers)
+        onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
     }
 
     function eventTooltip(ev) {
@@ -412,11 +414,14 @@ Item {
 
                                 Rectangle {
                                     required property var modelData
+                                    readonly property bool isSelected: root.selectedEventKeys.indexOf(DankCalService.eventKey(modelData)) !== -1
                                     width: parent.width
                                     height: root.eventChipHeight
                                     radius: 4
                                     clip: true
-                                    color: Theme.withAlpha(modelData.color, 0.18)
+                                    color: Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
+                                    border.color: isSelected ? Theme.primary : "transparent"
+                                    border.width: isSelected ? 2 : 0
 
                                     Row {
                                         anchors.left: parent.left
@@ -448,6 +453,7 @@ Item {
 
                                     MouseArea {
                                         anchors.fill: parent
+                                        acceptedButtons: Qt.LeftButton | Qt.RightButton
                                         cursorShape: Qt.PointingHandCursor
                                         hoverEnabled: true
                                         onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
@@ -455,7 +461,11 @@ Item {
                                         onClicked: mouse => {
                                             mouse.accepted = true;
                                             chipTooltip.hide();
-                                            root.eventClicked(parent.modelData);
+                                            if (mouse.button === Qt.RightButton) {
+                                                root.eventContextRequested(parent.modelData, parent, mouse.x, mouse.y);
+                                                return;
+                                            }
+                                            root.eventClicked(parent.modelData, mouse.modifiers);
                                         }
                                     }
                                 }
@@ -481,8 +491,14 @@ Item {
                         }
 
                         TapHandler {
-                            acceptedButtons: Qt.LeftButton
-                            onTapped: root.daySelected(dayCell.cellDate)
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onTapped: (eventPoint, button) => {
+                                if (button === Qt.RightButton) {
+                                    root.dayContextRequested(dayCell.cellDate, dayCell, eventPoint.position.x, eventPoint.position.y);
+                                    return;
+                                }
+                                root.daySelected(dayCell.cellDate);
+                            }
                             onDoubleTapped: root.dayActivated(dayCell.cellDate)
                         }
                     }
