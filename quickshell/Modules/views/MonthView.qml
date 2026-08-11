@@ -31,10 +31,33 @@ Item {
     property real dragRangeEnd: 0
     property real keyRangeStart: 0
     property real keyRangeEnd: 0
+    property bool eventPointerDown: false
+    property bool eventDragging: false
+    property var draggedEvent: null
+    property real dragTargetTime: 0
+    property point dragPosition: Qt.point(0, 0)
 
     readonly property bool previewActive: dragSelecting || keyRangeStart > 0
     readonly property real previewStart: dragSelecting ? dragRangeStart : keyRangeStart
     readonly property real previewEnd: dragSelecting ? dragRangeEnd : keyRangeEnd
+
+    function updateEventDrag(pointerItem, x, y) {
+        const gridPosition = pointerItem.mapToItem(grid, x, y);
+        const rootPosition = pointerItem.mapToItem(root, x, y);
+        dragPosition = Qt.point(rootPosition.x, rootPosition.y);
+        const target = rangeDrag.dateAt(gridPosition);
+        dragTargetTime = target ? target.getTime() : 0;
+    }
+
+    function finishEventDrag(event) {
+        const targetTime = dragTargetTime;
+        eventPointerDown = false;
+        eventDragging = false;
+        draggedEvent = null;
+        dragTargetTime = 0;
+        if (targetTime > 0)
+            eventDropRequested(event, new Date(targetTime));
+    }
 
     Timer {
         id: scrollCooldown
@@ -223,6 +246,7 @@ Item {
 
                 DragHandler {
                     id: rangeDrag
+                    enabled: !root.eventPointerDown && !root.eventDragging
 
                     function dateAt(pos) {
                         const x = Math.min(Math.max(pos.x, 0), grid.width - 1);
@@ -274,6 +298,7 @@ Item {
                         readonly property bool isToday: root.isSameDay(cellDate, root.today)
                         readonly property bool isSelected: root.isSameDay(cellDate, root.selectedDate)
                         readonly property bool inPreviewRange: root.previewActive && cellDate.getTime() >= root.previewStart && cellDate.getTime() <= root.previewEnd
+                        readonly property bool isDropTarget: root.eventDragging && cellDate.getTime() === root.dragTargetTime
                         readonly property bool previewLeading: inPreviewRange && cellDate.getTime() === (I18n.isRtl ? root.previewEnd : root.previewStart)
                         readonly property bool previewTrailing: inPreviewRange && cellDate.getTime() === (I18n.isRtl ? root.previewStart : root.previewEnd)
                         readonly property var cellEvents: {
@@ -323,6 +348,17 @@ Item {
                             border.color: Theme.primary
                             border.width: 1
                             radius: Theme.cornerRadiusSmall
+                        }
+
+                        Rectangle {
+                            visible: dayCell.isDropTarget
+                            anchors.fill: parent
+                            anchors.margins: 2
+                            color: Theme.withAlpha(Theme.primary, 0.12)
+                            border.color: Theme.primary
+                            border.width: 2
+                            radius: Theme.cornerRadiusSmall
+                            z: 4
                         }
 
                         Rectangle {
@@ -451,21 +487,33 @@ Item {
                                         }
                                     }
 
-                                    MouseArea {
+                                    EventMouseArea {
                                         anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton | Qt.RightButton
-                                        cursorShape: Qt.PointingHandCursor
-                                        hoverEnabled: true
+                                        eventData: parent.modelData
+                                        dragEnabled: !parent.modelData.readOnly
                                         onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
                                         onExited: chipTooltip.hide()
-                                        onClicked: mouse => {
-                                            mouse.accepted = true;
+                                        onActivated: (event, modifiers) => {
                                             chipTooltip.hide();
-                                            if (mouse.button === Qt.RightButton) {
-                                                root.eventContextRequested(parent.modelData, parent, mouse.x, mouse.y);
-                                                return;
-                                            }
-                                            root.eventClicked(parent.modelData, mouse.modifiers);
+                                            root.eventClicked(event, modifiers);
+                                        }
+                                        onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
+                                        onDragPressed: root.eventPointerDown = true
+                                        onDragStarted: (event, pointerItem, x, y) => {
+                                            chipTooltip.hide();
+                                            root.draggedEvent = event;
+                                            root.eventDragging = true;
+                                            root.updateEventDrag(pointerItem, x, y);
+                                        }
+                                        onDragMoved: (event, pointerItem, x, y) => root.updateEventDrag(pointerItem, x, y)
+                                        onDropped: (event, pointerItem, x, y) => {
+                                            root.updateEventDrag(pointerItem, x, y);
+                                            root.finishEventDrag(event);
+                                        }
+                                        onDragReleased: {
+                                            root.eventPointerDown = false;
+                                            if (root.eventDragging)
+                                                root.finishEventDrag(parent.modelData);
                                         }
                                     }
                                 }
@@ -513,5 +561,29 @@ Item {
         continuous: false
         dragEnabled: false
         onStepped: direction => wheelHandler.step((I18n.isRtl ? 1 : -1) * direction)
+    }
+
+    Rectangle {
+        visible: root.eventDragging && root.draggedEvent
+        x: Math.min(root.width - width - Theme.spacingS, Math.max(Theme.spacingS, root.dragPosition.x + 12))
+        y: Math.min(root.height - height - Theme.spacingS, Math.max(Theme.spacingS, root.dragPosition.y + 12))
+        width: Math.min(220, dragLabel.implicitWidth + Theme.spacingL * 2)
+        height: 34
+        radius: Theme.cornerRadiusSmall
+        color: Theme.surfaceContainerHigh
+        border.color: Theme.primary
+        border.width: 2
+        z: 100
+
+        StyledText {
+            id: dragLabel
+            anchors.centerIn: parent
+            text: root.selectedEventKeys.indexOf(root.draggedEvent ? DankCalService.eventKey(root.draggedEvent) : "") !== -1 && root.selectedEventKeys.length > 1 ? I18n.tr("Move %1 events", "event drag preview label; %1 is event count").arg(root.selectedEventKeys.length) : (root.draggedEvent ? root.draggedEvent.title : "")
+            font.pixelSize: Theme.fontSizeSmall
+            font.weight: Font.Medium
+            color: Theme.surfaceText
+            elide: Text.ElideRight
+            width: Math.min(196, implicitWidth)
+        }
     }
 }
