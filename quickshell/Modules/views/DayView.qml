@@ -20,6 +20,11 @@ Item {
     signal previousRequested
     signal nextRequested
 
+    function isEventSelected(event) {
+        const key = DankCalService.eventKey(event);
+        return selectedEventKey === key || selectedEventKeys.indexOf(key) !== -1;
+    }
+
     function revealHours(start, duration) {
         const top = start * hourHeight;
         const bottom = top + duration * hourHeight;
@@ -187,7 +192,7 @@ Item {
 
             Rectangle {
                 required property var modelData
-                readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                readonly property bool isSelected: root.isEventSelected(modelData)
                 width: parent.width
                 height: 22
                 radius: 4
@@ -210,16 +215,16 @@ Item {
                     elide: Text.ElideRight
                 }
 
-                MouseArea {
+                EventMouseArea {
                     anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    hoverEnabled: true
+                    eventData: parent.modelData
                     onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
                     onExited: chipTooltip.hide()
-                    onClicked: {
+                    onActivated: (event, modifiers) => {
                         chipTooltip.hide();
-                        root.eventClicked(parent.modelData);
+                        root.eventClicked(event, modifiers);
                     }
+                    onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
                 }
             }
         }
@@ -339,7 +344,7 @@ Item {
 
                     Rectangle {
                         required property var modelData
-                        readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                        readonly property bool isSelected: root.isEventSelected(modelData)
                         onIsSelectedChanged: {
                             if (isSelected)
                                 root.revealHours(modelData.startHour, modelData.durationHours);
@@ -420,16 +425,16 @@ Item {
                             }
                         }
 
-                        MouseArea {
+                        EventMouseArea {
                             anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            hoverEnabled: true
+                            eventData: parent.modelData
                             onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
                             onExited: chipTooltip.hide()
-                            onClicked: {
+                            onActivated: (event, modifiers) => {
                                 chipTooltip.hide();
-                                root.eventClicked(parent.modelData);
+                                root.eventClicked(event, modifiers);
                             }
+                            onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
                         }
                     }
                 }
@@ -453,5 +458,10 @@ Item {
 
     DankSlideDragHandler {
         slideArea: slidePager
+    }
+
+    TapHandler {
+        acceptedButtons: Qt.RightButton
+        onTapped: eventPoint => root.dayContextRequested(root.displayDate, root, eventPoint.position.x, eventPoint.position.y)
     }
 }
