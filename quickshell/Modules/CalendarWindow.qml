@@ -188,6 +188,7 @@ FloatingWindow {
         const next = selectedEventIndex + direction;
         if (next >= 0 && next < evs.length) {
             selectedEventIndex = next;
+            eventSelection.replace([evs[next]]);
             return;
         }
         for (let i = 1; i <= 366; i++) {
@@ -198,6 +199,7 @@ FloatingWindow {
                 continue;
             selectedDate = d;
             selectedEventIndex = direction > 0 ? 0 : list.length - 1;
+            eventSelection.replace([list[selectedEventIndex]]);
             ensureSelectionVisible();
             return;
         }
@@ -258,6 +260,13 @@ FloatingWindow {
             rangeAnchorTime = 0;
             openCreateEvent(start, end);
             return;
+        }
+        if (eventSelection.count === 1) {
+            const selected = eventSelection.events();
+            if (selected.length === 1) {
+                openEventDetails(selected[0]);
+                return;
+            }
         }
         const evs = DankCalService.eventsForDay(selectedDate);
         if (selectedEventIndex >= 0 && selectedEventIndex < evs.length) {
@@ -479,6 +488,11 @@ FloatingWindow {
                     window.rangeAnchorTime = 0;
                     break;
                 }
+                if (eventSelection.hasSelection) {
+                    eventSelection.clear();
+                    window.selectedEventIndex = -1;
+                    break;
+                }
                 if (window.selectedEventIndex < 0) {
                     event.accepted = false;
                     return;
@@ -502,9 +516,21 @@ FloatingWindow {
                 window.currentView = "week";
                 break;
             case Qt.Key_D:
+                if (ctrl) {
+                    if (!eventSelection.hasSelection) {
+                        event.accepted = false;
+                        return;
+                    }
+                    eventSelection.duplicate(shift ? 1 : 0);
+                    break;
+                }
                 window.currentView = "day";
                 break;
             case Qt.Key_A:
+                if (ctrl) {
+                    eventSelection.selectDay(window.selectedDate);
+                    break;
+                }
                 window.currentView = "agenda";
                 break;
             case Qt.Key_S:
@@ -546,7 +572,41 @@ FloatingWindow {
                 window.currentView = "tasks";
                 break;
             case Qt.Key_C:
+                if (ctrl) {
+                    if (!eventSelection.hasSelection) {
+                        event.accepted = false;
+                        return;
+                    }
+                    eventSelection.copy();
+                    break;
+                }
                 window.openCreateEvent();
+                break;
+            case Qt.Key_V:
+                if (!ctrl || eventSelection.clipboardCount === 0) {
+                    event.accepted = false;
+                    return;
+                }
+                eventSelection.paste(window.selectedDate);
+                break;
+            case Qt.Key_Delete:
+            case Qt.Key_Backspace:
+                if (!eventSelection.hasSelection || !eventSelection.allWritable()) {
+                    event.accepted = false;
+                    return;
+                }
+                window.requestEventDelete(eventSelection.events()[0]);
+                break;
+            case Qt.Key_Menu:
+                if (!eventSelection.hasSelection) {
+                    event.accepted = false;
+                    return;
+                }
+                {
+                    const selected = eventSelection.events();
+                    if (selected.length > 0)
+                        eventMenu.showForEvent(selected[0], focusScope, focusScope.width / 2, focusScope.height / 2);
+                }
                 break;
             case Qt.Key_Slash:
                 if (shift) {
@@ -819,6 +879,21 @@ FloatingWindow {
             visible: false
             z: 100
             onDismissed: visible = false
+        }
+
+        EventSelectionBar {
+            id: selectionBar
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.spacingL
+            width: Math.min(implicitWidth, parent.width - Theme.spacingL * 2)
+            z: 90
+            controller: eventSelection
+            onDeleteRequested: {
+                const selected = eventSelection.events();
+                if (selected.length > 0)
+                    window.requestEventDelete(selected[0]);
+            }
         }
     }
 
