@@ -73,11 +73,14 @@ func Open(ctx context.Context, dsn string) (*ent.Client, error) {
 	return ent.NewClient(ent.Driver(driver)), nil
 }
 
+// _time_format=sqlite makes the driver store timestamps in a format it can
+// read back; without it time.Time values are written via String(), which is
+// unparseable in zones whose offset has minutes, e.g. +0545 (issue #79).
 func OpenFile(ctx context.Context, path string) (*ent.Client, error) {
-	dsn := fmt.Sprintf("file:%s?cache=shared&_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)&_pragma=foreign_keys(ON)", path)
+	dsn := fmt.Sprintf("file:%s?cache=shared&_time_format=sqlite&_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)&_pragma=foreign_keys(ON)", path)
 	return Open(ctx, dsn)
 }
 
 func OpenMemory(ctx context.Context) (*ent.Client, error) {
-	return Open(ctx, "file:dankcal_test?mode=memory&cache=shared&_pragma=foreign_keys(ON)")
+	return Open(ctx, "file:dankcal_test?mode=memory&cache=shared&_time_format=sqlite&_pragma=foreign_keys(ON)")
 }

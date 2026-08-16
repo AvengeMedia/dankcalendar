@@ -50,6 +50,30 @@ func TestAccountLifecycle(t *testing.T) {
 	require.True(t, repo.IsNotFound(err))
 }
 
+// Account timestamps default to time.Now in the daemon's local zone; a zone
+// whose offset has minutes broke every later read of the row (issue #79).
+func TestAccountRoundTripInMinuteOffsetZone(t *testing.T) {
+	loc, err := time.LoadLocation("Asia/Kathmandu")
+	require.NoError(t, err)
+	original := time.Local
+	time.Local = loc
+	t.Cleanup(func() { time.Local = original })
+
+	r, ctx := newTestRepo(t)
+
+	_, err = r.CreateAccount(ctx, repo.CreateAccountInput{
+		ID:          "nepal",
+		Kind:        account.KindGoogle,
+		DisplayName: "Nepal",
+	})
+	require.NoError(t, err)
+
+	require.NoError(t, r.SetAccountAuthState(ctx, "nepal", false, ""))
+
+	_, err = r.GetAccount(ctx, "nepal")
+	require.NoError(t, err)
+}
+
 func TestUpsertCalendarAndEvents(t *testing.T) {
 	r, ctx := newTestRepo(t)
 

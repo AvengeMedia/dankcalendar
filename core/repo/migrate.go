@@ -51,7 +51,92 @@ func migrate(ctx context.Context, dsn string) error {
 	if err := goose.UpContext(ctx, db, migrationsDir); err != nil {
 		return fmt.Errorf("apply migrations: %w", err)
 	}
+	if err := repairLocalizedTimestamps(ctx, db); err != nil {
+		return fmt.Errorf("repair timestamps: %w", err)
+	}
 	return nil
+}
+
+// Timestamps written before _time_format=sqlite was set on the connection used
+// time.Time's String() format, e.g.
+//
+//	2026-08-16 12:34:56.789012345 +0545 +0545 m=+0.001234567
+//
+// which the driver cannot read back in zones whose offset has minutes,
+// breaking every query on the row (issue #79). Rewrite such values (any
+// datetime holding more than two space-separated fields) to "date time+hh:mm"
+// by keeping the first two fields and reformatting the offset field. Runs on
+// every startup; already-normalized values hold at most one space and are
+// never matched.
+func repairLocalizedTimestamps(ctx context.Context, db *sql.DB) error {
+	const repairStmt = "UPDATE `%[1]s` SET `%[2]s` = " +
+		"substr(`%[2]s`, 1, 10) || ' ' || " +
+		"substr(`%[2]s`, 12, instr(substr(`%[2]s`, 12), ' ') - 1) || " +
+		"substr(`%[2]s`, 12 + instr(substr(`%[2]s`, 12), ' '), 3) || ':' || " +
+		"substr(`%[2]s`, 15 + instr(substr(`%[2]s`, 12), ' '), 2) " +
+		"WHERE `%[2]s` LIKE '%% %% %%';"
+
+	tables, err := listTables(ctx, db)
+	if err != nil {
+		return err
+	}
+	for _, table := range tables {
+		columns, err := timeColumns(ctx, db, table)
+		if err != nil {
+			return err
+		}
+		for _, column := range columns {
+			if _, err := db.ExecContext(ctx, fmt.Sprintf(repairStmt, table, column)); err != nil {
+				return fmt.Errorf("repair %s.%s: %w", table, column, err)
+			}
+		}
+	}
+	return nil
+}
+
+func listTables(ctx context.Context, db *sql.DB) ([]string, error) {
+	rows, err := db.QueryContext(ctx,
+		"SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%';")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var tables []string
+	for rows.Next() {
+		var name string
+		if err := rows.Scan(&name); err != nil {
+			return nil, err
+		}
+		tables = append(tables, name)
+	}
+	return tables, rows.Err()
+}
+
+func timeColumns(ctx context.Context, db *sql.DB, table string) ([]string, error) {
+	rows, err := db.QueryContext(ctx, fmt.Sprintf("PRAGMA table_info(`%s`);", table))
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var columns []string
+	for rows.Next() {
+		var (
+			cid         int
+			name, typ   string
+			notNull, pk int
+			defaultVal  sql.NullString
+		)
+		if err := rows.Scan(&cid, &name, &typ, &notNull, &defaultVal, &pk); err != nil {
+			return nil, err
+		}
+		switch strings.ToUpper(typ) {
+		case "DATETIME", "TIMESTAMP", "DATE":
+			columns = append(columns, name)
+		}
+	}
+	return columns, rows.Err()
 }
 
 // migrationDSN replaces any foreign_keys pragma with foreign_keys(OFF). The

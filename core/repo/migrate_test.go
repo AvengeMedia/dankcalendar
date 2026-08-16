@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/pressly/goose/v3"
 	_ "modernc.org/sqlite"
@@ -150,6 +151,66 @@ func TestCalendarRebuildPreservesChildRows(t *testing.T) {
 	}
 	if token.Valid {
 		t.Fatalf("sync token should be invalidated for a full refetch: %q", token.String)
+	}
+}
+
+// Timestamps written before _time_format=sqlite was set used time.Time's
+// String() format, which the driver cannot read back in zones whose offset has
+// minutes, e.g. +0545 (issue #79). migrate rewrites them on every run.
+func TestMigrateRepairsLocalizedTimestamps(t *testing.T) {
+	ctx := context.Background()
+	db, dsn := openRaw(t, "timestamps.db")
+	defer db.Close()
+
+	if err := migrate(ctx, dsn); err != nil {
+		t.Fatalf("initial migrate: %v", err)
+	}
+
+	_, err := db.ExecContext(ctx, `INSERT INTO accounts
+		(id, kind, display_name, created_at, updated_at) VALUES
+		('kathmandu', 'google', 'Broken',
+			'2026-08-16 12:34:56.789012345 +0545 +0545 m=+0.001234567',
+			'2026-08-16 07:04:56 +0000 UTC'),
+		('normal', 'google', 'Fine',
+			'2026-01-01',
+			'2026-04-01 08:00:00.5 -0400 EDT');`)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if err := migrate(ctx, dsn); err != nil {
+		t.Fatalf("migrate: %v", err)
+	}
+
+	cases := []struct {
+		id      string
+		created time.Time
+		updated time.Time
+	}{
+		{
+			id:      "kathmandu",
+			created: time.Date(2026, 8, 16, 12, 34, 56, 789012345, time.FixedZone("", 5*3600+45*60)),
+			updated: time.Date(2026, 8, 16, 7, 4, 56, 0, time.UTC),
+		},
+		{
+			id:      "normal",
+			created: time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC),
+			updated: time.Date(2026, 4, 1, 8, 0, 0, 500000000, time.FixedZone("", -4*3600)),
+		},
+	}
+	for _, tc := range cases {
+		var created, updated time.Time
+		err := db.QueryRowContext(ctx,
+			"SELECT created_at, updated_at FROM accounts WHERE id = ?;", tc.id).Scan(&created, &updated)
+		if err != nil {
+			t.Fatalf("scan %q timestamps: %v", tc.id, err)
+		}
+		if !created.Equal(tc.created) {
+			t.Errorf("%q created_at = %v, want %v", tc.id, created, tc.created)
+		}
+		if !updated.Equal(tc.updated) {
+			t.Errorf("%q updated_at = %v, want %v", tc.id, updated, tc.updated)
+		}
 	}
 }
 
