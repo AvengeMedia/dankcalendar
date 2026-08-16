@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/api/calendar/v3"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 )
@@ -101,4 +102,61 @@ func TestToGoogleEventReminderAtStartSerializesMinutes(t *testing.T) {
 	data, err := out.Reminders.Overrides[0].MarshalJSON()
 	require.NoError(t, err)
 	assert.Contains(t, string(data), `"minutes":0`)
+}
+
+// Third-party integrations create all-day events whose exclusive end date
+// equals the start date, or omit the end entirely; Google shows those as
+// one-day events (#77).
+func TestFromGoogleEventNormalizesDegenerateAllDayEnd(t *testing.T) {
+	c := cal.Calendar{ID: "cal-1"}
+	cases := []struct {
+		name string
+		item *calendar.Event
+		end  time.Time
+	}{
+		{
+			name: "end equals start",
+			item: &calendar.Event{
+				Id:    "e1",
+				Start: &calendar.EventDateTime{Date: "2026-08-16"},
+				End:   &calendar.EventDateTime{Date: "2026-08-16"},
+			},
+			end: time.Date(2026, 8, 17, 0, 0, 0, 0, time.UTC),
+		},
+		{
+			name: "end missing",
+			item: &calendar.Event{
+				Id:    "e2",
+				Start: &calendar.EventDateTime{Date: "2026-08-16"},
+			},
+			end: time.Date(2026, 8, 17, 0, 0, 0, 0, time.UTC),
+		},
+		{
+			name: "well-formed exclusive end kept",
+			item: &calendar.Event{
+				Id:    "e3",
+				Start: &calendar.EventDateTime{Date: "2026-08-16"},
+				End:   &calendar.EventDateTime{Date: "2026-08-18"},
+			},
+			end: time.Date(2026, 8, 18, 0, 0, 0, 0, time.UTC),
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			ev := fromGoogleEvent(c, tc.item)
+			require.True(t, ev.AllDay)
+			assert.Equal(t, tc.end, ev.End)
+		})
+	}
+}
+
+// Cancelled recurring instances arrive without start or end; their zero times
+// mark them for deletion and must stay untouched.
+func TestFromGoogleEventKeepsCancelledInstanceTimesZero(t *testing.T) {
+	ev := fromGoogleEvent(cal.Calendar{ID: "cal-1"}, &calendar.Event{
+		Id:     "e4",
+		Status: "cancelled",
+	})
+	assert.True(t, ev.Start.IsZero())
+	assert.True(t, ev.End.IsZero())
 }

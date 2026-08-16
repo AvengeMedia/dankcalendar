@@ -352,6 +352,14 @@ func fromGoogleEvent(c cal.Calendar, item *calendar.Event) *cal.Event {
 	ev.End, _, ev.EndTimeZone = fromGoogleTime(item.End)
 	ev.OriginalStart, _, _ = fromGoogleTime(item.OriginalStartTime)
 
+	// Third-party integrations create all-day events whose exclusive end date
+	// equals the start date (or is missing); stored verbatim they span no day
+	// at all and vanish from every view (#77). Google renders them as one-day
+	// events, so must we.
+	if ev.AllDay && !ev.End.After(ev.Start) {
+		ev.End = ev.Start.AddDate(0, 0, 1)
+	}
+
 	if item.Organizer != nil {
 		ev.Organizer = &cal.Attendee{
 			Email:       item.Organizer.Email,

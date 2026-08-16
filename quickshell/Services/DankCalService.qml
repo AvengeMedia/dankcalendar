@@ -574,6 +574,14 @@ Singleton {
 
     function _normalizeEvent(e) {
         const allDay = !!e.allDay;
+        const start = allDay ? _dayBoundary(e.start) : new Date(e.start);
+        let end = allDay ? _dayBoundary(e.end) : new Date(e.end);
+        // A degenerate end (before the start, or an exclusive all-day end on
+        // the start date) would exclude the event from every range (#77).
+        if (allDay && end <= start)
+            end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1);
+        else if (end < start)
+            end = start;
         return {
             "id": e.id,
             "uid": e.uid || "",
@@ -583,8 +591,8 @@ Singleton {
             "location": e.location || "",
             "url": e.url || "",
             "meetingUrl": e.meetingUrl || "",
-            "start": allDay ? _dayBoundary(e.start) : new Date(e.start),
-            "end": allDay ? _dayBoundary(e.end) : new Date(e.end),
+            "start": start,
+            "end": end,
             "allDay": allDay,
             "status": e.status || "confirmed",
             "recurrence": (e.recurrence || {}).rrule || [],
