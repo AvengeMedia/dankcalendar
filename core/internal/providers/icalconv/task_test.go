@@ -102,3 +102,26 @@ func TestTaskFromComponentNoUID(t *testing.T) {
 	_, ok := TaskFromComponent("cal-1", doc.Children[0], NewTZResolver(doc, ""))
 	assert.False(t, ok, "a VTODO without a UID must be rejected")
 }
+
+// Timed due/start dates must render with a TZID instead of forcing UTC
+// (issue #80).
+func TestBuildTaskWritesTZID(t *testing.T) {
+	src := &cal.Task{
+		Summary:       "File report",
+		Due:           time.Date(2026, 5, 7, 12, 0, 0, 0, time.UTC),
+		Start:         time.Date(2026, 5, 7, 9, 0, 0, 0, time.UTC),
+		DueTimeZone:   "Europe/Berlin",
+		StartTimeZone: "Europe/Berlin",
+	}
+
+	var buf bytes.Buffer
+	require.NoError(t, ical.NewEncoder(&buf).Encode(CalendarFromTask(src, "uid-1")))
+	ics := buf.String()
+	assert.Contains(t, ics, "DUE;TZID=Europe/Berlin:20260507T140000")
+	assert.Contains(t, ics, "DTSTART;TZID=Europe/Berlin:20260507T110000")
+
+	got := roundTripTask(t, src, "uid-1")
+	assert.Equal(t, src.Due, got.Due.UTC())
+	assert.Equal(t, "Europe/Berlin", got.DueTimeZone)
+	assert.Equal(t, "Europe/Berlin", got.StartTimeZone)
+}

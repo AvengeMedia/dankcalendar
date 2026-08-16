@@ -347,13 +347,23 @@ func setEventTimes(props ical.Props, ev *cal.Event) {
 		}
 		props.SetDate(ical.PropDateTimeEnd, end)
 	default:
-		props.SetDateTime(ical.PropDateTimeStart, ev.Start.UTC())
+		props.SetDateTime(ical.PropDateTimeStart, inZone(ev.Start, ev.StartTimeZone))
 		end := ev.End
 		if end.IsZero() {
 			end = ev.Start
 		}
-		props.SetDateTime(ical.PropDateTimeEnd, end.UTC())
+		props.SetDateTime(ical.PropDateTimeEnd, inZone(end, ev.EndTimeZone))
 	}
+}
+
+// inZone renders t in its stored zone so SetDateTime writes a TZID instead of
+// forcing UTC (issue #80); empty or unknown zones stay UTC.
+func inZone(t time.Time, tz string) time.Time {
+	loc, _ := loadZone(tz)
+	if loc == nil {
+		return t.UTC()
+	}
+	return t.In(loc)
 }
 
 func setRecurrence(props ical.Props, rec *cal.Recurrence) {

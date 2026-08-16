@@ -86,8 +86,8 @@ func BuildTask(t *cal.Task, uid string) *ical.Component {
 		setRaw(props, ical.PropRelatedTo, t.ParentUID)
 	}
 
-	setTaskDate(props, ical.PropDue, t.Due, t.AllDay)
-	setTaskDate(props, ical.PropDateTimeStart, t.Start, t.AllDay)
+	setTaskDate(props, ical.PropDue, t.Due, t.DueTimeZone, t.AllDay)
+	setTaskDate(props, ical.PropDateTimeStart, t.Start, t.StartTimeZone, t.AllDay)
 	if !t.Completed.IsZero() {
 		props.SetDateTime(ical.PropCompleted, t.Completed.UTC())
 	}
@@ -98,14 +98,14 @@ func BuildTask(t *cal.Task, uid string) *ical.Component {
 	return comp
 }
 
-func setTaskDate(props ical.Props, name string, when time.Time, allDay bool) {
+func setTaskDate(props ical.Props, name string, when time.Time, tz string, allDay bool) {
 	switch {
 	case when.IsZero():
 		return
 	case allDay:
 		props.SetDate(name, when)
 	default:
-		props.SetDateTime(name, when.UTC())
+		props.SetDateTime(name, inZone(when, tz))
 	}
 }
 

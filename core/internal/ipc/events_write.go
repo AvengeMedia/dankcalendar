@@ -12,6 +12,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
 	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
 	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
+	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
 	"github.com/AvengeMedia/dankgo/log"
 )
 
@@ -34,6 +35,17 @@ func handleEventCreate(ctx context.Context, w *ConnWriter, req Request, deps Dep
 	case ev.Start.IsZero() || ev.End.IsZero():
 		RespondError(w, req.ID, "start and end are required (RFC3339)")
 		return
+	}
+
+	// Locally created events carry the machine's zone so providers write a
+	// TZID instead of forcing UTC (#80).
+	if tz := tzcache.LocalName(); !ev.AllDay && tz != "" {
+		if ev.StartTimeZone == "" {
+			ev.StartTimeZone = tz
+		}
+		if ev.EndTimeZone == "" {
+			ev.EndTimeZone = tz
+		}
 	}
 
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)

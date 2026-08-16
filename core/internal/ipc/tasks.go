@@ -8,6 +8,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
+	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 )
 
@@ -83,6 +84,17 @@ func handleTaskCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps
 	if t.Summary == "" {
 		RespondError(w, req.ID, "summary is required")
 		return
+	}
+
+	// Locally created tasks carry the machine's zone so providers write a
+	// TZID instead of forcing UTC (#80).
+	if tz := tzcache.LocalName(); !t.AllDay && tz != "" {
+		if t.DueTimeZone == "" && !t.Due.IsZero() {
+			t.DueTimeZone = tz
+		}
+		if t.StartTimeZone == "" && !t.Start.IsZero() {
+			t.StartTimeZone = tz
+		}
 	}
 
 	provider, writer, domCal, err := taskWriterForCalendar(ctx, deps, calendarID)

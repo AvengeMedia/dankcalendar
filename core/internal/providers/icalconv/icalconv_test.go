@@ -343,3 +343,40 @@ func TestTriggerMinutesRoundTrip(t *testing.T) {
 		assert.Equal(t, minutes, got, "minutes=%d", minutes)
 	}
 }
+
+// Events store their zone separately from the UTC instant; serializing must
+// render a TZID so servers display local times instead of UTC (issue #80).
+func TestBuildEventWritesTZID(t *testing.T) {
+	src := &cal.Event{
+		Summary:       "Sync up",
+		Start:         time.Date(2026, 5, 7, 12, 0, 0, 0, time.UTC),
+		End:           time.Date(2026, 5, 7, 13, 0, 0, 0, time.UTC),
+		StartTimeZone: "Europe/Berlin",
+		EndTimeZone:   "Europe/Berlin",
+	}
+
+	var buf bytes.Buffer
+	require.NoError(t, ical.NewEncoder(&buf).Encode(CalendarFromEvent(src, "uid-1")))
+	ics := buf.String()
+	assert.Contains(t, ics, "DTSTART;TZID=Europe/Berlin:20260507T140000")
+	assert.Contains(t, ics, "DTEND;TZID=Europe/Berlin:20260507T150000")
+
+	got := roundTrip(t, src, "uid-1")
+	assert.Equal(t, src.Start, got.Start.UTC())
+	assert.Equal(t, "Europe/Berlin", got.StartTimeZone)
+	assert.Equal(t, "Europe/Berlin", got.EndTimeZone)
+}
+
+func TestBuildEventUnknownZoneStaysUTC(t *testing.T) {
+	src := &cal.Event{
+		Summary:       "Sync up",
+		Start:         time.Date(2026, 5, 7, 12, 0, 0, 0, time.UTC),
+		End:           time.Date(2026, 5, 7, 13, 0, 0, 0, time.UTC),
+		StartTimeZone: "Not/AZone",
+		EndTimeZone:   "Not/AZone",
+	}
+
+	var buf bytes.Buffer
+	require.NoError(t, ical.NewEncoder(&buf).Encode(CalendarFromEvent(src, "uid-1")))
+	assert.Contains(t, buf.String(), "DTSTART:20260507T120000Z")
+}
