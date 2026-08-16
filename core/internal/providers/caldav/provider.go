@@ -76,18 +76,18 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 	}, nil
 }
 
-// baseHTTPClient returns the HTTP client the caldav client is built on. Servers
-// with self-signed certificates opt out of TLS verification via the
-// SettingInsecureSkipVerify account setting; everything else uses the default.
+// baseHTTPClient returns the HTTP client the caldav client is built on,
+// wrapped so non-compliant ETags get repaired before go-webdav parses them.
+// Servers with self-signed certificates opt out of TLS verification via the
+// SettingInsecureSkipVerify account setting.
 func baseHTTPClient(account cal.Account) *http.Client {
-	insecure, _ := account.Settings[SettingInsecureSkipVerify].(bool)
-	if !insecure {
-		return http.DefaultClient
+	base := http.DefaultTransport
+	if insecure, _ := account.Settings[SettingInsecureSkipVerify].(bool); insecure {
+		transport := http.DefaultTransport.(*http.Transport).Clone()
+		transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+		base = transport
 	}
-
-	transport := http.DefaultTransport.(*http.Transport).Clone()
-	transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-	return &http.Client{Transport: transport}
+	return &http.Client{Transport: etagNormalizingTransport{base: base}}
 }
 
 func (p *Provider) Kind() cal.AccountKind { return cal.AccountCalDAV }
