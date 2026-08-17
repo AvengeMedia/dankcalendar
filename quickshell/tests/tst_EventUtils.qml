@@ -72,6 +72,19 @@ TestCase {
         compare(copied.length, 1);
     }
 
+    function test_cutClipboardRetainsSourceForMoveAfterPaste() {
+        const original = event({
+            "recurringId": "series-1",
+            "recurrence": ["FREQ=WEEKLY"]
+        });
+        const copied = EventUtils.clipboardEvents(EventUtils.clipboardText([original], true));
+
+        compare(copied.length, 1);
+        compare(copied[0]._dankCut.id, original.id);
+        compare(copied[0]._dankCut.start, original.start.toISOString());
+        compare(copied[0]._dankCut.recurrence[0], "FREQ=WEEKLY");
+    }
+
     function test_pasteAnchorsGroupToTargetDay() {
         const first = EventUtils.createFields(event(), 0, "calendar-1", false);
         const second = EventUtils.createFields(event({

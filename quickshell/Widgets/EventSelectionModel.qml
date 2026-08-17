@@ -15,6 +15,7 @@ Item {
     readonly property bool hasSelection: count > 0
     readonly property var clipboardEvents: EventUtils.clipboardEvents(Quickshell.clipboardText)
     readonly property int clipboardCount: clipboardEvents.length
+    readonly property bool clipboardIsCut: clipboardCount > 0 && clipboardEvents.every(event => event._dankCut)
 
     visible: false
     width: 0
@@ -139,8 +140,20 @@ Item {
         const selected = events(fallback);
         if (selected.length === 0)
             return;
-        Quickshell.clipboardText = EventUtils.clipboardText(selected);
+        Quickshell.clipboardText = EventUtils.clipboardText(selected, false);
         ToastService.info(selected.length === 1 ? I18n.tr("Copied 1 event", "clipboard confirmation for one event") : I18n.tr("Copied %1 events", "clipboard confirmation for multiple events; %1 is event count").arg(selected.length));
+    }
+
+    function cut(fallback) {
+        if (fallback)
+            ensureSelected(fallback);
+        const selected = events(fallback);
+        if (!allWritable(fallback)) {
+            ToastService.info(I18n.tr("Read-only events can't be cut", "event cut error for a read-only calendar"));
+            return;
+        }
+        Quickshell.clipboardText = EventUtils.clipboardText(selected, true);
+        ToastService.info(selected.length === 1 ? I18n.tr("Cut 1 event", "clipboard confirmation for one event") : I18n.tr("Cut %1 events", "clipboard confirmation for multiple events; %1 is event count").arg(selected.length));
     }
 
     function paste(targetDay) {
@@ -153,12 +166,26 @@ Item {
             return;
         }
         const fields = EventUtils.pasteFields(copied, targetDay, fallbackId);
-        for (let i = 0; i < fields.length; i++)
+        const cutSources = [];
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i]._dankCut)
+                cutSources.push(fields[i]._dankCut);
+            delete fields[i]._dankCut;
             fields[i].calendarId = writableCalendarId(fields[i].calendarId);
+        }
         busy = true;
         DankCalService.createEvents(fields, response => {
-            root.finishOperation(I18n.tr("pasted", "past-tense event action used in a result message"), fields.length, response);
-            root.clear();
+            if (response.error || cutSources.length !== fields.length) {
+                root.finishOperation(I18n.tr("pasted", "past-tense event action used in a result message"), fields.length, response);
+                root.clear();
+                return;
+            }
+            DankCalService.deleteEvents(cutSources, deleteResponse => {
+                root.finishOperation(I18n.tr("moved", "past-tense event action used in a result message"), fields.length, deleteResponse);
+                if (!deleteResponse.error)
+                    Quickshell.clipboardText = EventUtils.clipboardText(cutSources, false);
+                root.clear();
+            });
         });
     }
 

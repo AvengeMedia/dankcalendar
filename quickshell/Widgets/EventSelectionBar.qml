@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import qs.Common
 import qs.Widgets
 import qs.DankCommon.Widgets
@@ -15,6 +16,11 @@ Item {
             id: "copy",
             label: I18n.tr("Copy", "multi-event action shelf label"),
             icon: "content_copy"
+        },
+        {
+            id: "cut",
+            label: I18n.tr("Cut", "multi-event action shelf label"),
+            icon: "content_cut"
         },
         {
             id: "duplicate",
@@ -48,6 +54,9 @@ Item {
         switch (actionId) {
         case "copy":
             controller.copy();
+            break;
+        case "cut":
+            controller.cut();
             break;
         case "duplicate":
             controller.duplicate(0);
@@ -132,7 +141,7 @@ Item {
                 Item {
                     id: action
                     required property var modelData
-                    width: 52
+                    width: 48
                     height: 44
 
                     Column {

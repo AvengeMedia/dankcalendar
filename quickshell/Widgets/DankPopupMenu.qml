@@ -53,7 +53,7 @@ Popup {
     }
 
     width: preferredWidth
-    padding: Theme.spacingXS
+    padding: Theme.spacingS
     // Outside-press dismissal is armed shortly after opening, otherwise the
     // click that opened the menu can immediately close it. Presses inside the
     // anchor item never auto-close, so the opener can toggle deterministically.
@@ -63,32 +63,12 @@ Popup {
     onOpened: {
         currentIndex = -1;
         moveCurrent(1);
-        forceActiveFocus();
+        menuFocus.forceActiveFocus();
         armCloseTimer.start();
     }
     onClosed: {
         closePolicy = Popup.CloseOnEscape;
         currentIndex = -1;
-    }
-
-    Keys.onPressed: event => {
-        switch (event.key) {
-        case Qt.Key_Up:
-            moveCurrent(-1);
-            break;
-        case Qt.Key_Down:
-            moveCurrent(1);
-            break;
-        case Qt.Key_Return:
-        case Qt.Key_Enter:
-        case Qt.Key_Space:
-            triggerCurrent();
-            break;
-        default:
-            event.accepted = false;
-            return;
-        }
-        event.accepted = true;
     }
 
     Timer {
@@ -104,116 +84,144 @@ Popup {
         border.color: Theme.outlineMedium
     }
 
-    contentItem: Column {
-        spacing: 1
+    contentItem: FocusScope {
+        id: menuFocus
+        implicitWidth: menuColumn.implicitWidth
+        implicitHeight: menuColumn.implicitHeight
 
-        LayoutMirroring.enabled: I18n.isRtl
-        LayoutMirroring.childrenInherit: true
-
-        Repeater {
-            model: ScriptModel {
-                values: root.items
+        Keys.onPressed: event => {
+            switch (event.key) {
+            case Qt.Key_Up:
+                root.moveCurrent(-1);
+                break;
+            case Qt.Key_Down:
+                root.moveCurrent(1);
+                break;
+            case Qt.Key_Return:
+            case Qt.Key_Enter:
+            case Qt.Key_Space:
+                root.triggerCurrent();
+                break;
+            default:
+                event.accepted = false;
+                return;
             }
+            event.accepted = true;
+        }
 
-            Rectangle {
-                id: menuRow
-                required property var modelData
-                required property int index
-                readonly property string itemType: modelData.type || "action"
-                readonly property bool isAction: itemType === "action"
-                readonly property bool itemEnabled: isAction && modelData.enabled !== false
+        Column {
+            id: menuColumn
+            anchors.fill: parent
+            spacing: 1
 
-                width: parent.width
-                height: itemType === "separator" ? 9 : (itemType === "header" ? 48 : 38)
-                radius: Theme.cornerRadiusSmall
-                color: isAction && root.currentIndex === index ? Theme.primaryBackground : "transparent"
-                opacity: !isAction || itemEnabled ? 1 : 0.4
+            LayoutMirroring.enabled: I18n.isRtl
+            LayoutMirroring.childrenInherit: true
+
+            Repeater {
+                model: ScriptModel {
+                    values: root.items
+                }
 
                 Rectangle {
-                    visible: menuRow.itemType === "separator"
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Theme.spacingS
-                    anchors.rightMargin: Theme.spacingS
-                    height: 1
-                    color: Theme.outlineLight
-                }
+                    id: menuRow
+                    required property var modelData
+                    required property int index
+                    readonly property string itemType: modelData.type || "action"
+                    readonly property bool isAction: itemType === "action"
+                    readonly property bool itemEnabled: isAction && modelData.enabled !== false
 
-                Column {
-                    visible: menuRow.itemType === "header"
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Theme.spacingM
-                    anchors.rightMargin: Theme.spacingM
-                    spacing: 1
+                    width: parent.width
+                    height: itemType === "separator" ? 13 : (itemType === "header" ? 52 : 40)
+                    radius: Theme.cornerRadiusSmall
+                    color: isAction && root.currentIndex === index ? Theme.primaryBackground : "transparent"
+                    opacity: !isAction || itemEnabled ? 1 : 0.4
 
-                    StyledText {
-                        text: menuRow.modelData.label || ""
-                        font.pixelSize: Theme.fontSizeMedium
-                        font.weight: Font.Medium
-                        color: Theme.surfaceText
-                        width: parent.width
-                        elide: Text.ElideRight
-                    }
-
-                    StyledText {
-                        visible: text !== ""
-                        text: menuRow.modelData.subtitle || ""
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.surfaceVariantText
-                        width: parent.width
-                        elide: Text.ElideRight
-                    }
-                }
-
-                Row {
-                    visible: menuRow.isAction
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.leftMargin: Theme.spacingM
-                    anchors.rightMargin: Theme.spacingM
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.spacingM
-
-                    DankIcon {
-                        visible: !!menuRow.modelData.icon
-                        name: menuRow.modelData.icon || ""
-                        size: Theme.iconSize - 6
-                        color: menuRow.modelData.danger ? Theme.error : Theme.surfaceVariantText
+                    Rectangle {
+                        visible: menuRow.itemType === "separator"
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.leftMargin: Theme.spacingS
+                        anchors.rightMargin: Theme.spacingS
+                        height: 1
+                        color: Theme.outlineLight
                     }
 
-                    StyledText {
-                        text: menuRow.modelData.label
-                        font.pixelSize: Theme.fontSizeMedium
-                        color: menuRow.modelData.danger ? Theme.error : Theme.surfaceText
+                    Column {
+                        visible: menuRow.itemType === "header"
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - (menuRow.modelData.icon ? Theme.iconSize - 6 + Theme.spacingM : 0) - shortcutText.width
-                        elide: Text.ElideRight
+                        anchors.leftMargin: Theme.spacingM
+                        anchors.rightMargin: Theme.spacingM
+                        spacing: 1
+
+                        StyledText {
+                            text: menuRow.modelData.label || ""
+                            font.pixelSize: Theme.fontSizeMedium
+                            font.weight: Font.Medium
+                            color: Theme.surfaceText
+                            width: parent.width
+                            elide: Text.ElideRight
+                        }
+
+                        StyledText {
+                            visible: text !== ""
+                            text: menuRow.modelData.subtitle || ""
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.surfaceVariantText
+                            width: parent.width
+                            elide: Text.ElideRight
+                        }
                     }
 
-                    StyledText {
-                        id: shortcutText
-                        visible: text !== ""
-                        text: menuRow.modelData.shortcut || ""
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.surfaceVariantText
+                    Row {
+                        visible: menuRow.isAction
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.leftMargin: Theme.spacingM
+                        anchors.rightMargin: Theme.spacingM
                         anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
+                        spacing: Theme.spacingM
 
-                StateLayer {
-                    visible: menuRow.isAction
-                    stateColor: menuRow.modelData.danger ? Theme.error : Theme.primary
-                    cornerRadius: parent.radius
-                    enabled: menuRow.itemEnabled
-                    disabled: !menuRow.itemEnabled
-                    onClicked: {
-                        root.currentIndex = menuRow.index;
-                        root.close();
-                        root.triggered(menuRow.modelData.id);
+                        DankIcon {
+                            visible: !!menuRow.modelData.icon
+                            name: menuRow.modelData.icon || ""
+                            size: Theme.iconSize - 6
+                            color: menuRow.modelData.danger ? Theme.error : Theme.surfaceVariantText
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        StyledText {
+                            text: menuRow.modelData.label
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: menuRow.modelData.danger ? Theme.error : Theme.surfaceText
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: parent.width - (menuRow.modelData.icon ? Theme.iconSize - 6 + Theme.spacingM : 0) - (shortcutText.visible ? shortcutText.width + Theme.spacingM : 0)
+                            elide: Text.ElideRight
+                        }
+
+                        StyledText {
+                            id: shortcutText
+                            visible: text !== ""
+                            text: menuRow.modelData.shortcut || ""
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.surfaceVariantText
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
+
+                    StateLayer {
+                        visible: menuRow.isAction
+                        stateColor: menuRow.modelData.danger ? Theme.error : Theme.primary
+                        cornerRadius: parent.radius
+                        enabled: menuRow.itemEnabled
+                        disabled: !menuRow.itemEnabled
+                        onClicked: {
+                            root.currentIndex = menuRow.index;
+                            root.close();
+                            root.triggered(menuRow.modelData.id);
+                        }
                     }
                 }
             }

@@ -82,12 +82,25 @@ function formatICalDate(value, allDay) {
     return date.getUTCFullYear() + pad(date.getUTCMonth() + 1) + pad(date.getUTCDate()) + "T" + pad(date.getUTCHours()) + pad(date.getUTCMinutes()) + pad(date.getUTCSeconds()) + "Z"
 }
 
-function clipboardText(events) {
+function clipboardText(events, cut) {
     const ordered = sortedUnique(events)
     const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:" + clipboardProductId, "CALSCALE:GREGORIAN"]
     for (let i = 0; i < ordered.length; i++) {
         const event = ordered[i]
         const fields = createFields(event, 0, event.calendarId, false)
+        if (cut) {
+            fields._dankCut = {
+                "id": event.id,
+                "uid": event.uid || "",
+                "calendarId": event.calendarId,
+                "title": event.title,
+                "start": new Date(event.start).toISOString(),
+                "end": new Date(event.end).toISOString(),
+                "allDay": !!event.allDay,
+                "recurringId": event.recurringId || "",
+                "recurrence": cloneValue(event.recurrence)
+            }
+        }
         lines.push("BEGIN:VEVENT")
         lines.push("SUMMARY:" + escapeICal(event.title))
         if (event.description)

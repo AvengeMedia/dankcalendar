@@ -924,6 +924,13 @@
     "comment": ""
   },
   {
+    "term": "Copy selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Core hours",
     "translation": "",
     "context": "core hours range setting label",
@@ -976,6 +983,41 @@
     "term": "Custom",
     "translation": "",
     "context": "color source button group option for a custom theme file | recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut",
+    "translation": "",
+    "context": "multi-event action shelf label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut %1 events",
+    "translation": "",
+    "context": "clipboard confirmation for multiple events; %1 is event count | event context menu cut action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut 1 event",
+    "translation": "",
+    "context": "clipboard confirmation for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut event",
+    "translation": "",
+    "context": "event context menu cut action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1134,6 +1176,13 @@
     "comment": ""
   },
   {
+    "term": "Delete selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Delete series",
     "translation": "",
     "context": "event details button to confirm deleting a whole recurring series",
@@ -1241,7 +1290,21 @@
   {
     "term": "Duplicate",
     "translation": "",
-    "context": "event context menu duplicate action",
+    "context": "event context menu duplicate action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Duplicate %1 events",
+    "translation": "",
+    "context": "event context menu duplicate action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Duplicate selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1326,6 +1389,13 @@
     "term": "Event",
     "translation": "",
     "context": "event modal window title when viewing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Event actions",
+    "translation": "",
+    "context": "keyboard shortcuts overlay section header",
     "reference": "",
     "comment": ""
   },
@@ -1701,6 +1771,20 @@
     "comment": ""
   },
   {
+    "term": "Move %1 events here",
+    "translation": "",
+    "context": "calendar context menu cut-paste action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Move 1 event here",
+    "translation": "",
+    "context": "calendar context menu cut-paste action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Move through sidebar items",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -1988,6 +2072,13 @@
     "comment": ""
   },
   {
+    "term": "Open event actions",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Open or create event",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -2086,6 +2177,13 @@
     "comment": ""
   },
   {
+    "term": "Paste events on the selected day",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Paste the Application (client) ID from your app registration's Overview page.",
     "translation": "",
     "context": "microsoft credentials step instructions",
@@ -2180,6 +2278,13 @@
     "term": "Quit",
     "translation": "",
     "context": "close behavior button group option to quit the app | tray menu item to quit the application",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Read-only events can't be cut",
+    "translation": "",
+    "context": "event cut error for a read-only calendar",
     "reference": "",
     "comment": ""
   },
@@ -2317,16 +2422,30 @@
     "comment": ""
   },
   {
+    "term": "Repeat %1 events next week",
+    "translation": "",
+    "context": "event context menu quick repeat action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeat %1 events tomorrow",
+    "translation": "",
+    "context": "event context menu quick repeat action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Repeat next week",
     "translation": "",
-    "context": "event context menu quick repeat action",
+    "context": "event context menu quick repeat action for one event",
     "reference": "",
     "comment": ""
   },
   {
     "term": "Repeat tomorrow",
     "translation": "",
-    "context": "event context menu quick repeat action",
+    "context": "event context menu quick repeat action for one event",
     "reference": "",
     "comment": ""
   },
@@ -3076,13 +3195,6 @@
     "term": "e.g. 2022-01-01",
     "translation": "",
     "context": "go to date input placeholder example",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "events",
-    "translation": "",
-    "context": "plural event noun in context menu actions",
     "reference": "",
     "comment": ""
   },

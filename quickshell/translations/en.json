@@ -20,25 +20,25 @@
   {
     "term": "%1 events %2",
     "context": "%1 events %2",
-    "reference": "Widgets/EventSelectionModel.qml:133",
+    "reference": "Widgets/EventSelectionModel.qml:134",
     "comment": "multiple event action result; %1 is event count, %2 is an action verb"
   },
   {
     "term": "%1 events selected",
     "context": "%1 events selected",
-    "reference": "Widgets/EventContextMenu.qml:95",
+    "reference": "Widgets/EventContextMenu.qml:98",
     "comment": "event context menu selection summary; %1 is event count"
   },
   {
     "term": "%1 of %2 events %3",
     "context": "%1 of %2 events %3",
-    "reference": "Widgets/EventSelectionModel.qml:130",
+    "reference": "Widgets/EventSelectionModel.qml:131",
     "comment": "partial batch event action result; %1 completed count, %2 total count, %3 action verb"
   },
   {
     "term": "%1 selected",
     "context": "%1 selected",
-    "reference": "Widgets/EventSelectionBar.qml:115",
+    "reference": "Widgets/EventSelectionBar.qml:124",
     "comment": "multi-event action shelf selection count; %1 is event count"
   },
   {
@@ -110,13 +110,13 @@
   {
     "term": "+1 day",
     "context": "+1 day",
-    "reference": "Widgets/EventSelectionBar.qml:26",
+    "reference": "Widgets/EventSelectionBar.qml:32",
     "comment": "multi-event action shelf repeat tomorrow label"
   },
   {
     "term": "+1 week",
     "context": "+1 week",
-    "reference": "Widgets/EventSelectionBar.qml:31",
+    "reference": "Widgets/EventSelectionBar.qml:37",
     "comment": "multi-event action shelf repeat next week label"
   },
   {
@@ -134,7 +134,7 @@
   {
     "term": "1 event %1",
     "context": "1 event %1",
-    "reference": "Widgets/EventSelectionModel.qml:133",
+    "reference": "Widgets/EventSelectionModel.qml:134",
     "comment": "single event action result; %1 is an action verb"
   },
   {
@@ -332,7 +332,7 @@
   {
     "term": "Actions apply to the whole selection",
     "context": "Actions apply to the whole selection",
-    "reference": "Widgets/EventContextMenu.qml:96",
+    "reference": "Widgets/EventContextMenu.qml:99",
     "comment": "event context menu multi-selection hint"
   },
   {
@@ -404,7 +404,7 @@
   {
     "term": "Again",
     "context": "Again",
-    "reference": "Widgets/EventSelectionBar.qml:21",
+    "reference": "Widgets/EventSelectionBar.qml:27",
     "comment": "multi-event action shelf duplicate label"
   },
   {
@@ -428,7 +428,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/SearchModal.qml:81, Modals/EventDetailsModal.qml:1108, Widgets/EventContextMenu.qml:46, Modules/views/MonthDayPopover.qml:163, Modules/views/MonthView.qml:140, Modules/views/WeekView.qml:151, Modules/views/DayView.qml:62, Modules/views/AgendaView.qml:81",
+    "reference": "Modals/SearchModal.qml:81, Modals/EventDetailsModal.qml:1108, Widgets/EventContextMenu.qml:40, Modules/views/MonthDayPopover.qml:163, Modules/views/MonthView.qml:140, Modules/views/WeekView.qml:151, Modules/views/DayView.qml:62, Modules/views/AgendaView.qml:81",
     "comment": "all-day marker in event context menu | all-day marker in event tooltip | all-day marker in the month day-detail popover | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -554,7 +554,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:387, Modules/CalendarWindow.qml:686",
+    "reference": "Modules/CalendarWindow.qml:387, Modules/CalendarWindow.qml:693",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -620,7 +620,7 @@
   {
     "term": "Clear",
     "context": "Clear",
-    "reference": "Widgets/EventSelectionBar.qml:42",
+    "reference": "Widgets/EventSelectionBar.qml:48",
     "comment": "multi-event action shelf clear selection label"
   },
   {
@@ -752,13 +752,13 @@
   {
     "term": "Copied %1 events",
     "context": "Copied %1 events",
-    "reference": "Widgets/EventSelectionModel.qml:143",
+    "reference": "Widgets/EventSelectionModel.qml:144",
     "comment": "clipboard confirmation for multiple events; %1 is event count"
   },
   {
     "term": "Copied 1 event",
     "context": "Copied 1 event",
-    "reference": "Widgets/EventSelectionModel.qml:143",
+    "reference": "Widgets/EventSelectionModel.qml:144",
     "comment": "clipboard confirmation for one event"
   },
   {
@@ -770,19 +770,19 @@
   {
     "term": "Copy",
     "context": "Copy",
-    "reference": "Widgets/EventSelectionBar.qml:16",
+    "reference": "Widgets/EventSelectionBar.qml:17",
     "comment": "multi-event action shelf label"
   },
   {
     "term": "Copy %1 events",
     "context": "Copy %1 events",
-    "reference": "Widgets/EventContextMenu.qml:105",
+    "reference": "Widgets/EventContextMenu.qml:108",
     "comment": "event context menu copy action; %1 is event count"
   },
   {
     "term": "Copy event",
     "context": "Copy event",
-    "reference": "Widgets/EventContextMenu.qml:105",
+    "reference": "Widgets/EventContextMenu.qml:108",
     "comment": "event context menu copy action for one event"
   },
   {
@@ -790,6 +790,12 @@
     "context": "Copy link",
     "reference": "Modals/AccountAddModal.qml:922, Modals/AccountAddModal.qml:1262",
     "comment": "button to copy a setup guide url to the clipboard"
+  },
+  {
+    "term": "Copy selected events",
+    "context": "Copy selected events",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:140",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Core hours",
@@ -824,7 +830,7 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:140, Modules/CalendarSidebar.qml:419",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:169, Modules/CalendarSidebar.qml:419",
     "comment": "keyboard shortcut description | sidebar button to create a new event"
   },
   {
@@ -838,6 +844,36 @@
     "context": "Custom",
     "reference": "Modals/SettingsContent.qml:25, Widgets/DankRecurrencePicker.qml:56",
     "comment": "color source button group option for a custom theme file | recurrence dropdown option"
+  },
+  {
+    "term": "Cut",
+    "context": "Cut",
+    "reference": "Widgets/EventSelectionBar.qml:22",
+    "comment": "multi-event action shelf label"
+  },
+  {
+    "term": "Cut %1 events",
+    "context": "Cut %1 events",
+    "reference": "Widgets/EventContextMenu.qml:115, Widgets/EventSelectionModel.qml:156",
+    "comment": "clipboard confirmation for multiple events; %1 is event count | event context menu cut action; %1 is event count"
+  },
+  {
+    "term": "Cut 1 event",
+    "context": "Cut 1 event",
+    "reference": "Widgets/EventSelectionModel.qml:156",
+    "comment": "clipboard confirmation for one event"
+  },
+  {
+    "term": "Cut event",
+    "context": "Cut event",
+    "reference": "Widgets/EventContextMenu.qml:115",
+    "comment": "event context menu cut action for one event"
+  },
+  {
+    "term": "Cut selected events",
+    "context": "Cut selected events",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:144",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Daemon offline",
@@ -884,7 +920,7 @@
   {
     "term": "Day actions",
     "context": "Day actions",
-    "reference": "Widgets/EventContextMenu.qml:56",
+    "reference": "Widgets/EventContextMenu.qml:59",
     "comment": "subtitle for a calendar day context menu"
   },
   {
@@ -920,7 +956,7 @@
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modals/TaskDetailsModal.qml:503, Modals/SettingsContent.qml:1018, Modals/SettingsContent.qml:1024, Modules/CalendarSidebar.qml:302, Widgets/EventSelectionBar.qml:36",
+    "reference": "Modals/TaskDetailsModal.qml:503, Modals/SettingsContent.qml:1018, Modals/SettingsContent.qml:1024, Modules/CalendarSidebar.qml:302, Widgets/EventSelectionBar.qml:42",
     "comment": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | multi-event action shelf label | task form button to delete the task"
   },
   {
@@ -944,7 +980,7 @@
   {
     "term": "Delete %1 events…",
     "context": "Delete %1 events…",
-    "reference": "Widgets/EventContextMenu.qml:149",
+    "reference": "Widgets/EventContextMenu.qml:159",
     "comment": "event context menu delete action; %1 is event count"
   },
   {
@@ -962,7 +998,7 @@
   {
     "term": "Delete event…",
     "context": "Delete event…",
-    "reference": "Widgets/EventContextMenu.qml:149",
+    "reference": "Widgets/EventContextMenu.qml:159",
     "comment": "event context menu delete action for one event"
   },
   {
@@ -970,6 +1006,12 @@
     "context": "Delete occurrence",
     "reference": "Modals/EventDetailsModal.qml:587",
     "comment": "event details button to delete only this occurrence of a recurring event"
+  },
+  {
+    "term": "Delete selected events",
+    "context": "Delete selected events",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:160",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Delete series",
@@ -1064,8 +1106,20 @@
   {
     "term": "Duplicate",
     "context": "Duplicate",
-    "reference": "Widgets/EventContextMenu.qml:112",
-    "comment": "event context menu duplicate action"
+    "reference": "Widgets/EventContextMenu.qml:122",
+    "comment": "event context menu duplicate action for one event"
+  },
+  {
+    "term": "Duplicate %1 events",
+    "context": "Duplicate %1 events",
+    "reference": "Widgets/EventContextMenu.qml:122",
+    "comment": "event context menu duplicate action; %1 is event count"
+  },
+  {
+    "term": "Duplicate selected events",
+    "context": "Duplicate selected events",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:152",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Edit event",
@@ -1140,6 +1194,12 @@
     "comment": "event modal window title when viewing"
   },
   {
+    "term": "Event actions",
+    "context": "Event actions",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:136",
+    "comment": "keyboard shortcuts overlay section header"
+  },
+  {
     "term": "Event details",
     "context": "Event details",
     "reference": "Modals/EventDetailsModal.qml:563",
@@ -1196,7 +1256,7 @@
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:16, Modals/KeyboardShortcutsOverlay.qml:136, Modals/SettingsContent.qml:373",
+    "reference": "Modals/SettingsSidebar.qml:16, Modals/SettingsContent.qml:373, Modals/KeyboardShortcutsOverlay.qml:165",
     "comment": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label"
   },
   {
@@ -1298,7 +1358,7 @@
   {
     "term": "Keyboard shortcuts",
     "context": "Keyboard shortcuts",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:205",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:234",
     "comment": "keyboard shortcuts overlay title"
   },
   {
@@ -1458,6 +1518,18 @@
     "comment": "event drag preview label; %1 is event count"
   },
   {
+    "term": "Move %1 events here",
+    "context": "Move %1 events here",
+    "reference": "Widgets/EventContextMenu.qml:47",
+    "comment": "calendar context menu cut-paste action; %1 is event count"
+  },
+  {
+    "term": "Move 1 event here",
+    "context": "Move 1 event here",
+    "reference": "Widgets/EventContextMenu.qml:47",
+    "comment": "calendar context menu cut-paste action for one event"
+  },
+  {
     "term": "Move through sidebar items",
     "context": "Move through sidebar items",
     "reference": "Modals/KeyboardShortcutsOverlay.qml:111",
@@ -1466,7 +1538,7 @@
   {
     "term": "Move to selected day",
     "context": "Move to selected day",
-    "reference": "Widgets/EventContextMenu.qml:131",
+    "reference": "Widgets/EventContextMenu.qml:141",
     "comment": "event context menu move action"
   },
   {
@@ -1508,7 +1580,7 @@
   {
     "term": "New event",
     "context": "New event",
-    "reference": "Modals/EventDetailsModal.qml:511, Modals/EventDetailsModal.qml:563, Widgets/EventContextMenu.qml:60, Modules/views/MonthView.qml:385",
+    "reference": "Modals/EventDetailsModal.qml:511, Modals/EventDetailsModal.qml:563, Widgets/EventContextMenu.qml:63, Modules/views/MonthView.qml:385",
     "comment": "calendar day context menu action | event modal header when creating | event modal window title when creating | placeholder label on the event span shown while selecting days in the month grid"
   },
   {
@@ -1610,7 +1682,7 @@
   {
     "term": "No writable calendar available",
     "context": "No writable calendar available",
-    "reference": "Modals/EventDetailsModal.qml:338, Widgets/EventSelectionModel.qml:152, Widgets/EventSelectionModel.qml:178",
+    "reference": "Modals/EventDetailsModal.qml:338, Widgets/EventSelectionModel.qml:165, Widgets/EventSelectionModel.qml:205",
     "comment": "event duplicate error when no calendar allows creating events | event form error when no calendar allows creating events | event paste error when no calendar allows creating events"
   },
   {
@@ -1700,8 +1772,14 @@
   {
     "term": "Open event",
     "context": "Open event",
-    "reference": "Widgets/EventContextMenu.qml:88",
+    "reference": "Widgets/EventContextMenu.qml:91",
     "comment": "event context menu action"
+  },
+  {
+    "term": "Open event actions",
+    "context": "Open event actions",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:156",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Open or create event",
@@ -1760,25 +1838,25 @@
   {
     "term": "Paste %1 events",
     "context": "Paste %1 events",
-    "reference": "Widgets/EventContextMenu.qml:65",
+    "reference": "Widgets/EventContextMenu.qml:50",
     "comment": "calendar day context menu paste action; %1 is event count"
   },
   {
     "term": "Paste %1 events here",
     "context": "Paste %1 events here",
-    "reference": "Widgets/EventContextMenu.qml:138",
+    "reference": "Widgets/EventContextMenu.qml:49",
     "comment": "event context menu paste action; %1 is event count"
   },
   {
     "term": "Paste 1 event",
     "context": "Paste 1 event",
-    "reference": "Widgets/EventContextMenu.qml:65",
+    "reference": "Widgets/EventContextMenu.qml:50",
     "comment": "calendar day context menu paste action for one event"
   },
   {
     "term": "Paste 1 event here",
     "context": "Paste 1 event here",
-    "reference": "Widgets/EventContextMenu.qml:138",
+    "reference": "Widgets/EventContextMenu.qml:49",
     "comment": "event context menu paste action for one event"
   },
   {
@@ -1786,6 +1864,12 @@
     "context": "Paste credentials",
     "reference": "Modals/AccountAddModal.qml:942",
     "comment": "last guide step button to google credentials"
+  },
+  {
+    "term": "Paste events on the selected day",
+    "context": "Paste events on the selected day",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:148",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Paste the Application (client) ID from your app registration's Overview page.",
@@ -1872,15 +1956,21 @@
     "comment": "close behavior button group option to quit the app | tray menu item to quit the application"
   },
   {
+    "term": "Read-only events can't be cut",
+    "context": "Read-only events can't be cut",
+    "reference": "Widgets/EventSelectionModel.qml:152",
+    "comment": "event cut error for a read-only calendar"
+  },
+  {
     "term": "Read-only events can't be deleted",
     "context": "Read-only events can't be deleted",
-    "reference": "Widgets/EventSelectionModel.qml:211",
+    "reference": "Widgets/EventSelectionModel.qml:238",
     "comment": "event delete error for a read-only calendar"
   },
   {
     "term": "Read-only events can't be moved",
     "context": "Read-only events can't be moved",
-    "reference": "Widgets/EventSelectionModel.qml:191",
+    "reference": "Widgets/EventSelectionModel.qml:218",
     "comment": "event move error for a read-only calendar"
   },
   {
@@ -1986,16 +2076,28 @@
     "comment": "task form label for the recurrence dropdown"
   },
   {
+    "term": "Repeat %1 events next week",
+    "context": "Repeat %1 events next week",
+    "reference": "Widgets/EventContextMenu.qml:135",
+    "comment": "event context menu quick repeat action; %1 is event count"
+  },
+  {
+    "term": "Repeat %1 events tomorrow",
+    "context": "Repeat %1 events tomorrow",
+    "reference": "Widgets/EventContextMenu.qml:129",
+    "comment": "event context menu quick repeat action; %1 is event count"
+  },
+  {
     "term": "Repeat next week",
     "context": "Repeat next week",
-    "reference": "Widgets/EventContextMenu.qml:125",
-    "comment": "event context menu quick repeat action"
+    "reference": "Widgets/EventContextMenu.qml:135",
+    "comment": "event context menu quick repeat action for one event"
   },
   {
     "term": "Repeat tomorrow",
     "context": "Repeat tomorrow",
-    "reference": "Widgets/EventContextMenu.qml:119",
-    "comment": "event context menu quick repeat action"
+    "reference": "Widgets/EventContextMenu.qml:129",
+    "comment": "event context menu quick repeat action for one event"
   },
   {
     "term": "Repeats",
@@ -2036,7 +2138,7 @@
   {
     "term": "Search",
     "context": "Search",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:144",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:173",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2060,7 +2162,7 @@
   {
     "term": "Select all %1 events",
     "context": "Select all %1 events",
-    "reference": "Widgets/EventContextMenu.qml:73",
+    "reference": "Widgets/EventContextMenu.qml:76",
     "comment": "calendar day context menu selection action; %1 is event count"
   },
   {
@@ -2078,7 +2180,7 @@
   {
     "term": "Select event",
     "context": "Select event",
-    "reference": "Widgets/EventContextMenu.qml:73",
+    "reference": "Widgets/EventContextMenu.qml:76",
     "comment": "calendar day context menu action for one event"
   },
   {
@@ -2108,7 +2210,7 @@
   {
     "term": "Settings",
     "context": "Settings",
-    "reference": "Modals/SettingsModal.qml:87, Modals/KeyboardShortcutsOverlay.qml:148",
+    "reference": "Modals/SettingsModal.qml:87, Modals/KeyboardShortcutsOverlay.qml:177",
     "comment": "keyboard shortcut description | settings window header title"
   },
   {
@@ -2402,7 +2504,7 @@
   {
     "term": "Toggle this help",
     "context": "Toggle this help",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:152",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:181",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2606,7 +2708,7 @@
   {
     "term": "created",
     "context": "created",
-    "reference": "Widgets/EventSelectionModel.qml:182",
+    "reference": "Widgets/EventSelectionModel.qml:209",
     "comment": "past-tense event action used in a result message"
   },
   {
@@ -2630,7 +2732,7 @@
   {
     "term": "deleted",
     "context": "deleted",
-    "reference": "Widgets/EventSelectionModel.qml:216",
+    "reference": "Widgets/EventSelectionModel.qml:243",
     "comment": "past-tense event action used in a result message"
   },
   {
@@ -2638,12 +2740,6 @@
     "context": "e.g. 2022-01-01",
     "reference": "Modals/GoToDateDialog.qml:207",
     "comment": "go to date input placeholder example"
-  },
-  {
-    "term": "events",
-    "context": "events",
-    "reference": "Widgets/EventContextMenu.qml:42",
-    "comment": "plural event noun in context menu actions"
   },
   {
     "term": "iCal subscription",
@@ -2672,7 +2768,7 @@
   {
     "term": "moved",
     "context": "moved",
-    "reference": "Widgets/EventSelectionModel.qml:199",
+    "reference": "Widgets/EventSelectionModel.qml:184, Widgets/EventSelectionModel.qml:226",
     "comment": "past-tense event action used in a result message"
   },
   {
@@ -2696,7 +2792,7 @@
   {
     "term": "pasted",
     "context": "pasted",
-    "reference": "Widgets/EventSelectionModel.qml:160",
+    "reference": "Widgets/EventSelectionModel.qml:179",
     "comment": "past-tense event action used in a result message"
   },
   {

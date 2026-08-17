@@ -36,15 +36,18 @@ Item {
         menu.show(anchorItem, x, y);
     }
 
-    function countLabel(action, count) {
-        if (count === 1)
-            return action;
-        return action + " " + count + " " + I18n.tr("events", "plural event noun in context menu actions");
-    }
-
     function eventSubtitle(event) {
         const when = event.allDay ? I18n.tr("All day", "all-day marker in event context menu") : SettingsData.formatTime(event.start) + " – " + SettingsData.formatTime(event.end);
         return event.calendar ? when + " · " + event.calendar : when;
+    }
+
+    function pasteLabel(includeHere) {
+        const count = controller ? controller.clipboardCount : 0;
+        if (controller && controller.clipboardIsCut)
+            return count === 1 ? I18n.tr("Move 1 event here", "calendar context menu cut-paste action for one event") : I18n.tr("Move %1 events here", "calendar context menu cut-paste action; %1 is event count").arg(count);
+        if (includeHere)
+            return count === 1 ? I18n.tr("Paste 1 event here", "event context menu paste action for one event") : I18n.tr("Paste %1 events here", "event context menu paste action; %1 is event count").arg(count);
+        return count === 1 ? I18n.tr("Paste 1 event", "calendar day context menu paste action for one event") : I18n.tr("Paste %1 events", "calendar day context menu paste action; %1 is event count").arg(count);
     }
 
     function menuItems() {
@@ -62,7 +65,7 @@ Item {
             });
             items.push({
                 id: "paste",
-                label: controller && controller.clipboardCount === 1 ? I18n.tr("Paste 1 event", "calendar day context menu paste action for one event") : I18n.tr("Paste %1 events", "calendar day context menu paste action; %1 is event count").arg(controller ? controller.clipboardCount : 0),
+                label: pasteLabel(false),
                 icon: "content_paste",
                 shortcut: "Ctrl+V",
                 enabled: controller && controller.clipboardCount > 0 && !controller.busy
@@ -108,21 +111,28 @@ Item {
             enabled: !controller.busy
         });
         items.push({
+            id: "cut",
+            label: selectionCount === 1 ? I18n.tr("Cut event", "event context menu cut action for one event") : I18n.tr("Cut %1 events", "event context menu cut action; %1 is event count").arg(selectionCount),
+            icon: "content_cut",
+            shortcut: "Ctrl+X",
+            enabled: controller.allWritable(actionEvent) && !controller.busy
+        });
+        items.push({
             id: "duplicate",
-            label: countLabel(I18n.tr("Duplicate", "event context menu duplicate action"), selectionCount),
+            label: selectionCount === 1 ? I18n.tr("Duplicate", "event context menu duplicate action for one event") : I18n.tr("Duplicate %1 events", "event context menu duplicate action; %1 is event count").arg(selectionCount),
             icon: "file_copy",
             shortcut: "Ctrl+D",
             enabled: !controller.busy
         });
         items.push({
             id: "tomorrow",
-            label: countLabel(I18n.tr("Repeat tomorrow", "event context menu quick repeat action"), selectionCount),
+            label: selectionCount === 1 ? I18n.tr("Repeat tomorrow", "event context menu quick repeat action for one event") : I18n.tr("Repeat %1 events tomorrow", "event context menu quick repeat action; %1 is event count").arg(selectionCount),
             icon: "update",
             enabled: !controller.busy
         });
         items.push({
             id: "nextWeek",
-            label: countLabel(I18n.tr("Repeat next week", "event context menu quick repeat action"), selectionCount),
+            label: selectionCount === 1 ? I18n.tr("Repeat next week", "event context menu quick repeat action for one event") : I18n.tr("Repeat %1 events next week", "event context menu quick repeat action; %1 is event count").arg(selectionCount),
             icon: "event_repeat",
             enabled: !controller.busy
         });
@@ -135,7 +145,7 @@ Item {
         if (controller.clipboardCount > 0) {
             items.push({
                 id: "paste",
-                label: controller.clipboardCount === 1 ? I18n.tr("Paste 1 event here", "event context menu paste action for one event") : I18n.tr("Paste %1 events here", "event context menu paste action; %1 is event count").arg(controller.clipboardCount),
+                label: pasteLabel(true),
                 icon: "content_paste",
                 shortcut: "Ctrl+V",
                 enabled: !controller.busy
@@ -171,6 +181,9 @@ Item {
                 break;
             case "copy":
                 root.controller.copy(root.actionEvent);
+                break;
+            case "cut":
+                root.controller.cut(root.actionEvent);
                 break;
             case "duplicate":
                 root.controller.duplicate(0, root.actionEvent);

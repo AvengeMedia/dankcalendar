@@ -589,6 +589,13 @@ FloatingWindow {
                 }
                 eventSelection.paste(window.selectedDate);
                 break;
+            case Qt.Key_X:
+                if (!ctrl || !eventSelection.hasSelection || !eventSelection.allWritable()) {
+                    event.accepted = false;
+                    return;
+                }
+                eventSelection.cut();
+                break;
             case Qt.Key_Delete:
             case Qt.Key_Backspace:
                 if (!eventSelection.hasSelection || !eventSelection.allWritable()) {
