@@ -218,12 +218,21 @@ func handleEventRSVP(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 		RespondError(w, req.ID, "response is required (accept|decline|tentative)")
 		return
 	}
+	var occurrenceStart time.Time
+	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" {
+		parsed, perr := time.Parse(time.RFC3339, raw)
+		if perr != nil {
+			RespondError(w, req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
+			return
+		}
+		occurrenceStart = parsed
+	}
 
 	res, err := rsvp.Apply(ctx, rsvp.Stores{
 		Repo:     deps.Repo,
 		Registry: deps.Registry,
 		Secrets:  deps.Secrets,
-	}, id, response)
+	}, id, response, occurrenceStart)
 	if err != nil {
 		RespondError(w, req.ID, err.Error())
 		return

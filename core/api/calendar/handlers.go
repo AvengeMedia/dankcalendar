@@ -202,7 +202,8 @@ func (h *HandlerGroup) GetEvent(ctx context.Context, in *GetEventInput) (*GetEve
 type RSVPEventInput struct {
 	ID   string `path:"id"`
 	Body struct {
-		Response string `json:"response" enum:"accept,decline,tentative" doc:"Your reply to the invitation"`
+		Response        string     `json:"response" enum:"accept,decline,tentative" doc:"Your reply to the invitation"`
+		OccurrenceStart *time.Time `json:"occurrenceStart,omitempty" doc:"Reply for the single occurrence of a recurring event starting at this time"`
 	}
 }
 
@@ -211,11 +212,15 @@ type RSVPEventOutput struct {
 }
 
 func (h *HandlerGroup) RSVPEvent(ctx context.Context, in *RSVPEventInput) (*RSVPEventOutput, error) {
+	var occurrenceStart time.Time
+	if in.Body.OccurrenceStart != nil {
+		occurrenceStart = *in.Body.OccurrenceStart
+	}
 	res, err := rsvp.Apply(ctx, rsvp.Stores{
 		Repo:     h.srv.Repo,
 		Registry: h.srv.Registry,
 		Secrets:  h.srv.Secrets,
-	}, in.ID, in.Body.Response)
+	}, in.ID, in.Body.Response, occurrenceStart)
 	if err != nil {
 		switch {
 		case errors.Is(err, rsvp.ErrNotAttendee):

@@ -5,9 +5,21 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+	"time"
 
 	"google.golang.org/api/googleapi"
 )
+
+func TestGoogleInstanceID(t *testing.T) {
+	start := time.Date(2026, 8, 17, 13, 30, 0, 0, time.FixedZone("CEST", 2*3600))
+
+	if got := googleInstanceID("master", start, false); got != "master_20260817T113000Z" {
+		t.Errorf("timed instance id = %q", got)
+	}
+	if got := googleInstanceID("master", time.Date(2026, 8, 17, 0, 0, 0, 0, time.UTC), true); got != "master_20260817" {
+		t.Errorf("all-day instance id = %q", got)
+	}
+}
 
 func TestIsServiceDisabled(t *testing.T) {
 	cases := []struct {

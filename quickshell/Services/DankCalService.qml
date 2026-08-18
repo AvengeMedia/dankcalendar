@@ -866,8 +866,8 @@ Singleton {
 
     function moveEvents(eventsToMove, dayOffset, callback) {
         const params = eventsToMove.map(event => Object.assign({
-            "id": event.id
-        }, EventUtils.moveFields(event, dayOffset)));
+                "id": event.id
+            }, EventUtils.moveFields(event, dayOffset)));
         mutateEvents("events.update", params, callback);
     }
 
@@ -1200,11 +1200,14 @@ Singleton {
         });
     }
 
-    function rsvpEvent(id, response, callback) {
-        sendRequest("events.rsvp", {
+    function rsvpEvent(id, response, callback, occurrenceStart) {
+        const params = {
             "id": id,
             "response": response
-        }, resp => {
+        };
+        if (occurrenceStart)
+            params.occurrenceStart = occurrenceStart;
+        sendRequest("events.rsvp", params, resp => {
             if (resp.error)
                 lastError = resp.error;
             else

@@ -8,6 +8,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
@@ -31,8 +32,10 @@ type Result struct {
 // there is no response to submit.
 var ErrNotAttendee = errors.New("you are not an attendee of this event")
 
-// Apply submits response (any NormalizeResponse-able value) for the event.
-func Apply(ctx context.Context, s Stores, eventID, response string) (*Result, error) {
+// Apply submits response (any NormalizeResponse-able value) for the event. A
+// non-zero occurrenceStart replies for that single occurrence of a recurring
+// series instead of the whole series; it is ignored for non-recurring events.
+func Apply(ctx context.Context, s Stores, eventID, response string, occurrenceStart time.Time) (*Result, error) {
 	canonical := calendar.NormalizeResponse(response)
 	if !calendar.CanRespond(canonical) {
 		return nil, fmt.Errorf("response must be accept, decline, or tentative")
@@ -66,6 +69,14 @@ func Apply(ctx context.Context, s Stores, eventID, response string) (*Result, er
 	}
 
 	ev := eventconv.FromEnt(entEv)
+	if !occurrenceStart.IsZero() && ev.Recurrence != nil {
+		duration := ev.End.Sub(ev.Start)
+		ev.RecurringID = ev.UID
+		ev.OriginalStart = occurrenceStart
+		ev.Start = occurrenceStart
+		ev.End = occurrenceStart.Add(duration)
+		ev.Recurrence = nil
+	}
 	idx := calendar.SelfAttendeeIndex(ev.Attendees, domAcc.SelfEmail())
 	if idx < 0 {
 		return nil, ErrNotAttendee

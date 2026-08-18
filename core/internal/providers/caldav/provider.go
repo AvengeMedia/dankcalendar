@@ -280,6 +280,38 @@ func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	return &out, nil
 }
 
+// RespondToEvent patches the user's PARTSTAT inside the stored resource rather
+// than rewriting it from the domain event, preserving exception components the
+// local model does not carry. Occurrence replies (ev.OriginalStart set) land on
+// the matching exception VEVENT, created from the master when needed.
+func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.Event, response string) (*cal.Event, error) {
+	if ev.RemoteID == "" {
+		return nil, errors.New("caldav respond requires remote id")
+	}
+
+	obj, err := p.client.GetCalendarObject(ctx, ev.RemoteID)
+	if err != nil {
+		return nil, fmt.Errorf("get caldav object %q: %w", ev.RemoteID, err)
+	}
+
+	rid, err := icalconv.ApplyParticipation(obj.Data, ev, p.account.SelfEmail(), response)
+	if err != nil {
+		return nil, err
+	}
+
+	put, err := p.client.PutCalendarObject(ctx, ev.RemoteID, obj.Data)
+	if err != nil {
+		return nil, fmt.Errorf("put caldav object %q: %w", ev.RemoteID, err)
+	}
+
+	out := *ev
+	out.Etag = put.ETag
+	if rid != "" {
+		out.UID = out.RecurringID + "/" + rid
+	}
+	return &out, nil
+}
+
 func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event) error {
 	if ev.RemoteID == "" {
 		return errors.New("caldav delete requires remote id")

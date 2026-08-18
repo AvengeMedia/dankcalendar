@@ -390,12 +390,23 @@ func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.E
 		return nil, fmt.Errorf("microsoft respond event: unsupported response %q", response)
 	}
 
-	reqURL := graphBase + "/me/events/" + url.PathEscape(ev.RemoteID) + "/" + action
+	out := *ev
+	remoteID := ev.RemoteID
+	if !ev.OriginalStart.IsZero() && ev.RecurringID != "" {
+		instanceID, err := p.occurrenceID(ctx, ev)
+		if err != nil {
+			return nil, err
+		}
+		remoteID = instanceID
+		out.UID = instanceID
+		out.RemoteID = instanceID
+	}
+
+	reqURL := graphBase + "/me/events/" + url.PathEscape(remoteID) + "/" + action
 	if err := p.doJSON(ctx, http.MethodPost, reqURL, map[string]any{"sendResponse": true}, nil); err != nil {
 		return nil, fmt.Errorf("microsoft respond event: %w", classifyAuthErr(err))
 	}
 
-	out := *ev
 	self := strings.ToLower(p.account.ID)
 	for i := range out.Attendees {
 		if strings.EqualFold(out.Attendees[i].Email, self) {
@@ -403,6 +414,30 @@ func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.E
 		}
 	}
 	return &out, nil
+}
+
+// occurrenceID resolves the Graph id of the series instance starting at
+// ev.OriginalStart, which accept/decline actions require in place of the
+// master's id.
+func (p *Provider) occurrenceID(ctx context.Context, ev *cal.Event) (string, error) {
+	window := url.Values{
+		"startDateTime": {ev.OriginalStart.UTC().Format(time.RFC3339)},
+		"endDateTime":   {ev.OriginalStart.UTC().Add(24 * time.Hour).Format(time.RFC3339)},
+	}
+	reqURL := graphBase + "/me/events/" + url.PathEscape(ev.RemoteID) + "/instances?" + window.Encode()
+
+	var page struct {
+		Value []graphEvent `json:"value"`
+	}
+	if err := p.doJSON(ctx, http.MethodGet, reqURL, nil, &page); err != nil {
+		return "", fmt.Errorf("microsoft list instances: %w", classifyAuthErr(err))
+	}
+	for _, g := range page.Value {
+		if instance := graphToEvent(g); instance.Start.Equal(ev.OriginalStart) {
+			return g.ID, nil
+		}
+	}
+	return "", fmt.Errorf("microsoft respond event: no instance at %s", ev.OriginalStart.UTC().Format(time.RFC3339))
 }
 
 func graphRSVPAction(canonical string) string {

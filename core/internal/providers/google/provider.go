@@ -269,7 +269,9 @@ func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 
 // RespondToEvent patches only the attendees collection, setting the current
 // user's responseStatus. A non-organizer attendee may change just their own
-// reply; sending the full list preserves everyone else's status.
+// reply; sending the full list preserves everyone else's status. Occurrence
+// replies (ev.OriginalStart set) patch the per-instance event instead of the
+// recurring master.
 func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.Event, response string) (*cal.Event, error) {
 	if ev.RemoteID == "" {
 		return nil, errors.New("respond google event: missing remote id")
@@ -289,11 +291,25 @@ func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.E
 		return nil, fmt.Errorf("respond google event: %q is not an attendee", self)
 	}
 
-	updated, err := p.svc.Events.Patch(c.RemoteID, ev.RemoteID, &calendar.Event{Attendees: attendees}).Context(ctx).Do()
+	remoteID := ev.RemoteID
+	if !ev.OriginalStart.IsZero() && ev.RecurringID != "" {
+		remoteID = googleInstanceID(ev.RemoteID, ev.OriginalStart, ev.AllDay)
+	}
+
+	updated, err := p.svc.Events.Patch(c.RemoteID, remoteID, &calendar.Event{Attendees: attendees}).Context(ctx).Do()
 	if err != nil {
 		return nil, fmt.Errorf("respond google event: %w", err)
 	}
 	return fromGoogleEvent(c, updated), nil
+}
+
+// googleInstanceID addresses one occurrence of a recurring event: the master id
+// plus the occurrence's original start, in the format instances() ids use.
+func googleInstanceID(masterID string, originalStart time.Time, allDay bool) string {
+	if allDay {
+		return masterID + "_" + originalStart.UTC().Format("20060102")
+	}
+	return masterID + "_" + originalStart.UTC().Format("20060102T150405Z")
 }
 
 func toGoogleResponse(canonical string) string {

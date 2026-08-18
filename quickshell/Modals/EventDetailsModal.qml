@@ -14,6 +14,7 @@ FloatingWindow {
     property bool createMode: false
     property bool confirmDelete: false
     property bool saving: false
+    property string pendingResponse: ""
     property string formError: ""
 
     readonly property bool noWritableCalendars: DankCalService.writableCalendars().length === 0
@@ -92,6 +93,7 @@ FloatingWindow {
         createMode = false;
         editMode = false;
         confirmDelete = false;
+        pendingResponse = "";
         formError = "";
         event = eventData || {};
         visible = true;
@@ -408,6 +410,15 @@ FloatingWindow {
     function respond(action) {
         if (!event.id || saving)
             return;
+        if (isRecurring) {
+            pendingResponse = action;
+            return;
+        }
+        submitResponse(action, false);
+    }
+
+    function submitResponse(action, occurrenceOnly) {
+        pendingResponse = "";
         saving = true;
         formError = "";
         DankCalService.rsvpEvent(event.id, action, response => {
@@ -418,7 +429,7 @@ FloatingWindow {
             }
             if (response.result)
                 eventModal.event = DankCalService.eventFromResult(response.result);
-        });
+        }, occurrenceOnly ? new Date(event.start).toISOString() : undefined);
     }
 
     function _styleAnchors(html) {
@@ -821,6 +832,7 @@ FloatingWindow {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.spacingL + Theme.iconSize - 4
                     spacing: Theme.spacingS
+                    visible: eventModal.pendingResponse === ""
 
                     DankButton {
                         text: I18n.tr("Accept", "RSVP accept button")
@@ -847,6 +859,39 @@ FloatingWindow {
                         textColor: eventModal.event.myResponse === "declined" ? Theme.primaryText : Theme.surfaceText
                         enabled: !eventModal.saving
                         onClicked: eventModal.respond("decline")
+                    }
+                }
+
+                Row {
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.spacingL + Theme.iconSize - 4
+                    spacing: Theme.spacingS
+                    visible: eventModal.pendingResponse !== ""
+
+                    DankButton {
+                        text: I18n.tr("This event", "RSVP scope button replying for one occurrence of a recurring event")
+                        buttonHeight: 32
+                        backgroundColor: Theme.primary
+                        textColor: Theme.primaryText
+                        enabled: !eventModal.saving
+                        onClicked: eventModal.submitResponse(eventModal.pendingResponse, true)
+                    }
+
+                    DankButton {
+                        text: I18n.tr("All events", "RSVP scope button replying for the whole recurring series")
+                        buttonHeight: 32
+                        backgroundColor: Theme.surfaceContainer
+                        textColor: Theme.surfaceText
+                        enabled: !eventModal.saving
+                        onClicked: eventModal.submitResponse(eventModal.pendingResponse, false)
+                    }
+
+                    DankActionButton {
+                        circular: false
+                        iconName: "close"
+                        iconColor: Theme.surfaceText
+                        anchors.verticalCenter: parent.verticalCenter
+                        onClicked: eventModal.pendingResponse = ""
                     }
                 }
             }

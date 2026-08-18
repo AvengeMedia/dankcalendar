@@ -334,7 +334,7 @@ func (e *Engine) HandleAction(id uint32, action string) {
 	case "accept", "decline", "tentative":
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
-		res, err := rsvp.Apply(ctx, e.stores, inv.eventID, action)
+		res, err := rsvp.Apply(ctx, e.stores, inv.eventID, action, time.Time{})
 		if err != nil {
 			log.Warnf("invitations: respond %s: %v", action, err)
 			return
