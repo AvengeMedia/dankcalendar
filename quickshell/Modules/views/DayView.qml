@@ -212,9 +212,14 @@ Item {
                 height: 22
                 radius: 4
                 clip: true
-                color: Theme.withAlpha(modelData.color, 0.22)
+                color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                 border.color: isSelected ? Theme.primary : modelData.color
                 border.width: isSelected ? 2 : 1
+
+                TentativeHatch {
+                    visible: parent.modelData.myResponse === "tentative"
+                    stripeColor: parent.modelData.color
+                }
 
                 StyledText {
                     anchors.left: parent.left
@@ -374,9 +379,14 @@ Item {
                         height: modelData.durationHours * root.hourHeight - 4
                         radius: Theme.cornerRadiusSmall
                         clip: true
-                        color: Theme.withAlpha(modelData.color, 0.22)
+                        color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                         border.color: isSelected ? Theme.primary : modelData.color
                         border.width: isSelected ? 2 : 1
+
+                        TentativeHatch {
+                            visible: parent.modelData.myResponse === "tentative"
+                            stripeColor: parent.modelData.color
+                        }
 
                         Row {
                             anchors.fill: parent

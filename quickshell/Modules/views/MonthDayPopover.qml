@@ -138,12 +138,18 @@ Item {
                     id: eventRow
                     required property var modelData
                     readonly property bool isSelected: root.isEventSelected(modelData)
+                    readonly property bool awaitingReply: modelData.myResponse === "needs-action"
                     width: ListView.view.width
                     height: root.rowHeight - 2
                     radius: 4
                     color: isSelected ? Theme.withAlpha(modelData.color, 0.28) : (rowHover.containsMouse ? Theme.withAlpha(modelData.color, 0.18) : "transparent")
-                    border.color: isSelected ? Theme.primary : "transparent"
-                    border.width: isSelected ? 2 : 0
+                    border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
+                    border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
+
+                    TentativeHatch {
+                        visible: eventRow.modelData.myResponse === "tentative"
+                        stripeColor: eventRow.modelData.color
+                    }
 
                     Row {
                         anchors.left: parent.left

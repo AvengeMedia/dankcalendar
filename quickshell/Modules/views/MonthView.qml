@@ -459,13 +459,19 @@ Item {
                                 Rectangle {
                                     required property var modelData
                                     readonly property bool isSelected: root.isEventSelected(modelData)
+                                    readonly property bool awaitingReply: modelData.myResponse === "needs-action"
                                     width: parent.width
                                     height: root.eventChipHeight
                                     radius: 4
                                     clip: true
-                                    color: Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
-                                    border.color: isSelected ? Theme.primary : "transparent"
-                                    border.width: isSelected ? 2 : 0
+                                    color: awaitingReply ? "transparent" : Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
+                                    border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
+                                    border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
+
+                                    TentativeHatch {
+                                        visible: parent.modelData.myResponse === "tentative"
+                                        stripeColor: parent.modelData.color
+                                    }
 
                                     Row {
                                         anchors.left: parent.left

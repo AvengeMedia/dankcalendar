@@ -154,12 +154,21 @@ Item {
                                         root.revealItem(card);
                                 });
                             }
+                            readonly property bool awaitingReply: modelData.myResponse === "needs-action"
+                            readonly property bool tentativeReply: modelData.myResponse === "tentative"
                             width: root.width
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
                             color: isSelected ? Theme.primaryBackground : (cardArea.containsMouse ? Theme.surfaceContainerHigh : Theme.surfaceContainer)
                             radius: Theme.cornerRadius
-                            border.color: isSelected ? Theme.primary : "transparent"
-                            border.width: isSelected ? 2 : 0
+                            border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
+                            border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
+                            clip: tentativeReply
+
+                            TentativeHatch {
+                                visible: card.tentativeReply
+                                stripeColor: card.modelData.color
+                                opacity: 0.15
+                            }
 
                             Row {
                                 id: contentRow
