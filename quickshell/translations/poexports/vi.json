@@ -8,6 +8,12 @@
   "%1 appointments fall outside core hours": {
     "%1 appointments fall outside core hours": "%1 cuộc hẹn nằm ngoài giờ làm việc chính"
   },
+  "%1 events selected": {
+    "%1 events selected": ""
+  },
+  "%1 selected": {
+    "%1 selected": ""
+  },
   "%1 times": {
     "%1 times": "%1 lần"
   },
@@ -40,6 +46,12 @@
   },
   "+%1 more": {
     "+%1 more": "+%1 khác"
+  },
+  "+1 day": {
+    "+1 day": ""
+  },
+  "+1 week": {
+    "+1 week": ""
   },
   "1 appointment falls outside core hours": {
     "1 appointment falls outside core hours": "1 cuộc hẹn nằm ngoài giờ làm việc chính"
@@ -146,6 +158,9 @@
   "Accounts": {
     "Accounts": "Tài khoản"
   },
+  "Actions apply to the whole selection": {
+    "Actions apply to the whole selection": ""
+  },
   "Add": {
     "Add": "Thêm"
   },
@@ -160,6 +175,9 @@
   },
   "Add description": {
     "Add description": "Thêm mô tả"
+  },
+  "Add or remove an event from the selection": {
+    "Add or remove an event from the selection": ""
   },
   "Add reminder": {
     "Add reminder": "Thêm lời nhắc nhở"
@@ -193,6 +211,9 @@
   },
   "All done": {
     "All done": "Tất cả hoàn tất"
+  },
+  "All events": {
+    "All events": ""
   },
   "All-day reminder time": {
     "All-day reminder time": "Thời điểm nhắc sự kiện cả ngày"
@@ -293,6 +314,9 @@
   "Choose calendar directory": {
     "Choose calendar directory": "Chọn thư mục lịch"
   },
+  "Clear": {
+    "Clear": ""
+  },
   "Clear event selection": {
     "Clear event selection": "Xóa lựa chọn sự kiện"
   },
@@ -359,14 +383,32 @@
   "Continue": {
     "Continue": "Tiếp tục"
   },
+  "Copied %1 events": {
+    "Copied %1 events": ""
+  },
+  "Copied 1 event": {
+    "Copied 1 event": ""
+  },
   "Copied to clipboard": {
     "Copied to clipboard": "Sao chép vào clipboard"
+  },
+  "Copy": {
+    "Copy": ""
+  },
+  "Copy %1 events": {
+    "Copy %1 events": ""
+  },
+  "Copy event": {
+    "Copy event": ""
   },
   "Copy link": {
     "Copy link": "Sao chép liên kết"
   },
   "Copy path": {
     "Copy path": "Sao chép đường dẫn"
+  },
+  "Copy selected events": {
+    "Copy selected events": ""
   },
   "Core hours": {
     "Core hours": "Giờ làm việc chính"
@@ -386,11 +428,35 @@
   "Create event": {
     "Create event": "Tạo sự kiện"
   },
+  "Created %1 events": {
+    "Created %1 events": ""
+  },
+  "Created %1 of %2 events": {
+    "Created %1 of %2 events": ""
+  },
+  "Created 1 event": {
+    "Created 1 event": ""
+  },
   "Credentials stay on this machine": {
     "Credentials stay on this machine": "Thông tin xác thực chỉ lưu trên máy này"
   },
   "Custom": {
     "Custom": "Tùy chỉnh"
+  },
+  "Cut": {
+    "Cut": ""
+  },
+  "Cut %1 events": {
+    "Cut %1 events": ""
+  },
+  "Cut 1 event": {
+    "Cut 1 event": ""
+  },
+  "Cut event": {
+    "Cut event": ""
+  },
+  "Cut selected events": {
+    "Cut selected events": ""
   },
   "DMS dynamic": {
     "DMS dynamic": "DMS dynamic"
@@ -419,6 +485,9 @@
   "Day": {
     "Day": "Ngày"
   },
+  "Day actions": {
+    "Day actions": ""
+  },
   "Day view": {
     "Day view": "Chế độ ngày"
   },
@@ -440,11 +509,41 @@
   "Delete \"%1\"?": {
     "Delete \"%1\"?": "Xóa \"%1\"?"
   },
+  "Delete %1 events": {
+    "Delete %1 events": ""
+  },
+  "Delete %1 events?": {
+    "Delete %1 events?": ""
+  },
+  "Delete %1 events…": {
+    "Delete %1 events…": ""
+  },
+  "Delete event": {
+    "Delete event": ""
+  },
+  "Delete event?": {
+    "Delete event?": ""
+  },
+  "Delete event…": {
+    "Delete event…": ""
+  },
   "Delete occurrence": {
     "Delete occurrence": "Xóa lần xuất hiện"
   },
+  "Delete selected events": {
+    "Delete selected events": ""
+  },
   "Delete series": {
     "Delete series": "Xóa chuỗi"
+  },
+  "Deleted %1 events": {
+    "Deleted %1 events": ""
+  },
+  "Deleted %1 of %2 events": {
+    "Deleted %1 of %2 events": ""
+  },
+  "Deleted 1 event": {
+    "Deleted 1 event": ""
   },
   "Delete…": {
     "Delete…": "Xóa…"
@@ -500,6 +599,18 @@
   "Due date": {
     "Due date": "Ngày hạn"
   },
+  "Duplicate": {
+    "Duplicate": ""
+  },
+  "Duplicate %1 events": {
+    "Duplicate %1 events": ""
+  },
+  "Duplicate selected events": {
+    "Duplicate selected events": ""
+  },
+  "Duplicate selected events to the next day": {
+    "Duplicate selected events to the next day": ""
+  },
   "Edit event": {
     "Edit event": "Chỉnh sửa sự kiện"
   },
@@ -538,6 +649,9 @@
   },
   "Event": {
     "Event": "Sự kiện"
+  },
+  "Event actions": {
+    "Event actions": ""
   },
   "Event details": {
     "Event details": "Chi tiết sự kiện"
@@ -719,11 +833,41 @@
   "Monthly": {
     "Monthly": "Hàng tháng"
   },
+  "Move": {
+    "Move": ""
+  },
+  "Move %1 events": {
+    "Move %1 events": ""
+  },
+  "Move %1 events here": {
+    "Move %1 events here": ""
+  },
+  "Move 1 event here": {
+    "Move 1 event here": ""
+  },
+  "Move recurring events?": {
+    "Move recurring events?": ""
+  },
   "Move through sidebar items": {
     "Move through sidebar items": "Di chuyển qua các mục thanh bên"
   },
   "Move to Trash": {
     "Move to Trash": "Chuyển vào thùng rác"
+  },
+  "Move to selected day": {
+    "Move to selected day": ""
+  },
+  "Moved %1 events": {
+    "Moved %1 events": ""
+  },
+  "Moved %1 of %2 events": {
+    "Moved %1 of %2 events": ""
+  },
+  "Moved 1 event": {
+    "Moved 1 event": ""
+  },
+  "Moving a recurring event moves its entire series.": {
+    "Moving a recurring event moves its entire series.": ""
   },
   "Music": {
     "Music": "Âm nhạc"
@@ -851,6 +995,12 @@
   "Open browser again": {
     "Open browser again": "Mở lại trình duyệt"
   },
+  "Open event": {
+    "Open event": ""
+  },
+  "Open event actions": {
+    "Open event actions": ""
+  },
   "Open or create event": {
     "Open or create event": "Mở hoặc tạo sự kiện"
   },
@@ -884,8 +1034,23 @@
   "Password (optional)": {
     "Password (optional)": "Mật khẩu (tùy chọn)"
   },
+  "Paste %1 events": {
+    "Paste %1 events": ""
+  },
+  "Paste %1 events here": {
+    "Paste %1 events here": ""
+  },
+  "Paste 1 event": {
+    "Paste 1 event": ""
+  },
+  "Paste 1 event here": {
+    "Paste 1 event here": ""
+  },
   "Paste credentials": {
     "Paste credentials": "Dán thông tin xác thực"
+  },
+  "Paste events on the selected day": {
+    "Paste events on the selected day": ""
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "Dán Application (client) ID từ trang Overview của đăng ký ứng dụng."
@@ -895,6 +1060,15 @@
   },
   "Paste your credentials": {
     "Paste your credentials": "Dán thông tin xác thực của bạn"
+  },
+  "Pasted %1 events": {
+    "Pasted %1 events": ""
+  },
+  "Pasted %1 of %2 events": {
+    "Pasted %1 of %2 events": ""
+  },
+  "Pasted 1 event": {
+    "Pasted 1 event": ""
   },
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Chọn một nguồn màu, bảng màu hoặc tệp chủ đề của riêng bạn."
@@ -940,6 +1114,15 @@
   },
   "Quit": {
     "Quit": "Thoát"
+  },
+  "Read-only events can't be cut": {
+    "Read-only events can't be cut": ""
+  },
+  "Read-only events can't be deleted": {
+    "Read-only events can't be deleted": ""
+  },
+  "Read-only events can't be moved": {
+    "Read-only events can't be moved": ""
   },
   "Reconnect": {
     "Reconnect": "Kết nối lại"
@@ -992,6 +1175,18 @@
   "Repeat": {
     "Repeat": "Lặp lại"
   },
+  "Repeat %1 events next week": {
+    "Repeat %1 events next week": ""
+  },
+  "Repeat %1 events tomorrow": {
+    "Repeat %1 events tomorrow": ""
+  },
+  "Repeat next week": {
+    "Repeat next week": ""
+  },
+  "Repeat tomorrow": {
+    "Repeat tomorrow": ""
+  },
   "Repeats": {
     "Repeats": "Lặp lại"
   },
@@ -1025,11 +1220,23 @@
   "Select File": {
     "Select File": "Chọn tệp"
   },
+  "Select a range of events": {
+    "Select a range of events": ""
+  },
+  "Select all %1 events": {
+    "Select all %1 events": ""
+  },
+  "Select all events on the selected day": {
+    "Select all events on the selected day": ""
+  },
   "Select client_secret.json": {
     "Select client_secret.json": "Chọn client_secret.json"
   },
   "Select days for a new event (month view)": {
     "Select days for a new event (month view)": "Chọn ngày cho sự kiện mới (chế độ xem tháng)"
+  },
+  "Select event": {
+    "Select event": ""
   },
   "Select file": {
     "Select file": "Chọn tệp"
@@ -1181,8 +1388,17 @@
   "Theme": {
     "Theme": "Giao diện"
   },
+  "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
+    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+  },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Tài khoản này không thể kết nối lại — hãy gỡ bỏ và thêm lại."
+  },
+  "This event": {
+    "This event": ""
+  },
+  "This event will be deleted from its calendar.": {
+    "This event will be deleted from its calendar.": ""
   },
   "Time format": {
     "Time format": "Định dạng giờ"

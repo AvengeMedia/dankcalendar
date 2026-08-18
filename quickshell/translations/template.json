@@ -21,23 +21,9 @@
     "comment": ""
   },
   {
-    "term": "%1 events %2",
-    "translation": "",
-    "context": "multiple event action result; %1 is event count, %2 is an action verb",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "%1 events selected",
     "translation": "",
     "context": "event context menu selection summary; %1 is event count",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "%1 of %2 events %3",
-    "translation": "",
-    "context": "partial batch event action result; %1 completed count, %2 total count, %3 action verb",
     "reference": "",
     "comment": ""
   },
@@ -150,13 +136,6 @@
     "term": "1 day before",
     "translation": "",
     "context": "all-day reminder day dropdown option | event reminder dropdown option",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "1 event %1",
-    "translation": "",
-    "context": "single event action result; %1 is an action verb",
     "reference": "",
     "comment": ""
   },
@@ -427,6 +406,13 @@
     "comment": ""
   },
   {
+    "term": "Add or remove an event from the selection",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Add reminder",
     "translation": "",
     "context": "event form button to add another reminder",
@@ -469,13 +455,6 @@
     "comment": ""
   },
   {
-    "term": "Again",
-    "translation": "",
-    "context": "multi-event action shelf duplicate label",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Agenda",
     "translation": "",
     "context": "header title when the agenda view is active | view switcher option in sidebar",
@@ -507,6 +486,13 @@
     "term": "All done",
     "translation": "",
     "context": "sidebar placeholder when there are no open tasks",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "All events",
+    "translation": "",
+    "context": "RSVP scope button replying for the whole recurring series",
     "reference": "",
     "comment": ""
   },
@@ -973,6 +959,27 @@
     "comment": ""
   },
   {
+    "term": "Created %1 events",
+    "translation": "",
+    "context": "toast after creating multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Created %1 of %2 events",
+    "translation": "",
+    "context": "toast when only some events created; %1 is completed count, %2 is total count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Created 1 event",
+    "translation": "",
+    "context": "toast after creating one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Credentials stay on this machine",
     "translation": "",
     "context": "security note heading in oauth intro",
@@ -1190,6 +1197,27 @@
     "comment": ""
   },
   {
+    "term": "Deleted %1 events",
+    "translation": "",
+    "context": "toast after deleting multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Deleted %1 of %2 events",
+    "translation": "",
+    "context": "toast when only some events deleted; %1 is completed count, %2 is total count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Deleted 1 event",
+    "translation": "",
+    "context": "toast after deleting one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Delete…",
     "translation": "",
     "context": "calendar context menu action to delete a calendar",
@@ -1290,7 +1318,7 @@
   {
     "term": "Duplicate",
     "translation": "",
-    "context": "event context menu duplicate action for one event",
+    "context": "event context menu duplicate action for one event | multi-event action shelf duplicate label",
     "reference": "",
     "comment": ""
   },
@@ -1303,6 +1331,13 @@
   },
   {
     "term": "Duplicate selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Duplicate selected events to the next day",
     "translation": "",
     "context": "keyboard shortcut description",
     "reference": "",
@@ -1764,6 +1799,13 @@
     "comment": ""
   },
   {
+    "term": "Move",
+    "translation": "",
+    "context": "confirmation button for moving recurring events",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Move %1 events",
     "translation": "",
     "context": "event drag preview label; %1 is event count",
@@ -1785,6 +1827,13 @@
     "comment": ""
   },
   {
+    "term": "Move recurring events?",
+    "translation": "",
+    "context": "confirmation title before moving events that repeat",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Move through sidebar items",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -1795,6 +1844,34 @@
     "term": "Move to selected day",
     "translation": "",
     "context": "event context menu move action",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Moved %1 events",
+    "translation": "",
+    "context": "toast after moving multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Moved %1 of %2 events",
+    "translation": "",
+    "context": "toast when only some events moved; %1 is completed count, %2 is total count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Moved 1 event",
+    "translation": "",
+    "context": "toast after moving one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Moving a recurring event moves its entire series.",
+    "translation": "",
+    "context": "confirmation body before moving events that repeat",
     "reference": "",
     "comment": ""
   },
@@ -2205,6 +2282,27 @@
     "comment": ""
   },
   {
+    "term": "Pasted %1 events",
+    "translation": "",
+    "context": "toast after pasting multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Pasted %1 of %2 events",
+    "translation": "",
+    "context": "toast when only some events pasted; %1 is completed count, %2 is total count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Pasted 1 event",
+    "translation": "",
+    "context": "toast after pasting one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Pick a color source, palette, or your own theme file.",
     "translation": "",
     "context": "appearance settings section subtitle",
@@ -2520,9 +2618,23 @@
     "comment": ""
   },
   {
+    "term": "Select a range of events",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Select all %1 events",
     "translation": "",
     "context": "calendar day context menu selection action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Select all events on the selected day",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -2884,6 +2996,13 @@
     "comment": ""
   },
   {
+    "term": "This event",
+    "translation": "",
+    "context": "RSVP scope button replying for one occurrence of a recurring event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "This event will be deleted from its calendar.",
     "translation": "",
     "context": "confirmation body for deleting one event",
@@ -3157,13 +3276,6 @@
     "comment": ""
   },
   {
-    "term": "created",
-    "translation": "",
-    "context": "past-tense event action used in a result message",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "dark",
     "translation": "",
     "context": "current scheme name in theme mode description",
@@ -3181,13 +3293,6 @@
     "term": "days",
     "translation": "",
     "context": "recurrence unit plural",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "deleted",
-    "translation": "",
-    "context": "past-tense event action used in a result message",
     "reference": "",
     "comment": ""
   },
@@ -3227,13 +3332,6 @@
     "comment": ""
   },
   {
-    "term": "moved",
-    "translation": "",
-    "context": "past-tense event action used in a result message",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "on %1",
     "translation": "",
     "context": "recurrence label suffix listing weekdays, %1 like 'Mon, Wed'",
@@ -3251,13 +3349,6 @@
     "term": "password",
     "translation": "",
     "context": "caldav password field placeholder",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "pasted",
-    "translation": "",
-    "context": "past-tense event action used in a result message",
     "reference": "",
     "comment": ""
   },

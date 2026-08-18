@@ -2,43 +2,31 @@
   {
     "term": "%1 AM",
     "context": "%1 AM",
-    "reference": "Modals/SettingsContent.qml:115, Modules/views/WeekView.qml:134, Modules/views/DayView.qml:72",
+    "reference": "Modals/SettingsContent.qml:115, Modules/views/DayView.qml:87, Modules/views/WeekView.qml:153",
     "comment": "core hours dropdown hour label, morning | morning hour label in time gutter"
   },
   {
     "term": "%1 PM",
     "context": "%1 PM",
-    "reference": "Modals/SettingsContent.qml:115, Modules/views/WeekView.qml:134, Modules/views/DayView.qml:72",
+    "reference": "Modals/SettingsContent.qml:115, Modules/views/DayView.qml:87, Modules/views/WeekView.qml:153",
     "comment": "afternoon hour label in time gutter | core hours dropdown hour label, afternoon"
   },
   {
     "term": "%1 appointments fall outside core hours",
     "context": "%1 appointments fall outside core hours",
-    "reference": "Modules/views/WeekView.qml:281, Modules/views/DayView.qml:161",
+    "reference": "Modules/views/DayView.qml:176, Modules/views/WeekView.qml:300",
     "comment": "core hours warning banner, plural"
-  },
-  {
-    "term": "%1 events %2",
-    "context": "%1 events %2",
-    "reference": "Widgets/EventSelectionModel.qml:134",
-    "comment": "multiple event action result; %1 is event count, %2 is an action verb"
   },
   {
     "term": "%1 events selected",
     "context": "%1 events selected",
-    "reference": "Widgets/EventContextMenu.qml:98",
+    "reference": "Widgets/EventContextMenu.qml:99",
     "comment": "event context menu selection summary; %1 is event count"
-  },
-  {
-    "term": "%1 of %2 events %3",
-    "context": "%1 of %2 events %3",
-    "reference": "Widgets/EventSelectionModel.qml:131",
-    "comment": "partial batch event action result; %1 completed count, %2 total count, %3 action verb"
   },
   {
     "term": "%1 selected",
     "context": "%1 selected",
-    "reference": "Widgets/EventSelectionBar.qml:124",
+    "reference": "Widgets/EventSelectionBar.qml:126",
     "comment": "multi-event action shelf selection count; %1 is event count"
   },
   {
@@ -50,13 +38,13 @@
   {
     "term": "%1 · All day",
     "context": "%1 · All day",
-    "reference": "Modals/EventDetailsModal.qml:492",
+    "reference": "Modals/EventDetailsModal.qml:503",
     "comment": "event details time label for all-day events"
   },
   {
     "term": "%1d before",
     "context": "%1d before",
-    "reference": "Modals/EventDetailsModal.qml:250",
+    "reference": "Modals/EventDetailsModal.qml:252",
     "comment": "event details short reminder offset in days"
   },
   {
@@ -68,7 +56,7 @@
   {
     "term": "%1h before",
     "context": "%1h before",
-    "reference": "Modals/EventDetailsModal.qml:252",
+    "reference": "Modals/EventDetailsModal.qml:254",
     "comment": "event details short reminder offset in hours"
   },
   {
@@ -86,25 +74,25 @@
   {
     "term": "%1m before",
     "context": "%1m before",
-    "reference": "Modals/EventDetailsModal.qml:253",
+    "reference": "Modals/EventDetailsModal.qml:255",
     "comment": "event details short reminder offset in minutes"
   },
   {
     "term": "%1w before",
     "context": "%1w before",
-    "reference": "Modals/EventDetailsModal.qml:248",
+    "reference": "Modals/EventDetailsModal.qml:250",
     "comment": "event details short reminder offset in weeks"
   },
   {
     "term": "(untitled)",
     "context": "(untitled)",
-    "reference": "Modals/EventDetailsModal.qml:717",
+    "reference": "Modals/EventDetailsModal.qml:728",
     "comment": "event details fallback title when event has no title"
   },
   {
     "term": "+%1 more",
     "context": "+%1 more",
-    "reference": "Modules/views/MonthView.qml:525",
+    "reference": "Modules/views/MonthView.qml:539",
     "comment": "overflow label in month grid day cell, %1 is the number of hidden events"
   },
   {
@@ -122,20 +110,14 @@
   {
     "term": "1 appointment falls outside core hours",
     "context": "1 appointment falls outside core hours",
-    "reference": "Modules/views/WeekView.qml:281, Modules/views/DayView.qml:161",
+    "reference": "Modules/views/DayView.qml:176, Modules/views/WeekView.qml:300",
     "comment": "core hours warning banner, singular"
   },
   {
     "term": "1 day before",
     "context": "1 day before",
-    "reference": "Modals/CalendarRemindersDialog.qml:82, Modals/EventDetailsModal.qml:77, Modals/SettingsContent.qml:196",
+    "reference": "Modals/EventDetailsModal.qml:78, Modals/SettingsContent.qml:196, Modals/CalendarRemindersDialog.qml:82",
     "comment": "all-day reminder day dropdown option | event reminder dropdown option"
-  },
-  {
-    "term": "1 event %1",
-    "context": "1 event %1",
-    "reference": "Widgets/EventSelectionModel.qml:134",
-    "comment": "single event action result; %1 is an action verb"
   },
   {
     "term": "1 hour",
@@ -146,7 +128,7 @@
   {
     "term": "1 hour before",
     "context": "1 hour before",
-    "reference": "Modals/CalendarRemindersDialog.qml:54, Modals/EventDetailsModal.qml:69, Modals/SettingsContent.qml:166",
+    "reference": "Modals/EventDetailsModal.qml:70, Modals/SettingsContent.qml:166, Modals/CalendarRemindersDialog.qml:54",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -164,7 +146,7 @@
   {
     "term": "1 week before",
     "context": "1 week before",
-    "reference": "Modals/CalendarRemindersDialog.qml:90, Modals/EventDetailsModal.qml:85, Modals/SettingsContent.qml:204",
+    "reference": "Modals/EventDetailsModal.qml:86, Modals/SettingsContent.qml:204, Modals/CalendarRemindersDialog.qml:90",
     "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
@@ -176,13 +158,13 @@
   {
     "term": "10 minutes",
     "context": "10 minutes",
-    "reference": "Modals/CalendarRemindersDialog.qml:64, Modals/SettingsContent.qml:177",
+    "reference": "Modals/SettingsContent.qml:177, Modals/CalendarRemindersDialog.qml:64",
     "comment": "snooze duration dropdown option"
   },
   {
     "term": "10 minutes before",
     "context": "10 minutes before",
-    "reference": "Modals/CalendarRemindersDialog.qml:42, Modals/EventDetailsModal.qml:57, Modals/SettingsContent.qml:154",
+    "reference": "Modals/EventDetailsModal.qml:58, Modals/SettingsContent.qml:154, Modals/CalendarRemindersDialog.qml:42",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -200,19 +182,19 @@
   {
     "term": "15 minutes",
     "context": "15 minutes",
-    "reference": "Modals/CalendarRemindersDialog.qml:68, Modals/SettingsContent.qml:84, Modals/SettingsContent.qml:181, Modals/SettingsContent.qml:219",
+    "reference": "Modals/SettingsContent.qml:84, Modals/SettingsContent.qml:181, Modals/SettingsContent.qml:219, Modals/CalendarRemindersDialog.qml:68",
     "comment": "default event duration option | snooze duration dropdown option | sync interval dropdown option"
   },
   {
     "term": "15 minutes before",
     "context": "15 minutes before",
-    "reference": "Modals/CalendarRemindersDialog.qml:46, Modals/EventDetailsModal.qml:61, Modals/SettingsContent.qml:158",
+    "reference": "Modals/EventDetailsModal.qml:62, Modals/SettingsContent.qml:158, Modals/CalendarRemindersDialog.qml:46",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "2 days before",
     "context": "2 days before",
-    "reference": "Modals/CalendarRemindersDialog.qml:86, Modals/EventDetailsModal.qml:81, Modals/SettingsContent.qml:200",
+    "reference": "Modals/EventDetailsModal.qml:82, Modals/SettingsContent.qml:200, Modals/CalendarRemindersDialog.qml:86",
     "comment": "all-day reminder day dropdown option | event reminder dropdown option"
   },
   {
@@ -224,7 +206,7 @@
   {
     "term": "2 hours before",
     "context": "2 hours before",
-    "reference": "Modals/EventDetailsModal.qml:73",
+    "reference": "Modals/EventDetailsModal.qml:74",
     "comment": "event reminder dropdown option"
   },
   {
@@ -254,13 +236,13 @@
   {
     "term": "30 minutes",
     "context": "30 minutes",
-    "reference": "Modals/CalendarRemindersDialog.qml:72, Modals/SettingsContent.qml:88, Modals/SettingsContent.qml:185, Modals/SettingsContent.qml:223",
+    "reference": "Modals/SettingsContent.qml:88, Modals/SettingsContent.qml:185, Modals/SettingsContent.qml:223, Modals/CalendarRemindersDialog.qml:72",
     "comment": "default event duration option | snooze duration dropdown option | sync interval dropdown option"
   },
   {
     "term": "30 minutes before",
     "context": "30 minutes before",
-    "reference": "Modals/CalendarRemindersDialog.qml:50, Modals/EventDetailsModal.qml:65, Modals/SettingsContent.qml:162",
+    "reference": "Modals/EventDetailsModal.qml:66, Modals/SettingsContent.qml:162, Modals/CalendarRemindersDialog.qml:50",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -272,13 +254,13 @@
   {
     "term": "5 minutes",
     "context": "5 minutes",
-    "reference": "Modals/CalendarRemindersDialog.qml:60, Modals/SettingsContent.qml:173, Modals/SettingsContent.qml:215",
+    "reference": "Modals/SettingsContent.qml:173, Modals/SettingsContent.qml:215, Modals/CalendarRemindersDialog.qml:60",
     "comment": "snooze duration dropdown option | sync interval dropdown option"
   },
   {
     "term": "5 minutes before",
     "context": "5 minutes before",
-    "reference": "Modals/CalendarRemindersDialog.qml:38, Modals/EventDetailsModal.qml:53, Modals/SettingsContent.qml:150",
+    "reference": "Modals/EventDetailsModal.qml:54, Modals/SettingsContent.qml:150, Modals/CalendarRemindersDialog.qml:38",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
@@ -302,13 +284,13 @@
   {
     "term": "About",
     "context": "About",
-    "reference": "Modals/SettingsAboutPage.qml:229, Modals/SettingsSidebar.qml:36",
+    "reference": "Modals/SettingsSidebar.qml:36, Modals/SettingsAboutPage.qml:229",
     "comment": "about page project section header | settings sidebar tab label"
   },
   {
     "term": "Accept",
     "context": "Accept",
-    "reference": "Modals/EventDetailsModal.qml:826",
+    "reference": "Modals/EventDetailsModal.qml:838",
     "comment": "RSVP accept button"
   },
   {
@@ -326,13 +308,13 @@
   {
     "term": "Accounts",
     "context": "Accounts",
-    "reference": "Modals/SettingsSidebar.qml:28, Modals/SettingsContent.qml:1118, Modules/CalendarSidebar.qml:798",
+    "reference": "Modules/CalendarSidebar.qml:798, Modals/SettingsSidebar.qml:28, Modals/SettingsContent.qml:1118",
     "comment": "accounts settings section header | settings sidebar tab label | sidebar section header for the account list"
   },
   {
     "term": "Actions apply to the whole selection",
     "context": "Actions apply to the whole selection",
-    "reference": "Widgets/EventContextMenu.qml:99",
+    "reference": "Widgets/EventContextMenu.qml:100",
     "comment": "event context menu multi-selection hint"
   },
   {
@@ -350,25 +332,31 @@
   {
     "term": "Add a calendar",
     "context": "Add a calendar",
-    "reference": "Modals/EventDetailsModal.qml:1212",
+    "reference": "Modals/EventDetailsModal.qml:1257",
     "comment": "event form button to add a calendar when none exist"
   },
   {
     "term": "Add account",
     "context": "Add account",
-    "reference": "Modals/AccountAddModal.qml:220, Modals/AccountAddModal.qml:317, Modals/SettingsContent.qml:1271, Modules/CalendarSidebar.qml:955",
+    "reference": "Modules/CalendarSidebar.qml:955, Modals/AccountAddModal.qml:220, Modals/AccountAddModal.qml:317, Modals/SettingsContent.qml:1271",
     "comment": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account"
   },
   {
     "term": "Add description",
     "context": "Add description",
-    "reference": "Modals/EventDetailsModal.qml:1399",
+    "reference": "Modals/EventDetailsModal.qml:1444",
     "comment": "event form placeholder for description text area"
+  },
+  {
+    "term": "Add or remove an event from the selection",
+    "context": "Add or remove an event from the selection",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:164",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Add reminder",
     "context": "Add reminder",
-    "reference": "Modals/EventDetailsModal.qml:1358",
+    "reference": "Modals/EventDetailsModal.qml:1403",
     "comment": "event form button to add another reminder"
   },
   {
@@ -380,7 +368,7 @@
   {
     "term": "Add title",
     "context": "Add title",
-    "reference": "Modals/TaskDetailsModal.qml:306, Modals/EventDetailsModal.qml:1063",
+    "reference": "Modals/EventDetailsModal.qml:1108, Modals/TaskDetailsModal.qml:306",
     "comment": "event form placeholder for title input | task form placeholder for title input"
   },
   {
@@ -400,12 +388,6 @@
     "context": "After",
     "reference": "Widgets/DankRecurrencePicker.qml:86",
     "comment": "recurrence end condition dropdown option, followed by a number of times"
-  },
-  {
-    "term": "Again",
-    "context": "Again",
-    "reference": "Widgets/EventSelectionBar.qml:27",
-    "comment": "multi-event action shelf duplicate label"
   },
   {
     "term": "Agenda",
@@ -428,7 +410,7 @@
   {
     "term": "All day",
     "context": "All day",
-    "reference": "Modals/SearchModal.qml:81, Modals/EventDetailsModal.qml:1108, Widgets/EventContextMenu.qml:40, Modules/views/MonthDayPopover.qml:163, Modules/views/MonthView.qml:140, Modules/views/WeekView.qml:151, Modules/views/DayView.qml:62, Modules/views/AgendaView.qml:81",
+    "reference": "Modals/EventDetailsModal.qml:1153, Modals/SearchModal.qml:81, Widgets/EventContextMenu.qml:41, Modules/views/AgendaView.qml:81, Modules/views/DayView.qml:77, Modules/views/WeekView.qml:170, Modules/views/MonthView.qml:148, Modules/views/MonthDayPopover.qml:173",
     "comment": "all-day marker in event context menu | all-day marker in event tooltip | all-day marker in the month day-detail popover | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card"
   },
   {
@@ -436,6 +418,12 @@
     "context": "All done",
     "reference": "Modules/CalendarSidebar.qml:668",
     "comment": "sidebar placeholder when there are no open tasks"
+  },
+  {
+    "term": "All events",
+    "context": "All events",
+    "reference": "Modals/EventDetailsModal.qml:881",
+    "comment": "RSVP scope button replying for the whole recurring series"
   },
   {
     "term": "All-day reminder time",
@@ -494,13 +482,13 @@
   {
     "term": "At start",
     "context": "At start",
-    "reference": "Modals/CalendarRemindersDialog.qml:34, Modals/EventDetailsModal.qml:49, Modals/EventDetailsModal.qml:246, Modals/SettingsContent.qml:146",
+    "reference": "Modals/EventDetailsModal.qml:50, Modals/EventDetailsModal.qml:248, Modals/SettingsContent.qml:146, Modals/CalendarRemindersDialog.qml:34",
     "comment": "default reminder dropdown option | event reminder dropdown option"
   },
   {
     "term": "Attendees",
     "context": "Attendees",
-    "reference": "Modals/EventDetailsModal.qml:874",
+    "reference": "Modals/EventDetailsModal.qml:919",
     "comment": "event details section label for attendee list"
   },
   {
@@ -554,7 +542,7 @@
   {
     "term": "Calendar",
     "context": "Calendar",
-    "reference": "Modules/CalendarWindow.qml:387, Modules/CalendarWindow.qml:693",
+    "reference": "Modules/CalendarWindow.qml:413, Modules/CalendarWindow.qml:719",
     "comment": "main window title | main window title bar text"
   },
   {
@@ -584,7 +572,7 @@
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/CalendarRemindersDialog.qml:376, Modals/ConfirmDialog.qml:72, Modals/NewCalendarDialog.qml:101, Modals/RenameCalendarDialog.qml:98, Modals/TaskDetailsModal.qml:513, Modals/AccountAddModal.qml:1134, Modals/EventDetailsModal.qml:666",
+    "reference": "Modals/ConfirmDialog.qml:72, Modals/EventDetailsModal.qml:677, Modals/NewCalendarDialog.qml:101, Modals/RenameCalendarDialog.qml:98, Modals/TaskDetailsModal.qml:513, Modals/AccountAddModal.qml:1134, Modals/CalendarRemindersDialog.qml:376",
     "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes"
   },
   {
@@ -596,7 +584,7 @@
   {
     "term": "Changes apply to the whole series",
     "context": "Changes apply to the whole series",
-    "reference": "Modals/EventDetailsModal.qml:1257, Modals/EventDetailsModal.qml:1293",
+    "reference": "Modals/EventDetailsModal.qml:1302, Modals/EventDetailsModal.qml:1338",
     "comment": "event form note when editing a recurring event"
   },
   {
@@ -692,7 +680,7 @@
   {
     "term": "Confirm delete",
     "context": "Confirm delete",
-    "reference": "Modals/TaskDetailsModal.qml:503, Modals/EventDetailsModal.qml:597",
+    "reference": "Modals/EventDetailsModal.qml:608, Modals/TaskDetailsModal.qml:503",
     "comment": "event details button to confirm deleting the event | task form button to confirm deletion"
   },
   {
@@ -728,7 +716,7 @@
   {
     "term": "Connected",
     "context": "Connected",
-    "reference": "Modals/SettingsAboutPage.qml:361, Modals/AccountAddModal.qml:1176, Modals/SettingsContent.qml:1194",
+    "reference": "Modals/AccountAddModal.qml:1176, Modals/SettingsContent.qml:1194, Modals/SettingsAboutPage.qml:361",
     "comment": "about page daemon status value | account status in account list | success step status heading"
   },
   {
@@ -752,13 +740,13 @@
   {
     "term": "Copied %1 events",
     "context": "Copied %1 events",
-    "reference": "Widgets/EventSelectionModel.qml:144",
+    "reference": "Widgets/EventSelectionModel.qml:161",
     "comment": "clipboard confirmation for multiple events; %1 is event count"
   },
   {
     "term": "Copied 1 event",
     "context": "Copied 1 event",
-    "reference": "Widgets/EventSelectionModel.qml:144",
+    "reference": "Widgets/EventSelectionModel.qml:161",
     "comment": "clipboard confirmation for one event"
   },
   {
@@ -776,13 +764,13 @@
   {
     "term": "Copy %1 events",
     "context": "Copy %1 events",
-    "reference": "Widgets/EventContextMenu.qml:108",
+    "reference": "Widgets/EventContextMenu.qml:109",
     "comment": "event context menu copy action; %1 is event count"
   },
   {
     "term": "Copy event",
     "context": "Copy event",
-    "reference": "Widgets/EventContextMenu.qml:108",
+    "reference": "Widgets/EventContextMenu.qml:109",
     "comment": "event context menu copy action for one event"
   },
   {
@@ -830,8 +818,26 @@
   {
     "term": "Create event",
     "context": "Create event",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:169, Modules/CalendarSidebar.qml:419",
+    "reference": "Modules/CalendarSidebar.qml:419, Modals/KeyboardShortcutsOverlay.qml:185",
     "comment": "keyboard shortcut description | sidebar button to create a new event"
+  },
+  {
+    "term": "Created %1 events",
+    "context": "Created %1 events",
+    "reference": "Widgets/EventSelectionModel.qml:140",
+    "comment": "toast after creating multiple events; %1 is event count"
+  },
+  {
+    "term": "Created %1 of %2 events",
+    "context": "Created %1 of %2 events",
+    "reference": "Widgets/EventSelectionModel.qml:139",
+    "comment": "toast when only some events created; %1 is completed count, %2 is total count"
+  },
+  {
+    "term": "Created 1 event",
+    "context": "Created 1 event",
+    "reference": "Widgets/EventSelectionModel.qml:140",
+    "comment": "toast after creating one event"
   },
   {
     "term": "Credentials stay on this machine",
@@ -854,19 +860,19 @@
   {
     "term": "Cut %1 events",
     "context": "Cut %1 events",
-    "reference": "Widgets/EventContextMenu.qml:115, Widgets/EventSelectionModel.qml:156",
+    "reference": "Widgets/EventContextMenu.qml:116, Widgets/EventSelectionModel.qml:175",
     "comment": "clipboard confirmation for multiple events; %1 is event count | event context menu cut action; %1 is event count"
   },
   {
     "term": "Cut 1 event",
     "context": "Cut 1 event",
-    "reference": "Widgets/EventSelectionModel.qml:156",
+    "reference": "Widgets/EventSelectionModel.qml:175",
     "comment": "clipboard confirmation for one event"
   },
   {
     "term": "Cut event",
     "context": "Cut event",
-    "reference": "Widgets/EventContextMenu.qml:115",
+    "reference": "Widgets/EventContextMenu.qml:116",
     "comment": "event context menu cut action for one event"
   },
   {
@@ -920,7 +926,7 @@
   {
     "term": "Day actions",
     "context": "Day actions",
-    "reference": "Widgets/EventContextMenu.qml:59",
+    "reference": "Widgets/EventContextMenu.qml:60",
     "comment": "subtitle for a calendar day context menu"
   },
   {
@@ -932,7 +938,7 @@
   {
     "term": "Decline",
     "context": "Decline",
-    "reference": "Modals/EventDetailsModal.qml:844",
+    "reference": "Modals/EventDetailsModal.qml:856",
     "comment": "RSVP decline button"
   },
   {
@@ -944,7 +950,7 @@
   {
     "term": "Default reminder",
     "context": "Default reminder",
-    "reference": "Modals/CalendarRemindersDialog.qml:297, Modals/SettingsContent.qml:588",
+    "reference": "Modals/SettingsContent.qml:588, Modals/CalendarRemindersDialog.qml:297",
     "comment": "default reminder setting label | per-calendar default reminder override label"
   },
   {
@@ -956,68 +962,86 @@
   {
     "term": "Delete",
     "context": "Delete",
-    "reference": "Modals/TaskDetailsModal.qml:503, Modals/SettingsContent.qml:1018, Modals/SettingsContent.qml:1024, Modules/CalendarSidebar.qml:302, Widgets/EventSelectionBar.qml:42",
+    "reference": "Modules/CalendarSidebar.qml:302, Modals/TaskDetailsModal.qml:503, Modals/SettingsContent.qml:1018, Modals/SettingsContent.qml:1024, Widgets/EventSelectionBar.qml:42",
     "comment": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | multi-event action shelf label | task form button to delete the task"
   },
   {
     "term": "Delete \"%1\"?",
     "context": "Delete \"%1\"?",
-    "reference": "Modals/SettingsContent.qml:1022, Modules/CalendarSidebar.qml:300",
+    "reference": "Modules/CalendarSidebar.qml:300, Modals/SettingsContent.qml:1022",
     "comment": "confirm dialog title for deleting a calendar, %1 is the calendar name | delete calendar confirmation title"
   },
   {
     "term": "Delete %1 events",
     "context": "Delete %1 events",
-    "reference": "Modules/CalendarWindow.qml:331",
+    "reference": "Modules/CalendarWindow.qml:357",
     "comment": "confirmation button for deleting multiple events; %1 is event count"
   },
   {
     "term": "Delete %1 events?",
     "context": "Delete %1 events?",
-    "reference": "Modules/CalendarWindow.qml:329",
+    "reference": "Modules/CalendarWindow.qml:355",
     "comment": "confirmation title for deleting multiple events; %1 is event count"
   },
   {
     "term": "Delete %1 events…",
     "context": "Delete %1 events…",
-    "reference": "Widgets/EventContextMenu.qml:159",
+    "reference": "Widgets/EventContextMenu.qml:160",
     "comment": "event context menu delete action; %1 is event count"
   },
   {
     "term": "Delete event",
     "context": "Delete event",
-    "reference": "Modules/CalendarWindow.qml:331",
+    "reference": "Modules/CalendarWindow.qml:357",
     "comment": "confirmation button for deleting one event"
   },
   {
     "term": "Delete event?",
     "context": "Delete event?",
-    "reference": "Modules/CalendarWindow.qml:329",
+    "reference": "Modules/CalendarWindow.qml:355",
     "comment": "confirmation title for deleting one event"
   },
   {
     "term": "Delete event…",
     "context": "Delete event…",
-    "reference": "Widgets/EventContextMenu.qml:159",
+    "reference": "Widgets/EventContextMenu.qml:160",
     "comment": "event context menu delete action for one event"
   },
   {
     "term": "Delete occurrence",
     "context": "Delete occurrence",
-    "reference": "Modals/EventDetailsModal.qml:587",
+    "reference": "Modals/EventDetailsModal.qml:598",
     "comment": "event details button to delete only this occurrence of a recurring event"
   },
   {
     "term": "Delete selected events",
     "context": "Delete selected events",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:160",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:176",
     "comment": "keyboard shortcut description"
   },
   {
     "term": "Delete series",
     "context": "Delete series",
-    "reference": "Modals/EventDetailsModal.qml:597",
+    "reference": "Modals/EventDetailsModal.qml:608",
     "comment": "event details button to confirm deleting a whole recurring series"
+  },
+  {
+    "term": "Deleted %1 events",
+    "context": "Deleted %1 events",
+    "reference": "Widgets/EventSelectionModel.qml:144",
+    "comment": "toast after deleting multiple events; %1 is event count"
+  },
+  {
+    "term": "Deleted %1 of %2 events",
+    "context": "Deleted %1 of %2 events",
+    "reference": "Widgets/EventSelectionModel.qml:143",
+    "comment": "toast when only some events deleted; %1 is completed count, %2 is total count"
+  },
+  {
+    "term": "Deleted 1 event",
+    "context": "Deleted 1 event",
+    "reference": "Widgets/EventSelectionModel.qml:144",
+    "comment": "toast after deleting one event"
   },
   {
     "term": "Delete…",
@@ -1028,7 +1052,7 @@
   {
     "term": "Description",
     "context": "Description",
-    "reference": "Modals/EventDetailsModal.qml:1003",
+    "reference": "Modals/EventDetailsModal.qml:1048",
     "comment": "event details section label for description"
   },
   {
@@ -1046,13 +1070,13 @@
   {
     "term": "Disable core hours",
     "context": "Disable core hours",
-    "reference": "Modules/views/WeekView.qml:291, Modules/views/DayView.qml:171",
+    "reference": "Modules/views/DayView.qml:186, Modules/views/WeekView.qml:310",
     "comment": "core hours warning banner disable action"
   },
   {
     "term": "Disable sync",
     "context": "Disable sync",
-    "reference": "Modals/SettingsContent.qml:1011, Modules/CalendarSidebar.qml:987",
+    "reference": "Modules/CalendarSidebar.qml:987, Modals/SettingsContent.qml:1011",
     "comment": "calendar context menu action to stop syncing a calendar | calendar row action tooltip"
   },
   {
@@ -1106,13 +1130,13 @@
   {
     "term": "Duplicate",
     "context": "Duplicate",
-    "reference": "Widgets/EventContextMenu.qml:122",
-    "comment": "event context menu duplicate action for one event"
+    "reference": "Widgets/EventContextMenu.qml:123, Widgets/EventSelectionBar.qml:27",
+    "comment": "event context menu duplicate action for one event | multi-event action shelf duplicate label"
   },
   {
     "term": "Duplicate %1 events",
     "context": "Duplicate %1 events",
-    "reference": "Widgets/EventContextMenu.qml:122",
+    "reference": "Widgets/EventContextMenu.qml:123",
     "comment": "event context menu duplicate action; %1 is event count"
   },
   {
@@ -1122,9 +1146,15 @@
     "comment": "keyboard shortcut description"
   },
   {
+    "term": "Duplicate selected events to the next day",
+    "context": "Duplicate selected events to the next day",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:156",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Edit event",
     "context": "Edit event",
-    "reference": "Modals/EventDetailsModal.qml:511, Modals/EventDetailsModal.qml:563",
+    "reference": "Modals/EventDetailsModal.qml:522, Modals/EventDetailsModal.qml:574",
     "comment": "event modal header when editing | event modal window title when editing"
   },
   {
@@ -1142,7 +1172,7 @@
   {
     "term": "Enable reminders",
     "context": "Enable reminders",
-    "reference": "Modals/CalendarRemindersDialog.qml:273, Modals/SettingsContent.qml:1314",
+    "reference": "Modals/SettingsContent.qml:1314, Modals/CalendarRemindersDialog.qml:273",
     "comment": "per-calendar enable reminders override label | reminders toggle label"
   },
   {
@@ -1190,7 +1220,7 @@
   {
     "term": "Event",
     "context": "Event",
-    "reference": "Modals/EventDetailsModal.qml:511",
+    "reference": "Modals/EventDetailsModal.qml:522",
     "comment": "event modal window title when viewing"
   },
   {
@@ -1202,7 +1232,7 @@
   {
     "term": "Event details",
     "context": "Event details",
-    "reference": "Modals/EventDetailsModal.qml:563",
+    "reference": "Modals/EventDetailsModal.qml:574",
     "comment": "event modal header when viewing"
   },
   {
@@ -1256,7 +1286,7 @@
   {
     "term": "General",
     "context": "General",
-    "reference": "Modals/SettingsSidebar.qml:16, Modals/SettingsContent.qml:373, Modals/KeyboardShortcutsOverlay.qml:165",
+    "reference": "Modals/SettingsSidebar.qml:16, Modals/SettingsContent.qml:373, Modals/KeyboardShortcutsOverlay.qml:181",
     "comment": "general settings section header | keyboard shortcuts overlay section header | settings sidebar tab label"
   },
   {
@@ -1340,7 +1370,7 @@
   {
     "term": "Join video call",
     "context": "Join video call",
-    "reference": "Modals/EventDetailsModal.qml:768",
+    "reference": "Modals/EventDetailsModal.qml:779",
     "comment": "event details row that opens the meeting link"
   },
   {
@@ -1352,13 +1382,13 @@
   {
     "term": "Keep until dismissed",
     "context": "Keep until dismissed",
-    "reference": "Modals/CalendarRemindersDialog.qml:285, Modals/SettingsContent.qml:1325",
+    "reference": "Modals/SettingsContent.qml:1325, Modals/CalendarRemindersDialog.qml:285",
     "comment": "per-calendar persist override label | persistent reminders toggle label"
   },
   {
     "term": "Keyboard shortcuts",
     "context": "Keyboard shortcuts",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:234",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:250",
     "comment": "keyboard shortcuts overlay title"
   },
   {
@@ -1412,7 +1442,7 @@
   {
     "term": "Local",
     "context": "Local",
-    "reference": "Modals/AccountAddModal.qml:125, Modals/AccountAddModal.qml:524, Modals/SettingsContent.qml:1099, Services/DankCalService.qml:1618",
+    "reference": "Modals/AccountAddModal.qml:125, Modals/AccountAddModal.qml:524, Modals/SettingsContent.qml:1099, Services/DankCalService.qml:1621",
     "comment": "local provider name in account add modal | local provider name in account list | provider label for a local account"
   },
   {
@@ -1430,7 +1460,7 @@
   {
     "term": "Location",
     "context": "Location",
-    "reference": "Modals/EventDetailsModal.qml:1151",
+    "reference": "Modals/EventDetailsModal.qml:1196",
     "comment": "event form placeholder for location input"
   },
   {
@@ -1460,7 +1490,7 @@
   {
     "term": "Maybe",
     "context": "Maybe",
-    "reference": "Modals/EventDetailsModal.qml:835",
+    "reference": "Modals/EventDetailsModal.qml:847",
     "comment": "RSVP tentative button"
   },
   {
@@ -1512,22 +1542,34 @@
     "comment": "recurrence dropdown option | task recurrence dropdown option"
   },
   {
+    "term": "Move",
+    "context": "Move",
+    "reference": "Modules/CalendarWindow.qml:347",
+    "comment": "confirmation button for moving recurring events"
+  },
+  {
     "term": "Move %1 events",
     "context": "Move %1 events",
-    "reference": "Modules/views/MonthView.qml:581, Modules/views/WeekView.qml:845",
+    "reference": "Widgets/EventDragGhost.qml:31",
     "comment": "event drag preview label; %1 is event count"
   },
   {
     "term": "Move %1 events here",
     "context": "Move %1 events here",
-    "reference": "Widgets/EventContextMenu.qml:47",
+    "reference": "Widgets/EventContextMenu.qml:48",
     "comment": "calendar context menu cut-paste action; %1 is event count"
   },
   {
     "term": "Move 1 event here",
     "context": "Move 1 event here",
-    "reference": "Widgets/EventContextMenu.qml:47",
+    "reference": "Widgets/EventContextMenu.qml:48",
     "comment": "calendar context menu cut-paste action for one event"
+  },
+  {
+    "term": "Move recurring events?",
+    "context": "Move recurring events?",
+    "reference": "Modules/CalendarWindow.qml:345",
+    "comment": "confirmation title before moving events that repeat"
   },
   {
     "term": "Move through sidebar items",
@@ -1538,8 +1580,32 @@
   {
     "term": "Move to selected day",
     "context": "Move to selected day",
-    "reference": "Widgets/EventContextMenu.qml:141",
+    "reference": "Widgets/EventContextMenu.qml:142",
     "comment": "event context menu move action"
+  },
+  {
+    "term": "Moved %1 events",
+    "context": "Moved %1 events",
+    "reference": "Widgets/EventSelectionModel.qml:136",
+    "comment": "toast after moving multiple events; %1 is event count"
+  },
+  {
+    "term": "Moved %1 of %2 events",
+    "context": "Moved %1 of %2 events",
+    "reference": "Widgets/EventSelectionModel.qml:135",
+    "comment": "toast when only some events moved; %1 is completed count, %2 is total count"
+  },
+  {
+    "term": "Moved 1 event",
+    "context": "Moved 1 event",
+    "reference": "Widgets/EventSelectionModel.qml:136",
+    "comment": "toast after moving one event"
+  },
+  {
+    "term": "Moving a recurring event moves its entire series.",
+    "context": "Moving a recurring event moves its entire series.",
+    "reference": "Modules/CalendarWindow.qml:346",
+    "comment": "confirmation body before moving events that repeat"
   },
   {
     "term": "My calendars",
@@ -1580,7 +1646,7 @@
   {
     "term": "New event",
     "context": "New event",
-    "reference": "Modals/EventDetailsModal.qml:511, Modals/EventDetailsModal.qml:563, Widgets/EventContextMenu.qml:63, Modules/views/MonthView.qml:385",
+    "reference": "Modals/EventDetailsModal.qml:522, Modals/EventDetailsModal.qml:574, Widgets/EventContextMenu.qml:64, Modules/views/MonthView.qml:393",
     "comment": "calendar day context menu action | event modal header when creating | event modal window title when creating | placeholder label on the event span shown while selecting days in the month grid"
   },
   {
@@ -1646,7 +1712,7 @@
   {
     "term": "No calendars yet. Add one to start creating events.",
     "context": "No calendars yet. Add one to start creating events.",
-    "reference": "Modals/EventDetailsModal.qml:1205",
+    "reference": "Modals/EventDetailsModal.qml:1250",
     "comment": "event form guidance when there are no writable calendars"
   },
   {
@@ -1682,13 +1748,13 @@
   {
     "term": "No writable calendar available",
     "context": "No writable calendar available",
-    "reference": "Modals/EventDetailsModal.qml:338, Widgets/EventSelectionModel.qml:165, Widgets/EventSelectionModel.qml:205",
+    "reference": "Modals/EventDetailsModal.qml:340, Widgets/EventSelectionModel.qml:184, Widgets/EventSelectionModel.qml:224",
     "comment": "event duplicate error when no calendar allows creating events | event form error when no calendar allows creating events | event paste error when no calendar allows creating events"
   },
   {
     "term": "None",
     "context": "None",
-    "reference": "Modals/CalendarRemindersDialog.qml:30, Modals/TaskDetailsModal.qml:67, Modals/EventDetailsModal.qml:45, Modals/SettingsContent.qml:142",
+    "reference": "Modals/EventDetailsModal.qml:46, Modals/TaskDetailsModal.qml:67, Modals/SettingsContent.qml:142, Modals/CalendarRemindersDialog.qml:30",
     "comment": "default reminder dropdown option | event reminder dropdown option | task priority dropdown option"
   },
   {
@@ -1748,7 +1814,7 @@
   {
     "term": "On the day",
     "context": "On the day",
-    "reference": "Modals/CalendarRemindersDialog.qml:78, Modals/SettingsContent.qml:192",
+    "reference": "Modals/SettingsContent.qml:192, Modals/CalendarRemindersDialog.qml:78",
     "comment": "all-day reminder day dropdown option"
   },
   {
@@ -1772,13 +1838,13 @@
   {
     "term": "Open event",
     "context": "Open event",
-    "reference": "Widgets/EventContextMenu.qml:91",
+    "reference": "Widgets/EventContextMenu.qml:92",
     "comment": "event context menu action"
   },
   {
     "term": "Open event actions",
     "context": "Open event actions",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:156",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:172",
     "comment": "keyboard shortcut description"
   },
   {
@@ -1838,25 +1904,25 @@
   {
     "term": "Paste %1 events",
     "context": "Paste %1 events",
-    "reference": "Widgets/EventContextMenu.qml:50",
+    "reference": "Widgets/EventContextMenu.qml:51",
     "comment": "calendar day context menu paste action; %1 is event count"
   },
   {
     "term": "Paste %1 events here",
     "context": "Paste %1 events here",
-    "reference": "Widgets/EventContextMenu.qml:49",
+    "reference": "Widgets/EventContextMenu.qml:50",
     "comment": "event context menu paste action; %1 is event count"
   },
   {
     "term": "Paste 1 event",
     "context": "Paste 1 event",
-    "reference": "Widgets/EventContextMenu.qml:50",
+    "reference": "Widgets/EventContextMenu.qml:51",
     "comment": "calendar day context menu paste action for one event"
   },
   {
     "term": "Paste 1 event here",
     "context": "Paste 1 event here",
-    "reference": "Widgets/EventContextMenu.qml:49",
+    "reference": "Widgets/EventContextMenu.qml:50",
     "comment": "event context menu paste action for one event"
   },
   {
@@ -1888,6 +1954,24 @@
     "context": "Paste your credentials",
     "reference": "Modals/AccountAddModal.qml:656",
     "comment": "google credentials step heading"
+  },
+  {
+    "term": "Pasted %1 events",
+    "context": "Pasted %1 events",
+    "reference": "Widgets/EventSelectionModel.qml:132",
+    "comment": "toast after pasting multiple events; %1 is event count"
+  },
+  {
+    "term": "Pasted %1 of %2 events",
+    "context": "Pasted %1 of %2 events",
+    "reference": "Widgets/EventSelectionModel.qml:131",
+    "comment": "toast when only some events pasted; %1 is completed count, %2 is total count"
+  },
+  {
+    "term": "Pasted 1 event",
+    "context": "Pasted 1 event",
+    "reference": "Widgets/EventSelectionModel.qml:132",
+    "comment": "toast after pasting one event"
   },
   {
     "term": "Pick a color source, palette, or your own theme file.",
@@ -1952,25 +2036,25 @@
   {
     "term": "Quit",
     "context": "Quit",
-    "reference": "Modals/SettingsContent.qml:401, Modules/TrayIcon.qml:57",
+    "reference": "Modules/TrayIcon.qml:57, Modals/SettingsContent.qml:401",
     "comment": "close behavior button group option to quit the app | tray menu item to quit the application"
   },
   {
     "term": "Read-only events can't be cut",
     "context": "Read-only events can't be cut",
-    "reference": "Widgets/EventSelectionModel.qml:152",
+    "reference": "Widgets/EventSelectionModel.qml:171",
     "comment": "event cut error for a read-only calendar"
   },
   {
     "term": "Read-only events can't be deleted",
     "context": "Read-only events can't be deleted",
-    "reference": "Widgets/EventSelectionModel.qml:238",
+    "reference": "Widgets/EventSelectionModel.qml:259",
     "comment": "event delete error for a read-only calendar"
   },
   {
     "term": "Read-only events can't be moved",
     "context": "Read-only events can't be moved",
-    "reference": "Widgets/EventSelectionModel.qml:218",
+    "reference": "Widgets/EventSelectionModel.qml:237",
     "comment": "event move error for a read-only calendar"
   },
   {
@@ -2018,13 +2102,13 @@
   {
     "term": "Remove",
     "context": "Remove",
-    "reference": "Modals/SettingsContent.qml:1260, Modules/CalendarSidebar.qml:313",
+    "reference": "Modules/CalendarSidebar.qml:313, Modals/SettingsContent.qml:1260",
     "comment": "confirm button for removing an account | remove account confirmation button"
   },
   {
     "term": "Remove \"%1\"?",
     "context": "Remove \"%1\"?",
-    "reference": "Modals/SettingsContent.qml:1258, Modules/CalendarSidebar.qml:311",
+    "reference": "Modules/CalendarSidebar.qml:311, Modals/SettingsContent.qml:1258",
     "comment": "confirm dialog title for removing an account, %1 is the account label | remove account confirmation title"
   },
   {
@@ -2036,13 +2120,13 @@
   {
     "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
     "context": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
-    "reference": "Modals/SettingsContent.qml:1259, Modules/CalendarSidebar.qml:312",
+    "reference": "Modules/CalendarSidebar.qml:312, Modals/SettingsContent.qml:1259",
     "comment": "confirm dialog body for removing an account | remove account confirmation message"
   },
   {
     "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
     "context": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
-    "reference": "Modals/SettingsContent.qml:1023, Modules/CalendarSidebar.qml:301",
+    "reference": "Modules/CalendarSidebar.qml:301, Modals/SettingsContent.qml:1023",
     "comment": "confirm dialog body for deleting a calendar | delete calendar confirmation message"
   },
   {
@@ -2078,31 +2162,31 @@
   {
     "term": "Repeat %1 events next week",
     "context": "Repeat %1 events next week",
-    "reference": "Widgets/EventContextMenu.qml:135",
+    "reference": "Widgets/EventContextMenu.qml:136",
     "comment": "event context menu quick repeat action; %1 is event count"
   },
   {
     "term": "Repeat %1 events tomorrow",
     "context": "Repeat %1 events tomorrow",
-    "reference": "Widgets/EventContextMenu.qml:129",
+    "reference": "Widgets/EventContextMenu.qml:130",
     "comment": "event context menu quick repeat action; %1 is event count"
   },
   {
     "term": "Repeat next week",
     "context": "Repeat next week",
-    "reference": "Widgets/EventContextMenu.qml:135",
+    "reference": "Widgets/EventContextMenu.qml:136",
     "comment": "event context menu quick repeat action for one event"
   },
   {
     "term": "Repeat tomorrow",
     "context": "Repeat tomorrow",
-    "reference": "Widgets/EventContextMenu.qml:129",
+    "reference": "Widgets/EventContextMenu.qml:130",
     "comment": "event context menu quick repeat action for one event"
   },
   {
     "term": "Repeats",
     "context": "Repeats",
-    "reference": "Modals/EventDetailsModal.qml:281, Services/DankCalService.qml:999",
+    "reference": "Modals/EventDetailsModal.qml:283, Services/DankCalService.qml:999",
     "comment": "generic recurrence label for an unrecognized rule"
   },
   {
@@ -2126,19 +2210,19 @@
   {
     "term": "Save",
     "context": "Save",
-    "reference": "Modals/CalendarRemindersDialog.qml:383, Modals/RenameCalendarDialog.qml:105, Modals/TaskDetailsModal.qml:522, Modals/EventDetailsModal.qml:680",
+    "reference": "Modals/EventDetailsModal.qml:691, Modals/RenameCalendarDialog.qml:105, Modals/TaskDetailsModal.qml:522, Modals/CalendarRemindersDialog.qml:383",
     "comment": "event details button to save changes | per-calendar reminders dialog button to save | rename calendar dialog button to save name | task form button to persist the task"
   },
   {
     "term": "Saving...",
     "context": "Saving...",
-    "reference": "Modals/EventDetailsModal.qml:680",
+    "reference": "Modals/EventDetailsModal.qml:691",
     "comment": "event details save button while saving"
   },
   {
     "term": "Search",
     "context": "Search",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:173",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:189",
     "comment": "keyboard shortcut description"
   },
   {
@@ -2160,10 +2244,22 @@
     "comment": "search status title while search is running"
   },
   {
+    "term": "Select a range of events",
+    "context": "Select a range of events",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:168",
+    "comment": "keyboard shortcut description"
+  },
+  {
     "term": "Select all %1 events",
     "context": "Select all %1 events",
-    "reference": "Widgets/EventContextMenu.qml:76",
+    "reference": "Widgets/EventContextMenu.qml:77",
     "comment": "calendar day context menu selection action; %1 is event count"
+  },
+  {
+    "term": "Select all events on the selected day",
+    "context": "Select all events on the selected day",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:160",
+    "comment": "keyboard shortcut description"
   },
   {
     "term": "Select client_secret.json",
@@ -2180,7 +2276,7 @@
   {
     "term": "Select event",
     "context": "Select event",
-    "reference": "Widgets/EventContextMenu.qml:76",
+    "reference": "Widgets/EventContextMenu.qml:77",
     "comment": "calendar day context menu action for one event"
   },
   {
@@ -2210,7 +2306,7 @@
   {
     "term": "Settings",
     "context": "Settings",
-    "reference": "Modals/SettingsModal.qml:87, Modals/KeyboardShortcutsOverlay.qml:177",
+    "reference": "Modals/SettingsModal.qml:87, Modals/KeyboardShortcutsOverlay.qml:193",
     "comment": "keyboard shortcut description | settings window header title"
   },
   {
@@ -2234,7 +2330,7 @@
   {
     "term": "Show all-day reminders",
     "context": "Show all-day reminders",
-    "reference": "Modals/CalendarRemindersDialog.qml:323, Modals/SettingsContent.qml:1364",
+    "reference": "Modals/SettingsContent.qml:1364, Modals/CalendarRemindersDialog.qml:323",
     "comment": "all-day reminders toggle label | per-calendar all-day reminders override label"
   },
   {
@@ -2318,7 +2414,7 @@
   {
     "term": "Snooze duration",
     "context": "Snooze duration",
-    "reference": "Modals/CalendarRemindersDialog.qml:310, Modals/SettingsContent.qml:1349",
+    "reference": "Modals/SettingsContent.qml:1349, Modals/CalendarRemindersDialog.qml:310",
     "comment": "per-calendar snooze override label | snooze duration setting label"
   },
   {
@@ -2462,19 +2558,25 @@
   {
     "term": "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.",
     "context": "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.",
-    "reference": "Modules/CalendarWindow.qml:330",
+    "reference": "Modules/CalendarWindow.qml:356",
     "comment": "confirmation body for deleting multiple events"
   },
   {
     "term": "This account cannot be reconnected — remove it and add it again.",
     "context": "This account cannot be reconnected — remove it and add it again.",
-    "reference": "Services/DankCalService.qml:1408",
+    "reference": "Services/DankCalService.qml:1411",
     "comment": "error when reconnect is unavailable for a provider"
+  },
+  {
+    "term": "This event",
+    "context": "This event",
+    "reference": "Modals/EventDetailsModal.qml:872",
+    "comment": "RSVP scope button replying for one occurrence of a recurring event"
   },
   {
     "term": "This event will be deleted from its calendar.",
     "context": "This event will be deleted from its calendar.",
-    "reference": "Modules/CalendarWindow.qml:330",
+    "reference": "Modules/CalendarWindow.qml:356",
     "comment": "confirmation body for deleting one event"
   },
   {
@@ -2486,13 +2588,13 @@
   {
     "term": "Title is required",
     "context": "Title is required",
-    "reference": "Modals/TaskDetailsModal.qml:194, Modals/EventDetailsModal.qml:332",
+    "reference": "Modals/EventDetailsModal.qml:334, Modals/TaskDetailsModal.qml:194",
     "comment": "event form validation error for missing title | task form validation error for missing title"
   },
   {
     "term": "Today",
     "context": "Today",
-    "reference": "Modals/SearchModal.qml:70, Modules/CalendarContent.qml:70, Modules/views/TasksView.qml:32, Modules/views/TasksView.qml:54, Modules/views/AgendaView.qml:50",
+    "reference": "Modules/CalendarContent.qml:70, Modals/SearchModal.qml:70, Modules/views/AgendaView.qml:50, Modules/views/TasksView.qml:32, Modules/views/TasksView.qml:54",
     "comment": "agenda section header for the current day | due-date label on a task card | header button that jumps to the current date | search result date label for current day | tasks view section header for tasks due today"
   },
   {
@@ -2504,13 +2606,13 @@
   {
     "term": "Toggle this help",
     "context": "Toggle this help",
-    "reference": "Modals/KeyboardShortcutsOverlay.qml:181",
+    "reference": "Modals/KeyboardShortcutsOverlay.qml:197",
     "comment": "keyboard shortcut description"
   },
   {
     "term": "Tomorrow",
     "context": "Tomorrow",
-    "reference": "Modals/SearchModal.qml:72, Modules/views/TasksView.qml:34, Modules/views/AgendaView.qml:52",
+    "reference": "Modals/SearchModal.qml:72, Modules/views/AgendaView.qml:52, Modules/views/TasksView.qml:34",
     "comment": "agenda section header for the next day | due-date label on a task card | search result date label for next day"
   },
   {
@@ -2630,7 +2732,7 @@
   {
     "term": "Waiting for the dankcalendar daemon...",
     "context": "Waiting for the dankcalendar daemon...",
-    "reference": "Modules/views/TasksView.qml:119, Modules/views/AgendaView.qml:110",
+    "reference": "Modules/views/AgendaView.qml:110, Modules/views/TasksView.qml:119",
     "comment": "agenda placeholder while the daemon is not connected | tasks view placeholder while the daemon is not connected"
   },
   {
@@ -2696,20 +2798,14 @@
   {
     "term": "Your response",
     "context": "Your response",
-    "reference": "Modals/EventDetailsModal.qml:812",
+    "reference": "Modals/EventDetailsModal.qml:823",
     "comment": "event details RSVP section label"
   },
   {
     "term": "all day",
     "context": "all day",
-    "reference": "Modules/views/DayView.qml:210",
+    "reference": "Modules/views/DayView.qml:230",
     "comment": "suffix on all-day event chip in day view"
-  },
-  {
-    "term": "created",
-    "context": "created",
-    "reference": "Widgets/EventSelectionModel.qml:209",
-    "comment": "past-tense event action used in a result message"
   },
   {
     "term": "dark",
@@ -2728,12 +2824,6 @@
     "context": "days",
     "reference": "Services/DankCalService.qml:993, Widgets/DankRecurrencePicker.qml:63",
     "comment": "recurrence unit plural"
-  },
-  {
-    "term": "deleted",
-    "context": "deleted",
-    "reference": "Widgets/EventSelectionModel.qml:243",
-    "comment": "past-tense event action used in a result message"
   },
   {
     "term": "e.g. 2022-01-01",
@@ -2766,12 +2856,6 @@
     "comment": "recurrence unit plural"
   },
   {
-    "term": "moved",
-    "context": "moved",
-    "reference": "Widgets/EventSelectionModel.qml:184, Widgets/EventSelectionModel.qml:226",
-    "comment": "past-tense event action used in a result message"
-  },
-  {
     "term": "on %1",
     "context": "on %1",
     "reference": "Services/DankCalService.qml:1015",
@@ -2788,12 +2872,6 @@
     "context": "password",
     "reference": "Modals/AccountAddModal.qml:1304",
     "comment": "caldav password field placeholder"
-  },
-  {
-    "term": "pasted",
-    "context": "pasted",
-    "reference": "Widgets/EventSelectionModel.qml:179",
-    "comment": "past-tense event action used in a result message"
   },
   {
     "term": "read-only",
@@ -2864,7 +2942,7 @@
   {
     "term": "· %1 invited · %2 accepted",
     "context": "· %1 invited · %2 accepted",
-    "reference": "Modals/EventDetailsModal.qml:505",
+    "reference": "Modals/EventDetailsModal.qml:516",
     "comment": "event details attendee count summary"
   }
 ]
