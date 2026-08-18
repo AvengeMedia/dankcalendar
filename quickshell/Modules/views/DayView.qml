@@ -45,6 +45,21 @@ Item {
     readonly property bool showsNow: today.getFullYear() === displayDate.getFullYear() && today.getMonth() === displayDate.getMonth() && today.getDate() === displayDate.getDate()
     readonly property real nowHour: today.getHours() + today.getMinutes() / 60
 
+    property bool initialScrollDone: false
+
+    function applyInitialScroll() {
+        const viewport = dayFlickable.height;
+        const contentSpan = hourHeight * hourCount;
+        if (initialScrollDone || viewport <= 0 || contentSpan <= viewport)
+            return;
+        initialScrollDone = true;
+        const coreTop = (SettingsData.coreHoursStart - startHour) * hourHeight;
+        const coreSpan = (SettingsData.coreHoursEnd - SettingsData.coreHoursStart) * hourHeight;
+        const nowInCore = nowHour >= SettingsData.coreHoursStart && nowHour < SettingsData.coreHoursEnd;
+        const center = SettingsData.coreHoursValid && nowInCore && coreSpan <= viewport ? coreTop + coreSpan / 2 : (nowHour - startHour) * hourHeight;
+        dayFlickable.contentY = Math.max(0, Math.min(contentSpan - viewport, center - viewport / 2));
+    }
+
     Connections {
         target: DankCalService
         function onEventsUpdated() {
@@ -256,6 +271,7 @@ Item {
         anchors.bottom: parent.bottom
         contentHeight: root.hourHeight * root.hourCount
         clip: true
+        onHeightChanged: root.applyInitialScroll()
 
         DankSlideDragHandler {
             slideArea: slidePager
