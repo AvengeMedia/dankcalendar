@@ -11,10 +11,18 @@ Item {
     property date displayDate: new Date()
     property date today: new Date()
     property string selectedEventKey: ""
+    property var selectedEventKeys: []
     property int eventsVersion: 0
     readonly property int daysAhead: 14
 
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
+    signal dayContextRequested(date day, var anchorItem, real x, real y)
+
+    function isEventSelected(event) {
+        const key = DankCalService.eventKey(event);
+        return selectedEventKey === key || selectedEventKeys.indexOf(key) !== -1;
+    }
 
     function revealItem(item) {
         const y = item.mapToItem(agendaColumn, 0, 0).y;
@@ -77,6 +85,7 @@ Item {
             });
             out.push({
                 "label": dayLabel(d),
+                "day": d,
                 "events": cards
             });
         }
@@ -121,6 +130,11 @@ Item {
                         font.weight: Font.Medium
                         color: Theme.surfaceText
                         width: parent.width
+
+                        TapHandler {
+                            acceptedButtons: Qt.RightButton
+                            onTapped: eventPoint => root.dayContextRequested(section.modelData.day, parent, eventPoint.position.x, eventPoint.position.y)
+                        }
                     }
 
                     Repeater {
@@ -131,7 +145,7 @@ Item {
                         StyledRect {
                             id: card
                             required property var modelData
-                            readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                            readonly property bool isSelected: root.isEventSelected(modelData)
                             onIsSelectedChanged: {
                                 if (!isSelected)
                                     return;
@@ -142,7 +156,7 @@ Item {
                             }
                             width: root.width
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
-                            color: Theme.surfaceContainer
+                            color: isSelected ? Theme.primaryBackground : (cardArea.containsMouse ? Theme.surfaceContainerHigh : Theme.surfaceContainer)
                             radius: Theme.cornerRadius
                             border.color: isSelected ? Theme.primary : "transparent"
                             border.width: isSelected ? 2 : 0
@@ -260,10 +274,12 @@ Item {
                                 }
                             }
 
-                            StateLayer {
-                                stateColor: Theme.primary
-                                cornerRadius: parent.radius
-                                onClicked: root.eventClicked(card.modelData)
+                            EventMouseArea {
+                                id: cardArea
+                                anchors.fill: parent
+                                eventData: card.modelData
+                                onActivated: (event, modifiers) => root.eventClicked(event, modifiers)
+                                onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
                             }
                         }
                     }

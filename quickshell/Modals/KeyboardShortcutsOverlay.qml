@@ -133,6 +133,51 @@ Item {
             ]
         },
         {
+            "title": I18n.tr("Event actions", "keyboard shortcuts overlay section header"),
+            "rows": [
+                {
+                    "keys": ["Ctrl+C"],
+                    "label": I18n.tr("Copy selected events", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+X"],
+                    "label": I18n.tr("Cut selected events", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+V"],
+                    "label": I18n.tr("Paste events on the selected day", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+D"],
+                    "label": I18n.tr("Duplicate selected events", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+Shift+D"],
+                    "label": I18n.tr("Duplicate selected events to the next day", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+A"],
+                    "label": I18n.tr("Select all events on the selected day", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+Click"],
+                    "label": I18n.tr("Add or remove an event from the selection", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Shift+Click"],
+                    "label": I18n.tr("Select a range of events", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Menu"],
+                    "label": I18n.tr("Open event actions", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Del", "Backspace"],
+                    "label": I18n.tr("Delete selected events", "keyboard shortcut description")
+                }
+            ]
+        },
+        {
             "title": I18n.tr("General", "keyboard shortcuts overlay section header"),
             "rows": [
                 {

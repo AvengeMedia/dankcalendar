@@ -11,13 +11,19 @@ Item {
 
     property var events: []
     property date day: new Date()
+    property var selectedEventKeys: []
 
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
 
     readonly property int rowHeight: 38
     readonly property int headerHeight: 40
     readonly property int maxBodyHeight: 320
     readonly property int popoverWidth: 300
+
+    function isEventSelected(event) {
+        return selectedEventKeys.indexOf(DankCalService.eventKey(event)) !== -1;
+    }
 
     function show(forDay, dayEvents, item) {
         if (!item)
@@ -131,10 +137,13 @@ Item {
                 delegate: Rectangle {
                     id: eventRow
                     required property var modelData
+                    readonly property bool isSelected: root.isEventSelected(modelData)
                     width: ListView.view.width
                     height: root.rowHeight - 2
                     radius: 4
-                    color: rowHover.containsMouse ? Theme.withAlpha(modelData.color, 0.18) : "transparent"
+                    color: isSelected ? Theme.withAlpha(modelData.color, 0.28) : (rowHover.containsMouse ? Theme.withAlpha(modelData.color, 0.18) : "transparent")
+                    border.color: isSelected ? Theme.primary : "transparent"
+                    border.width: isSelected ? 2 : 0
 
                     Row {
                         anchors.left: parent.left
@@ -176,11 +185,17 @@ Item {
                     MouseArea {
                         id: rowHover
                         anchors.fill: parent
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            root.eventClicked(eventRow.modelData);
-                            popup.close();
+                        onClicked: mouse => {
+                            if (mouse.button === Qt.RightButton) {
+                                root.eventContextRequested(eventRow.modelData, eventRow, mouse.x, mouse.y);
+                                return;
+                            }
+                            root.eventClicked(eventRow.modelData, mouse.modifiers);
+                            if ((mouse.modifiers & (Qt.ControlModifier | Qt.MetaModifier | Qt.ShiftModifier)) === 0)
+                                popup.close();
                         }
                     }
                 }

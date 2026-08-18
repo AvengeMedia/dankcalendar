@@ -12,10 +12,50 @@ Item {
     property date today: new Date()
     property date selectedDate: new Date()
     property string selectedEventKey: ""
+    property var selectedEventKeys: []
     property int eventsVersion: 0
+    property bool eventPointerDown: false
+    property bool eventDragging: false
+    property var draggedEvent: null
+    property real dragTargetTime: 0
+    property point dragPosition: Qt.point(0, 0)
 
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
+    signal dayContextRequested(date day, var anchorItem, real x, real y)
+    signal eventDropRequested(var event, date targetDay)
     signal shiftDaysRequested(int days)
+
+    function isEventSelected(event) {
+        const key = DankCalService.eventKey(event);
+        return selectedEventKey === key || selectedEventKeys.indexOf(key) !== -1;
+    }
+
+    function updateEventDrag(pointerItem, x, y) {
+        const position = pointerItem.mapToItem(root, x, y);
+        dragPosition = Qt.point(position.x, position.y);
+        if (position.x < timeColumnWidth || position.x >= width) {
+            dragTargetTime = 0;
+            return;
+        }
+        const visualIndex = Math.floor((position.x - timeColumnWidth - slidePx) / dayWidth);
+        if (visualIndex < 0 || visualIndex > 6) {
+            dragTargetTime = 0;
+            return;
+        }
+        const dayIndex = I18n.isRtl ? 6 - visualIndex : visualIndex;
+        dragTargetTime = dayAt(dayIndex).getTime();
+    }
+
+    function finishEventDrag(event) {
+        const targetTime = dragTargetTime;
+        eventPointerDown = false;
+        eventDragging = false;
+        draggedEvent = null;
+        dragTargetTime = 0;
+        if (targetTime > 0)
+            eventDropRequested(event, new Date(targetTime));
+    }
 
     function revealHours(start, duration) {
         const top = start * hourHeight;
@@ -326,6 +366,11 @@ Item {
                                 height: 1
                                 color: Theme.gridLine
                             }
+
+                            TapHandler {
+                                acceptedButtons: Qt.RightButton
+                                onTapped: eventPoint => root.dayContextRequested(parent.d, parent, eventPoint.position.x, eventPoint.position.y)
+                            }
                         }
                     }
                 }
@@ -365,6 +410,8 @@ Item {
                         Item {
                             id: allDayCell
                             required property int index
+                            readonly property date day: root.dayAt(index - 1)
+                            readonly property bool isDropTarget: root.eventDragging && day.getTime() === root.dragTargetTime
                             readonly property var dayEvents: {
                                 root.eventsVersion;
                                 return root.allDayEventsFor(root.dayAt(index - 1));
@@ -372,6 +419,16 @@ Item {
 
                             width: root.dayWidth
                             height: parent.height
+
+                            Rectangle {
+                                visible: allDayCell.isDropTarget
+                                anchors.fill: parent
+                                anchors.margins: 1
+                                color: Theme.withAlpha(Theme.primary, 0.12)
+                                border.color: Theme.primary
+                                border.width: 2
+                                radius: Theme.cornerRadiusSmall
+                            }
 
                             Column {
                                 anchors.fill: parent
@@ -385,7 +442,7 @@ Item {
 
                                     Rectangle {
                                         required property var modelData
-                                        readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                                        readonly property bool isSelected: root.isEventSelected(modelData)
                                         width: parent.width
                                         height: root.allDayChipHeight
                                         radius: 4
@@ -408,15 +465,33 @@ Item {
                                             elide: Text.ElideRight
                                         }
 
-                                        MouseArea {
+                                        EventMouseArea {
                                             anchors.fill: parent
-                                            cursorShape: Qt.PointingHandCursor
-                                            hoverEnabled: true
+                                            eventData: parent.modelData
+                                            dragEnabled: !parent.modelData.readOnly
                                             onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
                                             onExited: chipTooltip.hide()
-                                            onClicked: {
+                                            onActivated: (event, modifiers) => {
                                                 chipTooltip.hide();
-                                                root.eventClicked(parent.modelData);
+                                                root.eventClicked(event, modifiers);
+                                            }
+                                            onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
+                                            onDragPressed: root.eventPointerDown = true
+                                            onDragStarted: (event, pointerItem, x, y) => {
+                                                chipTooltip.hide();
+                                                root.draggedEvent = event;
+                                                root.eventDragging = true;
+                                                root.updateEventDrag(pointerItem, x, y);
+                                            }
+                                            onDragMoved: (event, pointerItem, x, y) => root.updateEventDrag(pointerItem, x, y)
+                                            onDropped: (event, pointerItem, x, y) => {
+                                                root.updateEventDrag(pointerItem, x, y);
+                                                root.finishEventDrag(event);
+                                            }
+                                            onDragReleased: {
+                                                root.eventPointerDown = false;
+                                                if (root.eventDragging)
+                                                    root.finishEventDrag(parent.modelData);
                                             }
                                         }
                                     }
@@ -566,6 +641,8 @@ Item {
                             Item {
                                 id: dayColumn
                                 required property int index
+                                readonly property date day: root.dayAt(index - 1)
+                                readonly property bool isDropTarget: root.eventDragging && day.getTime() === root.dragTargetTime
                                 readonly property var timedEvents: {
                                     root.eventsVersion;
                                     return root.timedEventsFor(root.dayAt(index - 1));
@@ -573,6 +650,16 @@ Item {
 
                                 width: root.dayWidth
                                 height: parent.height
+
+                                Rectangle {
+                                    visible: dayColumn.isDropTarget
+                                    anchors.fill: parent
+                                    anchors.margins: 1
+                                    color: Theme.withAlpha(Theme.primary, 0.1)
+                                    border.color: Theme.primary
+                                    border.width: 2
+                                    radius: Theme.cornerRadiusSmall
+                                }
 
                                 Rectangle {
                                     anchors.left: parent.left
@@ -600,7 +687,7 @@ Item {
 
                                     Rectangle {
                                         required property var modelData
-                                        readonly property bool isSelected: root.selectedEventKey === DankCalService.eventKey(modelData)
+                                        readonly property bool isSelected: root.isEventSelected(modelData)
                                         onIsSelectedChanged: {
                                             if (isSelected)
                                                 root.revealHours(modelData.startHour, modelData.durationHours);
@@ -646,18 +733,41 @@ Item {
                                             }
                                         }
 
-                                        MouseArea {
+                                        EventMouseArea {
                                             anchors.fill: parent
-                                            cursorShape: Qt.PointingHandCursor
-                                            hoverEnabled: true
+                                            eventData: parent.modelData
+                                            dragEnabled: !parent.modelData.readOnly
                                             onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
                                             onExited: chipTooltip.hide()
-                                            onClicked: {
+                                            onActivated: (event, modifiers) => {
                                                 chipTooltip.hide();
-                                                root.eventClicked(parent.modelData);
+                                                root.eventClicked(event, modifiers);
+                                            }
+                                            onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
+                                            onDragPressed: root.eventPointerDown = true
+                                            onDragStarted: (event, pointerItem, x, y) => {
+                                                chipTooltip.hide();
+                                                root.draggedEvent = event;
+                                                root.eventDragging = true;
+                                                root.updateEventDrag(pointerItem, x, y);
+                                            }
+                                            onDragMoved: (event, pointerItem, x, y) => root.updateEventDrag(pointerItem, x, y)
+                                            onDropped: (event, pointerItem, x, y) => {
+                                                root.updateEventDrag(pointerItem, x, y);
+                                                root.finishEventDrag(event);
+                                            }
+                                            onDragReleased: {
+                                                root.eventPointerDown = false;
+                                                if (root.eventDragging)
+                                                    root.finishEventDrag(parent.modelData);
                                             }
                                         }
                                     }
+                                }
+
+                                TapHandler {
+                                    acceptedButtons: Qt.RightButton
+                                    onTapped: eventPoint => root.dayContextRequested(dayColumn.day, dayColumn, eventPoint.position.x, eventPoint.position.y)
                                 }
                             }
                         }
@@ -711,6 +821,7 @@ Item {
         id: slidePager
         anchors.fill: parent
         z: 50
+        dragEnabled: !root.eventPointerDown && !root.eventDragging
         onMoved: dx => root.applySlide(dx)
         onStepped: direction => root.slideDays((I18n.isRtl ? 1 : -1) * direction)
         onSettled: root.settleSlide()
@@ -718,5 +829,12 @@ Item {
 
     DankSlideDragHandler {
         slideArea: slidePager
+    }
+
+    EventDragGhost {
+        dragging: root.eventDragging
+        draggedEvent: root.draggedEvent
+        dragPosition: root.dragPosition
+        selectedKeys: root.selectedEventKeys
     }
 }

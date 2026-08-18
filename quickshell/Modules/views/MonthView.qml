@@ -12,10 +12,14 @@ Item {
     property date today: new Date()
     property date selectedDate: new Date()
     property int eventsVersion: 0
+    property var selectedEventKeys: []
 
     signal daySelected(date day)
     signal dayActivated(date day)
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
+    signal dayContextRequested(date day, var anchorItem, real x, real y)
+    signal eventDropRequested(var event, date targetDay)
     signal viewDayRequested(date day)
     signal previousRequested
     signal nextRequested
@@ -27,10 +31,41 @@ Item {
     property real dragRangeEnd: 0
     property real keyRangeStart: 0
     property real keyRangeEnd: 0
+    property bool eventPointerDown: false
+    property bool eventDragging: false
+    property var draggedEvent: null
+    property real dragTargetTime: 0
+    property point dragPosition: Qt.point(0, 0)
 
     readonly property bool previewActive: dragSelecting || keyRangeStart > 0
     readonly property real previewStart: dragSelecting ? dragRangeStart : keyRangeStart
     readonly property real previewEnd: dragSelecting ? dragRangeEnd : keyRangeEnd
+
+    function isEventSelected(event) {
+        return selectedEventKeys.indexOf(DankCalService.eventKey(event)) !== -1;
+    }
+
+    function updateEventDrag(pointerItem, x, y) {
+        const gridPosition = pointerItem.mapToItem(grid, x, y);
+        const rootPosition = pointerItem.mapToItem(root, x, y);
+        dragPosition = Qt.point(rootPosition.x, rootPosition.y);
+        if (gridPosition.x < 0 || gridPosition.x >= grid.width || gridPosition.y < 0 || gridPosition.y >= grid.height) {
+            dragTargetTime = 0;
+            return;
+        }
+        const target = rangeDrag.dateAt(gridPosition);
+        dragTargetTime = target ? target.getTime() : 0;
+    }
+
+    function finishEventDrag(event) {
+        const targetTime = dragTargetTime;
+        eventPointerDown = false;
+        eventDragging = false;
+        draggedEvent = null;
+        dragTargetTime = 0;
+        if (targetTime > 0)
+            eventDropRequested(event, new Date(targetTime));
+    }
 
     Timer {
         id: scrollCooldown
@@ -103,7 +138,9 @@ Item {
 
     MonthDayPopover {
         id: dayPopover
-        onEventClicked: ev => root.eventClicked(ev)
+        selectedEventKeys: root.selectedEventKeys
+        onEventClicked: (ev, modifiers) => root.eventClicked(ev, modifiers)
+        onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
     }
 
     function eventTooltip(ev) {
@@ -217,6 +254,7 @@ Item {
 
                 DragHandler {
                     id: rangeDrag
+                    enabled: !root.eventPointerDown && !root.eventDragging
 
                     function dateAt(pos) {
                         const x = Math.min(Math.max(pos.x, 0), grid.width - 1);
@@ -268,6 +306,7 @@ Item {
                         readonly property bool isToday: root.isSameDay(cellDate, root.today)
                         readonly property bool isSelected: root.isSameDay(cellDate, root.selectedDate)
                         readonly property bool inPreviewRange: root.previewActive && cellDate.getTime() >= root.previewStart && cellDate.getTime() <= root.previewEnd
+                        readonly property bool isDropTarget: root.eventDragging && cellDate.getTime() === root.dragTargetTime
                         readonly property bool previewLeading: inPreviewRange && cellDate.getTime() === (I18n.isRtl ? root.previewEnd : root.previewStart)
                         readonly property bool previewTrailing: inPreviewRange && cellDate.getTime() === (I18n.isRtl ? root.previewStart : root.previewEnd)
                         readonly property var cellEvents: {
@@ -317,6 +356,17 @@ Item {
                             border.color: Theme.primary
                             border.width: 1
                             radius: Theme.cornerRadiusSmall
+                        }
+
+                        Rectangle {
+                            visible: dayCell.isDropTarget
+                            anchors.fill: parent
+                            anchors.margins: 2
+                            color: Theme.withAlpha(Theme.primary, 0.12)
+                            border.color: Theme.primary
+                            border.width: 2
+                            radius: Theme.cornerRadiusSmall
+                            z: 4
                         }
 
                         Rectangle {
@@ -408,11 +458,14 @@ Item {
 
                                 Rectangle {
                                     required property var modelData
+                                    readonly property bool isSelected: root.isEventSelected(modelData)
                                     width: parent.width
                                     height: root.eventChipHeight
                                     radius: 4
                                     clip: true
-                                    color: Theme.withAlpha(modelData.color, 0.18)
+                                    color: Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
+                                    border.color: isSelected ? Theme.primary : "transparent"
+                                    border.width: isSelected ? 2 : 0
 
                                     Row {
                                         anchors.left: parent.left
@@ -442,16 +495,33 @@ Item {
                                         }
                                     }
 
-                                    MouseArea {
+                                    EventMouseArea {
                                         anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        hoverEnabled: true
+                                        eventData: parent.modelData
+                                        dragEnabled: !parent.modelData.readOnly
                                         onEntered: chipTooltip.show(root.eventTooltip(parent.modelData), parent)
                                         onExited: chipTooltip.hide()
-                                        onClicked: mouse => {
-                                            mouse.accepted = true;
+                                        onActivated: (event, modifiers) => {
                                             chipTooltip.hide();
-                                            root.eventClicked(parent.modelData);
+                                            root.eventClicked(event, modifiers);
+                                        }
+                                        onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
+                                        onDragPressed: root.eventPointerDown = true
+                                        onDragStarted: (event, pointerItem, x, y) => {
+                                            chipTooltip.hide();
+                                            root.draggedEvent = event;
+                                            root.eventDragging = true;
+                                            root.updateEventDrag(pointerItem, x, y);
+                                        }
+                                        onDragMoved: (event, pointerItem, x, y) => root.updateEventDrag(pointerItem, x, y)
+                                        onDropped: (event, pointerItem, x, y) => {
+                                            root.updateEventDrag(pointerItem, x, y);
+                                            root.finishEventDrag(event);
+                                        }
+                                        onDragReleased: {
+                                            root.eventPointerDown = false;
+                                            if (root.eventDragging)
+                                                root.finishEventDrag(parent.modelData);
                                         }
                                     }
                                 }
@@ -477,8 +547,14 @@ Item {
                         }
 
                         TapHandler {
-                            acceptedButtons: Qt.LeftButton
-                            onTapped: root.daySelected(dayCell.cellDate)
+                            acceptedButtons: Qt.LeftButton | Qt.RightButton
+                            onTapped: (eventPoint, button) => {
+                                if (button === Qt.RightButton) {
+                                    root.dayContextRequested(dayCell.cellDate, dayCell, eventPoint.position.x, eventPoint.position.y);
+                                    return;
+                                }
+                                root.daySelected(dayCell.cellDate);
+                            }
                             onDoubleTapped: root.dayActivated(dayCell.cellDate)
                         }
                     }
@@ -493,5 +569,12 @@ Item {
         continuous: false
         dragEnabled: false
         onStepped: direction => wheelHandler.step((I18n.isRtl ? 1 : -1) * direction)
+    }
+
+    EventDragGhost {
+        dragging: root.eventDragging
+        draggedEvent: root.draggedEvent
+        dragPosition: root.dragPosition
+        selectedKeys: root.selectedEventKeys
     }
 }

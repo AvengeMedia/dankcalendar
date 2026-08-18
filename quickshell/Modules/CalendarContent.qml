@@ -12,6 +12,7 @@ Item {
     property date displayDate: new Date()
     property date selectedDate: new Date()
     property string selectedEventKey: ""
+    property var selectedEventKeys: []
     property date today: new Date()
     property date todayStart: new Date()
     property real rangeStartTime: 0
@@ -22,7 +23,10 @@ Item {
     signal nextRequested
     signal shiftDaysRequested(int days)
     signal createEventRequested
-    signal eventClicked(var event)
+    signal eventClicked(var event, int modifiers)
+    signal eventContextRequested(var event, var anchorItem, real x, real y)
+    signal dayContextRequested(date day, var anchorItem, real x, real y)
+    signal eventDropRequested(var event, date targetDay)
     signal createTaskRequested
     signal taskClicked(var task)
     signal settingsRequested
@@ -193,13 +197,17 @@ Item {
                     displayDate: root.displayDate
                     today: root.today
                     selectedDate: root.selectedDate
+                    selectedEventKeys: root.selectedEventKeys
                     keyRangeStart: root.rangeStartTime
                     keyRangeEnd: root.rangeEndTime
                     onDaySelected: day => root.daySelected(day)
                     onDayActivated: day => root.dayActivated(day)
                     onViewDayRequested: day => root.viewDayRequested(day)
                     onCreateRangeRequested: (startDay, endDay) => root.createRangeRequested(startDay, endDay)
-                    onEventClicked: ev => root.eventClicked(ev)
+                    onEventClicked: (ev, modifiers) => root.eventClicked(ev, modifiers)
+                    onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
+                    onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
+                    onEventDropRequested: (ev, targetDay) => root.eventDropRequested(ev, targetDay)
                     onPreviousRequested: root.previousRequested()
                     onNextRequested: root.nextRequested()
                 }
@@ -212,7 +220,11 @@ Item {
                     today: root.today
                     selectedDate: root.selectedDate
                     selectedEventKey: root.selectedEventKey
-                    onEventClicked: ev => root.eventClicked(ev)
+                    selectedEventKeys: root.selectedEventKeys
+                    onEventClicked: (ev, modifiers) => root.eventClicked(ev, modifiers)
+                    onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
+                    onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
+                    onEventDropRequested: (ev, targetDay) => root.eventDropRequested(ev, targetDay)
                     onShiftDaysRequested: days => root.shiftDaysRequested(days)
                 }
             }
@@ -223,7 +235,10 @@ Item {
                     displayDate: root.displayDate
                     today: root.today
                     selectedEventKey: root.selectedEventKey
-                    onEventClicked: ev => root.eventClicked(ev)
+                    selectedEventKeys: root.selectedEventKeys
+                    onEventClicked: (ev, modifiers) => root.eventClicked(ev, modifiers)
+                    onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
+                    onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
                     onPreviousRequested: root.previousRequested()
                     onNextRequested: root.nextRequested()
                 }
@@ -235,7 +250,10 @@ Item {
                     displayDate: root.displayDate
                     today: root.todayStart
                     selectedEventKey: root.selectedEventKey
-                    onEventClicked: ev => root.eventClicked(ev)
+                    selectedEventKeys: root.selectedEventKeys
+                    onEventClicked: (ev, modifiers) => root.eventClicked(ev, modifiers)
+                    onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
+                    onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
                 }
             }
 

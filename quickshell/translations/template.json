@@ -21,6 +21,34 @@
     "comment": ""
   },
   {
+    "term": "%1 events %2",
+    "translation": "",
+    "context": "multiple event action result; %1 is event count, %2 is an action verb",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 events selected",
+    "translation": "",
+    "context": "event context menu selection summary; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 of %2 events %3",
+    "translation": "",
+    "context": "partial batch event action result; %1 completed count, %2 total count, %3 action verb",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 selected",
+    "translation": "",
+    "context": "multi-event action shelf selection count; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "%1 times",
     "translation": "",
     "context": "recurrence label suffix for a fixed number of occurrences",
@@ -98,6 +126,20 @@
     "comment": ""
   },
   {
+    "term": "+1 day",
+    "translation": "",
+    "context": "multi-event action shelf repeat tomorrow label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "+1 week",
+    "translation": "",
+    "context": "multi-event action shelf repeat next week label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "1 appointment falls outside core hours",
     "translation": "",
     "context": "core hours warning banner, singular",
@@ -108,6 +150,13 @@
     "term": "1 day before",
     "translation": "",
     "context": "all-day reminder day dropdown option | event reminder dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "1 event %1",
+    "translation": "",
+    "context": "single event action result; %1 is an action verb",
     "reference": "",
     "comment": ""
   },
@@ -336,6 +385,13 @@
     "comment": ""
   },
   {
+    "term": "Actions apply to the whole selection",
+    "translation": "",
+    "context": "event context menu multi-selection hint",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Add",
     "translation": "",
     "context": "button to add evolution account | button to add local calendar account",
@@ -413,6 +469,13 @@
     "comment": ""
   },
   {
+    "term": "Again",
+    "translation": "",
+    "context": "multi-event action shelf duplicate label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Agenda",
     "translation": "",
     "context": "header title when the agenda view is active | view switcher option in sidebar",
@@ -436,7 +499,7 @@
   {
     "term": "All day",
     "translation": "",
-    "context": "all-day marker in event tooltip | all-day marker in the month day-detail popover | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card",
+    "context": "all-day marker in event context menu | all-day marker in event tooltip | all-day marker in the month day-detail popover | event form toggle label for all-day events | search result subtitle for all-day events | time column label for all-day events on agenda card",
     "reference": "",
     "comment": ""
   },
@@ -658,6 +721,13 @@
     "comment": ""
   },
   {
+    "term": "Clear",
+    "translation": "",
+    "context": "multi-event action shelf clear selection label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Clear event selection",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -805,6 +875,20 @@
     "comment": ""
   },
   {
+    "term": "Copied %1 events",
+    "translation": "",
+    "context": "clipboard confirmation for multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Copied 1 event",
+    "translation": "",
+    "context": "clipboard confirmation for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Copied to clipboard",
     "translation": "",
     "context": "toast after copying text to the clipboard",
@@ -812,9 +896,37 @@
     "comment": ""
   },
   {
+    "term": "Copy",
+    "translation": "",
+    "context": "multi-event action shelf label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Copy %1 events",
+    "translation": "",
+    "context": "event context menu copy action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Copy event",
+    "translation": "",
+    "context": "event context menu copy action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Copy link",
     "translation": "",
     "context": "button to copy a setup guide url to the clipboard",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Copy selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -875,6 +987,41 @@
     "comment": ""
   },
   {
+    "term": "Cut",
+    "translation": "",
+    "context": "multi-event action shelf label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut %1 events",
+    "translation": "",
+    "context": "clipboard confirmation for multiple events; %1 is event count | event context menu cut action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut 1 event",
+    "translation": "",
+    "context": "clipboard confirmation for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut event",
+    "translation": "",
+    "context": "event context menu cut action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Cut selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Daemon offline",
     "translation": "",
     "context": "sidebar placeholder when the daemon is not connected",
@@ -924,6 +1071,13 @@
     "comment": ""
   },
   {
+    "term": "Day actions",
+    "translation": "",
+    "context": "subtitle for a calendar day context menu",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Day view",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -961,7 +1115,7 @@
   {
     "term": "Delete",
     "translation": "",
-    "context": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | task form button to delete the task",
+    "context": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | multi-event action shelf label | task form button to delete the task",
     "reference": "",
     "comment": ""
   },
@@ -973,9 +1127,58 @@
     "comment": ""
   },
   {
+    "term": "Delete %1 events",
+    "translation": "",
+    "context": "confirmation button for deleting multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete %1 events?",
+    "translation": "",
+    "context": "confirmation title for deleting multiple events; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete %1 events…",
+    "translation": "",
+    "context": "event context menu delete action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete event",
+    "translation": "",
+    "context": "confirmation button for deleting one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete event?",
+    "translation": "",
+    "context": "confirmation title for deleting one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete event…",
+    "translation": "",
+    "context": "event context menu delete action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Delete occurrence",
     "translation": "",
     "context": "event details button to delete only this occurrence of a recurring event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Delete selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1085,6 +1288,27 @@
     "comment": ""
   },
   {
+    "term": "Duplicate",
+    "translation": "",
+    "context": "event context menu duplicate action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Duplicate %1 events",
+    "translation": "",
+    "context": "event context menu duplicate action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Duplicate selected events",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Edit event",
     "translation": "",
     "context": "event modal header when editing | event modal window title when editing",
@@ -1165,6 +1389,13 @@
     "term": "Event",
     "translation": "",
     "context": "event modal window title when viewing",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Event actions",
+    "translation": "",
+    "context": "keyboard shortcuts overlay section header",
     "reference": "",
     "comment": ""
   },
@@ -1533,9 +1764,37 @@
     "comment": ""
   },
   {
+    "term": "Move %1 events",
+    "translation": "",
+    "context": "event drag preview label; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Move %1 events here",
+    "translation": "",
+    "context": "calendar context menu cut-paste action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Move 1 event here",
+    "translation": "",
+    "context": "calendar context menu cut-paste action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Move through sidebar items",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Move to selected day",
+    "translation": "",
+    "context": "event context menu move action",
     "reference": "",
     "comment": ""
   },
@@ -1584,7 +1843,7 @@
   {
     "term": "New event",
     "translation": "",
-    "context": "event modal header when creating | event modal window title when creating | placeholder label on the event span shown while selecting days in the month grid",
+    "context": "calendar day context menu action | event modal header when creating | event modal window title when creating | placeholder label on the event span shown while selecting days in the month grid",
     "reference": "",
     "comment": ""
   },
@@ -1703,7 +1962,7 @@
   {
     "term": "No writable calendar available",
     "translation": "",
-    "context": "event form error when no calendar allows creating events",
+    "context": "event duplicate error when no calendar allows creating events | event form error when no calendar allows creating events | event paste error when no calendar allows creating events",
     "reference": "",
     "comment": ""
   },
@@ -1806,6 +2065,20 @@
     "comment": ""
   },
   {
+    "term": "Open event",
+    "translation": "",
+    "context": "event context menu action",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Open event actions",
+    "translation": "",
+    "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Open or create event",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -1869,9 +2142,44 @@
     "comment": ""
   },
   {
+    "term": "Paste %1 events",
+    "translation": "",
+    "context": "calendar day context menu paste action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste %1 events here",
+    "translation": "",
+    "context": "event context menu paste action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste 1 event",
+    "translation": "",
+    "context": "calendar day context menu paste action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste 1 event here",
+    "translation": "",
+    "context": "event context menu paste action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Paste credentials",
     "translation": "",
     "context": "last guide step button to google credentials",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Paste events on the selected day",
+    "translation": "",
+    "context": "keyboard shortcut description",
     "reference": "",
     "comment": ""
   },
@@ -1970,6 +2278,27 @@
     "term": "Quit",
     "translation": "",
     "context": "close behavior button group option to quit the app | tray menu item to quit the application",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Read-only events can't be cut",
+    "translation": "",
+    "context": "event cut error for a read-only calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Read-only events can't be deleted",
+    "translation": "",
+    "context": "event delete error for a read-only calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Read-only events can't be moved",
+    "translation": "",
+    "context": "event move error for a read-only calendar",
     "reference": "",
     "comment": ""
   },
@@ -2093,6 +2422,34 @@
     "comment": ""
   },
   {
+    "term": "Repeat %1 events next week",
+    "translation": "",
+    "context": "event context menu quick repeat action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeat %1 events tomorrow",
+    "translation": "",
+    "context": "event context menu quick repeat action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeat next week",
+    "translation": "",
+    "context": "event context menu quick repeat action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Repeat tomorrow",
+    "translation": "",
+    "context": "event context menu quick repeat action for one event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Repeats",
     "translation": "",
     "context": "generic recurrence label for an unrecognized rule",
@@ -2163,6 +2520,13 @@
     "comment": ""
   },
   {
+    "term": "Select all %1 events",
+    "translation": "",
+    "context": "calendar day context menu selection action; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Select client_secret.json",
     "translation": "",
     "context": "file picker title for google client json",
@@ -2173,6 +2537,13 @@
     "term": "Select days for a new event (month view)",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Select event",
+    "translation": "",
+    "context": "calendar day context menu action for one event",
     "reference": "",
     "comment": ""
   },
@@ -2499,9 +2870,23 @@
     "comment": ""
   },
   {
+    "term": "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.",
+    "translation": "",
+    "context": "confirmation body for deleting multiple events",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "This account cannot be reconnected — remove it and add it again.",
     "translation": "",
     "context": "error when reconnect is unavailable for a provider",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "This event will be deleted from its calendar.",
+    "translation": "",
+    "context": "confirmation body for deleting one event",
     "reference": "",
     "comment": ""
   },
@@ -2772,6 +3157,13 @@
     "comment": ""
   },
   {
+    "term": "created",
+    "translation": "",
+    "context": "past-tense event action used in a result message",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "dark",
     "translation": "",
     "context": "current scheme name in theme mode description",
@@ -2789,6 +3181,13 @@
     "term": "days",
     "translation": "",
     "context": "recurrence unit plural",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "deleted",
+    "translation": "",
+    "context": "past-tense event action used in a result message",
     "reference": "",
     "comment": ""
   },
@@ -2828,6 +3227,13 @@
     "comment": ""
   },
   {
+    "term": "moved",
+    "translation": "",
+    "context": "past-tense event action used in a result message",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "on %1",
     "translation": "",
     "context": "recurrence label suffix listing weekdays, %1 like 'Mon, Wed'",
@@ -2845,6 +3251,13 @@
     "term": "password",
     "translation": "",
     "context": "caldav password field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "pasted",
+    "translation": "",
+    "context": "past-tense event action used in a result message",
     "reference": "",
     "comment": ""
   },

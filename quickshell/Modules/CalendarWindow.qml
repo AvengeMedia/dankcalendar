@@ -5,6 +5,7 @@ import qs.Modals
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
+import "../Common/EventUtils.js" as EventUtils
 
 FloatingWindow {
     id: window
@@ -31,6 +32,11 @@ FloatingWindow {
     property int eventsVersion: 0
     property bool sidebarFocused: false
     property real rangeAnchorTime: 0
+    property var pendingMove: null
+
+    EventSelectionModel {
+        id: eventSelection
+    }
 
     readonly property real selectedDayTime: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()).getTime()
     readonly property real rangeStartTime: rangeAnchorTime > 0 ? Math.min(rangeAnchorTime, selectedDayTime) : 0
@@ -184,6 +190,7 @@ FloatingWindow {
         const next = selectedEventIndex + direction;
         if (next >= 0 && next < evs.length) {
             selectedEventIndex = next;
+            eventSelection.replace([evs[next]]);
             return;
         }
         for (let i = 1; i <= 366; i++) {
@@ -194,6 +201,7 @@ FloatingWindow {
                 continue;
             selectedDate = d;
             selectedEventIndex = direction > 0 ? 0 : list.length - 1;
+            eventSelection.replace([list[selectedEventIndex]]);
             ensureSelectionVisible();
             return;
         }
@@ -255,6 +263,13 @@ FloatingWindow {
             openCreateEvent(start, end);
             return;
         }
+        if (eventSelection.count === 1) {
+            const selected = eventSelection.events();
+            if (selected.length === 1) {
+                openEventDetails(selected[0]);
+                return;
+            }
+        }
         const evs = DankCalService.eventsForDay(selectedDate);
         if (selectedEventIndex >= 0 && selectedEventIndex < evs.length) {
             openEventDetails(evs[selectedEventIndex]);
@@ -296,6 +311,52 @@ FloatingWindow {
     function openEventDetails(event) {
         eventLoader.active = true;
         eventLoader.item.show(event);
+    }
+
+    function handleEventClick(event, modifiers) {
+        const selectionModifiers = modifiers || Qt.NoModifier;
+        eventSelection.select(event, selectionModifiers);
+        if ((selectionModifiers & (Qt.ControlModifier | Qt.MetaModifier | Qt.ShiftModifier)) === 0)
+            openEventDetails(event);
+    }
+
+    function handleEventContext(event, anchorItem, x, y) {
+        const position = anchorItem.mapToItem(focusScope, x, y);
+        eventMenu.showForEvent(event, focusScope, position.x, position.y);
+    }
+
+    function handleDayContext(day, anchorItem, x, y) {
+        const position = anchorItem.mapToItem(focusScope, x, y);
+        eventMenu.showForDay(day, focusScope, position.x, position.y);
+    }
+
+    function requestEventMove(event, targetDay) {
+        eventSelection.ensureSelected(event);
+        const movesSeries = eventSelection.events(event).some(ev => (ev.recurringId || "") !== "" || (ev.recurrence || []).length > 0);
+        if (!movesSeries || !eventSelection.allWritable(event) || EventUtils.daysBetween(event.start, targetDay) === 0) {
+            eventSelection.moveTo(event, targetDay);
+            return;
+        }
+        pendingMove = {
+            "event": event,
+            "targetDay": targetDay
+        };
+        moveEventsConfirm.show({
+            title: I18n.tr("Move recurring events?", "confirmation title before moving events that repeat"),
+            message: I18n.tr("Moving a recurring event moves its entire series.", "confirmation body before moving events that repeat"),
+            confirmText: I18n.tr("Move", "confirmation button for moving recurring events")
+        });
+    }
+
+    function requestEventDelete(event) {
+        eventSelection.ensureSelected(event);
+        const count = eventSelection.count;
+        deleteEventsConfirm.show({
+            title: count === 1 ? I18n.tr("Delete event?", "confirmation title for deleting one event") : I18n.tr("Delete %1 events?", "confirmation title for deleting multiple events; %1 is event count").arg(count),
+            message: count === 1 ? I18n.tr("This event will be deleted from its calendar.", "confirmation body for deleting one event") : I18n.tr("These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.", "confirmation body for deleting multiple events"),
+            confirmText: count === 1 ? I18n.tr("Delete event", "confirmation button for deleting one event") : I18n.tr("Delete %1 events", "confirmation button for deleting multiple events; %1 is event count").arg(count),
+            danger: true
+        });
     }
 
     function openCreateEvent(date, endDate) {
@@ -453,6 +514,11 @@ FloatingWindow {
                     window.rangeAnchorTime = 0;
                     break;
                 }
+                if (eventSelection.hasSelection) {
+                    eventSelection.clear();
+                    window.selectedEventIndex = -1;
+                    break;
+                }
                 if (window.selectedEventIndex < 0) {
                     event.accepted = false;
                     return;
@@ -476,9 +542,21 @@ FloatingWindow {
                 window.currentView = "week";
                 break;
             case Qt.Key_D:
+                if (ctrl) {
+                    if (!eventSelection.hasSelection) {
+                        event.accepted = false;
+                        return;
+                    }
+                    eventSelection.duplicate(shift ? 1 : 0);
+                    break;
+                }
                 window.currentView = "day";
                 break;
             case Qt.Key_A:
+                if (ctrl) {
+                    eventSelection.selectDay(window.selectedDate);
+                    break;
+                }
                 window.currentView = "agenda";
                 break;
             case Qt.Key_S:
@@ -520,7 +598,48 @@ FloatingWindow {
                 window.currentView = "tasks";
                 break;
             case Qt.Key_C:
+                if (ctrl) {
+                    if (!eventSelection.hasSelection) {
+                        event.accepted = false;
+                        return;
+                    }
+                    eventSelection.copy();
+                    break;
+                }
                 window.openCreateEvent();
+                break;
+            case Qt.Key_V:
+                if (!ctrl || eventSelection.clipboardCount === 0) {
+                    event.accepted = false;
+                    return;
+                }
+                eventSelection.paste(window.selectedDate);
+                break;
+            case Qt.Key_X:
+                if (!ctrl || !eventSelection.hasSelection || !eventSelection.allWritable()) {
+                    event.accepted = false;
+                    return;
+                }
+                eventSelection.cut();
+                break;
+            case Qt.Key_Delete:
+            case Qt.Key_Backspace:
+                if (!eventSelection.hasSelection || !eventSelection.allWritable()) {
+                    event.accepted = false;
+                    return;
+                }
+                window.requestEventDelete(eventSelection.events()[0]);
+                break;
+            case Qt.Key_Menu:
+                if (!eventSelection.hasSelection) {
+                    event.accepted = false;
+                    return;
+                }
+                {
+                    const selected = eventSelection.events();
+                    if (selected.length > 0)
+                        eventMenu.showForEvent(selected[0], focusScope, focusScope.width / 2, focusScope.height / 2);
+                }
                 break;
             case Qt.Key_Slash:
                 if (shift) {
@@ -746,6 +865,7 @@ FloatingWindow {
                         displayDate: window.displayDate
                         selectedDate: window.selectedDate
                         selectedEventKey: window.selectedEventKey
+                        selectedEventKeys: eventSelection.selectedKeys
                         today: window.today
                         todayStart: window.todayStart
                         rangeStartTime: window.rangeStartTime
@@ -775,7 +895,10 @@ FloatingWindow {
                             window.displayDate = day;
                             window.currentView = "day";
                         }
-                        onEventClicked: ev => window.openEventDetails(ev)
+                        onEventClicked: (ev, modifiers) => window.handleEventClick(ev, modifiers)
+                        onEventContextRequested: (ev, anchorItem, x, y) => window.handleEventContext(ev, anchorItem, x, y)
+                        onDayContextRequested: (day, anchorItem, x, y) => window.handleDayContext(day, anchorItem, x, y)
+                        onEventDropRequested: (ev, targetDay) => window.requestEventMove(ev, targetDay)
                         onTaskClicked: task => window.openTaskDetails(task)
                         onCreateTaskRequested: window.openCreateTask()
                     }
@@ -789,6 +912,21 @@ FloatingWindow {
             visible: false
             z: 100
             onDismissed: visible = false
+        }
+
+        EventSelectionBar {
+            id: selectionBar
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.spacingL
+            width: Math.min(implicitWidth, parent.width - Theme.spacingL * 2)
+            z: 90
+            controller: eventSelection
+            onDeleteRequested: {
+                const selected = eventSelection.events();
+                if (selected.length > 0)
+                    window.requestEventDelete(selected[0]);
+            }
         }
     }
 
@@ -857,6 +995,31 @@ FloatingWindow {
             GoToDateDialog {
                 onDateSelected: date => window.goToDate(date)
             }
+        }
+    }
+
+    EventContextMenu {
+        id: eventMenu
+        controller: eventSelection
+        selectedDay: window.selectedDate
+        onOpenRequested: event => window.openEventDetails(event)
+        onCreateRequested: day => window.openCreateEvent(day)
+        onDeleteRequested: event => window.requestEventDelete(event)
+        onMoveRequested: (event, day) => window.requestEventMove(event, day)
+    }
+
+    ConfirmDialog {
+        id: deleteEventsConfirm
+        onConfirmed: eventSelection.remove()
+    }
+
+    ConfirmDialog {
+        id: moveEventsConfirm
+        onConfirmed: {
+            if (!window.pendingMove)
+                return;
+            eventSelection.moveTo(window.pendingMove.event, window.pendingMove.targetDay);
+            window.pendingMove = null;
         }
     }
 
