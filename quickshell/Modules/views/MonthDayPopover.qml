@@ -21,6 +21,10 @@ Item {
     readonly property int maxBodyHeight: 320
     readonly property int popoverWidth: 300
 
+    function isEventSelected(event) {
+        return selectedEventKeys.indexOf(DankCalService.eventKey(event)) !== -1;
+    }
+
     function show(forDay, dayEvents, item) {
         if (!item)
             return;
@@ -133,7 +137,7 @@ Item {
                 delegate: Rectangle {
                     id: eventRow
                     required property var modelData
-                    readonly property bool isSelected: root.selectedEventKeys.indexOf(DankCalService.eventKey(modelData)) !== -1
+                    readonly property bool isSelected: root.isEventSelected(modelData)
                     width: ListView.view.width
                     height: root.rowHeight - 2
                     radius: 4

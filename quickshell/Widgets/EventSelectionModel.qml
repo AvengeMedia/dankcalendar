@@ -124,14 +124,31 @@ Item {
         return fallback ? fallback.id : "";
     }
 
-    function finishOperation(verb, total, response) {
-        busy = false;
-        const completed = (response.results || []).length;
-        if (response.error) {
-            ToastService.info(I18n.tr("%1 of %2 events %3", "partial batch event action result; %1 completed count, %2 total count, %3 action verb").arg(completed).arg(total).arg(verb));
-            return;
+    function operationToast(action, completed, total) {
+        switch (action) {
+        case "paste":
+            if (completed !== total)
+                return I18n.tr("Pasted %1 of %2 events", "toast when only some events pasted; %1 is completed count, %2 is total count").arg(completed).arg(total);
+            return total === 1 ? I18n.tr("Pasted 1 event", "toast after pasting one event") : I18n.tr("Pasted %1 events", "toast after pasting multiple events; %1 is event count").arg(total);
+        case "move":
+            if (completed !== total)
+                return I18n.tr("Moved %1 of %2 events", "toast when only some events moved; %1 is completed count, %2 is total count").arg(completed).arg(total);
+            return total === 1 ? I18n.tr("Moved 1 event", "toast after moving one event") : I18n.tr("Moved %1 events", "toast after moving multiple events; %1 is event count").arg(total);
+        case "create":
+            if (completed !== total)
+                return I18n.tr("Created %1 of %2 events", "toast when only some events created; %1 is completed count, %2 is total count").arg(completed).arg(total);
+            return total === 1 ? I18n.tr("Created 1 event", "toast after creating one event") : I18n.tr("Created %1 events", "toast after creating multiple events; %1 is event count").arg(total);
+        case "delete":
+            if (completed !== total)
+                return I18n.tr("Deleted %1 of %2 events", "toast when only some events deleted; %1 is completed count, %2 is total count").arg(completed).arg(total);
+            return total === 1 ? I18n.tr("Deleted 1 event", "toast after deleting one event") : I18n.tr("Deleted %1 events", "toast after deleting multiple events; %1 is event count").arg(total);
         }
-        ToastService.info(total === 1 ? I18n.tr("1 event %1", "single event action result; %1 is an action verb").arg(verb) : I18n.tr("%1 events %2", "multiple event action result; %1 is event count, %2 is an action verb").arg(total).arg(verb));
+        return "";
+    }
+
+    function finishOperation(action, total, response) {
+        busy = false;
+        ToastService.info(operationToast(action, (response.results || []).length, total));
     }
 
     function copy(fallback) {
@@ -148,6 +165,8 @@ Item {
         if (fallback)
             ensureSelected(fallback);
         const selected = events(fallback);
+        if (selected.length === 0)
+            return;
         if (!allWritable(fallback)) {
             ToastService.info(I18n.tr("Read-only events can't be cut", "event cut error for a read-only calendar"));
             return;
@@ -176,14 +195,14 @@ Item {
         busy = true;
         DankCalService.createEvents(fields, response => {
             if (response.error || cutSources.length !== fields.length) {
-                root.finishOperation(I18n.tr("pasted", "past-tense event action used in a result message"), fields.length, response);
+                root.finishOperation("paste", fields.length, response);
                 root.clear();
                 return;
             }
             DankCalService.deleteEvents(cutSources, deleteResponse => {
-                root.finishOperation(I18n.tr("moved", "past-tense event action used in a result message"), fields.length, deleteResponse);
+                root.finishOperation("move", fields.length, deleteResponse);
                 if (!deleteResponse.error)
-                    Quickshell.clipboardText = EventUtils.clipboardText(cutSources, false);
+                    Quickshell.clipboardText = EventUtils.clipboardTextFromFields(fields);
                 root.clear();
             });
         });
@@ -206,7 +225,7 @@ Item {
             return;
         }
         busy = true;
-        DankCalService.createEvents(fields, response => root.finishOperation(I18n.tr("created", "past-tense event action used in a result message"), fields.length, response));
+        DankCalService.createEvents(fields, response => root.finishOperation("create", fields.length, response));
     }
 
     function moveTo(anchorEvent, targetDay) {
@@ -223,7 +242,7 @@ Item {
             return;
         busy = true;
         DankCalService.moveEvents(selected, offset, response => {
-            root.finishOperation(I18n.tr("moved", "past-tense event action used in a result message"), selected.length, response);
+            root.finishOperation("move", selected.length, response);
             root.clear();
         });
     }
@@ -234,13 +253,15 @@ Item {
         if (fallback)
             ensureSelected(fallback);
         const selected = events(fallback);
+        if (selected.length === 0)
+            return;
         if (!allWritable(fallback)) {
             ToastService.info(I18n.tr("Read-only events can't be deleted", "event delete error for a read-only calendar"));
             return;
         }
         busy = true;
         DankCalService.deleteEvents(selected, response => {
-            root.finishOperation(I18n.tr("deleted", "past-tense event action used in a result message"), selected.length, response);
+            root.finishOperation("delete", selected.length, response);
             root.clear();
         });
     }

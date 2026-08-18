@@ -24,7 +24,7 @@ Item {
         },
         {
             id: "duplicate",
-            label: I18n.tr("Again", "multi-event action shelf duplicate label"),
+            label: I18n.tr("Duplicate", "multi-event action shelf duplicate label"),
             icon: "file_copy"
         },
         {
@@ -76,11 +76,13 @@ Item {
         }
     }
 
-    visible: controller && controller.count > 1
+    readonly property bool shown: controller !== null && controller.count > 1
+
+    visible: opacity > 0
     implicitWidth: selectionLabel.width + actionRow.width + Theme.spacingL * 2 + Theme.spacingM
     implicitHeight: 54
-    opacity: visible ? 1 : 0
-    scale: visible ? 1 : 0.96
+    opacity: shown ? 1 : 0
+    scale: shown ? 1 : 0.96
 
     Behavior on opacity {
         NumberAnimation {
@@ -141,7 +143,7 @@ Item {
                 Item {
                     id: action
                     required property var modelData
-                    width: 48
+                    width: Math.max(48, actionLabel.implicitWidth + Theme.spacingS * 2)
                     height: 44
 
                     Column {
@@ -156,8 +158,9 @@ Item {
                         }
 
                         StyledText {
+                            id: actionLabel
                             text: action.modelData.label
-                            font.pixelSize: 9
+                            font.pixelSize: Theme.fontSizeSmall - 2
                             color: action.modelData.danger ? Theme.error : Theme.surfaceVariantText
                             anchors.horizontalCenter: parent.horizontalCenter
                         }

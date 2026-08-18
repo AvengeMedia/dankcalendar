@@ -18,6 +18,7 @@ Item {
     signal openRequested(var event)
     signal createRequested(date day)
     signal deleteRequested(var event)
+    signal moveRequested(var event, date day)
 
     visible: false
     width: 0
@@ -167,6 +168,7 @@ Item {
     DankPopupMenu {
         id: menu
         preferredWidth: 264
+        dismissOnOutsidePress: true
         items: root.menuItems()
         onTriggered: itemId => {
             switch (itemId) {
@@ -195,7 +197,7 @@ Item {
                 root.controller.duplicate(7, root.actionEvent);
                 break;
             case "moveSelected":
-                root.controller.moveTo(root.actionEvent, root.selectedDay);
+                root.moveRequested(root.actionEvent, root.selectedDay);
                 break;
             case "paste":
                 root.controller.paste(root.targetDay);

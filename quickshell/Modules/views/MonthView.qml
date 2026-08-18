@@ -41,10 +41,18 @@ Item {
     readonly property real previewStart: dragSelecting ? dragRangeStart : keyRangeStart
     readonly property real previewEnd: dragSelecting ? dragRangeEnd : keyRangeEnd
 
+    function isEventSelected(event) {
+        return selectedEventKeys.indexOf(DankCalService.eventKey(event)) !== -1;
+    }
+
     function updateEventDrag(pointerItem, x, y) {
         const gridPosition = pointerItem.mapToItem(grid, x, y);
         const rootPosition = pointerItem.mapToItem(root, x, y);
         dragPosition = Qt.point(rootPosition.x, rootPosition.y);
+        if (gridPosition.x < 0 || gridPosition.x >= grid.width || gridPosition.y < 0 || gridPosition.y >= grid.height) {
+            dragTargetTime = 0;
+            return;
+        }
         const target = rangeDrag.dateAt(gridPosition);
         dragTargetTime = target ? target.getTime() : 0;
     }
@@ -450,7 +458,7 @@ Item {
 
                                 Rectangle {
                                     required property var modelData
-                                    readonly property bool isSelected: root.selectedEventKeys.indexOf(DankCalService.eventKey(modelData)) !== -1
+                                    readonly property bool isSelected: root.isEventSelected(modelData)
                                     width: parent.width
                                     height: root.eventChipHeight
                                     radius: 4
@@ -563,27 +571,10 @@ Item {
         onStepped: direction => wheelHandler.step((I18n.isRtl ? 1 : -1) * direction)
     }
 
-    Rectangle {
-        visible: root.eventDragging && root.draggedEvent
-        x: Math.min(root.width - width - Theme.spacingS, Math.max(Theme.spacingS, root.dragPosition.x + 12))
-        y: Math.min(root.height - height - Theme.spacingS, Math.max(Theme.spacingS, root.dragPosition.y + 12))
-        width: Math.min(220, dragLabel.implicitWidth + Theme.spacingL * 2)
-        height: 34
-        radius: Theme.cornerRadiusSmall
-        color: Theme.surfaceContainerHigh
-        border.color: Theme.primary
-        border.width: 2
-        z: 100
-
-        StyledText {
-            id: dragLabel
-            anchors.centerIn: parent
-            text: root.selectedEventKeys.indexOf(root.draggedEvent ? DankCalService.eventKey(root.draggedEvent) : "") !== -1 && root.selectedEventKeys.length > 1 ? I18n.tr("Move %1 events", "event drag preview label; %1 is event count").arg(root.selectedEventKeys.length) : (root.draggedEvent ? root.draggedEvent.title : "")
-            font.pixelSize: Theme.fontSizeSmall
-            font.weight: Font.Medium
-            color: Theme.surfaceText
-            elide: Text.ElideRight
-            width: Math.min(196, implicitWidth)
-        }
+    EventDragGhost {
+        dragging: root.eventDragging
+        draggedEvent: root.draggedEvent
+        dragPosition: root.dragPosition
+        selectedKeys: root.selectedEventKeys
     }
 }

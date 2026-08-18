@@ -14,6 +14,9 @@ Popup {
     property var items: []
     property real preferredWidth: 228
     property int currentIndex: -1
+    // Context menus dismiss on any outside press; opener-anchored menus keep
+    // presses on their anchor item inert so the opener can toggle them.
+    property bool dismissOnOutsidePress: false
 
     signal triggered(string itemId)
 
@@ -54,6 +57,7 @@ Popup {
 
     width: preferredWidth
     padding: Theme.spacingS
+    margins: Theme.spacingS
     // Outside-press dismissal is armed shortly after opening, otherwise the
     // click that opened the menu can immediately close it. Presses inside the
     // anchor item never auto-close, so the opener can toggle deterministically.
@@ -74,7 +78,7 @@ Popup {
     Timer {
         id: armCloseTimer
         interval: 100
-        onTriggered: root.closePolicy = Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        onTriggered: root.closePolicy = Popup.CloseOnEscape | (root.dismissOnOutsidePress ? Popup.CloseOnPressOutside : Popup.CloseOnPressOutsideParent)
     }
 
     background: Rectangle {

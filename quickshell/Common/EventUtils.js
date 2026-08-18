@@ -74,6 +74,25 @@ function escapeICal(value) {
     return String(value || "").replace(/\\/g, "\\\\").replace(/\r?\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;")
 }
 
+// RFC 5545 3.1: content lines longer than 75 octets fold into CRLF + space.
+function foldICalLine(line) {
+    let folded = ""
+    let current = ""
+    let octets = 0
+    for (const character of line) {
+        const encoded = encodeURIComponent(character)
+        const size = encoded.indexOf("%") === 0 ? encoded.length / 3 : 1
+        if (octets + size > 75) {
+            folded += current + "\r\n "
+            current = ""
+            octets = 1
+        }
+        current += character
+        octets += size
+    }
+    return folded + current
+}
+
 function formatICalDate(value, allDay) {
     const date = new Date(value)
     const pad = number => String(number).padStart(2, "0")
@@ -82,11 +101,27 @@ function formatICalDate(value, allDay) {
     return date.getUTCFullYear() + pad(date.getUTCMonth() + 1) + pad(date.getUTCDate()) + "T" + pad(date.getUTCHours()) + pad(date.getUTCMinutes()) + pad(date.getUTCSeconds()) + "Z"
 }
 
-function clipboardText(events, cut) {
-    const ordered = sortedUnique(events)
+function clipboardTextFromFields(fieldsList) {
     const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:" + clipboardProductId, "CALSCALE:GREGORIAN"]
-    for (let i = 0; i < ordered.length; i++) {
-        const event = ordered[i]
+    for (let i = 0; i < fieldsList.length; i++) {
+        const fields = fieldsList[i]
+        lines.push("BEGIN:VEVENT")
+        lines.push("SUMMARY:" + escapeICal(fields.summary))
+        if (fields.description)
+            lines.push("DESCRIPTION:" + escapeICal(fields.description))
+        if (fields.location)
+            lines.push("LOCATION:" + escapeICal(fields.location))
+        lines.push((fields.allDay ? "DTSTART;VALUE=DATE:" : "DTSTART:") + formatICalDate(fields.start, fields.allDay))
+        lines.push((fields.allDay ? "DTEND;VALUE=DATE:" : "DTEND:") + formatICalDate(fields.end, fields.allDay))
+        lines.push(clipboardDataPrefix + encodeURIComponent(JSON.stringify(fields)))
+        lines.push("END:VEVENT")
+    }
+    lines.push("END:VCALENDAR")
+    return lines.map(foldICalLine).join("\r\n")
+}
+
+function clipboardText(events, cut) {
+    const fieldsList = sortedUnique(events).map(event => {
         const fields = createFields(event, 0, event.calendarId, false)
         if (cut) {
             fields._dankCut = {
@@ -101,25 +136,15 @@ function clipboardText(events, cut) {
                 "recurrence": cloneValue(event.recurrence)
             }
         }
-        lines.push("BEGIN:VEVENT")
-        lines.push("SUMMARY:" + escapeICal(event.title))
-        if (event.description)
-            lines.push("DESCRIPTION:" + escapeICal(event.description))
-        if (event.location)
-            lines.push("LOCATION:" + escapeICal(event.location))
-        lines.push((event.allDay ? "DTSTART;VALUE=DATE:" : "DTSTART:") + formatICalDate(event.start, event.allDay))
-        lines.push((event.allDay ? "DTEND;VALUE=DATE:" : "DTEND:") + formatICalDate(event.end, event.allDay))
-        lines.push(clipboardDataPrefix + encodeURIComponent(JSON.stringify(fields)))
-        lines.push("END:VEVENT")
-    }
-    lines.push("END:VCALENDAR")
-    return lines.join("\r\n")
+        return fields
+    })
+    return clipboardTextFromFields(fieldsList)
 }
 
 function clipboardEvents(text) {
     if (!text || text.indexOf("BEGIN:VCALENDAR") === -1)
         return []
-    const lines = String(text).replace(/\r\n/g, "\n").split("\n")
+    const lines = String(text).replace(/\r?\n[ \t]/g, "").replace(/\r\n/g, "\n").split("\n")
     const events = []
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].indexOf(clipboardDataPrefix) !== 0)

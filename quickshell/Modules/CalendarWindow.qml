@@ -5,6 +5,7 @@ import qs.Modals
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
+import "../Common/EventUtils.js" as EventUtils
 
 FloatingWindow {
     id: window
@@ -31,6 +32,7 @@ FloatingWindow {
     property int eventsVersion: 0
     property bool sidebarFocused: false
     property real rangeAnchorTime: 0
+    property var pendingMove: null
 
     EventSelectionModel {
         id: eventSelection
@@ -319,7 +321,31 @@ FloatingWindow {
     }
 
     function handleEventContext(event, anchorItem, x, y) {
-        eventMenu.showForEvent(event, anchorItem, x, y);
+        const position = anchorItem.mapToItem(focusScope, x, y);
+        eventMenu.showForEvent(event, focusScope, position.x, position.y);
+    }
+
+    function handleDayContext(day, anchorItem, x, y) {
+        const position = anchorItem.mapToItem(focusScope, x, y);
+        eventMenu.showForDay(day, focusScope, position.x, position.y);
+    }
+
+    function requestEventMove(event, targetDay) {
+        eventSelection.ensureSelected(event);
+        const movesSeries = eventSelection.events(event).some(ev => (ev.recurringId || "") !== "" || (ev.recurrence || []).length > 0);
+        if (!movesSeries || !eventSelection.allWritable(event) || EventUtils.daysBetween(event.start, targetDay) === 0) {
+            eventSelection.moveTo(event, targetDay);
+            return;
+        }
+        pendingMove = {
+            "event": event,
+            "targetDay": targetDay
+        };
+        moveEventsConfirm.show({
+            title: I18n.tr("Move recurring events?", "confirmation title before moving events that repeat"),
+            message: I18n.tr("Moving a recurring event moves its entire series.", "confirmation body before moving events that repeat"),
+            confirmText: I18n.tr("Move", "confirmation button for moving recurring events")
+        });
     }
 
     function requestEventDelete(event) {
@@ -871,8 +897,8 @@ FloatingWindow {
                         }
                         onEventClicked: (ev, modifiers) => window.handleEventClick(ev, modifiers)
                         onEventContextRequested: (ev, anchorItem, x, y) => window.handleEventContext(ev, anchorItem, x, y)
-                        onDayContextRequested: (day, anchorItem, x, y) => eventMenu.showForDay(day, anchorItem, x, y)
-                        onEventDropRequested: (ev, targetDay) => eventSelection.moveTo(ev, targetDay)
+                        onDayContextRequested: (day, anchorItem, x, y) => window.handleDayContext(day, anchorItem, x, y)
+                        onEventDropRequested: (ev, targetDay) => window.requestEventMove(ev, targetDay)
                         onTaskClicked: task => window.openTaskDetails(task)
                         onCreateTaskRequested: window.openCreateTask()
                     }
@@ -979,11 +1005,22 @@ FloatingWindow {
         onOpenRequested: event => window.openEventDetails(event)
         onCreateRequested: day => window.openCreateEvent(day)
         onDeleteRequested: event => window.requestEventDelete(event)
+        onMoveRequested: (event, day) => window.requestEventMove(event, day)
     }
 
     ConfirmDialog {
         id: deleteEventsConfirm
         onConfirmed: eventSelection.remove()
+    }
+
+    ConfirmDialog {
+        id: moveEventsConfirm
+        onConfirmed: {
+            if (!window.pendingMove)
+                return;
+            eventSelection.moveTo(window.pendingMove.event, window.pendingMove.targetDay);
+            window.pendingMove = null;
+        }
     }
 
     Toast {

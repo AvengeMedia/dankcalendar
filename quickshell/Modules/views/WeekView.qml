@@ -39,6 +39,10 @@ Item {
             return;
         }
         const visualIndex = Math.floor((position.x - timeColumnWidth - slidePx) / dayWidth);
+        if (visualIndex < 0 || visualIndex > 6) {
+            dragTargetTime = 0;
+            return;
+        }
         const dayIndex = I18n.isRtl ? 6 - visualIndex : visualIndex;
         dragTargetTime = dayAt(dayIndex).getTime();
     }
@@ -827,27 +831,10 @@ Item {
         slideArea: slidePager
     }
 
-    Rectangle {
-        visible: root.eventDragging && root.draggedEvent
-        x: Math.min(root.width - width - Theme.spacingS, Math.max(Theme.spacingS, root.dragPosition.x + 12))
-        y: Math.min(root.height - height - Theme.spacingS, Math.max(Theme.spacingS, root.dragPosition.y + 12))
-        width: Math.min(220, dragLabel.implicitWidth + Theme.spacingL * 2)
-        height: 34
-        radius: Theme.cornerRadiusSmall
-        color: Theme.surfaceContainerHigh
-        border.color: Theme.primary
-        border.width: 2
-        z: 100
-
-        StyledText {
-            id: dragLabel
-            anchors.centerIn: parent
-            text: root.selectedEventKeys.indexOf(root.draggedEvent ? DankCalService.eventKey(root.draggedEvent) : "") !== -1 && root.selectedEventKeys.length > 1 ? I18n.tr("Move %1 events", "event drag preview label; %1 is event count").arg(root.selectedEventKeys.length) : (root.draggedEvent ? root.draggedEvent.title : "")
-            font.pixelSize: Theme.fontSizeSmall
-            font.weight: Font.Medium
-            color: Theme.surfaceText
-            elide: Text.ElideRight
-            width: Math.min(196, implicitWidth)
-        }
+    EventDragGhost {
+        dragging: root.eventDragging
+        draggedEvent: root.draggedEvent
+        dragPosition: root.dragPosition
+        selectedKeys: root.selectedEventKeys
     }
 }

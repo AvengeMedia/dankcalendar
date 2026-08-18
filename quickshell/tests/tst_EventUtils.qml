@@ -18,10 +18,12 @@ TestCase {
             "allDay": false,
             "recurringId": "",
             "recurrence": [],
-            "reminders": [{
-                "method": "popup",
-                "minutes": 10
-            }]
+            "reminders": [
+                {
+                    "method": "popup",
+                    "minutes": 10
+                }
+            ]
         }, overrides || {});
     }
 
@@ -99,6 +101,18 @@ TestCase {
         compare(new Date(pasted[0].start).getHours(), 9);
         compare(new Date(pasted[1].start).getDate(), 22);
         compare(new Date(pasted[1].start).getHours(), 14);
+    }
+
+    function test_clipboardFoldsLongLinesAndRoundTrips() {
+        const original = event({
+            "description": "réunion ".repeat(60).trim()
+        });
+        const text = EventUtils.clipboardText([original]);
+        const copied = EventUtils.clipboardEvents(text);
+
+        verify(text.split("\r\n").every(line => line.length <= 75));
+        compare(copied.length, 1);
+        compare(copied[0].description, original.description);
     }
 
     function test_allDayCopyUsesDateValues() {

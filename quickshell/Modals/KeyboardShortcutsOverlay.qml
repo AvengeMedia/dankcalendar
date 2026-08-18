@@ -152,6 +152,22 @@ Item {
                     "label": I18n.tr("Duplicate selected events", "keyboard shortcut description")
                 },
                 {
+                    "keys": ["Ctrl+Shift+D"],
+                    "label": I18n.tr("Duplicate selected events to the next day", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+A"],
+                    "label": I18n.tr("Select all events on the selected day", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Ctrl+Click"],
+                    "label": I18n.tr("Add or remove an event from the selection", "keyboard shortcut description")
+                },
+                {
+                    "keys": ["Shift+Click"],
+                    "label": I18n.tr("Select a range of events", "keyboard shortcut description")
+                },
+                {
                     "keys": ["Menu"],
                     "label": I18n.tr("Open event actions", "keyboard shortcut description")
                 },
