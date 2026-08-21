@@ -24,6 +24,20 @@ function shiftDate(value, days) {
     return shifted
 }
 
+function wireTime(value, allDay) {
+    const date = new Date(value)
+    if (!allDay)
+        return date.toISOString()
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString()
+}
+
+function localTime(value, allDay) {
+    const date = new Date(value)
+    if (!allDay)
+        return date
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+}
+
 function cloneValue(value) {
     return JSON.parse(JSON.stringify(value || []))
 }
@@ -34,8 +48,8 @@ function createFields(event, dayOffset, calendarId, preserveRecurrence) {
         "summary": event.title,
         "description": event.description || "",
         "location": event.location || "",
-        "start": shiftDate(event.start, dayOffset).toISOString(),
-        "end": shiftDate(event.end, dayOffset).toISOString(),
+        "start": wireTime(shiftDate(event.start, dayOffset), event.allDay),
+        "end": wireTime(shiftDate(event.end, dayOffset), event.allDay),
         "allDay": !!event.allDay,
         "reminders": cloneValue(event.reminders)
     }
@@ -46,11 +60,11 @@ function createFields(event, dayOffset, calendarId, preserveRecurrence) {
 
 function moveFields(event, dayOffset) {
     const fields = {
-        "start": shiftDate(event.start, dayOffset).toISOString(),
-        "end": shiftDate(event.end, dayOffset).toISOString()
+        "start": wireTime(shiftDate(event.start, dayOffset), event.allDay),
+        "end": wireTime(shiftDate(event.end, dayOffset), event.allDay)
     }
     if ((event.recurringId || "") !== "" || (event.recurrence || []).length > 0)
-        fields.occurrenceStart = new Date(event.start).toISOString()
+        fields.occurrenceStart = wireTime(event.start, event.allDay)
     return fields
 }
 
@@ -97,7 +111,7 @@ function formatICalDate(value, allDay) {
     const date = new Date(value)
     const pad = number => String(number).padStart(2, "0")
     if (allDay)
-        return date.getFullYear() + pad(date.getMonth() + 1) + pad(date.getDate())
+        return date.getUTCFullYear() + pad(date.getUTCMonth() + 1) + pad(date.getUTCDate())
     return date.getUTCFullYear() + pad(date.getUTCMonth() + 1) + pad(date.getUTCDate()) + "T" + pad(date.getUTCHours()) + pad(date.getUTCMinutes()) + pad(date.getUTCSeconds()) + "Z"
 }
 
@@ -164,13 +178,13 @@ function clipboardEvents(text) {
 function pasteFields(copiedFields, targetDay, fallbackCalendarId) {
     if (!copiedFields || copiedFields.length === 0)
         return []
-    const ordered = copiedFields.slice().sort((left, right) => new Date(left.start) - new Date(right.start))
-    const offset = daysBetween(ordered[0].start, targetDay)
+    const ordered = copiedFields.slice().sort((left, right) => localTime(left.start, left.allDay) - localTime(right.start, right.allDay))
+    const offset = daysBetween(localTime(ordered[0].start, ordered[0].allDay), targetDay)
     return ordered.map(fields => {
         const copy = Object.assign({}, fields)
         copy.calendarId = copy.calendarId || fallbackCalendarId
-        copy.start = shiftDate(copy.start, offset).toISOString()
-        copy.end = shiftDate(copy.end, offset).toISOString()
+        copy.start = wireTime(shiftDate(localTime(fields.start, fields.allDay), offset), fields.allDay)
+        copy.end = wireTime(shiftDate(localTime(fields.end, fields.allDay), offset), fields.allDay)
         copy.reminders = cloneValue(copy.reminders)
         if (copy.recurrence)
             copy.recurrence = cloneValue(copy.recurrence)

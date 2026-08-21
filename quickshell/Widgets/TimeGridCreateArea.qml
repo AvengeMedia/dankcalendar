@@ -11,13 +11,13 @@ MouseArea {
     required property real hourHeight
     property Item flickable: null
     property int slotMinutes: 15
-    property real dragThreshold: 6
     property real autoScrollEdge: 24
     property real autoScrollStep: 6
 
     readonly property real slotHeight: hourHeight * slotMinutes / 60
     readonly property int slotCount: hourCount * 60 / slotMinutes
     readonly property bool selecting: anchorSlot >= 0
+    property bool armed: false
     property int anchorSlot: -1
     property int fromSlot: 0
     property int toSlot: 0
@@ -62,17 +62,21 @@ MouseArea {
     }
 
     function reset() {
+        armed = false;
         anchorSlot = -1;
         autoScrollDirection = 0;
     }
 
-    onPressed: mouse => pressY = mouse.y
+    onPressed: mouse => {
+        pressY = mouse.y;
+        armed = true;
+    }
 
     onPositionChanged: mouse => {
-        if (!(mouse.buttons & Qt.LeftButton))
+        if (!armed || !(mouse.buttons & Qt.LeftButton))
             return;
         if (!selecting) {
-            if (Math.abs(mouse.y - pressY) < dragThreshold)
+            if (Math.abs(mouse.y - pressY) < slotHeight)
                 return;
             anchorSlot = slotAt(pressY);
         }
@@ -81,8 +85,10 @@ MouseArea {
     }
 
     onReleased: {
-        if (!selecting)
+        if (!selecting) {
+            reset();
             return;
+        }
         const start = slotTime(fromSlot);
         const end = slotTime(toSlot);
         reset();
@@ -90,6 +96,12 @@ MouseArea {
     }
 
     onCanceled: reset()
+
+    Shortcut {
+        sequence: "Escape"
+        enabled: root.selecting
+        onActivated: root.reset()
+    }
 
     Timer {
         interval: 16

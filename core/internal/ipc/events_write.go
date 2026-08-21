@@ -96,9 +96,9 @@ func handleEventUpdate(ctx context.Context, w *ConnWriter, req Request, deps Dep
 	}
 
 	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" && len(entEv.Recurrence) > 0 {
-		occStart, perr := time.Parse(time.RFC3339, raw)
+		occStart, perr := parseOccurrenceStart(raw, entEv.AllDay)
 		if perr != nil {
-			RespondError(w, req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
+			RespondError(w, req.ID, perr.Error())
 			return
 		}
 		ev = shiftSeriesTimes(ev, entEv.Start, occStart)
@@ -146,9 +146,9 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 	calendarID := entEv.Edges.Calendar.ID
 
 	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" {
-		occStart, perr := time.Parse(time.RFC3339, raw)
+		occStart, perr := parseOccurrenceStart(raw, entEv.AllDay)
 		if perr != nil {
-			RespondError(w, req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
+			RespondError(w, req.ID, perr.Error())
 			return
 		}
 		deleteEventOccurrence(ctx, w, req, deps, entEv, calendarID, occStart)
@@ -461,6 +461,24 @@ func exDateValue(occStart time.Time, allDay bool) string {
 	return occStart.UTC().Format("20060102T150405Z")
 }
 
+// allDayDate pins an all-day instant to UTC midnight of the calendar date it
+// was written with, so a client's local offset never shifts the day.
+func allDayDate(t time.Time) time.Time {
+	y, m, d := t.Date()
+	return time.Date(y, m, d, 0, 0, 0, 0, time.UTC)
+}
+
+func parseOccurrenceStart(raw string, allDay bool) (time.Time, error) {
+	t, err := time.Parse(time.RFC3339, raw)
+	if err != nil {
+		return time.Time{}, fmt.Errorf("occurrenceStart must be RFC3339: %v", err)
+	}
+	if allDay {
+		return allDayDate(t), nil
+	}
+	return t, nil
+}
+
 func shiftSeriesTimes(ev calendar.Event, masterStart, occurrenceStart time.Time) calendar.Event {
 	duration := ev.End.Sub(ev.Start)
 	ev.Start = masterStart.Add(ev.Start.Sub(occurrenceStart))
@@ -513,6 +531,9 @@ func eventFromParams(base calendar.Event, p map[string]any) (calendar.Event, err
 		t, err := time.Parse(time.RFC3339, raw)
 		if err != nil {
 			return base, fmt.Errorf("%s must be RFC3339: %v", key, err)
+		}
+		if base.AllDay {
+			t = allDayDate(t)
 		}
 		*dst = t
 	}

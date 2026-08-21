@@ -5,6 +5,7 @@ import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
+import "../Common/EventUtils.js" as EventUtils
 
 FloatingWindow {
     id: eventModal
@@ -93,6 +94,7 @@ FloatingWindow {
         createMode = false;
         editMode = false;
         confirmDelete = false;
+        saving = false;
         pendingResponse = "";
         formError = "";
         event = eventData || {};
@@ -155,6 +157,8 @@ FloatingWindow {
         };
         createMode = true;
         confirmDelete = false;
+        saving = false;
+        pendingResponse = "";
         formError = "";
         _loadForm();
         editMode = true;
@@ -164,8 +168,13 @@ FloatingWindow {
     function hide() {
         editMode = false;
         createMode = false;
+        confirmDelete = false;
+        saving = false;
+        pendingResponse = "";
         visible = false;
     }
+
+    onClosed: hide()
 
     function beginEdit() {
         _loadForm();
@@ -316,10 +325,10 @@ FloatingWindow {
         const emo = formEndDate.getMonth();
         const ed = formEndDate.getDate();
         if (formAllDay) {
-            const start = new Date(y, mo, d);
-            let end = new Date(ey, emo, ed + 1);
+            const start = new Date(Date.UTC(y, mo, d));
+            let end = new Date(Date.UTC(ey, emo, ed + 1));
             if (end.getTime() <= start.getTime())
-                end = new Date(y, mo, d + 1);
+                end = new Date(Date.UTC(y, mo, d + 1));
             return {
                 "start": start,
                 "end": end
@@ -376,7 +385,7 @@ FloatingWindow {
         if (recurrenceEditable && recurrencePickerItem)
             fields.recurrence = recurrencePickerItem.currentRules();
         if (!createMode && isOccurrence)
-            fields.occurrenceStart = new Date(event.start).toISOString();
+            fields.occurrenceStart = EventUtils.wireTime(event.start, event.allDay);
 
         saving = true;
         formError = "";
@@ -411,7 +420,7 @@ FloatingWindow {
                 return;
             }
             hide();
-        }, occurrenceOnly ? new Date(event.start).toISOString() : undefined);
+        }, occurrenceOnly ? EventUtils.wireTime(event.start, event.allDay) : undefined);
     }
 
     function respond(action) {
@@ -436,7 +445,7 @@ FloatingWindow {
             }
             if (response.result)
                 eventModal.event = DankCalService.eventFromResult(response.result);
-        }, occurrenceOnly ? new Date(event.start).toISOString() : undefined);
+        }, occurrenceOnly ? EventUtils.wireTime(event.start, event.allDay) : undefined);
     }
 
     function _styleAnchors(html) {

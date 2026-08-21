@@ -115,6 +115,38 @@ TestCase {
         compare(copied[0].description, original.description);
     }
 
+    function test_allDayFieldsUseUtcMidnightOfLocalDay() {
+        const original = event({
+            "allDay": true,
+            "recurrence": ["FREQ=WEEKLY"],
+            "start": new Date(2026, 7, 10),
+            "end": new Date(2026, 7, 11)
+        });
+
+        const moved = EventUtils.moveFields(original, 1);
+        compare(moved.start, "2026-08-11T00:00:00.000Z");
+        compare(moved.end, "2026-08-12T00:00:00.000Z");
+        compare(moved.occurrenceStart, "2026-08-10T00:00:00.000Z");
+
+        const created = EventUtils.createFields(original, 0, "calendar-2");
+        compare(created.start, "2026-08-10T00:00:00.000Z");
+        compare(created.end, "2026-08-11T00:00:00.000Z");
+    }
+
+    function test_allDayPasteLandsOnTargetDay() {
+        const original = event({
+            "allDay": true,
+            "start": new Date(2026, 7, 10),
+            "end": new Date(2026, 7, 12)
+        });
+        const copied = EventUtils.clipboardEvents(EventUtils.clipboardText([original]));
+        const pasted = EventUtils.pasteFields(copied, new Date(2026, 7, 20), "calendar-1");
+
+        compare(pasted.length, 1);
+        compare(pasted[0].start, "2026-08-20T00:00:00.000Z");
+        compare(pasted[0].end, "2026-08-22T00:00:00.000Z");
+    }
+
     function test_allDayCopyUsesDateValues() {
         const original = event({
             "allDay": true,

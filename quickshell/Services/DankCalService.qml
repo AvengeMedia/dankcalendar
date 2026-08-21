@@ -117,6 +117,7 @@ Singleton {
                 root.connected = false;
                 root.connecting = false;
                 root.connectionStateChanged();
+                root._failPendingRequests("disconnected from dankcalendar socket");
             }
         }
 
@@ -263,6 +264,16 @@ Singleton {
         interval: 400
         repeat: false
         onTriggered: root.reloadTasks()
+    }
+
+    function _failPendingRequests(reason) {
+        const callbacks = pendingRequests;
+        pendingRequests = ({});
+        for (const id in callbacks) {
+            callbacks[id]({
+                "error": reason
+            });
+        }
     }
 
     function sendRequest(method, params, callback) {
@@ -877,7 +888,7 @@ Singleton {
                 "id": event.id
             };
             if ((event.recurringId || "") !== "" || (event.recurrence || []).length > 0)
-                fields.occurrenceStart = new Date(event.start).toISOString();
+                fields.occurrenceStart = EventUtils.wireTime(event.start, event.allDay);
             return fields;
         });
         mutateEvents("events.delete", params, callback);

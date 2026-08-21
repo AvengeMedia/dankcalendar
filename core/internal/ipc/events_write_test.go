@@ -141,3 +141,36 @@ func TestDomainEventFromEntCarriesRecurrence(t *testing.T) {
 	assert.Equal(t, []string{"20260713T090000Z"}, ev.Recurrence.ExDate)
 	assert.Equal(t, origStart, ev.OriginalStart)
 }
+
+func TestEventFromParamsAllDayKeepsWrittenDate(t *testing.T) {
+	ev, err := eventFromParams(calendar.Event{}, map[string]any{
+		"summary": "holiday",
+		"allDay":  true,
+		"start":   "2026-08-01T00:00:00+02:00",
+		"end":     "2026-08-02T00:00:00+02:00",
+	})
+	require.NoError(t, err)
+	assert.Equal(t, time.Date(2026, 8, 1, 0, 0, 0, 0, time.UTC), ev.Start)
+	assert.Equal(t, time.Date(2026, 8, 2, 0, 0, 0, 0, time.UTC), ev.End)
+
+	timed, err := eventFromParams(calendar.Event{}, map[string]any{
+		"summary": "call",
+		"start":   "2026-08-01T09:00:00+02:00",
+		"end":     "2026-08-01T09:30:00+02:00",
+	})
+	require.NoError(t, err)
+	assert.True(t, timed.Start.Equal(time.Date(2026, 8, 1, 7, 0, 0, 0, time.UTC)))
+}
+
+func TestParseOccurrenceStart(t *testing.T) {
+	allDay, err := parseOccurrenceStart("2026-08-01T00:00:00-05:00", true)
+	require.NoError(t, err)
+	assert.Equal(t, time.Date(2026, 8, 1, 0, 0, 0, 0, time.UTC), allDay)
+
+	timed, err := parseOccurrenceStart("2026-08-01T09:00:00-05:00", false)
+	require.NoError(t, err)
+	assert.True(t, timed.Equal(time.Date(2026, 8, 1, 14, 0, 0, 0, time.UTC)))
+
+	_, err = parseOccurrenceStart("yesterday", false)
+	require.Error(t, err)
+}
