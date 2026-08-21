@@ -22,6 +22,7 @@ func TestQuoteETag(t *testing.T) {
 		{"empty", ``, ``},
 		{"whitespace only", `  `, `  `},
 		{"padded unquoted", ` 1234-5678 `, `"1234-5678"`},
+		{"entity encoded (does not apply)", ` &quot;1234-5678&quot; `, `"&quot;1234-5678&quot;"`},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -50,6 +51,11 @@ func TestNormalizeETagXML(t *testing.T) {
 			"quoted left alone",
 			`<d:getetag>"abc"</d:getetag>`,
 			`<d:getetag>"abc"</d:getetag>`,
+		},
+		{
+			"entity encoded left alone",
+			`<d:getetag>&quot;abc&quot;</d:getetag>`,
+			`<d:getetag>&quot;abc&quot;</d:getetag>`,
 		},
 		{
 			"empty left alone",
@@ -114,4 +120,35 @@ func TestETagNormalizingTransport(t *testing.T) {
 	require.NoError(t, err)
 	resp.Body.Close()
 	assert.Equal(t, `"1755-372673"`, resp.Header.Get("Etag"))
+}
+
+// Nextcloud returns getetag values with quotes entity encoded; the transport
+// must not modify multistatus bodies if this is the case.
+func TestETagNormalizingTransportEntityEncoded(t *testing.T) {
+	const multistatus = `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:">
+  <d:response>
+    <d:href>/caldav/cal/event.ics</d:href>
+    <d:propstat>
+      <d:prop><d:getetag>&quot;1755-372673&quot;</d:getetag></d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+</d:multistatus>`
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		writeMultiStatus(w, multistatus)
+	}))
+	defer server.Close()
+
+	client := &http.Client{Transport: etagNormalizingTransport{base: http.DefaultTransport}}
+
+	req, err := http.NewRequest("REPORT", server.URL, nil)
+	require.NoError(t, err)
+	resp, err := client.Do(req)
+	require.NoError(t, err)
+	body, err := io.ReadAll(resp.Body)
+	resp.Body.Close()
+	require.NoError(t, err)
+	assert.Contains(t, string(body), `<d:getetag>&quot;1755-372673&quot;</d:getetag>`)
 }

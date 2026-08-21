@@ -51,7 +51,20 @@ func (t etagNormalizingTransport) RoundTrip(req *http.Request) (*http.Response, 
 func normalizeETagXML(body []byte) []byte {
 	return getETagRe.ReplaceAllFunc(body, func(m []byte) []byte {
 		sub := getETagRe.FindSubmatch(m)
-		quoted := quoteETag(string(sub[2]))
+
+		etag := string(sub[2])
+		trimmed := strings.TrimSpace(etag)
+		// The ETAG may be quoted with entity encoded quotes which are valid according
+		// to the XML standard and go-webdav properly supports them. As such they must
+		// also be considered as quoted and skipped, otherwise they will end up double
+		// quoted and error during processing.
+		quoted := ""
+		if strings.HasPrefix(trimmed, "&quot;") && strings.HasSuffix(trimmed, "&quot;") {
+			quoted = etag
+		} else {
+			quoted = quoteETag(etag)
+		}
+
 		return append(append(sub[1], quoted...), sub[3]...)
 	})
 }
