@@ -1,0 +1,129 @@
+import QtQuick
+import qs.Common
+import qs.DankCommon.Widgets
+
+MouseArea {
+    id: root
+
+    required property date day
+    required property int startHour
+    required property int hourCount
+    required property real hourHeight
+    property Item flickable: null
+    property int slotMinutes: 15
+    property real dragThreshold: 6
+    property real autoScrollEdge: 24
+    property real autoScrollStep: 6
+
+    readonly property real slotHeight: hourHeight * slotMinutes / 60
+    readonly property int slotCount: hourCount * 60 / slotMinutes
+    readonly property bool selecting: anchorSlot >= 0
+    property int anchorSlot: -1
+    property int fromSlot: 0
+    property int toSlot: 0
+    property real pressY: 0
+    property real pointerViewportY: 0
+    property int autoScrollDirection: 0
+
+    signal createRequested(date start, date end)
+
+    acceptedButtons: Qt.LeftButton
+    preventStealing: true
+
+    function slotAt(y) {
+        return Math.max(0, Math.min(slotCount - 1, Math.floor(y / slotHeight)));
+    }
+
+    function slotTime(slot) {
+        const d = new Date(day);
+        d.setHours(startHour, slot * slotMinutes, 0, 0);
+        return d;
+    }
+
+    function updateSelection(y) {
+        const slot = slotAt(y);
+        fromSlot = Math.min(anchorSlot, slot);
+        toSlot = Math.max(anchorSlot, slot) + 1;
+    }
+
+    function updateAutoScroll(y) {
+        if (!flickable)
+            return;
+        pointerViewportY = mapToItem(flickable, 0, y).y;
+        if (pointerViewportY < autoScrollEdge) {
+            autoScrollDirection = -1;
+            return;
+        }
+        if (pointerViewportY > flickable.height - autoScrollEdge) {
+            autoScrollDirection = 1;
+            return;
+        }
+        autoScrollDirection = 0;
+    }
+
+    function reset() {
+        anchorSlot = -1;
+        autoScrollDirection = 0;
+    }
+
+    onPressed: mouse => pressY = mouse.y
+
+    onPositionChanged: mouse => {
+        if (!(mouse.buttons & Qt.LeftButton))
+            return;
+        if (!selecting) {
+            if (Math.abs(mouse.y - pressY) < dragThreshold)
+                return;
+            anchorSlot = slotAt(pressY);
+        }
+        updateSelection(mouse.y);
+        updateAutoScroll(mouse.y);
+    }
+
+    onReleased: {
+        if (!selecting)
+            return;
+        const start = slotTime(fromSlot);
+        const end = slotTime(toSlot);
+        reset();
+        createRequested(start, end);
+    }
+
+    onCanceled: reset()
+
+    Timer {
+        interval: 16
+        repeat: true
+        running: root.selecting && root.autoScrollDirection !== 0 && root.flickable !== null
+        onTriggered: {
+            const f = root.flickable;
+            f.contentY = Math.max(0, Math.min(f.contentHeight - f.height, f.contentY + root.autoScrollDirection * root.autoScrollStep));
+            root.updateSelection(root.mapFromItem(f, 0, root.pointerViewportY).y);
+        }
+    }
+
+    Rectangle {
+        visible: root.selecting
+        x: 2
+        width: parent.width - 4
+        y: root.fromSlot * root.slotHeight
+        height: (root.toSlot - root.fromSlot) * root.slotHeight - 2
+        radius: Theme.cornerRadiusSmall
+        color: Theme.withAlpha(Theme.primary, 0.18)
+        border.color: Theme.primary
+        border.width: 1
+
+        StyledText {
+            visible: parent.height >= 16
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.margins: 4
+            text: SettingsData.formatTime(root.slotTime(root.fromSlot)) + " – " + SettingsData.formatTime(root.slotTime(root.toSlot))
+            font.pixelSize: Theme.fontSizeSmall
+            font.weight: Font.Medium
+            color: Theme.primary
+            elide: Text.ElideRight
+        }
+    }
+}

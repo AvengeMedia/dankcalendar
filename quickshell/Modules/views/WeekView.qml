@@ -25,6 +25,7 @@ Item {
     signal dayContextRequested(date day, var anchorItem, real x, real y)
     signal eventDropRequested(var event, date targetDay)
     signal shiftDaysRequested(int days)
+    signal createTimedRequested(date start, date end)
 
     function isEventSelected(event) {
         const key = DankCalService.eventKey(event);
@@ -687,6 +688,16 @@ Item {
                                     width: 1
                                     height: parent.height
                                     color: Theme.gridLine
+                                }
+
+                                TimeGridCreateArea {
+                                    anchors.fill: parent
+                                    day: dayColumn.day
+                                    startHour: root.startHour
+                                    hourCount: root.hourCount
+                                    hourHeight: root.hourHeight
+                                    flickable: weekFlickable
+                                    onCreateRequested: (start, end) => root.createTimedRequested(start, end)
                                 }
 
                                 DankIcon {

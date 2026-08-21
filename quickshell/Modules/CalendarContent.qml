@@ -36,6 +36,7 @@ Item {
     signal dayActivated(date day)
     signal viewDayRequested(date day)
     signal createRangeRequested(date startDay, date endDay)
+    signal createTimedRequested(date start, date end)
 
     function headerTitle() {
         switch (currentView) {
@@ -226,6 +227,7 @@ Item {
                     onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
                     onEventDropRequested: (ev, targetDay) => root.eventDropRequested(ev, targetDay)
                     onShiftDaysRequested: days => root.shiftDaysRequested(days)
+                    onCreateTimedRequested: (start, end) => root.createTimedRequested(start, end)
                 }
             }
 
@@ -241,6 +243,7 @@ Item {
                     onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
                     onPreviousRequested: root.previousRequested()
                     onNextRequested: root.nextRequested()
+                    onCreateTimedRequested: (start, end) => root.createTimedRequested(start, end)
                 }
             }
 

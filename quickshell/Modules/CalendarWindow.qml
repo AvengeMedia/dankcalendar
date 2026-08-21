@@ -364,6 +364,11 @@ FloatingWindow {
         eventLoader.item.showCreate(date || selectedDate, endDate);
     }
 
+    function openCreateTimedEvent(start, end) {
+        eventLoader.active = true;
+        eventLoader.item.showCreateTimed(start, end);
+    }
+
     function openTaskDetails(task) {
         taskLoader.active = true;
         taskLoader.item.show(task);
@@ -889,6 +894,11 @@ FloatingWindow {
                         onCreateRangeRequested: (startDay, endDay) => {
                             window.selectedDate = startDay;
                             window.openCreateEvent(startDay, endDay);
+                        }
+                        onCreateTimedRequested: (start, end) => {
+                            window.rangeAnchorTime = 0;
+                            window.selectedDate = start;
+                            window.openCreateTimedEvent(start, end);
                         }
                         onViewDayRequested: day => {
                             window.selectedDate = day;

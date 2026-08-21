@@ -122,20 +122,27 @@ FloatingWindow {
 
     function showCreate(day, endDay) {
         const base = _defaultStart(day);
-        let end = new Date(base.getTime() + SettingsData.defaultEventDurationMinutes * 60000);
-        let allDay = false;
-        if (endDay) {
-            base.setHours(0, 0, 0, 0);
-            end = new Date(endDay);
-            end.setHours(0, 0, 0, 0);
-            end.setDate(end.getDate() + 1);
-            allDay = true;
+        if (!endDay) {
+            _beginCreate(base, new Date(base.getTime() + SettingsData.defaultEventDurationMinutes * 60000), false);
+            return;
         }
+        base.setHours(0, 0, 0, 0);
+        const end = new Date(endDay);
+        end.setHours(0, 0, 0, 0);
+        end.setDate(end.getDate() + 1);
+        _beginCreate(base, end, true);
+    }
+
+    function showCreateTimed(start, end) {
+        _beginCreate(new Date(start), new Date(end), false);
+    }
+
+    function _beginCreate(start, end, allDay) {
         event = {
             "title": "",
             "description": "",
             "location": "",
-            "start": base,
+            "start": start,
             "end": end,
             "allDay": allDay,
             "attendees": [],
