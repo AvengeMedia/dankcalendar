@@ -119,7 +119,7 @@ Item {
             StyledText {
                 width: parent.width
                 height: root.headerHeight - Theme.spacingXS
-                text: Qt.formatDate(root.day, "dddd, MMMM d")
+                text: SettingsData.formatDate(root.day, "dddd, MMMM d")
                 font.pixelSize: Theme.fontSizeMedium
                 font.weight: Font.Medium
                 color: Theme.surfaceText

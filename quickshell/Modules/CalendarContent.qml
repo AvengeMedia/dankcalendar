@@ -41,7 +41,7 @@ Item {
     function headerTitle() {
         switch (currentView) {
         case "day":
-            return Qt.formatDate(displayDate, "dddd, MMMM d, yyyy");
+            return SettingsData.formatDate(displayDate, "dddd, MMMM d, yyyy");
         case "week":
             return SettingsData.monthName(displayDate.getMonth()) + " " + displayDate.getFullYear();
         case "agenda":

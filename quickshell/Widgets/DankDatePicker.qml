@@ -59,7 +59,7 @@ Item {
             }
 
             StyledText {
-                text: Qt.formatDate(root.selectedDate, root.dateFormat)
+                text: SettingsData.formatDate(root.selectedDate, root.dateFormat)
                 font.pixelSize: Theme.fontSizeMedium
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -127,7 +127,7 @@ Item {
 
                 StyledText {
                     anchors.centerIn: parent
-                    text: Qt.formatDate(popup.displayDate, "MMMM yyyy")
+                    text: SettingsData.formatDate(popup.displayDate, "MMMM yyyy")
                     font.pixelSize: Theme.fontSizeMedium
                     font.weight: Font.Medium
                 }
@@ -153,7 +153,7 @@ Item {
 
                         StyledText {
                             anchors.centerIn: parent
-                            text: Qt.locale().dayName((index + root.firstDayOfWeek) % 7, Locale.ShortFormat)
+                            text: SettingsData.dayName((index + root.firstDayOfWeek) % 7)
                             font.pixelSize: Theme.fontSizeSmall
                             color: Theme.surfaceVariantText
                         }

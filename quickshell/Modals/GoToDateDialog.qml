@@ -281,7 +281,7 @@ Popup {
 
                     StyledText {
                         anchors.centerIn: parent
-                        text: Qt.locale().dayName((index + root.firstDayOfWeek) % 7, Locale.ShortFormat)
+                        text: SettingsData.dayName((index + root.firstDayOfWeek) % 7)
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.surfaceVariantText
                     }

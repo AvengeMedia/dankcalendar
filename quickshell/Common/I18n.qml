@@ -14,7 +14,7 @@ Singleton {
 
     property string _resolvedLocale: "en"
 
-    readonly property string _rawLocale: Qt.locale().name
+    readonly property string _rawLocale: SettingsData.language === "" ? Qt.locale().name : SettingsData.language
     readonly property string _lang: _rawLocale.split(/[_-]/)[0]
     readonly property var _candidates: {
         const fullUnderscore = _rawLocale;
@@ -38,6 +38,16 @@ Singleton {
 
     property url _selectedPath: ""
     property url _commonSelectedPath: ""
+
+    Connections {
+        target: SettingsData
+        function onLanguageChanged() {
+            if (dir.status === FolderListModel.Ready)
+                root._pickTranslation();
+            if (commonDir.status === FolderListModel.Ready)
+                root._pickCommonTranslation();
+        }
+    }
 
     FolderListModel {
         id: dir
@@ -104,13 +114,17 @@ Singleton {
     function _loadPresentLocales() {
         if (Object.keys(presentLocales).length > 1)
             return;
+        const found = {
+            "en": Qt.locale("en")
+        };
         for (let i = 0; i < dir.count; i++) {
             const name = dir.get(i, "fileName");
-            if (name && name.endsWith(".json")) {
-                const shortName = name.slice(0, -5);
-                presentLocales[shortName] = Qt.locale(shortName);
-            }
+            if (!name || !name.endsWith(".json"))
+                continue;
+            const shortName = name.slice(0, -5);
+            found[shortName] = Qt.locale(shortName);
         }
+        presentLocales = found;
     }
 
     function _pickTranslation() {
@@ -118,7 +132,8 @@ Singleton {
             const cand = _candidates[i];
             if (presentLocales[cand] === undefined)
                 continue;
-            _resolvedLocale = cand;
+            if (cand === _resolvedLocale)
+                return;
             useLocale(cand, cand.startsWith("en") ? "" : translationsFolder + "/" + cand + ".json");
             return;
         }
@@ -151,9 +166,17 @@ Singleton {
         for (let i = 0; i < _candidates.length; i++) {
             if (!present[_candidates[i]])
                 continue;
-            _commonSelectedPath = commonTranslationsFolder + "/" + _candidates[i] + ".json";
+            const path = commonTranslationsFolder + "/" + _candidates[i] + ".json";
+            if (path === _commonSelectedPath)
+                return;
+            commonTranslationsLoaded = false;
+            commonTranslations = ({});
+            _commonSelectedPath = path;
             return;
         }
+        commonTranslationsLoaded = false;
+        commonTranslations = ({});
+        _commonSelectedPath = "";
     }
 
     function _lookup(table, term, context) {

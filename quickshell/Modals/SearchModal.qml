@@ -72,8 +72,8 @@ Popup {
             return I18n.tr("Tomorrow", "search result date label for next day");
         }
         if (ev.start.getFullYear() === now.getFullYear())
-            return Qt.formatDate(ev.start, "MMM d");
-        return Qt.formatDate(ev.start, "MMM d, yyyy");
+            return SettingsData.formatDate(ev.start, "MMM d");
+        return SettingsData.formatDate(ev.start, "MMM d, yyyy");
     }
 
     function _subtitle(ev) {

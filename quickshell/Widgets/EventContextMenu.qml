@@ -56,7 +56,7 @@ Item {
         if (!eventMode) {
             items.push({
                 type: "header",
-                label: Qt.formatDate(targetDay, "dddd, MMMM d"),
+                label: SettingsData.formatDate(targetDay, "dddd, MMMM d"),
                 subtitle: I18n.tr("Day actions", "subtitle for a calendar day context menu")
             });
             items.push({

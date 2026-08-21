@@ -60,6 +60,30 @@ Item {
         return "";
     }
 
+    function localeDisplayName(code) {
+        const name = I18n.presentLocales[code].nativeLanguageName;
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    readonly property var bundledLocaleOptions: Object.keys(I18n.presentLocales).sort().map(code => ({
+                label: root.localeDisplayName(code),
+                value: code
+            }))
+
+    readonly property var languageOptions: [
+        {
+            label: I18n.tr("System default", "language dropdown option that follows the system language"),
+            value: ""
+        }
+    ].concat(bundledLocaleOptions)
+
+    readonly property var timeLocaleOptions: [
+        {
+            label: I18n.tr("Follow language", "date and time locale dropdown option that follows the interface language"),
+            value: ""
+        }
+    ].concat(bundledLocaleOptions)
+
     readonly property var weekStartOptions: [
         {
             label: I18n.tr("System default (%1)", "week start dropdown option").arg(SettingsData.dayName(SettingsData.localeFirstDayOfWeek, Locale.LongFormat)),
@@ -416,6 +440,32 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             checked: SettingsData.showTrayIcon
                             onToggled: checked => SettingsData.showTrayIcon = checked
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Language", "interface language setting label")
+                        description: I18n.tr("Language of the interface.", "interface language setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 220
+                            options: root.optionLabels(root.languageOptions)
+                            currentValue: root.labelForValue(root.languageOptions, SettingsData.language)
+                            onValueChanged: value => SettingsData.language = root.valueForLabel(root.languageOptions, value)
+                        }
+                    }
+
+                    SettingsRow {
+                        label: I18n.tr("Date and time locale", "date and time locale setting label")
+                        description: I18n.tr("Locale used for day and month names, time format and week start.", "date and time locale setting description")
+
+                        DankDropdown {
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 220
+                            options: root.optionLabels(root.timeLocaleOptions)
+                            currentValue: root.labelForValue(root.timeLocaleOptions, SettingsData.timeLocale)
+                            onValueChanged: value => SettingsData.timeLocale = root.valueForLabel(root.timeLocaleOptions, value)
                         }
                     }
 

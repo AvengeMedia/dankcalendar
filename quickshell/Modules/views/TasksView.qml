@@ -35,7 +35,7 @@ Item {
         case -1:
             return I18n.tr("Yesterday", "due-date label on a task card");
         default:
-            return Qt.formatDate(task.due, "MMM d");
+            return SettingsData.formatDate(task.due, "MMM d");
         }
     }
 

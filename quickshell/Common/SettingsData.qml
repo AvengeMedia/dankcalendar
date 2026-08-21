@@ -51,6 +51,10 @@ Singleton {
     property alias colorSource: adapter.colorSource
     property alias presetTheme: adapter.presetTheme
     property alias customThemeFile: adapter.customThemeFile
+    // "" follows the system language, otherwise a bundled translation code such as "de" or "zh_CN"
+    property alias language: adapter.language
+    // "" follows the interface language for date and time names, otherwise a locale code
+    property alias timeLocale: adapter.timeLocale
     // -1 = locale default, otherwise 0 (Sunday) … 6 (Saturday)
     property alias firstDayOfWeek: adapter.firstDayOfWeek
     // "auto" | "12h" | "24h"
@@ -97,7 +101,13 @@ Singleton {
         dismissedAccountNotices = dismissedAccountNotices.concat([accountId + ":" + code]);
     }
 
-    readonly property var locale: Qt.locale()
+    readonly property var locale: {
+        if (timeLocale !== "")
+            return Qt.locale(timeLocale);
+        if (language !== "")
+            return Qt.locale(language);
+        return Qt.locale();
+    }
     // Qt reports Monday=1 … Sunday=7; views use JS getDay() where Sunday=0
     readonly property int localeFirstDayOfWeek: locale.firstDayOfWeek % 7
     readonly property bool localeUses24Hour: {
@@ -126,7 +136,15 @@ Singleton {
     onUse24HourTimeChanged: adapter.use24HourClock = use24HourTime
 
     function formatTime(d) {
-        return Qt.formatTime(d, use24HourTime ? "HH:mm" : "h:mm AP");
+        if (!d)
+            return "";
+        return d.toLocaleTimeString(locale, use24HourTime ? "HH:mm" : "h:mm AP");
+    }
+
+    function formatDate(d, format) {
+        if (!d)
+            return "";
+        return d.toLocaleDateString(locale, format);
     }
 
     function dayName(jsDay, format) {
@@ -181,6 +199,8 @@ Singleton {
             property string colorSource: "auto"
             property string presetTheme: "purple"
             property string customThemeFile: ""
+            property string language: ""
+            property string timeLocale: ""
             property int firstDayOfWeek: -1
             property string timeFormat: "auto"
             property bool use24HourClock: true

@@ -51,7 +51,7 @@ Item {
         case 1:
             return I18n.tr("Tomorrow", "agenda section header for the next day");
         default:
-            return Qt.formatDate(d, "dddd, MMM d");
+            return SettingsData.formatDate(d, "dddd, MMM d");
         }
     }
 

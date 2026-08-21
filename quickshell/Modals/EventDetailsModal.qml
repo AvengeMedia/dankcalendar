@@ -505,7 +505,7 @@ FloatingWindow {
     function timeLabel() {
         if (!event.start)
             return "";
-        const day = Qt.formatDate(event.start, "dddd, MMM d, yyyy");
+        const day = SettingsData.formatDate(event.start, "dddd, MMM d, yyyy");
         if (event.allDay)
             return I18n.tr("%1 · All day", "event details time label for all-day events").arg(day);
         return day + " · " + SettingsData.formatTime(event.start) + " – " + SettingsData.formatTime(event.end);

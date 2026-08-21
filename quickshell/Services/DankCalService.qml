@@ -1017,7 +1017,7 @@ Singleton {
         if (count > 0)
             label += ", " + I18n.tr("%1 times", "recurrence label suffix for a fixed number of occurrences").arg(count);
         else if (until)
-            label += ", " + I18n.tr("until %1", "recurrence label suffix with an end date").arg(Qt.formatDate(until, "MMM d, yyyy"));
+            label += ", " + I18n.tr("until %1", "recurrence label suffix with an end date").arg(SettingsData.formatDate(until, "MMM d, yyyy"));
         return label;
     }
 

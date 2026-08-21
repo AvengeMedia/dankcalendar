@@ -33,7 +33,7 @@ Item {
 
     function formatMinutes(value) {
         const d = new Date(2000, 0, 1, Math.floor(value / 60), value % 60);
-        return Qt.formatTime(d, use24Hour ? "HH:mm" : "h:mm AP");
+        return d.toLocaleTimeString(SettingsData.locale, use24Hour ? "HH:mm" : "h:mm AP");
     }
 
     // Accepts free-form input: "9", "9:23", "923", "9.23 pm", "21:23", "9p".
