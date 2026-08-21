@@ -181,7 +181,7 @@ Item {
             "title": I18n.tr("General", "keyboard shortcuts overlay section header"),
             "rows": [
                 {
-                    "keys": ["c"],
+                    "keys": ["c", "Ctrl+N"],
                     "label": I18n.tr("Create event", "keyboard shortcut description")
                 },
                 {

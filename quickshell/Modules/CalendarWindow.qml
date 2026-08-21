@@ -613,6 +613,13 @@ FloatingWindow {
                 }
                 window.openCreateEvent();
                 break;
+            case Qt.Key_N:
+                if (!ctrl) {
+                    event.accepted = false;
+                    return;
+                }
+                window.openCreateEvent();
+                break;
             case Qt.Key_V:
                 if (!ctrl || eventSelection.clipboardCount === 0) {
                     event.accepted = false;
