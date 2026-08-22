@@ -77,6 +77,71 @@ func TestNewFallsBackToWellKnown(t *testing.T) {
 	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
 }
 
+// Synology DSM (#91): nginx answers PROPFIND outside /caldav/<user>/ with a
+// static 405, and serves /.well-known/caldav in place instead of redirecting.
+func TestNewDiscoversWellKnownServedInPlace(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case r.Method != "PROPFIND":
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		case r.URL.Path == "/.well-known/caldav", r.URL.Path == "/caldav/user/":
+			writeMultiStatus(w, principalXML)
+		case r.URL.Path == "/dav/principals/user/":
+			writeMultiStatus(w, homeSetXML)
+		default:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		}
+	}))
+	defer server.Close()
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL, "user")
+	require.NoError(t, err)
+	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+
+	p, err = New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL+"/caldav/user/", "user")
+	require.NoError(t, err)
+	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+}
+
+func TestNewFollowsRedirectsKeepingMethod(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, _ := io.ReadAll(r.Body)
+		switch {
+		case r.Method != "PROPFIND" || len(body) == 0:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		case r.URL.Path == "/caldav/user":
+			http.Redirect(w, r, "/caldav/user/", http.StatusMovedPermanently)
+		case r.URL.Path == "/caldav/user/":
+			writeMultiStatus(w, principalXML)
+		case r.URL.Path == "/dav/principals/user/":
+			writeMultiStatus(w, homeSetXML)
+		default:
+			w.WriteHeader(http.StatusNotFound)
+		}
+	}))
+	defer server.Close()
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL+"/caldav/user", "user")
+	require.NoError(t, err)
+	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+}
+
+func TestNewFallsBackToHomeSetWithoutPrincipal(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case r.Method == "PROPFIND" && r.URL.Path == "/dav/":
+			writeMultiStatus(w, homeSetXML)
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL+"/dav/", "user")
+	require.NoError(t, err)
+	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+}
+
 // A self-signed TLS server stands in for a Nextcloud/self-hosted instance (#50):
 // verification fails by default, and SettingInsecureSkipVerify opts out of it.
 func TestNewSkipsCertificateVerification(t *testing.T) {

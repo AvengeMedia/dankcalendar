@@ -11,7 +11,7 @@ require (
 	github.com/danielgtaylor/huma/v2 v2.38.0
 	github.com/dvsekhvalnov/jose2go v1.8.0
 	github.com/emersion/go-ical v0.0.0-20250609112844-439c63cef608
-	github.com/emersion/go-webdav v0.7.0
+	github.com/emersion/go-webdav v0.7.1-0.20260628102823-c16f8a9a132c
 	github.com/go-chi/chi/v5 v5.3.1
 	github.com/godbus/dbus/v5 v5.2.2
 	github.com/google/uuid v1.6.0

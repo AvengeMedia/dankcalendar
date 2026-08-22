@@ -46,24 +46,9 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 	}
 
 	httpClient := webdav.HTTPClientWithBasicAuth(baseHTTPClient(account), username, string(password))
-	client, err := caldav.NewClient(httpClient, baseURL)
+	client, endpoint, homeSet, err := discover(ctx, httpClient, endpoint)
 	if err != nil {
-		return nil, fmt.Errorf("init caldav client: %w", err)
-	}
-
-	principal, err := client.FindCurrentUserPrincipal(ctx)
-	if err != nil {
-		fbClient, fbEndpoint, fbPrincipal, fbErr := wellKnownFallback(ctx, httpClient, endpoint)
-		if fbErr != nil {
-			log.Debugf("caldav: well-known fallback for %q failed: %v", baseURL, fbErr)
-			return nil, fmt.Errorf("find caldav principal: %w", err)
-		}
-		log.Debugf("caldav: principal lookup at %q failed (%v), discovered %q via well-known", baseURL, err, fbEndpoint)
-		client, endpoint, principal = fbClient, fbEndpoint, fbPrincipal
-	}
-	homeSet, err := client.FindCalendarHomeSet(ctx, principal)
-	if err != nil {
-		return nil, fmt.Errorf("find caldav home set: %w", err)
+		return nil, err
 	}
 
 	return &Provider{
@@ -76,8 +61,59 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 	}, nil
 }
 
+// discover walks the RFC 6764 §6 bootstrap order: the URL as entered, then
+// /.well-known/caldav, then the server root. OpenCloud (#38) only answers at
+// the well-known URI via redirect, Synology DSM (#91) answers it in place.
+// Servers without current-user-principal still expose calendar-home-set on
+// the entered URL, which Thunderbird's detector also falls back to.
+func discover(ctx context.Context, hc webdav.HTTPClient, endpoint *url.URL) (*caldav.Client, *url.URL, string, error) {
+	var errs []error
+	for _, candidate := range discoveryCandidates(endpoint) {
+		client, err := caldav.NewClient(hc, candidate.String())
+		if err != nil {
+			return nil, nil, "", fmt.Errorf("init caldav client: %w", err)
+		}
+		principal, err := client.FindCurrentUserPrincipal(ctx)
+		if err != nil {
+			errs = append(errs, fmt.Errorf("%s: %w", candidate.Path, err))
+			continue
+		}
+		homeSet, err := client.FindCalendarHomeSet(ctx, principal)
+		if err != nil {
+			return nil, nil, "", fmt.Errorf("find caldav home set: %w", err)
+		}
+		if candidate != endpoint {
+			log.Debugf("caldav: principal for %q discovered at %q", endpoint, candidate)
+		}
+		return client, candidate, homeSet, nil
+	}
+
+	client, err := caldav.NewClient(hc, endpoint.String())
+	if err != nil {
+		return nil, nil, "", fmt.Errorf("init caldav client: %w", err)
+	}
+	homeSet, err := client.FindCalendarHomeSet(ctx, "")
+	if err == nil {
+		return client, endpoint, homeSet, nil
+	}
+	errs = append(errs, fmt.Errorf("%s calendar-home-set: %w", endpoint.Path, err))
+	return nil, nil, "", fmt.Errorf("find caldav principal: %w", errors.Join(errs...))
+}
+
+func discoveryCandidates(endpoint *url.URL) []*url.URL {
+	candidates := []*url.URL{endpoint}
+	for _, path := range []string{"/.well-known/caldav", "/"} {
+		if strings.Trim(endpoint.Path, "/") == strings.Trim(path, "/") {
+			continue
+		}
+		candidates = append(candidates, &url.URL{Scheme: endpoint.Scheme, Host: endpoint.Host, Path: path})
+	}
+	return candidates
+}
+
 // baseHTTPClient returns the HTTP client the caldav client is built on,
-// wrapped so non-compliant ETags get repaired before go-webdav parses them.
+// wrapped so redirects keep their method and non-compliant ETags get repaired
+// before go-webdav parses them.
 // Servers with self-signed certificates opt out of TLS verification via the
 // SettingInsecureSkipVerify account setting.
 func baseHTTPClient(account cal.Account) *http.Client {
@@ -87,7 +123,12 @@ func baseHTTPClient(account cal.Account) *http.Client {
 		transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 		base = transport
 	}
-	return &http.Client{Transport: etagNormalizingTransport{base: base}}
+	return &http.Client{
+		Transport: etagNormalizingTransport{base: redirectFollowingTransport{base: base}},
+		CheckRedirect: func(*http.Request, []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
 }
 
 func (p *Provider) Kind() cal.AccountKind { return cal.AccountCalDAV }
@@ -474,42 +515,6 @@ func (p *Provider) listObjectPaths(ctx context.Context, calendarPath string) ([]
 		paths = append(paths, href)
 	}
 	return paths, nil
-}
-
-// wellKnownFallback retries principal discovery through the RFC 6764
-// well-known URI. Servers like OpenCloud reject PROPFIND at arbitrary paths
-// (405 Method Not Allowed) but redirect /.well-known/caldav to their CalDAV
-// root, so a bare host URL still connects (#38). The GET follows redirects,
-// making the response's request URL the resolved CalDAV context path.
-func wellKnownFallback(ctx context.Context, hc webdav.HTTPClient, endpoint *url.URL) (*caldav.Client, *url.URL, string, error) {
-	wk := url.URL{Scheme: endpoint.Scheme, Host: endpoint.Host, Path: "/.well-known/caldav"}
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, wk.String(), nil)
-	if err != nil {
-		return nil, nil, "", err
-	}
-	resp, err := hc.Do(req)
-	if err != nil {
-		return nil, nil, "", err
-	}
-	resp.Body.Close()
-
-	target := *resp.Request.URL
-	if target.Path == wk.Path && resp.StatusCode >= http.StatusBadRequest {
-		return nil, nil, "", fmt.Errorf("well-known caldav lookup: %s", resp.Status)
-	}
-	if strings.TrimSuffix(target.Path, "/") == strings.TrimSuffix(endpoint.Path, "/") && target.Host == endpoint.Host {
-		return nil, nil, "", errors.New("well-known caldav resolves to the failing url")
-	}
-
-	client, err := caldav.NewClient(hc, target.String())
-	if err != nil {
-		return nil, nil, "", err
-	}
-	principal, err := client.FindCurrentUserPrincipal(ctx)
-	if err != nil {
-		return nil, nil, "", err
-	}
-	return client, &target, principal, nil
 }
 
 func objectPath(calendarPath, uid string) string {
