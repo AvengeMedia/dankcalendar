@@ -224,10 +224,21 @@ func TestSetCalendarSyncDisabled(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, synced.SyncDisabled)
 
+	require.NoError(t, r.SetCalendarSyncToken(ctx, cal.ID, "tok-stale"))
+	stillDisabled, err := r.GetCalendar(ctx, cal.ID)
+	require.NoError(t, err)
+	require.Empty(t, stillDisabled.SyncToken)
+
 	require.NoError(t, r.SetCalendarSyncDisabled(ctx, cal.ID, false))
 	enabled, err := r.GetCalendar(ctx, cal.ID)
 	require.NoError(t, err)
 	require.False(t, enabled.SyncDisabled)
+	require.Empty(t, enabled.SyncToken)
+
+	require.NoError(t, r.SetCalendarSyncToken(ctx, cal.ID, "tok-2"))
+	resynced, err := r.GetCalendar(ctx, cal.ID)
+	require.NoError(t, err)
+	require.Equal(t, "tok-2", resynced.SyncToken)
 }
 
 func TestSecrets(t *testing.T) {

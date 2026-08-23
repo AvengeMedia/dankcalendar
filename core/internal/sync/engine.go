@@ -406,6 +406,14 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 			color = result.Color
 		}
 
+		stored, err := e.repo.GetCalendar(ctx, cal.ID)
+		if err != nil {
+			return 0, err
+		}
+		if stored.SyncDisabled {
+			return retryAfter, nil
+		}
+
 		if err := e.applyChanges(ctx, cal, result.Changes); err != nil {
 			return 0, err
 		}

@@ -200,6 +200,33 @@ func (s *EngineSuite) TestSyncSkipsDisabledCalendar() {
 	s.True(stored.SyncDisabled)
 }
 
+func (s *EngineSuite) TestDisableDuringSyncDropsFetchedChanges() {
+	cal := s.seedCalendar("cal-1")
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).
+		RunAndReturn(func(ctx context.Context, _ calendar.Calendar, _ calendar.SyncCursor) (*calendar.SyncResult, error) {
+			s.Require().NoError(s.repo.SetCalendarSyncDisabled(ctx, cal.ID, true))
+			return &calendar.SyncResult{
+				FullSnapshot: true,
+				Cursor:       calendar.SyncCursor{Token: "delta-1"},
+				Changes:      []calendar.EventChange{upsertChange("late-1", calendar.EventConfirmed)},
+			}, nil
+		})
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.Empty(s.listUIDs())
+	stored, err := s.repo.GetCalendar(s.ctx, cal.ID)
+	s.Require().NoError(err)
+	s.True(stored.SyncDisabled)
+	s.Empty(stored.SyncToken)
+}
+
 func (s *EngineSuite) TestSyncMapsEventStatus() {
 	s.seedCalendar("cal-1")
 	provider := s.registerProvider()

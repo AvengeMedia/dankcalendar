@@ -84,8 +84,14 @@ func (r *Repo) calendarUpdate(id string, in UpsertCalendarInput) *ent.CalendarUp
 	return upd
 }
 
+// SetCalendarSyncToken is a no-op for disabled calendars so an in-flight sync
+// cannot leave a stale cursor behind.
 func (r *Repo) SetCalendarSyncToken(ctx context.Context, id, token string) error {
-	return r.client.Calendar.UpdateOneID(id).SetSyncToken(token).Exec(ctx)
+	_, err := r.client.Calendar.Update().
+		Where(calendar.IDEQ(id), calendar.SyncDisabled(false)).
+		SetSyncToken(token).
+		Save(ctx)
+	return err
 }
 
 func (r *Repo) SetCalendarHidden(ctx context.Context, id string, hidden bool) error {
@@ -97,7 +103,10 @@ func (r *Repo) SetCalendarHidden(ctx context.Context, id string, hidden bool) er
 // re-enable starts from a fresh snapshot.
 func (r *Repo) SetCalendarSyncDisabled(ctx context.Context, id string, disabled bool) error {
 	if !disabled {
-		return r.client.Calendar.UpdateOneID(id).SetSyncDisabled(false).Exec(ctx)
+		return r.client.Calendar.UpdateOneID(id).
+			SetSyncDisabled(false).
+			ClearSyncToken().
+			Exec(ctx)
 	}
 	return r.WithTx(ctx, func(tx *ent.Tx) error {
 		if _, err := tx.Event.Delete().
