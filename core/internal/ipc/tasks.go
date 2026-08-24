@@ -6,7 +6,9 @@ import (
 	"time"
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
+	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/recurrence"
 	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
 	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
@@ -138,6 +140,7 @@ func handleTaskComplete(ctx context.Context, w *ConnWriter, req Request, deps De
 		done = ParamBool(req.Params, "completed")
 	}
 	switch {
+	case done && recurringTaskAdvances(ctx, deps, calendarID) && advanceRecurringTask(&t):
 	case done:
 		t.Status = calendar.TaskCompleted
 		t.PercentComplete = 100
@@ -148,6 +151,56 @@ func handleTaskComplete(ctx context.Context, w *ConnWriter, req Request, deps De
 		t.Completed = time.Time{}
 	}
 	updateTask(ctx, w, req, deps, calendarID, &t)
+}
+
+// recurringTaskAdvances reports whether completing a recurring task should
+// move it to the next occurrence locally. Microsoft is excluded because Graph
+// creates the next occurrence server-side.
+func recurringTaskAdvances(ctx context.Context, deps Deps, calendarID string) bool {
+	c, err := deps.Repo.GetCalendar(ctx, calendarID)
+	if err != nil || c.Edges.Account == nil {
+		return false
+	}
+	return c.Edges.Account.Kind != account.KindMicrosoft
+}
+
+func advanceRecurringTask(t *calendar.Task) bool {
+	if t.Recurrence == nil || len(t.Recurrence.RRule) == 0 {
+		return false
+	}
+
+	base, tz := t.Start, t.StartTimeZone
+	if base.IsZero() {
+		base, tz = t.Due, t.DueTimeZone
+	}
+	if base.IsZero() {
+		return false
+	}
+
+	next, rules, ok := recurrence.Advance(recurrence.Series{
+		Start:    base,
+		AllDay:   t.AllDay,
+		TimeZone: tz,
+		RRule:    t.Recurrence.RRule,
+		RDate:    t.Recurrence.RDate,
+		ExDate:   t.Recurrence.ExDate,
+	})
+	if !ok {
+		return false
+	}
+
+	delta := next.Sub(base)
+	if !t.Start.IsZero() {
+		t.Start = t.Start.Add(delta)
+	}
+	if !t.Due.IsZero() {
+		t.Due = t.Due.Add(delta)
+	}
+	t.Recurrence.RRule = rules
+	t.Status = calendar.TaskNeedsAction
+	t.PercentComplete = 0
+	t.Completed = time.Time{}
+	return true
 }
 
 func handleTaskDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
