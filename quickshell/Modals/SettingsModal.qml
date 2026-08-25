@@ -156,6 +156,7 @@ FloatingWindow {
 
     Shortcut {
         sequence: "Escape"
+        enabled: settingsModal.visible
         onActivated: settingsModal.hide()
     }
 

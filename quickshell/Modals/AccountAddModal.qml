@@ -430,14 +430,14 @@ FloatingWindow {
 
         Shortcut {
             sequence: "Escape"
-            enabled: previewOverlay.visible
+            enabled: accountModal.visible && previewOverlay.visible
             onActivated: accountModal.expandedScreenshot = ""
         }
     }
 
     Shortcut {
         sequence: "Escape"
-        enabled: accountModal.expandedScreenshot === ""
+        enabled: accountModal.visible && accountModal.expandedScreenshot === ""
         onActivated: accountModal.hide()
     }
 

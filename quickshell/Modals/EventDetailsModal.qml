@@ -1529,6 +1529,7 @@ FloatingWindow {
 
     Shortcut {
         sequence: "Escape"
+        enabled: eventModal.visible
         onActivated: {
             if (eventModal.confirmDelete) {
                 eventModal.confirmDelete = false;
