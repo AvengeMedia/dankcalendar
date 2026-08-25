@@ -33,6 +33,19 @@ Item {
     }
 
     height: 48
+    activeFocusOnTab: enabled
+
+    Keys.onPressed: event => {
+        switch (event.key) {
+        case Qt.Key_Space:
+        case Qt.Key_Return:
+        case Qt.Key_Enter:
+        case Qt.Key_Down:
+            popup.open();
+            event.accepted = true;
+            break;
+        }
+    }
 
     Rectangle {
         id: field
@@ -40,8 +53,8 @@ Item {
         anchors.fill: parent
         radius: Theme.cornerRadius
         color: Theme.surfaceContainer
-        border.width: 1
-        border.color: popup.visible ? Theme.primary : Theme.outlineLight
+        border.width: popup.visible || root.activeFocus ? 2 : 1
+        border.color: popup.visible || root.activeFocus ? Theme.primary : Theme.outlineLight
 
         Row {
             anchors.left: parent.left
@@ -76,6 +89,7 @@ Item {
         id: popup
 
         property date displayDate: root.selectedDate
+        property date cursorDate: root.selectedDate
 
         readonly property int gridYear: displayDate.getFullYear()
         readonly property int gridMonth: displayDate.getMonth()
@@ -92,13 +106,36 @@ Item {
             return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
         }
 
+        function moveCursor(days) {
+            const d = new Date(cursorDate);
+            d.setDate(d.getDate() + days);
+            cursorDate = d;
+            if (d.getMonth() !== gridMonth || d.getFullYear() !== gridYear)
+                displayDate = d;
+        }
+
+        function moveCursorMonths(delta) {
+            const d = new Date(cursorDate);
+            d.setMonth(d.getMonth() + delta);
+            cursorDate = d;
+            displayDate = d;
+        }
+
+        function selectCursor() {
+            root.dateSelected(cursorDate);
+            close();
+        }
+
         y: root.openUpwards ? -(height + Theme.spacingXS) : (field.height + Theme.spacingXS)
         width: root.cellSize * 7 + padding * 2
         padding: Theme.spacingS
         onAboutToShow: {
             displayDate = root.selectedDate;
+            cursorDate = root.selectedDate;
             root.updateDirection();
         }
+        onOpened: calendarContent.forceActiveFocus()
+        onClosed: root.forceActiveFocus()
 
         background: Rectangle {
             color: Theme.surfaceContainerHigh
@@ -108,10 +145,43 @@ Item {
         }
 
         contentItem: Column {
+            id: calendarContent
+
             spacing: Theme.spacingXS
 
             LayoutMirroring.enabled: I18n.isRtl
             LayoutMirroring.childrenInherit: true
+
+            Keys.onPressed: event => {
+                switch (event.key) {
+                case Qt.Key_Left:
+                    popup.moveCursor(I18n.isRtl ? 1 : -1);
+                    break;
+                case Qt.Key_Right:
+                    popup.moveCursor(I18n.isRtl ? -1 : 1);
+                    break;
+                case Qt.Key_Up:
+                    popup.moveCursor(-7);
+                    break;
+                case Qt.Key_Down:
+                    popup.moveCursor(7);
+                    break;
+                case Qt.Key_PageUp:
+                    popup.moveCursorMonths(-1);
+                    break;
+                case Qt.Key_PageDown:
+                    popup.moveCursorMonths(1);
+                    break;
+                case Qt.Key_Space:
+                case Qt.Key_Return:
+                case Qt.Key_Enter:
+                    popup.selectCursor();
+                    break;
+                default:
+                    return;
+                }
+                event.accepted = true;
+            }
 
             Item {
                 width: parent.width
@@ -175,11 +245,12 @@ Item {
                         readonly property bool inMonth: cellDay.getMonth() === popup.gridMonth
                         readonly property bool selected: popup.sameDay(cellDay, root.selectedDate)
                         readonly property bool isToday: popup.sameDay(cellDay, new Date())
+                        readonly property bool cursorDay: popup.sameDay(cellDay, popup.cursorDate)
 
                         width: root.cellSize
                         height: root.cellSize - 4
                         radius: height / 2
-                        color: selected ? Theme.primary : "transparent"
+                        color: selected ? Theme.primary : (cursorDay ? Theme.primaryHover : "transparent")
                         border.width: isToday && !selected ? 1 : 0
                         border.color: Theme.primary
 

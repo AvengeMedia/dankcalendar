@@ -102,14 +102,6 @@ Item {
         border.width: 1
         border.color: (popup.visible || input.activeFocus) ? Theme.primary : Theme.outlineLight
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                input.forceActiveFocus();
-                popup.open();
-            }
-        }
-
         Row {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -137,16 +129,17 @@ Item {
                 selectedTextColor: Theme.surfaceText
                 clip: true
                 inputMethodHints: Qt.ImhTime
+                activeFocusOnTab: true
 
                 onActiveFocusChanged: {
                     if (activeFocus) {
                         selectAll();
-                        popup.open();
-                    } else {
-                        root._commit();
-                        popup.close();
+                        return;
                     }
+                    root._commit();
+                    popup.close();
                 }
+                Keys.onDownPressed: popup.open()
                 onAccepted: {
                     root._commit();
                     popup.close();
@@ -157,6 +150,14 @@ Item {
                     popup.close();
                     focus = false;
                 }
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                input.forceActiveFocus();
+                popup.open();
             }
         }
     }

@@ -1451,6 +1451,8 @@ FloatingWindow {
                             font.pixelSize: Theme.fontSizeMedium
                             text: eventModal.formDescription
                             onTextChanged: eventModal.formDescription = text
+                            Keys.onTabPressed: nextItemInFocusChain(true).forceActiveFocus()
+                            Keys.onBacktabPressed: nextItemInFocusChain(false).forceActiveFocus()
 
                             Text {
                                 anchors.fill: parent

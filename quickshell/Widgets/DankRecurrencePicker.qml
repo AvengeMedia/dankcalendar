@@ -323,6 +323,20 @@ Column {
                 height: 32
                 radius: height / 2
                 color: selected ? Theme.primary : Theme.surfaceContainerHigh
+                activeFocusOnTab: true
+
+                Keys.onPressed: event => {
+                    switch (event.key) {
+                    case Qt.Key_Space:
+                    case Qt.Key_Return:
+                    case Qt.Key_Enter:
+                        root._toggleDay(dayChip.day);
+                        event.accepted = true;
+                        break;
+                    }
+                }
+
+                FocusRing {}
 
                 StyledText {
                     id: chipLabel
