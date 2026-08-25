@@ -202,9 +202,10 @@ FloatingWindow {
             formEndMinutes = formStartMinutes + 60;
 
         const writable = DankCalService.writableCalendars();
+        const wanted = event.calendarId || SettingsData.defaultCalendarId;
         formCalendarIndex = 0;
         for (let i = 0; i < writable.length; i++) {
-            if (writable[i].id === event.calendarId) {
+            if (writable[i].id === wanted) {
                 formCalendarIndex = i;
                 break;
             }

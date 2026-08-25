@@ -70,6 +70,8 @@ Singleton {
     property alias defaultEventDurationMinutes: adapter.defaultEventDurationMinutes
     // -1 = no reminder
     property alias defaultReminderMinutes: adapter.defaultReminderMinutes
+    // "" = first writable calendar
+    property alias defaultCalendarId: adapter.defaultCalendarId
     property alias remindersEnabled: adapter.remindersEnabled
     property alias reminderPersist: adapter.reminderPersist
     property alias allDayReminders: adapter.allDayReminders
@@ -214,6 +216,7 @@ Singleton {
             property int weekEventTitleLines: 1
             property int defaultEventDurationMinutes: 30
             property int defaultReminderMinutes: 10
+            property string defaultCalendarId: ""
             property bool remindersEnabled: true
             property bool reminderPersist: true
             property bool allDayReminders: false

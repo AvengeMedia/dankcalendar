@@ -961,6 +961,53 @@ Item {
                     width: parent.width - Theme.spacingL * 2
                     spacing: Theme.spacingS
 
+                    SettingsRow {
+                        visible: DankCalService.calendars.length > 0
+                        label: I18n.tr("Default calendar", "default calendar setting label")
+                        description: I18n.tr("Calendar preselected when creating events.", "default calendar setting description")
+
+                        DankDropdown {
+                            readonly property string autoLabel: I18n.tr("First calendar", "default calendar dropdown option for no explicit default")
+                            readonly property var entries: {
+                                const writable = DankCalService.writableCalendars();
+                                const counts = {};
+                                for (let i = 0; i < writable.length; i++)
+                                    counts[writable[i].name] = (counts[writable[i].name] || 0) + 1;
+                                return writable.map(c => ({
+                                            "id": c.id,
+                                            "color": c.color,
+                                            "label": counts[c.name] > 1 && c.accountName ? c.name + " · " + c.accountName : c.name
+                                        }));
+                            }
+
+                            anchors.verticalCenter: parent.verticalCenter
+                            dropdownWidth: 220
+                            options: [autoLabel].concat(entries.map(e => e.label))
+                            optionColorMap: {
+                                const map = {};
+                                for (let i = 0; i < entries.length; i++)
+                                    map[entries[i].label] = entries[i].color;
+                                return map;
+                            }
+                            currentValue: {
+                                for (let i = 0; i < entries.length; i++) {
+                                    if (entries[i].id === SettingsData.defaultCalendarId)
+                                        return entries[i].label;
+                                }
+                                return autoLabel;
+                            }
+                            onValueChanged: value => {
+                                for (let i = 0; i < entries.length; i++) {
+                                    if (entries[i].label === value) {
+                                        SettingsData.defaultCalendarId = entries[i].id;
+                                        return;
+                                    }
+                                }
+                                SettingsData.defaultCalendarId = "";
+                            }
+                        }
+                    }
+
                     StyledText {
                         visible: DankCalService.calendars.length === 0
                         text: DankCalService.connected ? I18n.tr("No calendars yet. Add an account first.", "calendars page empty state") : I18n.tr("Backend not connected.", "calendars page empty state")
