@@ -395,6 +395,8 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 		retryAfter    time.Duration
 		color         string
 	)
+	touchedSeries := map[string]struct{}{}
+	seriesUIDs := map[string][]string{}
 
 	for {
 		result, err := provider.Sync(ctx, cal, cursor)
@@ -418,6 +420,15 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 			return 0, err
 		}
 		changedEvents += len(result.Changes)
+
+		for _, id := range result.SeriesTouched {
+			touchedSeries[id] = struct{}{}
+		}
+		for _, ch := range result.Changes {
+			if ch.Type == calendar.ChangeUpsert && ch.Event != nil && ch.Event.RecurringID != "" {
+				seriesUIDs[ch.Event.RecurringID] = append(seriesUIDs[ch.Event.RecurringID], ch.Event.UID)
+			}
+		}
 
 		if err := e.applyTaskChanges(ctx, cal, result.TaskChanges); err != nil {
 			return 0, err
@@ -454,6 +465,14 @@ func (e *Engine) syncCalendar(ctx context.Context, provider calendar.Provider, c
 			}
 			changedEvents += pruned.events
 			changedTasks += pruned.tasks
+		} else {
+			for id := range touchedSeries {
+				n, err := e.repo.DeleteEventsInSeriesNotInUIDs(ctx, cal.ID, id, seriesUIDs[id])
+				if err != nil {
+					return 0, fmt.Errorf("reconcile series %q: %w", id, err)
+				}
+				changedEvents += n
+			}
 		}
 
 		if c := calendar.NormalizeColor(color); c != "" && c != cal.Color {

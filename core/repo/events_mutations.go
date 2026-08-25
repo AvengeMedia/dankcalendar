@@ -168,6 +168,18 @@ func (r *Repo) DeleteEventsNotInUIDs(ctx context.Context, calendarID string, uid
 	return q.Exec(ctx)
 }
 
+func (r *Repo) DeleteEventsInSeriesNotInUIDs(ctx context.Context, calendarID, recurringID string, uids []string) (int, error) {
+	q := r.client.Event.Delete().
+		Where(
+			event.HasCalendarWith(calendar.IDEQ(calendarID)),
+			event.RecurringIDEQ(recurringID),
+		)
+	if len(uids) > 0 {
+		q = q.Where(event.UIDNotIn(uids...))
+	}
+	return q.Exec(ctx)
+}
+
 func (r *Repo) DeleteEventByUID(ctx context.Context, calendarID, uid string) error {
 	_, err := r.client.Event.Delete().
 		Where(

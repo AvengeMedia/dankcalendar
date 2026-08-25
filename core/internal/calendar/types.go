@@ -199,14 +199,18 @@ type TaskChange struct {
 // Color carries a calendar color discovered while syncing, for providers whose
 // listing has no color source (ical feeds, local files). Empty leaves the
 // stored color untouched.
+// SeriesTouched lists recurring-series master ids whose full occurrence set is
+// re-sent in this batch; stored occurrences of those series absent from the
+// batch no longer exist remotely and must be reconciled away.
 type SyncResult struct {
-	Cursor       SyncCursor    `json:"cursor"`
-	Changes      []EventChange `json:"changes"`
-	TaskChanges  []TaskChange  `json:"taskChanges,omitempty"`
-	More         bool          `json:"more"`
-	FullSnapshot bool          `json:"fullSnapshot"`
-	RetryAfter   time.Duration `json:"retryAfter,omitempty"`
-	Color        string        `json:"color,omitempty"`
+	Cursor        SyncCursor    `json:"cursor"`
+	Changes       []EventChange `json:"changes"`
+	TaskChanges   []TaskChange  `json:"taskChanges,omitempty"`
+	More          bool          `json:"more"`
+	FullSnapshot  bool          `json:"fullSnapshot"`
+	SeriesTouched []string      `json:"seriesTouched,omitempty"`
+	RetryAfter    time.Duration `json:"retryAfter,omitempty"`
+	Color         string        `json:"color,omitempty"`
 }
 
 type ListEventsOptions struct {

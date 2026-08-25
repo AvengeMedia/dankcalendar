@@ -267,6 +267,119 @@ func (s *EngineSuite) TestFullSnapshotPrunesMissingEvents() {
 	s.Equal([]string{"keep-1"}, s.listUIDs())
 }
 
+func (s *EngineSuite) seedOccurrence(calendarID, uid, recurringID string) {
+	start := time.Date(2026, 5, 7, 14, 0, 0, 0, time.UTC)
+	_, err := s.repo.UpsertEvent(s.ctx, repo.UpsertEventInput{
+		CalendarID:  calendarID,
+		UID:         uid,
+		Summary:     uid,
+		RecurringID: recurringID,
+		Start:       start,
+		End:         start.Add(time.Hour),
+	})
+	s.Require().NoError(err)
+}
+
+func upsertSeriesChange(uid, recurringID string) calendar.EventChange {
+	ch := upsertChange(uid, calendar.EventConfirmed)
+	ch.Event.RecurringID = recurringID
+	return ch
+}
+
+func (s *EngineSuite) TestSeriesTouchedReconcilesStaleOccurrences() {
+	cal := s.seedCalendar("cal-1")
+	s.seedOccurrence(cal.ID, "old-1", "master-1")
+	s.seedOccurrence(cal.ID, "old-2", "master-1")
+	s.seedOccurrence(cal.ID, "other-1", "master-2")
+	s.seedEvent(cal.ID, "single-1")
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{
+		Cursor:        calendar.SyncCursor{Token: "delta-1"},
+		SeriesTouched: []string{"master-1"},
+		Changes: []calendar.EventChange{
+			upsertSeriesChange("new-1", "master-1"),
+			upsertSeriesChange("new-2", "master-1"),
+		},
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.ElementsMatch([]string{"new-1", "new-2", "other-1", "single-1"}, s.listUIDs())
+}
+
+func (s *EngineSuite) TestSeriesTouchedAccumulatesAcrossPages() {
+	cal := s.seedCalendar("cal-1")
+	s.seedOccurrence(cal.ID, "old-1", "master-1")
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	tokenMatch := func(token string) any {
+		return mock.MatchedBy(func(c calendar.SyncCursor) bool { return c.Token == token })
+	}
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, tokenMatch("")).Return(&calendar.SyncResult{
+		Cursor:        calendar.SyncCursor{Token: "page-1"},
+		SeriesTouched: []string{"master-1"},
+		Changes:       []calendar.EventChange{upsertSeriesChange("new-1", "master-1")},
+		More:          true,
+	}, nil).Once()
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, tokenMatch("page-1")).Return(&calendar.SyncResult{
+		Cursor:  calendar.SyncCursor{Token: "delta-1"},
+		Changes: []calendar.EventChange{upsertSeriesChange("new-2", "master-1")},
+	}, nil).Once()
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.ElementsMatch([]string{"new-1", "new-2"}, s.listUIDs())
+}
+
+func (s *EngineSuite) TestSeriesTouchedWithNoOccurrencesRemovesSeries() {
+	cal := s.seedCalendar("cal-1")
+	s.seedOccurrence(cal.ID, "old-1", "master-1")
+	s.seedEvent(cal.ID, "single-1")
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{
+		Cursor:        calendar.SyncCursor{Token: "delta-1"},
+		SeriesTouched: []string{"master-1"},
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.Equal([]string{"single-1"}, s.listUIDs())
+}
+
+func (s *EngineSuite) TestSeriesUntouchedKeepsOccurrences() {
+	cal := s.seedCalendar("cal-1")
+	s.seedOccurrence(cal.ID, "old-1", "master-1")
+	s.seedOccurrence(cal.ID, "old-2", "master-1")
+
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{
+		Cursor:  calendar.SyncCursor{Token: "delta-1"},
+		Changes: []calendar.EventChange{upsertSeriesChange("old-1", "master-1")},
+	}, nil)
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+
+	s.ElementsMatch([]string{"old-1", "old-2"}, s.listUIDs())
+}
+
 func upsertTaskChange(uid string) calendar.TaskChange {
 	return calendar.TaskChange{
 		Type: calendar.ChangeUpsert,

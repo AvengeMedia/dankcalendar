@@ -200,7 +200,11 @@ func (p *Provider) Sync(ctx context.Context, c cal.Calendar, cursor cal.SyncCurs
 		case item.Type == "seriesMaster":
 			// Graph already expands the series into occurrences; the master
 			// is only kept around to fill in their trimmed-down properties.
+			// Occurrence ids encode their date, so a rescheduled series
+			// re-arrives under new ids with no @removed for the old ones —
+			// flag the series so the engine drops the stale rows.
 			p.masters[item.ID] = item
+			result.SeriesTouched = append(result.SeriesTouched, item.ID)
 		default:
 			ev := graphToEvent(p.hydrateOccurrence(ctx, item))
 			result.Changes = append(result.Changes, cal.EventChange{Type: cal.ChangeUpsert, Event: &ev})
