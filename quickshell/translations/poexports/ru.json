@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "Название календаря"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "Календари"
   },
@@ -482,6 +485,9 @@
   "Dark": {
     "Dark": "Тёмная"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "День"
   },
@@ -493,6 +499,9 @@
   },
   "Decline": {
     "Decline": "Отклонить"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "Длительность события по умолчанию"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "Файлы — %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Первый день, отображаемый в режимах недели и месяца."
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Использовать цвета DankMaterialShell с переходом на пресет при отсутствии."
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Следует системной цветовой схеме (сейчас %1)."
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "Запускать Dank Calendar в фоне при входе в систему."
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "Локальные календари"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "Местоположение"
@@ -1354,6 +1378,9 @@
   },
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "Синхронизировано как «%1». Имя изменяется только в Dank Calendar."
+  },
+  "System default": {
+    "System default": ""
   },
   "System default (%1)": {
     "System default (%1)": "Системное (%1)"

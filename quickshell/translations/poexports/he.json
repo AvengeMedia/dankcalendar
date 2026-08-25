@@ -9,10 +9,10 @@
     "%1 appointments fall outside core hours": "%1 פגישות חורגות משעות הפעילות המרכזיות"
   },
   "%1 events selected": {
-    "%1 events selected": ""
+    "%1 events selected": "%1 אירועים נבחרו"
   },
   "%1 selected": {
-    "%1 selected": ""
+    "%1 selected": "%1 נבחרו"
   },
   "%1 times": {
     "%1 times": "%1 פעמים"
@@ -48,10 +48,10 @@
     "+%1 more": "+%1 נוספים"
   },
   "+1 day": {
-    "+1 day": ""
+    "+1 day": "+יום 1"
   },
   "+1 week": {
-    "+1 week": ""
+    "+1 week": "+שבוע 1"
   },
   "1 appointment falls outside core hours": {
     "1 appointment falls outside core hours": "פגישה אחת חורגת משעות הפעילות המרכזיות"
@@ -159,7 +159,7 @@
     "Accounts": "חשבונות"
   },
   "Actions apply to the whole selection": {
-    "Actions apply to the whole selection": ""
+    "Actions apply to the whole selection": "הפעולות חלות על כל הבחירה"
   },
   "Add": {
     "Add": "הוספה"
@@ -177,7 +177,7 @@
     "Add description": "הוסף/י תיאור"
   },
   "Add or remove an event from the selection": {
-    "Add or remove an event from the selection": ""
+    "Add or remove an event from the selection": "הוסף/י או הסר/י אירוע מהבחירה"
   },
   "Add reminder": {
     "Add reminder": "הוסף/י תזכורת"
@@ -213,7 +213,7 @@
     "All done": "הכל בוצע"
   },
   "All events": {
-    "All events": ""
+    "All events": "כל האירועים"
   },
   "All-day reminder time": {
     "All-day reminder time": "שעת תזכורת לכל היום"
@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "שם היומן"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "יומנים"
   },
@@ -315,7 +318,7 @@
     "Choose calendar directory": "בחר/י תיקיית יומן"
   },
   "Clear": {
-    "Clear": ""
+    "Clear": "ניקוי"
   },
   "Clear event selection": {
     "Clear event selection": "נקה/י בחירת אירוע"
@@ -384,22 +387,22 @@
     "Continue": "המשך/המשיכי"
   },
   "Copied %1 events": {
-    "Copied %1 events": ""
+    "Copied %1 events": "הועתקו %1 אירועים"
   },
   "Copied 1 event": {
-    "Copied 1 event": ""
+    "Copied 1 event": "הועתק אירוע 1"
   },
   "Copied to clipboard": {
     "Copied to clipboard": "הועתק ללוח ההעתקה"
   },
   "Copy": {
-    "Copy": ""
+    "Copy": "העתקה"
   },
   "Copy %1 events": {
-    "Copy %1 events": ""
+    "Copy %1 events": "העתק/י %1 אירועים"
   },
   "Copy event": {
-    "Copy event": ""
+    "Copy event": "העתק/י אירוע"
   },
   "Copy link": {
     "Copy link": "העתק/י קישור"
@@ -408,7 +411,7 @@
     "Copy path": "העתק/י נתיב"
   },
   "Copy selected events": {
-    "Copy selected events": ""
+    "Copy selected events": "העתק/י אירועים שנבחרו"
   },
   "Core hours": {
     "Core hours": "שעות פעילות מרכזיות"
@@ -429,13 +432,13 @@
     "Create event": "צור/צרי אירוע"
   },
   "Created %1 events": {
-    "Created %1 events": ""
+    "Created %1 events": "נוצרו %1 אירועים"
   },
   "Created %1 of %2 events": {
-    "Created %1 of %2 events": ""
+    "Created %1 of %2 events": "נוצרו %1 מתוך %2 אירועים"
   },
   "Created 1 event": {
-    "Created 1 event": ""
+    "Created 1 event": "נוצר אירוע 1"
   },
   "Credentials stay on this machine": {
     "Credentials stay on this machine": "אישורי הגישה נשארים על מחשב זה"
@@ -444,19 +447,19 @@
     "Custom": "מותאם אישית"
   },
   "Cut": {
-    "Cut": ""
+    "Cut": "גזירה"
   },
   "Cut %1 events": {
-    "Cut %1 events": ""
+    "Cut %1 events": "גזור/גזרי %1 אירועים"
   },
   "Cut 1 event": {
-    "Cut 1 event": ""
+    "Cut 1 event": "גזור/גזרי אירוע 1"
   },
   "Cut event": {
-    "Cut event": ""
+    "Cut event": "גזור/גזרי אירוע"
   },
   "Cut selected events": {
-    "Cut selected events": ""
+    "Cut selected events": "גזור/גזרי אירועים שנבחרו"
   },
   "DMS dynamic": {
     "DMS dynamic": "דינמי של DMS"
@@ -482,17 +485,23 @@
   "Dark": {
     "Dark": "כהה"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "יום"
   },
   "Day actions": {
-    "Day actions": ""
+    "Day actions": "פעולות יום"
   },
   "Day view": {
     "Day view": "תצוגת יום"
   },
   "Decline": {
     "Decline": "דחייה"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "משך אירוע כברירת מחדל"
@@ -510,40 +519,40 @@
     "Delete \"%1\"?": "למחוק את \"%1\"?"
   },
   "Delete %1 events": {
-    "Delete %1 events": ""
+    "Delete %1 events": "מחק/י %1 אירועים"
   },
   "Delete %1 events?": {
-    "Delete %1 events?": ""
+    "Delete %1 events?": "למחוק %1 אירועים?"
   },
   "Delete %1 events…": {
-    "Delete %1 events…": ""
+    "Delete %1 events…": "מחיקת %1 אירועים…"
   },
   "Delete event": {
-    "Delete event": ""
+    "Delete event": "מחק/י אירוע"
   },
   "Delete event?": {
-    "Delete event?": ""
+    "Delete event?": "למחוק אירוע?"
   },
   "Delete event…": {
-    "Delete event…": ""
+    "Delete event…": "מחיקת אירוע…"
   },
   "Delete occurrence": {
     "Delete occurrence": "מחק/י מופע"
   },
   "Delete selected events": {
-    "Delete selected events": ""
+    "Delete selected events": "מחק/י אירועים שנבחרו"
   },
   "Delete series": {
     "Delete series": "מחק/י סדרה"
   },
   "Deleted %1 events": {
-    "Deleted %1 events": ""
+    "Deleted %1 events": "נמחקו %1 אירועים"
   },
   "Deleted %1 of %2 events": {
-    "Deleted %1 of %2 events": ""
+    "Deleted %1 of %2 events": "נמחקו %1 מתוך %2 אירועים"
   },
   "Deleted 1 event": {
-    "Deleted 1 event": ""
+    "Deleted 1 event": "נמחק אירוע 1"
   },
   "Delete…": {
     "Delete…": "מחיקה…"
@@ -600,16 +609,16 @@
     "Due date": "תאריך יעד"
   },
   "Duplicate": {
-    "Duplicate": ""
+    "Duplicate": "שכפול"
   },
   "Duplicate %1 events": {
-    "Duplicate %1 events": ""
+    "Duplicate %1 events": "שכפל/י %1 אירועים"
   },
   "Duplicate selected events": {
-    "Duplicate selected events": ""
+    "Duplicate selected events": "שכפל/י אירועים שנבחרו"
   },
   "Duplicate selected events to the next day": {
-    "Duplicate selected events to the next day": ""
+    "Duplicate selected events to the next day": "שכפל/י אירועים שנבחרו ליום הבא"
   },
   "Edit event": {
     "Edit event": "ערוך/ערכי אירוע"
@@ -651,7 +660,7 @@
     "Event": "אירוע"
   },
   "Event actions": {
-    "Event actions": ""
+    "Event actions": "פעולות לאירוע"
   },
   "Event details": {
     "Event details": "פרטי אירוע"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "קבצים - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "היום הראשון שמוצג בתצוגות שבוע וחודש."
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "עקוב/י אחר הצבעים של DankMaterialShell, עם גיבוי להגדרה מוכנה מראש."
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "עוקב אחר ערכת הצבעים של המערכת (כרגע %1)."
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "הפעל/י את Dank Calendar ברקע בעת ההתחברות."
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "יומנים מקומיים"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "מיקום"
@@ -834,19 +858,19 @@
     "Monthly": "חודשי"
   },
   "Move": {
-    "Move": ""
+    "Move": "העברה"
   },
   "Move %1 events": {
-    "Move %1 events": ""
+    "Move %1 events": "העבר/י %1 אירועים"
   },
   "Move %1 events here": {
-    "Move %1 events here": ""
+    "Move %1 events here": "העבר/י %1 אירועים לכאן"
   },
   "Move 1 event here": {
-    "Move 1 event here": ""
+    "Move 1 event here": "העבר/י אירוע 1 לכאן"
   },
   "Move recurring events?": {
-    "Move recurring events?": ""
+    "Move recurring events?": "להעביר אירועים מחזוריים?"
   },
   "Move through sidebar items": {
     "Move through sidebar items": "נווט/י בין פריטי סרגל הצד"
@@ -855,19 +879,19 @@
     "Move to Trash": "העבר/י לאשפה"
   },
   "Move to selected day": {
-    "Move to selected day": ""
+    "Move to selected day": "העבר/י ליום הנבחר"
   },
   "Moved %1 events": {
-    "Moved %1 events": ""
+    "Moved %1 events": "הועברו %1 אירועים"
   },
   "Moved %1 of %2 events": {
-    "Moved %1 of %2 events": ""
+    "Moved %1 of %2 events": "הועברו %1 מתוך %2 אירועים"
   },
   "Moved 1 event": {
-    "Moved 1 event": ""
+    "Moved 1 event": "הועבר אירוע 1"
   },
   "Moving a recurring event moves its entire series.": {
-    "Moving a recurring event moves its entire series.": ""
+    "Moving a recurring event moves its entire series.": "העברת אירוע מחזורי תעביר את כל הסדרה שלו."
   },
   "Music": {
     "Music": "מוסיקה"
@@ -996,10 +1020,10 @@
     "Open browser again": "פתח/י דפדפן מחדש"
   },
   "Open event": {
-    "Open event": ""
+    "Open event": "פתח/י אירוע"
   },
   "Open event actions": {
-    "Open event actions": ""
+    "Open event actions": "פתח/י פעולות לאירוע"
   },
   "Open or create event": {
     "Open or create event": "פתח/י או צור/צרי אירוע"
@@ -1035,22 +1059,22 @@
     "Password (optional)": "סיסמה (אופציונלית)"
   },
   "Paste %1 events": {
-    "Paste %1 events": ""
+    "Paste %1 events": "הדבק/י %1 אירועים"
   },
   "Paste %1 events here": {
-    "Paste %1 events here": ""
+    "Paste %1 events here": "הדבק/י %1 אירועים לכאן"
   },
   "Paste 1 event": {
-    "Paste 1 event": ""
+    "Paste 1 event": "הדבק/י אירוע 1"
   },
   "Paste 1 event here": {
-    "Paste 1 event here": ""
+    "Paste 1 event here": "הדבק/י אירוע 1 לכאן"
   },
   "Paste credentials": {
     "Paste credentials": "הדבק/י אישורי גישה"
   },
   "Paste events on the selected day": {
-    "Paste events on the selected day": ""
+    "Paste events on the selected day": "הדבק/י אירועים ביום הנבחר"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "הדבק/י את ה-Application (client) ID מתוך דף הסקירה הכללית של רישום האפליקציה שלך."
@@ -1062,13 +1086,13 @@
     "Paste your credentials": "הדבק/י את אישורי הגישה שלך"
   },
   "Pasted %1 events": {
-    "Pasted %1 events": ""
+    "Pasted %1 events": "הודבקו %1 אירועים"
   },
   "Pasted %1 of %2 events": {
-    "Pasted %1 of %2 events": ""
+    "Pasted %1 of %2 events": "הודבקו %1 מתוך %2 אירועים"
   },
   "Pasted 1 event": {
-    "Pasted 1 event": ""
+    "Pasted 1 event": "הודבק אירוע 1"
   },
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "בחר/י מקור צבע, פלטת צבעים או קובץ ערכת נושא משלך."
@@ -1116,13 +1140,13 @@
     "Quit": "יציאה"
   },
   "Read-only events can't be cut": {
-    "Read-only events can't be cut": ""
+    "Read-only events can't be cut": "לא ניתן לגזור אירועים לקריאה בלבד"
   },
   "Read-only events can't be deleted": {
-    "Read-only events can't be deleted": ""
+    "Read-only events can't be deleted": "לא ניתן למחוק אירועים לקריאה בלבד"
   },
   "Read-only events can't be moved": {
-    "Read-only events can't be moved": ""
+    "Read-only events can't be moved": "לא ניתן להעביר אירועים לקריאה בלבד"
   },
   "Reconnect": {
     "Reconnect": "התחבר/י מחדש"
@@ -1176,16 +1200,16 @@
     "Repeat": "חזרה"
   },
   "Repeat %1 events next week": {
-    "Repeat %1 events next week": ""
+    "Repeat %1 events next week": "חזור/חזרי על %1 אירועים בשבוע הבא"
   },
   "Repeat %1 events tomorrow": {
-    "Repeat %1 events tomorrow": ""
+    "Repeat %1 events tomorrow": "חזור/חזרי על %1 אירועים מחר"
   },
   "Repeat next week": {
-    "Repeat next week": ""
+    "Repeat next week": "חזור/חזרי בשבוע הבא"
   },
   "Repeat tomorrow": {
-    "Repeat tomorrow": ""
+    "Repeat tomorrow": "חזור/חזרי מחר"
   },
   "Repeats": {
     "Repeats": "חוזר"
@@ -1221,13 +1245,13 @@
     "Select File": "בחר/י קובץ"
   },
   "Select a range of events": {
-    "Select a range of events": ""
+    "Select a range of events": "בחר/י טווח של אירועים"
   },
   "Select all %1 events": {
-    "Select all %1 events": ""
+    "Select all %1 events": "בחר/י את כל %1 האירועים"
   },
   "Select all events on the selected day": {
-    "Select all events on the selected day": ""
+    "Select all events on the selected day": "בחר/י את כל האירועים ביום הנבחר"
   },
   "Select client_secret.json": {
     "Select client_secret.json": "בחר/י בclient_secret.json"
@@ -1236,7 +1260,7 @@
     "Select days for a new event (month view)": "בחר/י ימים לאירוע חדש (בתצוגת חודש)"
   },
   "Select event": {
-    "Select event": ""
+    "Select event": "בחר/י אירוע"
   },
   "Select file": {
     "Select file": "בחר/י קובץ"
@@ -1355,6 +1379,9 @@
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "מסונכרן בתור \"%1\". השם משתנה רק בDank Calendar."
   },
+  "System default": {
+    "System default": ""
+  },
   "System default (%1)": {
     "System default (%1)": "ברירת מחדל של המערכת (%1)"
   },
@@ -1389,16 +1416,16 @@
     "Theme": "ערכת נושא"
   },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
-    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "אירועים אלו יימחקו מהיומנים שלהם. בחירות מחזוריות מוחקות רק את המופעים שנבחרו."
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "לא ניתן לחבר חשבון זה מחדש — הסר/י אותו והוסף/י אותו מחדש."
   },
   "This event": {
-    "This event": ""
+    "This event": "אירוע זה"
   },
   "This event will be deleted from its calendar.": {
-    "This event will be deleted from its calendar.": ""
+    "This event will be deleted from its calendar.": "אירוע זה יימחק מהיומן שבו הוא מופיע."
   },
   "Time format": {
     "Time format": "תבנית זמן"

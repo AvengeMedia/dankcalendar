@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "Tên lịch"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "Lịch"
   },
@@ -482,6 +485,9 @@
   "Dark": {
     "Dark": "Tối"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "Ngày"
   },
@@ -493,6 +499,9 @@
   },
   "Decline": {
     "Decline": "Từ chối"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "Thời lượng sự kiện mặc định"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "Tệp - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Ngày đầu tiên hiển thị trong chế độ tuần và tháng."
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Theo dõi màu DankMaterialShell, quay lại cài đặt."
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Đang theo bảng màu hệ thống (hiện tại: %1)."
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "Khởi động Dank Calendar nền khi đăng nhập."
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "Lịch cục bộ"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "Địa điểm"
@@ -1354,6 +1378,9 @@
   },
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "Đồng bộ với tên \"%1\". Tên chỉ thay đổi trong Dank Calendar."
+  },
+  "System default": {
+    "System default": ""
   },
   "System default (%1)": {
     "System default (%1)": "Mặc định hệ thống (%1)"

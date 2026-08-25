@@ -651,6 +651,13 @@
     "comment": ""
   },
   {
+    "term": "Calendar preselected when creating events.",
+    "translation": "",
+    "context": "default calendar setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Calendars",
     "translation": "",
     "context": "calendars settings section header | settings sidebar tab label",
@@ -1071,6 +1078,13 @@
     "comment": ""
   },
   {
+    "term": "Date and time locale",
+    "translation": "",
+    "context": "date and time locale setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Day",
     "translation": "",
     "context": "view switcher option in sidebar",
@@ -1095,6 +1109,13 @@
     "term": "Decline",
     "translation": "",
     "context": "RSVP decline button",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Default calendar",
+    "translation": "",
+    "context": "default calendar setting label",
     "reference": "",
     "comment": ""
   },
@@ -1470,6 +1491,13 @@
     "comment": ""
   },
   {
+    "term": "First calendar",
+    "translation": "",
+    "context": "default calendar dropdown option for no explicit default",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "First day shown in week and month views.",
     "translation": "",
     "context": "week start setting description",
@@ -1487,6 +1515,13 @@
     "term": "Follow DankMaterialShell colors, falling back to a preset.",
     "translation": "",
     "context": "color source description for auto",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Follow language",
+    "translation": "",
+    "context": "date and time locale dropdown option that follows the interface language",
     "reference": "",
     "comment": ""
   },
@@ -1631,6 +1666,20 @@
     "comment": ""
   },
   {
+    "term": "Language",
+    "translation": "",
+    "context": "interface language setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Language of the interface.",
+    "translation": "",
+    "context": "interface language setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Launch Dank Calendar in the background when you log in.",
     "translation": "",
     "context": "autostart setting description",
@@ -1697,6 +1746,13 @@
     "term": "Local calendars",
     "translation": "",
     "context": "local account display name field placeholder",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Locale used for day and month names, time format and week start.",
+    "translation": "",
+    "context": "date and time locale setting description",
     "reference": "",
     "comment": ""
   },
@@ -2908,6 +2964,13 @@
     "term": "Synced as \"%1\". The name only changes in Dank Calendar.",
     "translation": "",
     "context": "rename calendar dialog note showing provider name",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "System default",
+    "translation": "",
+    "context": "language dropdown option that follows the system language",
     "reference": "",
     "comment": ""
   },

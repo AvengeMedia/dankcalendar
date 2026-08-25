@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "Nome calendario"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "Calendari"
   },
@@ -482,6 +485,9 @@
   "Dark": {
     "Dark": "Scuro"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "Giorno"
   },
@@ -493,6 +499,9 @@
   },
   "Decline": {
     "Decline": "Rifiuta"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "Durata predefinita evento"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "File - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Primo giorno mostrato nelle viste settimanale e mensile."
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Segue i colori della DankMaterialShell, con fallback a un preset."
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Segue lo schema colori di sistema (attualmente %1)."
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "Avvia Dank Calendar in background all'accesso."
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "Calendari locali"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "Posizione"
@@ -1354,6 +1378,9 @@
   },
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "Sincronizzato come \"%1\". Il nome cambia solo in Dank Calendar."
+  },
+  "System default": {
+    "System default": ""
   },
   "System default (%1)": {
     "System default (%1)": "Predefinito di sistema (%1)"

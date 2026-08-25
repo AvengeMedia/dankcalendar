@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "Agendanaam"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "Agenda's"
   },
@@ -482,6 +485,9 @@
   "Dark": {
     "Dark": "Donker"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "Dag"
   },
@@ -493,6 +499,9 @@
   },
   "Decline": {
     "Decline": "Weigeren"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "Standaardduur afspraak"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "Bestanden - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Eerste dag getoond in week- en maandweergave."
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Volg de kleuren van DankMaterialShell, of val terug op een preset."
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Systeemkleurenschema volgen (momenteel %1)."
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "Dank Calendar op de achtergrond starten wanneer je inlogt."
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "Lokale agenda's"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "Locatie"
@@ -1354,6 +1378,9 @@
   },
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "Gesynchroniseerd als \"%1\". De naam verandert alleen in Dank Calendar."
+  },
+  "System default": {
+    "System default": ""
   },
   "System default (%1)": {
     "System default (%1)": "Systeemstandaard (%1)"

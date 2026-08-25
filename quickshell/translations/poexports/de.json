@@ -9,10 +9,10 @@
     "%1 appointments fall outside core hours": "%1 Termine liegen außerhalb der Kernarbeitszeit"
   },
   "%1 events selected": {
-    "%1 events selected": ""
+    "%1 events selected": "%1 Ereignisse ausgewählt"
   },
   "%1 selected": {
-    "%1 selected": ""
+    "%1 selected": "%1 ausgewählt"
   },
   "%1 times": {
     "%1 times": "%1 Mal"
@@ -48,10 +48,10 @@
     "+%1 more": "+%1 weitere"
   },
   "+1 day": {
-    "+1 day": ""
+    "+1 day": "+1 Tag"
   },
   "+1 week": {
-    "+1 week": ""
+    "+1 week": "+1 Woche"
   },
   "1 appointment falls outside core hours": {
     "1 appointment falls outside core hours": "1 Termin liegt außerhalb der Kernarbeitszeit"
@@ -159,7 +159,7 @@
     "Accounts": "Konten"
   },
   "Actions apply to the whole selection": {
-    "Actions apply to the whole selection": ""
+    "Actions apply to the whole selection": "Aktionen gelten für die gesamte Auswahl"
   },
   "Add": {
     "Add": "Hinzufügen"
@@ -177,7 +177,7 @@
     "Add description": "Beschreibung hinzufügen"
   },
   "Add or remove an event from the selection": {
-    "Add or remove an event from the selection": ""
+    "Add or remove an event from the selection": "Ereignis zur Auswahl hinzufügen oder daraus entfernen"
   },
   "Add reminder": {
     "Add reminder": "Erinnerung hinzufügen"
@@ -213,7 +213,7 @@
     "All done": "Alles erledigt"
   },
   "All events": {
-    "All events": ""
+    "All events": "Alle Ereignisse"
   },
   "All-day reminder time": {
     "All-day reminder time": "Erinnerungszeit für ganztägige Termine"
@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "Kalendername"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "Kalender"
   },
@@ -315,7 +318,7 @@
     "Choose calendar directory": "Kalenderverzeichnis auswählen"
   },
   "Clear": {
-    "Clear": ""
+    "Clear": "Leeren"
   },
   "Clear event selection": {
     "Clear event selection": "Event-Auswahl aufheben"
@@ -384,22 +387,22 @@
     "Continue": "Weiter"
   },
   "Copied %1 events": {
-    "Copied %1 events": ""
+    "Copied %1 events": "%1 Ereignisse kopiert"
   },
   "Copied 1 event": {
-    "Copied 1 event": ""
+    "Copied 1 event": "1 Ereignis kopiert"
   },
   "Copied to clipboard": {
     "Copied to clipboard": "In Zwischenablage kopiert"
   },
   "Copy": {
-    "Copy": ""
+    "Copy": "Kopieren"
   },
   "Copy %1 events": {
-    "Copy %1 events": ""
+    "Copy %1 events": "%1 Ereignisse kopieren"
   },
   "Copy event": {
-    "Copy event": ""
+    "Copy event": "Ereignis kopieren"
   },
   "Copy link": {
     "Copy link": "Link kopieren"
@@ -408,7 +411,7 @@
     "Copy path": "Pfad kopieren"
   },
   "Copy selected events": {
-    "Copy selected events": ""
+    "Copy selected events": "Ausgewählte Ereignisse kopieren"
   },
   "Core hours": {
     "Core hours": "Kernarbeitszeit"
@@ -429,13 +432,13 @@
     "Create event": "Termin erstellen"
   },
   "Created %1 events": {
-    "Created %1 events": ""
+    "Created %1 events": "%1 Ereignisse erstellt"
   },
   "Created %1 of %2 events": {
-    "Created %1 of %2 events": ""
+    "Created %1 of %2 events": "%1 von %2 Ereignissen erstellt"
   },
   "Created 1 event": {
-    "Created 1 event": ""
+    "Created 1 event": "1 Ereignis erstellt"
   },
   "Credentials stay on this machine": {
     "Credentials stay on this machine": "Anmeldedaten verbleiben auf diesem Gerät"
@@ -444,19 +447,19 @@
     "Custom": "Benutzerdefiniert"
   },
   "Cut": {
-    "Cut": ""
+    "Cut": "Ausschneiden"
   },
   "Cut %1 events": {
-    "Cut %1 events": ""
+    "Cut %1 events": "%1 Ereignisse ausschneiden"
   },
   "Cut 1 event": {
-    "Cut 1 event": ""
+    "Cut 1 event": "1 Ereignis ausschneiden"
   },
   "Cut event": {
-    "Cut event": ""
+    "Cut event": "Ereignis ausschneiden"
   },
   "Cut selected events": {
-    "Cut selected events": ""
+    "Cut selected events": "Ausgewählte Ereignisse ausschneiden"
   },
   "DMS dynamic": {
     "DMS dynamic": "DMS dynamisch"
@@ -482,17 +485,23 @@
   "Dark": {
     "Dark": "Dunkel"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "Tag"
   },
   "Day actions": {
-    "Day actions": ""
+    "Day actions": "Tagesaktionen"
   },
   "Day view": {
     "Day view": "Tagesansicht"
   },
   "Decline": {
     "Decline": "Ablehnen"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "Standard-Termindauer"
@@ -510,40 +519,40 @@
     "Delete \"%1\"?": "\"%1\" löschen?"
   },
   "Delete %1 events": {
-    "Delete %1 events": ""
+    "Delete %1 events": "%1 Ereignisse löschen"
   },
   "Delete %1 events?": {
-    "Delete %1 events?": ""
+    "Delete %1 events?": "%1 Ereignisse löschen?"
   },
   "Delete %1 events…": {
-    "Delete %1 events…": ""
+    "Delete %1 events…": "%1 Ereignisse löschen…"
   },
   "Delete event": {
-    "Delete event": ""
+    "Delete event": "Ereignis löschen"
   },
   "Delete event?": {
-    "Delete event?": ""
+    "Delete event?": "Ereignis löschen?"
   },
   "Delete event…": {
-    "Delete event…": ""
+    "Delete event…": "Ereignis löschen…"
   },
   "Delete occurrence": {
     "Delete occurrence": "Vorkommen löschen"
   },
   "Delete selected events": {
-    "Delete selected events": ""
+    "Delete selected events": "Ausgewählte Ereignisse löschen"
   },
   "Delete series": {
     "Delete series": "Serie löschen"
   },
   "Deleted %1 events": {
-    "Deleted %1 events": ""
+    "Deleted %1 events": "%1 Ereignisse gelöscht"
   },
   "Deleted %1 of %2 events": {
-    "Deleted %1 of %2 events": ""
+    "Deleted %1 of %2 events": "%1 von %2 Ereignissen gelöscht"
   },
   "Deleted 1 event": {
-    "Deleted 1 event": ""
+    "Deleted 1 event": "1 Ereignis gelöscht"
   },
   "Delete…": {
     "Delete…": "Löschen…"
@@ -600,16 +609,16 @@
     "Due date": "Fälligkeitsdatum"
   },
   "Duplicate": {
-    "Duplicate": ""
+    "Duplicate": "Duplizieren"
   },
   "Duplicate %1 events": {
-    "Duplicate %1 events": ""
+    "Duplicate %1 events": "%1 Ereignisse duplizieren"
   },
   "Duplicate selected events": {
-    "Duplicate selected events": ""
+    "Duplicate selected events": "Ausgewählte Ereignisse duplizieren"
   },
   "Duplicate selected events to the next day": {
-    "Duplicate selected events to the next day": ""
+    "Duplicate selected events to the next day": "Ausgewählte Ereignisse auf den nächsten Tag duplizieren"
   },
   "Edit event": {
     "Edit event": "Termin bearbeiten"
@@ -651,7 +660,7 @@
     "Event": "Termin"
   },
   "Event actions": {
-    "Event actions": ""
+    "Event actions": "Ereignisaktionen"
   },
   "Event details": {
     "Event details": "Termindetails"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "Dateien - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Erster angezeigter Tag in Wochen- und Monatsansichten."
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Folgt den Farben von DankMaterialShell, mit Rückgriff auf eine Voreinstellung."
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Folgt dem System-Farbschema (aktuell %1)."
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "Dank Calendar beim Anmelden im Hintergrund starten."
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "Lokale Kalender"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "Ort"
@@ -834,19 +858,19 @@
     "Monthly": "Monatlich"
   },
   "Move": {
-    "Move": ""
+    "Move": "Verschieben"
   },
   "Move %1 events": {
-    "Move %1 events": ""
+    "Move %1 events": "%1 Ereignisse verschieben"
   },
   "Move %1 events here": {
-    "Move %1 events here": ""
+    "Move %1 events here": "%1 Ereignisse hierher verschieben"
   },
   "Move 1 event here": {
-    "Move 1 event here": ""
+    "Move 1 event here": "1 Ereignis hierher verschieben"
   },
   "Move recurring events?": {
-    "Move recurring events?": ""
+    "Move recurring events?": "Wiederkehrende Ereignisse verschieben?"
   },
   "Move through sidebar items": {
     "Move through sidebar items": "Durch Seitenleistenelemente navigieren"
@@ -855,19 +879,19 @@
     "Move to Trash": "In den Papierkorb verschieben"
   },
   "Move to selected day": {
-    "Move to selected day": ""
+    "Move to selected day": "Auf ausgewählten Tag verschieben"
   },
   "Moved %1 events": {
-    "Moved %1 events": ""
+    "Moved %1 events": "%1 Ereignisse verschoben"
   },
   "Moved %1 of %2 events": {
-    "Moved %1 of %2 events": ""
+    "Moved %1 of %2 events": "%1 von %2 Ereignissen verschoben"
   },
   "Moved 1 event": {
-    "Moved 1 event": ""
+    "Moved 1 event": "1 Ereignis verschoben"
   },
   "Moving a recurring event moves its entire series.": {
-    "Moving a recurring event moves its entire series.": ""
+    "Moving a recurring event moves its entire series.": "Das Verschieben eines wiederkehrenden Ereignisses verschiebt die gesamte Serie."
   },
   "Music": {
     "Music": "Musik"
@@ -996,10 +1020,10 @@
     "Open browser again": "Browser erneut öffnen"
   },
   "Open event": {
-    "Open event": ""
+    "Open event": "Ereignis öffnen"
   },
   "Open event actions": {
-    "Open event actions": ""
+    "Open event actions": "Ereignisaktionen öffnen"
   },
   "Open or create event": {
     "Open or create event": "Ereignis öffnen oder erstellen"
@@ -1035,22 +1059,22 @@
     "Password (optional)": "Passwort (optional)"
   },
   "Paste %1 events": {
-    "Paste %1 events": ""
+    "Paste %1 events": "%1 Ereignisse einfügen"
   },
   "Paste %1 events here": {
-    "Paste %1 events here": ""
+    "Paste %1 events here": "%1 Ereignisse hierher einfügen"
   },
   "Paste 1 event": {
-    "Paste 1 event": ""
+    "Paste 1 event": "1 Ereignis einfügen"
   },
   "Paste 1 event here": {
-    "Paste 1 event here": ""
+    "Paste 1 event here": "1 Ereignis hierher einfügen"
   },
   "Paste credentials": {
     "Paste credentials": "Anmeldedaten einfügen"
   },
   "Paste events on the selected day": {
-    "Paste events on the selected day": ""
+    "Paste events on the selected day": "Ereignisse am ausgewählten Tag einfügen"
   },
   "Paste the Application (client) ID from your app registration's Overview page.": {
     "Paste the Application (client) ID from your app registration's Overview page.": "Fügen Sie die Anwendungs-ID (Client-ID) von der Übersichtsseite Ihrer App-Registrierung ein."
@@ -1062,13 +1086,13 @@
     "Paste your credentials": "Ihre Anmeldedaten einfügen"
   },
   "Pasted %1 events": {
-    "Pasted %1 events": ""
+    "Pasted %1 events": "%1 Ereignisse eingefügt"
   },
   "Pasted %1 of %2 events": {
-    "Pasted %1 of %2 events": ""
+    "Pasted %1 of %2 events": "%1 von %2 Ereignissen eingefügt"
   },
   "Pasted 1 event": {
-    "Pasted 1 event": ""
+    "Pasted 1 event": "1 Ereignis eingefügt"
   },
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Wählen Sie eine Farbquelle, Palette oder Ihre eigene Themendatei aus."
@@ -1116,13 +1140,13 @@
     "Quit": "Beenden"
   },
   "Read-only events can't be cut": {
-    "Read-only events can't be cut": ""
+    "Read-only events can't be cut": "Schreibgeschützte Ereignisse können nicht ausgeschnitten werden"
   },
   "Read-only events can't be deleted": {
-    "Read-only events can't be deleted": ""
+    "Read-only events can't be deleted": "Schreibgeschützte Ereignisse können nicht gelöscht werden"
   },
   "Read-only events can't be moved": {
-    "Read-only events can't be moved": ""
+    "Read-only events can't be moved": "Schreibgeschützte Ereignisse können nicht verschoben werden"
   },
   "Reconnect": {
     "Reconnect": "Erneut verbinden"
@@ -1176,16 +1200,16 @@
     "Repeat": "Wiederholen"
   },
   "Repeat %1 events next week": {
-    "Repeat %1 events next week": ""
+    "Repeat %1 events next week": "%1 Ereignisse nächste Woche wiederholen"
   },
   "Repeat %1 events tomorrow": {
-    "Repeat %1 events tomorrow": ""
+    "Repeat %1 events tomorrow": "%1 Ereignisse morgen wiederholen"
   },
   "Repeat next week": {
-    "Repeat next week": ""
+    "Repeat next week": "Nächste Woche wiederholen"
   },
   "Repeat tomorrow": {
-    "Repeat tomorrow": ""
+    "Repeat tomorrow": "Morgen wiederholen"
   },
   "Repeats": {
     "Repeats": "Wiederholungen"
@@ -1221,13 +1245,13 @@
     "Select File": "Datei auswählen"
   },
   "Select a range of events": {
-    "Select a range of events": ""
+    "Select a range of events": "Einen Bereich von Ereignissen auswählen"
   },
   "Select all %1 events": {
-    "Select all %1 events": ""
+    "Select all %1 events": "Alle %1 Ereignisse auswählen"
   },
   "Select all events on the selected day": {
-    "Select all events on the selected day": ""
+    "Select all events on the selected day": "Alle Ereignisse am ausgewählten Tag auswählen"
   },
   "Select client_secret.json": {
     "Select client_secret.json": "client_secret.json auswählen"
@@ -1236,7 +1260,7 @@
     "Select days for a new event (month view)": "Tage für ein neues Ereignis auswählen (Monatsansicht)"
   },
   "Select event": {
-    "Select event": ""
+    "Select event": "Ereignis auswählen"
   },
   "Select file": {
     "Select file": "Datei auswählen"
@@ -1355,6 +1379,9 @@
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "Synchronisiert als „%1“. Der Name ändert sich nur in Dank Calendar."
   },
+  "System default": {
+    "System default": ""
+  },
   "System default (%1)": {
     "System default (%1)": "Systemstandard (%1)"
   },
@@ -1389,16 +1416,16 @@
     "Theme": "Design"
   },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
-    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "Diese Ereignisse werden aus ihren Kalendern gelöscht. Bei wiederkehrenden Auswahlen werden nur die ausgewählten Vorkommen gelöscht."
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Dieses Konto kann nicht erneut verbunden werden — entfernen Sie es und fügen Sie es erneut hinzu."
   },
   "This event": {
-    "This event": ""
+    "This event": "Dieses Ereignis"
   },
   "This event will be deleted from its calendar.": {
-    "This event will be deleted from its calendar.": ""
+    "This event will be deleted from its calendar.": "Dieses Ereignis wird aus seinem Kalender gelöscht."
   },
   "Time format": {
     "Time format": "Zeitformat"

@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "日历名称"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "日历"
   },
@@ -482,6 +485,9 @@
   "Dark": {
     "Dark": "深色"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "日"
   },
@@ -493,6 +499,9 @@
   },
   "Decline": {
     "Decline": "拒绝"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "默认日程时长"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "文件 - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "周视图和月视图中显示的一周首日。"
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "跟随 DankMaterialShell 色彩方案，若不可用则回退至预设。"
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "跟随系统色彩方案（当前为 %1）。"
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "登录系统时在后台启动 Dank Calendar日历。"
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "本地日历"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "地点"
@@ -1354,6 +1378,9 @@
   },
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "已同步为“%1”。该名称仅在 Dank Calendar 中生效。"
+  },
+  "System default": {
+    "System default": ""
   },
   "System default (%1)": {
     "System default (%1)": "系统默认（%1）"

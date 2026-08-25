@@ -290,6 +290,9 @@
   "Calendar name": {
     "Calendar name": "カレンダー名"
   },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": ""
+  },
   "Calendars": {
     "Calendars": "カレンダー"
   },
@@ -482,6 +485,9 @@
   "Dark": {
     "Dark": "ダーク"
   },
+  "Date and time locale": {
+    "Date and time locale": ""
+  },
   "Day": {
     "Day": "日"
   },
@@ -493,6 +499,9 @@
   },
   "Decline": {
     "Decline": "辞退"
+  },
+  "Default calendar": {
+    "Default calendar": ""
   },
   "Default event duration": {
     "Default event duration": "既定の予定時間"
@@ -680,6 +689,9 @@
   "Files - %1": {
     "Files - %1": "ファイル - %1"
   },
+  "First calendar": {
+    "First calendar": ""
+  },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "週表示と月表示で最初に表示する曜日です。"
   },
@@ -688,6 +700,9 @@
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "DankMaterialShell の色に従い、使えない場合はプリセットに戻します。"
+  },
+  "Follow language": {
+    "Follow language": ""
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "システムの配色に従います（現在は %1）。"
@@ -755,6 +770,12 @@
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
+  "Language": {
+    "Language": ""
+  },
+  "Language of the interface.": {
+    "Language of the interface.": ""
+  },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "ログイン時に Dank Calendar をバックグラウンドで起動します。"
   },
@@ -784,6 +805,9 @@
   },
   "Local calendars": {
     "Local calendars": "ローカルカレンダー"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": ""
   },
   "Location": {
     "Location": "場所"
@@ -1354,6 +1378,9 @@
   },
   "Synced as \"%1\". The name only changes in Dank Calendar.": {
     "Synced as \"%1\". The name only changes in Dank Calendar.": "\"%1\" として同期されています。名前の変更は Dank Calendar 内だけに反映されます。"
+  },
+  "System default": {
+    "System default": ""
   },
   "System default (%1)": {
     "System default (%1)": "システム既定（%1）"
