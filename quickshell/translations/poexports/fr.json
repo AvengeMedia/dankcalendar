@@ -1119,13 +1119,13 @@
     "Previous day, week or month": "Jour, semaine ou mois précédent"
   },
   "Previous event": {
-    "Previous event": ""
+    "Previous event": "Événement précédent"
   },
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "Événement précédent (semaine précédente dans la vue mois)"
   },
   "Previous week": {
-    "Previous week": ""
+    "Previous week": "Semaine suivante"
   },
   "Previous year": {
     "Previous year": "Année précédente"
@@ -1134,7 +1134,7 @@
     "Priority": "Priorité"
   },
   "Quick Access": {
-    "Quick Access": ""
+    "Quick Access": "Accès rapide"
   },
   "Quit": {
     "Quit": "Quitter"
@@ -1326,7 +1326,7 @@
     "Sign-in expired — reconnect to keep syncing": "Connexion expirée — reconnectez-vous pour continuer la synchronisation"
   },
   "Size": {
-    "Size": ""
+    "Size": "Taille"
   },
   "Skip certificate verification": {
     "Skip certificate verification": "Ignorer la vérification du certificat"
@@ -1335,7 +1335,7 @@
     "Snooze duration": "Durée du report"
   },
   "Sort By": {
-    "Sort By": ""
+    "Sort By": "Trier par"
   },
   "Start at login": {
     "Start at login": "Démarrer à la connexion"
@@ -1455,7 +1455,7 @@
     "Try again": "Réessayer"
   },
   "Type": {
-    "Type": ""
+    "Type": "Type"
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Saisissez au moins 2 caractères pour rechercher des événements."
@@ -1500,7 +1500,7 @@
     "Version": "Version"
   },
   "Videos": {
-    "Videos": ""
+    "Videos": "Vidéos"
   },
   "View": {
     "View": "Vue"

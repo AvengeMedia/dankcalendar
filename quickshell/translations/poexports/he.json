@@ -291,7 +291,7 @@
     "Calendar name": "שם היומן"
   },
   "Calendar preselected when creating events.": {
-    "Calendar preselected when creating events.": ""
+    "Calendar preselected when creating events.": "יומן שנבחר מראש לשימוש בעת יצירת אירועים."
   },
   "Calendars": {
     "Calendars": "יומנים"
@@ -486,7 +486,7 @@
     "Dark": "כהה"
   },
   "Date and time locale": {
-    "Date and time locale": ""
+    "Date and time locale": "שפה ואזור לתאריך ושעה"
   },
   "Day": {
     "Day": "יום"
@@ -501,7 +501,7 @@
     "Decline": "דחייה"
   },
   "Default calendar": {
-    "Default calendar": ""
+    "Default calendar": "יומן ברירת מחדל"
   },
   "Default event duration": {
     "Default event duration": "משך אירוע כברירת מחדל"
@@ -690,7 +690,7 @@
     "Files - %1": "קבצים - %1"
   },
   "First calendar": {
-    "First calendar": ""
+    "First calendar": "היומן הראשון"
   },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "היום הראשון שמוצג בתצוגות שבוע וחודש."
@@ -702,7 +702,7 @@
     "Follow DankMaterialShell colors, falling back to a preset.": "עקוב/י אחר הצבעים של DankMaterialShell, עם גיבוי להגדרה מוכנה מראש."
   },
   "Follow language": {
-    "Follow language": ""
+    "Follow language": "מעקב אחר שפת הממשק"
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "עוקב אחר ערכת הצבעים של המערכת (כרגע %1)."
@@ -771,10 +771,10 @@
     "Ko-fi": "Ko-fi"
   },
   "Language": {
-    "Language": ""
+    "Language": "שפה"
   },
   "Language of the interface.": {
-    "Language of the interface.": ""
+    "Language of the interface.": "שפת הממשק."
   },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "הפעל/י את Dank Calendar ברקע בעת ההתחברות."
@@ -807,7 +807,7 @@
     "Local calendars": "יומנים מקומיים"
   },
   "Locale used for day and month names, time format and week start.": {
-    "Locale used for day and month names, time format and week start.": ""
+    "Locale used for day and month names, time format and week start.": "ההגדרות האזוריות שמשמשות עבור שמות הימים והחודשים, תבנית הזמן ותחילת השבוע."
   },
   "Location": {
     "Location": "מיקום"
@@ -1380,7 +1380,7 @@
     "Synced as \"%1\". The name only changes in Dank Calendar.": "מסונכרן בתור \"%1\". השם משתנה רק בDank Calendar."
   },
   "System default": {
-    "System default": ""
+    "System default": "ברירת מחדל של המערכת"
   },
   "System default (%1)": {
     "System default (%1)": "ברירת מחדל של המערכת (%1)"

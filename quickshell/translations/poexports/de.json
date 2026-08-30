@@ -291,7 +291,7 @@
     "Calendar name": "Kalendername"
   },
   "Calendar preselected when creating events.": {
-    "Calendar preselected when creating events.": ""
+    "Calendar preselected when creating events.": "Vorausgewählter Kalender beim Erstellen von Ereignissen."
   },
   "Calendars": {
     "Calendars": "Kalender"
@@ -486,7 +486,7 @@
     "Dark": "Dunkel"
   },
   "Date and time locale": {
-    "Date and time locale": ""
+    "Date and time locale": "Datums- und Zeitgebietsschema"
   },
   "Day": {
     "Day": "Tag"
@@ -501,7 +501,7 @@
     "Decline": "Ablehnen"
   },
   "Default calendar": {
-    "Default calendar": ""
+    "Default calendar": "Standardkalender"
   },
   "Default event duration": {
     "Default event duration": "Standard-Termindauer"
@@ -690,7 +690,7 @@
     "Files - %1": "Dateien - %1"
   },
   "First calendar": {
-    "First calendar": ""
+    "First calendar": "Erster Kalender"
   },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "Erster angezeigter Tag in Wochen- und Monatsansichten."
@@ -702,7 +702,7 @@
     "Follow DankMaterialShell colors, falling back to a preset.": "Folgt den Farben von DankMaterialShell, mit Rückgriff auf eine Voreinstellung."
   },
   "Follow language": {
-    "Follow language": ""
+    "Follow language": "Sprache folgen"
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "Folgt dem System-Farbschema (aktuell %1)."
@@ -771,10 +771,10 @@
     "Ko-fi": "Ko-fi"
   },
   "Language": {
-    "Language": ""
+    "Language": "Sprache"
   },
   "Language of the interface.": {
-    "Language of the interface.": ""
+    "Language of the interface.": "Sprache der Benutzeroberfläche."
   },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "Dank Calendar beim Anmelden im Hintergrund starten."
@@ -807,7 +807,7 @@
     "Local calendars": "Lokale Kalender"
   },
   "Locale used for day and month names, time format and week start.": {
-    "Locale used for day and month names, time format and week start.": ""
+    "Locale used for day and month names, time format and week start.": "Gebietsschema für Tages- und Monatsnamen, Zeitformat und Wochenbeginn."
   },
   "Location": {
     "Location": "Ort"
@@ -1380,7 +1380,7 @@
     "Synced as \"%1\". The name only changes in Dank Calendar.": "Synchronisiert als „%1“. Der Name ändert sich nur in Dank Calendar."
   },
   "System default": {
-    "System default": ""
+    "System default": "Systemstandard"
   },
   "System default (%1)": {
     "System default (%1)": "Systemstandard (%1)"

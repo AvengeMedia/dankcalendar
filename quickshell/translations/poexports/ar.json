@@ -291,7 +291,7 @@
     "Calendar name": "اسم التقويم"
   },
   "Calendar preselected when creating events.": {
-    "Calendar preselected when creating events.": ""
+    "Calendar preselected when creating events.": "التقويم المحدد مسبقًا عند إنشاء الأحداث."
   },
   "Calendars": {
     "Calendars": "التقاويم"
@@ -486,7 +486,7 @@
     "Dark": "داكن"
   },
   "Date and time locale": {
-    "Date and time locale": ""
+    "Date and time locale": "إعدادات التاريخ والوقت المحلية"
   },
   "Day": {
     "Day": "يوم"
@@ -501,7 +501,7 @@
     "Decline": "رفض"
   },
   "Default calendar": {
-    "Default calendar": ""
+    "Default calendar": "التقويم الافتراضي"
   },
   "Default event duration": {
     "Default event duration": "المدة الافتراضية للحدث"
@@ -690,7 +690,7 @@
     "Files - %1": "الملفات - %1"
   },
   "First calendar": {
-    "First calendar": ""
+    "First calendar": "التقويم الأول"
   },
   "First day shown in week and month views.": {
     "First day shown in week and month views.": "اليوم الأول المعروض في عرضي الأسبوع والشهر."
@@ -702,7 +702,7 @@
     "Follow DankMaterialShell colors, falling back to a preset.": "اتبع ألوان DankMaterialShell، مع العودة إلى إعداد مسبق في حال عدم توفرها."
   },
   "Follow language": {
-    "Follow language": ""
+    "Follow language": "اتبع اللغة"
   },
   "Following the system color scheme (currently %1).": {
     "Following the system color scheme (currently %1).": "متابعة نظام الألوان الخاص بالنظام (حاليًا %1)."
@@ -771,10 +771,10 @@
     "Ko-fi": "Ko-fi"
   },
   "Language": {
-    "Language": ""
+    "Language": "اللغة"
   },
   "Language of the interface.": {
-    "Language of the interface.": ""
+    "Language of the interface.": "لغة الواجهة."
   },
   "Launch Dank Calendar in the background when you log in.": {
     "Launch Dank Calendar in the background when you log in.": "تشغيل Dank Calendar في الخلفية عند تسجيل الدخول."
@@ -807,7 +807,7 @@
     "Local calendars": "تقاويم محلية"
   },
   "Locale used for day and month names, time format and week start.": {
-    "Locale used for day and month names, time format and week start.": ""
+    "Locale used for day and month names, time format and week start.": "الإعدادات المحلية المستخدمة لأسماء الأيام والشهور، وتنسيق الوقت، وبداية الأسبوع."
   },
   "Location": {
     "Location": "الموقع"
@@ -1380,7 +1380,7 @@
     "Synced as \"%1\". The name only changes in Dank Calendar.": "تمت المزامنة باسم \"%1\". يتغير الاسم في Dank Calendar فقط."
   },
   "System default": {
-    "System default": ""
+    "System default": "إعدادات النظام الافتراضية"
   },
   "System default (%1)": {
     "System default (%1)": "الافتراضي للنظام (%1)"
