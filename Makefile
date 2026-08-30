@@ -36,6 +36,11 @@ DESKTOP_ID=com.danklinux.dankcalendar
 
 FLATPAK_MANIFEST=distro/flatpak/$(DESKTOP_ID).yml
 
+all: build
+
+build:
+	@$(MAKE) -C $(CORE_DIR) build
+
 flatpak-build:
 	flatpak run org.flatpak.Builder \
 		--force-clean --user --install --repo=repo \
@@ -55,11 +60,6 @@ flatpak-lint:
 flatpak-modules:
 	cd $(CORE_DIR) && GOWORK=off go run github.com/dennwc/flatpak-go-mod@latest \
 		-dest-pref $(CORE_DIR)/ -out ../distro/flatpak .
-
-all: build
-
-build:
-	@$(MAKE) -C $(CORE_DIR) build
 
 dev:
 	@$(MAKE) -C $(CORE_DIR) dev
