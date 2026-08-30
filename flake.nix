@@ -58,7 +58,7 @@
             pname = "dankcalendar";
             src = ./.;
             modRoot = "core";
-            vendorHash = "sha256-RS7XM80TtyOgwwTZa+ZwLEiQpRRbnApXFbt/8zDGiU8=";
+            vendorHash = "sha256-sCGKtWWOzARUz+whX6tDfWTYb8jIGO3o4fhndMGCm9c=";
 
             subPackages = [ "cmd/dcal" ];
 
