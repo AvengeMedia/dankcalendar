@@ -126,22 +126,31 @@ Item {
                 spacing: Theme.spacingS
 
                 DankActionButton {
-                    iconName: "refresh"
-                    iconColor: DankCalService.eventsLoading ? Theme.primary : Theme.surfaceText
+                    id: refreshButton
+
+                    property bool loading: DankCalService.eventsLoading
+                    readonly property bool syncing: loading || spinnerHold.running
+
+                    iconName: syncing ? "" : "refresh"
+                    iconColor: Theme.surfaceText
                     circular: true
                     enabled: DankCalService.connected
                     onClicked: DankCalService.refreshAll()
+                    onLoadingChanged: {
+                        if (loading)
+                            spinnerHold.restart();
+                    }
 
-                    RotationAnimation on rotation {
-                        running: DankCalService.eventsLoading
-                        from: 0
-                        to: 360
-                        duration: 900
-                        loops: Animation.Infinite
-                        onRunningChanged: {
-                            if (!running)
-                                rotation = 0;
-                        }
+                    Timer {
+                        id: spinnerHold
+                        interval: 1200
+                    }
+
+                    DankSpinner {
+                        anchors.centerIn: parent
+                        size: Theme.iconSize - 6
+                        color: Theme.primary
+                        visible: refreshButton.syncing
                     }
                 }
 

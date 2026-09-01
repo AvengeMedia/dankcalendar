@@ -1,0 +1,1622 @@
+{
+  "%1 AM": {
+    "%1 AM": "%1 AM"
+  },
+  "%1 PM": {
+    "%1 PM": "%1 PM"
+  },
+  "%1 appointments fall outside core hours": {
+    "%1 appointments fall outside core hours": "%1 събития са извън основните часове"
+  },
+  "%1 events selected": {
+    "%1 events selected": "%1 избрани събития"
+  },
+  "%1 selected": {
+    "%1 selected": "%1 избрани"
+  },
+  "%1 times": {
+    "%1 times": "%1 пъти"
+  },
+  "%1 · All day": {
+    "%1 · All day": "%1 · Цял ден"
+  },
+  "%1d before": {
+    "%1d before": "%1 д. преди"
+  },
+  "%1h": {
+    "%1h": "%1 ч."
+  },
+  "%1h before": {
+    "%1h before": "%1 ч. преди"
+  },
+  "%1h%2m": {
+    "%1h%2m": "%1 ч. %2 мин."
+  },
+  "%1m": {
+    "%1m": "%1 мин."
+  },
+  "%1m before": {
+    "%1m before": "%1 мин. преди"
+  },
+  "%1w before": {
+    "%1w before": "%1 седм. преди"
+  },
+  "(untitled)": {
+    "(untitled)": "(без заглавие)"
+  },
+  "+%1 more": {
+    "+%1 more": "+%1 още"
+  },
+  "+1 day": {
+    "+1 day": "+1 ден"
+  },
+  "+1 week": {
+    "+1 week": "+1 седмица"
+  },
+  "1 appointment falls outside core hours": {
+    "1 appointment falls outside core hours": "1 събитие е извън основните часове"
+  },
+  "1 day before": {
+    "1 day before": "1 ден преди"
+  },
+  "1 hour": {
+    "1 hour": "1 час"
+  },
+  "1 hour before": {
+    "1 hour before": "1 час преди"
+  },
+  "1 line": {
+    "1 line": "1 ред"
+  },
+  "1 minute": {
+    "1 minute": "1 минута"
+  },
+  "1 week before": {
+    "1 week before": "1 седмица преди"
+  },
+  "1.5 hours": {
+    "1.5 hours": "1,5 часа"
+  },
+  "10 minutes": {
+    "10 minutes": "10 минути"
+  },
+  "10 minutes before": {
+    "10 minutes before": "10 минути преди"
+  },
+  "12-hour": {
+    "12-hour": "12-часов"
+  },
+  "12h": {
+    "12h": "12 ч."
+  },
+  "15 minutes": {
+    "15 minutes": "15 минути"
+  },
+  "15 minutes before": {
+    "15 minutes before": "15 минути преди"
+  },
+  "2 days before": {
+    "2 days before": "2 дни преди"
+  },
+  "2 hours": {
+    "2 hours": "2 часа"
+  },
+  "2 hours before": {
+    "2 hours before": "2 часа преди"
+  },
+  "2 lines": {
+    "2 lines": "2 реда"
+  },
+  "24-hour": {
+    "24-hour": "24-часов"
+  },
+  "24h": {
+    "24h": "24 ч."
+  },
+  "3 lines": {
+    "3 lines": "3 реда"
+  },
+  "30 minutes": {
+    "30 minutes": "30 минути"
+  },
+  "30 minutes before": {
+    "30 minutes before": "30 минути преди"
+  },
+  "45 minutes": {
+    "45 minutes": "45 минути"
+  },
+  "5 minutes": {
+    "5 minutes": "5 минути"
+  },
+  "5 minutes before": {
+    "5 minutes before": "5 минути преди"
+  },
+  "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
+    "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Лиценз MIT</a>"
+  },
+  "A file with this name already exists. Do you want to overwrite it?": {
+    "A file with this name already exists. Do you want to overwrite it?": "Вече съществува файл с това име. Искате ли да го презапишете?"
+  },
+  "A folder of .ics files on this machine.": {
+    "A folder of .ics files on this machine.": "Папка с .ics файлове на това устройство."
+  },
+  "API": {
+    "API": "API"
+  },
+  "About": {
+    "About": "Относно"
+  },
+  "Accept": {
+    "Accept": "Приемане"
+  },
+  "Account connected": {
+    "Account connected": "Профилът е свързан"
+  },
+  "Account problem — click for options": {
+    "Account problem — click for options": "Проблем с профила – щракнете за опции"
+  },
+  "Accounts": {
+    "Accounts": "Профили"
+  },
+  "Actions apply to the whole selection": {
+    "Actions apply to the whole selection": "Действията важат за целия избор"
+  },
+  "Add": {
+    "Add": "Добавяне"
+  },
+  "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "Добавете CalDAV, локален, Google или Microsoft профил със списък със задачи, за да създавате задачи."
+  },
+  "Add a calendar": {
+    "Add a calendar": "Добавяне на календар"
+  },
+  "Add account": {
+    "Add account": "Добавяне на профил"
+  },
+  "Add description": {
+    "Add description": "Добавяне на описание"
+  },
+  "Add or remove an event from the selection": {
+    "Add or remove an event from the selection": "Добавяне или премахване на събитие от избора"
+  },
+  "Add reminder": {
+    "Add reminder": "Добавяне на напомняне"
+  },
+  "Add task": {
+    "Add task": "Добавяне на задача"
+  },
+  "Add title": {
+    "Add title": "Добавяне на заглавие"
+  },
+  "Adding…": {
+    "Adding…": "Добавяне…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": "Добавя календар към „%1“."
+  },
+  "After": {
+    "After": "След"
+  },
+  "Agenda": {
+    "Agenda": "Програма"
+  },
+  "Agenda view": {
+    "Agenda view": "Изглед „Програма“"
+  },
+  "All credentials are stored in your system keyring when available.": {
+    "All credentials are stored in your system keyring when available.": "Всички идентификационни данни се съхраняват в системния ключодържател, когато е наличен."
+  },
+  "All day": {
+    "All day": "Цял ден"
+  },
+  "All done": {
+    "All done": "Всичко е изпълнено"
+  },
+  "All events": {
+    "All events": "Всички събития"
+  },
+  "All-day reminder time": {
+    "All-day reminder time": "Време за напомняне за целодневни събития"
+  },
+  "All-day reminder timing": {
+    "All-day reminder timing": "Време на напомняне за целодневни събития"
+  },
+  "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
+    "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Назад • F1/I: Инфо за файла • F10: Помощ • Esc: Затваряне"
+  },
+  "Always use the dark theme.": {
+    "Always use the dark theme.": "Винаги да се използва тъмната тема."
+  },
+  "Always use the light theme.": {
+    "Always use the light theme.": "Винаги да се използва светлата тема."
+  },
+  "App-specific password": {
+    "App-specific password": "Парола за конкретно приложение"
+  },
+  "Appearance": {
+    "Appearance": "Облик"
+  },
+  "Apple ID": {
+    "Apple ID": "Apple ID"
+  },
+  "Apple iCloud calendars via app-specific password.": {
+    "Apple iCloud calendars via app-specific password.": "Календари на Apple iCloud чрез парола за конкретно приложение."
+  },
+  "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": {
+    "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": "Одобрете достъпа в браузъра си. Прозорецът ще се върне тук автоматично, когато %1 изпрати обратно кода за оторизация."
+  },
+  "Ascending": {
+    "Ascending": "Възходящ"
+  },
+  "At start": {
+    "At start": "В момента на събитието"
+  },
+  "Attendees": {
+    "Attendees": "Участници"
+  },
+  "Authorization failed": {
+    "Authorization failed": "Неуспешна оторизация"
+  },
+  "Authorize in your browser": {
+    "Authorize in your browser": "Оторизиране в браузъра"
+  },
+  "Auto": {
+    "Auto": "Автоматично"
+  },
+  "Auto follows your locale (%1).": {
+    "Auto follows your locale (%1).": "Автоматично следва регионалните ви настройки (%1)."
+  },
+  "Back": {
+    "Back": "Назад"
+  },
+  "Back to the calendar": {
+    "Back to the calendar": "Назад към календара"
+  },
+  "Backend": {
+    "Backend": "Бекенд"
+  },
+  "Backend not connected.": {
+    "Backend not connected.": "Бекендът не е свързан."
+  },
+  "Begin setup": {
+    "Begin setup": "Започване на настройка"
+  },
+  "Calendar": {
+    "Calendar": "Календар"
+  },
+  "Calendar Settings": {
+    "Calendar Settings": "Настройки на календара"
+  },
+  "Calendar name": {
+    "Calendar name": "Име на календара"
+  },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": "Предварително избран календар при създаване на събития."
+  },
+  "Calendars": {
+    "Calendars": "Календари"
+  },
+  "Calendars couldn't be loaded; tasks are still syncing.": {
+    "Calendars couldn't be loaded; tasks are still syncing.": "Календарите не можаха да се заредят; задачите все още се синхронизират."
+  },
+  "Cancel": {
+    "Cancel": "Отказ"
+  },
+  "Capabilities": {
+    "Capabilities": "Възможности"
+  },
+  "Changes apply to the whole series": {
+    "Changes apply to the whole series": "Промените важат за цялата поредица"
+  },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": "Изберете JSON файл с цветова тема."
+  },
+  "Choose a provider": {
+    "Choose a provider": "Изберете доставчик"
+  },
+  "Choose calendar directory": {
+    "Choose calendar directory": "Изберете директория на календара"
+  },
+  "Clear": {
+    "Clear": "Изчистване"
+  },
+  "Clear event selection": {
+    "Clear event selection": "Изчистване на избраните събития"
+  },
+  "Click to zoom · Esc to close": {
+    "Click to zoom · Esc to close": "Щракнете за мащабиране · Esc за затваряне"
+  },
+  "Client ID": {
+    "Client ID": "Client ID"
+  },
+  "Client Secret": {
+    "Client Secret": "Client Secret"
+  },
+  "Close behavior": {
+    "Close behavior": "Поведение при затваряне"
+  },
+  "Closing hides the window; reopen it from your app launcher.": {
+    "Closing hides the window; reopen it from your app launcher.": "Затварянето скрива прозореца; отворете го отново от менюто с приложения."
+  },
+  "Collapse or expand a section": {
+    "Collapse or expand a section": "Сгъване или разгъване на раздел"
+  },
+  "Color source": {
+    "Color source": "Източник на цветове"
+  },
+  "Colors are shared with DankMaterialShell when available.": {
+    "Colors are shared with DankMaterialShell when available.": "Цветовете се споделят с DankMaterialShell, когато е налично."
+  },
+  "Coming soon": {
+    "Coming soon": "Очаквайте скоро"
+  },
+  "Completed": {
+    "Completed": "Завършени"
+  },
+  "Confirm": {
+    "Confirm": "Потвърждаване"
+  },
+  "Confirm delete": {
+    "Confirm delete": "Потвърждаване на изтриването"
+  },
+  "Connect": {
+    "Connect": "Свързване"
+  },
+  "Connect %1": {
+    "Connect %1": "Свързване с %1"
+  },
+  "Connect Google Account": {
+    "Connect Google Account": "Свързване на профил в Google"
+  },
+  "Connect Microsoft Account": {
+    "Connect Microsoft Account": "Свързване на профил в Microsoft"
+  },
+  "Connect any CalDAV-compatible server.": {
+    "Connect any CalDAV-compatible server.": "Свързване с всеки сървър, съвместим с CalDAV."
+  },
+  "Connected": {
+    "Connected": "Свързан"
+  },
+  "Connected calendar providers.": {
+    "Connected calendar providers.": "Свързани доставчици на календарни услуги."
+  },
+  "Connecting…": {
+    "Connecting…": "Свързване…"
+  },
+  "Continue": {
+    "Continue": "Продължаване"
+  },
+  "Copied %1 events": {
+    "Copied %1 events": "Копирани са %1 събития"
+  },
+  "Copied 1 event": {
+    "Copied 1 event": "Копирано е 1 събитие"
+  },
+  "Copied to clipboard": {
+    "Copied to clipboard": "Копирано в буфера за обмен"
+  },
+  "Copy": {
+    "Copy": "Копиране"
+  },
+  "Copy %1 events": {
+    "Copy %1 events": "Копиране на %1 събития"
+  },
+  "Copy event": {
+    "Copy event": "Копиране на събитието"
+  },
+  "Copy link": {
+    "Copy link": "Копиране на връзката"
+  },
+  "Copy path": {
+    "Copy path": "Копиране на пътя"
+  },
+  "Copy selected events": {
+    "Copy selected events": "Копиране на избраните събития"
+  },
+  "Core hours": {
+    "Core hours": "Основни часове"
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": "Файлът не можа да бъде прочетен – очаква се JSON файл с цветова тема."
+  },
+  "Could not read that file.": {
+    "Could not read that file.": "Файлът не можа да бъде прочетен."
+  },
+  "Couldn't update task": {
+    "Couldn't update task": "Задачата не можа да се обнови"
+  },
+  "Create": {
+    "Create": "Създаване"
+  },
+  "Create event": {
+    "Create event": "Създаване на събитие"
+  },
+  "Created %1 events": {
+    "Created %1 events": "Създадени са %1 събития"
+  },
+  "Created %1 of %2 events": {
+    "Created %1 of %2 events": "Създадени са %1 от %2 събития"
+  },
+  "Created 1 event": {
+    "Created 1 event": "Създадено е 1 събитие"
+  },
+  "Credentials stay on this machine": {
+    "Credentials stay on this machine": "Данните за вход остават на това устройство"
+  },
+  "Custom": {
+    "Custom": "Персонализирано"
+  },
+  "Cut": {
+    "Cut": "Изрязване"
+  },
+  "Cut %1 events": {
+    "Cut %1 events": "Изрязване на %1 събития"
+  },
+  "Cut 1 event": {
+    "Cut 1 event": "Изрязване на 1 събитие"
+  },
+  "Cut event": {
+    "Cut event": "Изрязване на събитието"
+  },
+  "Cut selected events": {
+    "Cut selected events": "Изрязване на избраните събития"
+  },
+  "DMS dynamic": {
+    "DMS dynamic": "Динамични от DMS"
+  },
+  "DMS dynamic colors detected when available.": {
+    "DMS dynamic colors detected when available.": "Открити динамични цветове от DMS, когато са налични."
+  },
+  "Daemon offline": {
+    "Daemon offline": "Демонът не работи"
+  },
+  "Daily": {
+    "Daily": "Ежедневно"
+  },
+  "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
+    "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar е календар за съвременния десктоп на Linux с дизайн, <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">вдъхновен от Material 3</a>, плюс персонализируем CLI и сокет API за интеграции.<br /><br/>Създаден е с <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, QT6 рамка за изграждане на десктоп шелове, и <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, статично типизиран компилиран език за програмиране."
+  },
+  "Dank Linux Discord": {
+    "Dank Linux Discord": "Dank Linux Discord"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell не е открит – използва се готовия шаблон „%1“."
+  },
+  "Dark": {
+    "Dark": "Тъмна"
+  },
+  "Date and time locale": {
+    "Date and time locale": "Регионални настройки за дата и час"
+  },
+  "Day": {
+    "Day": "Ден"
+  },
+  "Day actions": {
+    "Day actions": "Действия за деня"
+  },
+  "Day view": {
+    "Day view": "Дневен изглед"
+  },
+  "Decline": {
+    "Decline": "Отказване"
+  },
+  "Default calendar": {
+    "Default calendar": "Календар по подразбиране"
+  },
+  "Default event duration": {
+    "Default event duration": "Продължителност по подразбиране на събитие"
+  },
+  "Default reminder": {
+    "Default reminder": "Напомняне по подразбиране"
+  },
+  "Defaults follow your locale unless overridden.": {
+    "Defaults follow your locale unless overridden.": "Стойностите по подразбиране следват регионалните настройки, освен ако не са презададени."
+  },
+  "Delete": {
+    "Delete": "Изтриване"
+  },
+  "Delete \"%1\"?": {
+    "Delete \"%1\"?": "Да се изтрие ли „%1“?"
+  },
+  "Delete %1 events": {
+    "Delete %1 events": "Изтриване на %1 събития"
+  },
+  "Delete %1 events?": {
+    "Delete %1 events?": "Да се изтрият ли %1 събития?"
+  },
+  "Delete %1 events…": {
+    "Delete %1 events…": "Изтриване на %1 събития…"
+  },
+  "Delete event": {
+    "Delete event": "Изтриване на събитието"
+  },
+  "Delete event?": {
+    "Delete event?": "Да се изтрие ли събитието?"
+  },
+  "Delete event…": {
+    "Delete event…": "Изтриване на събитието…"
+  },
+  "Delete occurrence": {
+    "Delete occurrence": "Изтриване на това повторение"
+  },
+  "Delete selected events": {
+    "Delete selected events": "Изтриване на избраните събития"
+  },
+  "Delete series": {
+    "Delete series": "Изтриване на поредицата"
+  },
+  "Deleted %1 events": {
+    "Deleted %1 events": "Изтрити са %1 събития"
+  },
+  "Deleted %1 of %2 events": {
+    "Deleted %1 of %2 events": "Изтрити са %1 от %2 събития"
+  },
+  "Deleted 1 event": {
+    "Deleted 1 event": "Изтрито е 1 събитие"
+  },
+  "Delete…": {
+    "Delete…": "Изтриване…"
+  },
+  "Descending": {
+    "Descending": "Низходящ"
+  },
+  "Description": {
+    "Description": "Описание"
+  },
+  "Desktop": {
+    "Desktop": "Работен плот"
+  },
+  "Desktop notifications for upcoming events.": {
+    "Desktop notifications for upcoming events.": "Известия на работния плот за предстоящи събития."
+  },
+  "Directory": {
+    "Directory": "Директория"
+  },
+  "Disable core hours": {
+    "Disable core hours": "Изключване на основните часове"
+  },
+  "Disable sync": {
+    "Disable sync": "Изключване на синхронизирането"
+  },
+  "Dismiss": {
+    "Dismiss": "Отхвърляне"
+  },
+  "Display ISO week numbers in month view.": {
+    "Display ISO week numbers in month view.": "Показване на ISO номерата на седмиците в месечния изглед."
+  },
+  "Display name (optional)": {
+    "Display name (optional)": "Екранно име (незадължително)"
+  },
+  "Docs": {
+    "Docs": "Документация"
+  },
+  "Documents": {
+    "Documents": "Документи"
+  },
+  "Does not repeat": {
+    "Does not repeat": "Без повтаряне"
+  },
+  "Done": {
+    "Done": "Готово"
+  },
+  "Downloads": {
+    "Downloads": "Свалени"
+  },
+  "Drag to pan · click to fit": {
+    "Drag to pan · click to fit": "Плъзнете за преместване · щракнете за вместване"
+  },
+  "Due date": {
+    "Due date": "Краен срок"
+  },
+  "Duplicate": {
+    "Duplicate": "Дублиране"
+  },
+  "Duplicate %1 events": {
+    "Duplicate %1 events": "Дублиране на %1 събития"
+  },
+  "Duplicate selected events": {
+    "Duplicate selected events": "Дублиране на избраните събития"
+  },
+  "Duplicate selected events to the next day": {
+    "Duplicate selected events to the next day": "Дублиране на избраните събития за следващия ден"
+  },
+  "Edit event": {
+    "Edit event": "Редактиране на събитие"
+  },
+  "Edit task": {
+    "Edit task": "Редактиране на задача"
+  },
+  "Enable core hours": {
+    "Enable core hours": "Включване на основните часове"
+  },
+  "Enable reminders": {
+    "Enable reminders": "Включване на напомнянията"
+  },
+  "Enable sync": {
+    "Enable sync": "Включване на синхронизирането"
+  },
+  "Ends": {
+    "Ends": "Край"
+  },
+  "Enlarge": {
+    "Enlarge": "Увеличаване"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": "Въведете име за календара."
+  },
+  "Enter client ID": {
+    "Enter client ID": "Въведете клиентски ID"
+  },
+  "Enter filename...": {
+    "Enter filename...": "Въведете име на файл..."
+  },
+  "Enter your CalDAV server details. The connection is verified before the account is saved.": {
+    "Enter your CalDAV server details. The connection is verified before the account is saved.": "Въведете данните за вашия CalDAV сървър. Връзката се проверява преди профилът да бъде запазен."
+  },
+  "Enter your client ID": {
+    "Enter your client ID": "Въведете вашия клиентски ID"
+  },
+  "Event": {
+    "Event": "Събитие"
+  },
+  "Event actions": {
+    "Event actions": "Действия за събитие"
+  },
+  "Event details": {
+    "Event details": "Подробности за събитието"
+  },
+  "Every": {
+    "Every": "На всеки"
+  },
+  "Evolution": {
+    "Evolution": "Evolution"
+  },
+  "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": {
+    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": "Разгъване на клетките за дни, за да поберат всяко събитие, вместо скриване на допълнителните в „+ още N“."
+  },
+  "F1/I: Toggle • F10: Help": {
+    "F1/I: Toggle • F10: Help": "F1/I: Превключване • F10: Помощ"
+  },
+  "Feed URL": {
+    "Feed URL": "URL адрес на емисията"
+  },
+  "File Already Exists": {
+    "File Already Exists": "Файлът вече съществува"
+  },
+  "File Information": {
+    "File Information": "Информация за файла"
+  },
+  "Files - %1": {
+    "Files - %1": "Файлове – %1"
+  },
+  "First calendar": {
+    "First calendar": "Първи календар"
+  },
+  "First day shown in week and month views.": {
+    "First day shown in week and month views.": "Първият ден, показван в седмичния и месечния изглед."
+  },
+  "Focus or leave the sidebar": {
+    "Focus or leave the sidebar": "Фокусиране или напускане на страничната лента"
+  },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": "Следване на цветовете на DankMaterialShell с резервен вариант към готов шаблон."
+  },
+  "Follow language": {
+    "Follow language": "Следване на езика"
+  },
+  "Following the system color scheme (currently %1).": {
+    "Following the system color scheme (currently %1).": "Следва системната цветова схема (в момента %1)."
+  },
+  "General": {
+    "General": "Общи"
+  },
+  "Generate app-specific password": {
+    "Generate app-specific password": "Генериране на парола за конкретно приложение"
+  },
+  "GitHub": {
+    "GitHub": "GitHub"
+  },
+  "Go to date": {
+    "Go to date": "Към дата"
+  },
+  "Go to today": {
+    "Go to today": "Към днес"
+  },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks не е налично. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Активирайте неговия API</a> или свържете отново този профил, след което опреснете, за да се синхронизират задачите."
+  },
+  "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": {
+    "Google requires you to create your own OAuth client to read calendar data on your behalf. This is a one-time setup that takes about three minutes.": "Google изисква да създадете собствен OAuth клиент за четене на календарни данни от ваше име. Това е еднократна настройка, която отнема около три минути."
+  },
+  "Hide": {
+    "Hide": "Скриване"
+  },
+  "High": {
+    "High": "Висок"
+  },
+  "Home": {
+    "Home": "Начало"
+  },
+  "Hour range shown in day and week views.": {
+    "Hour range shown in day and week views.": "Часови диапазон, показван в дневния и седмичния изглед."
+  },
+  "How long the snooze button postpones a reminder.": {
+    "How long the snooze button postpones a reminder.": "Колко време бутонът за отлагане отлага напомнянето."
+  },
+  "How often accounts are polled for changes.": {
+    "How often accounts are polled for changes.": "Колко често профилите се проверяват за промени."
+  },
+  "Import client_secret.json": {
+    "Import client_secret.json": "Импортиране на client_secret.json"
+  },
+  "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
+    "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Импортирайте изтегления файл client_secret_….json при създаването на клиента или поставете Client ID и Secret ръчно."
+  },
+  "Initial reminder set on new events.": {
+    "Initial reminder set on new events.": "Първоначално напомняне, задавано за нови събития."
+  },
+  "Join video call": {
+    "Join video call": "Присъединяване към видеообаждане"
+  },
+  "Keep typing": {
+    "Keep typing": "Продължете да въвеждате"
+  },
+  "Keep until dismissed": {
+    "Keep until dismissed": "Запазване до отхвърляне"
+  },
+  "Keyboard shortcuts": {
+    "Keyboard shortcuts": "Клавишни комбинации"
+  },
+  "Ko-fi": {
+    "Ko-fi": "Ko-fi"
+  },
+  "Language": {
+    "Language": "Език"
+  },
+  "Language of the interface.": {
+    "Language of the interface.": "Език на интерфейса."
+  },
+  "Launch Dank Calendar in the background when you log in.": {
+    "Launch Dank Calendar in the background when you log in.": "Стартиране на Dank Calendar във фонов режим при влизане в системата."
+  },
+  "Length used when creating events.": {
+    "Length used when creating events.": "Продължителност при създаване на събития."
+  },
+  "Light": {
+    "Light": "Светла"
+  },
+  "Limit the day and week views to a set hour range.": {
+    "Limit the day and week views to a set hour range.": "Ограничаване на дневния и седмичния изглед до определен часови диапазон."
+  },
+  "List": {
+    "List": "Списък"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": "Зареждане на цветове от собствен файл с тема."
+  },
+  "Loading setup instructions…": {
+    "Loading setup instructions…": "Зареждане на инструкции за настройка…"
+  },
+  "Local": {
+    "Local": "Локален"
+  },
+  "Local calendar": {
+    "Local calendar": "Локален календар"
+  },
+  "Local calendars": {
+    "Local calendars": "Локални календари"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": "Регионални настройки за имена на дни и месеци, формат на часа и начало на седмицата."
+  },
+  "Location": {
+    "Location": "Местоположение"
+  },
+  "Low": {
+    "Low": "Нисък"
+  },
+  "Marked as not done": {
+    "Marked as not done": "Маркирано като незавършено"
+  },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": "Максимален брой редове за заглавие на събитие в месечния изглед."
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": "Максимален брой редове за заглавие на събитие в седмичния изглед."
+  },
+  "Maybe": {
+    "Maybe": "Може би"
+  },
+  "Medium": {
+    "Medium": "Среден"
+  },
+  "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Достъпът до Microsoft To Do не бе предоставен. Свържете отново този профил, за да синхронизирате задачите."
+  },
+  "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
+    "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "Microsoft често връща server_error през първите няколко минути след създаване или промяна на регистрацията на приложение. Изчакайте минута или две и опитайте отново."
+  },
+  "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": {
+    "Microsoft requires you to register your own app to read calendar data on your behalf. This is a one-time setup that takes about two minutes — no client secret needed.": "Microsoft изисква да регистрирате собствено приложение за четене на календарни данни от ваше име. Това е еднократна настройка, която отнема около две минути – не се изисква клиентска тайна (Client Secret)."
+  },
+  "Minimize": {
+    "Minimize": "Минимизиране"
+  },
+  "Modified": {
+    "Modified": "Променен"
+  },
+  "Month": {
+    "Month": "Месец"
+  },
+  "Month event title lines": {
+    "Month event title lines": "Редове за заглавие в месечен изглед"
+  },
+  "Month view": {
+    "Month view": "Месечен изглед"
+  },
+  "Monthly": {
+    "Monthly": "Ежемесечно"
+  },
+  "Move": {
+    "Move": "Преместване"
+  },
+  "Move %1 events": {
+    "Move %1 events": "Преместване на %1 събития"
+  },
+  "Move %1 events here": {
+    "Move %1 events here": "Преместване на %1 събития тук"
+  },
+  "Move 1 event here": {
+    "Move 1 event here": "Преместване на 1 събитие тук"
+  },
+  "Move recurring events?": {
+    "Move recurring events?": "Да се преместят ли повтарящите се събития?"
+  },
+  "Move through sidebar items": {
+    "Move through sidebar items": "Придвижване между елементите в страничната лента"
+  },
+  "Move to Trash": {
+    "Move to Trash": "Преместване в кошчето"
+  },
+  "Move to selected day": {
+    "Move to selected day": "Преместване към избрания ден"
+  },
+  "Moved %1 events": {
+    "Moved %1 events": "Преместени са %1 събития"
+  },
+  "Moved %1 of %2 events": {
+    "Moved %1 of %2 events": "Преместени са %1 от %2 събития"
+  },
+  "Moved 1 event": {
+    "Moved 1 event": "Преместено е 1 събитие"
+  },
+  "Moving a recurring event moves its entire series.": {
+    "Moving a recurring event moves its entire series.": "Преместването на повтарящо се събитие премества цялата му поредица."
+  },
+  "Music": {
+    "Music": "Музика"
+  },
+  "My calendars": {
+    "My calendars": "Моите календари"
+  },
+  "My server": {
+    "My server": "Моят сървър"
+  },
+  "Name": {
+    "Name": "Име"
+  },
+  "Navigation": {
+    "Navigation": "Навигация"
+  },
+  "Never": {
+    "Never": "Никога"
+  },
+  "New calendar": {
+    "New calendar": "Нов календар"
+  },
+  "New calendar…": {
+    "New calendar…": "Нов календар…"
+  },
+  "New event": {
+    "New event": "Ново събитие"
+  },
+  "New task": {
+    "New task": "Нова задача"
+  },
+  "Next day": {
+    "Next day": "Следващ ден"
+  },
+  "Next day with events": {
+    "Next day with events": "Следващ ден със събития"
+  },
+  "Next day, week or month": {
+    "Next day, week or month": "Следващ ден, седмица или месец"
+  },
+  "Next event": {
+    "Next event": "Следващо събитие"
+  },
+  "Next event (next week in month view)": {
+    "Next event (next week in month view)": "Следващо събитие (следваща седмица в месечния изглед)"
+  },
+  "Next week": {
+    "Next week": "Следваща седмица"
+  },
+  "Next year": {
+    "Next year": "Следваща година"
+  },
+  "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
+    "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "В този файл не е открит OAuth клиент – очаква се файлът client_secret_….json, изтеглен от Google."
+  },
+  "No accounts yet. Click \"Add account\" to connect one.": {
+    "No accounts yet. Click \"Add account\" to connect one.": "Все още няма профили. Щракнете върху „Добавяне на профил“, за да свържете."
+  },
+  "No calendars yet": {
+    "No calendars yet": "Все още няма календари"
+  },
+  "No calendars yet. Add an account first.": {
+    "No calendars yet. Add an account first.": "Все още няма календари. Първо добавете профил."
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": "Все още няма календари. Добавете един, за да започнете да създавате събития."
+  },
+  "No due date": {
+    "No due date": "Без краен срок"
+  },
+  "No matching events": {
+    "No matching events": "Няма съвпадащи събития"
+  },
+  "No task list available": {
+    "No task list available": "Няма наличен списък със задачи"
+  },
+  "No tasks yet": {
+    "No tasks yet": "Все още няма задачи"
+  },
+  "No theme file selected": {
+    "No theme file selected": "Няма избран файл с тема"
+  },
+  "No writable calendar available": {
+    "No writable calendar available": "Няма наличен календар с права за запис"
+  },
+  "None": {
+    "None": "Няма"
+  },
+  "Not authorized — remove this account and add it again": {
+    "Not authorized — remove this account and add it again": "Няма оторизация – премахнете този профил и го добавете отново"
+  },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": "Няма влизане – щракнете за повторно свързване или повторно добавяне на профила"
+  },
+  "Notes": {
+    "Notes": "Бележки"
+  },
+  "Nothing scheduled in the next %1 days": {
+    "Nothing scheduled in the next %1 days": "Няма нищо планирано през следващите %1 дни"
+  },
+  "Notification sound": {
+    "Notification sound": "Звук за известие"
+  },
+  "Notifications": {
+    "Notifications": "Известия"
+  },
+  "Notify for all-day events without their own reminders.": {
+    "Notify for all-day events without their own reminders.": "Известяване за целодневни събития без собствени напомняния."
+  },
+  "Offline": {
+    "Offline": "Офлайн"
+  },
+  "On date": {
+    "On date": "На дата"
+  },
+  "On the day": {
+    "On the day": "В деня на събитието"
+  },
+  "Open": {
+    "Open": "Отваряне"
+  },
+  "Open Calendar": {
+    "Open Calendar": "Отваряне на календара"
+  },
+  "Open browser again": {
+    "Open browser again": "Повторно отваряне на браузъра"
+  },
+  "Open event": {
+    "Open event": "Отваряне на събитие"
+  },
+  "Open event actions": {
+    "Open event actions": "Отваряне на действията за събитие"
+  },
+  "Open or create event": {
+    "Open or create event": "Отваряне или създаване на събитие"
+  },
+  "Order": {
+    "Order": "Подредба"
+  },
+  "Outlook, Office 365 and Exchange Online calendars.": {
+    "Outlook, Office 365 and Exchange Online calendars.": "Календари на Outlook, Office 365 и Exchange Online."
+  },
+  "Overdue": {
+    "Overdue": "Просрочени"
+  },
+  "Override": {
+    "Override": "Презадаване"
+  },
+  "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "Презадаване на глобалните настройки за напомняния за този календар. Непроменените опции следват глобалните стойности по подразбиране."
+  },
+  "Overwrite": {
+    "Overwrite": "Презаписване"
+  },
+  "Palette: %1": {
+    "Palette: %1": "Палитра: %1"
+  },
+  "Part of the Dank Linux suite.": {
+    "Part of the Dank Linux suite.": "Част от пакета Dank Linux."
+  },
+  "Password": {
+    "Password": "Парола"
+  },
+  "Password (optional)": {
+    "Password (optional)": "Парола (незадължително)"
+  },
+  "Paste %1 events": {
+    "Paste %1 events": "Поставяне на %1 събития"
+  },
+  "Paste %1 events here": {
+    "Paste %1 events here": "Поставяне на %1 събития тук"
+  },
+  "Paste 1 event": {
+    "Paste 1 event": "Поставяне на 1 събитие"
+  },
+  "Paste 1 event here": {
+    "Paste 1 event here": "Поставяне на 1 събитие тук"
+  },
+  "Paste credentials": {
+    "Paste credentials": "Поставяне на данни за вход"
+  },
+  "Paste events on the selected day": {
+    "Paste events on the selected day": "Поставяне на събития в избрания ден"
+  },
+  "Paste the Application (client) ID from your app registration's Overview page.": {
+    "Paste the Application (client) ID from your app registration's Overview page.": "Поставете Application (client) ID от страницата с общ преглед на регистрираното приложение."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "Поставете URL адреса на външна емисия с календар, за да се абонирате. Календарът е само за четене и се опреснява във фонов режим. Приемат се и връзки webcal://."
+  },
+  "Paste your credentials": {
+    "Paste your credentials": "Поставете вашите данни за вход"
+  },
+  "Pasted %1 events": {
+    "Pasted %1 events": "Поставени са %1 събития"
+  },
+  "Pasted %1 of %2 events": {
+    "Pasted %1 of %2 events": "Поставени са %1 от %2 събития"
+  },
+  "Pasted 1 event": {
+    "Pasted 1 event": "Поставено е 1 събитие"
+  },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": "Изберете източник на цветове, палитра или собствен файл с тема."
+  },
+  "Pictures": {
+    "Pictures": "Снимки"
+  },
+  "Play a sound when a reminder fires.": {
+    "Play a sound when a reminder fires.": "Възпроизвеждане на звук при задействане на напомняне."
+  },
+  "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Посочете директория с .ics файлове. Всяка поддиректория или .ics файл става календар – съвместимо с оформленията на vdirsyncer/khal. Директорията се създава, ако не съществува."
+  },
+  "Preset": {
+    "Preset": "Готов шаблон"
+  },
+  "Previous day": {
+    "Previous day": "Предишен ден"
+  },
+  "Previous day with events": {
+    "Previous day with events": "Предишен ден със събития"
+  },
+  "Previous day, week or month": {
+    "Previous day, week or month": "Предишен ден, седмица или месец"
+  },
+  "Previous event": {
+    "Previous event": "Предишно събитие"
+  },
+  "Previous event (previous week in month view)": {
+    "Previous event (previous week in month view)": "Предишно събитие (предишна седмица в месечния изглед)"
+  },
+  "Previous week": {
+    "Previous week": "Предишна седмица"
+  },
+  "Previous year": {
+    "Previous year": "Предишна година"
+  },
+  "Priority": {
+    "Priority": "Приоритет"
+  },
+  "Quick Access": {
+    "Quick Access": "Бърз достъп"
+  },
+  "Quit": {
+    "Quit": "Изход"
+  },
+  "Read-only events can't be cut": {
+    "Read-only events can't be cut": "Събития само за четене не могат да бъдат изрязвани"
+  },
+  "Read-only events can't be deleted": {
+    "Read-only events can't be deleted": "Събития само за четене не могат да бъдат изтривани"
+  },
+  "Read-only events can't be moved": {
+    "Read-only events can't be moved": "Събития само за четене не могат да бъдат премествани"
+  },
+  "Reconnect": {
+    "Reconnect": "Повторно свързване"
+  },
+  "Recurring tasks are managed in Google Tasks.": {
+    "Recurring tasks are managed in Google Tasks.": "Повтарящите се задачи се управляват в Google Tasks."
+  },
+  "Reminders": {
+    "Reminders": "Напомняния"
+  },
+  "Reminders and desktop alerts.": {
+    "Reminders and desktop alerts.": "Напомняния и сигнали на работния плот."
+  },
+  "Reminders are disabled globally, so nothing fires until you re-enable them.": {
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "Напомнянията са изключени глобално, така че нищо няма да се задейства, докато не ги включите отново."
+  },
+  "Reminders for \"%1": {
+    "Reminders for \"%1\"": "Напомняния за „%1“"
+  },
+  "Reminders stay on screen until you act on them.": {
+    "Reminders stay on screen until you act on them.": "Напомнянията остават на екрана, докато не предприемете действие."
+  },
+  "Remove": {
+    "Remove": "Премахване"
+  },
+  "Remove \"%1\"?": {
+    "Remove \"%1\"?": "Да се премахне ли „%1“?"
+  },
+  "Remove calendar or account": {
+    "Remove calendar or account": "Премахване на календар или профил"
+  },
+  "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
+    "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Премахва този профил, неговите календари и събития от Dank Calendar. Нищо не се изтрива от доставчика."
+  },
+  "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": {
+    "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": "Премахва този календар и събитията му от Dank Calendar. Ако доставчикът все още го поддържа, той ще се появи отново при следващата синхронизация."
+  },
+  "Remove…": {
+    "Remove…": "Премахване…"
+  },
+  "Rename": {
+    "Rename": "Преименуване"
+  },
+  "Rename calendar": {
+    "Rename calendar": "Преименуване на календар"
+  },
+  "Rename…": {
+    "Rename…": "Преименуване…"
+  },
+  "Repeat": {
+    "Repeat": "Повтаряне"
+  },
+  "Repeat %1 events next week": {
+    "Repeat %1 events next week": "Повтаряне на %1 събития следващата седмица"
+  },
+  "Repeat %1 events tomorrow": {
+    "Repeat %1 events tomorrow": "Повтаряне на %1 събития утре"
+  },
+  "Repeat next week": {
+    "Repeat next week": "Повтаряне следващата седмица"
+  },
+  "Repeat tomorrow": {
+    "Repeat tomorrow": "Повтаряне утре"
+  },
+  "Repeats": {
+    "Repeats": "Повтаря се"
+  },
+  "Repeats every %1": {
+    "Repeats every %1": "Повтаря се всеки %1"
+  },
+  "Repeats every %1 %2": {
+    "Repeats every %1 %2": "Повтаря се на всеки %1 %2"
+  },
+  "Reset to global": {
+    "Reset to global": "Връщане към глобалните"
+  },
+  "Save": {
+    "Save": "Запазване"
+  },
+  "Saving...": {
+    "Saving...": "Запазване..."
+  },
+  "Search": {
+    "Search": "Търсене"
+  },
+  "Search events": {
+    "Search events": "Търсене на събития"
+  },
+  "Search failed": {
+    "Search failed": "Неуспешно търсене"
+  },
+  "Searching": {
+    "Searching": "Търсене"
+  },
+  "Select File": {
+    "Select File": "Избор на файл"
+  },
+  "Select a range of events": {
+    "Select a range of events": "Избор на диапазон от събития"
+  },
+  "Select all %1 events": {
+    "Select all %1 events": "Избор на всички %1 събития"
+  },
+  "Select all events on the selected day": {
+    "Select all events on the selected day": "Избор на всички събития в избрания ден"
+  },
+  "Select client_secret.json": {
+    "Select client_secret.json": "Избор на client_secret.json"
+  },
+  "Select days for a new event (month view)": {
+    "Select days for a new event (month view)": "Избор на дни за ново събитие (месечен изглед)"
+  },
+  "Select event": {
+    "Select event": "Избор на събитие"
+  },
+  "Select file": {
+    "Select file": "Избор на файл"
+  },
+  "Select theme file": {
+    "Select theme file": "Избор на файл с тема"
+  },
+  "Send test": {
+    "Send test": "Изпращане на тест"
+  },
+  "Server URL": {
+    "Server URL": "URL на сървъра"
+  },
+  "Settings": {
+    "Settings": "Настройки"
+  },
+  "Show": {
+    "Show": "Показване"
+  },
+  "Show Dank Calendar in the system tray.": {
+    "Show Dank Calendar in the system tray.": "Показване на Dank Calendar в системната област."
+  },
+  "Show all events in month view": {
+    "Show all events in month view": "Показване на всички събития в месечния изглед"
+  },
+  "Show all-day reminders": {
+    "Show all-day reminders": "Показване на напомняния за целодневни събития"
+  },
+  "Show task lists and the Tasks view when an account provides them.": {
+    "Show task lists and the Tasks view when an account provides them.": "Показване на списъците със задачи и изгледа „Задачи“, когато даден профил ги предоставя."
+  },
+  "Show tasks": {
+    "Show tasks": "Показване на задачи"
+  },
+  "Show tray icon": {
+    "Show tray icon": "Показване на икона в системната област"
+  },
+  "Show week numbers": {
+    "Show week numbers": "Показване на номерата на седмиците"
+  },
+  "Sidebar": {
+    "Sidebar": "Странична лента"
+  },
+  "Sign in with %1": {
+    "Sign in with %1": "Влизане с %1"
+  },
+  "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "Влезте с Google в браузъра си и сте готови – не е необходима настройка. Dank Calendar синхронизира вашите календари, събития и задачи."
+  },
+  "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "Влезте с Microsoft в браузъра си и сте готови – не е необходима настройка. Dank Calendar синхронизира вашите календари, събития и задачи от Outlook."
+  },
+  "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
+    "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Влезте с вашия Apple ID и парола за конкретно приложение. Обикновените пароли за Apple ID няма да работят."
+  },
+  "Sign in with your Google account.": {
+    "Sign in with your Google account.": "Влезте с профила си в Google."
+  },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": "Входът е изтекъл – щракнете за повторно свързване"
+  },
+  "Sign-in expired — reconnect to keep syncing": {
+    "Sign-in expired — reconnect to keep syncing": "Входът е изтекъл – свържете се отново, за да продължи синхронизирането"
+  },
+  "Size": {
+    "Size": "Размер"
+  },
+  "Skip certificate verification": {
+    "Skip certificate verification": "Пропускане на проверката на сертификата"
+  },
+  "Snooze duration": {
+    "Snooze duration": "Време за отлагане"
+  },
+  "Sort By": {
+    "Sort By": "Подреждане по"
+  },
+  "Start at login": {
+    "Start at login": "Стартиране при влизане"
+  },
+  "Start week on": {
+    "Start week on": "Начало на седмицата"
+  },
+  "Starting…": {
+    "Starting…": "Стартиране…"
+  },
+  "Status": {
+    "Status": "Състояние"
+  },
+  "Step %1": {
+    "Step %1": "Стъпка %1"
+  },
+  "Step %1: %2": {
+    "Step %1: %2": "Стъпка %1: %2"
+  },
+  "Stock palette": {
+    "Stock palette": "Стандартна палитра"
+  },
+  "Subscribe": {
+    "Subscribe": "Абониране"
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": "Абониране за външен календар чрез URL (webcal/https)."
+  },
+  "Subscribing…": {
+    "Subscribing…": "Абониране…"
+  },
+  "Sync interval": {
+    "Sync interval": "Интервал на синхронизиране"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": "Синхронизирането е изключено – щракнете за повторно включване"
+  },
+  "Sync now": {
+    "Sync now": "Синхронизиране сега"
+  },
+  "Synced as \"%1\". The name only changes in Dank Calendar.": {
+    "Synced as \"%1\". The name only changes in Dank Calendar.": "Синхронизиран като „%1“. Името се променя само в Dank Calendar."
+  },
+  "System default": {
+    "System default": "По подразбиране за системата"
+  },
+  "System default (%1)": {
+    "System default (%1)": "По подразбиране за системата (%1)"
+  },
+  "System preference unavailable — using dark.": {
+    "System preference unavailable — using dark.": "Системните предпочитания не са налични – използва се тъмна."
+  },
+  "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": {
+    "Tab/Shift+Tab: Nav • ←→↑↓: Grid Nav • Enter/Space: Select": "Tab/Shift+Tab: Навигация • ←→↑↓: Нав. в мрежата • Enter/Space: Избор"
+  },
+  "Task": {
+    "Task": "Задача"
+  },
+  "Task completed": {
+    "Task completed": "Задачата е завършена"
+  },
+  "Task lists couldn't be loaded; calendars are still syncing.": {
+    "Task lists couldn't be loaded; calendars are still syncing.": "Списъците със задачи не можаха да се заредят; календарите все още се синхронизират."
+  },
+  "Tasks": {
+    "Tasks": "Задачи"
+  },
+  "Tasks view": {
+    "Tasks view": "Изглед „Задачи“"
+  },
+  "Test notification": {
+    "Test notification": "Тестово известие"
+  },
+  "That file is not valid JSON.": {
+    "That file is not valid JSON.": "Този файл не е валиден JSON."
+  },
+  "Theme": {
+    "Theme": "Тема"
+  },
+  "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
+    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "Тези събития ще бъдат изтрити от техните календари. При повтарящи се събития се изтриват само избраните повторения."
+  },
+  "This account cannot be reconnected — remove it and add it again.": {
+    "This account cannot be reconnected — remove it and add it again.": "Този профил не може да бъде свързан отново – премахнете го и го добавете пак."
+  },
+  "This event": {
+    "This event": "Това събитие"
+  },
+  "This event will be deleted from its calendar.": {
+    "This event will be deleted from its calendar.": "Това събитие ще бъде изтрито от неговия календар."
+  },
+  "Time format": {
+    "Time format": "Формат на часа"
+  },
+  "Title is required": {
+    "Title is required": "Заглавието е задължително"
+  },
+  "Today": {
+    "Today": "Днес"
+  },
+  "Toggle calendar, switch view or sync account": {
+    "Toggle calendar, switch view or sync account": "Превключване на календар, смяна на изгледа или синхронизиране на профил"
+  },
+  "Toggle this help": {
+    "Toggle this help": "Превключване на тази помощ"
+  },
+  "Tomorrow": {
+    "Tomorrow": "Утре"
+  },
+  "Trust self-signed certificates. Only enable this for servers you control.": {
+    "Trust self-signed certificates. Only enable this for servers you control.": "Доверяване на самоподписани сертификати. Включвайте това само за сървъри, които контролирате."
+  },
+  "Try a different search.": {
+    "Try a different search.": "Опитайте с друго търсене."
+  },
+  "Try again": {
+    "Try again": "Повторен опит"
+  },
+  "Type": {
+    "Type": "Тип"
+  },
+  "Type at least 2 characters to search events.": {
+    "Type at least 2 characters to search events.": "Въведете поне 2 знака, за да търсите събития."
+  },
+  "Undo": {
+    "Undo": "Отмяна"
+  },
+  "University timetable": {
+    "University timetable": "Университетска програма"
+  },
+  "Upcoming": {
+    "Upcoming": "Предстоящи"
+  },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": "Използване на вградена цветова палитра."
+  },
+  "Use synced name": {
+    "Use synced name": "Използване на синхронизираното име"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "Използвайте календарите, които Evolution Data Server вече управлява на това устройство (Evolution, GNOME Online Accounts и др.). Не се изисква влизане – Evolution управлява данните за вход и синхронизирането."
+  },
+  "Use this folder": {
+    "Use this folder": "Използване на тази папка"
+  },
+  "Use your own OAuth client": {
+    "Use your own OAuth client": "Използване на собствен OAuth клиент"
+  },
+  "Username": {
+    "Username": "Потребителско име"
+  },
+  "Username (optional)": {
+    "Username (optional)": "Потребителско име (незадължително)"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": "Използване на динамични цветове от DankMaterialShell."
+  },
+  "Verify desktop notifications are working.": {
+    "Verify desktop notifications are working.": "Проверка дали известията на работния плот работят."
+  },
+  "Version": {
+    "Version": "Версия"
+  },
+  "Videos": {
+    "Videos": "Видеоклипове"
+  },
+  "View": {
+    "View": "Изглед"
+  },
+  "Visibility, names, and removal per calendar.": {
+    "Visibility, names, and removal per calendar.": "Видимост, имена и премахване за всеки календар."
+  },
+  "Waiting for browser…": {
+    "Waiting for browser…": "Изчакване на браузъра…"
+  },
+  "Waiting for the dankcalendar daemon...": {
+    "Waiting for the dankcalendar daemon...": "Изчакване на демона на dankcalendar..."
+  },
+  "Week": {
+    "Week": "Седмица"
+  },
+  "Week event title lines": {
+    "Week event title lines": "Редове за заглавие в седмичен изглед"
+  },
+  "Week view": {
+    "Week view": "Седмичен изглед"
+  },
+  "Weekly": {
+    "Weekly": "Ежеседмично"
+  },
+  "What the window's close button does.": {
+    "What the window's close button does.": "Действие при щракване върху бутона за затваряне на прозореца."
+  },
+  "When all-day event reminders fire.": {
+    "When all-day event reminders fire.": "Кога се задействат напомнянията за целодневни събития."
+  },
+  "Yearly": {
+    "Yearly": "Ежегодно"
+  },
+  "Yesterday": {
+    "Yesterday": "Вчера"
+  },
+  "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": {
+    "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": "Календарите ви ще се синхронизират във фонов режим. Можете да управлявате този профил от Настройки → Профили."
+  },
+  "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
+    "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Вашият Client ID, тайна и токен за опресняване се съхраняват в системния ключодържател (libsecret/kwallet), когато е наличен, или в шифрован локален файл."
+  },
+  "Your response": {
+    "Your response": "Вашият отговор"
+  },
+  "all day": {
+    "all day": "цял ден"
+  },
+  "dark": {
+    "dark": "тъмна"
+  },
+  "day": {
+    "day": "ден"
+  },
+  "days": {
+    "days": "дни"
+  },
+  "e.g. 2022-01-01": {
+    "e.g. 2022-01-01": "напр. 2022-01-01"
+  },
+  "iCal subscription": {
+    "iCal subscription": "iCal абонамент"
+  },
+  "light": {
+    "light": "светла"
+  },
+  "month": {
+    "month": "месец"
+  },
+  "months": {
+    "months": "месеца"
+  },
+  "on %1": {
+    "on %1": "в %1"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": "само ако емисията изисква влизане"
+  },
+  "password": {
+    "password": "парола"
+  },
+  "read-only": {
+    "read-only": "само за четене"
+  },
+  "sync off": {
+    "sync off": "без синхронизиране"
+  },
+  "synced as \"%1": {
+    "synced as \"%1\"": "синхронизиран като „%1“"
+  },
+  "times": {
+    "times": "пъти"
+  },
+  "to": {
+    "to": "до"
+  },
+  "until %1": {
+    "until %1": "до %1"
+  },
+  "username": {
+    "username": "потребителско име"
+  },
+  "week": {
+    "week": "седмица"
+  },
+  "weeks": {
+    "weeks": "седмици"
+  },
+  "year": {
+    "year": "година"
+  },
+  "years": {
+    "years": "години"
+  },
+  "· %1 invited · %2 accepted": {
+    "· %1 invited · %2 accepted": "· %1 поканени · %2 приели"
+  }
+}
