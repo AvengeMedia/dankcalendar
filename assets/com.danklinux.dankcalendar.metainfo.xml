@@ -41,6 +41,22 @@
   </screenshots>
 
   <releases>
+    <release version="1.6.0" date="2026-09-03">
+      <description>
+        <ul>
+          <li>flake: bump version to 1.6.0</li>
+          <li>import: open .ics files and import them into a calendar</li>
+          <li>bump qml-common</li>
+          <li>core: update dependencies</li>
+          <li>ui/settings: add default calendar option</li>
+          <li>fix(providers/microsoft) reconcile series occurrences after a reschedule fixes #95</li>
+          <li>qs: fix escape key to close search modal</li>
+          <li>qs: fix tab in create event form fixes #93</li>
+          <li>tasks: advance recurring tasks to the next occurrence on completion</li>
+          <li>sync: don&#x27;t resume from a stale cursor after re-enabling a calendar</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.3.1" date="2026-08-01">
       <description>
         <ul>
