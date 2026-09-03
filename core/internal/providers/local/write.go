@@ -48,6 +48,10 @@ func (p *Provider) CreateEvent(ctx context.Context, cal calendar.Calendar, ev *c
 	return storedEvent(cal, uid, ev), nil
 }
 
+func (p *Provider) ImportEvent(ctx context.Context, cal calendar.Calendar, ev *calendar.Event) (*calendar.Event, error) {
+	return p.CreateEvent(ctx, cal, ev)
+}
+
 func (p *Provider) UpdateEvent(ctx context.Context, cal calendar.Calendar, ev *calendar.Event) (*calendar.Event, error) {
 	if ev.UID == "" {
 		return nil, fmt.Errorf("event missing UID")

@@ -90,6 +90,10 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 		handleEventDelete(ctx, w, req, deps)
 	case "events.rsvp":
 		handleEventRSVP(ctx, w, req, deps)
+	case "events.parseIcs":
+		handleEventsParseIcs(ctx, w, req, deps)
+	case "events.importIcs":
+		handleEventsImportIcs(ctx, w, req, deps)
 	default:
 		RespondError(w, req.ID, "unknown events method: "+req.Method)
 	}

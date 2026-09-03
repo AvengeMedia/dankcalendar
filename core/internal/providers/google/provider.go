@@ -255,6 +255,19 @@ func (p *Provider) CreateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	return fromGoogleEvent(c, created), nil
 }
 
+func (p *Provider) ImportEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
+	item := toGoogleEvent(ev)
+	item.ICalUID = ev.UID
+	if ev.Organizer != nil {
+		item.Organizer = &calendar.EventOrganizer{Email: ev.Organizer.Email, DisplayName: ev.Organizer.DisplayName}
+	}
+	imported, err := p.svc.Events.Import(c.RemoteID, item).Context(ctx).Do()
+	if err != nil {
+		return nil, fmt.Errorf("import google event: %w", err)
+	}
+	return fromGoogleEvent(c, imported), nil
+}
+
 func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
 	if ev.RemoteID == "" {
 		return nil, errors.New("update google event: missing remote id")

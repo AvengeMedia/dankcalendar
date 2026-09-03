@@ -62,6 +62,13 @@ type Responder interface {
 	RespondToEvent(ctx context.Context, cal Calendar, ev *Event, response string) (*Event, error)
 }
 
+// Importer stores a private copy of an event organized elsewhere without
+// making the user its organizer; providers lacking it get the copy stripped of
+// organizer and attendees.
+type Importer interface {
+	ImportEvent(ctx context.Context, cal Calendar, ev *Event) (*Event, error)
+}
+
 type ProviderFactory interface {
 	Kind() AccountKind
 	Build(ctx context.Context, account Account, secrets SecretStore) (Provider, error)

@@ -6,6 +6,8 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/AvengeMedia/dankcalendar/core/internal/icsimport"
 )
 
 var uiViews = []string{"month", "week", "day", "agenda"}
@@ -53,6 +55,22 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 			return
 		}
 		publishUI(deps, map[string]any{"action": "subscribe", "url": url})
+		Respond(w, req.ID, map[string]any{"ok": true})
+	case "ui.openIcs":
+		ics := ParamString(req.Params, "ics")
+		if strings.TrimSpace(ics) == "" {
+			RespondError(w, req.ID, "ui.openIcs requires ics")
+			return
+		}
+		if _, err := icsimport.Parse([]byte(ics)); err != nil {
+			RespondError(w, req.ID, err.Error())
+			return
+		}
+		payload := map[string]any{"action": "importIcs", "ics": ics}
+		if name := strings.TrimSpace(ParamString(req.Params, "name")); name != "" {
+			payload["name"] = name
+		}
+		publishUI(deps, payload)
 		Respond(w, req.ID, map[string]any{"ok": true})
 	case "ui.openEvent":
 		uid := strings.TrimSpace(ParamString(req.Params, "uid"))

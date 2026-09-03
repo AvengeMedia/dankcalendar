@@ -59,6 +59,7 @@ Singleton {
     signal tasksUpdated
     signal windowActionRequested(string action, string view)
     signal subscribeRequested(string url)
+    signal importIcsRequested(string ics, string name)
     signal openEventRequested(string uid, string start)
     signal newEventRequested(string start)
     signal colorSchemeUpdate(var data)
@@ -230,6 +231,9 @@ Singleton {
                 switch (data.action) {
                 case "subscribe":
                     subscribeRequested(data.url || "");
+                    break;
+                case "importIcs":
+                    importIcsRequested(data.ics || "", data.name || "");
                     break;
                 case "openEvent":
                     openEventRequested(data.uid || "", data.start || "");
@@ -1206,6 +1210,29 @@ Singleton {
                 lastError = response.error;
             else
                 reloadTasks();
+            if (callback)
+                callback(response);
+        });
+    }
+
+    function parseIcs(ics, callback) {
+        sendRequest("events.parseIcs", {
+            "ics": ics
+        }, callback);
+    }
+
+    function importIcs(ics, calendarId, uids, callback) {
+        const params = {
+            "ics": ics,
+            "calendarId": calendarId
+        };
+        if (uids && uids.length > 0)
+            params.uids = uids;
+        sendRequest("events.importIcs", params, response => {
+            if (response.error)
+                lastError = response.error;
+            else
+                reloadEvents();
             if (callback)
                 callback(response);
         });

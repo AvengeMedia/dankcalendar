@@ -60,6 +60,8 @@ var Methods = []MethodSpec{
 	{Name: "events.update", Group: "events", Desc: "Update an event", Params: []ParamSpec{req("id", ""), opt("summary", ""), opt("start", "RFC3339"), opt("end", "RFC3339"), opt("description", ""), opt("location", ""), opt("allDay", "true|false"), opt("status", "confirmed|tentative|cancelled"), opt("reminders", ""), opt("recurrence", "RRULE list"), opt("occurrenceStart", "RFC3339 start of the edited occurrence; shifts a recurring series by the start delta")}},
 	{Name: "events.delete", Group: "events", Desc: "Delete an event", Params: []ParamSpec{req("id", ""), opt("occurrenceStart", "RFC3339 start of one occurrence; excludes it via EXDATE instead of deleting the series")}},
 	{Name: "events.rsvp", Group: "events", Desc: "Respond to a meeting invitation", Params: []ParamSpec{req("id", ""), req("response", "accept|decline|tentative"), opt("occurrenceStart", "RFC3339; reply for this single occurrence of a recurring event")}},
+	{Name: "events.parseIcs", Group: "events", Desc: "Parse iCalendar data (e.g. an emailed invitation) and match it against synced events", Params: []ParamSpec{req("ics", "iCalendar text")}},
+	{Name: "events.importIcs", Group: "events", Desc: "Import events from iCalendar data into a calendar", Params: []ParamSpec{req("ics", "iCalendar text"), req("calendarId", ""), opt("uids", "only import these event UIDs")}},
 
 	{Name: "tasks.list", Group: "tasks", Desc: "List tasks", Params: []ParamSpec{opt("query", "text filter"), opt("calendarId", "limit to one task list"), opt("includeCompleted", "true|false, default true"), opt("limit", ""), opt("offset", "")}},
 	{Name: "tasks.get", Group: "tasks", Desc: "Get a task by id", Params: []ParamSpec{req("id", "")}},
@@ -73,6 +75,7 @@ var Methods = []MethodSpec{
 
 	{Name: "ui.show", Group: "ui", Desc: "Show the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.open", Group: "ui", Desc: "Open a webcal/ICS subscription link in the UI", Params: []ParamSpec{req("url", "webcal:// or https ICS URL")}},
+	{Name: "ui.openIcs", Group: "ui", Desc: "Open iCalendar data in the import dialog", Params: []ParamSpec{req("ics", "iCalendar text"), opt("name", "file name shown in the dialog")}},
 	{Name: "ui.openEvent", Group: "ui", Desc: "Open a specific event's details window", Params: []ParamSpec{req("uid", "event iCal UID"), opt("start", "occurrence start RFC3339 for recurring events")}},
 	{Name: "ui.newEvent", Group: "ui", Desc: "Open the new-event editor", Params: []ParamSpec{opt("start", "prefill start RFC3339 (defaults to the next half-hour slot)")}},
 	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},

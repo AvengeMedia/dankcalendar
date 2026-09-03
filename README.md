@@ -176,6 +176,16 @@ dcal sync [account-id]            # force a sync
 dcal reminders                    # list upcoming reminders
 ```
 
+Open an `.ics` file, such as a meeting invitation attached to an email, to
+preview and import it. The desktop entry registers `dcal` as a `text/calendar`
+handler, so opening the attachment from your mail client does the same:
+
+```bash
+dcal open invite.ics                          # preview in the import dialog
+dcal events import invite.ics --calendar <id> # import from the terminal
+dcal events rsvp <event-id> accept            # reply to an imported invitation
+```
+
 ## IPC
 
 The daemon exposes a scriptable IPC surface — handy for keybinds and automation:

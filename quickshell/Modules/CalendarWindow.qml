@@ -308,6 +308,11 @@ FloatingWindow {
         accountLoader.item.showIcal(url);
     }
 
+    function openImport(ics, name) {
+        importLoader.active = true;
+        importLoader.item.show(ics, name);
+    }
+
     function openEventDetails(event) {
         eventLoader.active = true;
         eventLoader.item.show(event);
@@ -969,6 +974,18 @@ FloatingWindow {
         sourceComponent: Component {
             AccountAddModal {
                 parentWindow: window
+            }
+        }
+    }
+
+    Loader {
+        id: importLoader
+        active: false
+        sourceComponent: Component {
+            ImportIcsModal {
+                parentWindow: window
+                onOpenEventRequested: event => window.openEventDetails(event)
+                onAddCalendarRequested: window.openAddAccount()
             }
         }
     }

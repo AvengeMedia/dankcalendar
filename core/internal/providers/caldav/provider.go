@@ -306,6 +306,10 @@ func (p *Provider) CreateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	return &out, nil
 }
 
+func (p *Provider) ImportEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
+	return p.CreateEvent(ctx, c, ev)
+}
+
 func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
 	if ev.RemoteID == "" {
 		return nil, errors.New("caldav update requires remote id")
