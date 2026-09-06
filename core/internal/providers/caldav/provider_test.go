@@ -2,10 +2,13 @@ package caldav
 
 import (
 	"context"
+	"crypto/md5"
+	"encoding/hex"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -268,6 +271,57 @@ func TestNewReportsPrincipalErrorWithoutWellKnown(t *testing.T) {
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "find caldav principal")
 	assert.Contains(t, err.Error(), "405")
+}
+
+// Baïkal behind nginx (#98): PROPFIND on the entered URL and the root are
+// 405 from nginx, the well-known URI redirects into sabre/dav, and sabre only
+// accepts Digest credentials.
+func TestNewAuthenticatesWithDigest(t *testing.T) {
+	const nonce = "nonce-1"
+	fieldRe := regexp.MustCompile(`(\w+)=(?:"([^"]*)"|([^\s,]+))`)
+	md5hex := func(s string) string {
+		sum := md5.Sum([]byte(s))
+		return hex.EncodeToString(sum[:])
+	}
+	authorized := func(r *http.Request) bool {
+		parts := map[string]string{}
+		for _, m := range fieldRe.FindAllStringSubmatch(strings.TrimPrefix(r.Header.Get("Authorization"), "Digest "), -1) {
+			parts[m[1]] = m[2] + m[3]
+		}
+		a1 := md5hex(parts["username"] + ":BaikalDAV:pw")
+		a2 := md5hex(r.Method + ":" + parts["uri"])
+		expected := md5hex(strings.Join([]string{a1, nonce, parts["nc"], parts["cnonce"], parts["qop"], a2}, ":"))
+		return parts["response"] == expected
+	}
+	var challenges, basicAttempts int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(r.Header.Get("Authorization"), "Basic ") {
+			basicAttempts++
+		}
+		switch {
+		case r.URL.Path == "/" || r.URL.Path == "/baikal/":
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		case r.URL.Path == "/.well-known/caldav":
+			http.Redirect(w, r, "/dav.php/", http.StatusFound)
+		case !authorized(r):
+			challenges++
+			w.Header().Set("WWW-Authenticate", `Digest realm="BaikalDAV", qop="auth", nonce="`+nonce+`", opaque="op"`)
+			w.WriteHeader(http.StatusUnauthorized)
+		case r.Method == "PROPFIND" && r.URL.Path == "/dav.php/":
+			writeMultiStatus(w, principalXML)
+		case r.Method == "PROPFIND" && r.URL.Path == "/dav/principals/user/":
+			writeMultiStatus(w, homeSetXML)
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL+"/baikal/", "user")
+	require.NoError(t, err)
+	assert.Equal(t, "/dav/calendars/user/", p.homeSet)
+	assert.Equal(t, 1, challenges)
+	assert.Equal(t, 3, basicAttempts)
 }
 
 func TestNoticeUpgradedReminders(t *testing.T) {

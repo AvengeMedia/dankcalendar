@@ -14,6 +14,7 @@ import (
 
 	ical "github.com/emersion/go-ical"
 
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/httpauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
 )
 
@@ -28,6 +29,16 @@ const (
 )
 
 var httpClient = &http.Client{Timeout: requestTimeout}
+
+func feedClient(username, password string) *http.Client {
+	if username == "" {
+		return httpClient
+	}
+	return &http.Client{
+		Timeout:   requestTimeout,
+		Transport: &httpauth.Transport{Username: username, Password: password},
+	}
+}
 
 // normalizeURL rewrites webcal:// to https:// and rejects non-http(s) schemes.
 func normalizeURL(raw string) (string, error) {
@@ -109,9 +120,6 @@ func fetch(ctx context.Context, feedURL, username string, password []byte, prev 
 	}
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Accept", "text/calendar, text/plain;q=0.9, */*;q=0.5")
-	if username != "" {
-		req.SetBasicAuth(username, string(password))
-	}
 	if prev.ETag != "" {
 		req.Header.Set("If-None-Match", prev.ETag)
 	}
@@ -119,7 +127,7 @@ func fetch(ctx context.Context, feedURL, username string, password []byte, prev 
 		req.Header.Set("If-Modified-Since", prev.LastModified)
 	}
 
-	resp, err := httpClient.Do(req)
+	resp, err := feedClient(username, string(password)).Do(req)
 	if err != nil {
 		return nil, err
 	}

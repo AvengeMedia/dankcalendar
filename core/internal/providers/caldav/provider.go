@@ -18,6 +18,7 @@ import (
 	"github.com/google/uuid"
 
 	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/providers/httpauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
 	"github.com/AvengeMedia/dankgo/log"
 )
@@ -45,7 +46,7 @@ func New(ctx context.Context, account cal.Account, secrets cal.SecretStore, base
 		return nil, fmt.Errorf("parse caldav url: %w", err)
 	}
 
-	httpClient := webdav.HTTPClientWithBasicAuth(baseHTTPClient(account), username, string(password))
+	httpClient := newHTTPClient(account, username, string(password))
 	client, endpoint, homeSet, err := discover(ctx, httpClient, endpoint)
 	if err != nil {
 		return nil, err
@@ -111,20 +112,22 @@ func discoveryCandidates(endpoint *url.URL) []*url.URL {
 	return candidates
 }
 
-// baseHTTPClient returns the HTTP client the caldav client is built on,
+// newHTTPClient returns the HTTP client the caldav client is built on,
 // wrapped so redirects keep their method and non-compliant ETags get repaired
-// before go-webdav parses them.
+// before go-webdav parses them. Authentication sits innermost so every
+// redirect hop signs its own URI; Baïkal (#98) only accepts Digest.
 // Servers with self-signed certificates opt out of TLS verification via the
 // SettingInsecureSkipVerify account setting.
-func baseHTTPClient(account cal.Account) *http.Client {
-	base := http.DefaultTransport
+func newHTTPClient(account cal.Account, username, password string) *http.Client {
+	var base = http.DefaultTransport
 	if insecure, _ := account.Settings[SettingInsecureSkipVerify].(bool); insecure {
 		transport := http.DefaultTransport.(*http.Transport).Clone()
 		transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 		base = transport
 	}
+	auth := &httpauth.Transport{Base: base, Username: username, Password: password}
 	return &http.Client{
-		Transport: etagNormalizingTransport{base: redirectFollowingTransport{base: base}},
+		Transport: etagNormalizingTransport{base: redirectFollowingTransport{base: auth}},
 		CheckRedirect: func(*http.Request, []*http.Request) error {
 			return http.ErrUseLastResponse
 		},
