@@ -3,6 +3,7 @@ package accounts_test
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,6 +13,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
+	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
 	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
@@ -44,27 +46,34 @@ func TestProviderName(t *testing.T) {
 	assert.Equal(t, "mystery", accounts.ProviderName("mystery"))
 }
 
-func TestAuthorized(t *testing.T) {
+func TestCheckCredentials(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("local accounts need no credentials", func(t *testing.T) {
 		secrets := mocks.NewMockSecretStore(t)
 		acc := &ent.Account{ID: "loc", Kind: account.KindLocal}
-		assert.True(t, accounts.Authorized(ctx, secrets, acc))
+		assert.Equal(t, accounts.CredentialsPresent, accounts.CheckCredentials(ctx, secrets, acc))
 	})
 
 	t.Run("google with stored token", func(t *testing.T) {
 		secrets := mocks.NewMockSecretStore(t)
 		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return([]byte("tok"), nil)
 		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
-		assert.True(t, accounts.Authorized(ctx, secrets, acc))
+		assert.Equal(t, accounts.CredentialsPresent, accounts.CheckCredentials(ctx, secrets, acc))
 	})
 
 	t.Run("google without token", func(t *testing.T) {
 		secrets := mocks.NewMockSecretStore(t)
 		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return(nil, errors.New("not found"))
 		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
-		assert.False(t, accounts.Authorized(ctx, secrets, acc))
+		assert.Equal(t, accounts.CredentialsMissing, accounts.CheckCredentials(ctx, secrets, acc))
+	})
+
+	t.Run("google behind a locked keyring", func(t *testing.T) {
+		secrets := mocks.NewMockSecretStore(t)
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return(nil, fmt.Errorf("keyring get: %w", keyring.ErrLocked))
+		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
+		assert.Equal(t, accounts.CredentialsLocked, accounts.CheckCredentials(ctx, secrets, acc))
 	})
 }
 

@@ -2,12 +2,14 @@ package accounts
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/AvengeMedia/dankcalendar/core/ent"
 	"github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
 	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution/eds"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
@@ -124,9 +126,17 @@ func Flavor(kind string, settings map[string]any) string {
 	return kind
 }
 
-// Authorized means the credentials needed to reach the provider are present;
-// it does not probe the provider.
-func Authorized(ctx context.Context, secrets calendar.SecretStore, acc *ent.Account) bool {
+type CredentialState int
+
+const (
+	CredentialsPresent CredentialState = iota
+	CredentialsMissing
+	CredentialsLocked
+)
+
+// CheckCredentials reports whether the provider's credentials are stored,
+// missing, or behind a locked keyring; it does not probe the provider.
+func CheckCredentials(ctx context.Context, secrets calendar.SecretStore, acc *ent.Account) CredentialState {
 	var key string
 	switch acc.Kind {
 	case account.KindGoogle:
@@ -138,15 +148,21 @@ func Authorized(ctx context.Context, secrets calendar.SecretStore, acc *ent.Acco
 	case account.KindIcal:
 		user, _ := acc.Settings["username"].(string)
 		if user == "" {
-			return true
+			return CredentialsPresent
 		}
 		key = icalprovider.SecretKeyPassword
 	default:
-		return true
+		return CredentialsPresent
 	}
 
 	_, err := secrets.Get(ctx, acc.ID, key)
-	return err == nil
+	switch {
+	case err == nil:
+		return CredentialsPresent
+	case errors.Is(err, keyring.ErrLocked):
+		return CredentialsLocked
+	}
+	return CredentialsMissing
 }
 
 func Ensure(ctx context.Context, r *repo.Repo, id string, kind account.Kind, displayName string, settings map[string]any) error {

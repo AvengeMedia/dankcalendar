@@ -48,24 +48,27 @@ var accountListCmd = &cobra.Command{
 
 		if jsonOutput {
 			type accountOut struct {
-				ID          string         `json:"id"`
-				Kind        string         `json:"kind"`
-				Provider    string         `json:"provider"`
-				DisplayName string         `json:"displayName"`
-				Authorized  bool           `json:"authorized"`
-				NeedsReauth bool           `json:"needsReauth"`
-				Settings    map[string]any `json:"settings,omitempty"`
+				ID            string         `json:"id"`
+				Kind          string         `json:"kind"`
+				Provider      string         `json:"provider"`
+				DisplayName   string         `json:"displayName"`
+				Authorized    bool           `json:"authorized"`
+				KeyringLocked bool           `json:"keyringLocked"`
+				NeedsReauth   bool           `json:"needsReauth"`
+				Settings      map[string]any `json:"settings,omitempty"`
 			}
 			out := make([]accountOut, 0, len(items))
 			for _, a := range items {
+				state := accounts.CheckCredentials(ctx, st.secrets, a)
 				out = append(out, accountOut{
-					ID:          a.ID,
-					Kind:        string(a.Kind),
-					Provider:    accounts.Flavor(string(a.Kind), a.Settings),
-					DisplayName: a.DisplayName,
-					Authorized:  accounts.Authorized(ctx, st.secrets, a),
-					NeedsReauth: a.NeedsReauth,
-					Settings:    a.Settings,
+					ID:            a.ID,
+					Kind:          string(a.Kind),
+					Provider:      accounts.Flavor(string(a.Kind), a.Settings),
+					DisplayName:   a.DisplayName,
+					Authorized:    state != accounts.CredentialsMissing,
+					KeyringLocked: state == accounts.CredentialsLocked,
+					NeedsReauth:   a.NeedsReauth,
+					Settings:      a.Settings,
 				})
 			}
 			return printJSON(out)
@@ -79,17 +82,24 @@ var accountListCmd = &cobra.Command{
 		w := tabwriter.NewWriter(os.Stdout, 0, 4, 2, ' ', 0)
 		fmt.Fprintln(w, "ID\tPROVIDER\tNAME\tSTATUS")
 		for _, a := range items {
-			status := "ok"
-			switch {
-			case a.NeedsReauth:
-				status = "needs reauth"
-			case !accounts.Authorized(ctx, st.secrets, a):
-				status = "needs auth"
-			}
+			status := credentialStatus(a.NeedsReauth, accounts.CheckCredentials(ctx, st.secrets, a))
 			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", a.ID, accounts.Flavor(string(a.Kind), a.Settings), a.DisplayName, status)
 		}
 		return w.Flush()
 	},
+}
+
+func credentialStatus(needsReauth bool, state accounts.CredentialState) string {
+	if needsReauth {
+		return "needs reauth"
+	}
+	switch state {
+	case accounts.CredentialsLocked:
+		return "keyring locked"
+	case accounts.CredentialsMissing:
+		return "needs auth"
+	}
+	return "ok"
 }
 
 var accountRemoveCmd = &cobra.Command{

@@ -809,7 +809,7 @@ Item {
                     Item {
                         id: accRow
                         required property var modelData
-                        readonly property bool authorized: modelData.authorized !== false && modelData.needsReauth !== true
+                        readonly property bool authorized: modelData.authorized !== false && modelData.needsReauth !== true && modelData.keyringLocked !== true
                         readonly property string flavor: DankCalService.accountFlavor(modelData)
                         readonly property bool reconnectable: modelData.kind === "google" || modelData.kind === "microsoft"
                         readonly property string authReason: {
@@ -818,6 +818,8 @@ Item {
                                 const head = I18n.tr("Sign-in expired — click to reconnect", "tooltip on the account warning icon when re-authentication is required");
                                 return detail === "" ? head : head + " · " + detail;
                             }
+                            if (modelData.keyringLocked === true)
+                                return I18n.tr("Keyring locked — unlock it to sync", "tooltip on the account warning icon when the system keyring holding the credentials is locked");
                             if (modelData.authorized === false)
                                 return I18n.tr("Not signed in — click to reconnect or re-add this account", "tooltip on the account warning icon when credentials are missing");
                             return I18n.tr("Account problem — click for options", "tooltip on the account warning icon for an unspecified problem");

@@ -66,7 +66,9 @@ func handleAccountsList(ctx context.Context, w *ConnWriter, req Request, deps De
 
 	out := mapAccounts(items)
 	for i, acc := range items {
-		out[i]["authorized"] = accounts.Authorized(ctx, deps.Secrets, acc)
+		state := accounts.CheckCredentials(ctx, deps.Secrets, acc)
+		out[i]["authorized"] = state != accounts.CredentialsMissing
+		out[i]["keyringLocked"] = state == accounts.CredentialsLocked
 	}
 	Respond(w, req.ID, out)
 }

@@ -12,6 +12,7 @@ import (
 	entaccount "github.com/AvengeMedia/dankcalendar/core/ent/account"
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
 	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
+	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
 	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
 	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
@@ -34,6 +35,8 @@ const (
 	// maxWake caps how long the loop parks; a backstop against a missed wake or
 	// an undetected clock change, not the normal path.
 	maxWake = time.Hour
+	// keyringLockedRetry polls a locked keyring until the user unlocks it.
+	keyringLockedRetry = minInterval
 )
 
 type Engine struct {
@@ -48,10 +51,11 @@ type Engine struct {
 
 	wake chan struct{}
 
-	mu      sync.Mutex
-	nextDue map[string]time.Time
-	running bool
-	stop    chan struct{}
+	mu            sync.Mutex
+	nextDue       map[string]time.Time
+	keyringLocked map[string]bool
+	running       bool
+	stop          chan struct{}
 }
 
 func NewEngine(r *repo.Repo, registry *calendar.Registry, secrets calendar.SecretStore, interval time.Duration) *Engine {
@@ -59,14 +63,15 @@ func NewEngine(r *repo.Repo, registry *calendar.Registry, secrets calendar.Secre
 		interval = 5 * time.Minute
 	}
 	return &Engine{
-		repo:     r,
-		registry: registry,
-		secrets:  secrets,
-		interval: interval,
-		now:      time.Now,
-		wake:     make(chan struct{}, 1),
-		nextDue:  make(map[string]time.Time),
-		stop:     make(chan struct{}),
+		repo:          r,
+		registry:      registry,
+		secrets:       secrets,
+		interval:      interval,
+		now:           time.Now,
+		wake:          make(chan struct{}, 1),
+		nextDue:       make(map[string]time.Time),
+		keyringLocked: make(map[string]bool),
+		stop:          make(chan struct{}),
 	}
 }
 
@@ -197,7 +202,7 @@ func (e *Engine) runDue(ctx context.Context) {
 			continue
 		}
 		if err := e.SyncAccount(ctx, acc); err != nil {
-			log.Warnf("account %s sync error: %v", acc.ID, err)
+			logSyncError(acc.ID, err)
 		}
 	}
 	e.pruneSchedule(accounts)
@@ -256,6 +261,7 @@ func (e *Engine) pruneSchedule(accounts []*ent.Account) {
 	for id := range e.nextDue {
 		if _, ok := live[id]; !ok {
 			delete(e.nextDue, id)
+			delete(e.keyringLocked, id)
 		}
 	}
 	e.mu.Unlock()
@@ -269,17 +275,44 @@ func (e *Engine) SyncAll(ctx context.Context) error {
 
 	for _, acc := range accounts {
 		if err := e.SyncAccount(ctx, acc); err != nil {
-			log.Warnf("account %s sync error: %v", acc.ID, err)
+			logSyncError(acc.ID, err)
 		}
 	}
 	return nil
 }
 
+func logSyncError(accountID string, err error) {
+	if errors.Is(err, keyring.ErrLocked) {
+		log.Debugf("account %s sync deferred: %v", accountID, err)
+		return
+	}
+	log.Warnf("account %s sync error: %v", accountID, err)
+}
+
 func (e *Engine) SyncAccount(ctx context.Context, acc *ent.Account) error {
 	retryAfter, err := e.syncAccount(ctx, acc)
 	e.recordAuthState(ctx, acc, err)
+	if e.recordKeyringLocked(acc.ID, errors.Is(err, keyring.ErrLocked)) {
+		retryAfter = keyringLockedRetry
+	}
 	e.schedule(acc.ID, retryAfter)
 	return err
+}
+
+func (e *Engine) recordKeyringLocked(accountID string, locked bool) bool {
+	e.mu.Lock()
+	was := e.keyringLocked[accountID]
+	if locked {
+		e.keyringLocked[accountID] = true
+	} else {
+		delete(e.keyringLocked, accountID)
+	}
+	e.mu.Unlock()
+
+	if was != locked {
+		e.publish("accounts", map[string]any{"type": "changed", "accountId": accountID})
+	}
+	return locked
 }
 
 func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Duration, error) {

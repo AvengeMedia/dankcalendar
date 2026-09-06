@@ -25,6 +25,12 @@ func (s *SecretStore) Get(ctx context.Context, accountID, key string) ([]byte, e
 	switch {
 	case errors.Is(err, ErrNotFound):
 		return s.fallback.Get(ctx, accountID, key)
+	case errors.Is(err, ErrLocked):
+		value, fallbackErr := s.fallback.Get(ctx, accountID, key)
+		if fallbackErr != nil {
+			return nil, err
+		}
+		return value, nil
 	case err != nil:
 		return nil, err
 	}

@@ -33,7 +33,10 @@ const (
 	promptTimeout = 2 * time.Minute
 )
 
-var ErrNotFound = errors.New("keyring: key not found")
+var (
+	ErrNotFound = errors.New("keyring: key not found")
+	ErrLocked   = errors.New("keyring: collection is locked")
+)
 
 type backend interface {
 	Get(key string) ([]byte, error)
@@ -83,8 +86,8 @@ func (s *Store) Get(accountID, key string) ([]byte, error) {
 
 	value, err := s.backend.Get(entryKey(accountID, key))
 	switch {
-	case errors.Is(err, ErrNotFound):
-		return nil, ErrNotFound
+	case errors.Is(err, ErrNotFound), errors.Is(err, ErrLocked):
+		return nil, err
 	case err != nil:
 		return nil, fmt.Errorf("keyring get: %w", err)
 	}

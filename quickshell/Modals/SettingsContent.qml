@@ -1288,15 +1288,24 @@ Item {
                                     StyledText {
                                         readonly property bool needsReauth: parent.parent.parent.modelData.needsReauth === true
                                         readonly property bool authorized: parent.parent.parent.modelData.authorized !== false
-                                        text: needsReauth ? I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth") : (authorized ? I18n.tr("Connected", "account status in account list") : I18n.tr("Not authorized — remove this account and add it again", "account status in account list"))
+                                        readonly property bool keyringLocked: parent.parent.parent.modelData.keyringLocked === true
+                                        text: {
+                                            if (needsReauth)
+                                                return I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth");
+                                            if (keyringLocked)
+                                                return I18n.tr("Keyring locked — unlock it to sync", "account status when the system keyring holding the credentials is locked");
+                                            if (!authorized)
+                                                return I18n.tr("Not authorized — remove this account and add it again", "account status in account list");
+                                            return I18n.tr("Connected", "account status in account list");
+                                        }
                                         font.pixelSize: Theme.fontSizeSmall
-                                        color: (needsReauth || !authorized) ? Theme.error : Theme.surfaceVariantText
+                                        color: (needsReauth || keyringLocked || !authorized) ? Theme.error : Theme.surfaceVariantText
                                         width: parent.width
                                     }
 
                                     Row {
                                         readonly property string noticeText: root.accountNotice(accountRow.modelData)
-                                        visible: noticeText !== "" && accountRow.modelData.needsReauth !== true && accountRow.modelData.authorized !== false
+                                        visible: noticeText !== "" && accountRow.modelData.needsReauth !== true && accountRow.modelData.keyringLocked !== true && accountRow.modelData.authorized !== false
                                         width: parent.width
                                         spacing: Theme.spacingXS
 

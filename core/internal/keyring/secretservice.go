@@ -98,7 +98,7 @@ func (s *secretService) getFrom(collection dbus.ObjectPath, key string) ([]byte,
 		return nil, err
 	}
 	if len(items) == 0 {
-		return nil, ErrNotFound
+		return nil, s.absentErr(collection)
 	}
 	if err := s.unlock(items[0]); err != nil {
 		return nil, err
@@ -154,6 +154,18 @@ func (s *secretService) search(collection dbus.ObjectPath, key string) ([]dbus.O
 		return nil, err
 	}
 	return items, nil
+}
+
+// KeePassXC answers SearchItems with nothing while its database is locked (issue #99).
+func (s *secretService) absentErr(collection dbus.ObjectPath) error {
+	value, err := s.object(collection).GetProperty(collectionInterface + ".Locked")
+	if err != nil {
+		return ErrNotFound
+	}
+	if locked, _ := value.Value().(bool); locked {
+		return ErrLocked
+	}
+	return ErrNotFound
 }
 
 func (s *secretService) hasCollection(collection dbus.ObjectPath) (bool, error) {
