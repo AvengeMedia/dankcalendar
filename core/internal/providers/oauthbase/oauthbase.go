@@ -15,9 +15,9 @@ import (
 )
 
 // LoadTokenSource reads the account's stored app credentials and OAuth token and
-// returns a token source that refreshes and re-persists the token on every use.
-// C is the provider's app-credentials type; build turns it into the oauth2
-// config used to refresh.
+// returns a token source that refreshes the token and re-persists it on each
+// refresh. C is the provider's app-credentials type; build turns it into the
+// oauth2 config used to refresh.
 func LoadTokenSource[C any](ctx context.Context, secrets cal.SecretStore, account cal.Account, appKey, tokenKey string, build func(C) *oauth2.Config) (oauth2.TokenSource, error) {
 	appBytes, err := secrets.Get(ctx, account.ID, appKey)
 	if err != nil {
@@ -39,12 +39,12 @@ func LoadTokenSource[C any](ctx context.Context, secrets cal.SecretStore, accoun
 		return nil, err
 	}
 
-	return &persistingTokenSource{
+	return oauth2.ReuseTokenSource(tok, &persistingTokenSource{
 		base:      build(creds).TokenSource(ctx, tok),
 		secrets:   secrets,
 		accountID: account.ID,
 		tokenKey:  tokenKey,
-	}, nil
+	}), nil
 }
 
 // ClassifyAuthErr wraps ErrReauthRequired around dead-credential failures so the
