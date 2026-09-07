@@ -274,6 +274,27 @@ Singleton {
             "expressiveEffects": currentAnimationBaseDuration * 0.4
         })
 
+    // DankCommon's Style delegates the whole elevation contract to the host theme once one is set.
+    function elevationOffsetXFor(level, direction, fallback) {
+        return level?.offsetX ?? 0;
+    }
+
+    function elevationOffsetYFor(level, direction, fallback) {
+        return level?.offsetY ?? (fallback ?? 0);
+    }
+
+    function elevationShadowColor(level) {
+        return Qt.rgba(0, 0, 0, level?.alpha ?? 0.3);
+    }
+
+    function elevationAmbient(level) {
+        return {
+            "blurPx": (level?.blurPx ?? 0) * 1.75,
+            "spreadPx": 1,
+            "alpha": (level?.alpha ?? 0.3) * 0.5
+        };
+    }
+
     function withAlpha(c, a) {
         if (!c || c.r === undefined)
             return Qt.rgba(0, 0, 0, 0);

@@ -8,6 +8,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import qs.Common
+import qs.DankCommon.Common as DC
 import qs.Modules
 import qs.Services
 
@@ -19,6 +20,10 @@ ShellRoot {
 
     Component.onCompleted: {
         Quickshell.watchFiles = enableHotReload;
+        DC.Style.theme = Theme;
+        DC.Style.settings = SettingsData;
+        DC.I18n.backend = I18n;
+        DC.Log.backend = Log;
     }
 
     function ownToplevel() {
