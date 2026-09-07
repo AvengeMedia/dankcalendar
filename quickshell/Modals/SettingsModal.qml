@@ -21,6 +21,8 @@ FloatingWindow {
         visible = false;
     }
 
+    onClosed: hide()
+
     title: I18n.tr("Calendar Settings", "settings window title")
     minimumSize: Qt.size(520, 420)
     implicitWidth: Math.max(minimumSize.width, Theme.modalWidth(parentWindow, screen, 880))

@@ -50,6 +50,8 @@ FloatingWindow {
         visible = false;
     }
 
+    onClosed: hide()
+
     function resetState() {
         selectedProvider = "";
         presetUrl = "";

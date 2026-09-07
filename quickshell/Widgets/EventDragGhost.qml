@@ -11,6 +11,7 @@ Rectangle {
     property var draggedEvent: null
     property point dragPosition: Qt.point(0, 0)
     property var selectedKeys: []
+    property string detail: ""
 
     readonly property int groupCount: draggedEvent && selectedKeys.length > 1 && selectedKeys.indexOf(DankCalService.eventKey(draggedEvent)) !== -1 ? selectedKeys.length : 0
 
@@ -28,7 +29,13 @@ Rectangle {
     StyledText {
         id: dragLabel
         anchors.centerIn: parent
-        text: root.groupCount > 0 ? I18n.tr("Move %1 events", "event drag preview label; %1 is event count").arg(root.groupCount) : (root.draggedEvent ? root.draggedEvent.title : "")
+        text: {
+            if (root.groupCount > 0)
+                return I18n.tr("Move %1 events", "event drag preview label; %1 is event count").arg(root.groupCount);
+            if (!root.draggedEvent)
+                return "";
+            return root.detail !== "" ? root.draggedEvent.title + " · " + root.detail : root.draggedEvent.title;
+        }
         font.pixelSize: Theme.fontSizeSmall
         font.weight: Font.Medium
         color: Theme.surfaceText

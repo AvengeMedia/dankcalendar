@@ -6,6 +6,7 @@ DragHandler {
     required property Item slideArea
     property real lastX: 0
 
+    enabled: slideArea.dragEnabled
     target: null
     xAxis.enabled: true
     yAxis.enabled: false

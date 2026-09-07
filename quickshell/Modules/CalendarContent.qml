@@ -27,6 +27,7 @@ Item {
     signal eventContextRequested(var event, var anchorItem, real x, real y)
     signal dayContextRequested(date day, var anchorItem, real x, real y)
     signal eventDropRequested(var event, date targetDay)
+    signal eventRescheduleRequested(var event, int dayOffset, int minuteOffset)
     signal createTaskRequested
     signal taskClicked(var task)
     signal settingsRequested
@@ -235,6 +236,7 @@ Item {
                     onEventContextRequested: (ev, anchorItem, x, y) => root.eventContextRequested(ev, anchorItem, x, y)
                     onDayContextRequested: (day, anchorItem, x, y) => root.dayContextRequested(day, anchorItem, x, y)
                     onEventDropRequested: (ev, targetDay) => root.eventDropRequested(ev, targetDay)
+                    onEventRescheduleRequested: (ev, dayOffset, minuteOffset) => root.eventRescheduleRequested(ev, dayOffset, minuteOffset)
                     onShiftDaysRequested: days => root.shiftDaysRequested(days)
                     onCreateTimedRequested: (start, end) => root.createTimedRequested(start, end)
                 }

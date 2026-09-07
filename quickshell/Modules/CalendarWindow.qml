@@ -336,15 +336,20 @@ FloatingWindow {
     }
 
     function requestEventMove(event, targetDay) {
+        requestEventShift(event, EventUtils.daysBetween(event.start, targetDay), 0);
+    }
+
+    function requestEventShift(event, dayOffset, minuteOffset) {
         eventSelection.ensureSelected(event);
         const movesSeries = eventSelection.events(event).some(ev => (ev.recurringId || "") !== "" || (ev.recurrence || []).length > 0);
-        if (!movesSeries || !eventSelection.allWritable(event) || EventUtils.daysBetween(event.start, targetDay) === 0) {
-            eventSelection.moveTo(event, targetDay);
+        if (!movesSeries || !eventSelection.allWritable(event) || (dayOffset === 0 && minuteOffset === 0)) {
+            eventSelection.moveBy(event, dayOffset, minuteOffset);
             return;
         }
         pendingMove = {
             "event": event,
-            "targetDay": targetDay
+            "dayOffset": dayOffset,
+            "minuteOffset": minuteOffset
         };
         moveEventsConfirm.show({
             title: I18n.tr("Move recurring events?", "confirmation title before moving events that repeat"),
@@ -921,6 +926,7 @@ FloatingWindow {
                         onEventContextRequested: (ev, anchorItem, x, y) => window.handleEventContext(ev, anchorItem, x, y)
                         onDayContextRequested: (day, anchorItem, x, y) => window.handleDayContext(day, anchorItem, x, y)
                         onEventDropRequested: (ev, targetDay) => window.requestEventMove(ev, targetDay)
+                        onEventRescheduleRequested: (ev, dayOffset, minuteOffset) => window.requestEventShift(ev, dayOffset, minuteOffset)
                         onTaskClicked: task => window.openTaskDetails(task)
                         onCreateTaskRequested: window.openCreateTask()
                     }
@@ -1052,7 +1058,7 @@ FloatingWindow {
         onConfirmed: {
             if (!window.pendingMove)
                 return;
-            eventSelection.moveTo(window.pendingMove.event, window.pendingMove.targetDay);
+            eventSelection.moveBy(window.pendingMove.event, window.pendingMove.dayOffset, window.pendingMove.minuteOffset);
             window.pendingMove = null;
         }
     }

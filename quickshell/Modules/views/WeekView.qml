@@ -4,6 +4,7 @@ import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
+import "../../Common/EventUtils.js" as EventUtils
 
 Item {
     id: root
@@ -19,11 +20,21 @@ Item {
     property var draggedEvent: null
     property real dragTargetTime: 0
     property point dragPosition: Qt.point(0, 0)
+    property real dragSourceTime: 0
+    property bool dragOnGrid: false
+    property int dragBlockMinutes: 0
+    property real dragPointerMinutes: 0
+    property int dragMinuteOffset: 0
+    readonly property int slotMinutes: 15
+    readonly property int dragDayOffset: dragTargetTime > 0 ? Math.round((dragTargetTime - dragSourceTime) / 86400000) : 0
+    readonly property real dragPreviewTop: (dragBlockMinutes + dragMinuteOffset) / 60 * hourHeight
+    readonly property string dragPreviewLabel: dragOnGrid && draggedEvent ? SettingsData.formatTime(EventUtils.shiftDateTime(draggedEvent.start, dragDayOffset, dragMinuteOffset)) : ""
 
     signal eventClicked(var event, int modifiers)
     signal eventContextRequested(var event, var anchorItem, real x, real y)
     signal dayContextRequested(date day, var anchorItem, real x, real y)
     signal eventDropRequested(var event, date targetDay)
+    signal eventRescheduleRequested(var event, int dayOffset, int minuteOffset)
     signal shiftDaysRequested(int days)
     signal createTimedRequested(date start, date end)
 
@@ -32,30 +43,66 @@ Item {
         return selectedEventKey === key || selectedEventKeys.indexOf(key) !== -1;
     }
 
+    function dayTimeAt(px) {
+        if (px < timeColumnWidth || px >= width)
+            return 0;
+        const visualIndex = Math.floor((px - timeColumnWidth - slidePx) / dayWidth);
+        if (visualIndex < 0 || visualIndex > 6)
+            return 0;
+        return dayAt(I18n.isRtl ? 6 - visualIndex : visualIndex).getTime();
+    }
+
+    function startEventDrag(event, pointerItem, x, y) {
+        chipTooltip.hide();
+        draggedEvent = event;
+        eventDragging = true;
+        updateEventDrag(pointerItem, x, y);
+    }
+
+    function startTimedDrag(event, sourceDay, pointerItem, x, y) {
+        dragSourceTime = sourceDay.getTime();
+        dragBlockMinutes = Math.round(event.startHour * 60);
+        dragPointerMinutes = pointerItem.mapToItem(timedGrid, x, y).y / hourHeight * 60;
+        startEventDrag(event, pointerItem, x, y);
+    }
+
     function updateEventDrag(pointerItem, x, y) {
         const position = pointerItem.mapToItem(root, x, y);
         dragPosition = Qt.point(position.x, position.y);
-        if (position.x < timeColumnWidth || position.x >= width) {
-            dragTargetTime = 0;
+        dragTargetTime = dayTimeAt(position.x);
+        updateGridTarget(pointerItem, x, y);
+    }
+
+    function updateGridTarget(pointerItem, x, y) {
+        dragOnGrid = false;
+        if (!draggedEvent || draggedEvent.allDay || dragTargetTime === 0)
             return;
-        }
-        const visualIndex = Math.floor((position.x - timeColumnWidth - slidePx) / dayWidth);
-        if (visualIndex < 0 || visualIndex > 6) {
-            dragTargetTime = 0;
+        const gridY = pointerItem.mapToItem(timedGrid, x, y).y;
+        if (gridY < 0 || gridY >= timedGrid.height)
             return;
-        }
-        const dayIndex = I18n.isRtl ? 6 - visualIndex : visualIndex;
-        dragTargetTime = dayAt(dayIndex).getTime();
+        const snapped = Math.round((gridY / hourHeight * 60 - dragPointerMinutes) / slotMinutes) * slotMinutes;
+        const maxTop = hourCount * 60 - slotMinutes;
+        dragMinuteOffset = Math.max(-dragBlockMinutes, Math.min(maxTop - dragBlockMinutes, snapped));
+        dragOnGrid = true;
     }
 
     function finishEventDrag(event) {
         const targetTime = dragTargetTime;
+        const onGrid = dragOnGrid;
+        const dayOffset = dragDayOffset;
+        const minuteOffset = dragMinuteOffset;
         eventPointerDown = false;
         eventDragging = false;
         draggedEvent = null;
         dragTargetTime = 0;
-        if (targetTime > 0)
+        dragOnGrid = false;
+        if (targetTime === 0)
+            return;
+        if (!onGrid) {
             eventDropRequested(event, new Date(targetTime));
+            return;
+        }
+        eventRescheduleRequested(event, dayOffset, minuteOffset);
     }
 
     function revealHours(start, duration) {
@@ -498,12 +545,7 @@ Item {
                                             }
                                             onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
                                             onDragPressed: root.eventPointerDown = true
-                                            onDragStarted: (event, pointerItem, x, y) => {
-                                                chipTooltip.hide();
-                                                root.draggedEvent = event;
-                                                root.eventDragging = true;
-                                                root.updateEventDrag(pointerItem, x, y);
-                                            }
+                                            onDragStarted: (event, pointerItem, x, y) => root.startEventDrag(event, pointerItem, x, y)
                                             onDragMoved: (event, pointerItem, x, y) => root.updateEventDrag(pointerItem, x, y)
                                             onDropped: (event, pointerItem, x, y) => {
                                                 root.updateEventDrag(pointerItem, x, y);
@@ -648,6 +690,7 @@ Item {
                 }
 
                 Item {
+                    id: timedGrid
                     anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
                     height: parent.height
@@ -681,6 +724,19 @@ Item {
                                     border.color: Theme.primary
                                     border.width: 2
                                     radius: Theme.cornerRadiusSmall
+                                }
+
+                                Rectangle {
+                                    visible: dayColumn.isDropTarget && root.dragOnGrid
+                                    x: 4
+                                    y: root.dragPreviewTop
+                                    z: 1
+                                    width: parent.width - 8
+                                    height: (root.draggedEvent ? root.draggedEvent.durationHours : 0) * root.hourHeight - 2
+                                    radius: Theme.cornerRadiusSmall
+                                    color: Theme.withAlpha(Theme.primary, 0.2)
+                                    border.color: Theme.primary
+                                    border.width: 1
                                 }
 
                                 Rectangle {
@@ -782,12 +838,7 @@ Item {
                                             }
                                             onContextRequested: (event, anchorItem, x, y) => root.eventContextRequested(event, anchorItem, x, y)
                                             onDragPressed: root.eventPointerDown = true
-                                            onDragStarted: (event, pointerItem, x, y) => {
-                                                chipTooltip.hide();
-                                                root.draggedEvent = event;
-                                                root.eventDragging = true;
-                                                root.updateEventDrag(pointerItem, x, y);
-                                            }
+                                            onDragStarted: (event, pointerItem, x, y) => root.startTimedDrag(event, dayColumn.day, pointerItem, x, y)
                                             onDragMoved: (event, pointerItem, x, y) => root.updateEventDrag(pointerItem, x, y)
                                             onDropped: (event, pointerItem, x, y) => {
                                                 root.updateEventDrag(pointerItem, x, y);
@@ -873,5 +924,6 @@ Item {
         draggedEvent: root.draggedEvent
         dragPosition: root.dragPosition
         selectedKeys: root.selectedEventKeys
+        detail: root.dragPreviewLabel
     }
 }

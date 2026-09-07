@@ -21,14 +21,17 @@ MouseArea {
     property int anchorSlot: -1
     property int fromSlot: 0
     property int toSlot: 0
+    property real pressX: 0
     property real pressY: 0
+    property bool panIntent: false
+    readonly property int panThreshold: Application.styleHints.startDragDistance
     property real pointerViewportY: 0
     property int autoScrollDirection: 0
 
     signal createRequested(date start, date end)
 
     acceptedButtons: Qt.LeftButton
-    preventStealing: true
+    preventStealing: !panIntent
 
     function slotAt(y) {
         return Math.max(0, Math.min(slotCount - 1, Math.floor(y / slotHeight)));
@@ -65,9 +68,11 @@ MouseArea {
         armed = false;
         anchorSlot = -1;
         autoScrollDirection = 0;
+        panIntent = false;
     }
 
     onPressed: mouse => {
+        pressX = mouse.x;
         pressY = mouse.y;
         armed = true;
     }
@@ -76,7 +81,10 @@ MouseArea {
         if (!armed || !(mouse.buttons & Qt.LeftButton))
             return;
         if (!selecting) {
-            if (Math.abs(mouse.y - pressY) < slotHeight)
+            const dx = Math.abs(mouse.x - pressX);
+            const dy = Math.abs(mouse.y - pressY);
+            panIntent = dx > dy && dx > panThreshold;
+            if (panIntent || dy < slotHeight)
                 return;
             anchorSlot = slotAt(pressY);
         }

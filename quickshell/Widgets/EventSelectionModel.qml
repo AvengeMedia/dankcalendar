@@ -229,6 +229,10 @@ Item {
     }
 
     function moveTo(anchorEvent, targetDay) {
+        moveBy(anchorEvent, EventUtils.daysBetween(anchorEvent.start, targetDay), 0);
+    }
+
+    function moveBy(anchorEvent, dayOffset, minuteOffset) {
         if (busy)
             return;
         ensureSelected(anchorEvent);
@@ -237,11 +241,10 @@ Item {
             ToastService.info(I18n.tr("Read-only events can't be moved", "event move error for a read-only calendar"));
             return;
         }
-        const offset = EventUtils.daysBetween(anchorEvent.start, targetDay);
-        if (offset === 0)
+        if (dayOffset === 0 && minuteOffset === 0)
             return;
         busy = true;
-        DankCalService.moveEvents(selected, offset, response => {
+        DankCalService.moveEvents(selected, dayOffset, minuteOffset, response => {
             root.finishOperation("move", selected.length, response);
             root.clear();
         });

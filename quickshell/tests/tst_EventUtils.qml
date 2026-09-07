@@ -40,6 +40,29 @@ TestCase {
         verify(fields.occurrenceStart === undefined);
     }
 
+    function test_moveFieldsShiftsByMinutes() {
+        const fields = EventUtils.moveFields(event(), 1, 45);
+        const start = new Date(fields.start);
+        const end = new Date(fields.end);
+
+        compare(start.getDate(), 11);
+        compare(start.getHours(), 10);
+        compare(start.getMinutes(), 15);
+        compare(end.getTime() - start.getTime(), 75 * 60000);
+    }
+
+    function test_moveFieldsIgnoresMinutesForAllDay() {
+        const original = event({
+            "allDay": true,
+            "start": new Date(2026, 7, 10),
+            "end": new Date(2026, 7, 11)
+        });
+        const fields = EventUtils.moveFields(original, 1, 90);
+
+        compare(fields.start, "2026-08-11T00:00:00.000Z");
+        compare(fields.end, "2026-08-12T00:00:00.000Z");
+    }
+
     function test_recurringMoveIdentifiesOccurrence() {
         const original = event({
             "recurringId": "series-1",

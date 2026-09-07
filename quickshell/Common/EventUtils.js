@@ -24,6 +24,12 @@ function shiftDate(value, days) {
     return shifted
 }
 
+function shiftDateTime(value, days, minutes) {
+    const shifted = shiftDate(value, days)
+    shifted.setMinutes(shifted.getMinutes() + minutes)
+    return shifted
+}
+
 function wireTime(value, allDay) {
     const date = new Date(value)
     if (!allDay)
@@ -58,10 +64,11 @@ function createFields(event, dayOffset, calendarId, preserveRecurrence) {
     return fields
 }
 
-function moveFields(event, dayOffset) {
+function moveFields(event, dayOffset, minuteOffset) {
+    const minutes = event.allDay ? 0 : (minuteOffset || 0)
     const fields = {
-        "start": wireTime(shiftDate(event.start, dayOffset), event.allDay),
-        "end": wireTime(shiftDate(event.end, dayOffset), event.allDay)
+        "start": wireTime(shiftDateTime(event.start, dayOffset, minutes), event.allDay),
+        "end": wireTime(shiftDateTime(event.end, dayOffset, minutes), event.allDay)
     }
     if ((event.recurringId || "") !== "" || (event.recurrence || []).length > 0)
         fields.occurrenceStart = wireTime(event.start, event.allDay)

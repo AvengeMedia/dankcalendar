@@ -879,10 +879,10 @@ Singleton {
         mutateEvents("events.create", fields, callback);
     }
 
-    function moveEvents(eventsToMove, dayOffset, callback) {
+    function moveEvents(eventsToMove, dayOffset, minuteOffset, callback) {
         const params = eventsToMove.map(event => Object.assign({
                 "id": event.id
-            }, EventUtils.moveFields(event, dayOffset)));
+            }, EventUtils.moveFields(event, dayOffset, minuteOffset)));
         mutateEvents("events.update", params, callback);
     }
 

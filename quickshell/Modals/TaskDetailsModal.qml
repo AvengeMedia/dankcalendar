@@ -102,6 +102,8 @@ FloatingWindow {
         confirmDelete = false;
     }
 
+    onClosed: hide()
+
     function _loadForm() {
         formError = "";
         confirmDelete = false;
