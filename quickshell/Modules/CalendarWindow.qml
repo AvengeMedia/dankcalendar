@@ -13,7 +13,7 @@ FloatingWindow {
     signal hideRequested
 
     property bool isCompactMode: width < 760
-    property bool menuVisible: !isCompactMode
+    property bool menuVisible: false
     property string currentView: SettingsData.lastView
     onCurrentViewChanged: {
         SettingsData.lastView = currentView;
@@ -432,10 +432,7 @@ FloatingWindow {
     color: Theme.surface
     visible: true
 
-    onIsCompactModeChanged: {
-        if (!isCompactMode)
-            menuVisible = true;
-    }
+    onIsCompactModeChanged: menuVisible = false
 
     FocusScope {
         id: focusScope

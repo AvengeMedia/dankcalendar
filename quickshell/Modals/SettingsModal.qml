@@ -9,7 +9,7 @@ FloatingWindow {
 
     property int currentTabIndex: 0
     property bool isCompactMode: width < 640
-    property bool menuVisible: !isCompactMode
+    property bool menuVisible: false
 
     signal addAccountRequested
 
@@ -30,10 +30,7 @@ FloatingWindow {
     color: Theme.surface
     visible: false
 
-    onIsCompactModeChanged: {
-        if (!isCompactMode)
-            menuVisible = true;
-    }
+    onIsCompactModeChanged: menuVisible = false
 
     FocusScope {
         anchors.fill: parent
