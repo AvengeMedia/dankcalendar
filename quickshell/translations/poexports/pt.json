@@ -1,0 +1,1541 @@
+{
+  "%1 AM": {
+    "%1 AM": "%1 AM"
+  },
+  "%1 PM": {
+    "%1 PM": "%1 PM"
+  },
+  "%1 appointments fall outside core hours": {
+    "%1 appointments fall outside core hours": "%1 compromissos fora do horário principal"
+  },
+  "%1 events selected": {
+    "%1 events selected": "%1 eventos selecionados"
+  },
+  "%1 selected": {
+    "%1 selected": "%1 selecionado"
+  },
+  "%1 times": {
+    "%1 times": "%1 vezes"
+  },
+  "%1 · All day": {
+    "%1 · All day": "%1 · O dia todo"
+  },
+  "%1d before": {
+    "%1d before": "%1d antes"
+  },
+  "%1h": {
+    "%1h": "%1h"
+  },
+  "%1h before": {
+    "%1h before": "%1h antes"
+  },
+  "%1h%2m": {
+    "%1h%2m": "%1h%2m"
+  },
+  "%1m": {
+    "%1m": "%1m"
+  },
+  "%1m before": {
+    "%1m before": "%1m antes"
+  },
+  "%1w before": {
+    "%1w before": "%1s antes"
+  },
+  "(untitled)": {
+    "(untitled)": "(sem título)"
+  },
+  "+%1 more": {
+    "+%1 more": "+%1 mais"
+  },
+  "+1 day": {
+    "+1 day": "+1 dia"
+  },
+  "+1 week": {
+    "+1 week": "+1 semana"
+  },
+  "1 appointment falls outside core hours": {
+    "1 appointment falls outside core hours": "1 compromisso está fora do horário principal"
+  },
+  "1 day before": {
+    "1 day before": "1 dia antes"
+  },
+  "1 hour": {
+    "1 hour": "1 hora"
+  },
+  "1 hour before": {
+    "1 hour before": "1 hora antes"
+  },
+  "1 line": {
+    "1 line": "1 linha"
+  },
+  "1 minute": {
+    "1 minute": "1 minuto"
+  },
+  "1 week before": {
+    "1 week before": "1 semana antes"
+  },
+  "1.5 hours": {
+    "1.5 hours": "1,5 horas"
+  },
+  "10 minutes": {
+    "10 minutes": "10 minutos"
+  },
+  "10 minutes before": {
+    "10 minutes before": "10 minutos antes"
+  },
+  "12-hour": {
+    "12-hour": "12 horas"
+  },
+  "12h": {
+    "12h": "12h"
+  },
+  "15 minutes": {
+    "15 minutes": "15 minutos"
+  },
+  "15 minutes before": {
+    "15 minutes before": "15 minutos antes"
+  },
+  "2 days before": {
+    "2 days before": "2 dias antes"
+  },
+  "2 hours": {
+    "2 hours": "2 horas"
+  },
+  "2 hours before": {
+    "2 hours before": "2 horas antes"
+  },
+  "2 lines": {
+    "2 lines": "2 linhas"
+  },
+  "24-hour": {
+    "24-hour": "24 horas"
+  },
+  "24h": {
+    "24h": "24h"
+  },
+  "3 lines": {
+    "3 lines": "3 linhas"
+  },
+  "30 minutes": {
+    "30 minutes": "30 minutos"
+  },
+  "30 minutes before": {
+    "30 minutes before": "30 minutos antes"
+  },
+  "45 minutes": {
+    "45 minutes": "45 minutos"
+  },
+  "5 minutes": {
+    "5 minutes": "5 minutos"
+  },
+  "5 minutes before": {
+    "5 minutes before": "5 minutos antes"
+  },
+  "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
+    "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Licença MIT</a>"
+  },
+  "A folder of .ics files on this machine.": {
+    "A folder of .ics files on this machine.": "Uma pasta de arquivos .ics nesta máquina."
+  },
+  "API": {
+    "API": "API"
+  },
+  "About": {
+    "About": "Sobre"
+  },
+  "Accept": {
+    "Accept": "Aceitar"
+  },
+  "Account connected": {
+    "Account connected": "Conta conectada"
+  },
+  "Account problem — click for options": {
+    "Account problem — click for options": "Problema na conta — clique para opções"
+  },
+  "Accounts": {
+    "Accounts": "Contas"
+  },
+  "Actions apply to the whole selection": {
+    "Actions apply to the whole selection": "As ações se aplicam a toda a seleção"
+  },
+  "Add": {
+    "Add": "Adicionar"
+  },
+  "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": {
+    "Add a CalDAV, local, Google, or Microsoft account with a task list to create tasks.": "Adicione uma conta CalDAV, local, Google ou Microsoft com uma lista de tarefas para criar tarefas."
+  },
+  "Add a calendar": {
+    "Add a calendar": "Adicionar calendário"
+  },
+  "Add account": {
+    "Add account": "Adicionar conta"
+  },
+  "Add description": {
+    "Add description": "Adicionar descrição"
+  },
+  "Add or remove an event from the selection": {
+    "Add or remove an event from the selection": "Adicionar ou remover um evento da seleção"
+  },
+  "Add reminder": {
+    "Add reminder": "Adicionar lembrete"
+  },
+  "Add task": {
+    "Add task": "Adicionar tarefa"
+  },
+  "Add title": {
+    "Add title": "Adicionar título"
+  },
+  "Adding…": {
+    "Adding…": "Adicionando…"
+  },
+  "Adds a calendar to \"%1\".": {
+    "Adds a calendar to \"%1\".": "Adiciona um calendário a \"%1\"."
+  },
+  "After": {
+    "After": "Depois"
+  },
+  "Agenda": {
+    "Agenda": "Agenda"
+  },
+  "Agenda view": {
+    "Agenda view": "Visão de agenda"
+  },
+  "All credentials are stored in your system keyring when available.": {
+    "All credentials are stored in your system keyring when available.": "Todas as credenciais são armazenadas no chaveiro do sistema quando disponível."
+  },
+  "All day": {
+    "All day": "O dia todo"
+  },
+  "All done": {
+    "All done": "Tudo pronto"
+  },
+  "All events": {
+    "All events": "Todos os eventos"
+  },
+  "All-day reminder time": {
+    "All-day reminder time": "Horário do lembrete de o dia todo"
+  },
+  "All-day reminder timing": {
+    "All-day reminder timing": "Momento do lembrete de o dia todo"
+  },
+  "Already in %1": {
+    "Already in %1": "Já está em %1"
+  },
+  "Always use the dark theme.": {
+    "Always use the dark theme.": "Sempre usar o tema escuro."
+  },
+  "Always use the light theme.": {
+    "Always use the light theme.": "Sempre usar o tema claro."
+  },
+  "App-specific password": {
+    "App-specific password": "Senha específica de aplicativo"
+  },
+  "Appearance": {
+    "Appearance": "Aparência"
+  },
+  "Apple ID": {
+    "Apple ID": "Apple ID"
+  },
+  "Apple iCloud calendars via app-specific password.": {
+    "Apple iCloud calendars via app-specific password.": "Calendários Apple iCloud via senha específica de aplicativo."
+  },
+  "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": {
+    "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.": "Aprove o acesso no seu navegador. A janela retornará aqui automaticamente quando %1 nos enviar de volta o código de autorização."
+  },
+  "At start": {
+    "At start": "No início"
+  },
+  "Attendees": {
+    "Attendees": "Participantes"
+  },
+  "Authorization failed": {
+    "Authorization failed": "Falha na autorização"
+  },
+  "Authorize in your browser": {
+    "Authorize in your browser": "Autorizar no seu navegador"
+  },
+  "Auto": {
+    "Auto": "Automático"
+  },
+  "Auto follows your locale (%1).": {
+    "Auto follows your locale (%1).": "Automático segue a sua localidade (%1)."
+  },
+  "Back": {
+    "Back": "Voltar"
+  },
+  "Back to the calendar": {
+    "Back to the calendar": "Voltar ao calendário"
+  },
+  "Backend": {
+    "Backend": "Backend"
+  },
+  "Backend not connected.": {
+    "Backend not connected.": "Backend não conectado."
+  },
+  "Calendar": {
+    "Calendar": "Calendário"
+  },
+  "Calendar Settings": {
+    "Calendar Settings": "Configurações do calendário"
+  },
+  "Calendar file": {
+    "Calendar file": "Arquivo de calendário"
+  },
+  "Calendar name": {
+    "Calendar name": "Nome do calendário"
+  },
+  "Calendar preselected when creating events.": {
+    "Calendar preselected when creating events.": "Calendário pré-selecionado ao criar eventos."
+  },
+  "Calendars": {
+    "Calendars": "Calendários"
+  },
+  "Calendars couldn't be loaded; tasks are still syncing.": {
+    "Calendars couldn't be loaded; tasks are still syncing.": "Não foi possível carregar os calendários; as tarefas ainda estão sincronizando."
+  },
+  "Cancel": {
+    "Cancel": "Cancelar"
+  },
+  "Capabilities": {
+    "Capabilities": "Recursos"
+  },
+  "Changes apply to the whole series": {
+    "Changes apply to the whole series": "As alterações se aplicam a toda a série"
+  },
+  "Choose a JSON color theme file.": {
+    "Choose a JSON color theme file.": "Escolha um arquivo de tema de cores JSON."
+  },
+  "Choose a provider": {
+    "Choose a provider": "Escolha um provedor"
+  },
+  "Choose calendar directory": {
+    "Choose calendar directory": "Escolher diretório do calendário"
+  },
+  "Clear": {
+    "Clear": "Limpar"
+  },
+  "Clear event selection": {
+    "Clear event selection": "Limpar seleção de eventos"
+  },
+  "Click to zoom · Esc to close": {
+    "Click to zoom · Esc to close": "Clique para ampliar · Esc para fechar"
+  },
+  "Client ID": {
+    "Client ID": "ID do cliente"
+  },
+  "Client Secret": {
+    "Client Secret": "Segredo do cliente"
+  },
+  "Close behavior": {
+    "Close behavior": "Comportamento ao fechar"
+  },
+  "Closing hides the window; reopen it from your app launcher.": {
+    "Closing hides the window; reopen it from your app launcher.": "Fechar oculta a janela; reabra-a pelo iniciador de aplicativos."
+  },
+  "Collapse or expand a section": {
+    "Collapse or expand a section": "Recolher ou expandir uma seção"
+  },
+  "Color source": {
+    "Color source": "Fonte de cor"
+  },
+  "Coming soon": {
+    "Coming soon": "Em breve"
+  },
+  "Completed": {
+    "Completed": "Concluído"
+  },
+  "Confirm": {
+    "Confirm": "Confirmar"
+  },
+  "Confirm delete": {
+    "Confirm delete": "Confirmar exclusão"
+  },
+  "Connect": {
+    "Connect": "Conectar"
+  },
+  "Connect %1": {
+    "Connect %1": "Conectar %1"
+  },
+  "Connect Google Account": {
+    "Connect Google Account": "Conectar Conta Google"
+  },
+  "Connect Microsoft Account": {
+    "Connect Microsoft Account": "Conectar Conta Microsoft"
+  },
+  "Connect any CalDAV-compatible server.": {
+    "Connect any CalDAV-compatible server.": "Conecte qualquer servidor compatível com CalDAV."
+  },
+  "Connected": {
+    "Connected": "Conectado"
+  },
+  "Connected calendar providers.": {
+    "Connected calendar providers.": "Provedores de calendário conectados."
+  },
+  "Connecting…": {
+    "Connecting…": "Conectando…"
+  },
+  "Continue": {
+    "Continue": "Continuar"
+  },
+  "Copied %1 events": {
+    "Copied %1 events": "%1 eventos copiados"
+  },
+  "Copied 1 event": {
+    "Copied 1 event": "1 evento copiado"
+  },
+  "Copied to clipboard": {
+    "Copied to clipboard": "Copiado para a área de transferência"
+  },
+  "Copy": {
+    "Copy": "Copiar"
+  },
+  "Copy %1 events": {
+    "Copy %1 events": "Copiar %1 eventos"
+  },
+  "Copy event": {
+    "Copy event": "Copiar evento"
+  },
+  "Copy link": {
+    "Copy link": "Copiar link"
+  },
+  "Copy selected events": {
+    "Copy selected events": "Copiar eventos selecionados"
+  },
+  "Core hours": {
+    "Core hours": "Horário principal"
+  },
+  "Could not read that file — expected a JSON color theme.": {
+    "Could not read that file — expected a JSON color theme.": "Não foi possível ler esse arquivo — esperava-se um tema de cores JSON."
+  },
+  "Could not read that file.": {
+    "Could not read that file.": "Não foi possível ler esse arquivo."
+  },
+  "Couldn't update task": {
+    "Couldn't update task": "Não foi possível atualizar a tarefa"
+  },
+  "Create": {
+    "Create": "Criar"
+  },
+  "Create event": {
+    "Create event": "Criar evento"
+  },
+  "Created %1 events": {
+    "Created %1 events": "%1 eventos criados"
+  },
+  "Created %1 of %2 events": {
+    "Created %1 of %2 events": "%1 de %2 eventos criados"
+  },
+  "Created 1 event": {
+    "Created 1 event": "1 evento criado"
+  },
+  "Credentials stay on this machine": {
+    "Credentials stay on this machine": "As credenciais permanecem nesta máquina"
+  },
+  "Custom": {
+    "Custom": "Personalizado"
+  },
+  "Cut": {
+    "Cut": "Recortar"
+  },
+  "Cut %1 events": {
+    "Cut %1 events": "Recortar %1 eventos"
+  },
+  "Cut 1 event": {
+    "Cut 1 event": "Recortar 1 evento"
+  },
+  "Cut event": {
+    "Cut event": "Recortar evento"
+  },
+  "Cut selected events": {
+    "Cut selected events": "Recortar eventos selecionados"
+  },
+  "Daemon offline": {
+    "Daemon offline": "Daemon offline"
+  },
+  "Daily": {
+    "Daily": "Diário"
+  },
+  "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": {
+    "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.": "Dank Calendar é um calendário para o desktop Linux moderno com um design <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">inspirado no material 3</a>, além de uma CLI hackeável e API de socket para integrações.<br /><br/>É construído com <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, um framework QT6 para construção de shells de desktop, e <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, uma linguagem de programação compilada e estaticamente tipada."
+  },
+  "Dank Linux Discord": {
+    "Dank Linux Discord": "Discord do Dank Linux"
+  },
+  "DankMaterialShell not detected — using the %1 preset.": {
+    "DankMaterialShell not detected — using the %1 preset.": "DankMaterialShell não detectado — usando a predefinição %1."
+  },
+  "Dark": {
+    "Dark": "Escuro"
+  },
+  "Date and time locale": {
+    "Date and time locale": "Local de data e hora"
+  },
+  "Day": {
+    "Day": "Dia"
+  },
+  "Day actions": {
+    "Day actions": "Ações do dia"
+  },
+  "Day view": {
+    "Day view": "Visualização de dia"
+  },
+  "Decline": {
+    "Decline": "Recusar"
+  },
+  "Default calendar": {
+    "Default calendar": "Calendário padrão"
+  },
+  "Default event duration": {
+    "Default event duration": "Duração padrão do evento"
+  },
+  "Default reminder": {
+    "Default reminder": "Lembrete padrão"
+  },
+  "Defaults follow your locale unless overridden.": {
+    "Defaults follow your locale unless overridden.": "Os padrões seguem sua localidade, a menos que sejam alterados."
+  },
+  "Delete": {
+    "Delete": "Excluir"
+  },
+  "Delete \"%1\"?": {
+    "Delete \"%1\"?": "Excluir \"%1\"?"
+  },
+  "Delete %1 events": {
+    "Delete %1 events": "Excluir %1 eventos"
+  },
+  "Delete %1 events?": {
+    "Delete %1 events?": "Excluir %1 eventos?"
+  },
+  "Delete %1 events…": {
+    "Delete %1 events…": "Excluindo %1 eventos…"
+  },
+  "Delete event": {
+    "Delete event": "Excluir evento"
+  },
+  "Delete event?": {
+    "Delete event?": "Excluir evento?"
+  },
+  "Delete event…": {
+    "Delete event…": "Excluir evento…"
+  },
+  "Delete occurrence": {
+    "Delete occurrence": "Excluir ocorrência"
+  },
+  "Delete selected events": {
+    "Delete selected events": "Excluir eventos selecionados"
+  },
+  "Delete series": {
+    "Delete series": "Excluir série"
+  },
+  "Deleted %1 events": {
+    "Deleted %1 events": "%1 eventos excluídos"
+  },
+  "Deleted %1 of %2 events": {
+    "Deleted %1 of %2 events": "%1 de %2 eventos excluídos"
+  },
+  "Deleted 1 event": {
+    "Deleted 1 event": "1 evento excluído"
+  },
+  "Delete…": {
+    "Delete…": "Excluir…"
+  },
+  "Description": {
+    "Description": "Descrição"
+  },
+  "Desktop notifications for upcoming events.": {
+    "Desktop notifications for upcoming events.": "Notificações na área de trabalho para eventos futuros."
+  },
+  "Directory": {
+    "Directory": "Diretório"
+  },
+  "Disable core hours": {
+    "Disable core hours": "Desativar horário principal"
+  },
+  "Disable sync": {
+    "Disable sync": "Desativar sincronização"
+  },
+  "Dismiss": {
+    "Dismiss": "Dispensar"
+  },
+  "Display ISO week numbers in month view.": {
+    "Display ISO week numbers in month view.": "Exibir números de semanas ISO na visão de mês."
+  },
+  "Display name (optional)": {
+    "Display name (optional)": "Nome de exibição (opcional)"
+  },
+  "Docs": {
+    "Docs": "Documentação"
+  },
+  "Does not repeat": {
+    "Does not repeat": "Não repetir"
+  },
+  "Done": {
+    "Done": "Concluído"
+  },
+  "Drag to pan · click to fit": {
+    "Drag to pan · click to fit": "Arraste para mover · clique para ajustar"
+  },
+  "Due date": {
+    "Due date": "Data de vencimento"
+  },
+  "Duplicate": {
+    "Duplicate": "Duplicar"
+  },
+  "Duplicate %1 events": {
+    "Duplicate %1 events": "Duplicar %1 eventos"
+  },
+  "Duplicate selected events": {
+    "Duplicate selected events": "Duplicar eventos selecionados"
+  },
+  "Duplicate selected events to the next day": {
+    "Duplicate selected events to the next day": "Duplicar eventos selecionados para o dia seguinte"
+  },
+  "Edit event": {
+    "Edit event": "Editar evento"
+  },
+  "Edit task": {
+    "Edit task": "Editar tarefa"
+  },
+  "Enable core hours": {
+    "Enable core hours": "Ativar horário principal"
+  },
+  "Enable reminders": {
+    "Enable reminders": "Ativar lembretes"
+  },
+  "Enable sync": {
+    "Enable sync": "Ativar sincronização"
+  },
+  "Ends": {
+    "Ends": "Termina"
+  },
+  "Enlarge": {
+    "Enlarge": "Ampliar"
+  },
+  "Enter a name for the calendar.": {
+    "Enter a name for the calendar.": "Digite um nome para o calendário."
+  },
+  "Enter client ID": {
+    "Enter client ID": "Digite o ID do cliente"
+  },
+  "Enter your CalDAV server details. The connection is verified before the account is saved.": {
+    "Enter your CalDAV server details. The connection is verified before the account is saved.": "Digite os detalhes do seu servidor CalDAV. A conexão é verificada antes de salvar a conta."
+  },
+  "Enter your client ID": {
+    "Enter your client ID": "Digite seu ID de cliente"
+  },
+  "Event": {
+    "Event": "Evento"
+  },
+  "Event actions": {
+    "Event actions": "Ações do evento"
+  },
+  "Event details": {
+    "Event details": "Detalhes do evento"
+  },
+  "Every": {
+    "Every": "Cada"
+  },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": "Tudo neste arquivo já está no seu calendário."
+  },
+  "Evolution": {
+    "Evolution": "Evolution"
+  },
+  "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": {
+    "Expand day cells to fit every event instead of collapsing extras into \"+N more\".": "Expandir as células do dia para caber todos os eventos em vez de recolher os extras em \"+N more\"."
+  },
+  "Feed URL": {
+    "Feed URL": "URL do feed"
+  },
+  "First calendar": {
+    "First calendar": "Primeiro calendário"
+  },
+  "First day shown in week and month views.": {
+    "First day shown in week and month views.": "Primeiro dia exibido nas visões de semana e mês."
+  },
+  "Focus or leave the sidebar": {
+    "Focus or leave the sidebar": "Focar ou sair da barra lateral"
+  },
+  "Follow DankMaterialShell colors, falling back to a preset.": {
+    "Follow DankMaterialShell colors, falling back to a preset.": "Seguir as cores do DankMaterialShell, com fallback para um predefinido."
+  },
+  "Follow language": {
+    "Follow language": "Seguir o idioma"
+  },
+  "Following the system color scheme (currently %1).": {
+    "Following the system color scheme (currently %1).": "Seguindo o esquema de cores do sistema (atualmente %1)."
+  },
+  "General": {
+    "General": "Geral"
+  },
+  "Generate app-specific password": {
+    "Generate app-specific password": "Gerar senha específica de app"
+  },
+  "GitHub": {
+    "GitHub": "GitHub"
+  },
+  "Go to date": {
+    "Go to date": "Ir para data"
+  },
+  "Go to today": {
+    "Go to today": "Ir para hoje"
+  },
+  "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": {
+    "Google Tasks is unavailable. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Enable its API</a> or reconnect this account, then refresh, to sync tasks.": "Google Tasks indisponível. <a href=\"https://console.cloud.google.com/apis/library/tasks.googleapis.com\" style=\"text-decoration:none; color:%1;\">Ative a API</a> ou reconecte esta conta e depois atualize para sincronizar tarefas."
+  },
+  "Hide": {
+    "Hide": "Ocultar"
+  },
+  "High": {
+    "High": "Alta"
+  },
+  "Hour range shown in day and week views.": {
+    "Hour range shown in day and week views.": "Intervalo de horas exibido nas visões de dia e semana."
+  },
+  "How long the snooze button postpones a reminder.": {
+    "How long the snooze button postpones a reminder.": "Por quanto tempo o botão de soneca adia um lembrete."
+  },
+  "How often accounts are polled for changes.": {
+    "How often accounts are polled for changes.": "Com que frequência as contas são consultadas em busca de alterações."
+  },
+  "Import": {
+    "Import": "Importar"
+  },
+  "Import %1 events": {
+    "Import %1 events": "Importar %1 eventos"
+  },
+  "Import client_secret.json": {
+    "Import client_secret.json": "Importar client_secret.json"
+  },
+  "Import events": {
+    "Import events": "Importar eventos"
+  },
+  "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
+    "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Importe o client_secret_….json que você baixou ao criar o cliente, ou cole o Client ID e o Secret manualmente."
+  },
+  "Importing...": {
+    "Importing...": "Importando..."
+  },
+  "Initial reminder set on new events.": {
+    "Initial reminder set on new events.": "Lembrete inicial definido em novos eventos."
+  },
+  "Join video call": {
+    "Join video call": "Entrar na chamada de vídeo"
+  },
+  "Keep typing": {
+    "Keep typing": "Continue digitando"
+  },
+  "Keep until dismissed": {
+    "Keep until dismissed": "Manter até descartar"
+  },
+  "Keyboard shortcuts": {
+    "Keyboard shortcuts": "Atalhos de teclado"
+  },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": "Chaveiro bloqueado — desbloqueie para sincronizar"
+  },
+  "Ko-fi": {
+    "Ko-fi": "Ko-fi"
+  },
+  "Language": {
+    "Language": "Idioma"
+  },
+  "Language of the interface.": {
+    "Language of the interface.": "Idioma da interface."
+  },
+  "Launch Dank Calendar in the background when you log in.": {
+    "Launch Dank Calendar in the background when you log in.": "Iniciar o Dank Calendar em segundo plano ao fazer login."
+  },
+  "Length used when creating events.": {
+    "Length used when creating events.": "Duração usada ao criar eventos."
+  },
+  "Light": {
+    "Light": "Claro"
+  },
+  "Limit the day and week views to a set hour range.": {
+    "Limit the day and week views to a set hour range.": "Limitar as visões de dia e semana a um intervalo de horas definido."
+  },
+  "List": {
+    "List": "Lista"
+  },
+  "Load colors from your own theme file.": {
+    "Load colors from your own theme file.": "Carregar cores do seu próprio arquivo de tema."
+  },
+  "Loading setup instructions…": {
+    "Loading setup instructions…": "Carregando instruções de configuração…"
+  },
+  "Local": {
+    "Local": "Local"
+  },
+  "Local calendar": {
+    "Local calendar": "Calendário local"
+  },
+  "Local calendars": {
+    "Local calendars": "Calendários locais"
+  },
+  "Locale used for day and month names, time format and week start.": {
+    "Locale used for day and month names, time format and week start.": "Locale usado para nomes de dias e meses, formato de hora e início da semana."
+  },
+  "Location": {
+    "Location": "Local"
+  },
+  "Low": {
+    "Low": "Baixa"
+  },
+  "Marked as not done": {
+    "Marked as not done": "Marcado como não concluído"
+  },
+  "Maximum title lines per event in month view.": {
+    "Maximum title lines per event in month view.": "Máximo de linhas de título por evento na visão de mês."
+  },
+  "Maximum title lines per event in week view.": {
+    "Maximum title lines per event in week view.": "Máximo de linhas de título por evento na visão de semana."
+  },
+  "Maybe": {
+    "Maybe": "Talvez"
+  },
+  "Medium": {
+    "Medium": "Média"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": "Cancelamento de reunião"
+  },
+  "Meeting invitation": {
+    "Meeting invitation": "Convite de reunião"
+  },
+  "Meeting reply": {
+    "Meeting reply": "Resposta de reunião"
+  },
+  "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
+    "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "O acesso ao Microsoft To Do não foi concedido. Reconecte esta conta para sincronizar tarefas."
+  },
+  "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": {
+    "Microsoft often returns server_error for the first few minutes after an app registration is created or changed. Wait a minute or two and try again.": "A Microsoft frequentemente retorna server_error nos primeiros minutos após a criação ou alteração de um registro de aplicativo. Aguarde um ou dois minutos e tente novamente."
+  },
+  "Minimize": {
+    "Minimize": "Minimizar"
+  },
+  "Month": {
+    "Month": "Mês"
+  },
+  "Month event title lines": {
+    "Month event title lines": "Linhas de título de evento no mês"
+  },
+  "Month view": {
+    "Month view": "Visão de mês"
+  },
+  "Monthly": {
+    "Monthly": "Mensalmente"
+  },
+  "Move": {
+    "Move": "Mover"
+  },
+  "Move %1 events": {
+    "Move %1 events": "Mover %1 eventos"
+  },
+  "Move %1 events here": {
+    "Move %1 events here": "Mover %1 eventos para cá"
+  },
+  "Move 1 event here": {
+    "Move 1 event here": "Mover 1 evento para cá"
+  },
+  "Move recurring events?": {
+    "Move recurring events?": "Mover eventos recorrentes?"
+  },
+  "Move through sidebar items": {
+    "Move through sidebar items": "Navegar pelos itens da barra lateral"
+  },
+  "Move to selected day": {
+    "Move to selected day": "Mover para o dia selecionado"
+  },
+  "Moved %1 events": {
+    "Moved %1 events": "%1 eventos movidos"
+  },
+  "Moved %1 of %2 events": {
+    "Moved %1 of %2 events": "%1 de %2 eventos movidos"
+  },
+  "Moved 1 event": {
+    "Moved 1 event": "1 evento movido"
+  },
+  "Moving a recurring event moves its entire series.": {
+    "Moving a recurring event moves its entire series.": "Mover um evento recorrente move a série inteira."
+  },
+  "My calendars": {
+    "My calendars": "Meus calendários"
+  },
+  "My server": {
+    "My server": "Meu servidor"
+  },
+  "Navigation": {
+    "Navigation": "Navegação"
+  },
+  "Never": {
+    "Never": "Nunca"
+  },
+  "New calendar": {
+    "New calendar": "Novo calendário"
+  },
+  "New calendar…": {
+    "New calendar…": "Novo calendário…"
+  },
+  "New event": {
+    "New event": "Novo evento"
+  },
+  "New task": {
+    "New task": "Nova tarefa"
+  },
+  "Next day": {
+    "Next day": "Próximo dia"
+  },
+  "Next day with events": {
+    "Next day with events": "Próximo dia com eventos"
+  },
+  "Next day, week or month": {
+    "Next day, week or month": "Próximo dia, semana ou mês"
+  },
+  "Next event (next week in month view)": {
+    "Next event (next week in month view)": "Próximo evento (próxima semana na visão de mês)"
+  },
+  "Next year": {
+    "Next year": "Próximo ano"
+  },
+  "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": {
+    "No OAuth client found in that file — expected the client_secret_….json downloaded from Google.": "Nenhum cliente OAuth encontrado nesse arquivo — era esperado o client_secret_….json baixado do Google."
+  },
+  "No accounts yet. Click \"Add account\" to connect one.": {
+    "No accounts yet. Click \"Add account\" to connect one.": "Nenhuma conta ainda. Clique em \"Add account\" para conectar uma."
+  },
+  "No calendars yet": {
+    "No calendars yet": "Nenhum calendário ainda"
+  },
+  "No calendars yet. Add an account first.": {
+    "No calendars yet. Add an account first.": "Nenhum calendário ainda. Adicione uma conta primeiro."
+  },
+  "No calendars yet. Add one to start creating events.": {
+    "No calendars yet. Add one to start creating events.": "Nenhum calendário ainda. Adicione um para começar a criar eventos."
+  },
+  "No due date": {
+    "No due date": "Sem data de vencimento"
+  },
+  "No matching events": {
+    "No matching events": "Nenhum evento correspondente"
+  },
+  "No task list available": {
+    "No task list available": "Nenhuma lista de tarefas disponível"
+  },
+  "No tasks yet": {
+    "No tasks yet": "Nenhuma tarefa ainda"
+  },
+  "No theme file selected": {
+    "No theme file selected": "Nenhum arquivo de tema selecionado"
+  },
+  "No writable calendar available": {
+    "No writable calendar available": "Nenhum calendário gravável disponível"
+  },
+  "None": {
+    "None": "Nenhum"
+  },
+  "Not authorized — remove this account and add it again": {
+    "Not authorized — remove this account and add it again": "Não autorizado — remova esta conta e adicione-a novamente"
+  },
+  "Not signed in — click to reconnect or re-add this account": {
+    "Not signed in — click to reconnect or re-add this account": "Sessão não iniciada — clique para reconectar ou readicionar esta conta"
+  },
+  "Notes": {
+    "Notes": "Notas"
+  },
+  "Nothing scheduled in the next %1 days": {
+    "Nothing scheduled in the next %1 days": "Nada agendado nos próximos %1 dias"
+  },
+  "Notification sound": {
+    "Notification sound": "Som de notificação"
+  },
+  "Notifications": {
+    "Notifications": "Notificações"
+  },
+  "Notify for all-day events without their own reminders.": {
+    "Notify for all-day events without their own reminders.": "Notificar sobre eventos do dia todo sem lembretes próprios."
+  },
+  "Offline": {
+    "Offline": "Offline"
+  },
+  "On date": {
+    "On date": "Na data"
+  },
+  "On the day": {
+    "On the day": "No dia"
+  },
+  "Open": {
+    "Open": "Abrir"
+  },
+  "Open Calendar": {
+    "Open Calendar": "Abrir calendário"
+  },
+  "Open browser again": {
+    "Open browser again": "Abrir navegador novamente"
+  },
+  "Open event": {
+    "Open event": "Abrir evento"
+  },
+  "Open event actions": {
+    "Open event actions": "Abrir ações do evento"
+  },
+  "Open or create event": {
+    "Open or create event": "Abrir ou criar evento"
+  },
+  "Organized by %1": {
+    "Organized by %1": "Organizado por %1"
+  },
+  "Outlook, Office 365 and Exchange Online calendars.": {
+    "Outlook, Office 365 and Exchange Online calendars.": "Calendários do Outlook, Office 365 e Exchange Online."
+  },
+  "Overdue": {
+    "Overdue": "Atrasado"
+  },
+  "Override": {
+    "Override": "Substituir"
+  },
+  "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": {
+    "Override the global reminder settings for this calendar. Unchanged options follow the global defaults.": "Substitui as configurações globais de lembrete deste calendário. Opções inalteradas seguem os padrões globais."
+  },
+  "Palette: %1": {
+    "Palette: %1": "Paleta: %1"
+  },
+  "Part of the Dank Linux suite.": {
+    "Part of the Dank Linux suite.": "Parte do pacote Dank Linux."
+  },
+  "Password": {
+    "Password": "Senha"
+  },
+  "Password (optional)": {
+    "Password (optional)": "Senha (opcional)"
+  },
+  "Paste %1 events": {
+    "Paste %1 events": "Colar %1 eventos"
+  },
+  "Paste %1 events here": {
+    "Paste %1 events here": "Cole %1 eventos aqui"
+  },
+  "Paste 1 event": {
+    "Paste 1 event": "Colar 1 evento"
+  },
+  "Paste 1 event here": {
+    "Paste 1 event here": "Cole 1 evento aqui"
+  },
+  "Paste credentials": {
+    "Paste credentials": "Cole as credenciais"
+  },
+  "Paste events on the selected day": {
+    "Paste events on the selected day": "Colar eventos no dia selecionado"
+  },
+  "Paste the Application (client) ID from your app registration's Overview page.": {
+    "Paste the Application (client) ID from your app registration's Overview page.": "Cole o ID do aplicativo (cliente) da página Visão geral do registro do seu app."
+  },
+  "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": {
+    "Paste the URL of an external calendar feed to subscribe to it. The calendar is read-only and refreshes in the background. webcal:// links are accepted.": "Cole a URL de um feed de calendário externo para assiná-lo. O calendário é somente leitura e atualiza em segundo plano. Links webcal:// são aceitos."
+  },
+  "Paste your credentials": {
+    "Paste your credentials": "Cole suas credenciais"
+  },
+  "Pasted %1 events": {
+    "Pasted %1 events": "%1 eventos colados"
+  },
+  "Pasted %1 of %2 events": {
+    "Pasted %1 of %2 events": "%1 de %2 eventos colados"
+  },
+  "Pasted 1 event": {
+    "Pasted 1 event": "1 evento colado"
+  },
+  "Pick a color source, palette, or your own theme file.": {
+    "Pick a color source, palette, or your own theme file.": "Escolha uma origem de cor, paleta ou seu próprio arquivo de tema."
+  },
+  "Play a sound when a reminder fires.": {
+    "Play a sound when a reminder fires.": "Reproduz um som quando um lembrete é acionado."
+  },
+  "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
+    "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Aponte para um diretório de arquivos .ics. Cada subdiretório ou arquivo .ics se torna um calendário — compatível com layouts vdirsyncer/khal. O diretório é criado se não existir."
+  },
+  "Preset": {
+    "Preset": "Predefinição"
+  },
+  "Previous day": {
+    "Previous day": "Dia anterior"
+  },
+  "Previous day with events": {
+    "Previous day with events": "Dia anterior com eventos"
+  },
+  "Previous day, week or month": {
+    "Previous day, week or month": "Dia, semana ou mês anterior"
+  },
+  "Previous event (previous week in month view)": {
+    "Previous event (previous week in month view)": "Evento anterior (semana anterior na visão de mês)"
+  },
+  "Previous year": {
+    "Previous year": "Ano anterior"
+  },
+  "Priority": {
+    "Priority": "Prioridade"
+  },
+  "Quit": {
+    "Quit": "Sair"
+  },
+  "Read-only events can't be cut": {
+    "Read-only events can't be cut": "Eventos somente leitura não podem ser recortados"
+  },
+  "Read-only events can't be deleted": {
+    "Read-only events can't be deleted": "Eventos somente leitura não podem ser excluídos"
+  },
+  "Read-only events can't be moved": {
+    "Read-only events can't be moved": "Eventos somente leitura não podem ser movidos"
+  },
+  "Reading file...": {
+    "Reading file...": "Lendo arquivo..."
+  },
+  "Reconnect": {
+    "Reconnect": "Reconectar"
+  },
+  "Recurring tasks are managed in Google Tasks.": {
+    "Recurring tasks are managed in Google Tasks.": "Tarefas recorrentes são gerenciadas no Google Tasks."
+  },
+  "Reminders": {
+    "Reminders": "Lembretes"
+  },
+  "Reminders and desktop alerts.": {
+    "Reminders and desktop alerts.": "Lembretes e alertas na área de trabalho."
+  },
+  "Reminders are disabled globally, so nothing fires until you re-enable them.": {
+    "Reminders are disabled globally, so nothing fires until you re-enable them.": "Os lembretes estão desativados globalmente, então nada será acionado até que você os reative."
+  },
+  "Reminders for \"%1\"": {
+    "Reminders for \"%1\"": "Lembretes de \"%1\""
+  },
+  "Reminders stay on screen until you act on them.": {
+    "Reminders stay on screen until you act on them.": "Os lembretes permanecem na tela até que você os trate."
+  },
+  "Remove": {
+    "Remove": "Remover"
+  },
+  "Remove \"%1\"?": {
+    "Remove \"%1\"?": "Remover \"%1\"?"
+  },
+  "Remove calendar or account": {
+    "Remove calendar or account": "Remover calendário ou conta"
+  },
+  "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
+    "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Remove esta conta, seus calendários e eventos do Dank Calendar. Nada é excluído do provedor."
+  },
+  "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": {
+    "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.": "Remove este calendário e seus eventos do Dank Calendar. Se o provedor ainda o oferecer, ele voltará na próxima sincronização."
+  },
+  "Remove…": {
+    "Remove…": "Remover…"
+  },
+  "Rename": {
+    "Rename": "Renomear"
+  },
+  "Rename calendar": {
+    "Rename calendar": "Renomear calendário"
+  },
+  "Rename…": {
+    "Rename…": "Renomear…"
+  },
+  "Repeat": {
+    "Repeat": "Repetir"
+  },
+  "Repeat %1 events next week": {
+    "Repeat %1 events next week": "Repetir %1 eventos na próxima semana"
+  },
+  "Repeat %1 events tomorrow": {
+    "Repeat %1 events tomorrow": "Repetir %1 eventos amanhã"
+  },
+  "Repeat next week": {
+    "Repeat next week": "Repetir na próxima semana"
+  },
+  "Repeat tomorrow": {
+    "Repeat tomorrow": "Repetir amanhã"
+  },
+  "Repeats": {
+    "Repeats": "Repete"
+  },
+  "Repeats every %1": {
+    "Repeats every %1": "Repete a cada %1"
+  },
+  "Repeats every %1 %2": {
+    "Repeats every %1 %2": "Repete a cada %1 %2"
+  },
+  "Reset to global": {
+    "Reset to global": "Restaurar padrão global"
+  },
+  "Save": {
+    "Save": "Salvar"
+  },
+  "Saving...": {
+    "Saving...": "Salvando…"
+  },
+  "Search": {
+    "Search": "Pesquisar"
+  },
+  "Search events": {
+    "Search events": "Pesquisar eventos"
+  },
+  "Search failed": {
+    "Search failed": "Falha na pesquisa"
+  },
+  "Searching": {
+    "Searching": "Pesquisando"
+  },
+  "Select a range of events": {
+    "Select a range of events": "Selecione um intervalo de eventos"
+  },
+  "Select all %1 events": {
+    "Select all %1 events": "Selecionar todos os %1 eventos"
+  },
+  "Select all events on the selected day": {
+    "Select all events on the selected day": "Selecionar todos os eventos do dia selecionado"
+  },
+  "Select client_secret.json": {
+    "Select client_secret.json": "Selecionar client_secret.json"
+  },
+  "Select days for a new event (month view)": {
+    "Select days for a new event (month view)": "Selecione os dias para um novo evento (visão de mês)"
+  },
+  "Select event": {
+    "Select event": "Selecionar evento"
+  },
+  "Select file": {
+    "Select file": "Selecionar arquivo"
+  },
+  "Select theme file": {
+    "Select theme file": "Selecionar arquivo de tema"
+  },
+  "Send test": {
+    "Send test": "Enviar teste"
+  },
+  "Server URL": {
+    "Server URL": "URL do servidor"
+  },
+  "Settings": {
+    "Settings": "Configurações"
+  },
+  "Show": {
+    "Show": "Mostrar"
+  },
+  "Show Dank Calendar in the system tray.": {
+    "Show Dank Calendar in the system tray.": "Mostrar DankCalendar na bandeja do sistema."
+  },
+  "Show all events in month view": {
+    "Show all events in month view": "Mostrar todos os eventos na visão de mês"
+  },
+  "Show all-day reminders": {
+    "Show all-day reminders": "Mostrar lembretes de o dia todo"
+  },
+  "Show task lists and the Tasks view when an account provides them.": {
+    "Show task lists and the Tasks view when an account provides them.": "Mostrar listas de tarefas e a visão de Tarefas quando uma conta as fornecer."
+  },
+  "Show tasks": {
+    "Show tasks": "Mostrar tarefas"
+  },
+  "Show tray icon": {
+    "Show tray icon": "Mostrar ícone na bandeja"
+  },
+  "Show week numbers": {
+    "Show week numbers": "Mostrar números das semanas"
+  },
+  "Sidebar": {
+    "Sidebar": "Barra lateral"
+  },
+  "Sign in with %1": {
+    "Sign in with %1": "Entrar com %1"
+  },
+  "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": {
+    "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.": "Entre com o Google no seu navegador e pronto — sem necessidade de configuração. O DankCalendar sincroniza seus calendários, eventos e tarefas."
+  },
+  "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": {
+    "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.": "Entre com a Microsoft no seu navegador e pronto — sem necessidade de configuração. O DankCalendar sincroniza seus calendários, eventos e tarefas do Outlook."
+  },
+  "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": {
+    "Sign in with your Apple ID and an app-specific password. Regular Apple ID passwords will not work.": "Entre com seu Apple ID e uma senha específica de app. Senhas comuns do Apple ID não funcionarão."
+  },
+  "Sign in with your Google account.": {
+    "Sign in with your Google account.": "Entre com sua conta Google."
+  },
+  "Sign-in expired — click to reconnect": {
+    "Sign-in expired — click to reconnect": "Sessão expirada — clique para reconectar"
+  },
+  "Sign-in expired — reconnect to keep syncing": {
+    "Sign-in expired — reconnect to keep syncing": "Sessão expirada — reconecte para continuar sincronizando"
+  },
+  "Skip certificate verification": {
+    "Skip certificate verification": "Ignorar verificação de certificado"
+  },
+  "Snooze duration": {
+    "Snooze duration": "Duração da soneca"
+  },
+  "Start at login": {
+    "Start at login": "Iniciar com a sessão"
+  },
+  "Start week on": {
+    "Start week on": "Início da semana"
+  },
+  "Starting…": {
+    "Starting…": "Iniciando…"
+  },
+  "Status": {
+    "Status": "Status"
+  },
+  "Step %1": {
+    "Step %1": "Etapa %1"
+  },
+  "Step %1: %2": {
+    "Step %1: %2": "Etapa %1: %2"
+  },
+  "Subscribe": {
+    "Subscribe": "Assinar"
+  },
+  "Subscribe to an external calendar by URL (webcal/https).": {
+    "Subscribe to an external calendar by URL (webcal/https).": "Assine um calendário externo por URL (webcal/https)."
+  },
+  "Subscribing…": {
+    "Subscribing…": "Assinando…"
+  },
+  "Sync interval": {
+    "Sync interval": "Intervalo de sincronização"
+  },
+  "Sync is off — click to re-enable": {
+    "Sync is off — click to re-enable": "Sincronização desativada — clique para reativar"
+  },
+  "Sync now": {
+    "Sync now": "Sincronizar agora"
+  },
+  "Synced as \"%1\". The name only changes in Dank Calendar.": {
+    "Synced as \"%1\". The name only changes in Dank Calendar.": "Sincronizado como \"%1\". O nome só muda no Dank Calendar."
+  },
+  "System default": {
+    "System default": "Padrão do sistema"
+  },
+  "System default (%1)": {
+    "System default (%1)": "Padrão do sistema (%1)"
+  },
+  "System preference unavailable — using dark.": {
+    "System preference unavailable — using dark.": "Preferência do sistema indisponível — usando modo escuro."
+  },
+  "Task": {
+    "Task": "Tarefa"
+  },
+  "Task completed": {
+    "Task completed": "Tarefa concluída"
+  },
+  "Task lists couldn't be loaded; calendars are still syncing.": {
+    "Task lists couldn't be loaded; calendars are still syncing.": "Não foi possível carregar as listas de tarefas; os calendários ainda estão sincronizando."
+  },
+  "Tasks": {
+    "Tasks": "Tarefas"
+  },
+  "Tasks view": {
+    "Tasks view": "Visão de tarefas"
+  },
+  "Test notification": {
+    "Test notification": "Notificação de teste"
+  },
+  "That file is not valid JSON.": {
+    "That file is not valid JSON.": "Esse arquivo não é um JSON válido."
+  },
+  "Theme": {
+    "Theme": "Tema"
+  },
+  "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
+    "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "Esses eventos serão excluídos dos seus calendários. Seleções recorrentes excluem apenas as ocorrências selecionadas."
+  },
+  "This account cannot be reconnected — remove it and add it again.": {
+    "This account cannot be reconnected — remove it and add it again.": "Esta conta não pode ser reconectada — remova-a e adicione-a novamente."
+  },
+  "This event": {
+    "This event": "Este evento"
+  },
+  "This event will be deleted from its calendar.": {
+    "This event will be deleted from its calendar.": "Este evento será excluído do seu calendário."
+  },
+  "Time format": {
+    "Time format": "Formato de hora"
+  },
+  "Title is required": {
+    "Title is required": "O título é obrigatório"
+  },
+  "Today": {
+    "Today": "Hoje"
+  },
+  "Toggle calendar, switch view or sync account": {
+    "Toggle calendar, switch view or sync account": "Alternar calendário, mudar visão ou sincronizar conta"
+  },
+  "Toggle this help": {
+    "Toggle this help": "Alternar esta ajuda"
+  },
+  "Tomorrow": {
+    "Tomorrow": "Amanhã"
+  },
+  "Trust self-signed certificates. Only enable this for servers you control.": {
+    "Trust self-signed certificates. Only enable this for servers you control.": "Confiar em certificados autoassinados. Ative apenas para servidores que você controla."
+  },
+  "Try a different search.": {
+    "Try a different search.": "Tente uma pesquisa diferente."
+  },
+  "Try again": {
+    "Try again": "Tentar novamente"
+  },
+  "Type at least 2 characters to search events.": {
+    "Type at least 2 characters to search events.": "Digite pelo menos 2 caracteres para pesquisar eventos."
+  },
+  "Undo": {
+    "Undo": "Desfazer"
+  },
+  "University timetable": {
+    "University timetable": "Grade universitária"
+  },
+  "Upcoming": {
+    "Upcoming": "Próximos"
+  },
+  "Use a bundled color palette.": {
+    "Use a bundled color palette.": "Usa uma paleta de cores incluída."
+  },
+  "Use synced name": {
+    "Use synced name": "Usar nome sincronizado"
+  },
+  "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": {
+    "Use the calendars Evolution Data Server already manages on this machine (Evolution, GNOME Online Accounts, and more). No sign-in is needed — Evolution handles credentials and syncing.": "Usa os calendários que o Evolution Data Server já gerencia nesta máquina (Evolution, GNOME Online Accounts e mais). Não é necessário login — o Evolution cuida das credenciais e da sincronização."
+  },
+  "Use your own OAuth client": {
+    "Use your own OAuth client": "Usar seu próprio cliente OAuth"
+  },
+  "Username": {
+    "Username": "Nome de usuário"
+  },
+  "Username (optional)": {
+    "Username (optional)": "Nome de usuário (opcional)"
+  },
+  "Using DankMaterialShell dynamic colors.": {
+    "Using DankMaterialShell dynamic colors.": "Usando cores dinâmicas do DankMaterialShell."
+  },
+  "Verify desktop notifications are working.": {
+    "Verify desktop notifications are working.": "Verifique se as notificações da área de trabalho estão funcionando."
+  },
+  "Version": {
+    "Version": "Versão"
+  },
+  "View": {
+    "View": "Visualizar"
+  },
+  "Visibility, names, and removal per calendar.": {
+    "Visibility, names, and removal per calendar.": "Visibilidade, nomes e remoção por calendário."
+  },
+  "Waiting for browser…": {
+    "Waiting for browser…": "Aguardando o navegador…"
+  },
+  "Waiting for the dankcalendar daemon...": {
+    "Waiting for the dankcalendar daemon...": "Aguardando o daemon do dankcalendar..."
+  },
+  "Week": {
+    "Week": "Semana"
+  },
+  "Week event title lines": {
+    "Week event title lines": "Linhas do título de eventos na semana"
+  },
+  "Week view": {
+    "Week view": "Visão semanal"
+  },
+  "Weekly": {
+    "Weekly": "Semanal"
+  },
+  "What the window's close button does.": {
+    "What the window's close button does.": "O que o botão de fechar da janela faz."
+  },
+  "When all-day event reminders fire.": {
+    "When all-day event reminders fire.": "Quando os lembretes de eventos de o dia todo são disparados."
+  },
+  "Yearly": {
+    "Yearly": "Anual"
+  },
+  "Yesterday": {
+    "Yesterday": "Ontem"
+  },
+  "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": {
+    "Your calendars will sync in the background. You can manage this account from Settings → Accounts.": "Seus calendários serão sincronizados em segundo plano. Você pode gerenciar esta conta em Configurações → Contas."
+  },
+  "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": {
+    "Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.": "Seu client ID, secret e refresh token são armazenados no chaveiro do sistema (libsecret/kwallet) quando disponível, ou em um arquivo local criptografado."
+  },
+  "Your response": {
+    "Your response": "Sua resposta"
+  },
+  "all day": {
+    "all day": "o dia todo"
+  },
+  "dark": {
+    "dark": "escuro"
+  },
+  "day": {
+    "day": "dia"
+  },
+  "days": {
+    "days": "dias"
+  },
+  "e.g. 2022-01-01": {
+    "e.g. 2022-01-01": "ex.: 2022-01-01"
+  },
+  "iCal subscription": {
+    "iCal subscription": "Assinatura iCal"
+  },
+  "light": {
+    "light": "claro"
+  },
+  "month": {
+    "month": "mês"
+  },
+  "months": {
+    "months": "meses"
+  },
+  "on %1": {
+    "on %1": "em %1"
+  },
+  "only if the feed requires sign-in": {
+    "only if the feed requires sign-in": "apenas se o feed exigir login"
+  },
+  "password": {
+    "password": "senha"
+  },
+  "read-only": {
+    "read-only": "somente leitura"
+  },
+  "sync off": {
+    "sync off": "sincronização desativada"
+  },
+  "synced as \"%1\"": {
+    "synced as \"%1\"": "sincronizado como \"%1\""
+  },
+  "times": {
+    "times": "vezes"
+  },
+  "to": {
+    "to": "até"
+  },
+  "until %1": {
+    "until %1": "até %1"
+  },
+  "username": {
+    "username": "nome de usuário"
+  },
+  "week": {
+    "week": "semana"
+  },
+  "weeks": {
+    "weeks": "semanas"
+  },
+  "year": {
+    "year": "ano"
+  },
+  "years": {
+    "years": "anos"
+  },
+  "· %1 invited · %2 accepted": {
+    "· %1 invited · %2 accepted": "· %1 convidado · %2 aceito"
+  }
+}
