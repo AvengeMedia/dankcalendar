@@ -2,9 +2,69 @@ package keyring
 
 import (
 	"bytes"
+	"errors"
 	"path/filepath"
 	"testing"
 )
+
+type errBackend struct{ err error }
+
+func (b errBackend) Get(string) ([]byte, error)     { return nil, b.err }
+func (errBackend) Set(string, []byte, string) error { return nil }
+func (errBackend) Delete(string) error              { return ErrNotFound }
+
+type valueBackend struct {
+	value   []byte
+	deleted []string
+}
+
+func (b *valueBackend) Get(string) ([]byte, error)     { return b.value, nil }
+func (*valueBackend) Set(string, []byte, string) error { return nil }
+func (b *valueBackend) Delete(key string) error {
+	b.deleted = append(b.deleted, key)
+	return nil
+}
+
+func TestFileFallbackSurvivesUpgrade(t *testing.T) {
+	t.Run("service miss falls back to retained file", func(t *testing.T) {
+		file := &valueBackend{value: []byte("tok")}
+		s := &Store{backend: errBackend{ErrNotFound}, fileFallback: file}
+		got, err := s.Get("acc", "google.token")
+		if err != nil {
+			t.Fatalf("Get() error = %v", err)
+		}
+		if !bytes.Equal(got, []byte("tok")) {
+			t.Fatalf("Get() = %q, want file value", got)
+		}
+	})
+
+	t.Run("locked service with file hit still serves", func(t *testing.T) {
+		file := &valueBackend{value: []byte("tok")}
+		s := &Store{backend: errBackend{ErrLocked}, fileFallback: file}
+		if _, err := s.Get("acc", "google.token"); err != nil {
+			t.Fatalf("Get() error = %v, want file value", err)
+		}
+	})
+
+	t.Run("locked service without file stays locked", func(t *testing.T) {
+		s := &Store{backend: errBackend{ErrLocked}, fileFallback: errBackend{ErrNotFound}}
+		_, err := s.Get("acc", "google.token")
+		if !errors.Is(err, ErrLocked) {
+			t.Fatalf("Get() error = %v, want ErrLocked", err)
+		}
+	})
+
+	t.Run("set converges away from the file copy", func(t *testing.T) {
+		file := &valueBackend{value: []byte("old")}
+		s := &Store{backend: errBackend{nil}, fileFallback: file}
+		if err := s.Set("acc", "google.token", []byte("new")); err != nil {
+			t.Fatalf("Set() error = %v", err)
+		}
+		if len(file.deleted) != 1 {
+			t.Fatalf("file deletes = %d, want 1", len(file.deleted))
+		}
+	})
+}
 
 func TestCollectionBaseName(t *testing.T) {
 	cases := []struct {

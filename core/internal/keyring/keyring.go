@@ -45,7 +45,9 @@ type backend interface {
 }
 
 type Store struct {
-	backend backend
+	mu           sync.Mutex
+	backend      backend
+	fileFallback backend
 }
 
 func Open() *Store {
@@ -64,7 +66,11 @@ func Open() *Store {
 	service, serviceErr := openSecretService()
 	if serviceErr == nil {
 		log.Debugf("keyring using secret collection %q", collectionBaseName(string(service.collection)))
-		return &Store{backend: service}
+		file, fileErr := openFileStore(localFilePassword)
+		if fileErr != nil {
+			return &Store{backend: service}
+		}
+		return &Store{backend: service, fileFallback: file}
 	}
 
 	file, fileErr := openFileStore(localFilePassword)
@@ -80,6 +86,8 @@ func Open() *Store {
 func (s *Store) Available() bool { return s.backend != nil }
 
 func (s *Store) Get(accountID, key string) ([]byte, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	if s.backend == nil {
 		return nil, ErrNotFound
 	}
@@ -87,29 +95,108 @@ func (s *Store) Get(accountID, key string) ([]byte, error) {
 	value, err := s.backend.Get(entryKey(accountID, key))
 	switch {
 	case errors.Is(err, ErrNotFound), errors.Is(err, ErrLocked):
-		return nil, err
+		if upgraded, uerr := s.maybeUpgradeLocked(); uerr == nil && upgraded {
+			value, err = s.backend.Get(entryKey(accountID, key))
+			if err != nil && !errors.Is(err, ErrNotFound) && !errors.Is(err, ErrLocked) {
+				if fb, ferr := s.fileGetLocked(entryKey(accountID, key)); ferr == nil {
+					return fb, nil
+				}
+				return nil, fmt.Errorf("keyring get: %w", err)
+			}
+			if err == nil {
+				return value, nil
+			}
+		}
+		// Credentials written to the file store before an upgrade stay
+		// readable; a locked service cannot prove absence.
+		if fb, ferr := s.fileGetLocked(entryKey(accountID, key)); ferr == nil {
+			return fb, nil
+		}
+		if errors.Is(err, ErrLocked) {
+			return nil, err
+		}
+		return nil, ErrNotFound
 	case err != nil:
+		if upgraded, uerr := s.maybeUpgradeLocked(); uerr == nil && upgraded {
+			if value, rerr := s.backend.Get(entryKey(accountID, key)); rerr == nil {
+				return value, nil
+			}
+		}
+		if fb, ferr := s.fileGetLocked(entryKey(accountID, key)); ferr == nil {
+			return fb, nil
+		}
 		return nil, fmt.Errorf("keyring get: %w", err)
 	}
 	return value, nil
 }
 
+// fileGetLocked reads the retained pre-upgrade file store, if any.
+// Callers must hold s.mu.
+func (s *Store) fileGetLocked(key string) ([]byte, error) {
+	if s.fileFallback == nil {
+		return nil, ErrNotFound
+	}
+	return s.fileFallback.Get(key)
+}
+
+// maybeUpgradeLocked swaps a file fallback for the Secret Service when it
+// appears after startup (e.g. the daemon launched before KeePassXC owned
+// org.freedesktop.secrets). The previous file backend is retained as a read
+// fallback so already-stored credentials are not stranded. True means the
+// backend changed and the caller should retry. Callers must hold s.mu.
+func (s *Store) maybeUpgradeLocked() (bool, error) {
+	if portal.InFlatpak() {
+		return false, nil
+	}
+	// Only file backends upgrade: test doubles and the Secret Service
+	// itself must never trigger a bus dial here (the latter keeps unit
+	// tests hermetic).
+	if _, ok := s.backend.(*fileStore); !ok {
+		return false, nil
+	}
+	service, err := openSecretService()
+	if err != nil {
+		return false, err
+	}
+	log.Debugf("keyring: secret service appeared, keeping local file fallback readable for %q",
+		collectionBaseName(string(service.collection)))
+	if s.backend != nil {
+		s.fileFallback = s.backend
+	}
+	s.backend = service
+	return true, nil
+}
+
 func (s *Store) Set(accountID, key string, value []byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	if s.backend == nil {
 		return ErrNotFound
 	}
 
+	// Write to the Secret Service once it appears so token refreshes do not
+	// split secrets between the file fallback and KeePassXC (issue #105).
+	_, _ = s.maybeUpgradeLocked()
 	if err := s.backend.Set(entryKey(accountID, key), value, entryLabel(accountID, key)); err != nil {
 		return fmt.Errorf("keyring set: %w", err)
+	}
+	// Converge: the service copy is now canonical, drop the pre-upgrade one.
+	if s.fileFallback != nil {
+		_ = s.fileFallback.Delete(entryKey(accountID, key))
 	}
 	return nil
 }
 
 func (s *Store) Delete(accountID, key string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	if s.backend == nil {
 		return nil
 	}
 
+	if s.fileFallback != nil {
+		_ = s.fileFallback.Delete(entryKey(accountID, key))
+	}
 	err := s.backend.Delete(entryKey(accountID, key))
 	switch {
 	case errors.Is(err, ErrNotFound):

@@ -136,33 +136,51 @@ const (
 
 // CheckCredentials reports whether the provider's credentials are stored,
 // missing, or behind a locked keyring; it does not probe the provider.
+// OAuth providers need both the app credentials and the user token: sync
+// fails on either, so a status that only probes the token reports a false
+// "ok" while sync errors with a missing app secret (issue #105).
 func CheckCredentials(ctx context.Context, secrets calendar.SecretStore, acc *ent.Account) CredentialState {
-	var key string
+	var keys []string
 	switch acc.Kind {
 	case account.KindGoogle:
-		key = google.SecretKeyToken
+		keys = []string{google.SecretKeyApp, google.SecretKeyToken}
 	case account.KindMicrosoft:
-		key = microsoft.SecretKeyToken
+		keys = []string{microsoft.SecretKeyApp, microsoft.SecretKeyToken}
 	case account.KindCaldav:
-		key = caldavprovider.SecretKeyPassword
+		keys = []string{caldavprovider.SecretKeyPassword}
 	case account.KindIcal:
 		user, _ := acc.Settings["username"].(string)
 		if user == "" {
 			return CredentialsPresent
 		}
-		key = icalprovider.SecretKeyPassword
+		keys = []string{icalprovider.SecretKeyPassword}
 	default:
 		return CredentialsPresent
 	}
 
-	_, err := secrets.Get(ctx, acc.ID, key)
-	switch {
-	case err == nil:
-		return CredentialsPresent
-	case errors.Is(err, keyring.ErrLocked):
-		return CredentialsLocked
+	return checkKeys(ctx, secrets, acc.ID, keys)
+}
+
+// checkKeys requires every key to be present. A locked keyring cannot prove
+// absence, so any locked key wins over a missing one: the caller should
+// retry after unlock instead of reporting the account as unauthenticated.
+func checkKeys(ctx context.Context, secrets calendar.SecretStore, accountID string, keys []string) CredentialState {
+	missing := false
+	for _, key := range keys {
+		_, err := secrets.Get(ctx, accountID, key)
+		switch {
+		case err == nil:
+			continue
+		case errors.Is(err, keyring.ErrLocked):
+			return CredentialsLocked
+		default:
+			missing = true
+		}
 	}
-	return CredentialsMissing
+	if missing {
+		return CredentialsMissing
+	}
+	return CredentialsPresent
 }
 
 func Ensure(ctx context.Context, r *repo.Repo, id string, kind account.Kind, displayName string, settings map[string]any) error {
