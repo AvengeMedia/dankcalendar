@@ -31,7 +31,7 @@ func LoadTokenSource[C any](ctx context.Context, secrets cal.SecretStore, accoun
 
 	tokenBytes, err := secrets.Get(ctx, account.ID, tokenKey)
 	if err != nil {
-		return nil, fmt.Errorf("account %q is not authorized; run `dcal account %s login %s`", account.ID, account.Kind, account.ID)
+		return nil, fmt.Errorf("account %q is not authorized; run `dcal account %s login %s`: %w", account.ID, account.Kind, account.ID, err)
 	}
 
 	tok, err := oauth.UnmarshalToken(tokenBytes)

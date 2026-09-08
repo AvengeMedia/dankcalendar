@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"slices"
+	"sync"
 	"time"
 
 	"github.com/godbus/dbus/v5"
@@ -15,6 +16,7 @@ import (
 type secretService struct {
 	conn       *dbus.Conn
 	collection dbus.ObjectPath
+	mu         sync.Mutex
 }
 
 // wireSecret is the Secret struct from the spec (oayays).
@@ -54,11 +56,96 @@ func resolveDefaultCollection(conn *dbus.Conn) dbus.ObjectPath {
 }
 
 func (s *secretService) Get(key string) ([]byte, error) {
-	return s.getFrom(s.collection, key)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	// The default alias can move while we run: the daemon may have started
+	// before KeePassXC owned org.freedesktop.secrets, or the user may have
+	// unlocked a different database. Re-resolving per lookup keeps a
+	// long-lived daemon working without a restart (issue #105).
+	if fresh := resolveDefaultCollection(s.conn); fresh != "/" && fresh != s.collection {
+		s.collection = fresh
+	}
+	return s.getAnywhereLocked(key)
+}
+
+// getAnywhereLocked searches the pinned collection first, then every other
+// exposed collection. A locked database answers SearchItems with nothing
+// (issue #99), so an empty hit on a locked collection must read as locked,
+// not missing — but only after all unlocked collections have been tried.
+// Callers must hold s.mu.
+func (s *secretService) getAnywhereLocked(key string) ([]byte, error) {
+	collections, err := s.listCollections()
+	if err != nil || len(collections) == 0 {
+		return s.getFrom(s.collection, key)
+	}
+
+	ordered := make([]dbus.ObjectPath, 0, len(collections))
+	ordered = append(ordered, s.collection)
+	for _, c := range collections {
+		if c != s.collection {
+			ordered = append(ordered, c)
+		}
+	}
+
+	lockedSeen := false
+	for _, collection := range ordered {
+		items, err := s.search(collection, key)
+		if err != nil {
+			return nil, err
+		}
+		if len(items) > 0 {
+			return s.readItem(collection, items[0], key)
+		}
+		if errors.Is(s.absentErr(collection), ErrLocked) {
+			lockedSeen = true
+		}
+	}
+	if lockedSeen {
+		return nil, ErrLocked
+	}
+	return nil, ErrNotFound
+}
+
+func (s *secretService) listCollections() ([]dbus.ObjectPath, error) {
+	value, err := s.service().GetProperty(serviceInterface + ".Collections")
+	if err != nil {
+		return nil, err
+	}
+	paths, ok := value.Value().([]dbus.ObjectPath)
+	if !ok {
+		return nil, fmt.Errorf("unexpected Collections property type %T", value.Value())
+	}
+	return paths, nil
+}
+
+// readItem unlocks and decrypts a found item. Callers must hold s.mu.
+func (s *secretService) readItem(collection dbus.ObjectPath, item dbus.ObjectPath, key string) ([]byte, error) {
+	_ = collection
+	if err := s.unlock(item); err != nil {
+		return nil, err
+	}
+
+	session, err := s.openSession()
+	if err != nil {
+		return nil, err
+	}
+	defer s.closeSession(session)
+
+	var secret wireSecret
+	if err := s.object(item).Call(itemInterface+".GetSecret", 0, session).Store(&secret); err != nil {
+		return nil, err
+	}
+	return decodeStoredSecret(key, secret.Value), nil
 }
 
 func (s *secretService) Set(key string, value []byte, label string) error {
-	collection, err := s.ensureCollection()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if fresh := resolveDefaultCollection(s.conn); fresh != "/" && fresh != s.collection {
+		s.collection = fresh
+	}
+	collection, err := s.ensureCollectionLocked()
 	if err != nil {
 		return err
 	}
@@ -89,7 +176,38 @@ func (s *secretService) Set(key string, value []byte, label string) error {
 }
 
 func (s *secretService) Delete(key string) error {
-	return s.deleteFrom(s.collection, key)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if fresh := resolveDefaultCollection(s.conn); fresh != "/" && fresh != s.collection {
+		s.collection = fresh
+	}
+	collections, err := s.listCollections()
+	if err != nil || len(collections) == 0 {
+		return s.deleteFrom(s.collection, key)
+	}
+	ordered := make([]dbus.ObjectPath, 0, len(collections))
+	ordered = append(ordered, s.collection)
+	for _, c := range collections {
+		if c != s.collection {
+			ordered = append(ordered, c)
+		}
+	}
+	found := false
+	for _, collection := range ordered {
+		err := s.deleteFrom(collection, key)
+		switch {
+		case err == nil:
+			found = true
+		case errors.Is(err, ErrNotFound):
+			continue
+		default:
+			return err
+		}
+	}
+	if !found {
+		return ErrNotFound
+	}
+	return nil
 }
 
 func (s *secretService) getFrom(collection dbus.ObjectPath, key string) ([]byte, error) {
@@ -180,7 +298,7 @@ func (s *secretService) hasCollection(collection dbus.ObjectPath) (bool, error) 
 	return slices.Contains(paths, collection), nil
 }
 
-func (s *secretService) ensureCollection() (dbus.ObjectPath, error) {
+func (s *secretService) ensureCollectionLocked() (dbus.ObjectPath, error) {
 	ok, err := s.hasCollection(s.collection)
 	if err != nil {
 		return "", err

@@ -55,8 +55,9 @@ func TestCheckCredentials(t *testing.T) {
 		assert.Equal(t, accounts.CredentialsPresent, accounts.CheckCredentials(ctx, secrets, acc))
 	})
 
-	t.Run("google with stored token", func(t *testing.T) {
+	t.Run("google with stored credentials", func(t *testing.T) {
 		secrets := mocks.NewMockSecretStore(t)
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyApp).Return([]byte("app"), nil)
 		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return([]byte("tok"), nil)
 		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
 		assert.Equal(t, accounts.CredentialsPresent, accounts.CheckCredentials(ctx, secrets, acc))
@@ -64,13 +65,30 @@ func TestCheckCredentials(t *testing.T) {
 
 	t.Run("google without token", func(t *testing.T) {
 		secrets := mocks.NewMockSecretStore(t)
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyApp).Return([]byte("app"), nil)
 		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return(nil, errors.New("not found"))
+		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
+		assert.Equal(t, accounts.CredentialsMissing, accounts.CheckCredentials(ctx, secrets, acc))
+	})
+
+	t.Run("google without app credentials is missing even with a token", func(t *testing.T) {
+		secrets := mocks.NewMockSecretStore(t)
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyApp).Return(nil, errors.New("not found"))
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return([]byte("tok"), nil)
 		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
 		assert.Equal(t, accounts.CredentialsMissing, accounts.CheckCredentials(ctx, secrets, acc))
 	})
 
 	t.Run("google behind a locked keyring", func(t *testing.T) {
 		secrets := mocks.NewMockSecretStore(t)
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyApp).Return(nil, fmt.Errorf("keyring get: %w", keyring.ErrLocked))
+		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
+		assert.Equal(t, accounts.CredentialsLocked, accounts.CheckCredentials(ctx, secrets, acc))
+	})
+
+	t.Run("locked token wins over missing app", func(t *testing.T) {
+		secrets := mocks.NewMockSecretStore(t)
+		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyApp).Return(nil, errors.New("not found"))
 		secrets.EXPECT().Get(mock.Anything, "g", google.SecretKeyToken).Return(nil, fmt.Errorf("keyring get: %w", keyring.ErrLocked))
 		acc := &ent.Account{ID: "g", Kind: account.KindGoogle}
 		assert.Equal(t, accounts.CredentialsLocked, accounts.CheckCredentials(ctx, secrets, acc))

@@ -3,9 +3,11 @@ package accounts
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
 	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
@@ -16,6 +18,9 @@ import (
 func GoogleAppCreds(ctx context.Context, secrets calendar.SecretStore, accountID string) (oauth.GoogleAppCredentials, error) {
 	appBytes, err := secrets.Get(ctx, accountID, google.SecretKeyApp)
 	if err != nil {
+		if errors.Is(err, keyring.ErrLocked) {
+			return oauth.GoogleAppCredentials{}, fmt.Errorf("keyring is locked for %q: unlock it and retry: %w", accountID, err)
+		}
 		return oauth.GoogleAppCredentials{}, fmt.Errorf("no stored google credentials for %q; remove the account and add it again", accountID)
 	}
 	var creds oauth.GoogleAppCredentials
@@ -32,6 +37,9 @@ func GoogleAppCreds(ctx context.Context, secrets calendar.SecretStore, accountID
 func MicrosoftAppCreds(ctx context.Context, secrets calendar.SecretStore, accountID string) (oauth.MicrosoftAppCredentials, error) {
 	appBytes, err := secrets.Get(ctx, accountID, microsoft.SecretKeyApp)
 	if err != nil {
+		if errors.Is(err, keyring.ErrLocked) {
+			return oauth.MicrosoftAppCredentials{}, fmt.Errorf("keyring is locked for %q: unlock it and retry: %w", accountID, err)
+		}
 		return oauth.MicrosoftAppCredentials{}, fmt.Errorf("no stored microsoft credentials for %q; remove the account and add it again", accountID)
 	}
 	var creds oauth.MicrosoftAppCredentials

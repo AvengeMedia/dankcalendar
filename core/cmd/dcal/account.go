@@ -90,14 +90,14 @@ var accountListCmd = &cobra.Command{
 }
 
 func credentialStatus(needsReauth bool, state accounts.CredentialState) string {
-	if needsReauth {
-		return "needs reauth"
-	}
 	switch state {
 	case accounts.CredentialsLocked:
 		return "keyring locked"
 	case accounts.CredentialsMissing:
 		return "needs auth"
+	}
+	if needsReauth {
+		return "needs reauth"
 	}
 	return "ok"
 }

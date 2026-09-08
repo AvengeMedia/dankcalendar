@@ -1290,10 +1290,10 @@ Item {
                                         readonly property bool authorized: parent.parent.parent.modelData.authorized !== false
                                         readonly property bool keyringLocked: parent.parent.parent.modelData.keyringLocked === true
                                         text: {
-                                            if (needsReauth)
-                                                return I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth");
                                             if (keyringLocked)
                                                 return I18n.tr("Keyring locked — unlock it to sync", "account status when the system keyring holding the credentials is locked");
+                                            if (needsReauth)
+                                                return I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth");
                                             if (!authorized)
                                                 return I18n.tr("Not authorized — remove this account and add it again", "account status in account list");
                                             return I18n.tr("Connected", "account status in account list");
