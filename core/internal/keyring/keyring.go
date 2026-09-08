@@ -83,7 +83,11 @@ func Open() *Store {
 	return &Store{backend: file}
 }
 
-func (s *Store) Available() bool { return s.backend != nil }
+func (s *Store) Available() bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.backend != nil
+}
 
 func (s *Store) Get(accountID, key string) ([]byte, error) {
 	s.mu.Lock()
