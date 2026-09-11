@@ -23,6 +23,7 @@ const MaxBytes = 256 << 10
 var ErrNoEvents = errors.New("no importable events found")
 
 type Document struct {
+	Source string           `json:"source,omitempty"`
 	Method string           `json:"method,omitempty"`
 	Events []calendar.Event `json:"events"`
 }
@@ -47,6 +48,16 @@ func Parse(data []byte) (*Document, error) {
 		if doc.Method == "" {
 			doc.Method = methodOf(cal)
 		}
+		source, err := sourceOf(cal)
+		if err != nil {
+			return nil, err
+		}
+		if source != "" {
+			if doc.Source != "" && doc.Source != source {
+				return nil, fmt.Errorf("file contains multiple subscription sources")
+			}
+			doc.Source = source
+		}
 		tz := icalconv.NewTZResolver(cal, "")
 		for _, comp := range cal.Events() {
 			ev, ok := icalconv.EventFromComponent("", comp.Component, tz)
@@ -57,7 +68,7 @@ func Parse(data []byte) (*Document, error) {
 		}
 	}
 
-	if len(doc.Events) == 0 {
+	if len(doc.Events) == 0 && doc.Source == "" {
 		return nil, ErrNoEvents
 	}
 	return doc, nil
