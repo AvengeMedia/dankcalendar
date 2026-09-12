@@ -3,6 +3,7 @@ package icsimport
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/json"
 	"fmt"
 	"io"
 	"mime/quotedprintable"
@@ -76,13 +77,11 @@ func normalizeVCalendar(cal *ical.Calendar) error {
 			ev.Props[name] = props
 		}
 		if ev.Props.Get(ical.PropUID) == nil {
-			var buf bytes.Buffer
-			wrapper := ical.NewCalendar()
-			wrapper.Children = append(wrapper.Children, ev.Component)
-			if err := ical.NewEncoder(&buf).Encode(wrapper); err != nil {
+			data, err := json.Marshal(ev.Component)
+			if err != nil {
 				return err
 			}
-			ev.Props.SetText(ical.PropUID, fmt.Sprintf("%x@vcalendar.dankcalendar", sha256.Sum256(buf.Bytes())))
+			ev.Props.SetText(ical.PropUID, fmt.Sprintf("%x@vcalendar.dankcalendar", sha256.Sum256(data)))
 		}
 		for _, name := range []string{ical.PropDateTimeStart, ical.PropDateTimeEnd, ical.PropRecurrenceID, ical.PropRecurrenceDates, ical.PropExceptionDates} {
 			for i := range ev.Props[name] {

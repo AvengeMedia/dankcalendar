@@ -49,9 +49,9 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 		deps.Bus.Publish("ui", payload)
 		Respond(w, req.ID, map[string]any{"ok": true})
 	case "ui.open":
-		url := strings.TrimSpace(ParamString(req.Params, "url"))
-		if url == "" {
-			RespondError(w, req.ID, "ui.open requires a url")
+		url, err := icsimport.SubscriptionURL(ParamString(req.Params, "url"))
+		if err != nil {
+			RespondError(w, req.ID, err.Error())
 			return
 		}
 		publishUI(deps, map[string]any{"action": "subscribe", "url": url})
@@ -62,8 +62,14 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 			RespondError(w, req.ID, "ui.openIcs requires ics")
 			return
 		}
-		if _, err := icsimport.Parse([]byte(ics)); err != nil {
+		doc, err := icsimport.Parse([]byte(ics))
+		if err != nil {
 			RespondError(w, req.ID, err.Error())
+			return
+		}
+		if doc.Source != "" {
+			publishUI(deps, map[string]any{"action": "subscribe", "url": doc.Source})
+			Respond(w, req.ID, map[string]any{"ok": true})
 			return
 		}
 		payload := map[string]any{"action": "importIcs", "ics": ics}

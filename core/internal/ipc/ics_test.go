@@ -206,3 +206,13 @@ func factoryFor(t *testing.T, kind calendar.AccountKind, provider calendar.Provi
 	factory.EXPECT().Build(mock.Anything, mock.Anything, mock.Anything).Return(provider, nil)
 	return factory
 }
+
+func TestUIOpenSubscriptionFile(t *testing.T) {
+	deps := Deps{Bus: NewEventBus(), Pending: &PendingOpen{}}
+	data := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nSOURCE:https://example.com/feed\r\nEND:VCALENDAR\r\n"
+	resultOf(t, routeAndRead(t, Request{ID: 1, Method: "ui.openIcs", Params: map[string]any{"ics": data}}, deps))
+	resultOf(t, routeAndRead(t, Request{ID: 2, Method: "ui.openIcs", Params: map[string]any{"ics": inviteICS}}, deps))
+	assert.Equal(t, map[string]any{"action": "subscribe", "url": "https://example.com/feed"}, deps.Pending.Take())
+	assert.Equal(t, "importIcs", deps.Pending.Take()["action"])
+	assert.Nil(t, deps.Pending.Take())
+}
