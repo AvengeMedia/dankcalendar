@@ -4,7 +4,7 @@ go 1.26.4
 
 require (
 	entgo.io/ent v0.14.6
-	github.com/AvengeMedia/dankgo v0.0.0-20260827031318-2e04b1617d75
+	github.com/AvengeMedia/dankgo v1.6.1
 	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.2
 	github.com/adrg/xdg v0.5.3
 	github.com/caarlos0/env/v11 v11.4.1
