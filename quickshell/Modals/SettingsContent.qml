@@ -56,6 +56,10 @@ Item {
             return I18n.tr("Calendars couldn't be loaded; tasks are still syncing.", "account notice when calendars are unavailable but tasks sync");
         case "icloud_reminders_upgraded":
             return I18n.tr('Apple no longer provides upgraded iCloud reminders to third-party apps, so these lists only contain placeholder items. <a href="https://support.apple.com/HT210220" style="text-decoration:none; color:%1;">Learn more</a>', "account notice when apple serves placeholder items instead of upgraded icloud reminders").arg(Theme.primary);
+        case "items_skipped":
+            return I18n.tr("The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.", "account notice when a caldav server refuses individual calendar objects");
+        case "calendar_sync_failed":
+            return I18n.tr("Some calendars couldn't be synced; their events may be missing or out of date.", "account notice when at least one calendar failed to sync");
         }
         return "";
     }

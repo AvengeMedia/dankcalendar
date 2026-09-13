@@ -347,3 +347,91 @@ func TestNoticeUpgradedReminders(t *testing.T) {
 	p.noticeUpgradedReminders(placeholder)
 	assert.Empty(t, p.Notices())
 }
+
+const objectListingXML = `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:">
+  <d:response><d:href>/dav/calendars/user/cal/</d:href><d:propstat><d:prop/><d:status>HTTP/1.1 200 OK</d:status></d:propstat></d:response>
+  <d:response><d:href>/dav/calendars/user/cal/good.ics</d:href><d:propstat><d:prop><d:getetag>"1"</d:getetag></d:prop><d:status>HTTP/1.1 200 OK</d:status></d:propstat></d:response>
+  <d:response><d:href>/dav/calendars/user/cal/-963706995%40logmeincom.ics</d:href><d:propstat><d:prop><d:getetag>"2"</d:getetag></d:prop><d:status>HTTP/1.1 200 OK</d:status></d:propstat></d:response>
+</d:multistatus>`
+
+const goodObjectResponseXML = `<d:response>
+    <d:href>/dav/calendars/user/cal/good.ics</d:href>
+    <d:propstat>
+      <d:prop>
+        <d:getetag>"1"</d:getetag>
+        <c:calendar-data>BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//test//EN
+BEGIN:VEVENT
+UID:good
+DTSTAMP:20260101T000000Z
+DTSTART:20260501T100000Z
+DTEND:20260501T110000Z
+SUMMARY:Good
+END:VEVENT
+END:VCALENDAR
+</c:calendar-data>
+      </d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>`
+
+const staleObjectResponseXML = `<d:response>
+    <d:href>/dav/calendars/user/cal/-963706995%40logmeincom.ics</d:href>
+    <d:status>HTTP/1.1 404 Not Found</d:status>
+  </d:response>`
+
+func multiStatusXML(responses ...string) string {
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">` + strings.Join(responses, "\n") + `</d:multistatus>`
+}
+
+// iCloud-style server (#108): calendar-query is refused, the multiget answers
+// one stale invite with a per-response 404 next to a good object.
+func newMultiGetServer(t *testing.T, multiGetBody string) *httptest.Server {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, _ := io.ReadAll(r.Body)
+		path := strings.TrimSuffix(r.URL.Path, "/")
+		switch {
+		case r.Method == "PROPFIND" && path == "":
+			writeMultiStatus(w, principalXML)
+		case r.Method == "PROPFIND" && path == "/dav/principals/user":
+			writeMultiStatus(w, homeSetXML)
+		case r.Method == "PROPFIND" && path == "/dav/calendars/user/cal":
+			writeMultiStatus(w, objectListingXML)
+		case r.Method == "REPORT" && strings.Contains(string(body), "calendar-query"):
+			w.WriteHeader(http.StatusForbidden)
+		case r.Method == "REPORT" && strings.Contains(string(body), "calendar-multiget"):
+			writeMultiStatus(w, multiGetBody)
+		default:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+		}
+	}))
+	t.Cleanup(server.Close)
+	return server
+}
+
+func TestSyncKeepsObjectsNextToRefusedOnes(t *testing.T) {
+	server := newMultiGetServer(t, multiStatusXML(goodObjectResponseXML, staleObjectResponseXML))
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL, "user")
+	require.NoError(t, err)
+
+	result, err := p.Sync(context.Background(), cal.Calendar{RemoteID: "/dav/calendars/user/cal/"}, cal.SyncCursor{})
+	require.NoError(t, err)
+	require.Len(t, result.Changes, 1)
+	assert.Equal(t, "good", result.Changes[0].Event.UID)
+	assert.Equal(t, []string{cal.NoticeItemsSkipped}, p.Notices())
+}
+
+func TestSyncFailsWhenEveryObjectIsRefused(t *testing.T) {
+	server := newMultiGetServer(t, multiStatusXML(staleObjectResponseXML))
+
+	p, err := New(context.Background(), cal.Account{ID: "acc"}, newSecrets(t), server.URL, "user")
+	require.NoError(t, err)
+
+	_, err = p.Sync(context.Background(), cal.Calendar{RemoteID: "/dav/calendars/user/cal/"}, cal.SyncCursor{})
+	require.ErrorContains(t, err, "404")
+	assert.Empty(t, p.Notices())
+}

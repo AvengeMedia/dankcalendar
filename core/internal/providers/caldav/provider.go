@@ -463,12 +463,26 @@ func (p *Provider) multiGetAll(ctx context.Context, calendarPath string) ([]cald
 			Paths:       chunk,
 			CompRequest: req,
 		})
-		if err != nil {
+		switch {
+		case err == nil:
+		case len(objs) == 0:
 			return nil, fmt.Errorf("multiget caldav objects: %w", err)
+		default:
+			p.noticeItemsSkipped(calendarPath, err)
 		}
 		out = append(out, objs...)
 	}
 	return out, nil
+}
+
+// go-webdav returns the objects it could decode alongside a joined error for
+// responses the server refused (iCloud answers 404 for stale invites, #108).
+func (p *Provider) noticeItemsSkipped(calendarPath string, err error) {
+	log.Warnf("caldav: skipped unreadable objects in %q: %v", calendarPath, err)
+	if slices.Contains(p.notices, cal.NoticeItemsSkipped) {
+		return
+	}
+	p.notices = append(p.notices, cal.NoticeItemsSkipped)
 }
 
 // Raw PROPFIND asking only for hrefs: go-webdav's higher-level helpers error

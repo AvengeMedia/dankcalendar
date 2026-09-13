@@ -45,6 +45,8 @@ const (
 	// Apple stopped serving upgraded Reminders over CalDAV (iOS 13+); iCloud
 	// answers with placeholder items pointing at support.apple.com/HT210220.
 	NoticeICloudRemindersUpgraded = "icloud_reminders_upgraded"
+	NoticeItemsSkipped            = "items_skipped"
+	NoticeCalendarSyncFailed      = "calendar_sync_failed"
 )
 
 // NoticeReporter is implemented by providers that may partially degrade during a

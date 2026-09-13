@@ -327,6 +327,7 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		return 0, fmt.Errorf("list calendars: %w", err)
 	}
 	var retryAfter time.Duration
+	calendarFailed := false
 	for _, rc := range remoteCals {
 		stored, err := e.repo.UpsertCalendar(ctx, repo.UpsertCalendarInput{
 			AccountID:           acc.ID,
@@ -353,6 +354,7 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		ra, err := e.syncCalendar(ctx, provider, rc, stored.SyncToken)
 		if err != nil {
 			log.Warnf("sync calendar %q: %v", rc.RemoteID, err)
+			calendarFailed = true
 			continue
 		}
 		if ra > retryAfter {
@@ -360,19 +362,22 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		}
 	}
 
-	e.recordSyncNotice(ctx, acc, provider)
+	e.recordSyncNotice(ctx, acc, provider, calendarFailed)
 	e.publish("sync", map[string]any{"type": "completed", "accountId": acc.ID})
 	return retryAfter, nil
 }
 
 // recordSyncNotice persists the provider's soft, non-fatal notices (e.g. a
 // disabled Tasks API) for the GUI. Writes only on change.
-func (e *Engine) recordSyncNotice(ctx context.Context, acc *ent.Account, provider calendar.Provider) {
-	reporter, ok := provider.(calendar.NoticeReporter)
-	if !ok {
-		return
+func (e *Engine) recordSyncNotice(ctx context.Context, acc *ent.Account, provider calendar.Provider, calendarFailed bool) {
+	var codes []string
+	if reporter, ok := provider.(calendar.NoticeReporter); ok {
+		codes = append(codes, reporter.Notices()...)
 	}
-	notice := strings.Join(reporter.Notices(), ",")
+	if calendarFailed {
+		codes = append(codes, calendar.NoticeCalendarSyncFailed)
+	}
+	notice := strings.Join(codes, ",")
 	if notice == acc.SyncNotice {
 		return
 	}

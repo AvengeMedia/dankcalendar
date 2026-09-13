@@ -662,3 +662,24 @@ func (s *EngineSuite) TestSyncAllContinuesPastFailingAccount() {
 
 	s.Equal([]string{"ev-1"}, s.listUIDs())
 }
+
+func (s *EngineSuite) TestCalendarFailureRecordsNoticeUntilRecovered() {
+	s.seedCalendar("cal-1")
+	provider := s.registerProvider()
+	provider.EXPECT().ListCalendars(mock.Anything).Return([]calendar.Calendar{
+		{RemoteID: "cal-1", Name: "Main"},
+	}, nil)
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(nil, errors.New("multiget: 404")).Once()
+	provider.EXPECT().Sync(mock.Anything, mock.Anything, mock.Anything).Return(&calendar.SyncResult{FullSnapshot: true}, nil).Once()
+	provider.EXPECT().Close().Return(nil)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+	stored, err := s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
+	s.Equal(calendar.NoticeCalendarSyncFailed, stored.SyncNotice)
+
+	s.Require().NoError(s.engine.SyncAccount(s.ctx, s.account))
+	stored, err = s.repo.GetAccount(s.ctx, s.account.ID)
+	s.Require().NoError(err)
+	s.Empty(stored.SyncNotice)
+}
