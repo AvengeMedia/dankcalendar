@@ -216,3 +216,17 @@ func TestUIOpenSubscriptionFile(t *testing.T) {
 	assert.Equal(t, "importIcs", deps.Pending.Take()["action"])
 	assert.Nil(t, deps.Pending.Take())
 }
+
+func TestPreviewScopesDuplicatesToDestination(t *testing.T) {
+	f := newIcsFixture(t, account.KindLocal, false)
+	ctx := context.Background()
+	_, err := f.repo.UpsertCalendar(ctx, repo.UpsertCalendarInput{ID: "other", AccountID: "acc", RemoteID: "other", Name: "Personal"})
+	require.NoError(t, err)
+	_, err = f.repo.UpsertEvent(ctx, repo.UpsertEventInput{CalendarID: "cal", UID: "inv-1", Summary: "Already here", Start: time.Date(2026, 9, 10, 12, 0, 0, 0, time.UTC), End: time.Date(2026, 9, 10, 13, 0, 0, 0, time.UTC)})
+	require.NoError(t, err)
+	result := resultOf(t, routeAndRead(t, Request{ID: 1, Method: "events.parseIcs", Params: map[string]any{"ics": inviteICS, "calendarId": "other"}}, f.deps))
+	events := resultEvents(t, result)
+	assert.Nil(t, events[0]["existing"])
+	assert.NotNil(t, events[0]["conflicts"])
+	assert.NotNil(t, events[0]["previewEnd"])
+}
