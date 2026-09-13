@@ -16,6 +16,17 @@ FloatingWindow {
     property bool importing: false
     property string errorText: ""
     property int calendarIndex: 0
+    property int previewGeneration: 0
+    property bool previewReady: false
+    readonly property bool schedulingOnly: method === "CANCEL" || method === "REPLY"
+    readonly property var calendarLabels: writable.map((c, i) => {
+        const account = DankCalService.accountById(c.accountId);
+        return c.name + " · " + (account ? account.displayName : c.id) + " (" + (i + 1) + ")";
+    })
+    onTargetCalendarChanged: {
+        if (visible && !importing)
+            previewTimer.restart();
+    }
 
     readonly property var writable: DankCalService.writableCalendars()
     readonly property bool noWritableCalendars: writable.length === 0
@@ -35,22 +46,37 @@ FloatingWindow {
         loading = true;
         calendarIndex = _defaultCalendarIndex();
         visible = true;
-        DankCalService.parseIcs(ics, response => {
+        refreshPreview();
+    }
+
+    function refreshPreview() {
+        const generation = ++previewGeneration;
+        loading = true;
+        previewReady = false;
+        DankCalService.parseIcs(ics, targetCalendar ? targetCalendar.id : "", response => {
+            if (generation !== previewGeneration || !visible)
+                return;
             loading = false;
             if (response.error) {
                 errorText = response.error;
                 return;
             }
             const result = response.result || {};
+            previewReady = true;
             method = result.method || "";
             items = (result.events || []).map(entry => ({
                         "event": DankCalService.eventFromResult(entry.event),
+                        "conflicts": (entry.conflicts || []).map(DankCalService.eventFromResult),
+                        "previewEnd": entry.previewEnd,
                         "existing": entry.existing ? DankCalService.eventFromResult(entry.existing) : null
                     }));
         });
     }
 
     function hide() {
+        if (importing)
+            return;
+        ++previewGeneration;
         visible = false;
     }
 
@@ -68,7 +94,7 @@ FloatingWindow {
     }
 
     function importPending() {
-        if (importing || !targetCalendar || pendingItems.length === 0)
+        if (importing || loading || !previewReady || schedulingOnly || !targetCalendar || pendingItems.length === 0)
             return;
         importing = true;
         errorText = "";
@@ -76,6 +102,7 @@ FloatingWindow {
             importing = false;
             if (response.error) {
                 errorText = response.error;
+                refreshPreview();
                 return;
             }
             const imported = ((response.result || {}).events || []).filter(entry => !entry.existing);
@@ -115,7 +142,7 @@ FloatingWindow {
         const day = SettingsData.formatDate(ev.start, "dddd, MMM d, yyyy");
         if (ev.allDay)
             return I18n.tr("%1 · All day", "event details time label for all-day events").arg(day);
-        return day + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end);
+        return day + " · " + SettingsData.formatTime(ev.start) + " – " + (SettingsData.formatDate(ev.start, "yyyy-MM-dd") === SettingsData.formatDate(ev.end, "yyyy-MM-dd") ? SettingsData.formatTime(ev.end) : SettingsData.formatDate(ev.end, "MMM d, yyyy") + " " + SettingsData.formatTime(ev.end));
     }
 
     function organizerLabel(ev) {
@@ -141,6 +168,20 @@ FloatingWindow {
         if (items.length > 0 && pendingItems.length === 0)
             return I18n.tr("Everything in this file is already on your calendar.", "import dialog status when no event is new");
         return "";
+    }
+
+    Timer {
+        id: previewTimer
+        interval: 100
+        onTriggered: importModal.refreshPreview()
+    }
+
+    Connections {
+        target: DankCalService
+        function onEventsUpdated() {
+            if (importModal.visible && !importModal.importing)
+                previewTimer.restart();
+        }
     }
 
     readonly property real chromeHeight: header.height + footer.height + Theme.spacingL * 2
@@ -200,6 +241,43 @@ FloatingWindow {
                         color: Theme.surfaceVariantText
                         wrapMode: Text.WordWrap
                         visible: text !== ""
+                    }
+
+                    StyledText {
+                        text: I18n.tr("Add to calendar", "import destination label")
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.surfaceVariantText
+                    }
+                DankDropdown {
+                    width: parent.width
+                    visible: !importModal.noWritableCalendars
+                    enabled: !importModal.importing
+                    options: importModal.calendarLabels
+                    currentValue: importModal.calendarLabels[importModal.calendarIndex] || ""
+                    onValueChanged: value => {
+                        const index = importModal.calendarLabels.indexOf(value);
+                        if (index >= 0) {
+                            importModal.previewReady = false;
+                            importModal.calendarIndex = index;
+                        }
+                    }
+                }
+
+                    StyledText {
+                        width: parent.width
+                        text: importModal.errorText
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        color: Theme.error
+                        visible: text !== ""
+                    }
+
+                    StyledText {
+                        width: parent.width
+                        text: I18n.tr("Open the existing meeting to handle this reply or cancellation.", "scheduling messages cannot be imported as new events")
+                        wrapMode: Text.WordWrap
+                        visible: importModal.schedulingOnly
+                        color: Theme.surfaceVariantText
                     }
 
                     Repeater {
@@ -274,6 +352,46 @@ FloatingWindow {
                                     visible: text !== ""
                                 }
 
+                                StyledText {
+                                    width: parent.width
+                                    text: row.modelData.conflicts.length > 0
+                                        ? I18n.tr("%1 overlapping events", "import conflict count").arg(row.modelData.conflicts.length)
+                                        : I18n.tr("No overlapping busy events", "import preview with no time conflicts")
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: row.modelData.conflicts.length > 0 ? Theme.warning : Theme.surfaceVariantText
+                                    visible: !importModal.loading && !row.existing
+                                }
+
+                                Repeater {
+                                    model: row.modelData.conflicts.slice(0, 20)
+                                    StyledText {
+                                        required property var modelData
+                                        width: parent.width
+                                        text: modelData.title + " · " + modelData.calendar + "\n" + importModal.timeLabel(modelData)
+                                        textFormat: Text.PlainText
+                                        wrapMode: Text.WordWrap
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceVariantText
+                                    }
+                                }
+
+                                StyledText {
+                                    width: parent.width
+                                    text: I18n.tr("Showing the first 20 overlaps.", "import conflict list limit")
+                                    visible: row.modelData.conflicts.length > 20
+                                    color: Theme.surfaceVariantText
+                                    font.pixelSize: Theme.fontSizeSmall
+                                }
+
+                                StyledText {
+                                    width: parent.width
+                                    text: I18n.tr("Recurring event · conflicts checked through %1", "bounded recurring import preview").arg(SettingsData.formatDate(new Date(row.modelData.previewEnd), "MMM d, yyyy"))
+                                    visible: !!row.event.recurrence && row.event.recurrence.length > 0
+                                    wrapMode: Text.WordWrap
+                                    color: Theme.surfaceVariantText
+                                    font.pixelSize: Theme.fontSizeSmall
+                                }
+
                                 Row {
                                     width: parent.width
                                     spacing: Theme.spacingM
@@ -313,19 +431,6 @@ FloatingWindow {
             width: parent.width
             height: Theme.buttonHeightS + Theme.spacingM * 2
 
-            StyledText {
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.spacingL
-                anchors.right: actions.left
-                anchors.rightMargin: Theme.spacingM
-                anchors.verticalCenter: parent.verticalCenter
-                text: importModal.errorText
-                color: Theme.error
-                font.pixelSize: Theme.fontSizeSmall
-                elide: Text.ElideRight
-                visible: importModal.errorText !== ""
-            }
-
             Row {
                 id: actions
                 anchors.right: parent.right
@@ -333,22 +438,6 @@ FloatingWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.spacingS
 
-                DankDropdown {
-                    width: Theme.fieldDefaultWidth
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: !importModal.noWritableCalendars
-                    enabled: !importModal.importing
-                    options: importModal.writable.map(c => c.name)
-                    currentValue: importModal.targetCalendar ? importModal.targetCalendar.name : ""
-                    onValueChanged: value => {
-                        for (let i = 0; i < importModal.writable.length; i++) {
-                            if (importModal.writable[i].name === value) {
-                                importModal.calendarIndex = i;
-                                return;
-                            }
-                        }
-                    }
-                }
 
                 DankButton {
                     text: I18n.tr("Cancel", "import dialog button to close without importing")
@@ -376,7 +465,7 @@ FloatingWindow {
                     busy: importModal.importing
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
-                    enabled: !importModal.importing && !importModal.loading && importModal.pendingItems.length > 0
+                    enabled: !importModal.importing && !importModal.loading && importModal.previewReady && !importModal.schedulingOnly && importModal.pendingItems.length > 0
                     onClicked: importModal.importPending()
                 }
             }

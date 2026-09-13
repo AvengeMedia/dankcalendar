@@ -1215,8 +1215,9 @@ Singleton {
         });
     }
 
-    function parseIcs(ics, callback) {
+    function parseIcs(ics, calendarId, callback) {
         sendRequest("events.parseIcs", {
+            "calendarId": calendarId,
             "ics": ics
         }, callback);
     }
