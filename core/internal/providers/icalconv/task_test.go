@@ -125,3 +125,33 @@ func TestBuildTaskWritesTZID(t *testing.T) {
 	assert.Equal(t, "Europe/Berlin", got.DueTimeZone)
 	assert.Equal(t, "Europe/Berlin", got.StartTimeZone)
 }
+
+func TestRoundTripTaskAlarmAnchor(t *testing.T) {
+	src := &cal.Task{
+		Summary: "Renew passport",
+		Due:     time.Date(2026, 9, 20, 17, 0, 0, 0, time.UTC),
+		Reminders: []cal.Reminder{
+			{Method: "popup", Minutes: 15, Related: cal.ReminderRelatedEnd},
+			{Method: "popup", Minutes: 60},
+		},
+	}
+	got := roundTripTask(t, src, "todo-alarm")
+	assert.Equal(t, src.Reminders, got.Reminders)
+}
+
+func TestTaskFromComponentReadsAlarmRelated(t *testing.T) {
+	raw := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//test//EN\r\nBEGIN:VTODO\r\nUID:todo-nc\r\nSUMMARY:Pay rent\r\nDUE:20260920T170000Z\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Pay rent\r\nTRIGGER;RELATED=END:-PT15M\r\nEND:VALARM\r\nEND:VTODO\r\nEND:VCALENDAR\r\n"
+	doc, err := ical.NewDecoder(strings.NewReader(raw)).Decode()
+	require.NoError(t, err)
+	var todo *ical.Component
+	for _, child := range doc.Children {
+		if child.Name == ical.CompToDo {
+			todo = child
+		}
+	}
+	require.NotNil(t, todo)
+
+	got, ok := TaskFromComponent("cal-1", todo, NewTZResolver(doc, ""))
+	require.True(t, ok)
+	assert.Equal(t, []cal.Reminder{{Method: "popup", Minutes: 15, Related: cal.ReminderRelatedEnd}}, got.Reminders)
+}

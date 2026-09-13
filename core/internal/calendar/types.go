@@ -79,10 +79,17 @@ type Attendee struct {
 	Organizer   bool   `json:"organizer,omitempty"`
 }
 
+// ReminderRelatedEnd marks an alarm anchored to the end (a task's due time)
+// instead of the start, as TRIGGER;RELATED=END does in RFC 5545 3.8.6.3.
+const ReminderRelatedEnd = "end"
+
 type Reminder struct {
 	Method  string `json:"method"`
 	Minutes int    `json:"minutes"`
+	Related string `json:"related,omitempty"`
 }
+
+func (r Reminder) RelatedToEnd() bool { return r.Related == ReminderRelatedEnd }
 
 type Recurrence struct {
 	RRule  []string `json:"rrule,omitempty"`

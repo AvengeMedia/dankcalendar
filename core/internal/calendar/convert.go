@@ -70,7 +70,11 @@ func RemindersToMaps(reminders []Reminder) []map[string]any {
 	}
 	out := make([]map[string]any, 0, len(reminders))
 	for _, r := range reminders {
-		out = append(out, map[string]any{"method": r.Method, "minutes": r.Minutes})
+		m := map[string]any{"method": r.Method, "minutes": r.Minutes}
+		if r.Related != "" {
+			m["related"] = r.Related
+		}
+		out = append(out, m)
 	}
 	return out
 }
@@ -95,7 +99,8 @@ func RemindersFromMaps(maps []map[string]any) []Reminder {
 		default:
 			continue
 		}
-		out = append(out, Reminder{Method: method, Minutes: minutes})
+		related, _ := m["related"].(string)
+		out = append(out, Reminder{Method: method, Minutes: minutes, Related: related})
 	}
 	return out
 }

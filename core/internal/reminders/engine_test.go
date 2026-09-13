@@ -576,3 +576,50 @@ func TestTriggersFor(t *testing.T) {
 		})
 	}
 }
+
+func (s *EngineSuite) TestTaskAlarmFiresOnlyAtItsAnchor() {
+	s.addTask("task1", func(in *repo.UpsertTaskInput) {
+		in.Start = t0.Add(-time.Hour)
+		in.Due = t0.Add(16 * time.Minute)
+		in.Reminders = []map[string]any{{"method": "popup", "minutes": 15, "related": "end"}}
+	})
+
+	upcoming, err := s.engine.Upcoming(s.ctx, 10)
+	s.Require().NoError(err)
+	s.Require().Len(upcoming, 1)
+	s.True(upcoming[0].Trigger.Equal(t0.Add(time.Minute)), upcoming[0].Trigger.String())
+
+	s.clock = t0.Add(time.Minute)
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Due today at 12:16", captured.Body)
+
+	s.clock = t0.Add(16 * time.Minute)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+}
+
+func (s *EngineSuite) TestTaskStartAlarmSkipsDueDefault() {
+	s.addTask("task1", func(in *repo.UpsertTaskInput) {
+		in.Start = t0.Add(10 * time.Minute)
+		in.Due = t0.Add(20 * time.Minute)
+		in.Reminders = []map[string]any{{"method": "popup", "minutes": 10}}
+	})
+
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Starts today at 12:10", captured.Body)
+
+	s.clock = t0.Add(20 * time.Minute)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+}
+
+func (s *EngineSuite) TestTaskWithOnlyDueOwnsStartRelatedAlarm() {
+	s.addTask("task1", func(in *repo.UpsertTaskInput) {
+		in.Due = t0.Add(30 * time.Minute)
+		in.Reminders = []map[string]any{{"method": "popup", "minutes": 30}}
+	})
+
+	captured := s.expectSend(1)
+	s.Require().NoError(s.engine.Tick(s.ctx))
+	s.Equal("Due today at 12:30", captured.Body)
+}

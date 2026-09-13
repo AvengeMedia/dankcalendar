@@ -28,11 +28,19 @@ func remindersFromComponent(comp *ical.Component) []cal.Reminder {
 		default:
 			continue
 		}
-		minutes, ok := triggerMinutes(propValue(alarm, ical.PropTrigger))
+		trig := alarm.Props.Get(ical.PropTrigger)
+		if trig == nil {
+			continue
+		}
+		minutes, ok := triggerMinutes(trig.Value)
 		if !ok {
 			continue
 		}
-		out = append(out, cal.Reminder{Method: "popup", Minutes: minutes})
+		rem := cal.Reminder{Method: "popup", Minutes: minutes}
+		if strings.EqualFold(trig.Params.Get("RELATED"), "END") {
+			rem.Related = cal.ReminderRelatedEnd
+		}
+		out = append(out, rem)
 	}
 	return out
 }
@@ -46,7 +54,12 @@ func addAlarms(comp *ical.Component, reminders []cal.Reminder) {
 		alarm.Props.SetText(ical.PropAction, "DISPLAY")
 		// DISPLAY alarms require a description per RFC 5545.
 		alarm.Props.SetText(ical.PropDescription, "Reminder")
-		setRaw(alarm.Props, ical.PropTrigger, triggerFromMinutes(rem.Minutes))
+		trig := ical.NewProp(ical.PropTrigger)
+		trig.Value = triggerFromMinutes(rem.Minutes)
+		if rem.RelatedToEnd() {
+			trig.Params.Set("RELATED", "END")
+		}
+		alarm.Props.Set(trig)
 		comp.Children = append(comp.Children, alarm)
 	}
 }

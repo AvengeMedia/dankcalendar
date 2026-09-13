@@ -565,7 +565,8 @@ func remindersFromParam(raw any) ([]calendar.Reminder, error) {
 			if method == "" {
 				method = "popup"
 			}
-			out = append(out, calendar.Reminder{Method: method, Minutes: minutes})
+			related, _ := entry["related"].(string)
+			out = append(out, calendar.Reminder{Method: method, Minutes: minutes, Related: related})
 		}
 		return out, nil
 	default:

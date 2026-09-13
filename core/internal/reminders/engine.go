@@ -639,38 +639,57 @@ type taskTrigger struct {
 	trigger trigger
 }
 
-func taskTriggersFor(task *ent.Task, s settings.UISettings, loc *time.Location) []taskTrigger {
-	var times []struct {
-		at   time.Time
-		kind string
-	}
+type taskAnchor struct {
+	at   time.Time
+	kind string
+	end  bool
+}
+
+func taskAnchors(task *ent.Task) []taskAnchor {
+	var out []taskAnchor
 	if task.Start != nil {
-		times = append(times, struct {
-			at   time.Time
-			kind string
-		}{*task.Start, "Starts"})
+		out = append(out, taskAnchor{at: *task.Start, kind: "Starts"})
 	}
 	if task.Due != nil && (task.Start == nil || !task.Due.Equal(*task.Start)) {
-		times = append(times, struct {
-			at   time.Time
-			kind string
-		}{*task.Due, "Due"})
+		out = append(out, taskAnchor{at: *task.Due, kind: "Due", end: true})
 	}
-	minutes := popupMinutes(task.Reminders)
-	out := make([]taskTrigger, 0, len(times))
-	for _, item := range times {
-		base := item.at
+	return out
+}
+
+// Explicit alarms fire once each, at the anchor their TRIGGER relates to; a
+// task with a single date owns every alarm. Without alarms each date gets the
+// default trigger.
+func taskTriggersFor(task *ent.Task, s settings.UISettings, loc *time.Location) []taskTrigger {
+	anchors := taskAnchors(task)
+	reminders := calendar.RemindersFromMaps(task.Reminders)
+	explicit := len(popupMinutesOf(reminders)) > 0
+	out := make([]taskTrigger, 0, len(anchors))
+	for _, anchor := range anchors {
+		base := anchor.at
 		if task.AllDay {
-			day := localMidnight(item.at, loc)
+			day := localMidnight(anchor.at, loc)
 			hour, minute := s.AllDayClock()
 			base = time.Date(day.Year(), day.Month(), day.Day(), hour, minute, 0, 0, loc)
 		}
-		if len(minutes) == 0 {
-			out = append(out, taskTrigger{base: item.at, kind: item.kind, trigger: trigger{at: base}})
+		if !explicit {
+			out = append(out, taskTrigger{base: anchor.at, kind: anchor.kind, trigger: trigger{at: base}})
 			continue
 		}
-		for _, offset := range minutes {
-			out = append(out, taskTrigger{base: item.at, kind: item.kind, trigger: trigger{at: base.Add(-time.Duration(offset) * time.Minute), minutes: offset}})
+		for _, offset := range popupMinutesOf(anchoredReminders(reminders, anchor.end, len(anchors) == 1)) {
+			out = append(out, taskTrigger{base: anchor.at, kind: anchor.kind, trigger: trigger{at: base.Add(-time.Duration(offset) * time.Minute), minutes: offset}})
+		}
+	}
+	return out
+}
+
+func anchoredReminders(reminders []calendar.Reminder, end, single bool) []calendar.Reminder {
+	if single {
+		return reminders
+	}
+	out := make([]calendar.Reminder, 0, len(reminders))
+	for _, rem := range reminders {
+		if rem.RelatedToEnd() == end {
+			out = append(out, rem)
 		}
 	}
 	return out
@@ -777,9 +796,13 @@ func triggersFor(ev *ent.Event, s settings.UISettings, loc *time.Location) []tri
 // popupMinutes extracts offsets for display-style reminders, dropping email
 // reminders and duplicates.
 func popupMinutes(reminders []map[string]any) []int {
+	return popupMinutesOf(calendar.RemindersFromMaps(reminders))
+}
+
+func popupMinutesOf(reminders []calendar.Reminder) []int {
 	var out []int
 	seen := make(map[int]struct{})
-	for _, rem := range calendar.RemindersFromMaps(reminders) {
+	for _, rem := range reminders {
 		switch rem.Method {
 		case "", "popup", "display":
 		default:
