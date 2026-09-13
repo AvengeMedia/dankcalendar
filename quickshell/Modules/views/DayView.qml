@@ -4,6 +4,7 @@ import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
+import "../../Common/EventUtils.js" as EventUtils
 
 Item {
     id: root
@@ -96,33 +97,21 @@ Item {
     readonly property var allDayEvents: dayEvents.filter(ev => ev.allDay)
 
     readonly property var timedEvents: {
-        const dayStart = new Date(displayDate.getFullYear(), displayDate.getMonth(), displayDate.getDate());
-        const dayEnd = new Date(dayStart.getTime() + 86400000);
         const out = [];
         for (let i = 0; i < dayEvents.length; i++) {
             const ev = dayEvents[i];
             if (ev.allDay)
                 continue;
-            const coreStart = dayStart.getTime() + root.startHour * 3600000;
-            const coreEnd = dayStart.getTime() + root.endHour * 3600000;
-            const s = Math.max(ev.start.getTime(), dayStart.getTime(), coreStart);
-            const e = Math.min(ev.end.getTime(), dayEnd.getTime(), coreEnd);
-            if (e <= s)
+            const slot = EventUtils.timedSlot(ev, displayDate, root.startHour, root.endHour);
+            if (!slot)
                 continue;
-            const decorated = Object.assign({}, ev);
-            decorated.startHour = (s - dayStart.getTime()) / 3600000 - root.startHour;
-            decorated.durationHours = Math.max((e - s) / 3600000, 0.5);
-            out.push(decorated);
+            out.push(Object.assign({}, ev, slot));
         }
         return DankCalService.layoutTimedEvents(out);
     }
 
     readonly property var hiddenInfo: {
         eventsVersion;
-        const dayStart = new Date(displayDate.getFullYear(), displayDate.getMonth(), displayDate.getDate());
-        const dayEnd = new Date(dayStart.getTime() + 86400000);
-        const coreStart = dayStart.getTime() + root.startHour * 3600000;
-        const coreEnd = dayStart.getTime() + root.endHour * 3600000;
         let count = 0;
         let before = false;
         let after = false;
@@ -130,15 +119,12 @@ Item {
             const ev = dayEvents[i];
             if (ev.allDay)
                 continue;
-            const s0 = Math.max(ev.start.getTime(), dayStart.getTime());
-            const e0 = Math.min(ev.end.getTime(), dayEnd.getTime());
-            if (e0 <= s0)
+            const sides = EventUtils.hiddenSides(ev, displayDate, root.startHour, root.endHour);
+            if (!sides)
                 continue;
-            if (s0 < coreStart)
-                before = true;
-            if (e0 > coreEnd)
-                after = true;
-            if (s0 < coreStart || e0 > coreEnd)
+            before = before || sides.before;
+            after = after || sides.after;
+            if (sides.before || sides.after)
                 count++;
         }
         return {

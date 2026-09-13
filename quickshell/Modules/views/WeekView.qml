@@ -230,24 +230,16 @@ Item {
     }
 
     function timedEventsFor(day) {
-        const dayStart = new Date(day.getFullYear(), day.getMonth(), day.getDate());
-        const dayEnd = new Date(dayStart.getTime() + 86400000);
         const out = [];
         const list = DankCalService.eventsForDay(day);
         for (let i = 0; i < list.length; i++) {
             const ev = list[i];
             if (ev.allDay)
                 continue;
-            const coreStart = dayStart.getTime() + root.startHour * 3600000;
-            const coreEnd = dayStart.getTime() + root.endHour * 3600000;
-            const s = Math.max(ev.start.getTime(), dayStart.getTime(), coreStart);
-            const e = Math.min(ev.end.getTime(), dayEnd.getTime(), coreEnd);
-            if (e <= s)
+            const slot = EventUtils.timedSlot(ev, day, root.startHour, root.endHour);
+            if (!slot)
                 continue;
-            const decorated = Object.assign({}, ev);
-            decorated.startHour = (s - dayStart.getTime()) / 3600000 - root.startHour;
-            decorated.durationHours = Math.max((e - s) / 3600000, 0.5);
-            out.push(decorated);
+            out.push(Object.assign({}, ev, slot));
         }
         return DankCalService.layoutTimedEvents(out);
     }
@@ -265,10 +257,6 @@ Item {
     }
 
     function hiddenInfoFor(day) {
-        const dayStart = new Date(day.getFullYear(), day.getMonth(), day.getDate());
-        const dayEnd = new Date(dayStart.getTime() + 86400000);
-        const coreStart = dayStart.getTime() + root.startHour * 3600000;
-        const coreEnd = dayStart.getTime() + root.endHour * 3600000;
         const list = DankCalService.eventsForDay(day);
         let count = 0;
         let before = false;
@@ -277,15 +265,12 @@ Item {
             const ev = list[i];
             if (ev.allDay)
                 continue;
-            const s0 = Math.max(ev.start.getTime(), dayStart.getTime());
-            const e0 = Math.min(ev.end.getTime(), dayEnd.getTime());
-            if (e0 <= s0)
+            const sides = EventUtils.hiddenSides(ev, day, root.startHour, root.endHour);
+            if (!sides)
                 continue;
-            if (s0 < coreStart)
-                before = true;
-            if (e0 > coreEnd)
-                after = true;
-            if (s0 < coreStart || e0 > coreEnd)
+            before = before || sides.before;
+            after = after || sides.after;
+            if (sides.before || sides.after)
                 count++;
         }
         return {

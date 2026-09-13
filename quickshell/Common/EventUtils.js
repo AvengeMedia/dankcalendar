@@ -12,6 +12,41 @@ function startOfDay(value) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
+// Events with no DTEND/DURATION have zero length (RFC 5545 3.6.1) and still
+// need a slot; clipping alone would drop them.
+function timedSlot(event, day, startHour, endHour) {
+    const dayStart = startOfDay(day).getTime()
+    const lo = dayStart + startHour * 3600000
+    const hi = dayStart + endHour * 3600000
+    const start = new Date(event.start).getTime()
+    const end = new Date(event.end).getTime()
+    const s = Math.max(start, lo)
+    const e = Math.min(end, hi)
+    const hidden = end === start ? start < lo || start >= hi : e <= s
+    if (hidden)
+        return null
+    return {
+        "startHour": (s - dayStart) / 3600000 - startHour,
+        "durationHours": Math.max((e - s) / 3600000, 0.5)
+    }
+}
+
+function hiddenSides(event, day, startHour, endHour) {
+    const dayStart = startOfDay(day).getTime()
+    const dayEnd = dayStart + 86400000
+    const coreStart = dayStart + startHour * 3600000
+    const coreEnd = dayStart + endHour * 3600000
+    const start = new Date(event.start).getTime()
+    const end = new Date(event.end).getTime()
+    if (end === start)
+        return start < dayStart || start >= dayEnd ? null : { "before": start < coreStart, "after": start >= coreEnd }
+    const s = Math.max(start, dayStart)
+    const e = Math.min(end, dayEnd)
+    if (e <= s)
+        return null
+    return { "before": s < coreStart, "after": e > coreEnd }
+}
+
 function daysBetween(from, to) {
     const fromDay = startOfDay(from)
     const toDay = startOfDay(to)
