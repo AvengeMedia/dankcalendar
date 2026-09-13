@@ -171,3 +171,43 @@ func TestReadOnly(t *testing.T) {
 		t.Errorf("DeleteEvent err = %v, want %v", err, errReadOnly)
 	}
 }
+
+const rawNewlineFeed = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//test//EN\r\n\r\nBEGIN:VEVENT\r\nUID:evt-raw@test\r\nSUMMARY:Holiday\r\nDESCRIPTION:first line\n\nsecond: line\nthird line\r\nDTSTART;VALUE=DATE:20260927\r\nDTEND;VALUE=DATE:20260927\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+
+func TestSyncFoldsRawNewlinesInTextValues(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/calendar; charset=utf-8")
+		w.Write([]byte(rawNewlineFeed))
+	}))
+	defer server.Close()
+
+	result, err := testProvider(server.URL).Sync(context.Background(), calendar.Calendar{ID: "cal"}, calendar.SyncCursor{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(result.Changes) != 1 {
+		t.Fatalf("expected 1 event, got %d", len(result.Changes))
+	}
+	ev := result.Changes[0].Event
+	if ev.UID != "evt-raw@test" {
+		t.Errorf("uid = %q", ev.UID)
+	}
+	if ev.Description != "first line\n\nsecond: line\nthird line" {
+		t.Errorf("description = %q", ev.Description)
+	}
+	if !ev.AllDay {
+		t.Errorf("expected all-day event")
+	}
+}
+
+func TestSyncStillRejectsUnparseableFeed(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("<html>not a calendar</html>\n"))
+	}))
+	defer server.Close()
+
+	_, err := testProvider(server.URL).Sync(context.Background(), calendar.Calendar{ID: "cal"}, calendar.SyncCursor{})
+	if err == nil {
+		t.Fatal("expected a decode error")
+	}
+}

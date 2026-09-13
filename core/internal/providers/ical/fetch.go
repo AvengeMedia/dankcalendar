@@ -1,6 +1,7 @@
 package ical
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -8,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -141,7 +143,7 @@ func fetch(ctx context.Context, feedURL, username string, password []byte, prev 
 		return nil, fmt.Errorf("fetch feed: %s", resp.Status)
 	}
 
-	doc, err := ical.NewDecoder(io.LimitReader(resp.Body, maxBodyBytes)).Decode()
+	doc, err := decodeFeed(io.LimitReader(resp.Body, maxBodyBytes))
 	if err != nil {
 		return nil, fmt.Errorf("decode feed: %w", err)
 	}
@@ -156,6 +158,60 @@ func fetch(ctx context.Context, feedURL, username string, password []byte, prev 
 			TTLSeconds:   int64(feedTTL(doc).Seconds()),
 		},
 	}, nil
+}
+
+// Feeds in the wild put raw newlines inside text values (#111). RFC 5545 3.1
+// wants them escaped, so go-ical rejects the orphaned lines; retry with them
+// folded back into the property above.
+func decodeFeed(r io.Reader) (*ical.Calendar, error) {
+	body, err := io.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+	doc, err := ical.NewDecoder(bytes.NewReader(body)).Decode()
+	if err == nil {
+		return doc, nil
+	}
+	repaired, changed := foldOrphanLines(body)
+	if !changed {
+		return nil, err
+	}
+	doc, repairErr := ical.NewDecoder(bytes.NewReader(repaired)).Decode()
+	if repairErr != nil {
+		return nil, err
+	}
+	return doc, nil
+}
+
+var contentLinePattern = regexp.MustCompile(`^[A-Z0-9-]+[;:]`)
+
+func foldOrphanLines(body []byte) ([]byte, bool) {
+	lines := strings.Split(string(body), "\n")
+	out := make([]string, 0, len(lines))
+	changed := false
+	blanks := 0
+	for _, line := range lines {
+		line = strings.TrimSuffix(line, "\r")
+		switch {
+		case line == "":
+			blanks++
+			continue
+		case line[0] == ' ' || line[0] == '\t' || contentLinePattern.MatchString(line):
+			changed = changed || blanks > 0
+			blanks = 0
+			out = append(out, line)
+			continue
+		case len(out) == 0:
+			return nil, false
+		}
+		out[len(out)-1] += strings.Repeat(`\n`, blanks+1) + line
+		blanks = 0
+		changed = true
+	}
+	if !changed {
+		return nil, false
+	}
+	return []byte(strings.Join(out, "\r\n") + "\r\n"), true
 }
 
 func calendarName(doc *ical.Calendar) string {
