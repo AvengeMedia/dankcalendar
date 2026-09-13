@@ -67,12 +67,13 @@ func EventFromComponent(calID string, comp *ical.Component, tz *TZResolver) (cal
 	}
 
 	ev := cal.Event{
-		CalendarID:  calID,
-		UID:         uid,
-		Summary:     propText(comp, ical.PropSummary),
-		Description: propText(comp, ical.PropDescription),
-		Location:    propText(comp, ical.PropLocation),
-		Status:      statusFromComponent(comp),
+		CalendarID:   calID,
+		UID:          uid,
+		Summary:      propText(comp, ical.PropSummary),
+		Description:  propText(comp, ical.PropDescription),
+		Location:     propText(comp, ical.PropLocation),
+		Status:       statusFromComponent(comp),
+		Transparency: propText(comp, ical.PropTransparency),
 	}
 
 	if rid := comp.Props.Get(ical.PropRecurrenceID); rid != nil {
