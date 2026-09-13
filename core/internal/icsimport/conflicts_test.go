@@ -18,7 +18,7 @@ func TestConflicts(t *testing.T) {
 	require.NoError(t, err)
 	r := repo.New(client)
 	t.Cleanup(func() { _ = r.Close() })
-	_, err = r.CreateAccount(ctx, repo.CreateAccountInput{ID: "acc", Kind: account.KindLocal})
+	_, err = r.CreateAccount(ctx, repo.CreateAccountInput{ID: "acc", Kind: account.KindLocal, DisplayName: "Local"})
 	require.NoError(t, err)
 	_, err = r.UpsertCalendar(ctx, repo.UpsertCalendarInput{ID: "cal", AccountID: "acc", RemoteID: "remote", Name: "Work"})
 	require.NoError(t, err)
