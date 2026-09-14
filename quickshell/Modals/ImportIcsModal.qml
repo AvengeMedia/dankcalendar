@@ -70,6 +70,7 @@ FloatingWindow {
                         "event": DankCalService.eventFromResult(entry.event),
                         "conflicts": (entry.conflicts || []).map(event => DankCalService.eventFromResult(event)),
                         "previewEnd": entry.previewEnd,
+                        "conflictCount": entry.conflictCount || 0,
                         "existing": entry.existing ? DankCalService.eventFromResult(entry.existing) : null
                     }));
         });
@@ -368,11 +369,11 @@ FloatingWindow {
 
                                 StyledText {
                                     width: parent.width
-                                    text: row.modelData.conflicts.length > 0
-                                        ? I18n.tr("%1 overlapping events", "import conflict count").arg(row.modelData.conflicts.length)
+                                    text: row.modelData.conflictCount > 0
+                                        ? (row.modelData.conflictCount === 1 ? I18n.tr("1 overlapping event", "import single conflict count") : I18n.tr("%1 overlapping events", "import conflict count").arg(row.modelData.conflictCount))
                                         : I18n.tr("No overlapping busy events", "import preview with no time conflicts")
                                     font.pixelSize: Theme.fontSizeSmall
-                                    color: row.modelData.conflicts.length > 0 ? Theme.warning : Theme.surfaceVariantText
+                                    color: row.modelData.conflictCount > 0 ? Theme.warning : Theme.surfaceVariantText
                                     visible: !importModal.loading && !row.existing
                                 }
 
@@ -392,7 +393,7 @@ FloatingWindow {
                                 StyledText {
                                     width: parent.width
                                     text: I18n.tr("Showing the first 20 overlaps.", "import conflict list limit")
-                                    visible: row.modelData.conflicts.length > 20
+                                    visible: row.modelData.conflictCount > 20
                                     color: Theme.surfaceVariantText
                                     font.pixelSize: Theme.fontSizeSmall
                                 }

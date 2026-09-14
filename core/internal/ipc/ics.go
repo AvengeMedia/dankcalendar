@@ -42,8 +42,9 @@ func handleEventsParseIcs(ctx context.Context, w *ConnWriter, req Request, deps 
 			RespondError(w, req.ID, err.Error())
 			return
 		}
-		overlaps := make([]map[string]any, 0, len(conflicts))
-		for _, conflict := range conflicts {
+		entry["conflictCount"] = len(conflicts)
+		overlaps := make([]map[string]any, 0, min(20, len(conflicts)))
+		for _, conflict := range conflicts[:min(20, len(conflicts))] {
 			overlaps = append(overlaps, mapEvent(conflict))
 		}
 		entry["conflicts"] = overlaps

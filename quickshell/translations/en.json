@@ -26,7 +26,7 @@
   {
     "term": "%1 overlapping events",
     "context": "%1 overlapping events",
-    "reference": "Modals/ImportIcsModal.qml:372",
+    "reference": "Modals/ImportIcsModal.qml:373",
     "comment": "import conflict count"
   },
   {
@@ -44,7 +44,7 @@
   {
     "term": "%1 · All day",
     "context": "%1 · All day",
-    "reference": "Modals/EventDetailsModal.qml:504, Modals/ImportIcsModal.qml:146",
+    "reference": "Modals/EventDetailsModal.qml:504, Modals/ImportIcsModal.qml:147",
     "comment": "event details time label for all-day events"
   },
   {
@@ -148,6 +148,12 @@
     "context": "1 minute",
     "reference": "Modals/SettingsContent.qml:223",
     "comment": "sync interval dropdown option"
+  },
+  {
+    "term": "1 overlapping event",
+    "context": "1 overlapping event",
+    "reference": "Modals/ImportIcsModal.qml:373",
+    "comment": "import single conflict count"
   },
   {
     "term": "1 week before",
@@ -350,7 +356,7 @@
   {
     "term": "Add a calendar",
     "context": "Add a calendar",
-    "reference": "Modals/EventDetailsModal.qml:1201, Modals/ImportIcsModal.qml:465",
+    "reference": "Modals/EventDetailsModal.qml:1201, Modals/ImportIcsModal.qml:466",
     "comment": "event form button to add a calendar when none exist | import dialog button to add a calendar when none can hold events"
   },
   {
@@ -392,7 +398,7 @@
   {
     "term": "Add to calendar",
     "context": "Add to calendar",
-    "reference": "Modals/ImportIcsModal.qml:249",
+    "reference": "Modals/ImportIcsModal.qml:250",
     "comment": "import destination label"
   },
   {
@@ -470,7 +476,7 @@
   {
     "term": "Already in %1",
     "context": "Already in %1",
-    "reference": "Modals/ImportIcsModal.qml:415",
+    "reference": "Modals/ImportIcsModal.qml:416",
     "comment": "import row note naming the calendar that holds this event"
   },
   {
@@ -602,7 +608,7 @@
   {
     "term": "Calendar file",
     "context": "Calendar file",
-    "reference": "Modals/ImportIcsModal.qml:131",
+    "reference": "Modals/ImportIcsModal.qml:132",
     "comment": "import dialog subtitle for a plain iCalendar file"
   },
   {
@@ -638,7 +644,7 @@
   {
     "term": "Cancel",
     "context": "Cancel",
-    "reference": "Modals/AccountAddModal.qml:1104, Modals/CalendarRemindersDialog.qml:351, Modals/ConfirmDialog.qml:33, Modals/EventDetailsModal.qml:625, Modals/EventDetailsModal.qml:838, Modals/ImportIcsModal.qml:457, Modals/NewCalendarDialog.qml:57, Modals/RenameCalendarDialog.qml:59, Modals/TaskDetailsModal.qml:546",
+    "reference": "Modals/AccountAddModal.qml:1104, Modals/CalendarRemindersDialog.qml:351, Modals/ConfirmDialog.qml:33, Modals/EventDetailsModal.qml:625, Modals/EventDetailsModal.qml:838, Modals/ImportIcsModal.qml:458, Modals/NewCalendarDialog.qml:57, Modals/RenameCalendarDialog.qml:59, Modals/TaskDetailsModal.qml:546",
     "comment": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | import dialog button to close without importing | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes"
   },
   {
@@ -764,7 +770,7 @@
   {
     "term": "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.",
     "context": "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.",
-    "reference": "Modals/ImportIcsModal.qml:289",
+    "reference": "Modals/ImportIcsModal.qml:290",
     "comment": "import preview explains the data and non-blocking conflicts"
   },
   {
@@ -1382,7 +1388,7 @@
   {
     "term": "Everything in this file is already on your calendar.",
     "context": "Everything in this file is already on your calendar.",
-    "reference": "Modals/ImportIcsModal.qml:171",
+    "reference": "Modals/ImportIcsModal.qml:172",
     "comment": "import dialog status when no event is new"
   },
   {
@@ -1514,13 +1520,13 @@
   {
     "term": "Import",
     "context": "Import",
-    "reference": "Modals/ImportIcsModal.qml:164",
+    "reference": "Modals/ImportIcsModal.qml:165",
     "comment": "import dialog button to import the events"
   },
   {
     "term": "Import %1 events",
     "context": "Import %1 events",
-    "reference": "Modals/ImportIcsModal.qml:163",
+    "reference": "Modals/ImportIcsModal.qml:164",
     "comment": "import dialog button naming how many events will be imported"
   },
   {
@@ -1532,7 +1538,7 @@
   {
     "term": "Import events",
     "context": "Import events",
-    "reference": "Modals/ImportIcsModal.qml:192, Modals/ImportIcsModal.qml:211",
+    "reference": "Modals/ImportIcsModal.qml:193, Modals/ImportIcsModal.qml:212",
     "comment": "import modal header | import modal window title"
   },
   {
@@ -1544,7 +1550,7 @@
   {
     "term": "Importing...",
     "context": "Importing...",
-    "reference": "Modals/ImportIcsModal.qml:161",
+    "reference": "Modals/ImportIcsModal.qml:162",
     "comment": "import dialog button while the import runs"
   },
   {
@@ -1730,19 +1736,19 @@
   {
     "term": "Meeting cancellation",
     "context": "Meeting cancellation",
-    "reference": "Modals/ImportIcsModal.qml:127",
+    "reference": "Modals/ImportIcsModal.qml:128",
     "comment": "import dialog subtitle for an iCalendar CANCEL"
   },
   {
     "term": "Meeting invitation",
     "context": "Meeting invitation",
-    "reference": "Modals/ImportIcsModal.qml:125",
+    "reference": "Modals/ImportIcsModal.qml:126",
     "comment": "import dialog subtitle for an iCalendar REQUEST"
   },
   {
     "term": "Meeting reply",
     "context": "Meeting reply",
-    "reference": "Modals/ImportIcsModal.qml:129",
+    "reference": "Modals/ImportIcsModal.qml:130",
     "comment": "import dialog subtitle for an iCalendar REPLY"
   },
   {
@@ -2012,7 +2018,7 @@
   {
     "term": "No overlapping busy events",
     "context": "No overlapping busy events",
-    "reference": "Modals/ImportIcsModal.qml:373",
+    "reference": "Modals/ImportIcsModal.qml:374",
     "comment": "import preview with no time conflicts"
   },
   {
@@ -2114,7 +2120,7 @@
   {
     "term": "Open",
     "context": "Open",
-    "reference": "Modals/AccountAddModal.qml:884, Modals/ImportIcsModal.qml:422",
+    "reference": "Modals/AccountAddModal.qml:884, Modals/ImportIcsModal.qml:423",
     "comment": "fallback label for guide step link button | import row button to open the event already on the calendar"
   },
   {
@@ -2150,13 +2156,13 @@
   {
     "term": "Open the existing meeting to handle this reply or cancellation.",
     "context": "Open the existing meeting to handle this reply or cancellation.",
-    "reference": "Modals/ImportIcsModal.qml:281",
+    "reference": "Modals/ImportIcsModal.qml:282",
     "comment": "scheduling messages cannot be imported as new events"
   },
   {
     "term": "Organized by %1",
     "context": "Organized by %1",
-    "reference": "Modals/ImportIcsModal.qml:156",
+    "reference": "Modals/ImportIcsModal.qml:157",
     "comment": "import row line naming the meeting organizer"
   },
   {
@@ -2414,7 +2420,7 @@
   {
     "term": "Reading file...",
     "context": "Reading file...",
-    "reference": "Modals/ImportIcsModal.qml:169",
+    "reference": "Modals/ImportIcsModal.qml:170",
     "comment": "import dialog status while parsing"
   },
   {
@@ -2426,7 +2432,7 @@
   {
     "term": "Recurring event · conflicts checked through %1",
     "context": "Recurring event · conflicts checked through %1",
-    "reference": "Modals/ImportIcsModal.qml:402",
+    "reference": "Modals/ImportIcsModal.qml:403",
     "comment": "bounded recurring import preview"
   },
   {
@@ -2774,7 +2780,7 @@
   {
     "term": "Showing the first 20 overlaps.",
     "context": "Showing the first 20 overlaps.",
-    "reference": "Modals/ImportIcsModal.qml:394",
+    "reference": "Modals/ImportIcsModal.qml:395",
     "comment": "import conflict list limit"
   },
   {
