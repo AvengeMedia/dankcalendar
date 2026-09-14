@@ -186,6 +186,16 @@ dcal events import invite.ics --calendar <id> # import from the terminal
 dcal events rsvp <event-id> accept            # reply to an imported invitation
 ```
 
+## Calendar files
+
+Open `.ics` and `.vcs` files with Dank Calendar, or run
+`dcal open invitation.ics appointment.vcs`. Event files show a destination calendar
+picker and a preview of overlapping events before import. Subscription links and
+files carrying a refreshable calendar source open subscription setup instead.
+
+See [calendar file imports](docs/calendar-file-import.md) for supported formats,
+conflict-preview behavior, and legacy compatibility.
+
 ## IPC
 
 The daemon exposes a scriptable IPC surface — handy for keybinds and automation:
