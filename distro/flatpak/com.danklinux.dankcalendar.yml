@@ -102,7 +102,7 @@ modules:
       - make -C core sync-shell
       - >-
         go build -C core -mod=vendor -tags withshell
-        -ldflags=-s\ -w\ -X\ main.Version=1.6.0\ -X\ main.Commit=565cd465
+        -ldflags=-s\ -w\ -X\ main.Version=1.6.1\ -X\ main.Commit=effdb208
         -o dcal ./cmd/dcal
       - install -Dm755 core/dcal /app/bin/dcal
       - >-
@@ -120,5 +120,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/AvengeMedia/dankcalendar.git
-        commit: 565cd46583f76190833c551a4c8e34aa5dc2917b
+        commit: effdb208b544874573c327759f9ae74e8233ffaa
       - go.mod.yml
