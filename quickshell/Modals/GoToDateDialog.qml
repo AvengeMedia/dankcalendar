@@ -83,7 +83,6 @@ DankOverlayDialog {
 
     maximumWidth: Theme.clockFaceSize + Theme.spacingXL * 3
     title: I18n.tr("Go to date", "go to date dialog title")
-    iconName: "event"
     onAccepted: submitInput()
 
     DankTextField {

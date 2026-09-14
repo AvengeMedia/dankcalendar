@@ -284,7 +284,6 @@ FloatingWindow {
             z: 10
             controls: windowControls
             title: taskModal.createMode ? I18n.tr("New task", "header in the create-task dialog") : I18n.tr("Edit task", "header in the edit-task dialog")
-            iconName: "task_alt"
             onCloseRequested: taskModal.hide()
         }
 

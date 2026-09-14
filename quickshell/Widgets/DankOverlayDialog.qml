@@ -8,7 +8,6 @@ Popup {
 
     property bool takesFocus: true
     property alias title: dialog.title
-    property alias iconName: dialog.iconName
     property alias supportingText: dialog.supportingText
     property alias maximumWidth: dialog.maximumWidth
     property alias acceptEnabled: dialog.acceptEnabled

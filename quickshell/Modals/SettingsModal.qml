@@ -78,7 +78,6 @@ FloatingWindow {
                 z: 10
                 controls: windowControls
                 title: I18n.tr("Settings", "settings window header title")
-                iconName: "settings"
                 onCloseRequested: settingsModal.hide()
 
                 DankActionButton {

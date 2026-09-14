@@ -702,7 +702,6 @@ FloatingWindow {
                 z: 10
                 controls: windowControls
                 title: I18n.tr("Calendar", "main window title bar text")
-                iconName: "calendar_month"
                 onCloseRequested: window.requestClose()
             }
 

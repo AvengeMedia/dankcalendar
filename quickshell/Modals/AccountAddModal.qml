@@ -272,6 +272,7 @@ FloatingWindow {
 
             DankActionButton {
                 id: backButton
+                z: 1
                 anchors.left: parent.left
                 anchors.leftMargin: Theme.spacingS
                 anchors.verticalCenter: parent.verticalCenter
@@ -295,11 +296,10 @@ FloatingWindow {
 
             DankWindowHeader {
                 id: header
-                anchors.left: backButton.visible ? backButton.right : parent.left
+                anchors.left: parent.left
                 anchors.right: parent.right
                 controls: windowControls
                 title: accountModal.selectedProvider === "" ? I18n.tr("Add account", "account add modal header title") : I18n.tr("Connect %1", "account add header when a provider is selected").arg(accountModal.providerName(accountModal.selectedProvider))
-                iconName: backButton.visible ? "" : "person_add"
                 showDivider: false
                 onCloseRequested: accountModal.hide()
             }

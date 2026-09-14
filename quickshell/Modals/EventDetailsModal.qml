@@ -556,7 +556,6 @@ FloatingWindow {
             z: 10
             controls: windowControls
             title: eventModal.createMode ? I18n.tr("New event", "event modal header when creating") : (eventModal.editMode ? I18n.tr("Edit event", "event modal header when editing") : I18n.tr("Event details", "event modal header when viewing"))
-            iconName: "event"
             onCloseRequested: eventModal.hide()
 
             DankActionButton {

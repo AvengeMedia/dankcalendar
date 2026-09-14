@@ -202,7 +202,6 @@ DankOverlayDialog {
 
     takesFocus: false
     title: I18n.tr("Keyboard shortcuts", "keyboard shortcuts overlay title")
-    iconName: "keyboard"
     onRejected: dismissed()
 
     Repeater {

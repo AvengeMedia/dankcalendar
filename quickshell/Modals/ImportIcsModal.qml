@@ -166,7 +166,6 @@ FloatingWindow {
             z: 10
             controls: windowControls
             title: I18n.tr("Import events", "import modal header")
-            iconName: "download"
             onCloseRequested: importModal.hide()
         }
 
