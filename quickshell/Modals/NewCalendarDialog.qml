@@ -1,11 +1,10 @@
 import QtQuick
-import QtQuick.Controls
 import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
 
-Popup {
+DankOverlayDialog {
     id: root
 
     property var account: null
@@ -36,80 +35,35 @@ Popup {
         });
     }
 
-    parent: Overlay.overlay
-    anchors.centerIn: parent
-    modal: true
-    width: Math.min(400, parent.width - Theme.spacingXL * 2)
-    padding: Theme.spacingL
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    title: I18n.tr("New calendar", "new calendar dialog header")
+    supportingText: account ? I18n.tr("Adds a calendar to \"%1\".", "new calendar dialog subtitle naming the local account").arg(DankCalService.accountLabel(account)) : ""
+    onAccepted: submit()
 
-    Overlay.modal: Rectangle {
-        color: Qt.rgba(0, 0, 0, 0.4)
+    DankTextField {
+        id: nameField
+        width: parent.width
+        outlined: true
+        labelText: I18n.tr("Calendar name", "new calendar dialog placeholder for name input")
+        isError: root.errorText !== ""
+        supportingText: root.errorText
+        onTextChanged: root.errorText = ""
+        onAccepted: root.submit()
+        Keys.onReturnPressed: event => event.accepted = true
+        Keys.onEnterPressed: event => event.accepted = true
     }
 
-    background: Rectangle {
-        color: Theme.surfaceContainerHigh
-        radius: Theme.cornerRadiusLarge
-        border.width: 1
-        border.color: Theme.outlineMedium
-    }
-
-    contentItem: Column {
-        spacing: Theme.spacingM
-
-        LayoutMirroring.enabled: I18n.isRtl
-        LayoutMirroring.childrenInherit: true
-
-        StyledText {
-            width: parent.width
-            text: I18n.tr("New calendar", "new calendar dialog header")
-            font.pixelSize: Theme.fontSizeLarge
-            font.weight: Font.Medium
-            color: Theme.surfaceText
+    actions: [
+        DankButton {
+            text: I18n.tr("Cancel", "new calendar dialog button to cancel")
+            backgroundColor: Theme.secondaryContainer
+            textColor: Theme.onSecondaryContainer
+            onClicked: root.close()
+        },
+        DankButton {
+            text: I18n.tr("Create", "new calendar dialog button to create the calendar")
+            backgroundColor: Theme.primary
+            textColor: Theme.primaryText
+            onClicked: root.submit()
         }
-
-        StyledText {
-            text: root.account ? I18n.tr("Adds a calendar to \"%1\".", "new calendar dialog subtitle naming the local account").arg(DankCalService.accountLabel(root.account)) : ""
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.surfaceVariantText
-            width: parent.width
-            wrapMode: Text.WordWrap
-        }
-
-        DankTextField {
-            id: nameField
-            width: parent.width
-            placeholderText: I18n.tr("Calendar name", "new calendar dialog placeholder for name input")
-            onTextChanged: root.errorText = ""
-            onAccepted: root.submit()
-        }
-
-        StyledText {
-            visible: root.errorText !== ""
-            text: root.errorText
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.error
-            width: parent.width
-            wrapMode: Text.WordWrap
-        }
-
-        Row {
-            anchors.right: parent.right
-            spacing: Theme.spacingS
-
-            DankButton {
-                text: I18n.tr("Cancel", "new calendar dialog button to cancel")
-                backgroundColor: "transparent"
-                textColor: Theme.surfaceText
-                onClicked: root.close()
-            }
-
-            DankButton {
-                text: I18n.tr("Create", "new calendar dialog button to create the calendar")
-                backgroundColor: Theme.primary
-                textColor: Theme.primaryText
-                onClicked: root.submit()
-            }
-        }
-    }
+    ]
 }

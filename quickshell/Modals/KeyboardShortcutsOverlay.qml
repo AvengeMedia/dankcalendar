@@ -3,7 +3,7 @@ import qs.Common
 import qs.Widgets
 import qs.DankCommon.Widgets
 
-Item {
+DankOverlayDialog {
     id: root
 
     signal dismissed
@@ -200,120 +200,69 @@ Item {
         }
     ]
 
-    Rectangle {
-        anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.55)
+    takesFocus: false
+    title: I18n.tr("Keyboard shortcuts", "keyboard shortcuts overlay title")
+    iconName: "keyboard"
+    onRejected: dismissed()
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: root.dismissed()
-        }
-    }
+    Repeater {
+        model: root.groups
 
-    Rectangle {
-        anchors.centerIn: parent
-        width: Math.min(640, parent.width - Theme.spacingXL * 2)
-        height: Math.min(card.implicitHeight + Theme.spacingXL * 2, parent.height - Theme.spacingXL * 2)
-        radius: Theme.cornerRadius
-        color: Theme.surfaceContainerHigh
-        border.color: Theme.outlineLight
-        border.width: 1
+        Column {
+            id: group
+            required property var modelData
+            width: parent.width
+            spacing: Theme.spacingS
 
-        MouseArea {
-            anchors.fill: parent
-        }
-
-        DankFlickable {
-            anchors.fill: parent
-            anchors.margins: Theme.spacingXL
-            contentWidth: width
-            contentHeight: card.implicitHeight
-            clip: true
+            StyledText {
+                text: group.modelData.title
+                font.pixelSize: Theme.fontSizeSmall
+                font.weight: Theme.fontWeightMedium
+                color: Theme.primary
+                width: parent.width
+            }
 
             Column {
-                id: card
                 width: parent.width
-                spacing: Theme.spacingL
-
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
-
-                    DankIcon {
-                        name: "keyboard"
-                        size: Theme.iconSize
-                        color: Theme.primary
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    StyledText {
-                        text: I18n.tr("Keyboard shortcuts", "keyboard shortcuts overlay title")
-                        font.pixelSize: Theme.fontSizeLarge
-                        font.weight: Font.Medium
-                        color: Theme.surfaceText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
+                spacing: Theme.groupedListGap
 
                 Repeater {
-                    model: root.groups
+                    model: group.modelData.rows
 
-                    Column {
+                    DankListRow {
+                        id: row
                         required property var modelData
+                        required property int index
                         width: parent.width
-                        spacing: Theme.spacingS
+                        height: Theme.buttonHeightS
+                        firstInGroup: index === 0
+                        lastInGroup: index === group.modelData.rows.length - 1
 
                         StyledText {
-                            text: parent.modelData.title
-                            font.pixelSize: Theme.fontSizeSmall
-                            font.weight: Font.Medium
-                            color: Theme.surfaceVariantText
-                            width: parent.width
+                            anchors.left: parent.left
+                            anchors.leftMargin: Theme.spacingM
+                            anchors.right: keys.left
+                            anchors.rightMargin: Theme.spacingM
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: row.modelData.label
+                            font.pixelSize: Theme.fontSizeMedium
+                            color: row.contentColor
+                            elide: Text.ElideRight
                         }
 
-                        Repeater {
-                            model: parent.modelData.rows
+                        Row {
+                            id: keys
+                            anchors.right: parent.right
+                            anchors.rightMargin: Theme.spacingM
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: Theme.spacingXS
 
-                            Item {
-                                required property var modelData
-                                width: parent.width
-                                height: 28
+                            Repeater {
+                                model: row.modelData.keys
 
-                                StyledText {
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    text: parent.modelData.label
-                                    font.pixelSize: Theme.fontSizeMedium
-                                    color: Theme.surfaceText
-                                }
-
-                                Row {
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    spacing: Theme.spacingXS
-
-                                    Repeater {
-                                        model: parent.parent.modelData.keys
-
-                                        Rectangle {
-                                            required property var modelData
-                                            height: 22
-                                            width: Math.max(22, keyLabel.implicitWidth + Theme.spacingS * 2)
-                                            radius: Theme.cornerRadiusSmall
-                                            color: Theme.surfaceContainerHighest
-                                            border.color: Theme.outlineLight
-                                            border.width: 1
-
-                                            StyledText {
-                                                id: keyLabel
-                                                anchors.centerIn: parent
-                                                text: parent.modelData
-                                                font.pixelSize: Theme.fontSizeSmall
-                                                color: Theme.surfaceText
-                                                isMonospace: true
-                                            }
-                                        }
-                                    }
+                                DankKeycap {
+                                    required property string modelData
+                                    text: modelData
                                 }
                             }
                         }

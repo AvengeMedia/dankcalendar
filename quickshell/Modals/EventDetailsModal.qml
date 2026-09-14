@@ -534,7 +534,7 @@ FloatingWindow {
     }
 
     readonly property real contentNaturalHeight: contentLoader.item ? contentLoader.item.naturalHeight : 0
-    readonly property real chromeHeight: 48 + Theme.spacingL * 2 + (editMode ? 60 : 0)
+    readonly property real chromeHeight: header.height + Theme.spacingL * 2 + (editMode ? footer.height : 0)
 
     title: createMode ? I18n.tr("New event", "event modal window title when creating") : (editMode ? I18n.tr("Edit event", "event modal window title when editing") : I18n.tr("Event", "event modal window title when viewing"))
     minimumSize: Qt.size(460, 560)
@@ -550,106 +550,52 @@ FloatingWindow {
         LayoutMirroring.enabled: I18n.isRtl
         LayoutMirroring.childrenInherit: true
 
-        Item {
+        DankWindowHeader {
+            id: header
             width: parent.width
-            height: 48
             z: 10
+            controls: windowControls
+            title: eventModal.createMode ? I18n.tr("New event", "event modal header when creating") : (eventModal.editMode ? I18n.tr("Edit event", "event modal header when editing") : I18n.tr("Event details", "event modal header when viewing"))
+            iconName: "event"
+            onCloseRequested: eventModal.hide()
 
-            MouseArea {
-                anchors.fill: parent
-                onPressed: windowControls.tryStartMove()
+            DankActionButton {
+                visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id
+                iconName: "edit"
+                Accessible.name: I18n.tr("Edit", "event details button to start editing")
+                onClicked: eventModal.beginEdit()
             }
 
-            Rectangle {
-                anchors.fill: parent
-                color: Theme.surfaceContainer
-                opacity: 0.5
+            DankButton {
+                visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete && eventModal.isRecurring
+                text: I18n.tr("Delete occurrence", "event details button to delete only this occurrence of a recurring event")
+                buttonHeight: Theme.buttonHeightXS
+                backgroundColor: Theme.errorContainer
+                textColor: Theme.onErrorContainer
+                onClicked: eventModal.removeEvent(true)
             }
 
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.spacingL
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.spacingM
-
-                Rectangle {
-                    width: 12
-                    height: 12
-                    radius: 3
-                    color: {
-                        if (!eventModal.editMode)
-                            return eventModal.event.color || Theme.primary;
-                        const writable = DankCalService.writableCalendars();
-                        if (writable.length === 0)
-                            return Theme.primary;
-                        return writable[Math.min(eventModal.formCalendarIndex, writable.length - 1)].color || Theme.primary;
-                    }
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                StyledText {
-                    text: eventModal.createMode ? I18n.tr("New event", "event modal header when creating") : (eventModal.editMode ? I18n.tr("Edit event", "event modal header when editing") : I18n.tr("Event details", "event modal header when viewing"))
-                    font.pixelSize: Theme.fontSizeXLarge
-                    font.weight: Font.Medium
-                    color: Theme.surfaceText
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+            DankButton {
+                visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete
+                text: eventModal.isRecurring ? I18n.tr("Delete series", "event details button to confirm deleting a whole recurring series") : I18n.tr("Confirm delete", "event details button to confirm deleting the event")
+                buttonHeight: Theme.buttonHeightXS
+                backgroundColor: eventModal.isRecurring ? "transparent" : Theme.errorContainer
+                textColor: eventModal.isRecurring ? Theme.error : Theme.onErrorContainer
+                onClicked: eventModal.removeEvent()
             }
 
-            Row {
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.spacingM
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.spacingXS
-
-                DankActionButton {
-                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id
-                    circular: false
-                    iconName: "edit"
-                    iconColor: Theme.surfaceText
-                    onClicked: eventModal.beginEdit()
-                }
-
-                DankButton {
-                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete && eventModal.isRecurring
-                    text: I18n.tr("Delete occurrence", "event details button to delete only this occurrence of a recurring event")
-                    buttonHeight: 32
-                    backgroundColor: Theme.error
-                    textColor: Theme.primaryText
-                    anchors.verticalCenter: parent.verticalCenter
-                    onClicked: eventModal.removeEvent(true)
-                }
-
-                DankButton {
-                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete
-                    text: eventModal.isRecurring ? I18n.tr("Delete series", "event details button to confirm deleting a whole recurring series") : I18n.tr("Confirm delete", "event details button to confirm deleting the event")
-                    buttonHeight: 32
-                    backgroundColor: eventModal.isRecurring ? "transparent" : Theme.error
-                    textColor: eventModal.isRecurring ? Theme.error : Theme.primaryText
-                    anchors.verticalCenter: parent.verticalCenter
-                    onClicked: eventModal.removeEvent()
-                }
-
-                DankActionButton {
-                    visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && !eventModal.confirmDelete
-                    circular: false
-                    iconName: "delete_outline"
-                    iconColor: Theme.error
-                    onClicked: eventModal.removeEvent()
-                }
-
-                DankActionButton {
-                    circular: false
-                    iconName: "close"
-                    iconColor: Theme.surfaceText
-                    onClicked: eventModal.hide()
-                }
+            DankActionButton {
+                visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && !eventModal.confirmDelete
+                iconName: "delete_outline"
+                iconColor: Theme.error
+                Accessible.name: I18n.tr("Delete", "event details button to delete the event")
+                onClicked: eventModal.removeEvent()
             }
         }
 
         Item {
             width: parent.width
-            height: parent.height - 48 - (footer.visible ? footer.height + 1 : 0)
+            height: parent.height - header.height - (footer.visible ? footer.height + Theme.dividerWidth : 0)
 
             Loader {
                 id: contentLoader
@@ -661,15 +607,15 @@ FloatingWindow {
 
         Rectangle {
             width: parent.width
-            height: 1
-            color: Theme.outlineLight
+            height: Theme.dividerWidth
+            color: Theme.outlineVariant
             visible: footer.visible
         }
 
         Item {
             id: footer
             width: parent.width
-            height: 59
+            height: Theme.buttonHeightS + Theme.spacingM * 2
             visible: eventModal.editMode
 
             StyledText {
@@ -692,9 +638,8 @@ FloatingWindow {
 
                 DankButton {
                     text: I18n.tr("Cancel", "event form button to cancel editing")
-                    buttonHeight: 38
                     backgroundColor: "transparent"
-                    textColor: Theme.surfaceText
+                    textColor: Theme.primary
                     onClicked: {
                         if (eventModal.createMode) {
                             eventModal.hide();
@@ -707,7 +652,7 @@ FloatingWindow {
                 DankButton {
                     text: eventModal.saving ? I18n.tr("Saving...", "event details save button while saving") : I18n.tr("Save", "event details button to save changes")
                     iconName: "check"
-                    buttonHeight: 38
+                    busy: eventModal.saving
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     onClicked: {
@@ -730,7 +675,7 @@ FloatingWindow {
                 if (attendeesBlock.visible)
                     h += Theme.spacingL + attendeesBlock.implicitHeight;
                 if (descBlock.visible)
-                    h += Theme.spacingL + 24 + descBlock.spacing + descriptionText.implicitHeight + Theme.spacingM * 2;
+                    h += Theme.spacingL + descHeader.height + descBlock.spacing + descriptionText.implicitHeight + Theme.spacingM * 2;
                 return h;
             }
 
@@ -743,8 +688,8 @@ FloatingWindow {
 
                 StyledText {
                     text: eventModal.event.title || I18n.tr("(untitled)", "event details fallback title when event has no title")
-                    font.pixelSize: 24
-                    font.weight: Font.Medium
+                    font.pixelSize: Theme.fontSizeXXLarge
+                    font.weight: Theme.fontWeightMedium
                     color: Theme.surfaceText
                     width: parent.width
                     wrapMode: Text.WordWrap
@@ -831,7 +776,7 @@ FloatingWindow {
 
                     DankIcon {
                         name: "event_available"
-                        size: Theme.iconSize - 4
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -839,7 +784,7 @@ FloatingWindow {
                     StyledText {
                         text: I18n.tr("Your response", "event details RSVP section label")
                         font.pixelSize: Theme.fontSizeMedium
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -847,33 +792,33 @@ FloatingWindow {
 
                 Row {
                     anchors.left: parent.left
-                    anchors.leftMargin: Theme.spacingL + Theme.iconSize - 4
+                    anchors.leftMargin: Theme.spacingL + Theme.iconSizeMedium
                     spacing: Theme.spacingS
                     visible: eventModal.pendingResponse === ""
 
                     DankButton {
                         text: I18n.tr("Accept", "RSVP accept button")
-                        buttonHeight: 32
-                        backgroundColor: eventModal.event.myResponse === "accepted" ? Theme.success : Theme.surfaceContainer
-                        textColor: eventModal.event.myResponse === "accepted" ? Theme.primaryText : Theme.surfaceText
+                        buttonHeight: Theme.buttonHeightXS
+                        backgroundColor: eventModal.event.myResponse === "accepted" ? Theme.success : Theme.secondaryContainer
+                        textColor: eventModal.event.myResponse === "accepted" ? Theme.contrastDark : Theme.onSecondaryContainer
                         enabled: !eventModal.saving
                         onClicked: eventModal.respond("accept")
                     }
 
                     DankButton {
                         text: I18n.tr("Maybe", "RSVP tentative button")
-                        buttonHeight: 32
-                        backgroundColor: eventModal.event.myResponse === "tentative" ? Theme.warning : Theme.surfaceContainer
-                        textColor: eventModal.event.myResponse === "tentative" ? Theme.primaryText : Theme.surfaceText
+                        buttonHeight: Theme.buttonHeightXS
+                        backgroundColor: eventModal.event.myResponse === "tentative" ? Theme.warning : Theme.secondaryContainer
+                        textColor: eventModal.event.myResponse === "tentative" ? Theme.contrastDark : Theme.onSecondaryContainer
                         enabled: !eventModal.saving
                         onClicked: eventModal.respond("tentative")
                     }
 
                     DankButton {
                         text: I18n.tr("Decline", "RSVP decline button")
-                        buttonHeight: 32
-                        backgroundColor: eventModal.event.myResponse === "declined" ? Theme.error : Theme.surfaceContainer
-                        textColor: eventModal.event.myResponse === "declined" ? Theme.primaryText : Theme.surfaceText
+                        buttonHeight: Theme.buttonHeightXS
+                        backgroundColor: eventModal.event.myResponse === "declined" ? Theme.error : Theme.secondaryContainer
+                        textColor: eventModal.event.myResponse === "declined" ? Theme.contrastDark : Theme.onSecondaryContainer
                         enabled: !eventModal.saving
                         onClicked: eventModal.respond("decline")
                     }
@@ -881,13 +826,13 @@ FloatingWindow {
 
                 Row {
                     anchors.left: parent.left
-                    anchors.leftMargin: Theme.spacingL + Theme.iconSize - 4
+                    anchors.leftMargin: Theme.spacingL + Theme.iconSizeMedium
                     spacing: Theme.spacingS
                     visible: eventModal.pendingResponse !== ""
 
                     DankButton {
                         text: I18n.tr("This event", "RSVP scope button replying for one occurrence of a recurring event")
-                        buttonHeight: 32
+                        buttonHeight: Theme.buttonHeightXS
                         backgroundColor: Theme.primary
                         textColor: Theme.primaryText
                         enabled: !eventModal.saving
@@ -896,17 +841,16 @@ FloatingWindow {
 
                     DankButton {
                         text: I18n.tr("All events", "RSVP scope button replying for the whole recurring series")
-                        buttonHeight: 32
-                        backgroundColor: Theme.surfaceContainer
-                        textColor: Theme.surfaceText
+                        buttonHeight: Theme.buttonHeightXS
+                        backgroundColor: Theme.secondaryContainer
+                        textColor: Theme.onSecondaryContainer
                         enabled: !eventModal.saving
                         onClicked: eventModal.submitResponse(eventModal.pendingResponse, false)
                     }
 
                     DankActionButton {
-                        circular: false
                         iconName: "close"
-                        iconColor: Theme.surfaceText
+                        Accessible.name: I18n.tr("Cancel", "event form button to cancel editing")
                         anchors.verticalCenter: parent.verticalCenter
                         onClicked: eventModal.pendingResponse = ""
                     }
@@ -927,7 +871,7 @@ FloatingWindow {
 
                     DankIcon {
                         name: "people"
-                        size: Theme.iconSize - 4
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -935,7 +879,7 @@ FloatingWindow {
                     StyledText {
                         text: I18n.tr("Attendees", "event details section label for attendee list")
                         font.pixelSize: Theme.fontSizeMedium
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -959,27 +903,27 @@ FloatingWindow {
                         readonly property string displayName: modelData.displayName || modelData.email || ""
                         readonly property string status: modelData.status || "needsAction"
                         width: parent.width
-                        height: 36
+                        height: Theme.buttonHeightXS + Theme.spacingXS
 
                         Row {
                             anchors.left: parent.left
-                            anchors.leftMargin: Theme.spacingL + Theme.iconSize - 4
+                            anchors.leftMargin: Theme.spacingL + Theme.iconSizeMedium
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: Theme.spacingS
 
                             Rectangle {
-                                width: 24
-                                height: 24
-                                radius: 12
+                                width: Theme.iconSize
+                                height: Theme.iconSize
+                                radius: Theme.fullRadius(width, height)
                                 anchors.verticalCenter: parent.verticalCenter
-                                color: Theme.withAlpha(Theme.primary, 0.18)
+                                color: Theme.primaryContainer
 
                                 StyledText {
                                     anchors.centerIn: parent
                                     text: attendeeItem.displayName.charAt(0).toUpperCase()
                                     font.pixelSize: Theme.fontSizeSmall
-                                    font.weight: Font.Medium
-                                    color: Theme.primary
+                                    font.weight: Theme.fontWeightMedium
+                                    color: Theme.onPrimaryContainer
                                 }
                             }
 
@@ -1001,12 +945,12 @@ FloatingWindow {
                         Item {
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 90
-                            height: 22
+                            width: statusLabel.implicitWidth + Theme.spacingM * 2
+                            height: Theme.iconSizeMedium + Theme.spacingXXS
 
                             Rectangle {
                                 anchors.fill: parent
-                                radius: 11
+                                radius: Theme.fullRadius(width, height)
                                 color: {
                                     switch (attendeeItem.status) {
                                     case "accepted":
@@ -1019,10 +963,11 @@ FloatingWindow {
                                 }
 
                                 StyledText {
+                                    id: statusLabel
                                     anchors.centerIn: parent
                                     text: attendeeItem.status
                                     font.pixelSize: Theme.fontSizeSmall
-                                    font.weight: Font.Medium
+                                    font.weight: Theme.fontWeightMedium
                                     elide: Text.ElideRight
                                     color: {
                                         switch (attendeeItem.status) {
@@ -1052,11 +997,12 @@ FloatingWindow {
                 visible: (eventModal.event.description || "") !== ""
 
                 Row {
+                    id: descHeader
                     spacing: Theme.spacingS
 
                     DankIcon {
                         name: "notes"
-                        size: Theme.iconSize - 4
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -1064,7 +1010,7 @@ FloatingWindow {
                     StyledText {
                         text: I18n.tr("Description", "event details section label for description")
                         font.pixelSize: Theme.fontSizeMedium
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -1072,9 +1018,9 @@ FloatingWindow {
 
                 StyledRect {
                     width: parent.width
-                    height: parent.height - parent.spacing - 24
-                    color: Theme.surfaceContainer
-                    radius: Theme.cornerRadius
+                    height: parent.height - parent.spacing - descHeader.height
+                    color: Theme.surfaceContainerLow
+                    radius: Theme.cornerRadiusM
 
                     DankFlickable {
                         anchors.fill: parent
@@ -1122,7 +1068,8 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
-                    placeholderText: I18n.tr("Add title", "event form placeholder for title input")
+                    outlined: true
+                    labelText: I18n.tr("Add title", "event form placeholder for title input")
                     text: eventModal.formTitle
                     onTextChanged: eventModal.formTitle = text
                     Component.onCompleted: forceActiveFocus()
@@ -1180,7 +1127,7 @@ FloatingWindow {
                     spacing: Theme.spacingM
                     visible: !eventModal.formAllDay
 
-                    DankTimePicker {
+                    DankTimeField {
                         width: (parent.width - dash.width - Theme.spacingM * 2) / 2
                         use24Hour: SettingsData.use24HourTime
                         minutes: eventModal.formStartMinutes
@@ -1199,7 +1146,7 @@ FloatingWindow {
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
-                    DankTimePicker {
+                    DankTimeField {
                         width: (parent.width - dash.width - Theme.spacingM * 2) / 2
                         use24Hour: SettingsData.use24HourTime
                         minutes: eventModal.formEndMinutes
@@ -1209,8 +1156,9 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     leftIconName: "place"
-                    placeholderText: I18n.tr("Location", "event form placeholder for location input")
+                    labelText: I18n.tr("Location", "event form placeholder for location input")
                     text: eventModal.formLocation
                     onTextChanged: eventModal.formLocation = text
                 }
@@ -1222,7 +1170,7 @@ FloatingWindow {
 
                     DankIcon {
                         name: "calendar_month"
-                        size: Theme.iconSize - 6
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.verticalCenter: parent.verticalCenter
                     }
@@ -1230,7 +1178,7 @@ FloatingWindow {
                     DankDropdown {
                         readonly property var writable: DankCalService.writableCalendars()
 
-                        width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
                         enabled: eventModal.createMode
                         opacity: enabled ? 1 : 0.5
                         options: writable.map(c => c.name)
@@ -1253,13 +1201,13 @@ FloatingWindow {
 
                     DankIcon {
                         name: "calendar_add_on"
-                        size: Theme.iconSize - 6
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
                     Column {
-                        width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
                         spacing: Theme.spacingXS
 
                         StyledText {
@@ -1273,7 +1221,6 @@ FloatingWindow {
                         DankButton {
                             text: I18n.tr("Add a calendar", "event form button to add a calendar when none exist")
                             iconName: "add"
-                            buttonHeight: 36
                             backgroundColor: Theme.primary
                             textColor: Theme.primaryText
                             onClicked: {
@@ -1291,14 +1238,14 @@ FloatingWindow {
 
                     DankIcon {
                         name: "repeat"
-                        size: Theme.iconSize - 6
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.top: parent.top
-                        anchors.topMargin: (40 - (Theme.iconSize - 6)) / 2
+                        anchors.topMargin: (Theme.iconButtonSize - Theme.iconSizeMedium) / 2
                     }
 
                     Column {
-                        width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
                         spacing: Theme.spacingXS
 
                         DankRecurrencePicker {
@@ -1333,13 +1280,13 @@ FloatingWindow {
 
                     DankIcon {
                         name: "repeat"
-                        size: Theme.iconSize - 6
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
                     Column {
-                        width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
                         spacing: 0
 
                         StyledText {
@@ -1368,14 +1315,14 @@ FloatingWindow {
 
                     DankIcon {
                         name: "notifications"
-                        size: Theme.iconSize - 6
+                        size: Theme.iconSizeMedium
                         color: Theme.surfaceVariantText
                         anchors.top: parent.top
-                        anchors.topMargin: (40 - (Theme.iconSize - 6)) / 2
+                        anchors.topMargin: (Theme.iconButtonSize - Theme.iconSizeMedium) / 2
                     }
 
                     Column {
-                        width: parent.width - (Theme.iconSize - 6) - Theme.spacingM
+                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
                         spacing: Theme.spacingS
 
                         Repeater {
@@ -1409,7 +1356,7 @@ FloatingWindow {
                                 DankActionButton {
                                     id: removeButton
                                     iconName: "close"
-                                    iconColor: Theme.surfaceVariantText
+                                    Accessible.name: I18n.tr("Remove reminder", "event form button that removes one reminder row")
                                     onClicked: eventModal.removeReminder(reminderRow.index)
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
@@ -1419,7 +1366,9 @@ FloatingWindow {
                         DankButton {
                             text: I18n.tr("Add reminder", "event form button to add another reminder")
                             iconName: "add"
-                            buttonHeight: 36
+                            buttonHeight: Theme.buttonHeightXS
+                            backgroundColor: Theme.secondaryContainer
+                            textColor: Theme.onSecondaryContainer
                             visible: eventModal.formReminders.length < eventModal.maxReminders
                             onClicked: eventModal.addReminder()
                         }
@@ -1428,11 +1377,11 @@ FloatingWindow {
 
                 StyledRect {
                     width: parent.width
-                    height: 150
-                    color: Theme.surfaceContainer
-                    radius: Theme.cornerRadius
-                    border.width: 1
-                    border.color: descArea.activeFocus ? Theme.primary : Theme.outlineLight
+                    height: Theme.textEditHeight
+                    color: Theme.surfaceContainerHigh
+                    radius: Theme.cornerRadiusXS
+                    border.width: descArea.activeFocus ? Theme.outlineWidthFocused : Theme.outlineWidth
+                    border.color: descArea.activeFocus ? Theme.primary : Theme.outlineVariant
 
                     DankFlickable {
                         anchors.fill: parent
@@ -1482,12 +1431,12 @@ FloatingWindow {
         property string linkUrl: ""
 
         width: parent.width
-        height: Math.max(32, infoColumn.implicitHeight)
+        height: Math.max(Theme.buttonHeightXS, infoColumn.implicitHeight)
 
         DankIcon {
             id: rowIcon
             name: parent.iconName
-            size: Theme.iconSize - 4
+            size: Theme.iconSizeMedium
             color: parent.accent
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -1504,7 +1453,7 @@ FloatingWindow {
             StyledText {
                 text: parent.parent.primary
                 font.pixelSize: Theme.fontSizeMedium
-                font.weight: Font.Medium
+                font.weight: Theme.fontWeightMedium
                 color: parent.parent.link ? Theme.primary : Theme.surfaceText
                 width: parent.width
                 elide: Text.ElideRight

@@ -83,9 +83,7 @@ Popup {
 
     background: Rectangle {
         color: Theme.surfaceContainerHigh
-        radius: Theme.cornerRadius
-        border.width: 1
-        border.color: Theme.outlineMedium
+        radius: Theme.cornerRadiusM
     }
 
     contentItem: FocusScope {
@@ -116,7 +114,7 @@ Popup {
         Column {
             id: menuColumn
             anchors.fill: parent
-            spacing: 1
+            spacing: Theme.groupedListGap
 
             LayoutMirroring.enabled: I18n.isRtl
             LayoutMirroring.childrenInherit: true
@@ -134,11 +132,24 @@ Popup {
                     readonly property bool isAction: itemType === "action"
                     readonly property bool itemEnabled: isAction && modelData.enabled !== false
 
+                    readonly property color contentColor: modelData.danger ? Theme.error : Theme.surfaceText
+                    readonly property color supportingColor: modelData.danger ? Theme.error : Theme.surfaceVariantText
+                    readonly property bool highlighted: isAction && root.currentIndex === index
+
                     width: parent.width
-                    height: itemType === "separator" ? 13 : (itemType === "header" ? 52 : 40)
-                    radius: Theme.cornerRadiusSmall
-                    color: isAction && root.currentIndex === index ? Theme.primaryBackground : "transparent"
-                    opacity: !isAction || itemEnabled ? 1 : 0.4
+                    height: {
+                        switch (itemType) {
+                        case "separator":
+                            return Theme.spacingM + Theme.dividerWidth;
+                        case "header":
+                            return Theme.listItemHeight;
+                        default:
+                            return Theme.menuItemHeight;
+                        }
+                    }
+                    radius: Theme.cornerRadiusXS
+                    color: highlighted ? Theme.withAlpha(contentColor, Theme.stateLayerFocus) : "transparent"
+                    opacity: !isAction || itemEnabled ? 1 : Theme.pendingOpacity
 
                     Rectangle {
                         visible: menuRow.itemType === "separator"
@@ -147,8 +158,8 @@ Popup {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: Theme.spacingS
                         anchors.rightMargin: Theme.spacingS
-                        height: 1
-                        color: Theme.outlineLight
+                        height: Theme.dividerWidth
+                        color: Theme.outlineVariant
                     }
 
                     Column {
@@ -158,12 +169,12 @@ Popup {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: Theme.spacingM
                         anchors.rightMargin: Theme.spacingM
-                        spacing: 1
+                        spacing: Theme.spacingXXS
 
                         StyledText {
                             text: menuRow.modelData.label || ""
                             font.pixelSize: Theme.fontSizeMedium
-                            font.weight: Font.Medium
+                            font.weight: Theme.fontWeightMedium
                             color: Theme.surfaceText
                             width: parent.width
                             elide: Text.ElideRight
@@ -191,17 +202,17 @@ Popup {
                         DankIcon {
                             visible: !!menuRow.modelData.icon
                             name: menuRow.modelData.icon || ""
-                            size: Theme.iconSize - 6
-                            color: menuRow.modelData.danger ? Theme.error : Theme.surfaceVariantText
+                            size: Theme.iconSizeMedium
+                            color: menuRow.supportingColor
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
                         StyledText {
                             text: menuRow.modelData.label
                             font.pixelSize: Theme.fontSizeMedium
-                            color: menuRow.modelData.danger ? Theme.error : Theme.surfaceText
+                            color: menuRow.contentColor
                             anchors.verticalCenter: parent.verticalCenter
-                            width: parent.width - (menuRow.modelData.icon ? Theme.iconSize - 6 + Theme.spacingM : 0) - (shortcutText.visible ? shortcutText.width + Theme.spacingM : 0)
+                            width: parent.width - (menuRow.modelData.icon ? Theme.iconSizeMedium + Theme.spacingM : 0) - (shortcutText.visible ? shortcutText.width + Theme.spacingM : 0)
                             elide: Text.ElideRight
                         }
 
@@ -217,8 +228,7 @@ Popup {
 
                     StateLayer {
                         visible: menuRow.isAction
-                        stateColor: menuRow.modelData.danger ? Theme.error : Theme.primary
-                        cornerRadius: parent.radius
+                        stateColor: menuRow.contentColor
                         enabled: menuRow.itemEnabled
                         disabled: !menuRow.itemEnabled
                         onClicked: {

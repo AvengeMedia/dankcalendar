@@ -143,7 +143,7 @@ FloatingWindow {
         return "";
     }
 
-    readonly property real chromeHeight: 48 + 60 + Theme.spacingL * 2
+    readonly property real chromeHeight: header.height + footer.height + Theme.spacingL * 2
     readonly property real contentNaturalHeight: contentColumn.implicitHeight
 
     title: I18n.tr("Import events", "import modal window title")
@@ -160,58 +160,19 @@ FloatingWindow {
         LayoutMirroring.enabled: I18n.isRtl
         LayoutMirroring.childrenInherit: true
 
-        Item {
+        DankWindowHeader {
+            id: header
             width: parent.width
-            height: 48
             z: 10
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: windowControls.tryStartMove()
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                color: Theme.surfaceContainer
-                opacity: 0.5
-            }
-
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.spacingL
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.spacingM
-
-                DankIcon {
-                    name: "download"
-                    size: Theme.iconSize - 4
-                    color: Theme.primary
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                StyledText {
-                    text: I18n.tr("Import events", "import modal header")
-                    font.pixelSize: Theme.fontSizeXLarge
-                    font.weight: Font.Medium
-                    color: Theme.surfaceText
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            DankActionButton {
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.spacingM
-                anchors.verticalCenter: parent.verticalCenter
-                circular: false
-                iconName: "close"
-                iconColor: Theme.surfaceText
-                onClicked: importModal.hide()
-            }
+            controls: windowControls
+            title: I18n.tr("Import events", "import modal header")
+            iconName: "download"
+            onCloseRequested: importModal.hide()
         }
 
         Item {
             width: parent.width
-            height: parent.height - 48 - footer.height - 1
+            height: parent.height - header.height - footer.height - Theme.dividerWidth
 
             DankFlickable {
                 anchors.fill: parent
@@ -254,12 +215,12 @@ FloatingWindow {
 
                             width: parent.width
                             height: rowColumn.implicitHeight + Theme.spacingM * 2
-                            radius: Theme.cornerRadius
-                            color: Theme.surfaceContainer
+                            radius: Theme.cornerRadiusM
+                            color: Theme.surfaceContainerLow
 
                             Rectangle {
-                                width: 4
-                                radius: 2
+                                width: Theme.spacingXS
+                                radius: Theme.cornerRadiusXXS
                                 anchors.left: parent.left
                                 anchors.leftMargin: Theme.spacingS
                                 anchors.top: parent.top
@@ -274,7 +235,7 @@ FloatingWindow {
                                 anchors.left: parent.left
                                 anchors.right: parent.right
                                 anchors.top: parent.top
-                                anchors.leftMargin: Theme.spacingM + Theme.spacingS + 4
+                                anchors.leftMargin: Theme.spacingM + Theme.spacingS + Theme.spacingXS
                                 anchors.rightMargin: Theme.spacingM
                                 anchors.topMargin: Theme.spacingM
                                 spacing: Theme.spacingXS
@@ -283,7 +244,7 @@ FloatingWindow {
                                     width: parent.width
                                     text: row.event.title
                                     font.pixelSize: Theme.fontSizeMedium
-                                    font.weight: Font.Medium
+                                    font.weight: Theme.fontWeightMedium
                                     color: Theme.surfaceText
                                     elide: Text.ElideRight
                                 }
@@ -328,9 +289,9 @@ FloatingWindow {
 
                                     DankButton {
                                         text: I18n.tr("Open", "import row button to open the event already on the calendar")
-                                        buttonHeight: 28
-                                        backgroundColor: Theme.surfaceContainerHigh
-                                        textColor: Theme.surfaceText
+                                        buttonHeight: Theme.buttonHeightXS
+                                        backgroundColor: Theme.secondaryContainer
+                                        textColor: Theme.onSecondaryContainer
                                         anchors.verticalCenter: parent.verticalCenter
                                         onClicked: importModal.openExisting(row.existing)
                                     }
@@ -344,14 +305,14 @@ FloatingWindow {
 
         Rectangle {
             width: parent.width
-            height: 1
-            color: Theme.outlineLight
+            height: Theme.dividerWidth
+            color: Theme.outlineVariant
         }
 
         Item {
             id: footer
             width: parent.width
-            height: 60
+            height: Theme.buttonHeightS + Theme.spacingM * 2
 
             StyledText {
                 anchors.left: parent.left
@@ -374,7 +335,7 @@ FloatingWindow {
                 spacing: Theme.spacingS
 
                 DankDropdown {
-                    width: 200
+                    width: Theme.fieldDefaultWidth
                     anchors.verticalCenter: parent.verticalCenter
                     visible: !importModal.noWritableCalendars
                     enabled: !importModal.importing
@@ -392,9 +353,8 @@ FloatingWindow {
 
                 DankButton {
                     text: I18n.tr("Cancel", "import dialog button to close without importing")
-                    buttonHeight: 38
                     backgroundColor: "transparent"
-                    textColor: Theme.surfaceText
+                    textColor: Theme.primary
                     onClicked: importModal.hide()
                 }
 
@@ -402,7 +362,6 @@ FloatingWindow {
                     visible: importModal.noWritableCalendars
                     text: I18n.tr("Add a calendar", "import dialog button to add a calendar when none can hold events")
                     iconName: "add"
-                    buttonHeight: 38
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     onClicked: {
@@ -415,15 +374,20 @@ FloatingWindow {
                     visible: !importModal.noWritableCalendars
                     text: importModal.importLabel()
                     iconName: "check"
-                    buttonHeight: 38
+                    busy: importModal.importing
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     enabled: !importModal.importing && !importModal.loading && importModal.pendingItems.length > 0
-                    opacity: enabled ? 1 : 0.5
                     onClicked: importModal.importPending()
                 }
             }
         }
+    }
+
+    Shortcut {
+        sequence: "Escape"
+        enabled: importModal.visible
+        onActivated: importModal.hide()
     }
 
     FloatingWindowControls {

@@ -80,7 +80,7 @@ Item {
 
     visible: opacity > 0
     implicitWidth: selectionLabel.width + actionRow.width + Theme.spacingL * 2 + Theme.spacingM
-    implicitHeight: 54
+    implicitHeight: Theme.buttonHeightM
     opacity: shown ? 1 : 0
     scale: shown ? 1 : 0.96
 
@@ -101,9 +101,9 @@ Item {
     StyledRect {
         anchors.fill: parent
         color: Theme.surfaceContainerHigh
-        radius: Theme.cornerRadiusLarge
-        border.color: Theme.primary
-        border.width: 1
+        radius: Theme.cornerRadiusXL
+        border.color: Theme.outlineVariant
+        border.width: Theme.outlineWidth
     }
 
     Row {
@@ -117,7 +117,7 @@ Item {
 
             DankIcon {
                 name: "select_all"
-                size: Theme.iconSize - 2
+                size: Theme.iconSize
                 color: Theme.primary
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -125,7 +125,7 @@ Item {
             StyledText {
                 text: I18n.tr("%1 selected", "multi-event action shelf selection count; %1 is event count").arg(root.controller ? root.controller.count : 0)
                 font.pixelSize: Theme.fontSizeMedium
-                font.weight: Font.Medium
+                font.weight: Theme.fontWeightMedium
                 color: Theme.surfaceText
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -133,7 +133,7 @@ Item {
 
         Row {
             id: actionRow
-            spacing: 2
+            spacing: Theme.spacingXXS
 
             Repeater {
                 model: ScriptModel {
@@ -143,8 +143,10 @@ Item {
                 Item {
                     id: action
                     required property var modelData
-                    width: Math.max(48, actionLabel.implicitWidth + Theme.spacingS * 2)
-                    height: 44
+                    readonly property color contentColor: modelData.danger ? Theme.error : Theme.surfaceVariantText
+
+                    width: Math.max(Theme.minimumTouchTargetSize, actionLabel.implicitWidth + Theme.spacingS * 2)
+                    height: Theme.minimumTouchTargetSize
 
                     Column {
                         anchors.centerIn: parent
@@ -152,23 +154,23 @@ Item {
 
                         DankIcon {
                             name: action.modelData.icon
-                            size: Theme.iconSize - 4
-                            color: action.modelData.danger ? Theme.error : Theme.surfaceVariantText
+                            size: Theme.iconSizeMedium
+                            color: action.contentColor
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
                         StyledText {
                             id: actionLabel
                             text: action.modelData.label
-                            font.pixelSize: Theme.fontSizeSmall - 2
-                            color: action.modelData.danger ? Theme.error : Theme.surfaceVariantText
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: action.contentColor
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 
                     StateLayer {
-                        stateColor: action.modelData.danger ? Theme.error : Theme.primary
-                        cornerRadius: Theme.cornerRadiusSmall
+                        stateColor: action.contentColor
+                        cornerRadius: Theme.cornerRadiusS
                         disabled: root.controller ? root.controller.busy : true
                         onClicked: root.run(action.modelData.id)
                     }

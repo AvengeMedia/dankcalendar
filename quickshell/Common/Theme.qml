@@ -7,6 +7,8 @@ import Quickshell.Io
 import qs.DankCommon.Common
 import qs.Services
 import "StockTheme.js" as StockTheme
+import "../DankCommon/Common/Shape.js" as Shape
+import "../DankCommon/Common/Surface.js" as Surface
 
 Singleton {
     id: root
@@ -90,19 +92,36 @@ Singleton {
             "primary": getMatugenColor("primary", fallback.primary),
             "primaryText": getMatugenColor("on_primary", fallback.primaryText),
             "primaryContainer": getMatugenColor("primary_container", fallback.primaryContainer),
+            "onPrimaryContainer": getMatugenColor("on_primary_container", fallback.onPrimaryContainer),
             "secondary": getMatugenColor("secondary", fallback.secondary),
+            "secondaryContainer": getMatugenColor("secondary_container", fallback.secondaryContainer),
+            "onSecondaryContainer": getMatugenColor("on_secondary_container", fallback.onSecondaryContainer),
+            "tertiary": getMatugenColor("tertiary", fallback.tertiary),
+            "tertiaryContainer": getMatugenColor("tertiary_container", fallback.tertiaryContainer),
+            "onTertiaryContainer": getMatugenColor("on_tertiary_container", fallback.onTertiaryContainer),
             "surface": getMatugenColor("surface", fallback.surface),
             "surfaceText": getMatugenColor("on_surface", fallback.surfaceText),
             "surfaceVariant": getMatugenColor("surface_variant", fallback.surfaceVariant),
             "surfaceVariantText": getMatugenColor("on_surface_variant", fallback.surfaceVariantText),
             "surfaceTint": getMatugenColor("surface_tint", fallback.surfaceTint),
+            "surfaceBright": getMatugenColor("surface_bright", fallback.surfaceBright),
+            "surfaceDim": getMatugenColor("surface_dim", fallback.surfaceDim),
             "background": getMatugenColor("background", fallback.background),
             "backgroundText": getMatugenColor("on_background", fallback.backgroundText),
             "outline": getMatugenColor("outline", fallback.outline),
+            "outlineVariant": getMatugenColor("outline_variant", fallback.outlineVariant),
+            "surfaceContainerLowest": getMatugenColor("surface_container_lowest", fallback.surfaceContainerLowest),
+            "surfaceContainerLow": getMatugenColor("surface_container_low", fallback.surfaceContainerLow),
             "surfaceContainer": getMatugenColor("surface_container", fallback.surfaceContainer),
             "surfaceContainerHigh": getMatugenColor("surface_container_high", fallback.surfaceContainerHigh),
             "surfaceContainerHighest": getMatugenColor("surface_container_highest", fallback.surfaceContainerHighest),
-            "error": fallback.error,
+            "inverseSurface": getMatugenColor("inverse_surface", fallback.inverseSurface),
+            "inverseOnSurface": getMatugenColor("inverse_on_surface", fallback.inverseOnSurface),
+            "scrim": getMatugenColor("scrim", fallback.scrim),
+            "error": getMatugenColor("error", fallback.error),
+            "errorText": getMatugenColor("on_error", fallback.errorText),
+            "errorContainer": getMatugenColor("error_container", fallback.errorContainer),
+            "errorContainerText": getMatugenColor("on_error_container", fallback.errorContainerText),
             "warning": fallback.warning,
             "info": fallback.info,
             "success": fallback.success
@@ -136,26 +155,89 @@ Singleton {
 
     property color primary: currentThemeData.primary
     property color primaryText: currentThemeData.primaryText
-    property color primaryContainer: currentThemeData.primaryContainer
+    property color primaryContainer: currentThemeData.primaryContainer || blend(surfaceContainerHigh, primary, 0.45)
     property color secondary: currentThemeData.secondary
+    property color secondaryContainer: currentThemeData.secondaryContainer || blend(surfaceContainerHigh, secondary, 0.35)
+    property color tertiary: currentThemeData.tertiary || currentThemeData.secondary
+    property color tertiaryContainer: currentThemeData.tertiaryContainer || blend(surfaceContainerHigh, tertiary, 0.35)
     property color surface: currentThemeData.surface
     property color surfaceText: currentThemeData.surfaceText
     property color surfaceVariant: currentThemeData.surfaceVariant
     property color surfaceVariantText: currentThemeData.surfaceVariantText
     property color surfaceTint: currentThemeData.surfaceTint
+    property color surfaceBright: currentThemeData.surfaceBright || (isLightMode ? surface : surfaceContainerHighest)
+    property color surfaceDim: currentThemeData.surfaceDim || (isLightMode ? surfaceContainer : background)
     property color background: currentThemeData.background
     property color backgroundText: currentThemeData.backgroundText
     property color outline: currentThemeData.outline
-    property color outlineVariant: Qt.rgba(outline.r, outline.g, outline.b, 0.6)
+    property color outlineVariant: currentThemeData.outlineVariant || withAlpha(outline, 0.6)
+    property color surfaceContainerLowest: currentThemeData.surfaceContainerLowest || blend(surfaceContainer, surface, 1.2)
+    property color surfaceContainerLow: currentThemeData.surfaceContainerLow || blend(surface, surfaceContainer, 0.667)
     property color surfaceContainer: currentThemeData.surfaceContainer
     property color surfaceContainerHigh: currentThemeData.surfaceContainerHigh
-    property color surfaceContainerHighest: currentThemeData.surfaceContainerHighest
+    property color surfaceContainerHighest: currentThemeData.surfaceContainerHighest || surfaceContainerHigh
+    property color inverseSurface: currentThemeData.inverseSurface || surfaceText
+    property color inverseOnSurface: currentThemeData.inverseOnSurface || surface
+    readonly property color contrastDark: "#000000"
+    readonly property color contrastLight: "#ffffff"
 
-    property color onSurface: surfaceText
-    property color onSurfaceVariant: surfaceVariantText
-    property color onPrimary: primaryText
+    property color onSurface
+    property color onSurfaceVariant
+    property color onPrimary
+    property color onPrimaryContainer
+    property color onSecondaryContainer
+    property color onTertiaryContainer
+    property color onError
+    property color onErrorContainer
+    property color onSurface_12: withAlpha(onSurface, 0.12)
+    property color onSurface_38: withAlpha(onSurface, 0.38)
+    property color onSurfaceVariant_30: withAlpha(onSurfaceVariant, 0.3)
+    readonly property list<QtObject> roleBindings: [
+        Binding {
+            target: root
+            property: "onSurface"
+            value: root.surfaceText
+        },
+        Binding {
+            target: root
+            property: "onSurfaceVariant"
+            value: root.surfaceVariantText
+        },
+        Binding {
+            target: root
+            property: "onPrimary"
+            value: root.primaryText
+        },
+        Binding {
+            target: root
+            property: "onPrimaryContainer"
+            value: root.currentThemeData.onPrimaryContainer || root.surfaceText
+        },
+        Binding {
+            target: root
+            property: "onSecondaryContainer"
+            value: root.currentThemeData.onSecondaryContainer || root.surfaceText
+        },
+        Binding {
+            target: root
+            property: "onTertiaryContainer"
+            value: root.currentThemeData.onTertiaryContainer || root.surfaceText
+        },
+        Binding {
+            target: root
+            property: "onError"
+            value: root.currentThemeData.errorText || root.surface
+        },
+        Binding {
+            target: root
+            property: "onErrorContainer"
+            value: root.currentThemeData.errorContainerText || root.onSurface
+        }
+    ]
+    readonly property real tonalTintAlpha: 0.16
 
     property color error: currentThemeData.error
+    property color errorContainer: currentThemeData.errorContainer || surfaceContainerHigh
     property color warning: currentThemeData.warning
     property color info: currentThemeData.info
     property color success: currentThemeData.success
@@ -187,8 +269,11 @@ Singleton {
     property color outlineHeavy: Qt.rgba(outline.r, outline.g, outline.b, 0.2)
     property color gridLine: Qt.rgba(outline.r, outline.g, outline.b, 0.25)
 
+    property color surfaceTextSecondary: Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.6)
+
     property color errorHover: Qt.rgba(error.r, error.g, error.b, 0.12)
     property color errorPressed: Qt.rgba(error.r, error.g, error.b, 0.16)
+    property color errorSelected: Qt.rgba(error.r, error.g, error.b, 0.3)
 
     property color shadowMedium: Qt.rgba(0, 0, 0, 0.08)
     property color shadowStrong: Qt.rgba(0, 0, 0, 0.3)
@@ -205,51 +290,242 @@ Singleton {
     property real spacingL: 16
     property real spacingXL: 24
 
-    property real fontScale: 1.0
+    readonly property real fontScale: SettingsData.fontScale
     property real fontSizeSmall: Math.round(fontScale * 12)
     property real fontSizeMedium: Math.round(fontScale * 14)
     property real fontSizeLarge: Math.round(fontScale * 16)
     property real fontSizeXLarge: Math.round(fontScale * 20)
+    property real fontSizeXXLarge: Math.round(fontScale * 28)
+    property real fontSizeDisplay: Math.round(fontScale * 36)
+    property real fontSizeDisplayLarge: Math.round(fontScale * 57)
 
     property real iconSize: 24
     property real iconSizeSmall: 16
+    readonly property real iconSizeMedium: 20
     property real iconSizeLarge: 32
 
-    property real cornerRadius: 12
-    property real cornerRadiusSmall: 8
-    property real cornerRadiusLarge: 16
+    readonly property real radiusStrength: SettingsData.radiusStrength
+    readonly property real shapeScale: Shape.scaleForStrength(radiusStrength)
+    readonly property real cornerRadius: cornerRadiusM
+    readonly property real cornerRadiusXXS: Shape.radius("xxs", shapeScale)
+    readonly property real cornerRadiusXS: Shape.radius("xs", shapeScale)
+    readonly property real cornerRadiusS: Shape.radius("s", shapeScale)
+    readonly property real cornerRadiusM: Shape.radius("m", shapeScale)
+    readonly property real cornerRadiusL: Shape.radius("l", shapeScale)
+    readonly property real cornerRadiusLIncreased: Shape.radius("lIncreased", shapeScale)
+    readonly property real cornerRadiusXL: Shape.radius("xl", shapeScale)
+    readonly property real cornerRadiusXLIncreased: Shape.radius("xlIncreased", shapeScale)
+    readonly property real cornerRadiusXXL: Shape.radius("xxl", shapeScale)
+    readonly property real cornerRadiusFull: shapeScale > 0 ? 9999 : 0
+    readonly property real cornerRadiusSmall: cornerRadiusS
+    readonly property real cornerRadiusLarge: cornerRadiusL
+    readonly property real windowRadius: cornerRadiusL
+
+    function scaledRadius(radius, limit) {
+        return Shape.scaledRadius(radius, limit, shapeScale);
+    }
+
+    function fullRadius(width, height) {
+        return Shape.fullRadius(width, height, shapeScale);
+    }
+
+    function buttonRadius(width, height, sizeHeight, pressed, round) {
+        return Shape.buttonRadius(width, height, sizeHeight, pressed, round, shapeScale);
+    }
+
+    readonly property real groupedListGap: spacingXXS
+    readonly property real groupedListInnerRadius: cornerRadiusXS
+    readonly property real groupedListOuterRadius: cornerRadiusL
+    readonly property int smallBreakpoint: 480
+    readonly property int mediumBreakpoint: 768
+    readonly property real iconButtonSize: 40
+    readonly property real minimumTouchTargetSize: 48
+    readonly property real listItemHeight: 56
+    readonly property real listItemTwoLineHeight: 72
+    readonly property real avatarSize: 36
+    readonly property real sliderTrackHeight: 16
+    readonly property real sliderHandleWidth: 4
+    readonly property real sliderHandleWidthDesktop: 6
+    readonly property real sliderHandleWidthDesktopPressed: 4
+    readonly property real sliderHandleHeightDesktop: 32
+    readonly property real sliderHandleHeight: 44
+    readonly property real sliderHandleGap: 6
+    readonly property real sliderTrackHeightS: 24
+    readonly property real sliderHandleHeightS: 44
+    readonly property real sliderTrackHeightM: 40
+    readonly property real sliderHandleHeightM: 44
+    readonly property real sliderTrackHeightL: 56
+    readonly property real sliderHandleHeightL: 68
+    readonly property real sliderTrackHeightXL: 96
+    readonly property real sliderHandleHeightXL: 108
+    readonly property real switchTrackWidth: 52
+    readonly property real switchTrackHeight: 32
+    readonly property real switchOutlineWidth: 2
+    readonly property real switchThumbUnselected: 16
+    readonly property real switchThumbSelected: 24
+    readonly property real switchThumbPressed: 28
+    readonly property real sliderStopSize: 4
+    readonly property real sliderTickSize: 3
+    readonly property real menuItemHeight: 40
+    readonly property real outlineWidth: 1
+    readonly property real outlineWidthFocused: 2
+    readonly property real dividerWidth: 1
+    readonly property real focusRingWidth: SettingsData.focusRingEnabled ? SettingsData.focusRingWidth : 0
+    readonly property real focusRingOffset: 3
+    readonly property color focusRingColor: {
+        switch (SettingsData.focusRingColor) {
+        case "secondary":
+            return secondary;
+        case "outline":
+            return outline;
+        case "surfaceText":
+            return surfaceText;
+        default:
+            return primary;
+        }
+    }
+    readonly property real scrimAlpha: 0.55
+    readonly property color scrimColor: currentThemeData.scrim || "#000000"
+    readonly property real buttonHeightXS: 32
+    readonly property real buttonHeightS: 40
+    readonly property real buttonHeightM: 56
+    readonly property real buttonMinWidth: 58
+    readonly property real pressScale: 0.98
+    readonly property real iconEnterScale: 0.6
+    readonly property real dialogMaxWidth: 560
+    readonly property real popupEnterScale: 0.92
+    readonly property real pendingOpacity: 0.6
+    readonly property real spinnerStrokeWidth: 2
+    readonly property real tabMinWidth: 64
+    readonly property real tabIndicatorHeight: 3
+    readonly property real tabIndicatorMinWidth: 24
+    readonly property real tabIndicatorInset: 2
+    readonly property real fieldDefaultWidth: 200
+    readonly property real fieldHeight: Math.round(fontSizeMedium * 3)
+    readonly property real fieldHeightLarge: 48
+    readonly property real outlinedFieldLabelLineHeight: 16
+    readonly property real textFieldSpatialStiffness: 800
+    readonly property real textFieldSpatialDampingRatio: 1
+    readonly property real textFieldFastEffectsStiffness: 3800
+    readonly property real textFieldSlowEffectsStiffness: 800
+    readonly property real textEditHeight: Math.round(fontSizeMedium * 8)
+    readonly property real tooltipMaxWidth: 500
+    readonly property int tooltipDelay: 400
+    readonly property real menuMaxHeight: 400
+    readonly property real clockFaceSize: 250
+    readonly property real clockOuterRingRatio: 0.34
+    readonly property real clockInnerRingRatio: 0.2
+    readonly property real clockHandWidth: 2
+    readonly property real clockHandleSize: 40
+    readonly property real clockCenterSize: 8
+    readonly property int clockSwitchDelay: 100
+    readonly property real chipIconSize: 18
+    readonly property real buttonGroupExpandRatio: 0.15
 
     property string fontFamily: defaultFontFamily
     property string monoFontFamily: defaultMonoFontFamily
-    property int fontWeight: Font.Normal
+    readonly property int fontWeight: SettingsData.fontWeight
+    readonly property int fontWeightMedium: shiftedFontWeight(Font.Medium)
+    readonly property int fontWeightBold: shiftedFontWeight(Font.Bold)
 
-    property real popupTransparency: 1.0
+    function shiftedFontWeight(weight) {
+        return Math.max(Font.Thin, Math.min(Font.Black, weight + fontWeight - Font.Normal));
+    }
+
+    readonly property real popupTransparency: 1.0
+    readonly property bool foregroundLayers: true
+    readonly property real foregroundLayerTransparency: 1.0
+    readonly property real foregroundAlpha: Surface.foregroundAlpha(foregroundLayers, foregroundLayerTransparency)
+    readonly property bool blurLayersActive: false
+    readonly property bool connectedSurfaceBlurEnabled: true
 
     readonly property color floatingSurface: withAlpha(surfaceContainer, popupTransparency)
-    readonly property color nestedSurface: withAlpha(surfaceContainerHigh, popupTransparency)
+    readonly property color nestedSurface: withAlpha(surfaceContainerHigh, foregroundAlpha)
+    readonly property real floatingWindowTransparency: popupTransparency
+    readonly property bool floatingWindowForegroundLayers: foregroundLayers
+    readonly property real floatingWindowForegroundTransparency: foregroundLayerTransparency
+    readonly property real floatingWindowForegroundAlpha: Surface.foregroundAlpha(floatingWindowForegroundLayers, floatingWindowForegroundTransparency)
+    readonly property color floatingWindowSurface: withAlpha(surfaceContainer, floatingWindowTransparency)
+    readonly property color floatingWindowNestedSurface: withAlpha(surfaceContainerHigh, floatingWindowForegroundAlpha)
+    readonly property color floatingWindowFieldColor: floatingWindowNestedSurface
+    readonly property color floatingWindowFieldBorderColor: withAlpha(outline, 0.16)
+    readonly property color floatingWindowFieldFocusedBorderColor: primary
+    readonly property color popupFieldColor: nestedSurface
+    readonly property color popupFieldBorderColor: withAlpha(outline, 0.16)
+    readonly property color popupFieldFocusedBorderColor: primary
+
+    function isFloatingWindow(item) {
+        return Surface.isFloatingWindow(item);
+    }
+
+    function foregroundColor(baseColor, floatingWindow = false) {
+        return blendAlpha(baseColor, floatingWindow ? floatingWindowForegroundAlpha : foregroundAlpha);
+    }
 
     property color widgetBaseHoverColor: {
         const blended = blend(surfaceContainerHigh, primary, 0.1);
         return withAlpha(blended, Math.max(0.3, blended.a));
     }
 
-    property int shorterDuration: 100
-    property int shortDuration: 200
-    property int mediumDuration: 400
-    property int longDuration: 600
-    property int standardEasing: Easing.OutCubic
-    property int emphasizedEasing: Easing.OutQuart
-
-    readonly property int currentAnimationSpeed: SettingsData.animationSpeed
-    readonly property int currentAnimationBaseDuration: [0, 250, 500, 750][SettingsData.animationSpeed] ?? 500
+    readonly property int currentAnimationBaseDuration: SettingsData.animationDuration
+    readonly property int currentAnimationSpeed: currentAnimationBaseDuration > 0 ? Style.AnimationSpeed.Custom : Style.AnimationSpeed.None
+    readonly property int shorterDuration: Math.round(currentAnimationBaseDuration * 0.2)
+    readonly property int shortDuration: Math.round(currentAnimationBaseDuration * 0.3)
+    readonly property int mediumDuration: Math.round(currentAnimationBaseDuration * 0.6)
+    readonly property int longDuration: currentAnimationBaseDuration
+    readonly property int standardEasing: Easing.OutCubic
+    readonly property int emphasizedEasing: Easing.OutQuart
     readonly property bool elevationEnabled: true
+    readonly property string elevationLightDirection: "top"
+
+    readonly property real stateLayerHover: 0.08
+    readonly property real stateLayerFocus: 0.12
+    readonly property real stateLayerPressed: 0.12
+    readonly property real stateLayerDrag: 0.16
+
+    readonly property var springSpecs: ({
+            "expressive": [560, 37],
+            "fast": [220, 23],
+            "default": [300, 24]
+        })
+    readonly property var springDampingScales: [1.22, 1.0, 0.82]
+    readonly property bool springMotionDisabled: currentAnimationBaseDuration <= 0
+    readonly property bool reduceMotion: SettingsData.reduceMotion
+    readonly property bool animationsEnabled: !reduceMotion && currentAnimationBaseDuration > 0
+
+    function springPreset(name, baseDuration) {
+        const spec = springSpecs[name] ?? springSpecs["default"];
+        const f = Math.max(0.05, baseDuration / 500);
+        const bounce = springDampingScales[Math.round(SettingsData.springBounce)] ?? 1;
+        return {
+            "stiffness": spec[0] / (f * f),
+            "damping": spec[1] / f * bounce,
+            "mass": 1
+        };
+    }
+
+    readonly property var elevationLevel1: ({
+            blurPx: 4,
+            offsetX: 0,
+            offsetY: 1,
+            spreadPx: 0,
+            alpha: 0.2
+        })
 
     readonly property var elevationLevel2: ({
             blurPx: 8,
-            offsetX: 4,
+            offsetX: 0,
             offsetY: 4,
             spreadPx: 0,
             alpha: 0.25
+        })
+
+    readonly property var elevationLevel3: ({
+            blurPx: 12,
+            offsetX: 0,
+            offsetY: 6,
+            spreadPx: 0,
+            alpha: 0.3
         })
 
     readonly property var expressiveCurves: ({
@@ -274,7 +550,6 @@ Singleton {
             "expressiveEffects": currentAnimationBaseDuration * 0.4
         })
 
-    // DankCommon's Style delegates the whole elevation contract to the host theme once one is set.
     function elevationOffsetXFor(level, direction, fallback) {
         return level?.offsetX ?? 0;
     }
@@ -299,6 +574,12 @@ Singleton {
         if (!c || c.r === undefined)
             return Qt.rgba(0, 0, 0, 0);
         return Qt.rgba(c.r, c.g, c.b, a);
+    }
+
+    function blendAlpha(c, a) {
+        if (!c || c.r === undefined)
+            return Qt.rgba(0, 0, 0, 0);
+        return Qt.rgba(c.r, c.g, c.b, c.a * a);
     }
 
     function blend(c1, c2, r) {

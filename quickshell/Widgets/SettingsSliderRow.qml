@@ -1,0 +1,87 @@
+import QtQuick
+import qs.Common
+import qs.DankCommon.Widgets
+
+SettingsRow {
+    id: root
+
+    property string text: ""
+    property string description: ""
+    property string minimumLabel: ""
+    property real value: 0
+    property alias minimum: slider.minimum
+    property alias maximum: slider.maximum
+    property alias step: slider.step
+    property alias showStops: slider.showStops
+    property alias unit: slider.unit
+    property alias decimals: slider.decimals
+
+    readonly property bool atMinimum: minimumLabel !== "" && slider.value === slider.minimum
+    readonly property int stepAmount: Math.max(1, step)
+
+    signal sliderValueChanged(int newValue)
+    signal sliderDragFinished(int finalValue)
+
+    function nudge(direction) {
+        const next = Math.max(minimum, Math.min(maximum, slider.value + direction * stepAmount));
+        if (next === slider.value)
+            return;
+        slider.value = next;
+        sliderValueChanged(next);
+        sliderDragFinished(next);
+    }
+
+    title: text
+    subtitle: description
+    onValueChanged: slider.value = Math.round(value)
+
+    StyledText {
+        text: root.minimumLabel
+        font.pixelSize: Theme.fontSizeSmall
+        color: Theme.surfaceVariantText
+        visible: root.atMinimum
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    body: Row {
+        width: parent.width
+        spacing: Theme.spacingS
+
+        DankActionButton {
+            buttonSize: Theme.iconButtonSize
+            iconName: "remove"
+            Accessible.name: I18n.tr("Decrease", "slider row step down button")
+            iconSize: Theme.iconSizeMedium
+            iconColor: Theme.surfaceVariantText
+            enabled: root.enabled && slider.value > slider.minimum
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: root.nudge(-1)
+        }
+
+        DankSlider {
+            id: slider
+            Accessible.name: root.text
+            Accessible.description: root.description
+            size: "s"
+            width: parent.width - (Theme.iconButtonSize + parent.spacing) * 2
+            anchors.verticalCenter: parent.verticalCenter
+            enabled: root.enabled
+            wheelEnabled: false
+            showValue: !root.atMinimum
+            Component.onCompleted: value = Math.round(root.value)
+            onSliderValueChanged: newValue => root.sliderValueChanged(newValue)
+            onSliderDragFinished: finalValue => root.sliderDragFinished(finalValue)
+        }
+
+        DankActionButton {
+            buttonSize: Theme.iconButtonSize
+            iconName: "add"
+            Accessible.name: I18n.tr("Increase", "slider row step up button")
+            iconSize: Theme.iconSizeMedium
+            iconColor: Theme.surfaceVariantText
+            enabled: root.enabled && slider.value < slider.maximum
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: root.nudge(1)
+        }
+    }
+}

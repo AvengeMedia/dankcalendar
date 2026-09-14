@@ -128,7 +128,7 @@ MouseArea {
         width: parent.width - 4
         y: root.fromSlot * root.slotHeight
         height: (root.toSlot - root.fromSlot) * root.slotHeight - 2
-        radius: Theme.cornerRadiusSmall
+        radius: Theme.cornerRadiusS
         color: Theme.withAlpha(Theme.primary, 0.18)
         border.color: Theme.primary
         border.width: 1
@@ -141,7 +141,7 @@ MouseArea {
             anchors.margins: 4
             text: SettingsData.formatTime(root.slotTime(root.fromSlot)) + " – " + SettingsData.formatTime(root.slotTime(root.toSlot))
             font.pixelSize: Theme.fontSizeSmall
-            font.weight: Font.Medium
+            font.weight: Theme.fontWeightMedium
             color: Theme.primary
             elide: Text.ElideRight
         }

@@ -4,9 +4,6 @@ import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
 
-// Toast renders ToastService's current message as a bottom-centered snackbar
-// within whatever window mounts it. Mount it last (high z) with anchors.fill so
-// it overlays the window's content.
 Item {
     id: root
 
@@ -21,12 +18,10 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Theme.spacingL + (showing ? 0 : Theme.spacingS)
-        height: 48
+        height: Theme.fieldHeightLarge
         width: Math.min(parent.width - Theme.spacingL * 2, contentRow.implicitWidth + Theme.spacingL * 2)
-        radius: Theme.cornerRadius
-        color: Theme.surfaceContainerHighest
-        border.width: 1
-        border.color: Theme.outlineMedium
+        radius: Theme.cornerRadiusXS
+        color: Theme.inverseSurface
         opacity: showing ? 1 : 0
 
         Behavior on opacity {
@@ -50,7 +45,7 @@ Item {
             StyledText {
                 text: ToastService.message
                 font.pixelSize: Theme.fontSizeMedium
-                color: Theme.surfaceText
+                color: Theme.inverseOnSurface
                 wrapMode: Text.NoWrap
                 maximumLineCount: 1
                 elide: Text.ElideRight
@@ -60,9 +55,10 @@ Item {
             DankButton {
                 visible: ToastService.actionLabel !== ""
                 text: ToastService.actionLabel
-                buttonHeight: 32
+                buttonHeight: Theme.buttonHeightXS
                 backgroundColor: "transparent"
-                textColor: Theme.primary
+                textColor: Theme.inverseOnSurface
+                focusPolicy: Qt.NoFocus
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: ToastService.runAction()
             }

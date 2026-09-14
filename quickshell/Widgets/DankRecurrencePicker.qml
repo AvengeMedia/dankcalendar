@@ -320,9 +320,9 @@ Column {
                 readonly property bool selected: root.byDays.indexOf(day) !== -1
 
                 width: Math.max(height, chipLabel.implicitWidth + Theme.spacingM * 2)
-                height: 32
-                radius: height / 2
-                color: selected ? Theme.primary : Theme.surfaceContainerHigh
+                height: Theme.buttonHeightXS
+                radius: Theme.fullRadius(width, height)
+                color: selected ? Theme.primary : Theme.secondaryContainer
                 activeFocusOnTab: true
 
                 Keys.onPressed: event => {
@@ -343,7 +343,7 @@ Column {
                     anchors.centerIn: parent
                     text: SettingsData.dayName(dayChip.day)
                     font.pixelSize: Theme.fontSizeSmall
-                    color: dayChip.selected ? Theme.primaryText : Theme.surfaceText
+                    color: dayChip.selected ? Theme.primaryText : Theme.onSecondaryContainer
                 }
 
                 StateLayer {

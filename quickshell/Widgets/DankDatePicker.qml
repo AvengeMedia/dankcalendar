@@ -16,7 +16,7 @@ Item {
 
     signal dateSelected(date value)
 
-    readonly property int cellSize: 36
+    readonly property int cellSize: Theme.iconButtonSize
 
     // updateDirection flips the calendar above the field when it would clip off
     // the bottom of the window.
@@ -32,7 +32,7 @@ Item {
         openUpwards = spaceBelow < popH + Theme.spacingXS && topInWindow > spaceBelow;
     }
 
-    height: 48
+    height: Theme.fieldHeightLarge
     activeFocusOnTab: enabled
 
     Keys.onPressed: event => {
@@ -51,10 +51,14 @@ Item {
         id: field
 
         anchors.fill: parent
-        radius: Theme.cornerRadius
-        color: Theme.surfaceContainer
-        border.width: popup.visible || root.activeFocus ? 2 : 1
-        border.color: popup.visible || root.activeFocus ? Theme.primary : Theme.outlineLight
+        radius: Theme.cornerRadiusXS
+        color: Theme.surfaceContainerHigh
+        border.width: popup.visible || root.activeFocus ? Theme.outlineWidthFocused : Theme.outlineWidth
+        border.color: popup.visible || root.activeFocus ? Theme.primary : Theme.outlineVariant
+
+        FocusRing {
+            visible: root.activeFocus && !popup.visible
+        }
 
         Row {
             anchors.left: parent.left
@@ -66,7 +70,7 @@ Item {
 
             DankIcon {
                 name: root.iconName
-                size: Theme.iconSize - 6
+                size: Theme.iconSizeMedium
                 color: popup.visible ? Theme.primary : Theme.surfaceVariantText
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -91,57 +95,50 @@ Item {
         property date displayDate: root.selectedDate
         property date cursorDate: root.selectedDate
 
-        readonly property int gridYear: displayDate.getFullYear()
-        readonly property int gridMonth: displayDate.getMonth()
-        readonly property int leadingDays: {
-            const offset = new Date(gridYear, gridMonth, 1).getDay() - root.firstDayOfWeek;
-            return offset < 0 ? offset + 7 : offset;
+        function focusDay(date) {
+            for (const cell of grid.children) {
+                if (cell.dayDate === undefined || !grid.sameDay(cell.dayDate, date))
+                    continue;
+                cell.forceActiveFocus(Qt.TabFocusReason);
+                return;
+            }
         }
 
-        function cellDate(index) {
-            return new Date(gridYear, gridMonth, 1 + index - leadingDays);
+        function focusedDay() {
+            for (const cell of grid.children) {
+                if (cell.dayDate !== undefined && cell.activeFocus)
+                    return cell.dayDate;
+            }
+            return cursorDate;
         }
 
-        function sameDay(a, b) {
-            return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-        }
-
-        function moveCursor(days) {
-            const d = new Date(cursorDate);
-            d.setDate(d.getDate() + days);
-            cursorDate = d;
-            if (d.getMonth() !== gridMonth || d.getFullYear() !== gridYear)
-                displayDate = d;
-        }
-
-        function moveCursorMonths(delta) {
-            const d = new Date(cursorDate);
+        function moveMonths(delta) {
+            const d = new Date(focusedDay());
             d.setMonth(d.getMonth() + delta);
             cursorDate = d;
             displayDate = d;
+            Qt.callLater(() => focusDay(d));
         }
 
-        function selectCursor() {
-            root.dateSelected(cursorDate);
+        function selectDay(date) {
+            root.dateSelected(date);
             close();
         }
 
         y: root.openUpwards ? -(height + Theme.spacingXS) : (field.height + Theme.spacingXS)
-        width: root.cellSize * 7 + padding * 2
+        width: root.cellSize * 7 + Theme.spacingXS * 6 + padding * 2
         padding: Theme.spacingS
         onAboutToShow: {
             displayDate = root.selectedDate;
             cursorDate = root.selectedDate;
             root.updateDirection();
         }
-        onOpened: calendarContent.forceActiveFocus()
+        onOpened: focusDay(root.selectedDate)
         onClosed: root.forceActiveFocus()
 
         background: Rectangle {
             color: Theme.surfaceContainerHigh
-            radius: Theme.cornerRadius
-            border.width: 1
-            border.color: Theme.outlineMedium
+            radius: Theme.cornerRadiusM
         }
 
         contentItem: Column {
@@ -154,28 +151,11 @@ Item {
 
             Keys.onPressed: event => {
                 switch (event.key) {
-                case Qt.Key_Left:
-                    popup.moveCursor(I18n.isRtl ? 1 : -1);
-                    break;
-                case Qt.Key_Right:
-                    popup.moveCursor(I18n.isRtl ? -1 : 1);
-                    break;
-                case Qt.Key_Up:
-                    popup.moveCursor(-7);
-                    break;
-                case Qt.Key_Down:
-                    popup.moveCursor(7);
-                    break;
                 case Qt.Key_PageUp:
-                    popup.moveCursorMonths(-1);
+                    popup.moveMonths(-1);
                     break;
                 case Qt.Key_PageDown:
-                    popup.moveCursorMonths(1);
-                    break;
-                case Qt.Key_Space:
-                case Qt.Key_Return:
-                case Qt.Key_Enter:
-                    popup.selectCursor();
+                    popup.moveMonths(1);
                     break;
                 default:
                     return;
@@ -185,92 +165,46 @@ Item {
 
             Item {
                 width: parent.width
-                height: 32
+                height: Theme.buttonHeightXS
 
                 DankActionButton {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
-                    iconColor: Theme.surfaceVariantText
-                    onClicked: popup.displayDate = new Date(popup.gridYear, popup.gridMonth - 1, 1)
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Previous month", "date picker button that shows the previous month")
+                    onClicked: popup.moveMonths(-1)
                 }
 
                 StyledText {
                     anchors.centerIn: parent
                     text: SettingsData.formatDate(popup.displayDate, "MMMM yyyy")
                     font.pixelSize: Theme.fontSizeMedium
-                    font.weight: Font.Medium
+                    font.weight: Theme.fontWeightMedium
                 }
 
                 DankActionButton {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
-                    iconColor: Theme.surfaceVariantText
-                    onClicked: popup.displayDate = new Date(popup.gridYear, popup.gridMonth + 1, 1)
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Next month", "date picker button that shows the next month")
+                    onClicked: popup.moveMonths(1)
                 }
             }
 
-            Row {
-                Repeater {
-                    model: 7
-
-                    Item {
-                        required property int index
-
-                        width: root.cellSize
-                        height: 24
-
-                        StyledText {
-                            anchors.centerIn: parent
-                            text: SettingsData.dayName((index + root.firstDayOfWeek) % 7)
-                            font.pixelSize: Theme.fontSizeSmall
-                            color: Theme.surfaceVariantText
-                        }
-                    }
-                }
-            }
-
-            Grid {
-                columns: 7
-
-                Repeater {
-                    model: 42
-
-                    Rectangle {
-                        id: dayCell
-
-                        required property int index
-                        readonly property date cellDay: popup.cellDate(index)
-                        readonly property bool inMonth: cellDay.getMonth() === popup.gridMonth
-                        readonly property bool selected: popup.sameDay(cellDay, root.selectedDate)
-                        readonly property bool isToday: popup.sameDay(cellDay, new Date())
-                        readonly property bool cursorDay: popup.sameDay(cellDay, popup.cursorDate)
-
-                        width: root.cellSize
-                        height: root.cellSize - 4
-                        radius: height / 2
-                        color: selected ? Theme.primary : (cursorDay ? Theme.primaryHover : "transparent")
-                        border.width: isToday && !selected ? 1 : 0
-                        border.color: Theme.primary
-
-                        StyledText {
-                            anchors.centerIn: parent
-                            text: dayCell.cellDay.getDate()
-                            font.pixelSize: Theme.fontSizeSmall
-                            color: dayCell.selected ? Theme.primaryText : (dayCell.inMonth ? Theme.surfaceText : Theme.surfaceVariantText)
-                        }
-
-                        StateLayer {
-                            stateColor: Theme.primary
-                            cornerRadius: parent.radius
-                            onClicked: {
-                                root.dateSelected(dayCell.cellDay);
-                                popup.close();
-                            }
-                        }
-                    }
-                }
+            DankMonthGrid {
+                id: grid
+                width: parent.width
+                height: root.cellSize * 6 + cellGap * 6 + weekdayRowHeight
+                displayDate: popup.displayDate
+                selectedDate: root.selectedDate
+                today: new Date()
+                firstDayOfWeek: root.firstDayOfWeek
+                dayNames: Array.from({
+                    "length": 7
+                }, (_, i) => SettingsData.dayName((i + root.firstDayOfWeek) % 7))
+                onDayClicked: date => popup.selectDay(date)
             }
         }
     }

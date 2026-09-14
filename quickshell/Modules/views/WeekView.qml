@@ -343,7 +343,8 @@ Item {
                 text: I18n.tr("Disable core hours", "core hours warning banner disable action")
                 backgroundColor: "transparent"
                 textColor: Theme.warning
-                buttonHeight: 28
+                buttonHeight: Theme.buttonHeightXS
+                focusPolicy: Qt.NoFocus
                 onClicked: SettingsData.coreHoursEnabled = false
             }
         }
@@ -390,9 +391,9 @@ Item {
                                 }
 
                                 Rectangle {
-                                    width: 32
-                                    height: 32
-                                    radius: 16
+                                    width: Theme.iconSizeLarge
+                                    height: Theme.iconSizeLarge
+                                    radius: Theme.fullRadius(width, height)
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     color: parent.parent.isToday ? Theme.primary : "transparent"
                                     border.color: Theme.primary
@@ -402,7 +403,7 @@ Item {
                                         anchors.centerIn: parent
                                         text: parent.parent.parent.d.getDate()
                                         font.pixelSize: Theme.fontSizeMedium
-                                        font.weight: Font.Medium
+                                        font.weight: Theme.fontWeightMedium
                                         color: parent.parent.parent.isToday ? Theme.primaryText : Theme.surfaceText
                                     }
                                 }
@@ -475,7 +476,7 @@ Item {
                                 color: Theme.withAlpha(Theme.primary, 0.12)
                                 border.color: Theme.primary
                                 border.width: 2
-                                radius: Theme.cornerRadiusSmall
+                                radius: Theme.cornerRadiusXXS
                             }
 
                             Column {
@@ -493,7 +494,7 @@ Item {
                                         readonly property bool isSelected: root.isEventSelected(modelData)
                                         width: parent.width
                                         height: root.allDayChipHeight
-                                        radius: 4
+                                        radius: Theme.cornerRadiusXS
                                         clip: true
                                         color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                                         border.color: isSelected ? Theme.primary : modelData.color
@@ -708,7 +709,7 @@ Item {
                                     color: Theme.withAlpha(Theme.primary, 0.1)
                                     border.color: Theme.primary
                                     border.width: 2
-                                    radius: Theme.cornerRadiusSmall
+                                    radius: Theme.cornerRadiusXXS
                                 }
 
                                 Rectangle {
@@ -718,7 +719,7 @@ Item {
                                     z: 1
                                     width: parent.width - 8
                                     height: (root.draggedEvent ? root.draggedEvent.durationHours : 0) * root.hourHeight - 2
-                                    radius: Theme.cornerRadiusSmall
+                                    radius: Theme.cornerRadiusS
                                     color: Theme.withAlpha(Theme.primary, 0.2)
                                     border.color: Theme.primary
                                     border.width: 1
@@ -772,7 +773,7 @@ Item {
                                         y: modelData.startHour * root.hourHeight
                                         width: laneWidth
                                         height: modelData.durationHours * root.hourHeight - 2
-                                        radius: Theme.cornerRadiusSmall
+                                        radius: Theme.cornerRadiusS
                                         clip: true
                                         color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                                         border.color: isSelected ? Theme.primary : modelData.color
@@ -791,7 +792,7 @@ Item {
                                             StyledText {
                                                 text: modelData.title
                                                 font.pixelSize: 11
-                                                font.weight: Font.Medium
+                                                font.weight: Theme.fontWeightMedium
                                                 color: Theme.surfaceText
                                                 width: parent.width
                                                 wrapMode: Text.WordWrap
@@ -870,9 +871,9 @@ Item {
                         Rectangle {
                             x: root.slidePx + (I18n.isRtl ? 6 - root.nowIndex : root.nowIndex) * root.dayWidth
                             anchors.verticalCenter: parent.top
-                            width: 10
-                            height: 10
-                            radius: 5
+                            width: Theme.spacingS + Theme.spacingXXS
+                            height: width
+                            radius: Theme.fullRadius(width, height)
                             color: Theme.error
                         }
                     }

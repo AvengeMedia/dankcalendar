@@ -37,7 +37,7 @@ Item {
 
         Column {
             id: mainColumn
-            topPadding: 4
+            topPadding: Theme.spacingL
 
             width: Math.min(550, parent.width - Theme.spacingL * 2)
             anchors.horizontalCenter: parent.horizontalCenter
@@ -46,7 +46,7 @@ Item {
             StyledRect {
                 width: parent.width
                 height: headerSection.implicitHeight + Theme.spacingL * 2
-                radius: Theme.cornerRadius
+                radius: Theme.cornerRadiusL
                 color: Theme.surfaceContainerHigh
 
                 Column {
@@ -87,7 +87,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             text: "DANK CALENDAR"
                             font.pixelSize: parent.compactLogo ? 26 : 38
-                            font.weight: Font.Bold
+                            font.weight: Theme.fontWeightBold
                             font.family: Theme.defaultFontFamily
                             color: Theme.surfaceText
                             antialiasing: true
@@ -97,7 +97,7 @@ Item {
                     StyledText {
                         text: aboutPage.versionText
                         font.pixelSize: Theme.fontSizeXLarge
-                        font.weight: Font.Bold
+                        font.weight: Theme.fontWeightBold
                         color: Theme.surfaceText
                         horizontalAlignment: Text.AlignHCenter
                         width: parent.width
@@ -123,9 +123,9 @@ Item {
                             id: docsButton
                             text: resourceButtonsRow.compactMode ? "" : I18n.tr("Docs", "about page resource button")
                             iconName: "menu_book"
-                            iconSize: 18
-                            backgroundColor: Qt.rgba(Theme.surfaceText.r, Theme.surfaceText.g, Theme.surfaceText.b, 0.08)
-                            textColor: Theme.surfaceText
+                            iconSize: Theme.chipIconSize
+                            backgroundColor: Theme.secondaryContainer
+                            textColor: Theme.onSecondaryContainer
                             onClicked: Qt.openUrlExternally(aboutPage.docsUrl)
                             onHoveredChanged: {
                                 if (hovered) {
@@ -140,9 +140,9 @@ Item {
                             id: githubButton
                             text: resourceButtonsRow.compactMode ? "" : I18n.tr("GitHub", "about page resource button")
                             iconName: "code"
-                            iconSize: 18
-                            backgroundColor: Qt.rgba(Theme.surfaceText.r, Theme.surfaceText.g, Theme.surfaceText.b, 0.08)
-                            textColor: Theme.surfaceText
+                            iconSize: Theme.chipIconSize
+                            backgroundColor: Theme.secondaryContainer
+                            textColor: Theme.onSecondaryContainer
                             onClicked: Qt.openUrlExternally(aboutPage.githubUrl)
                             onHoveredChanged: {
                                 if (hovered) {
@@ -157,9 +157,9 @@ Item {
                             id: kofiButton
                             text: resourceButtonsRow.compactMode ? "" : I18n.tr("Ko-fi", "about page resource button")
                             iconName: "favorite"
-                            iconSize: 18
-                            backgroundColor: Qt.rgba(Theme.primary.r, Theme.primary.g, Theme.primary.b, 0.12)
-                            textColor: Theme.primary
+                            iconSize: Theme.chipIconSize
+                            backgroundColor: Theme.secondaryContainer
+                            textColor: Theme.onSecondaryContainer
                             onClicked: Qt.openUrlExternally(aboutPage.kofiUrl)
                             onHoveredChanged: {
                                 if (hovered) {
@@ -204,7 +204,7 @@ Item {
             StyledRect {
                 width: parent.width
                 height: projectSection.implicitHeight + Theme.spacingL * 2
-                radius: Theme.cornerRadius
+                radius: Theme.cornerRadiusL
                 color: Theme.surfaceContainerHigh
 
                 Column {
@@ -228,7 +228,7 @@ Item {
                         StyledText {
                             text: I18n.tr("About", "about page project section header")
                             font.pixelSize: Theme.fontSizeLarge
-                            font.weight: Font.Medium
+                            font.weight: Theme.fontWeightMedium
                             color: Theme.surfaceText
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -257,7 +257,7 @@ Item {
             StyledRect {
                 width: parent.width
                 height: backendSection.implicitHeight + Theme.spacingL * 2
-                radius: Theme.cornerRadius
+                radius: Theme.cornerRadiusL
                 color: Theme.surfaceContainerHigh
 
                 Column {
@@ -281,7 +281,7 @@ Item {
                         StyledText {
                             text: I18n.tr("Backend", "about page daemon section header")
                             font.pixelSize: Theme.fontSizeLarge
-                            font.weight: Font.Medium
+                            font.weight: Theme.fontWeightMedium
                             color: Theme.surfaceText
                             anchors.verticalCenter: parent.verticalCenter
                         }
@@ -303,14 +303,14 @@ Item {
                             StyledText {
                                 text: DankCalService.daemonVersion || "—"
                                 font.pixelSize: Theme.fontSizeMedium
-                                font.weight: Font.Medium
+                                font.weight: Theme.fontWeightMedium
                                 color: Theme.surfaceText
                             }
                         }
 
                         Rectangle {
-                            width: 1
-                            height: 32
+                            width: Theme.dividerWidth
+                            height: Theme.iconSizeLarge
                             color: Theme.outlineVariant
                         }
 
@@ -326,14 +326,14 @@ Item {
                             StyledText {
                                 text: DankCalService.apiVersion > 0 ? `v${DankCalService.apiVersion}` : "—"
                                 font.pixelSize: Theme.fontSizeMedium
-                                font.weight: Font.Medium
+                                font.weight: Theme.fontWeightMedium
                                 color: Theme.surfaceText
                             }
                         }
 
                         Rectangle {
-                            width: 1
-                            height: 32
+                            width: Theme.dividerWidth
+                            height: Theme.iconSizeLarge
                             color: Theme.outlineVariant
                         }
 
@@ -350,9 +350,9 @@ Item {
                                 spacing: 4
 
                                 Rectangle {
-                                    width: 8
-                                    height: 8
-                                    radius: 4
+                                    width: Theme.spacingS
+                                    height: Theme.spacingS
+                                    radius: Theme.fullRadius(width, height)
                                     color: DankCalService.connected ? Theme.success : Theme.error
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
@@ -360,7 +360,7 @@ Item {
                                 StyledText {
                                     text: DankCalService.connected ? I18n.tr("Connected", "about page daemon status value") : I18n.tr("Offline", "about page daemon status value")
                                     font.pixelSize: Theme.fontSizeMedium
-                                    font.weight: Font.Medium
+                                    font.weight: Theme.fontWeightMedium
                                     color: Theme.surfaceText
                                 }
                             }
@@ -390,10 +390,10 @@ Item {
 
                                 Rectangle {
                                     required property var modelData
-                                    width: capText.implicitWidth + 16
-                                    height: 26
-                                    radius: 13
-                                    color: Qt.rgba(Theme.primary.r, Theme.primary.g, Theme.primary.b, 0.12)
+                                    width: capText.implicitWidth + Theme.spacingL
+                                    height: Theme.fontSizeMedium + Theme.spacingM
+                                    radius: Theme.fullRadius(width, height)
+                                    color: Theme.withAlpha(Theme.primary, Theme.tonalTintAlpha)
 
                                     StyledText {
                                         id: capText

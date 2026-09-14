@@ -92,9 +92,10 @@ Item {
         anchors.right: parent.right
         text: I18n.tr("Add task", "tasks view button to create a new task")
         iconName: "add"
-        buttonHeight: 36
+        buttonHeight: Theme.buttonHeightS
         backgroundColor: Theme.primary
         textColor: Theme.primaryText
+        focusPolicy: Qt.NoFocus
         enabled: DankCalService.taskListCalendars().length > 0
         onClicked: root.createTaskRequested()
     }
@@ -136,7 +137,7 @@ Item {
                     StyledText {
                         text: section.modelData.label
                         font.pixelSize: Theme.fontSizeLarge
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: section.modelData.overdue ? Theme.error : Theme.surfaceText
                         width: parent.width
                     }
@@ -152,15 +153,14 @@ Item {
                             readonly property bool overdue: section.modelData.overdue
                             width: root.width
                             height: Math.max(60, contentRow.implicitHeight + Theme.spacingM * 2)
-                            color: Theme.surfaceContainer
-                            radius: Theme.cornerRadius
+                            color: Theme.surfaceContainerLow
+                            radius: Theme.cornerRadiusM
 
                             // Declared before contentRow so the checkbox's own
                             // StateLayer, on top, wins clicks in its area while
                             // this one handles the rest of the card.
                             StateLayer {
-                                stateColor: Theme.primary
-                                cornerRadius: parent.radius
+                                stateColor: Theme.surfaceText
                                 onClicked: root.taskClicked(card.modelData)
                             }
 
@@ -177,7 +177,7 @@ Item {
                                     id: checkbox
                                     width: 22
                                     height: 22
-                                    radius: 11
+                                    radius: Theme.fullRadius(width, height)
                                     anchors.verticalCenter: parent.verticalCenter
                                     color: card.modelData.completed ? card.modelData.color : "transparent"
                                     border.color: card.modelData.color
@@ -186,7 +186,7 @@ Item {
                                     DankIcon {
                                         anchors.centerIn: parent
                                         name: "check"
-                                        size: 14
+                                        size: Theme.iconSizeSmall
                                         color: Theme.primaryText
                                         visible: card.modelData.completed
                                     }
@@ -207,7 +207,7 @@ Item {
                                     StyledText {
                                         text: card.modelData.title
                                         font.pixelSize: Theme.fontSizeLarge
-                                        font.weight: Font.Medium
+                                        font.weight: Theme.fontWeightMedium
                                         font.strikeout: card.modelData.completed
                                         color: card.modelData.completed ? Theme.surfaceVariantText : Theme.surfaceText
                                         width: parent.width
@@ -230,7 +230,7 @@ Item {
                                         Rectangle {
                                             width: 8
                                             height: 8
-                                            radius: 4
+                                            radius: Theme.fullRadius(width, height)
                                             anchors.verticalCenter: parent.verticalCenter
                                             color: card.modelData.color
                                         }
@@ -256,10 +256,10 @@ Item {
                                     id: priorityFlag
                                     anchors.verticalCenter: parent.verticalCenter
                                     name: "flag"
-                                    size: Theme.iconSize - 6
+                                    size: Theme.chipIconSize
                                     color: Theme.error
                                     visible: card.modelData.priority > 0 && card.modelData.priority <= 4
-                                    width: visible ? Theme.iconSize - 6 : 0
+                                    width: visible ? Theme.chipIconSize : 0
                                 }
                             }
                         }

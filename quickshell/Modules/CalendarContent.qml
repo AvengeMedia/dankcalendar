@@ -17,7 +17,9 @@ Item {
     property date todayStart: new Date()
     property real rangeStartTime: 0
     property real rangeEndTime: 0
+    property bool menuButtonVisible: false
 
+    signal menuRequested
     signal todayRequested
     signal previousRequested
     signal nextRequested
@@ -59,72 +61,100 @@ Item {
         spacing: 0
 
         Item {
+            id: toolbar
+            readonly property bool stacked: navigationRow.width + titleButton.implicitWidth + actionsRow.width + Theme.spacingL * 2 + Theme.spacingS * 2 > width
             width: parent.width
-            height: 56
+            height: Theme.buttonHeightM * (stacked ? 2 : 1)
 
             Row {
+                id: navigationRow
                 anchors.left: parent.left
                 anchors.leftMargin: Theme.spacingL
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.spacingM
+                y: (Theme.buttonHeightM - height) / 2
+                spacing: Theme.spacingS
+
+                DankActionButton {
+                    visible: root.menuButtonVisible
+                    iconName: "menu"
+                    iconColor: Theme.surfaceText
+                    buttonSize: Theme.buttonHeightS
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Toggle sidebar", "toolbar button that shows or hides the sidebar")
+                    anchors.verticalCenter: parent.verticalCenter
+                    onClicked: root.menuRequested()
+                }
 
                 DankButton {
                     text: I18n.tr("Today", "header button that jumps to the current date")
                     iconName: "today"
-                    buttonHeight: 36
-                    horizontalPadding: Theme.spacingM
-                    backgroundColor: "transparent"
-                    textColor: Theme.surfaceText
+                    buttonHeight: Theme.buttonHeightS
+                    backgroundColor: Theme.secondaryContainer
+                    textColor: Theme.onSecondaryContainer
+                    focusPolicy: Qt.NoFocus
+                    anchors.verticalCenter: parent.verticalCenter
                     onClicked: root.todayRequested()
                 }
 
                 DankActionButton {
                     iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
-                    iconSize: Theme.iconSize - 4
                     iconColor: Theme.surfaceText
-                    circular: true
+                    buttonSize: Theme.buttonHeightS
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Previous", "toolbar button that moves to the previous period")
                     onClicked: root.previousRequested()
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
                 DankActionButton {
                     iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
-                    iconSize: Theme.iconSize - 4
                     iconColor: Theme.surfaceText
-                    circular: true
+                    buttonSize: Theme.buttonHeightS
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Next", "toolbar button that moves to the next period")
                     onClicked: root.nextRequested()
                     anchors.verticalCenter: parent.verticalCenter
                 }
+            }
 
-                Rectangle {
-                    width: headerTitleText.implicitWidth + Theme.spacingM * 2
-                    height: 36
-                    radius: Theme.cornerRadius
-                    color: "transparent"
-                    anchors.verticalCenter: parent.verticalCenter
+            StyledRect {
+                id: titleButton
+                implicitWidth: headerTitleText.implicitWidth + Theme.spacingM * 2
+                anchors.left: toolbar.stacked ? parent.left : navigationRow.right
+                anchors.leftMargin: toolbar.stacked ? Theme.spacingL : Theme.spacingS
+                anchors.right: actionsRow.left
+                anchors.rightMargin: Theme.spacingS
+                anchors.verticalCenter: actionsRow.verticalCenter
+                height: Theme.buttonHeightS
+                radius: Theme.cornerRadiusS
 
-                    StyledText {
-                        id: headerTitleText
-                        anchors.centerIn: parent
-                        text: root.headerTitle()
-                        font.pixelSize: Theme.fontSizeXLarge
-                        font.weight: Font.Medium
-                        color: Theme.surfaceText
-                    }
+                StyledText {
+                    id: headerTitleText
+                    anchors.fill: parent
+                    anchors.leftMargin: Theme.spacingM
+                    anchors.rightMargin: Theme.spacingM
+                    text: root.headerTitle()
+                    font.pixelSize: Theme.fontSizeXLarge
+                    font.weight: Theme.fontWeightMedium
+                    color: Theme.surfaceText
+                    wrapMode: Text.NoWrap
+                    elide: Text.ElideRight
+                    horizontalAlignment: Text.AlignLeft
+                }
 
-                    StateLayer {
-                        stateColor: Theme.primary
-                        cornerRadius: parent.radius
-                        onClicked: root.goToDateRequested()
-                    }
+                StateLayer {
+                    stateColor: Theme.surfaceText
+                    tooltipText: headerTitleText.truncated ? headerTitleText.text : ""
+                    onClicked: root.goToDateRequested()
                 }
             }
 
             Row {
+                id: actionsRow
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.spacingL
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.spacingS
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: (Theme.buttonHeightM - height) / 2
+                spacing: Theme.spacingXS
 
                 DankActionButton {
                     id: refreshButton
@@ -134,7 +164,9 @@ Item {
 
                     iconName: syncing ? "" : "refresh"
                     iconColor: Theme.surfaceText
-                    circular: true
+                    buttonSize: Theme.buttonHeightS
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Sync now", "account context menu action to sync the account")
                     enabled: DankCalService.connected
                     onClicked: DankCalService.refreshAll()
                     onLoadingChanged: {
@@ -149,7 +181,7 @@ Item {
 
                     DankSpinner {
                         anchors.centerIn: parent
-                        size: Theme.iconSize - 6
+                        size: Theme.iconSizeMedium
                         color: Theme.primary
                         visible: refreshButton.syncing
                     }
@@ -158,28 +190,33 @@ Item {
                 DankActionButton {
                     iconName: "search"
                     iconColor: Theme.surfaceText
-                    circular: true
+                    buttonSize: Theme.buttonHeightS
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Search events", "search modal input placeholder")
                     onClicked: root.searchRequested()
                 }
 
                 DankActionButton {
                     iconName: "settings"
                     iconColor: Theme.surfaceText
-                    circular: true
+                    buttonSize: Theme.buttonHeightS
+                    focusPolicy: Qt.NoFocus
+                    Accessible.name: I18n.tr("Settings", "settings window header title")
                     onClicked: root.settingsRequested()
                 }
             }
         }
 
         Rectangle {
+            id: toolbarDivider
             width: parent.width
-            height: 1
-            color: Theme.outlineLight
+            height: Theme.dividerWidth
+            color: Theme.outlineVariant
         }
 
         Item {
             width: parent.width
-            height: parent.height - 57
+            height: parent.height - toolbar.height - toolbarDivider.height
 
             Loader {
                 id: viewLoader

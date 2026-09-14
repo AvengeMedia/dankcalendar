@@ -1,11 +1,10 @@
 import QtQuick
-import QtQuick.Controls
 import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
 
-Popup {
+DankOverlayDialog {
     id: root
 
     property var calendar: null
@@ -18,95 +17,55 @@ Popup {
         nameField.forceActiveFocus();
     }
 
+    function useSyncedName() {
+        DankCalService.renameCalendar(calendar.id, "");
+        close();
+    }
+
     function submit() {
         if (!calendar)
             return;
         const trimmed = nameField.text.trim();
         if (trimmed === "")
             return;
-
-        // Storing the provider's own name is the same as clearing the override
         const next = trimmed === calendar.providerName ? "" : trimmed;
         DankCalService.renameCalendar(calendar.id, next);
         close();
     }
 
-    parent: Overlay.overlay
-    anchors.centerIn: parent
-    modal: true
-    width: Math.min(400, parent.width - Theme.spacingXL * 2)
-    padding: Theme.spacingL
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    title: I18n.tr("Rename calendar", "rename calendar dialog header")
+    supportingText: hasOverride ? I18n.tr("Synced as \"%1\". The name only changes in Dank Calendar.", "rename calendar dialog note showing provider name").arg(calendar.providerName) : ""
+    onAccepted: submit()
 
-    Overlay.modal: Rectangle {
-        color: Qt.rgba(0, 0, 0, 0.4)
+    DankTextField {
+        id: nameField
+        width: parent.width
+        outlined: true
+        labelText: I18n.tr("Calendar name", "rename calendar dialog placeholder for name input")
+        onAccepted: root.submit()
+        Keys.onReturnPressed: event => event.accepted = true
+        Keys.onEnterPressed: event => event.accepted = true
     }
 
-    background: Rectangle {
-        color: Theme.surfaceContainerHigh
-        radius: Theme.cornerRadiusLarge
-        border.width: 1
-        border.color: Theme.outlineMedium
-    }
-
-    contentItem: Column {
-        spacing: Theme.spacingM
-
-        LayoutMirroring.enabled: I18n.isRtl
-        LayoutMirroring.childrenInherit: true
-
-        StyledText {
-            width: parent.width
-            text: I18n.tr("Rename calendar", "rename calendar dialog header")
-            font.pixelSize: Theme.fontSizeLarge
-            font.weight: Font.Medium
-            color: Theme.surfaceText
-        }
-
-        DankTextField {
-            id: nameField
-            width: parent.width
-            placeholderText: I18n.tr("Calendar name", "rename calendar dialog placeholder for name input")
-            onAccepted: root.submit()
-        }
-
-        StyledText {
+    actions: [
+        DankButton {
             visible: root.hasOverride
-            text: I18n.tr("Synced as \"%1\". The name only changes in Dank Calendar.", "rename calendar dialog note showing provider name").arg(root.calendar ? root.calendar.providerName : "")
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.surfaceVariantText
-            width: parent.width
-            wrapMode: Text.WordWrap
+            text: I18n.tr("Use synced name", "rename calendar dialog button to revert to provider name")
+            backgroundColor: "transparent"
+            textColor: Theme.primary
+            onClicked: root.useSyncedName()
+        },
+        DankButton {
+            text: I18n.tr("Cancel", "rename calendar dialog button to cancel")
+            backgroundColor: Theme.secondaryContainer
+            textColor: Theme.onSecondaryContainer
+            onClicked: root.close()
+        },
+        DankButton {
+            text: I18n.tr("Save", "rename calendar dialog button to save name")
+            backgroundColor: Theme.primary
+            textColor: Theme.primaryText
+            onClicked: root.submit()
         }
-
-        Row {
-            anchors.right: parent.right
-            spacing: Theme.spacingS
-
-            DankButton {
-                visible: root.hasOverride
-                text: I18n.tr("Use synced name", "rename calendar dialog button to revert to provider name")
-                backgroundColor: "transparent"
-                textColor: Theme.surfaceVariantText
-                onClicked: {
-                    DankCalService.renameCalendar(root.calendar.id, "");
-                    root.close();
-                }
-            }
-
-            DankButton {
-                text: I18n.tr("Cancel", "rename calendar dialog button to cancel")
-                backgroundColor: "transparent"
-                textColor: Theme.surfaceText
-                onClicked: root.close()
-            }
-
-            DankButton {
-                text: I18n.tr("Save", "rename calendar dialog button to save name")
-                backgroundColor: Theme.primary
-                textColor: Theme.primaryText
-                onClicked: root.submit()
-            }
-        }
-    }
+    ]
 }

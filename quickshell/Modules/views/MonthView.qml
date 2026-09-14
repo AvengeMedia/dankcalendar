@@ -206,7 +206,7 @@ Item {
                         anchors.centerIn: parent
                         text: SettingsData.dayName((index + root.firstDayOfWeek) % 7)
                         font.pixelSize: Theme.fontSizeSmall
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceVariantText
                     }
                 }
@@ -355,7 +355,7 @@ Item {
                             color: Theme.primaryBackground
                             border.color: Theme.primary
                             border.width: 1
-                            radius: Theme.cornerRadiusSmall
+                            radius: Theme.cornerRadiusXXS
                         }
 
                         Rectangle {
@@ -365,7 +365,7 @@ Item {
                             color: Theme.withAlpha(Theme.primary, 0.12)
                             border.color: Theme.primary
                             border.width: 2
-                            radius: Theme.cornerRadiusSmall
+                            radius: Theme.cornerRadiusXXS
                             z: 4
                         }
 
@@ -379,10 +379,10 @@ Item {
                             anchors.rightMargin: dayCell.previewTrailing ? 2 : 0
                             height: root.eventChipHeight
                             color: Theme.primary
-                            topLeftRadius: dayCell.previewLeading ? 4 : 0
-                            bottomLeftRadius: dayCell.previewLeading ? 4 : 0
-                            topRightRadius: dayCell.previewTrailing ? 4 : 0
-                            bottomRightRadius: dayCell.previewTrailing ? 4 : 0
+                            topLeftRadius: dayCell.previewLeading ? Theme.cornerRadiusXXS : 0
+                            bottomLeftRadius: dayCell.previewLeading ? Theme.cornerRadiusXXS : 0
+                            topRightRadius: dayCell.previewTrailing ? Theme.cornerRadiusXXS : 0
+                            bottomRightRadius: dayCell.previewTrailing ? Theme.cornerRadiusXXS : 0
                             z: 3
 
                             StyledText {
@@ -410,7 +410,7 @@ Item {
 
                             Rectangle {
                                 anchors.fill: parent
-                                radius: width / 2
+                                radius: Theme.fullRadius(width, height)
                                 color: Theme.primary
                                 visible: parent.parent.isToday
                             }
@@ -419,7 +419,7 @@ Item {
                                 anchors.centerIn: parent
                                 text: parent.parent.cellDate.getDate()
                                 font.pixelSize: parent.parent.isToday ? Theme.fontSizeMedium : Theme.fontSizeSmall
-                                font.weight: parent.parent.isToday ? Font.Medium : Font.Normal
+                                font.weight: parent.parent.isToday ? Theme.fontWeightMedium : Theme.fontWeight
                                 color: {
                                     if (parent.parent.isToday)
                                         return Theme.primaryText;
@@ -462,7 +462,7 @@ Item {
                                     readonly property bool awaitingReply: modelData.myResponse === "needs-action"
                                     width: parent.width
                                     height: root.eventChipHeight
-                                    radius: 4
+                                    radius: Theme.cornerRadiusXS
                                     clip: true
                                     color: awaitingReply ? "transparent" : Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
                                     border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
@@ -484,7 +484,7 @@ Item {
                                         Rectangle {
                                             width: 3
                                             height: 12
-                                            radius: 1.5
+                                            radius: Theme.fullRadius(width, height)
                                             color: parent.parent.modelData.color
                                             anchors.verticalCenter: parent.verticalCenter
                                         }

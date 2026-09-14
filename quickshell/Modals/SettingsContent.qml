@@ -313,19 +313,21 @@ Item {
         }
     }
 
-    component SectionHeader: Column {
+    component PageHeader: Column {
         property string title: ""
         property string subtitle: ""
 
         width: parent.width
         spacing: Theme.spacingXS
+        bottomPadding: Theme.spacingS
 
         StyledText {
             text: parent.title
             font.pixelSize: Theme.fontSizeXLarge
-            font.weight: Font.Medium
+            font.weight: Theme.fontWeightMedium
             color: Theme.surfaceText
             width: parent.width
+            horizontalAlignment: Text.AlignLeft
         }
 
         StyledText {
@@ -334,335 +336,240 @@ Item {
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.surfaceVariantText
             width: parent.width
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignLeft
         }
     }
 
-    component SettingsRow: StyledRect {
-        id: settingsRow
-        property string label: ""
-        property string description: ""
-        default property alias trailingContent: trailing.data
+    component OptionDropdownRow: SettingsDropdownRow {
+        id: optionRow
+        property var optionList: []
+        property var current: null
 
-        width: parent.width
-        height: 64
-        color: Theme.surfaceContainer
-        radius: Theme.cornerRadius
+        signal picked(var value)
 
-        Column {
-            anchors.left: parent.left
-            anchors.leftMargin: Theme.spacingL
-            anchors.right: trailing.left
-            anchors.rightMargin: Theme.spacingM
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: 2
-
-            StyledText {
-                text: settingsRow.label
-                font.pixelSize: Theme.fontSizeMedium
-                font.weight: Font.Medium
-                color: Theme.surfaceText
-                width: parent.width
-                elide: Text.ElideRight
-            }
-
-            StyledText {
-                visible: text !== ""
-                text: settingsRow.description
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.surfaceVariantText
-                width: parent.width
-                elide: Text.ElideRight
-            }
-        }
-
-        Row {
-            id: trailing
-            anchors.right: parent.right
-            anchors.rightMargin: Theme.spacingM
-            anchors.verticalCenter: parent.verticalCenter
-            spacing: Theme.spacingS
-        }
+        options: root.optionLabels(optionList)
+        currentValue: root.labelForValue(optionList, current)
+        onValueChanged: label => picked(root.valueForLabel(optionList, label))
     }
 
     Component {
         id: generalPage
-        DankFlickable {
-            clip: true
-            contentWidth: width
-            contentHeight: generalColumn.implicitHeight
+        SettingsPage {
+            PageHeader {
+                title: I18n.tr("General", "general settings section header")
+                subtitle: I18n.tr("Defaults follow your locale unless overridden.", "general settings section subtitle")
+            }
 
-            Column {
-                id: generalColumn
-                width: parent.width
-                padding: Theme.spacingL
-                spacing: Theme.spacingL
+            SettingsSectionLabel {
+                text: I18n.tr("App", "general settings section label")
+            }
 
-                SectionHeader {
-                    title: I18n.tr("General", "general settings section header")
-                    subtitle: I18n.tr("Defaults follow your locale unless overridden.", "general settings section subtitle")
+            SettingsGroup {
+                SettingsToggleRow {
+                    text: I18n.tr("Start at login", "autostart setting label")
+                    description: I18n.tr("Launch Dank Calendar in the background when you log in.", "autostart setting description")
+                    checked: DankCalService.autostartEnabled
+                    enabled: DankCalService.connected
+                    onToggled: checked => DankCalService.setAutostart(checked)
                 }
 
-                Column {
-                    width: parent.width - Theme.spacingL * 2
-                    spacing: Theme.spacingS
+                SettingsButtonGroupRow {
+                    text: I18n.tr("Close behavior", "close behavior setting label")
+                    description: I18n.tr("What the window's close button does.", "close behavior setting description")
+                    model: [I18n.tr("Minimize", "close behavior button group option to hide to tray"), I18n.tr("Quit", "close behavior button group option to quit the app")]
+                    currentIndex: SettingsData.closeBehavior === "quit" ? 1 : 0
+                    onSelectionChanged: (index, selected) => {
+                        if (!selected)
+                            return;
+                        SettingsData.closeBehavior = index === 1 ? "quit" : "minimize";
+                    }
+                }
 
-                    SettingsRow {
-                        label: I18n.tr("Start at login", "autostart setting label")
-                        description: I18n.tr("Launch Dank Calendar in the background when you log in.", "autostart setting description")
+                SettingsToggleRow {
+                    text: I18n.tr("Show tray icon", "tray icon toggle label")
+                    description: !SettingsData.showTrayIcon && SettingsData.closeBehavior === "minimize" ? I18n.tr("Closing hides the window; reopen it from your app launcher.", "tray icon toggle warning when closing only minimizes") : I18n.tr("Show Dank Calendar in the system tray.", "tray icon toggle description")
+                    checked: SettingsData.showTrayIcon
+                    onToggled: checked => SettingsData.showTrayIcon = checked
+                }
 
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: DankCalService.autostartEnabled
-                            enabled: DankCalService.connected
-                            onToggled: checked => DankCalService.setAutostart(checked)
+                OptionDropdownRow {
+                    text: I18n.tr("Sync interval", "sync interval setting label")
+                    description: I18n.tr("How often accounts are polled for changes.", "sync interval setting description")
+                    dropdownWidth: 150
+                    optionList: root.syncIntervalOptions
+                    current: SettingsData.syncIntervalMinutes
+                    onPicked: value => SettingsData.syncIntervalMinutes = value
+                }
+            }
+
+            SettingsSectionLabel {
+                text: I18n.tr("Language and time", "general settings section label")
+            }
+
+            SettingsGroup {
+                OptionDropdownRow {
+                    text: I18n.tr("Language", "interface language setting label")
+                    description: I18n.tr("Language of the interface.", "interface language setting description")
+                    dropdownWidth: 220
+                    optionList: root.languageOptions
+                    current: SettingsData.language
+                    onPicked: value => SettingsData.language = value
+                }
+
+                OptionDropdownRow {
+                    text: I18n.tr("Date and time locale", "date and time locale setting label")
+                    description: I18n.tr("Locale used for day and month names, time format and week start.", "date and time locale setting description")
+                    dropdownWidth: 220
+                    optionList: root.timeLocaleOptions
+                    current: SettingsData.timeLocale
+                    onPicked: value => SettingsData.timeLocale = value
+                }
+
+                OptionDropdownRow {
+                    text: I18n.tr("Start week on", "week start setting label")
+                    description: I18n.tr("First day shown in week and month views.", "week start setting description")
+                    dropdownWidth: 220
+                    optionList: root.weekStartOptions
+                    current: SettingsData.firstDayOfWeek
+                    onPicked: value => SettingsData.firstDayOfWeek = value
+                }
+
+                SettingsButtonGroupRow {
+                    text: I18n.tr("Time format", "time format setting label")
+                    description: I18n.tr("Auto follows your locale (%1).", "time format setting description").arg(SettingsData.localeUses24Hour ? I18n.tr("24-hour", "locale time format name in time format description") : I18n.tr("12-hour", "locale time format name in time format description"))
+                    model: [I18n.tr("Auto", "time format button group option"), I18n.tr("12h", "time format button group option"), I18n.tr("24h", "time format button group option")]
+                    currentIndex: {
+                        switch (SettingsData.timeFormat) {
+                        case "12h":
+                            return 1;
+                        case "24h":
+                            return 2;
+                        default:
+                            return 0;
                         }
                     }
-
-                    SettingsRow {
-                        label: I18n.tr("Close behavior", "close behavior setting label")
-                        description: I18n.tr("What the window's close button does.", "close behavior setting description")
-
-                        DankButtonGroup {
-                            anchors.verticalCenter: parent.verticalCenter
-                            buttonHeight: 36
-                            minButtonWidth: 90
-                            model: [I18n.tr("Minimize", "close behavior button group option to hide to tray"), I18n.tr("Quit", "close behavior button group option to quit the app")]
-                            currentIndex: SettingsData.closeBehavior === "quit" ? 1 : 0
-                            onSelectionChanged: (index, selected) => {
-                                if (!selected)
-                                    return;
-                                SettingsData.closeBehavior = index === 1 ? "quit" : "minimize";
-                            }
+                    onSelectionChanged: (index, selected) => {
+                        if (!selected)
+                            return;
+                        switch (index) {
+                        case 1:
+                            SettingsData.timeFormat = "12h";
+                            break;
+                        case 2:
+                            SettingsData.timeFormat = "24h";
+                            break;
+                        default:
+                            SettingsData.timeFormat = "auto";
+                            break;
                         }
                     }
+                }
+            }
 
-                    SettingsRow {
-                        label: I18n.tr("Show tray icon", "tray icon toggle label")
-                        description: !SettingsData.showTrayIcon && SettingsData.closeBehavior === "minimize" ? I18n.tr("Closing hides the window; reopen it from your app launcher.", "tray icon toggle warning when closing only minimizes") : I18n.tr("Show Dank Calendar in the system tray.", "tray icon toggle description")
+            SettingsSectionLabel {
+                text: I18n.tr("Views", "general settings section label")
+            }
 
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.showTrayIcon
-                            onToggled: checked => SettingsData.showTrayIcon = checked
-                        }
+            SettingsGroup {
+                SettingsToggleRow {
+                    text: I18n.tr("Enable core hours", "core hours toggle label")
+                    description: I18n.tr("Limit the day and week views to a set hour range.", "core hours toggle description")
+                    checked: SettingsData.coreHoursEnabled
+                    onToggled: checked => SettingsData.coreHoursEnabled = checked
+                }
+
+                SettingsRow {
+                    title: I18n.tr("Core hours", "core hours range setting label")
+                    subtitle: I18n.tr("Hour range shown in day and week views.", "core hours range setting description")
+                    enabled: SettingsData.coreHoursEnabled
+
+                    DankDropdown {
+                        anchors.verticalCenter: parent.verticalCenter
+                        dropdownWidth: 90
+                        enabled: SettingsData.coreHoursEnabled
+                        options: root.optionLabels(root.coreHourOptions.filter(o => o.value < SettingsData.coreHoursEnd))
+                        currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursStart)
+                        onValueChanged: value => SettingsData.coreHoursStart = root.valueForLabel(root.coreHourOptions, value)
                     }
 
-                    SettingsRow {
-                        label: I18n.tr("Language", "interface language setting label")
-                        description: I18n.tr("Language of the interface.", "interface language setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 220
-                            options: root.optionLabels(root.languageOptions)
-                            currentValue: root.labelForValue(root.languageOptions, SettingsData.language)
-                            onValueChanged: value => SettingsData.language = root.valueForLabel(root.languageOptions, value)
-                        }
+                    StyledText {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: I18n.tr("to", "core hours range separator")
+                        color: Theme.surfaceVariantText
                     }
 
-                    SettingsRow {
-                        label: I18n.tr("Date and time locale", "date and time locale setting label")
-                        description: I18n.tr("Locale used for day and month names, time format and week start.", "date and time locale setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 220
-                            options: root.optionLabels(root.timeLocaleOptions)
-                            currentValue: root.labelForValue(root.timeLocaleOptions, SettingsData.timeLocale)
-                            onValueChanged: value => SettingsData.timeLocale = root.valueForLabel(root.timeLocaleOptions, value)
-                        }
+                    DankDropdown {
+                        anchors.verticalCenter: parent.verticalCenter
+                        dropdownWidth: 90
+                        enabled: SettingsData.coreHoursEnabled
+                        options: root.optionLabels(root.coreHourOptions.filter(o => o.value > SettingsData.coreHoursStart))
+                        currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursEnd)
+                        onValueChanged: value => SettingsData.coreHoursEnd = root.valueForLabel(root.coreHourOptions, value)
                     }
+                }
 
-                    SettingsRow {
-                        label: I18n.tr("Start week on", "week start setting label")
-                        description: I18n.tr("First day shown in week and month views.", "week start setting description")
+                SettingsToggleRow {
+                    text: I18n.tr("Show week numbers", "week numbers setting label")
+                    description: I18n.tr("Display ISO week numbers in month view.", "week numbers setting description")
+                    checked: SettingsData.showWeekNumbers
+                    onToggled: checked => SettingsData.showWeekNumbers = checked
+                }
 
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 220
-                            options: root.optionLabels(root.weekStartOptions)
-                            currentValue: root.labelForValue(root.weekStartOptions, SettingsData.firstDayOfWeek)
-                            onValueChanged: value => SettingsData.firstDayOfWeek = root.valueForLabel(root.weekStartOptions, value)
-                        }
-                    }
+                SettingsToggleRow {
+                    text: I18n.tr("Show tasks", "show tasks setting label")
+                    description: I18n.tr("Show task lists and the Tasks view when an account provides them.", "show tasks setting description")
+                    checked: SettingsData.showTasks
+                    onToggled: checked => SettingsData.showTasks = checked
+                }
 
-                    SettingsRow {
-                        label: I18n.tr("Time format", "time format setting label")
-                        description: I18n.tr("Auto follows your locale (%1).", "time format setting description").arg(SettingsData.localeUses24Hour ? I18n.tr("24-hour", "locale time format name in time format description") : I18n.tr("12-hour", "locale time format name in time format description"))
+                OptionDropdownRow {
+                    text: I18n.tr("Month event title lines", "month event title line count setting label")
+                    description: I18n.tr("Maximum title lines per event in month view.", "month event title line count setting description")
+                    dropdownWidth: 120
+                    optionList: root.eventTitleLineOptions
+                    current: SettingsData.monthEventTitleLines
+                    onPicked: value => SettingsData.monthEventTitleLines = value
+                }
 
-                        DankButtonGroup {
-                            anchors.verticalCenter: parent.verticalCenter
-                            buttonHeight: 36
-                            minButtonWidth: 56
-                            model: [I18n.tr("Auto", "time format button group option"), I18n.tr("12h", "time format button group option"), I18n.tr("24h", "time format button group option")]
-                            currentIndex: {
-                                switch (SettingsData.timeFormat) {
-                                case "12h":
-                                    return 1;
-                                case "24h":
-                                    return 2;
-                                default:
-                                    return 0;
-                                }
-                            }
-                            onSelectionChanged: (index, selected) => {
-                                if (!selected)
-                                    return;
-                                switch (index) {
-                                case 1:
-                                    SettingsData.timeFormat = "12h";
-                                    break;
-                                case 2:
-                                    SettingsData.timeFormat = "24h";
-                                    break;
-                                default:
-                                    SettingsData.timeFormat = "auto";
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                SettingsToggleRow {
+                    text: I18n.tr("Show all events in month view", "show all month events setting label")
+                    description: I18n.tr("Expand day cells to fit every event instead of collapsing extras into \"+N more\".", "show all month events setting description")
+                    checked: SettingsData.monthShowAllEvents
+                    onToggled: checked => SettingsData.monthShowAllEvents = checked
+                }
 
-                    SettingsRow {
-                        label: I18n.tr("Enable core hours", "core hours toggle label")
-                        description: I18n.tr("Limit the day and week views to a set hour range.", "core hours toggle description")
+                OptionDropdownRow {
+                    text: I18n.tr("Week event title lines", "week event title line count setting label")
+                    description: I18n.tr("Maximum title lines per event in week view.", "week event title line count setting description")
+                    dropdownWidth: 120
+                    optionList: root.eventTitleLineOptions
+                    current: SettingsData.weekEventTitleLines
+                    onPicked: value => SettingsData.weekEventTitleLines = value
+                }
+            }
 
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.coreHoursEnabled
-                            onToggled: checked => SettingsData.coreHoursEnabled = checked
-                        }
-                    }
+            SettingsSectionLabel {
+                text: I18n.tr("New events", "general settings section label")
+            }
 
-                    SettingsRow {
-                        label: I18n.tr("Core hours", "core hours range setting label")
-                        description: I18n.tr("Hour range shown in day and week views.", "core hours range setting description")
+            SettingsGroup {
+                OptionDropdownRow {
+                    text: I18n.tr("Default event duration", "default event duration setting label")
+                    description: I18n.tr("Length used when creating events.", "default event duration setting description")
+                    dropdownWidth: 150
+                    optionList: root.durationOptions
+                    current: SettingsData.defaultEventDurationMinutes
+                    onPicked: value => SettingsData.defaultEventDurationMinutes = value
+                }
 
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 90
-                            enabled: SettingsData.coreHoursEnabled
-                            opacity: enabled ? 1 : 0.5
-                            options: root.optionLabels(root.coreHourOptions.filter(o => o.value < SettingsData.coreHoursEnd))
-                            currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursStart)
-                            onValueChanged: value => SettingsData.coreHoursStart = root.valueForLabel(root.coreHourOptions, value)
-                        }
-
-                        StyledText {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: I18n.tr("to", "core hours range separator")
-                            color: Theme.surfaceVariantText
-                            opacity: SettingsData.coreHoursEnabled ? 1 : 0.5
-                        }
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 90
-                            enabled: SettingsData.coreHoursEnabled
-                            opacity: enabled ? 1 : 0.5
-                            options: root.optionLabels(root.coreHourOptions.filter(o => o.value > SettingsData.coreHoursStart))
-                            currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursEnd)
-                            onValueChanged: value => SettingsData.coreHoursEnd = root.valueForLabel(root.coreHourOptions, value)
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Show week numbers", "week numbers setting label")
-                        description: I18n.tr("Display ISO week numbers in month view.", "week numbers setting description")
-
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.showWeekNumbers
-                            onToggled: checked => SettingsData.showWeekNumbers = checked
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Show tasks", "show tasks setting label")
-                        description: I18n.tr("Show task lists and the Tasks view when an account provides them.", "show tasks setting description")
-
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.showTasks
-                            onToggled: checked => SettingsData.showTasks = checked
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Month event title lines", "month event title line count setting label")
-                        description: I18n.tr("Maximum title lines per event in month view.", "month event title line count setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 120
-                            options: root.optionLabels(root.eventTitleLineOptions)
-                            currentValue: root.labelForValue(root.eventTitleLineOptions, SettingsData.monthEventTitleLines)
-                            onValueChanged: value => SettingsData.monthEventTitleLines = root.valueForLabel(root.eventTitleLineOptions, value)
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Show all events in month view", "show all month events setting label")
-                        description: I18n.tr("Expand day cells to fit every event instead of collapsing extras into \"+N more\".", "show all month events setting description")
-
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.monthShowAllEvents
-                            onToggled: checked => SettingsData.monthShowAllEvents = checked
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Week event title lines", "week event title line count setting label")
-                        description: I18n.tr("Maximum title lines per event in week view.", "week event title line count setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 120
-                            options: root.optionLabels(root.eventTitleLineOptions)
-                            currentValue: root.labelForValue(root.eventTitleLineOptions, SettingsData.weekEventTitleLines)
-                            onValueChanged: value => SettingsData.weekEventTitleLines = root.valueForLabel(root.eventTitleLineOptions, value)
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Default event duration", "default event duration setting label")
-                        description: I18n.tr("Length used when creating events.", "default event duration setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 150
-                            options: root.optionLabels(root.durationOptions)
-                            currentValue: root.labelForValue(root.durationOptions, SettingsData.defaultEventDurationMinutes)
-                            onValueChanged: value => SettingsData.defaultEventDurationMinutes = root.valueForLabel(root.durationOptions, value)
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Default reminder", "default reminder setting label")
-                        description: I18n.tr("Initial reminder set on new events.", "default reminder setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 180
-                            options: root.optionLabels(root.reminderOptions)
-                            currentValue: root.labelForValue(root.reminderOptions, SettingsData.defaultReminderMinutes)
-                            onValueChanged: value => SettingsData.defaultReminderMinutes = root.valueForLabel(root.reminderOptions, value)
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Sync interval", "sync interval setting label")
-                        description: I18n.tr("How often accounts are polled for changes.", "sync interval setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 150
-                            options: root.optionLabels(root.syncIntervalOptions)
-                            currentValue: root.labelForValue(root.syncIntervalOptions, SettingsData.syncIntervalMinutes)
-                            onValueChanged: value => SettingsData.syncIntervalMinutes = root.valueForLabel(root.syncIntervalOptions, value)
-                        }
-                    }
+                OptionDropdownRow {
+                    text: I18n.tr("Default reminder", "default reminder setting label")
+                    description: I18n.tr("Initial reminder set on new events.", "default reminder setting description")
+                    dropdownWidth: 180
+                    optionList: root.reminderOptions
+                    current: SettingsData.defaultReminderMinutes
+                    onPicked: value => SettingsData.defaultReminderMinutes = value
                 }
             }
         }
@@ -670,11 +577,8 @@ Item {
 
     Component {
         id: appearancePage
-        DankFlickable {
+        SettingsPage {
             id: appearanceFlickable
-            clip: true
-            contentWidth: width
-            contentHeight: appearanceColumn.implicitHeight
 
             function openThemeFilePicker() {
                 themePickerLoader.active = true;
@@ -684,244 +588,295 @@ Item {
                 picker.open();
             }
 
-            Column {
-                id: appearanceColumn
-                width: parent.width
-                padding: Theme.spacingL
-                spacing: Theme.spacingL
+            PageHeader {
+                title: I18n.tr("Appearance", "appearance settings section header")
+                subtitle: I18n.tr("Pick a color source, palette, or your own theme file.", "appearance settings section subtitle")
+            }
 
-                SectionHeader {
-                    title: I18n.tr("Appearance", "appearance settings section header")
-                    subtitle: I18n.tr("Pick a color source, palette, or your own theme file.", "appearance settings section subtitle")
+            SettingsSectionLabel {
+                text: I18n.tr("Theme", "appearance settings section label")
+            }
+
+            SettingsGroup {
+                SettingsButtonGroupRow {
+                    text: I18n.tr("Theme", "theme mode setting label")
+                    description: {
+                        switch (SettingsData.themeMode) {
+                        case "light":
+                            return I18n.tr("Always use the light theme.", "theme mode setting description");
+                        case "dark":
+                            return I18n.tr("Always use the dark theme.", "theme mode setting description");
+                        default:
+                            return PortalService.available ? I18n.tr("Following the system color scheme (currently %1).", "theme mode setting description").arg(Theme.isLightMode ? I18n.tr("light", "current scheme name in theme mode description") : I18n.tr("dark", "current scheme name in theme mode description")) : I18n.tr("System preference unavailable — using dark.", "theme mode setting description");
+                        }
+                    }
+                    model: [I18n.tr("Auto", "theme mode button group option"), I18n.tr("Light", "theme mode button group option"), I18n.tr("Dark", "theme mode button group option")]
+                    currentIndex: {
+                        switch (SettingsData.themeMode) {
+                        case "light":
+                            return 1;
+                        case "dark":
+                            return 2;
+                        default:
+                            return 0;
+                        }
+                    }
+                    onSelectionChanged: (index, selected) => {
+                        if (!selected)
+                            return;
+                        switch (index) {
+                        case 1:
+                            SettingsData.themeMode = "light";
+                            break;
+                        case 2:
+                            SettingsData.themeMode = "dark";
+                            break;
+                        default:
+                            SettingsData.themeMode = "auto";
+                            break;
+                        }
+                    }
                 }
 
-                Column {
-                    width: parent.width - Theme.spacingL * 2
-                    spacing: Theme.spacingS
-
-                    SettingsRow {
-                        label: I18n.tr("Theme", "theme mode setting label")
-                        description: {
-                            switch (SettingsData.themeMode) {
-                            case "light":
-                                return I18n.tr("Always use the light theme.", "theme mode setting description");
-                            case "dark":
-                                return I18n.tr("Always use the dark theme.", "theme mode setting description");
-                            default:
-                                return PortalService.available ? I18n.tr("Following the system color scheme (currently %1).", "theme mode setting description").arg(Theme.isLightMode ? I18n.tr("light", "current scheme name in theme mode description") : I18n.tr("dark", "current scheme name in theme mode description")) : I18n.tr("System preference unavailable — using dark.", "theme mode setting description");
-                            }
-                        }
-
-                        DankButtonGroup {
-                            anchors.verticalCenter: parent.verticalCenter
-                            buttonHeight: 36
-                            minButtonWidth: 56
-                            model: [I18n.tr("Auto", "theme mode button group option"), I18n.tr("Light", "theme mode button group option"), I18n.tr("Dark", "theme mode button group option")]
-                            currentIndex: {
-                                switch (SettingsData.themeMode) {
-                                case "light":
-                                    return 1;
-                                case "dark":
-                                    return 2;
-                                default:
-                                    return 0;
-                                }
-                            }
-                            onSelectionChanged: (index, selected) => {
-                                if (!selected)
-                                    return;
-                                switch (index) {
-                                case 1:
-                                    SettingsData.themeMode = "light";
-                                    break;
-                                case 2:
-                                    SettingsData.themeMode = "dark";
-                                    break;
-                                default:
-                                    SettingsData.themeMode = "auto";
-                                    break;
-                                }
-                            }
+                SettingsButtonGroupRow {
+                    text: I18n.tr("Color source", "color source setting label")
+                    description: {
+                        switch (SettingsData.colorSource) {
+                        case "preset":
+                            return I18n.tr("Use a bundled color palette.", "color source description for preset");
+                        case "custom":
+                            return I18n.tr("Load colors from your own theme file.", "color source description for custom");
+                        default:
+                            return I18n.tr("Follow DankMaterialShell colors, falling back to a preset.", "color source description for auto");
                         }
                     }
-
-                    SettingsRow {
-                        label: I18n.tr("Color source", "color source setting label")
-                        description: {
-                            switch (SettingsData.colorSource) {
-                            case "preset":
-                                return I18n.tr("Use a bundled color palette.", "color source description for preset");
-                            case "custom":
-                                return I18n.tr("Load colors from your own theme file.", "color source description for custom");
-                            default:
-                                return I18n.tr("Follow DankMaterialShell colors, falling back to a preset.", "color source description for auto");
-                            }
+                    model: root.optionLabels(root.colorSourceOptions)
+                    currentIndex: {
+                        for (let i = 0; i < root.colorSourceOptions.length; i++) {
+                            if (root.colorSourceOptions[i].value === SettingsData.colorSource)
+                                return i;
                         }
-
-                        DankButtonGroup {
-                            anchors.verticalCenter: parent.verticalCenter
-                            buttonHeight: 36
-                            minButtonWidth: 64
-                            model: root.optionLabels(root.colorSourceOptions)
-                            currentIndex: {
-                                for (let i = 0; i < root.colorSourceOptions.length; i++) {
-                                    if (root.colorSourceOptions[i].value === SettingsData.colorSource)
-                                        return i;
-                                }
-                                return 0;
-                            }
-                            onSelectionChanged: (index, selected) => {
-                                if (!selected)
-                                    return;
-                                SettingsData.colorSource = root.colorSourceOptions[index].value;
-                            }
-                        }
+                        return 0;
                     }
+                    onSelectionChanged: (index, selected) => {
+                        if (!selected)
+                            return;
+                        SettingsData.colorSource = root.colorSourceOptions[index].value;
+                    }
+                }
 
-                    StyledRect {
-                        visible: SettingsData.colorSource === "auto"
+                SettingsRow {
+                    visible: SettingsData.colorSource === "auto"
+                    iconName: Theme.dmsColorsAvailable ? "check_circle" : "info"
+                    iconColor: Theme.dmsColorsAvailable ? Theme.success : Theme.surfaceVariantText
+                    title: Theme.dmsColorsAvailable ? I18n.tr("Using DankMaterialShell dynamic colors.", "auto color source status when DMS is active") : I18n.tr("DankMaterialShell not detected — using the %1 preset.", "auto color source status when DMS is missing").arg(Theme.presetLabel(SettingsData.presetTheme))
+                }
+
+                SettingsRow {
+                    visible: SettingsData.colorSource === "preset"
+                    title: I18n.tr("Palette: %1", "selected preset palette name").arg(Theme.presetLabel(SettingsData.presetTheme))
+
+                    body: Flow {
                         width: parent.width
-                        height: 64
-                        color: Theme.surfaceContainer
-                        radius: Theme.cornerRadius
+                        spacing: Theme.spacingS
 
-                        Row {
-                            anchors.fill: parent
-                            anchors.leftMargin: Theme.spacingL
-                            anchors.rightMargin: Theme.spacingL
-                            anchors.verticalCenter: parent.verticalCenter
-                            spacing: Theme.spacingM
+                        Repeater {
+                            model: Theme.presetNames()
 
-                            DankIcon {
-                                anchors.verticalCenter: parent.verticalCenter
-                                name: Theme.dmsColorsAvailable ? "check_circle" : "info"
-                                size: Theme.iconSize
-                                color: Theme.dmsColorsAvailable ? Theme.success : Theme.surfaceVariantText
-                            }
+                            Rectangle {
+                                id: swatch
+                                required property string modelData
+                                readonly property bool active: SettingsData.presetTheme === modelData
 
-                            StyledText {
-                                anchors.verticalCenter: parent.verticalCenter
-                                width: parent.width - Theme.iconSize - Theme.spacingM
-                                text: Theme.dmsColorsAvailable ? I18n.tr("Using DankMaterialShell dynamic colors.", "auto color source status when DMS is active") : I18n.tr("DankMaterialShell not detected — using the %1 preset.", "auto color source status when DMS is missing").arg(Theme.presetLabel(SettingsData.presetTheme))
-                                font.pixelSize: Theme.fontSizeMedium
-                                color: Theme.surfaceText
-                                wrapMode: Text.WordWrap
-                            }
-                        }
-                    }
+                                width: Theme.avatarSize
+                                height: Theme.avatarSize
+                                radius: Theme.fullRadius(width, height)
+                                color: Theme.presetColors(modelData).primary
+                                border.color: active ? Theme.primary : Theme.outlineVariant
+                                border.width: active ? Theme.outlineWidthFocused + Theme.outlineWidth : Theme.outlineWidth
+                                scale: active ? 1.1 : 1
+                                Accessible.role: Accessible.RadioButton
+                                Accessible.name: Theme.presetLabel(modelData)
+                                Accessible.checked: active
 
-                    StyledRect {
-                        visible: SettingsData.colorSource === "preset"
-                        width: parent.width
-                        height: presetContent.implicitHeight + Theme.spacingL * 2
-                        color: Theme.surfaceContainer
-                        radius: Theme.cornerRadius
-
-                        Column {
-                            id: presetContent
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.leftMargin: Theme.spacingL
-                            anchors.rightMargin: Theme.spacingL
-                            spacing: Theme.spacingM
-
-                            StyledText {
-                                text: I18n.tr("Palette: %1", "selected preset palette name").arg(Theme.presetLabel(SettingsData.presetTheme))
-                                font.pixelSize: Theme.fontSizeMedium
-                                font.weight: Font.Medium
-                                color: Theme.surfaceText
-                                width: parent.width
-                            }
-
-                            Flow {
-                                width: parent.width
-                                spacing: Theme.spacingS
-
-                                Repeater {
-                                    model: Theme.presetNames()
-
-                                    Rectangle {
-                                        required property string modelData
-                                        readonly property bool active: SettingsData.presetTheme === modelData
-
-                                        width: 36
-                                        height: 36
-                                        radius: width / 2
-                                        color: Theme.presetColors(modelData).primary
-                                        border.color: active ? Theme.primary : Theme.outline
-                                        border.width: active ? 3 : 1
-                                        scale: active ? 1.1 : 1
-
-                                        Behavior on scale {
-                                            NumberAnimation {
-                                                duration: Theme.shortDuration
-                                                easing.type: Theme.emphasizedEasing
-                                            }
-                                        }
-
-                                        MouseArea {
-                                            anchors.fill: parent
-                                            hoverEnabled: true
-                                            cursorShape: Qt.PointingHandCursor
-                                            onClicked: SettingsData.presetTheme = parent.modelData
-                                        }
+                                Behavior on scale {
+                                    enabled: Theme.animationsEnabled
+                                    NumberAnimation {
+                                        duration: Theme.shortDuration
+                                        easing.type: Theme.emphasizedEasing
                                     }
                                 }
-                            }
-                        }
-                    }
 
-                    StyledRect {
-                        visible: SettingsData.colorSource === "custom"
-                        width: parent.width
-                        height: 72
-                        color: Theme.surfaceContainer
-                        radius: Theme.cornerRadius
-
-                        Row {
-                            anchors.fill: parent
-                            anchors.leftMargin: Theme.spacingL
-                            anchors.rightMargin: Theme.spacingL
-                            spacing: Theme.spacingM
-
-                            DankActionButton {
-                                anchors.verticalCenter: parent.verticalCenter
-                                iconName: "folder_open"
-                                iconColor: Theme.primary
-                                onClicked: appearanceFlickable.openThemeFilePicker()
-                            }
-
-                            Column {
-                                anchors.verticalCenter: parent.verticalCenter
-                                width: parent.width - 40 - Theme.spacingM
-                                spacing: 2
-
-                                StyledText {
-                                    text: SettingsData.customThemeFile ? SettingsData.customThemeFile.split('/').pop() : I18n.tr("No theme file selected", "custom theme empty state title")
-                                    font.pixelSize: Theme.fontSizeMedium
-                                    font.weight: Font.Medium
-                                    color: Theme.surfaceText
-                                    elide: Text.ElideMiddle
-                                    width: parent.width
-                                }
-
-                                StyledText {
-                                    text: {
-                                        if (!SettingsData.customThemeFile)
-                                            return I18n.tr("Choose a JSON color theme file.", "custom theme hint when none selected");
-                                        if (Theme.customThemeLoaded)
-                                            return SettingsData.customThemeFile;
-                                        return I18n.tr("Could not read that file — expected a JSON color theme.", "custom theme error when file is invalid");
-                                    }
-                                    font.pixelSize: Theme.fontSizeSmall
-                                    color: (SettingsData.customThemeFile && !Theme.customThemeLoaded) ? Theme.error : Theme.surfaceVariantText
-                                    elide: Text.ElideMiddle
-                                    width: parent.width
+                                StateLayer {
+                                    stateColor: Theme.surfaceText
+                                    cornerRadius: parent.radius
+                                    onClicked: SettingsData.presetTheme = swatch.modelData
                                 }
                             }
                         }
                     }
+                }
+
+                SettingsRow {
+                    visible: SettingsData.colorSource === "custom"
+                    clickable: true
+                    iconName: "folder_open"
+                    title: SettingsData.customThemeFile ? SettingsData.customThemeFile.split('/').pop() : I18n.tr("No theme file selected", "custom theme empty state title")
+                    subtitle: {
+                        if (!SettingsData.customThemeFile)
+                            return I18n.tr("Choose a JSON color theme file.", "custom theme hint when none selected");
+                        if (Theme.customThemeLoaded)
+                            return SettingsData.customThemeFile;
+                        return I18n.tr("Could not read that file — expected a JSON color theme.", "custom theme error when file is invalid");
+                    }
+                    subtitleColor: (SettingsData.customThemeFile && !Theme.customThemeLoaded) ? Theme.error : Theme.surfaceVariantText
+                    showChevron: true
+                    onClicked: appearanceFlickable.openThemeFilePicker()
+                }
+            }
+
+            SettingsSectionLabel {
+                text: I18n.tr("Shape", "appearance settings section label")
+            }
+
+            SettingsGroup {
+                SettingsSliderRow {
+                    text: I18n.tr("Radius strength", "global component corner rounding")
+                    description: I18n.tr("50 uses Material shapes. Lower values reduce rounding; higher values increase it.", "radius strength slider description")
+                    minimumLabel: I18n.tr("Square", "radius strength slider label at zero")
+                    value: SettingsData.radiusStrength
+                    minimum: 0
+                    maximum: 100
+                    unit: ""
+                    onSliderValueChanged: newValue => SettingsData.radiusStrength = newValue
+                }
+            }
+
+            SettingsSectionLabel {
+                text: I18n.tr("Typography", "appearance settings section label")
+            }
+
+            SettingsGroup {
+                SettingsSliderRow {
+                    text: I18n.tr("Weight", "font weight slider label")
+                    minimum: Font.Thin
+                    maximum: Font.Black
+                    step: 100
+                    showStops: true
+                    unit: ""
+                    value: SettingsData.fontWeight
+                    onSliderValueChanged: newValue => SettingsData.fontWeight = newValue
+                }
+
+                SettingsSliderRow {
+                    text: I18n.tr("Scale", "font scale slider label")
+                    minimum: 75
+                    maximum: 150
+                    unit: "%"
+                    value: Math.round(SettingsData.fontScale * 100)
+                    onSliderValueChanged: newValue => SettingsData.fontScale = newValue / 100
+                }
+            }
+
+            SettingsSectionLabel {
+                text: I18n.tr("Motion", "appearance settings section label")
+            }
+
+            SettingsGroup {
+                SettingsSliderRow {
+                    text: I18n.tr("Duration", "animation duration slider label")
+                    minimumLabel: I18n.tr("Off", "animation duration slider label at zero")
+                    minimum: 0
+                    maximum: 1000
+                    unit: "ms"
+                    value: SettingsData.animationDuration
+                    onSliderValueChanged: newValue => SettingsData.animationDuration = newValue
+                }
+
+                SettingsButtonGroupRow {
+                    text: I18n.tr("Spring", "spring bounce setting label")
+                    model: [I18n.tr("Smooth", "spring bounce option"), I18n.tr("Balanced", "spring bounce option"), I18n.tr("Playful", "spring bounce option")]
+                    currentIndex: SettingsData.springBounce
+                    onSelectionChanged: (index, selected) => {
+                        if (!selected)
+                            return;
+                        SettingsData.springBounce = index;
+                    }
+                }
+
+                SettingsToggleRow {
+                    text: I18n.tr("Ripple effects", "ripple effects toggle label")
+                    checked: SettingsData.enableRippleEffects
+                    onToggled: checked => SettingsData.enableRippleEffects = checked
+                }
+
+                SettingsToggleRow {
+                    text: I18n.tr("Reduce motion", "reduce motion toggle label")
+                    checked: SettingsData.reduceMotion
+                    onToggled: checked => SettingsData.reduceMotion = checked
+                }
+            }
+
+            SettingsSectionLabel {
+                text: I18n.tr("Focus ring", "appearance settings section label")
+            }
+
+            SettingsGroup {
+                SettingsToggleRow {
+                    text: I18n.tr("Focus ring", "focus ring toggle label")
+                    description: I18n.tr("Outline the control that has keyboard focus.", "focus ring toggle description")
+                    checked: SettingsData.focusRingEnabled
+                    onToggled: checked => SettingsData.focusRingEnabled = checked
+                }
+
+                SettingsSliderRow {
+                    text: I18n.tr("Thickness", "focus ring thickness slider label")
+                    enabled: SettingsData.focusRingEnabled
+                    value: Math.round(SettingsData.focusRingWidth * 10)
+                    minimum: 10
+                    maximum: 40
+                    step: 5
+                    decimals: 1
+                    unit: "px"
+                    onSliderValueChanged: newValue => SettingsData.focusRingWidth = newValue / 10
+                }
+
+                SettingsDropdownRow {
+                    readonly property var colorOptions: [
+                        {
+                            label: I18n.tr("Primary", "focus ring color option"),
+                            value: "primary",
+                            color: Theme.primary
+                        },
+                        {
+                            label: I18n.tr("Secondary", "focus ring color option"),
+                            value: "secondary",
+                            color: Theme.secondary
+                        },
+                        {
+                            label: I18n.tr("Outline", "focus ring color option"),
+                            value: "outline",
+                            color: Theme.outline
+                        },
+                        {
+                            label: I18n.tr("Text color", "focus ring color option"),
+                            value: "surfaceText",
+                            color: Theme.surfaceText
+                        }
+                    ]
+
+                    text: I18n.tr("Color", "focus ring color setting label")
+                    enabled: SettingsData.focusRingEnabled
+                    dropdownWidth: 160
+                    options: root.optionLabels(colorOptions)
+                    optionColorMap: {
+                        const map = {};
+                        for (const option of colorOptions)
+                            map[option.label] = option.color;
+                        return map;
+                    }
+                    currentValue: root.labelForValue(colorOptions, SettingsData.focusRingColor)
+                    onValueChanged: value => SettingsData.focusRingColor = root.valueForLabel(colorOptions, value)
                 }
             }
 
@@ -941,200 +896,153 @@ Item {
 
     Component {
         id: calendarsPage
-        DankFlickable {
+        SettingsPage {
             id: calendarsFlickable
 
             property var actionCalendar: null
 
-            clip: true
-            contentWidth: width
-            contentHeight: calendarsColumn.implicitHeight
+            PageHeader {
+                title: I18n.tr("Calendars", "calendars settings section header")
+                subtitle: I18n.tr("Visibility, names, and removal per calendar.", "calendars settings section subtitle")
+            }
 
-            Column {
-                id: calendarsColumn
-                width: parent.width
-                padding: Theme.spacingL
-                spacing: Theme.spacingL
+            SettingsGroup {
+                visible: DankCalService.calendars.length > 0
 
-                SectionHeader {
-                    title: I18n.tr("Calendars", "calendars settings section header")
-                    subtitle: I18n.tr("Visibility, names, and removal per calendar.", "calendars settings section subtitle")
+                SettingsDropdownRow {
+                    readonly property string autoLabel: I18n.tr("First calendar", "default calendar dropdown option for no explicit default")
+                    readonly property var entries: {
+                        const writable = DankCalService.writableCalendars();
+                        const counts = {};
+                        for (let i = 0; i < writable.length; i++)
+                            counts[writable[i].name] = (counts[writable[i].name] || 0) + 1;
+                        return writable.map(c => ({
+                                    "id": c.id,
+                                    "color": c.color,
+                                    "label": counts[c.name] > 1 && c.accountName ? c.name + " · " + c.accountName : c.name
+                                }));
+                    }
+
+                    text: I18n.tr("Default calendar", "default calendar setting label")
+                    description: I18n.tr("Calendar preselected when creating events.", "default calendar setting description")
+                    dropdownWidth: 220
+                    options: [autoLabel].concat(entries.map(e => e.label))
+                    optionColorMap: {
+                        const map = {};
+                        for (let i = 0; i < entries.length; i++)
+                            map[entries[i].label] = entries[i].color;
+                        return map;
+                    }
+                    currentValue: {
+                        for (let i = 0; i < entries.length; i++) {
+                            if (entries[i].id === SettingsData.defaultCalendarId)
+                                return entries[i].label;
+                        }
+                        return autoLabel;
+                    }
+                    onValueChanged: value => {
+                        for (let i = 0; i < entries.length; i++) {
+                            if (entries[i].label === value) {
+                                SettingsData.defaultCalendarId = entries[i].id;
+                                return;
+                            }
+                        }
+                        SettingsData.defaultCalendarId = "";
+                    }
                 }
+            }
 
-                Column {
-                    width: parent.width - Theme.spacingL * 2
-                    spacing: Theme.spacingS
+            StyledText {
+                visible: DankCalService.calendars.length === 0
+                text: DankCalService.connected ? I18n.tr("No calendars yet. Add an account first.", "calendars page empty state") : I18n.tr("Backend not connected.", "calendars page empty state")
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.surfaceVariantText
+                width: parent.width
+                horizontalAlignment: Text.AlignLeft
+            }
+
+            SettingsSectionLabel {
+                visible: DankCalService.calendars.length > 0
+                text: I18n.tr("Calendars", "calendars settings section header")
+            }
+
+            SettingsGroup {
+                Repeater {
+                    model: ScriptModel {
+                        values: DankCalService.calendars
+                    }
 
                     SettingsRow {
-                        visible: DankCalService.calendars.length > 0
-                        label: I18n.tr("Default calendar", "default calendar setting label")
-                        description: I18n.tr("Calendar preselected when creating events.", "default calendar setting description")
+                        id: calendarRow
+                        required property var modelData
+                        readonly property bool renamed: !!modelData.providerName && modelData.providerName !== modelData.name
 
-                        DankDropdown {
-                            readonly property string autoLabel: I18n.tr("First calendar", "default calendar dropdown option for no explicit default")
-                            readonly property var entries: {
-                                const writable = DankCalService.writableCalendars();
-                                const counts = {};
-                                for (let i = 0; i < writable.length; i++)
-                                    counts[writable[i].name] = (counts[writable[i].name] || 0) + 1;
-                                return writable.map(c => ({
-                                            "id": c.id,
-                                            "color": c.color,
-                                            "label": counts[c.name] > 1 && c.accountName ? c.name + " · " + c.accountName : c.name
-                                        }));
-                            }
+                        title: modelData.name
+                        subtitle: {
+                            let line = modelData.accountName || modelData.accountId || "";
+                            if (renamed)
+                                line += " · " + I18n.tr("synced as \"%1\"", "renamed calendar provider name suffix in calendar list").arg(modelData.providerName);
+                            if (modelData.readOnly)
+                                line += " · " + I18n.tr("read-only", "read-only suffix in calendar list");
+                            if (modelData.syncDisabled)
+                                line += " · " + I18n.tr("sync off", "sync disabled suffix in calendar list");
+                            return line;
+                        }
 
+                        leading: Rectangle {
+                            width: Theme.chipIconSize
+                            height: Theme.chipIconSize
+                            radius: Theme.cornerRadiusXS
                             anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 220
-                            options: [autoLabel].concat(entries.map(e => e.label))
-                            optionColorMap: {
-                                const map = {};
-                                for (let i = 0; i < entries.length; i++)
-                                    map[entries[i].label] = entries[i].color;
-                                return map;
-                            }
-                            currentValue: {
-                                for (let i = 0; i < entries.length; i++) {
-                                    if (entries[i].id === SettingsData.defaultCalendarId)
-                                        return entries[i].label;
-                                }
-                                return autoLabel;
-                            }
-                            onValueChanged: value => {
-                                for (let i = 0; i < entries.length; i++) {
-                                    if (entries[i].label === value) {
-                                        SettingsData.defaultCalendarId = entries[i].id;
-                                        return;
-                                    }
-                                }
-                                SettingsData.defaultCalendarId = "";
-                            }
-                        }
-                    }
-
-                    StyledText {
-                        visible: DankCalService.calendars.length === 0
-                        text: DankCalService.connected ? I18n.tr("No calendars yet. Add an account first.", "calendars page empty state") : I18n.tr("Backend not connected.", "calendars page empty state")
-                        font.pixelSize: Theme.fontSizeMedium
-                        color: Theme.surfaceVariantText
-                        width: parent.width
-                    }
-
-                    Repeater {
-                        model: ScriptModel {
-                            values: DankCalService.calendars
+                            color: calendarRow.modelData.color
+                            opacity: calendarRow.modelData.syncDisabled ? SettingsMetrics.disabledOpacity : 1
                         }
 
-                        StyledRect {
-                            id: calendarRow
-                            required property var modelData
-                            readonly property bool renamed: !!modelData.providerName && modelData.providerName !== modelData.name
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconName: "edit"
+                            tooltipText: I18n.tr("Rename", "calendar row action tooltip")
+                            onClicked: calendarRenameDialog.show(calendarRow.modelData)
+                        }
 
-                            width: parent.width
-                            height: 64
-                            color: Theme.surfaceContainer
-                            radius: Theme.cornerRadius
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconName: !!calendarRow.modelData.reminders ? "notifications_active" : "notifications"
+                            iconColor: !!calendarRow.modelData.reminders ? Theme.primary : Theme.onSurfaceVariant
+                            tooltipText: I18n.tr("Reminders", "calendar row action tooltip")
+                            onClicked: calendarRemindersDialog.show(calendarRow.modelData)
+                        }
 
-                            Row {
-                                anchors.fill: parent
-                                anchors.leftMargin: Theme.spacingL
-                                anchors.rightMargin: Theme.spacingM
-                                spacing: Theme.spacingM
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            visible: calendarRow.modelData.accountKind !== "local"
+                            iconName: calendarRow.modelData.syncDisabled ? "cloud_off" : "cloud"
+                            iconColor: calendarRow.modelData.syncDisabled ? Theme.error : Theme.onSurfaceVariant
+                            tooltipText: calendarRow.modelData.syncDisabled ? I18n.tr("Sync is off — click to re-enable", "calendar row action tooltip") : I18n.tr("Disable sync", "calendar row action tooltip")
+                            onClicked: DankCalService.setCalendarSyncDisabled(calendarRow.modelData.id, !calendarRow.modelData.syncDisabled)
+                        }
 
-                                Rectangle {
-                                    width: 18
-                                    height: 18
-                                    radius: 5
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: calendarRow.modelData.color
-                                    opacity: calendarRow.modelData.syncDisabled ? 0.4 : 1
-                                }
-
-                                Column {
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: parent.width - 18 - calendarActions.width - Theme.spacingM * 2
-                                    opacity: calendarRow.modelData.syncDisabled ? 0.6 : 1
-
-                                    StyledText {
-                                        text: calendarRow.modelData.name
-                                        font.pixelSize: Theme.fontSizeMedium
-                                        font.weight: Font.Medium
-                                        color: Theme.surfaceText
-                                        wrapMode: Text.NoWrap
-                                        maximumLineCount: 1
-                                        elide: Text.ElideRight
-                                        width: parent.width
-                                    }
-
-                                    StyledText {
-                                        text: {
-                                            let line = calendarRow.modelData.accountName || calendarRow.modelData.accountId || "";
-                                            if (calendarRow.renamed)
-                                                line += " · " + I18n.tr("synced as \"%1\"", "renamed calendar provider name suffix in calendar list").arg(calendarRow.modelData.providerName);
-                                            if (calendarRow.modelData.readOnly)
-                                                line += " · " + I18n.tr("read-only", "read-only suffix in calendar list");
-                                            if (calendarRow.modelData.syncDisabled)
-                                                line += " · " + I18n.tr("sync off", "sync disabled suffix in calendar list");
-                                            return line;
-                                        }
-                                        font.pixelSize: Theme.fontSizeSmall
-                                        color: Theme.surfaceVariantText
-                                        wrapMode: Text.NoWrap
-                                        maximumLineCount: 1
-                                        elide: Text.ElideRight
-                                        width: parent.width
-                                    }
-                                }
-
-                                Row {
-                                    id: calendarActions
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    spacing: Theme.spacingXS
-
-                                    DankActionButton {
-                                        iconName: "edit"
-                                        iconColor: Theme.surfaceText
-                                        tooltipText: I18n.tr("Rename", "calendar row action tooltip")
-                                        onClicked: calendarRenameDialog.show(calendarRow.modelData)
-                                    }
-
-                                    DankActionButton {
-                                        iconName: !!calendarRow.modelData.reminders ? "notifications_active" : "notifications"
-                                        iconColor: !!calendarRow.modelData.reminders ? Theme.primary : Theme.surfaceText
-                                        tooltipText: I18n.tr("Reminders", "calendar row action tooltip")
-                                        onClicked: calendarRemindersDialog.show(calendarRow.modelData)
-                                    }
-
-                                    DankActionButton {
-                                        visible: calendarRow.modelData.accountKind !== "local"
-                                        iconName: calendarRow.modelData.syncDisabled ? "cloud_off" : "cloud"
-                                        iconColor: calendarRow.modelData.syncDisabled ? Theme.error : Theme.surfaceText
-                                        tooltipText: calendarRow.modelData.syncDisabled ? I18n.tr("Sync is off — click to re-enable", "calendar row action tooltip") : I18n.tr("Disable sync", "calendar row action tooltip")
-                                        onClicked: DankCalService.setCalendarSyncDisabled(calendarRow.modelData.id, !calendarRow.modelData.syncDisabled)
-                                    }
-
-                                    DankActionButton {
-                                        iconName: "delete_outline"
-                                        iconColor: Theme.error
-                                        tooltipText: I18n.tr("Delete", "calendar row action tooltip")
-                                        onClicked: {
-                                            calendarsFlickable.actionCalendar = calendarRow.modelData;
-                                            calendarDeleteConfirm.show({
-                                                title: I18n.tr("Delete \"%1\"?", "delete calendar confirmation title").arg(calendarRow.modelData.name),
-                                                message: I18n.tr("Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.", "delete calendar confirmation message"),
-                                                confirmText: I18n.tr("Delete", "delete calendar confirmation button"),
-                                                danger: true
-                                            });
-                                        }
-                                    }
-
-                                    DankToggle {
-                                        anchors.verticalCenter: parent.verticalCenter
-                                        checked: !calendarRow.modelData.hidden
-                                        onToggled: checked => DankCalService.setCalendarHidden(calendarRow.modelData.id, !checked)
-                                    }
-                                }
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconName: "delete_outline"
+                            iconColor: Theme.error
+                            tooltipText: I18n.tr("Delete", "calendar row action tooltip")
+                            onClicked: {
+                                calendarsFlickable.actionCalendar = calendarRow.modelData;
+                                calendarDeleteConfirm.show({
+                                    title: I18n.tr("Delete \"%1\"?", "delete calendar confirmation title").arg(calendarRow.modelData.name),
+                                    message: I18n.tr("Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.", "delete calendar confirmation message"),
+                                    confirmText: I18n.tr("Delete", "delete calendar confirmation button"),
+                                    danger: true
+                                });
                             }
+                        }
+
+                        DankToggle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            Accessible.name: I18n.tr("Show calendar", "calendar row visibility toggle")
+                            checked: !calendarRow.modelData.hidden
+                            onToggled: checked => DankCalService.setCalendarHidden(calendarRow.modelData.id, !checked)
                         }
                     }
                 }
@@ -1160,14 +1068,10 @@ Item {
 
     Component {
         id: accountsPage
-        DankFlickable {
+        SettingsPage {
             id: accountsFlickable
 
             property var actionAccount: null
-
-            clip: true
-            contentWidth: width
-            contentHeight: accountsColumn.implicitHeight
 
             function providerMeta(kind) {
                 switch (kind) {
@@ -1209,183 +1113,147 @@ Item {
                 };
             }
 
-            Column {
-                id: accountsColumn
+            PageHeader {
+                title: I18n.tr("Accounts", "accounts settings section header")
+                subtitle: DankCalService.connected ? I18n.tr("Connected calendar providers.", "accounts settings section subtitle") : I18n.tr("Backend not connected.", "accounts settings section subtitle")
+            }
+
+            StyledText {
+                visible: DankCalService.accounts.length === 0
+                text: I18n.tr("No accounts yet. Click \"Add account\" to connect one.", "accounts page empty state")
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.surfaceVariantText
                 width: parent.width
-                padding: Theme.spacingL
-                spacing: Theme.spacingL
+                horizontalAlignment: Text.AlignLeft
+            }
 
-                SectionHeader {
-                    title: I18n.tr("Accounts", "accounts settings section header")
-                    subtitle: DankCalService.connected ? I18n.tr("Connected calendar providers.", "accounts settings section subtitle") : I18n.tr("Backend not connected.", "accounts settings section subtitle")
-                }
-
-                Column {
-                    width: parent.width - Theme.spacingL * 2
-                    spacing: Theme.spacingS
-
-                    StyledText {
-                        visible: DankCalService.accounts.length === 0
-                        text: I18n.tr("No accounts yet. Click \"Add account\" to connect one.", "accounts page empty state")
-                        font.pixelSize: Theme.fontSizeMedium
-                        color: Theme.surfaceVariantText
-                        width: parent.width
+            SettingsGroup {
+                Repeater {
+                    model: ScriptModel {
+                        values: DankCalService.accounts
                     }
 
-                    Repeater {
-                        model: ScriptModel {
-                            values: DankCalService.accounts
+                    SettingsRow {
+                        id: accountRow
+                        required property var modelData
+                        readonly property var meta: accountsFlickable.providerMeta(DankCalService.accountFlavor(modelData))
+                        readonly property bool needsReauth: modelData.needsReauth === true
+                        readonly property bool authorized: modelData.authorized !== false
+                        readonly property bool keyringLocked: modelData.keyringLocked === true
+                        readonly property bool healthy: !needsReauth && !keyringLocked && authorized
+                        readonly property string noticeText: root.accountNotice(modelData)
+
+                        title: meta.label
+                        subtitle: DankCalService.accountLabel(modelData)
+
+                        leading: Rectangle {
+                            width: Theme.iconButtonSize
+                            height: Theme.iconButtonSize
+                            radius: Theme.fullRadius(width, height)
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: Theme.withAlpha(accountRow.meta.color, Theme.tonalTintAlpha)
+
+                            DankIcon {
+                                anchors.centerIn: parent
+                                name: accountRow.meta.icon
+                                size: Theme.iconSizeMedium
+                                color: accountRow.meta.color
+                            }
                         }
 
-                        StyledRect {
-                            id: accountRow
-                            required property var modelData
-                            readonly property var meta: providerMeta(DankCalService.accountFlavor(modelData))
-
+                        body: Column {
                             width: parent.width
-                            height: 80
-                            color: Theme.surfaceContainer
-                            radius: Theme.cornerRadius
+                            spacing: Theme.spacingXS
+
+                            StyledText {
+                                width: parent.width
+                                text: {
+                                    if (accountRow.keyringLocked)
+                                        return I18n.tr("Keyring locked — unlock it to sync", "account status when the system keyring holding the credentials is locked");
+                                    if (accountRow.needsReauth)
+                                        return I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth");
+                                    if (!accountRow.authorized)
+                                        return I18n.tr("Not authorized — remove this account and add it again", "account status in account list");
+                                    return I18n.tr("Connected", "account status in account list");
+                                }
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: accountRow.healthy ? Theme.surfaceVariantText : Theme.error
+                                horizontalAlignment: Text.AlignLeft
+                            }
 
                             Row {
-                                anchors.fill: parent
-                                anchors.leftMargin: Theme.spacingL
-                                anchors.rightMargin: Theme.spacingM
-                                spacing: Theme.spacingM
+                                visible: accountRow.noticeText !== "" && accountRow.healthy
+                                width: parent.width
+                                spacing: Theme.spacingXS
 
-                                Rectangle {
-                                    width: 40
-                                    height: 40
-                                    radius: 20
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    color: Theme.withAlpha(parent.parent.meta.color, 0.18)
+                                StyledText {
+                                    text: accountRow.noticeText
+                                    textFormat: Text.RichText
+                                    font.pixelSize: Theme.fontSizeSmall
+                                    color: Theme.warning
+                                    linkColor: Theme.primary
+                                    onLinkActivated: url => Qt.openUrlExternally(url)
+                                    width: parent.width - Theme.iconSizeMedium - Theme.spacingXS
+                                    wrapMode: Text.WordWrap
+                                    horizontalAlignment: Text.AlignLeft
 
-                                    DankIcon {
-                                        anchors.centerIn: parent
-                                        name: parent.parent.parent.meta.icon
-                                        size: Theme.iconSize - 4
-                                        color: parent.parent.parent.meta.color
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                        acceptedButtons: Qt.NoButton
                                     }
                                 }
 
-                                Column {
+                                DankActionButton {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    width: parent.width - 40 - 80 - Theme.spacingM * 3
-                                    spacing: 2
-
-                                    StyledText {
-                                        text: parent.parent.parent.meta.label
-                                        font.pixelSize: Theme.fontSizeMedium
-                                        font.weight: Font.Medium
-                                        color: Theme.surfaceText
-                                        width: parent.width
-                                    }
-
-                                    StyledText {
-                                        text: DankCalService.accountLabel(parent.parent.parent.modelData)
-                                        font.pixelSize: Theme.fontSizeSmall
-                                        color: Theme.surfaceText
-                                        elide: Text.ElideRight
-                                        width: parent.width
-                                    }
-
-                                    StyledText {
-                                        readonly property bool needsReauth: parent.parent.parent.modelData.needsReauth === true
-                                        readonly property bool authorized: parent.parent.parent.modelData.authorized !== false
-                                        readonly property bool keyringLocked: parent.parent.parent.modelData.keyringLocked === true
-                                        text: {
-                                            if (keyringLocked)
-                                                return I18n.tr("Keyring locked — unlock it to sync", "account status when the system keyring holding the credentials is locked");
-                                            if (needsReauth)
-                                                return I18n.tr("Sign-in expired — reconnect to keep syncing", "account status when oauth needs re-auth");
-                                            if (!authorized)
-                                                return I18n.tr("Not authorized — remove this account and add it again", "account status in account list");
-                                            return I18n.tr("Connected", "account status in account list");
-                                        }
-                                        font.pixelSize: Theme.fontSizeSmall
-                                        color: (needsReauth || keyringLocked || !authorized) ? Theme.error : Theme.surfaceVariantText
-                                        width: parent.width
-                                    }
-
-                                    Row {
-                                        readonly property string noticeText: root.accountNotice(accountRow.modelData)
-                                        visible: noticeText !== "" && accountRow.modelData.needsReauth !== true && accountRow.modelData.keyringLocked !== true && accountRow.modelData.authorized !== false
-                                        width: parent.width
-                                        spacing: Theme.spacingXS
-
-                                        StyledText {
-                                            text: parent.noticeText
-                                            textFormat: Text.RichText
-                                            font.pixelSize: Theme.fontSizeSmall
-                                            color: Theme.warning
-                                            linkColor: Theme.primary
-                                            onLinkActivated: url => Qt.openUrlExternally(url)
-                                            width: parent.width - 20 - Theme.spacingXS
-                                            wrapMode: Text.WordWrap
-
-                                            MouseArea {
-                                                anchors.fill: parent
-                                                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                                acceptedButtons: Qt.NoButton
-                                            }
-                                        }
-
-                                        DankActionButton {
-                                            anchors.verticalCenter: parent.verticalCenter
-                                            buttonSize: 20
-                                            iconSize: Theme.fontSizeMedium
-                                            iconName: "close"
-                                            iconColor: Theme.surfaceVariantText
-                                            tooltipText: I18n.tr("Dismiss", "account notice dismiss button tooltip")
-                                            onClicked: root.dismissAccountNotice(accountRow.modelData)
-                                        }
-                                    }
-                                }
-
-                                Row {
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    spacing: Theme.spacingXS
-
-                                    DankActionButton {
-                                        visible: accountRow.modelData.needsReauth === true
-                                        iconName: "login"
-                                        iconColor: Theme.primary
-                                        onClicked: DankCalService.reconnectAccount(accountRow.modelData)
-                                    }
-
-                                    DankActionButton {
-                                        iconName: "refresh"
-                                        iconColor: Theme.surfaceText
-                                        onClicked: DankCalService.refreshAccount(parent.parent.parent.modelData.id)
-                                    }
-
-                                    DankActionButton {
-                                        iconName: "delete_outline"
-                                        iconColor: Theme.error
-                                        onClicked: {
-                                            accountsFlickable.actionAccount = accountRow.modelData;
-                                            accountRemoveConfirm.show({
-                                                title: I18n.tr("Remove \"%1\"?", "remove account confirmation title").arg(DankCalService.accountLabel(accountRow.modelData)),
-                                                message: I18n.tr("Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.", "remove account confirmation message"),
-                                                confirmText: I18n.tr("Remove", "remove account confirmation button"),
-                                                danger: true
-                                            });
-                                        }
-                                    }
+                                    buttonSize: Theme.iconSizeMedium
+                                    iconSize: Theme.iconSizeSmall
+                                    iconName: "close"
+                                    tooltipText: I18n.tr("Dismiss", "account notice dismiss button tooltip")
+                                    onClicked: root.dismissAccountNotice(accountRow.modelData)
                                 }
                             }
                         }
-                    }
 
-                    DankButton {
-                        text: I18n.tr("Add account", "add account button on accounts page")
-                        iconName: "add"
-                        buttonHeight: 40
-                        backgroundColor: Theme.primary
-                        textColor: Theme.primaryText
-                        onClicked: root.addAccountRequested()
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            visible: accountRow.needsReauth
+                            iconName: "login"
+                            iconColor: Theme.primary
+                            tooltipText: I18n.tr("Reconnect", "account row action tooltip")
+                            onClicked: DankCalService.reconnectAccount(accountRow.modelData)
+                        }
+
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconName: "refresh"
+                            tooltipText: I18n.tr("Sync now", "account row action tooltip")
+                            onClicked: DankCalService.refreshAccount(accountRow.modelData.id)
+                        }
+
+                        DankActionButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconName: "delete_outline"
+                            iconColor: Theme.error
+                            tooltipText: I18n.tr("Remove", "remove account confirmation button")
+                            onClicked: {
+                                accountsFlickable.actionAccount = accountRow.modelData;
+                                accountRemoveConfirm.show({
+                                    title: I18n.tr("Remove \"%1\"?", "remove account confirmation title").arg(DankCalService.accountLabel(accountRow.modelData)),
+                                    message: I18n.tr("Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.", "remove account confirmation message"),
+                                    confirmText: I18n.tr("Remove", "remove account confirmation button"),
+                                    danger: true
+                                });
+                            }
+                        }
                     }
                 }
+            }
+
+            DankButton {
+                text: I18n.tr("Add account", "add account button on accounts page")
+                iconName: "add"
+                onClicked: root.addAccountRequested()
             }
 
             ConfirmDialog {
@@ -1400,125 +1268,102 @@ Item {
 
     Component {
         id: notificationsPage
-        DankFlickable {
-            clip: true
-            contentWidth: width
-            contentHeight: notificationsColumn.implicitHeight
+        SettingsPage {
+            PageHeader {
+                title: I18n.tr("Notifications", "notifications settings section header")
+                subtitle: I18n.tr("Reminders and desktop alerts.", "notifications settings section subtitle")
+            }
 
-            Column {
-                id: notificationsColumn
-                width: parent.width
-                padding: Theme.spacingL
-                spacing: Theme.spacingL
-
-                SectionHeader {
-                    title: I18n.tr("Notifications", "notifications settings section header")
-                    subtitle: I18n.tr("Reminders and desktop alerts.", "notifications settings section subtitle")
+            SettingsGroup {
+                SettingsToggleRow {
+                    text: I18n.tr("Enable reminders", "reminders toggle label")
+                    description: I18n.tr("Desktop notifications for upcoming events.", "reminders toggle description")
+                    checked: SettingsData.remindersEnabled
+                    onToggled: checked => SettingsData.remindersEnabled = checked
                 }
 
-                Column {
-                    width: parent.width - Theme.spacingL * 2
-                    spacing: Theme.spacingS
+                SettingsToggleRow {
+                    text: I18n.tr("Keep until dismissed", "persistent reminders toggle label")
+                    description: I18n.tr("Reminders stay on screen until you act on them.", "persistent reminders toggle description")
+                    checked: SettingsData.reminderPersist
+                    enabled: SettingsData.remindersEnabled
+                    onToggled: checked => SettingsData.reminderPersist = checked
+                }
 
-                    SettingsRow {
-                        label: I18n.tr("Enable reminders", "reminders toggle label")
-                        description: I18n.tr("Desktop notifications for upcoming events.", "reminders toggle description")
+                SettingsToggleRow {
+                    text: I18n.tr("Notification sound", "notification sound toggle label")
+                    description: I18n.tr("Play a sound when a reminder fires.", "notification sound toggle description")
+                    checked: SettingsData.notificationSounds
+                    enabled: SettingsData.remindersEnabled
+                    onToggled: checked => SettingsData.notificationSounds = checked
+                }
 
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.remindersEnabled
-                            onToggled: checked => SettingsData.remindersEnabled = checked
-                        }
-                    }
+                OptionDropdownRow {
+                    text: I18n.tr("Snooze duration", "snooze duration setting label")
+                    description: I18n.tr("How long the snooze button postpones a reminder.", "snooze duration setting description")
+                    dropdownWidth: 150
+                    enabled: SettingsData.remindersEnabled
+                    optionList: root.snoozeOptions
+                    current: SettingsData.snoozeMinutes
+                    onPicked: value => SettingsData.snoozeMinutes = value
+                }
+            }
 
-                    SettingsRow {
-                        label: I18n.tr("Keep until dismissed", "persistent reminders toggle label")
-                        description: I18n.tr("Reminders stay on screen until you act on them.", "persistent reminders toggle description")
+            SettingsSectionLabel {
+                text: I18n.tr("All-day events", "notifications settings section label")
+            }
 
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.reminderPersist
-                            enabled: SettingsData.remindersEnabled
-                            onToggled: checked => SettingsData.reminderPersist = checked
-                        }
-                    }
+            SettingsGroup {
+                SettingsToggleRow {
+                    text: I18n.tr("Show all-day reminders", "all-day reminders toggle label")
+                    description: I18n.tr("Notify for all-day events without their own reminders.", "all-day reminders toggle description")
+                    checked: SettingsData.allDayReminders
+                    enabled: SettingsData.remindersEnabled
+                    onToggled: checked => SettingsData.allDayReminders = checked
+                }
 
-                    SettingsRow {
-                        label: I18n.tr("Notification sound", "notification sound toggle label")
-                        description: I18n.tr("Play a sound when a reminder fires.", "notification sound toggle description")
+                SettingsRow {
+                    title: I18n.tr("All-day reminder time", "all-day reminder time setting label")
+                    subtitle: I18n.tr("When all-day event reminders fire.", "all-day reminder time setting description")
+                    enabled: SettingsData.remindersEnabled && SettingsData.allDayReminders
 
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.notificationSounds
-                            enabled: SettingsData.remindersEnabled
-                            onToggled: checked => SettingsData.notificationSounds = checked
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Snooze duration", "snooze duration setting label")
-                        description: I18n.tr("How long the snooze button postpones a reminder.", "snooze duration setting description")
-
-                        DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 150
-                            enabled: SettingsData.remindersEnabled
-                            opacity: enabled ? 1 : 0.5
-                            options: root.optionLabels(root.snoozeOptions)
-                            currentValue: root.labelForValue(root.snoozeOptions, SettingsData.snoozeMinutes)
-                            onValueChanged: value => SettingsData.snoozeMinutes = root.valueForLabel(root.snoozeOptions, value)
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("Show all-day reminders", "all-day reminders toggle label")
-                        description: I18n.tr("Notify for all-day events without their own reminders.", "all-day reminders toggle description")
-
-                        DankToggle {
-                            anchors.verticalCenter: parent.verticalCenter
-                            checked: SettingsData.allDayReminders
-                            enabled: SettingsData.remindersEnabled
-                            onToggled: checked => SettingsData.allDayReminders = checked
-                        }
-                    }
-
-                    SettingsRow {
-                        label: I18n.tr("All-day reminder time", "all-day reminder time setting label")
-                        description: I18n.tr("When all-day event reminders fire.", "all-day reminder time setting description")
+                    body: Flow {
+                        width: parent.width
+                        spacing: Theme.spacingS
 
                         DankDropdown {
-                            anchors.verticalCenter: parent.verticalCenter
-                            dropdownWidth: 160
-                            enabled: SettingsData.remindersEnabled && SettingsData.allDayReminders
-                            opacity: enabled ? 1 : 0.5
+                            dropdownWidth: Math.min(Theme.fieldDefaultWidth, parent.width)
                             options: root.optionLabels(root.allDayDayOptions)
                             currentValue: root.labelForValue(root.allDayDayOptions, SettingsData.allDayReminderDaysBefore)
                             onValueChanged: value => SettingsData.allDayReminderDaysBefore = root.valueForLabel(root.allDayDayOptions, value)
                         }
 
-                        DankTimePicker {
-                            anchors.verticalCenter: parent.verticalCenter
-                            enabled: SettingsData.remindersEnabled && SettingsData.allDayReminders
-                            opacity: enabled ? 1 : 0.5
+                        DankTimeField {
+                            width: Math.min(Theme.fieldDefaultWidth, parent.width)
                             use24Hour: SettingsData.use24HourTime
                             minutes: root.minutesFromClock(SettingsData.allDayReminderTime)
                             onTimeSelected: value => SettingsData.allDayReminderTime = root.clockFromMinutes(value)
                         }
                     }
+                }
+            }
 
-                    SettingsRow {
-                        label: I18n.tr("Test notification", "test notification setting label")
-                        description: DankCalService.connected ? I18n.tr("Verify desktop notifications are working.", "test notification setting description") : I18n.tr("Backend not connected.", "test notification setting description when backend is unavailable")
+            SettingsSectionLabel {
+                text: I18n.tr("Diagnostics", "notifications settings section label")
+            }
 
-                        DankButton {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: I18n.tr("Send test", "test notification button")
-                            buttonHeight: 36
-                            enabled: DankCalService.connected
-                            backgroundColor: Theme.primary
-                            textColor: Theme.primaryText
-                            onClicked: DankCalService.sendTestReminder()
-                        }
+            SettingsGroup {
+                SettingsRow {
+                    title: I18n.tr("Test notification", "test notification setting label")
+                    subtitle: DankCalService.connected ? I18n.tr("Verify desktop notifications are working.", "test notification setting description") : I18n.tr("Backend not connected.", "test notification setting description when backend is unavailable")
+
+                    DankButton {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: I18n.tr("Send test", "test notification button")
+                        enabled: DankCalService.connected
+                        backgroundColor: Theme.secondaryContainer
+                        textColor: Theme.onSecondaryContainer
+                        onClicked: DankCalService.sendTestReminder()
                     }
                 }
             }

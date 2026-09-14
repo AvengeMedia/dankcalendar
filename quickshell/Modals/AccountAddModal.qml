@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.Common
@@ -222,7 +221,7 @@ FloatingWindow {
     title: I18n.tr("Add account", "account add modal window title")
     minimumSize: Qt.size(560, 540)
     implicitWidth: Math.max(minimumSize.width, Theme.modalWidth(parentWindow, screen, 640))
-    implicitHeight: Math.max(minimumSize.height, Theme.modalHeight(parentWindow, screen, Math.max(620, 48 + Theme.spacingL * 2 + contentNaturalHeight)))
+    implicitHeight: Math.max(minimumSize.height, Theme.modalHeight(parentWindow, screen, Math.max(620, headerRow.height + Theme.spacingL * 2 + contentNaturalHeight)))
     color: Theme.surface
     visible: false
 
@@ -266,78 +265,57 @@ FloatingWindow {
         LayoutMirroring.childrenInherit: true
 
         Item {
+            id: headerRow
             width: parent.width
-            height: 48
+            height: header.height
             z: 10
 
-            MouseArea {
-                anchors.fill: parent
-                onPressed: windowControls.tryStartMove()
+            DankActionButton {
+                id: backButton
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.spacingS
+                anchors.verticalCenter: parent.verticalCenter
+                visible: accountModal.selectedProvider !== ""
+                iconName: "arrow_back"
+                Accessible.name: I18n.tr("Back", "back button in account setup wizard")
+                onClicked: {
+                    const fromBrowser = accountModal.wizardStep === accountModal.browserStepIndex;
+                    accountModal.cancelPendingFlow();
+                    if (fromBrowser) {
+                        accountModal.wizardStep = accountModal.flowReturnStep;
+                        return;
+                    }
+                    if (accountModal.wizardStep > 0) {
+                        accountModal.wizardStep -= 1;
+                        return;
+                    }
+                    accountModal.selectedProvider = "";
+                }
+            }
+
+            DankWindowHeader {
+                id: header
+                anchors.left: backButton.visible ? backButton.right : parent.left
+                anchors.right: parent.right
+                controls: windowControls
+                title: accountModal.selectedProvider === "" ? I18n.tr("Add account", "account add modal header title") : I18n.tr("Connect %1", "account add header when a provider is selected").arg(accountModal.providerName(accountModal.selectedProvider))
+                iconName: backButton.visible ? "" : "person_add"
+                showDivider: false
+                onCloseRequested: accountModal.hide()
             }
 
             Rectangle {
-                anchors.fill: parent
-                color: Theme.surfaceContainer
-                opacity: 0.5
-            }
-
-            Row {
                 anchors.left: parent.left
-                anchors.leftMargin: Theme.spacingL
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.spacingM
-
-                DankActionButton {
-                    visible: accountModal.selectedProvider !== ""
-                    circular: false
-                    iconName: "arrow_back"
-                    iconColor: Theme.surfaceText
-                    anchors.verticalCenter: parent.verticalCenter
-                    onClicked: {
-                        const fromBrowser = accountModal.wizardStep === accountModal.browserStepIndex;
-                        accountModal.cancelPendingFlow();
-                        if (fromBrowser) {
-                            accountModal.wizardStep = accountModal.flowReturnStep;
-                            return;
-                        }
-                        if (accountModal.wizardStep > 0) {
-                            accountModal.wizardStep -= 1;
-                            return;
-                        }
-                        accountModal.selectedProvider = "";
-                    }
-                }
-
-                DankIcon {
-                    name: "person_add"
-                    size: Theme.iconSize
-                    color: Theme.primary
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                StyledText {
-                    text: accountModal.selectedProvider === "" ? I18n.tr("Add account", "account add modal header title") : I18n.tr("Connect %1", "account add header when a provider is selected").arg(accountModal.providerName(accountModal.selectedProvider))
-                    font.pixelSize: Theme.fontSizeXLarge
-                    font.weight: Font.Medium
-                    color: Theme.surfaceText
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            DankActionButton {
                 anchors.right: parent.right
-                anchors.rightMargin: Theme.spacingM
-                anchors.verticalCenter: parent.verticalCenter
-                circular: false
-                iconName: "close"
-                iconColor: Theme.surfaceText
-                onClicked: accountModal.hide()
+                anchors.bottom: parent.bottom
+                height: Theme.dividerWidth
+                color: Theme.outlineVariant
             }
         }
 
         Item {
             width: parent.width
-            height: parent.height - 48
+            height: parent.height - headerRow.height
             clip: true
 
             Loader {
@@ -370,7 +348,7 @@ FloatingWindow {
         anchors.fill: parent
         z: 100
         visible: accountModal.expandedScreenshot !== ""
-        color: Qt.rgba(0, 0, 0, 0.85)
+        color: Theme.withAlpha(Theme.scrimColor, 0.85)
 
         property bool zoomed: false
 
@@ -384,8 +362,8 @@ FloatingWindow {
         Flickable {
             id: previewFlick
             anchors.fill: parent
-            anchors.topMargin: 52
-            anchors.bottomMargin: 36
+            anchors.topMargin: Theme.buttonHeightS + Theme.spacingM
+            anchors.bottomMargin: Theme.spacingXL + Theme.spacingM
             anchors.leftMargin: Theme.spacingL
             anchors.rightMargin: Theme.spacingL
             clip: true
@@ -415,9 +393,9 @@ FloatingWindow {
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.margins: Theme.spacingM
-            circular: false
             iconName: "close"
-            iconColor: "white"
+            iconColor: Theme.contrastLight
+            Accessible.name: I18n.tr("Close", "button that closes the enlarged setup screenshot")
             onClicked: accountModal.expandedScreenshot = ""
         }
 
@@ -427,7 +405,7 @@ FloatingWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             text: previewOverlay.zoomed ? I18n.tr("Drag to pan · click to fit", "hint while a setup screenshot is zoomed") : I18n.tr("Click to zoom · Esc to close", "hint while a setup screenshot is fit to the window")
             font.pixelSize: Theme.fontSizeSmall
-            color: Qt.rgba(1, 1, 1, 0.7)
+            color: Theme.withAlpha(Theme.contrastLight, 0.7)
         }
 
         Shortcut {
@@ -470,7 +448,7 @@ FloatingWindow {
                 StyledText {
                     text: I18n.tr("Choose a provider", "heading for provider selection list")
                     font.pixelSize: Theme.fontSizeLarge
-                    font.weight: Font.Medium
+                    font.weight: Theme.fontWeightMedium
                     color: Theme.surfaceText
                     width: parent.width
                 }
@@ -533,13 +511,16 @@ FloatingWindow {
                         StyledRect {
                             required property var modelData
                             width: (parent.width - Theme.spacingM) / 2
-                            height: 132
-                            color: Theme.surfaceContainer
-                            radius: Theme.cornerRadius
-                            opacity: modelData.implemented ? 1 : 0.55
+                            height: cardColumn.implicitHeight + Theme.spacingM * 2
+                            color: Theme.surfaceContainerLow
+                            radius: Theme.cornerRadiusL
+                            opacity: modelData.implemented ? 1 : Theme.pendingOpacity
 
                             Column {
-                                anchors.fill: parent
+                                id: cardColumn
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
                                 anchors.margins: Theme.spacingM
                                 spacing: Theme.spacingS
 
@@ -548,16 +529,16 @@ FloatingWindow {
                                     width: parent.width
 
                                     Rectangle {
-                                        width: 36
-                                        height: 36
-                                        radius: 18
-                                        color: Theme.withAlpha(Theme.primary, 0.18)
+                                        width: Theme.avatarSize
+                                        height: Theme.avatarSize
+                                        radius: Theme.fullRadius(width, height)
+                                        color: Theme.primaryContainer
 
                                         DankIcon {
                                             anchors.centerIn: parent
                                             name: accountModal.providerIcon(parent.parent.parent.parent.modelData.id)
-                                            size: Theme.iconSize - 4
-                                            color: Theme.primary
+                                            size: Theme.iconSizeMedium
+                                            color: Theme.onPrimaryContainer
                                         }
                                     }
 
@@ -565,7 +546,7 @@ FloatingWindow {
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: parent.parent.parent.modelData.name
                                         font.pixelSize: Theme.fontSizeMedium
-                                        font.weight: Font.Medium
+                                        font.weight: Theme.fontWeightMedium
                                         color: Theme.surfaceText
                                     }
                                 }
@@ -578,17 +559,12 @@ FloatingWindow {
                                     wrapMode: Text.WordWrap
                                 }
 
-                                Item {
-                                    width: parent.width
-                                    height: 1
-                                }
-
                                 Rectangle {
                                     visible: !parent.parent.modelData.implemented
                                     width: badgeText.implicitWidth + Theme.spacingM
-                                    height: 22
-                                    radius: 11
-                                    color: Theme.withAlpha(Theme.warning, 0.18)
+                                    height: Theme.iconSizeMedium + Theme.spacingXXS
+                                    radius: Theme.fullRadius(width, height)
+                                    color: Theme.withAlpha(Theme.warning, Theme.tonalTintAlpha)
 
                                     StyledText {
                                         id: badgeText
@@ -640,9 +616,9 @@ FloatingWindow {
                         Rectangle {
                             required property int index
                             width: (wizardColumn.width - Theme.spacingXS * accountModal.doneStep) / (accountModal.doneStep + 1)
-                            height: 4
-                            radius: 2
-                            color: index <= accountModal.wizardStep ? Theme.primary : Theme.outlineLight
+                            height: Theme.spacingXS
+                            radius: Theme.cornerRadiusXXS
+                            color: index <= accountModal.wizardStep ? Theme.primary : Theme.surfaceContainerHighest
                         }
                     }
                 }
@@ -668,7 +644,7 @@ FloatingWindow {
                         return "";
                     }
                     font.pixelSize: Theme.fontSizeLarge
-                    font.weight: Font.Medium
+                    font.weight: Theme.fontWeightMedium
                     color: Theme.surfaceText
                 }
 
@@ -712,8 +688,8 @@ FloatingWindow {
             StyledRect {
                 width: parent.width
                 height: childrenRect.height + Theme.spacingM * 2
-                color: Theme.withAlpha(Theme.info, 0.10)
-                radius: Theme.cornerRadius
+                color: Theme.tertiaryContainer
+                radius: Theme.cornerRadiusM
 
                 Column {
                     anchors.left: parent.left
@@ -726,22 +702,22 @@ FloatingWindow {
                         spacing: Theme.spacingS
                         DankIcon {
                             name: "lock"
-                            size: Theme.iconSize - 6
-                            color: Theme.info
+                            size: Theme.iconSizeMedium
+                            color: Theme.onTertiaryContainer
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         StyledText {
                             text: I18n.tr("Credentials stay on this machine", "security note heading in oauth intro")
                             font.pixelSize: Theme.fontSizeMedium
-                            font.weight: Font.Medium
-                            color: Theme.surfaceText
+                            font.weight: Theme.fontWeightMedium
+                            color: Theme.onTertiaryContainer
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
                     StyledText {
                         text: I18n.tr("Your client ID, secret, and refresh token are stored in the system keyring (libsecret/kwallet) when available, or an encrypted local file.", "security note body in oauth intro")
                         font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.surfaceVariantText
+                        color: Theme.onTertiaryContainer
                         width: parent.width
                         wrapMode: Text.WordWrap
                     }
@@ -764,7 +740,7 @@ FloatingWindow {
                 DankButton {
                     text: accountModal.isMicrosoft ? I18n.tr("Connect Microsoft Account", "button to start the one-click microsoft sign-in") : I18n.tr("Connect Google Account", "button to start the one-click google sign-in")
                     iconName: "open_in_new"
-                    buttonHeight: 44
+                    busy: accountModal.flowInProgress
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     enabled: !accountModal.flowInProgress
@@ -773,9 +749,8 @@ FloatingWindow {
 
                 DankButton {
                     text: I18n.tr("Use your own OAuth client", "button to open the advanced custom google client setup")
-                    buttonHeight: 44
                     backgroundColor: "transparent"
-                    textColor: Theme.surfaceVariantText
+                    textColor: Theme.primary
                     enabled: !accountModal.flowInProgress
                     onClicked: accountModal.wizardStep = 1
                 }
@@ -817,8 +792,8 @@ FloatingWindow {
                 visible: !!(guideColumn.step && guideColumn.step.note)
                 width: parent.width
                 height: visible ? noteRow.implicitHeight + Theme.spacingM * 2 : 0
-                color: Theme.withAlpha(Theme.info, 0.10)
-                radius: Theme.cornerRadius
+                color: Theme.tertiaryContainer
+                radius: Theme.cornerRadiusM
 
                 Row {
                     id: noteRow
@@ -831,30 +806,26 @@ FloatingWindow {
 
                     DankIcon {
                         name: "info"
-                        size: Theme.iconSize - 4
-                        color: Theme.info
+                        size: Theme.iconSizeMedium
+                        color: Theme.onTertiaryContainer
                     }
 
                     StyledText {
-                        width: parent.width - (Theme.iconSize - 4) - Theme.spacingS
+                        width: parent.width - Theme.iconSizeMedium - Theme.spacingS
                         text: guideColumn.step && guideColumn.step.note ? guideColumn.step.note : ""
                         font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.surfaceText
+                        color: Theme.onTertiaryContainer
                         wrapMode: Text.WordWrap
                     }
                 }
             }
 
-            // Drop matching PNGs into quickshell/assets/google-setup/ or
-            // microsoft-setup/ to render a thumbnail under the step's
-            // description (click to enlarge). The frame is hidden until the
-            // image loads, so missing files degrade silently.
             StyledRect {
                 visible: screenshot.status === Image.Ready
                 width: parent.width
-                height: visible ? 180 : 0
-                color: Theme.surfaceContainer
-                radius: Theme.cornerRadius
+                height: visible ? Theme.listItemTwoLineHeight * 2.5 : 0
+                color: Theme.surfaceContainerLow
+                radius: Theme.cornerRadiusM
                 clip: true
 
                 Image {
@@ -872,26 +843,26 @@ FloatingWindow {
                     anchors.bottom: parent.bottom
                     anchors.margins: Theme.spacingS
                     width: zoomHint.implicitWidth + Theme.spacingM
-                    height: 24
-                    radius: 12
-                    color: Qt.rgba(0, 0, 0, 0.6)
+                    height: Theme.iconSize
+                    radius: Theme.fullRadius(width, height)
+                    color: Theme.withAlpha(Theme.scrimColor, 0.6)
 
                     Row {
                         id: zoomHint
                         anchors.centerIn: parent
-                        spacing: 4
+                        spacing: Theme.spacingXS
 
                         DankIcon {
                             name: "zoom_in"
-                            size: 14
-                            color: "white"
+                            size: Theme.iconSizeSmall
+                            color: Theme.contrastLight
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
                         StyledText {
                             text: I18n.tr("Enlarge", "hint on setup screenshot thumbnail")
-                            font.pixelSize: 11
-                            color: "white"
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: Theme.contrastLight
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -911,7 +882,6 @@ FloatingWindow {
                 DankButton {
                     text: (guideColumn.step && guideColumn.step.urlLabel) || I18n.tr("Open", "fallback label for guide step link button")
                     iconName: "open_in_new"
-                    buttonHeight: 44
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     onClicked: {
@@ -923,9 +893,8 @@ FloatingWindow {
                 DankButton {
                     text: I18n.tr("Copy link", "button to copy a setup guide url to the clipboard")
                     iconName: "content_copy"
-                    buttonHeight: 44
-                    backgroundColor: Theme.surfaceContainer
-                    textColor: Theme.surfaceText
+                    backgroundColor: Theme.secondaryContainer
+                    textColor: Theme.onSecondaryContainer
                     onClicked: {
                         if (guideColumn.step && guideColumn.step.url) {
                             Quickshell.clipboardText = guideColumn.step.url;
@@ -943,7 +912,6 @@ FloatingWindow {
                 DankButton {
                     text: accountModal.wizardStep === accountModal.guideCount ? (accountModal.isMicrosoft ? I18n.tr("Enter client ID", "last guide step button to microsoft credentials") : I18n.tr("Paste credentials", "last guide step button to google credentials")) : I18n.tr("Continue", "guide step next button")
                     iconName: "arrow_forward"
-                    buttonHeight: 40
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     onClicked: accountModal.wizardStep += 1
@@ -951,9 +919,8 @@ FloatingWindow {
 
                 DankButton {
                     text: I18n.tr("Back", "back button in account setup wizard")
-                    buttonHeight: 40
                     backgroundColor: "transparent"
-                    textColor: Theme.surfaceText
+                    textColor: Theme.primary
                     onClicked: accountModal.wizardStep -= 1
                 }
             }
@@ -979,9 +946,8 @@ FloatingWindow {
                 visible: !accountModal.isMicrosoft
                 text: I18n.tr("Import client_secret.json", "button to import google oauth client json")
                 iconName: "upload_file"
-                buttonHeight: 40
-                backgroundColor: Theme.surfaceContainer
-                textColor: Theme.surfaceText
+                backgroundColor: Theme.secondaryContainer
+                textColor: Theme.onSecondaryContainer
                 onClicked: accountModal.openFilePicker({
                     "title": I18n.tr("Select client_secret.json", "file picker title for google client json"),
                     "extensions": ["*.json"]
@@ -990,6 +956,7 @@ FloatingWindow {
 
             DankTextField {
                 width: parent.width
+                outlined: true
                 labelText: I18n.tr("Client ID", "oauth client id field label")
                 placeholderText: accountModal.isMicrosoft ? "00000000-0000-0000-0000-000000000000" : "xxxxxxxxxxxx.apps.googleusercontent.com"
                 leftIconName: "key"
@@ -1004,10 +971,12 @@ FloatingWindow {
             DankTextField {
                 visible: !accountModal.isMicrosoft
                 width: parent.width
+                outlined: true
                 labelText: I18n.tr("Client Secret", "oauth client secret field label")
                 placeholderText: "GOCSPX-…"
                 leftIconName: "lock"
                 echoMode: TextInput.Password
+                showPasswordToggle: true
                 onTextChanged: accountModal.clientSecret = text
 
                 Binding on text {
@@ -1032,7 +1001,7 @@ FloatingWindow {
                 DankButton {
                     text: accountModal.flowInProgress ? I18n.tr("Starting…", "connect button while oauth flow starts") : I18n.tr("Connect", "account setup button to start provider sign-in")
                     iconName: "check"
-                    buttonHeight: 40
+                    busy: accountModal.flowInProgress
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     enabled: !accountModal.flowInProgress && accountModal.clientId.length > 0 && (accountModal.isMicrosoft || accountModal.clientSecret.length > 0)
@@ -1041,9 +1010,8 @@ FloatingWindow {
 
                 DankButton {
                     text: I18n.tr("Back", "back button in account setup wizard")
-                    buttonHeight: 40
                     backgroundColor: "transparent"
-                    textColor: Theme.surfaceText
+                    textColor: Theme.primary
                     enabled: !accountModal.flowInProgress
                     onClicked: accountModal.wizardStep = accountModal.guideCount
                 }
@@ -1061,17 +1029,18 @@ FloatingWindow {
             Row {
                 spacing: Theme.spacingM
 
-                BusyIndicator {
-                    width: 24
-                    height: 24
+                DankSpinner {
+                    size: Theme.iconSize
+                    color: Theme.primary
                     running: accountModal.flowInProgress
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 StyledText {
                     anchors.verticalCenter: parent.verticalCenter
                     text: accountModal.flowError !== "" ? I18n.tr("Authorization failed", "browser step heading on oauth error") : I18n.tr("Waiting for browser…", "browser step heading while waiting for oauth")
                     font.pixelSize: Theme.fontSizeMedium
-                    font.weight: Font.Medium
+                    font.weight: Theme.fontWeightMedium
                     color: accountModal.flowError !== "" ? Theme.error : Theme.surfaceText
                 }
             }
@@ -1107,9 +1076,8 @@ FloatingWindow {
                 visible: accountModal.flowError === "" && accountModal.pendingAuthUrl !== ""
                 text: I18n.tr("Open browser again", "button to reopen oauth url in browser")
                 iconName: "open_in_new"
-                buttonHeight: 40
-                backgroundColor: Theme.surfaceContainer
-                textColor: Theme.surfaceText
+                backgroundColor: Theme.secondaryContainer
+                textColor: Theme.onSecondaryContainer
                 onClicked: Qt.openUrlExternally(accountModal.pendingAuthUrl)
             }
 
@@ -1122,7 +1090,6 @@ FloatingWindow {
                     visible: accountModal.flowError !== ""
                     text: I18n.tr("Try again", "button to retry oauth after failure")
                     iconName: "refresh"
-                    buttonHeight: 40
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     onClicked: {
@@ -1134,9 +1101,8 @@ FloatingWindow {
 
                 DankButton {
                     text: I18n.tr("Cancel", "button to cancel oauth browser step")
-                    buttonHeight: 40
                     backgroundColor: "transparent"
-                    textColor: Theme.surfaceText
+                    textColor: Theme.primary
                     onClicked: {
                         accountModal.cancelPendingFlow();
                         accountModal.wizardStep = accountModal.flowReturnStep;
@@ -1157,27 +1123,27 @@ FloatingWindow {
                 spacing: Theme.spacingM
 
                 Rectangle {
-                    width: 40
-                    height: 40
-                    radius: 20
-                    color: Theme.withAlpha(Theme.success, 0.18)
+                    width: Theme.iconButtonSize
+                    height: Theme.iconButtonSize
+                    radius: Theme.fullRadius(width, height)
+                    color: Theme.withAlpha(Theme.success, Theme.tonalTintAlpha)
 
                     DankIcon {
                         anchors.centerIn: parent
                         name: "check"
-                        size: Theme.iconSize - 4
+                        size: Theme.iconSizeMedium
                         color: Theme.success
                     }
                 }
 
                 Column {
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: 2
+                    spacing: Theme.spacingXXS
 
                     StyledText {
                         text: I18n.tr("Connected", "success step status heading")
                         font.pixelSize: Theme.fontSizeLarge
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceText
                     }
 
@@ -1205,7 +1171,6 @@ FloatingWindow {
                 DankButton {
                     text: I18n.tr("Done", "button to close modal after account added")
                     iconName: "check"
-                    buttonHeight: 40
                     backgroundColor: Theme.primary
                     textColor: Theme.primaryText
                     onClicked: accountModal.hide()
@@ -1254,18 +1219,16 @@ FloatingWindow {
                     DankButton {
                         text: I18n.tr("Generate app-specific password", "button to open apple app password page")
                         iconName: "open_in_new"
-                        buttonHeight: 40
-                        backgroundColor: Theme.surfaceContainer
-                        textColor: Theme.surfaceText
+                        backgroundColor: Theme.secondaryContainer
+                        textColor: Theme.onSecondaryContainer
                         onClicked: Qt.openUrlExternally("https://account.apple.com/account/manage")
                     }
 
                     DankButton {
                         text: I18n.tr("Copy link", "button to copy a setup guide url to the clipboard")
                         iconName: "content_copy"
-                        buttonHeight: 40
-                        backgroundColor: Theme.surfaceContainer
-                        textColor: Theme.surfaceText
+                        backgroundColor: Theme.secondaryContainer
+                        textColor: Theme.onSecondaryContainer
                         onClicked: {
                             Quickshell.clipboardText = "https://account.apple.com/account/manage";
                             ToastService.info(I18n.tr("Copied to clipboard", "toast after copying text to the clipboard"));
@@ -1276,6 +1239,7 @@ FloatingWindow {
                 DankTextField {
                     visible: !caldavRoot.isICloud
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Server URL", "caldav server url field label")
                     placeholderText: "https://dav.example.com"
                     leftIconName: "cloud"
@@ -1289,6 +1253,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: caldavRoot.isICloud ? I18n.tr("Apple ID", "icloud username field label") : I18n.tr("Username", "caldav username field label")
                     placeholderText: caldavRoot.isICloud ? "you@icloud.com" : I18n.tr("username", "caldav username field placeholder")
                     leftIconName: "person"
@@ -1302,16 +1267,19 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: caldavRoot.isICloud ? I18n.tr("App-specific password", "icloud password field label") : I18n.tr("Password", "caldav password field label")
                     placeholderText: caldavRoot.isICloud ? "xxxx-xxxx-xxxx-xxxx" : I18n.tr("password", "caldav password field placeholder")
                     leftIconName: "lock"
                     echoMode: TextInput.Password
+                    showPasswordToggle: true
                     text: caldavRoot.password
                     onTextChanged: caldavRoot.password = text
                 }
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: caldavRoot.isICloud ? "iCloud" : I18n.tr("My server", "caldav display name field placeholder")
                     leftIconName: "badge"
@@ -1334,7 +1302,7 @@ FloatingWindow {
                     Column {
                         width: parent.width - insecureToggle.width - Theme.spacingM
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 2
+                        spacing: Theme.spacingXXS
 
                         StyledText {
                             text: I18n.tr("Skip certificate verification", "caldav toggle label to disable tls verification")
@@ -1373,7 +1341,7 @@ FloatingWindow {
                     DankButton {
                         text: caldavRoot.busy ? I18n.tr("Connecting…", "connect button while caldav connection verifies") : I18n.tr("Connect", "account setup button to start provider sign-in")
                         iconName: "check"
-                        buttonHeight: 40
+                        busy: caldavRoot.busy
                         backgroundColor: Theme.primary
                         textColor: Theme.primaryText
                         enabled: !caldavRoot.busy && caldavRoot.serverUrl.length > 0 && caldavRoot.username.length > 0 && caldavRoot.password.length > 0
@@ -1439,7 +1407,8 @@ FloatingWindow {
 
                     DankTextField {
                         id: localDirField
-                        width: parent.width - 44 - Theme.spacingS
+                        width: parent.width - Theme.iconButtonSize - Theme.spacingS
+                        outlined: true
                         labelText: I18n.tr("Directory", "local calendar directory field label")
                         placeholderText: "/home/you/.local/share/calendars"
                         leftIconName: "folder"
@@ -1449,9 +1418,9 @@ FloatingWindow {
                     }
 
                     DankActionButton {
-                        circular: false
                         iconName: "folder_open"
-                        iconColor: Theme.surfaceText
+                        buttonSize: Theme.iconButtonSize
+                        Accessible.name: I18n.tr("Choose calendar directory", "folder picker title for local calendar directory")
                         anchors.verticalCenter: localDirField.verticalCenter
                         onClicked: accountModal.openFilePicker({
                             "title": I18n.tr("Choose calendar directory", "folder picker title for local calendar directory"),
@@ -1462,6 +1431,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: I18n.tr("Local calendars", "local account display name field placeholder")
                     leftIconName: "badge"
@@ -1486,7 +1456,7 @@ FloatingWindow {
                     DankButton {
                         text: localRoot.busy ? I18n.tr("Adding…", "add button while local account is created") : I18n.tr("Add", "button to add local calendar account")
                         iconName: "check"
-                        buttonHeight: 40
+                        busy: localRoot.busy
                         backgroundColor: Theme.primary
                         textColor: Theme.primaryText
                         enabled: !localRoot.busy && localRoot.rootPath.length > 0
@@ -1547,6 +1517,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: I18n.tr("Evolution", "evolution account display name field placeholder")
                     leftIconName: "badge"
@@ -1572,7 +1543,7 @@ FloatingWindow {
                     DankButton {
                         text: evolutionRoot.busy ? I18n.tr("Adding…", "add button while evolution account is created") : I18n.tr("Add", "button to add evolution account")
                         iconName: "check"
-                        buttonHeight: 40
+                        busy: evolutionRoot.busy
                         backgroundColor: Theme.primary
                         textColor: Theme.primaryText
                         enabled: !evolutionRoot.busy
@@ -1636,6 +1607,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Feed URL", "ical feed url field label")
                     placeholderText: "https://example.com/calendar.ics"
                     leftIconName: "rss_feed"
@@ -1646,6 +1618,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Display name (optional)", "optional account display name field label")
                     placeholderText: I18n.tr("University timetable", "ical display name field placeholder")
                     leftIconName: "badge"
@@ -1655,6 +1628,7 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Username (optional)", "ical optional basic-auth username field label")
                     placeholderText: I18n.tr("only if the feed requires sign-in", "ical optional username field placeholder")
                     leftIconName: "person"
@@ -1664,10 +1638,12 @@ FloatingWindow {
 
                 DankTextField {
                     width: parent.width
+                    outlined: true
                     labelText: I18n.tr("Password (optional)", "ical optional basic-auth password field label")
                     placeholderText: I18n.tr("only if the feed requires sign-in", "ical optional password field placeholder")
                     leftIconName: "lock"
                     echoMode: TextInput.Password
+                    showPasswordToggle: true
                     text: icalRoot.password
                     onTextChanged: icalRoot.password = text
                 }
@@ -1689,7 +1665,7 @@ FloatingWindow {
                     DankButton {
                         text: icalRoot.busy ? I18n.tr("Subscribing…", "subscribe button while ical feed is verified") : I18n.tr("Subscribe", "button to subscribe to an ical feed")
                         iconName: "check"
-                        buttonHeight: 40
+                        busy: icalRoot.busy
                         backgroundColor: Theme.primary
                         textColor: Theme.primaryText
                         enabled: !icalRoot.busy && icalRoot.feedUrl.length > 0

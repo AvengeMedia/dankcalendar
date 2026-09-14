@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell
 import qs.Common
 import qs.Widgets
 import qs.DankCommon.Widgets
@@ -8,90 +7,144 @@ Item {
     id: root
 
     property int currentIndex: 0
+    property int highlightIndex: -1
 
     signal tabSelected(int index)
 
-    readonly property var tabs: [
-        {
-            label: I18n.tr("General", "settings sidebar tab label"),
-            icon: "tune"
-        },
-        {
-            label: I18n.tr("Appearance", "settings sidebar tab label"),
-            icon: "palette"
-        },
-        {
-            label: I18n.tr("Calendars", "settings sidebar tab label"),
-            icon: "calendar_month"
-        },
-        {
-            label: I18n.tr("Accounts", "settings sidebar tab label"),
-            icon: "account_circle"
-        },
-        {
-            label: I18n.tr("Notifications", "settings sidebar tab label"),
-            icon: "notifications"
-        },
-        {
-            label: I18n.tr("About", "settings sidebar tab label"),
-            icon: "info"
-        }
-    ]
-
-    implicitWidth: 220
-
-    Rectangle {
-        anchors.fill: parent
-        color: Theme.surfaceContainer
-        opacity: 0.6
+    function tabOrder() {
+        return groups.reduce((all, group) => all.concat(group.map(tab => tab.index)), []);
     }
 
-    Column {
-        anchors.fill: parent
-        anchors.margins: Theme.spacingM
-        spacing: 2
+    function moveHighlight(delta) {
+        const order = tabOrder();
+        let position = order.indexOf(highlightIndex);
+        if (position < 0)
+            position = order.indexOf(currentIndex);
+        highlightIndex = order[(position + delta + order.length) % order.length];
+    }
 
-        Repeater {
-            model: ScriptModel {
-                values: root.tabs
+    function selectHighlighted() {
+        if (highlightIndex < 0)
+            return false;
+        tabSelected(highlightIndex);
+        highlightIndex = -1;
+        return true;
+    }
+
+    function clearHighlight() {
+        if (highlightIndex < 0)
+            return false;
+        highlightIndex = -1;
+        return true;
+    }
+
+    readonly property var groups: [[
+            {
+                tone: "primary",
+                index: 0,
+                label: I18n.tr("General", "settings sidebar tab label"),
+                hint: I18n.tr("Locale, views and defaults", "settings sidebar tab hint"),
+                icon: "tune"
+            },
+            {
+                tone: "primary",
+                index: 1,
+                label: I18n.tr("Appearance", "settings sidebar tab label"),
+                hint: I18n.tr("Theme, shape and motion", "settings sidebar tab hint"),
+                icon: "palette"
+            },
+            {
+                tone: "primary",
+                index: 4,
+                label: I18n.tr("Notifications", "settings sidebar tab label"),
+                hint: I18n.tr("Reminders and alerts", "settings sidebar tab hint"),
+                icon: "notifications"
             }
+        ], [
+            {
+                tone: "secondary",
+                index: 2,
+                label: I18n.tr("Calendars", "settings sidebar tab label"),
+                hint: I18n.tr("Names, visibility, removal", "settings sidebar tab hint"),
+                icon: "calendar_month"
+            },
+            {
+                tone: "secondary",
+                index: 3,
+                label: I18n.tr("Accounts", "settings sidebar tab label"),
+                hint: I18n.tr("Connected providers", "settings sidebar tab hint"),
+                icon: "account_circle"
+            }
+        ], [
+            {
+                tone: "tertiary",
+                index: 5,
+                label: I18n.tr("About", "settings sidebar tab label"),
+                hint: I18n.tr("Version and links", "settings sidebar tab hint"),
+                icon: "info"
+            }
+        ]]
 
-            StyledRect {
-                required property int index
-                required property var modelData
-                readonly property bool active: index === root.currentIndex
+    implicitWidth: SettingsMetrics.sidebarWidth
 
-                width: parent.width
-                height: 40
-                radius: Theme.cornerRadius
-                color: active ? Theme.primaryHover : "transparent"
+    Rectangle {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: Theme.dividerWidth
+        color: Theme.outlineVariant
+    }
 
-                Row {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.spacingM
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.spacingM
+    DankFlickable {
+        anchors.fill: parent
+        anchors.rightMargin: Theme.dividerWidth
+        clip: true
+        contentWidth: width
+        contentHeight: navColumn.height
 
-                    DankIcon {
-                        name: parent.parent.modelData.icon
-                        size: Theme.iconSize - 4
-                        color: parent.parent.active ? Theme.primary : Theme.surfaceVariantText
-                        anchors.verticalCenter: parent.verticalCenter
+        Column {
+            id: navColumn
+            width: parent.width
+            padding: Theme.spacingL
+            spacing: SettingsMetrics.sidebarGroupGap
+
+            Repeater {
+                model: root.groups
+
+                Column {
+                    id: groupColumn
+                    required property var modelData
+                    width: navColumn.width - navColumn.padding * 2
+                    spacing: Theme.groupedListGap
+
+                    Repeater {
+                        model: groupColumn.modelData
+
+                        SettingsSidebarItem {
+                            required property var modelData
+                            required property int index
+                            width: groupColumn.width
+                            iconName: modelData.icon
+                            title: modelData.label
+                            hint: modelData.hint
+                            tone: modelData.tone
+                            active: root.currentIndex === modelData.index
+                            highlighted: root.highlightIndex === modelData.index
+                            isFirstInGroup: index === 0
+                            isLastInGroup: index === groupColumn.modelData.length - 1
+                            onActiveFocusChanged: {
+                                if (activeFocus)
+                                    root.highlightIndex = modelData.index;
+                            }
+                            Keys.onReturnPressed: event => event.accepted = root.selectHighlighted()
+                            Keys.onEnterPressed: event => event.accepted = root.selectHighlighted()
+                            Keys.onSpacePressed: event => event.accepted = root.selectHighlighted()
+                            onClicked: {
+                                root.highlightIndex = -1;
+                                root.tabSelected(modelData.index);
+                            }
+                        }
                     }
-
-                    StyledText {
-                        text: parent.parent.modelData.label
-                        font.pixelSize: Theme.fontSizeMedium
-                        font.weight: parent.parent.active ? Font.Medium : Font.Normal
-                        color: parent.parent.active ? Theme.primary : Theme.surfaceText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-
-                StateLayer {
-                    stateColor: Theme.primary
-                    cornerRadius: parent.radius
-                    onClicked: root.tabSelected(parent.index)
                 }
             }
         }

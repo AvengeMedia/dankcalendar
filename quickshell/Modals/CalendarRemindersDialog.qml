@@ -1,11 +1,10 @@
 import QtQuick
-import QtQuick.Controls
 import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
 
-Popup {
+DankOverlayDialog {
     id: root
 
     property var calendar: null
@@ -142,6 +141,12 @@ Popup {
         open();
     }
 
+    function resetToGlobal() {
+        if (calendar)
+            DankCalService.setCalendarReminders(calendar.id, {});
+        close();
+    }
+
     function buildOverrides() {
         const o = {};
         if (ovrEnabled)
@@ -168,23 +173,9 @@ Popup {
         close();
     }
 
-    parent: Overlay.overlay
-    anchors.centerIn: parent
-    modal: true
-    width: Math.min(440, parent.width - Theme.spacingXL * 2)
-    padding: Theme.spacingL
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-
-    Overlay.modal: Rectangle {
-        color: Qt.rgba(0, 0, 0, 0.4)
-    }
-
-    background: Rectangle {
-        color: Theme.surfaceContainerHigh
-        radius: Theme.cornerRadiusLarge
-        border.width: 1
-        border.color: Theme.outlineMedium
-    }
+    title: I18n.tr("Reminders for \"%1\"", "per-calendar reminders dialog header").arg(calendar ? calendar.name : "")
+    supportingText: I18n.tr("Override the global reminder settings for this calendar. Unchanged options follow the global defaults.", "per-calendar reminders dialog subtitle")
+    onAccepted: submit()
 
     component OverrideRow: Column {
         id: orow
@@ -198,17 +189,22 @@ Popup {
 
         Item {
             width: parent.width
-            height: 32
+            height: Theme.buttonHeightXS
 
             StyledText {
                 anchors.left: parent.left
+                anchors.right: overrideRow.left
+                anchors.rightMargin: Theme.spacingM
                 anchors.verticalCenter: parent.verticalCenter
                 text: orow.label
                 font.pixelSize: Theme.fontSizeMedium
+                font.weight: Theme.fontWeightMedium
                 color: Theme.surfaceText
+                elide: Text.ElideRight
             }
 
             Row {
+                id: overrideRow
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.spacingS
@@ -233,158 +229,135 @@ Popup {
             width: parent.width
             height: childrenRect.height
             enabled: orow.overridden
-            opacity: orow.overridden ? 1 : 0.5
+            opacity: orow.overridden ? 1 : Theme.pendingOpacity
+        }
+
+        Rectangle {
+            width: parent.width
+            height: Theme.dividerWidth
+            color: Theme.outlineVariant
         }
     }
 
-    contentItem: Column {
-        spacing: Theme.spacingM
+    StyledText {
+        visible: !SettingsData.remindersEnabled
+        text: I18n.tr("Reminders are disabled globally, so nothing fires until you re-enable them.", "per-calendar reminders dialog note when global reminders are off")
+        font.pixelSize: Theme.fontSizeSmall
+        color: Theme.error
+        width: parent.width
+        wrapMode: Text.WordWrap
+    }
 
-        LayoutMirroring.enabled: I18n.isRtl
-        LayoutMirroring.childrenInherit: true
+    OverrideRow {
+        label: I18n.tr("Enable reminders", "per-calendar enable reminders override label")
+        overridden: root.ovrEnabled
+        onOverrideChanged: on => root.ovrEnabled = on
 
-        StyledText {
-            text: I18n.tr("Reminders for \"%1\"", "per-calendar reminders dialog header").arg(root.calendar ? root.calendar.name : "")
-            font.pixelSize: Theme.fontSizeLarge
-            font.weight: Font.Medium
-            color: Theme.surfaceText
-            width: parent.width
-            elide: Text.ElideRight
+        DankToggle {
+            checked: root.ovrEnabled ? root.valEnabled : SettingsData.remindersEnabled
+            enabled: root.ovrEnabled
+            onToggled: checked => root.valEnabled = checked
         }
+    }
 
-        StyledText {
-            text: I18n.tr("Override the global reminder settings for this calendar. Unchanged options follow the global defaults.", "per-calendar reminders dialog subtitle")
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.surfaceVariantText
-            width: parent.width
-            wrapMode: Text.WordWrap
+    OverrideRow {
+        label: I18n.tr("Keep until dismissed", "per-calendar persist override label")
+        overridden: root.ovrPersist
+        onOverrideChanged: on => root.ovrPersist = on
+
+        DankToggle {
+            checked: root.ovrPersist ? root.valPersist : SettingsData.reminderPersist
+            enabled: root.ovrPersist
+            onToggled: checked => root.valPersist = checked
         }
+    }
 
-        StyledText {
-            visible: !SettingsData.remindersEnabled
-            text: I18n.tr("Reminders are disabled globally, so nothing fires until you re-enable them.", "per-calendar reminders dialog note when global reminders are off")
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.error
-            width: parent.width
-            wrapMode: Text.WordWrap
+    OverrideRow {
+        label: I18n.tr("Default reminder", "per-calendar default reminder override label")
+        overridden: root.ovrDefault
+        onOverrideChanged: on => root.ovrDefault = on
+
+        DankDropdown {
+            dropdownWidth: Theme.fieldDefaultWidth
+            options: root.optionLabels(root.reminderOptions)
+            currentValue: root.labelForValue(root.reminderOptions, root.ovrDefault ? root.valDefault : SettingsData.defaultReminderMinutes)
+            onValueChanged: value => root.valDefault = root.valueForLabel(root.reminderOptions, value)
         }
+    }
 
-        OverrideRow {
-            label: I18n.tr("Enable reminders", "per-calendar enable reminders override label")
-            overridden: root.ovrEnabled
-            onOverrideChanged: on => root.ovrEnabled = on
+    OverrideRow {
+        label: I18n.tr("Snooze duration", "per-calendar snooze override label")
+        overridden: root.ovrSnooze
+        onOverrideChanged: on => root.ovrSnooze = on
 
-            DankToggle {
-                checked: root.ovrEnabled ? root.valEnabled : SettingsData.remindersEnabled
-                enabled: root.ovrEnabled
-                onToggled: checked => root.valEnabled = checked
-            }
+        DankDropdown {
+            dropdownWidth: Theme.fieldDefaultWidth
+            options: root.optionLabels(root.snoozeOptions)
+            currentValue: root.labelForValue(root.snoozeOptions, root.ovrSnooze ? root.valSnooze : SettingsData.snoozeMinutes)
+            onValueChanged: value => root.valSnooze = root.valueForLabel(root.snoozeOptions, value)
         }
+    }
 
-        OverrideRow {
-            label: I18n.tr("Keep until dismissed", "per-calendar persist override label")
-            overridden: root.ovrPersist
-            onOverrideChanged: on => root.ovrPersist = on
+    OverrideRow {
+        label: I18n.tr("Show all-day reminders", "per-calendar all-day reminders override label")
+        overridden: root.ovrAllDay
+        onOverrideChanged: on => root.ovrAllDay = on
 
-            DankToggle {
-                checked: root.ovrPersist ? root.valPersist : SettingsData.reminderPersist
-                enabled: root.ovrPersist
-                onToggled: checked => root.valPersist = checked
-            }
+        DankToggle {
+            checked: root.ovrAllDay ? root.valAllDay : SettingsData.allDayReminders
+            enabled: root.ovrAllDay
+            onToggled: checked => root.valAllDay = checked
         }
+    }
 
-        OverrideRow {
-            label: I18n.tr("Default reminder", "per-calendar default reminder override label")
-            overridden: root.ovrDefault
-            onOverrideChanged: on => root.ovrDefault = on
-
-            DankDropdown {
-                dropdownWidth: 160
-                options: root.optionLabels(root.reminderOptions)
-                currentValue: root.labelForValue(root.reminderOptions, root.ovrDefault ? root.valDefault : SettingsData.defaultReminderMinutes)
-                onValueChanged: value => root.valDefault = root.valueForLabel(root.reminderOptions, value)
-            }
-        }
-
-        OverrideRow {
-            label: I18n.tr("Snooze duration", "per-calendar snooze override label")
-            overridden: root.ovrSnooze
-            onOverrideChanged: on => root.ovrSnooze = on
-
-            DankDropdown {
-                dropdownWidth: 150
-                options: root.optionLabels(root.snoozeOptions)
-                currentValue: root.labelForValue(root.snoozeOptions, root.ovrSnooze ? root.valSnooze : SettingsData.snoozeMinutes)
-                onValueChanged: value => root.valSnooze = root.valueForLabel(root.snoozeOptions, value)
-            }
-        }
-
-        OverrideRow {
-            label: I18n.tr("Show all-day reminders", "per-calendar all-day reminders override label")
-            overridden: root.ovrAllDay
-            onOverrideChanged: on => root.ovrAllDay = on
-
-            DankToggle {
-                checked: root.ovrAllDay ? root.valAllDay : SettingsData.allDayReminders
-                enabled: root.ovrAllDay
-                onToggled: checked => root.valAllDay = checked
-            }
-        }
-
-        OverrideRow {
-            label: I18n.tr("All-day reminder timing", "per-calendar all-day timing override label")
-            overridden: root.ovrAllDayDays || root.ovrAllDayTime
-            onOverrideChanged: on => {
-                root.ovrAllDayDays = on;
-                root.ovrAllDayTime = on;
-            }
-
-            Row {
-                spacing: Theme.spacingS
-
-                DankDropdown {
-                    dropdownWidth: 160
-                    options: root.optionLabels(root.allDayDayOptions)
-                    currentValue: root.labelForValue(root.allDayDayOptions, root.ovrAllDayDays ? root.valAllDayDays : SettingsData.allDayReminderDaysBefore)
-                    onValueChanged: value => root.valAllDayDays = root.valueForLabel(root.allDayDayOptions, value)
-                }
-
-                DankTimePicker {
-                    use24Hour: SettingsData.use24HourTime
-                    minutes: root.minutesFromClock(root.ovrAllDayTime ? root.valAllDayTime : SettingsData.allDayReminderTime)
-                    onTimeSelected: value => root.valAllDayTime = root.clockFromMinutes(value)
-                }
-            }
+    OverrideRow {
+        label: I18n.tr("All-day reminder timing", "per-calendar all-day timing override label")
+        overridden: root.ovrAllDayDays || root.ovrAllDayTime
+        onOverrideChanged: on => {
+            root.ovrAllDayDays = on;
+            root.ovrAllDayTime = on;
         }
 
         Row {
-            anchors.right: parent.right
+            id: timingRow
+            width: parent.width
             spacing: Theme.spacingS
 
-            DankButton {
-                text: I18n.tr("Reset to global", "per-calendar reminders dialog button to clear overrides")
-                backgroundColor: "transparent"
-                textColor: Theme.surfaceVariantText
-                onClicked: {
-                    if (root.calendar)
-                        DankCalService.setCalendarReminders(root.calendar.id, {});
-                    root.close();
-                }
+            DankDropdown {
+                id: allDayDaysDropdown
+                dropdownWidth: Theme.fieldDefaultWidth
+                options: root.optionLabels(root.allDayDayOptions)
+                currentValue: root.labelForValue(root.allDayDayOptions, root.ovrAllDayDays ? root.valAllDayDays : SettingsData.allDayReminderDaysBefore)
+                onValueChanged: value => root.valAllDayDays = root.valueForLabel(root.allDayDayOptions, value)
             }
 
-            DankButton {
-                text: I18n.tr("Cancel", "per-calendar reminders dialog button to cancel")
-                backgroundColor: "transparent"
-                textColor: Theme.surfaceText
-                onClicked: root.close()
-            }
-
-            DankButton {
-                text: I18n.tr("Save", "per-calendar reminders dialog button to save")
-                backgroundColor: Theme.primary
-                textColor: Theme.primaryText
-                onClicked: root.submit()
+            DankTimeField {
+                width: Math.min(Theme.fieldDefaultWidth, timingRow.width - allDayDaysDropdown.width - timingRow.spacing)
+                use24Hour: SettingsData.use24HourTime
+                minutes: root.minutesFromClock(root.ovrAllDayTime ? root.valAllDayTime : SettingsData.allDayReminderTime)
+                onTimeSelected: value => root.valAllDayTime = root.clockFromMinutes(value)
             }
         }
     }
+
+    actions: [
+        DankButton {
+            text: I18n.tr("Reset to global", "per-calendar reminders dialog button to clear overrides")
+            backgroundColor: "transparent"
+            textColor: Theme.primary
+            onClicked: root.resetToGlobal()
+        },
+        DankButton {
+            text: I18n.tr("Cancel", "per-calendar reminders dialog button to cancel")
+            backgroundColor: Theme.secondaryContainer
+            textColor: Theme.onSecondaryContainer
+            onClicked: root.close()
+        },
+        DankButton {
+            text: I18n.tr("Save", "per-calendar reminders dialog button to save")
+            backgroundColor: Theme.primary
+            textColor: Theme.primaryText
+            onClicked: root.submit()
+        }
+    ]
 }

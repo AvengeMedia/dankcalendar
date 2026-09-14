@@ -15,6 +15,7 @@ FloatingWindow {
     property bool isCompactMode: width < 760
     property bool menuVisible: false
     property string currentView: SettingsData.lastView
+    onMaximizedChanged: focusScope.forceActiveFocus()
     onCurrentViewChanged: {
         SettingsData.lastView = currentView;
         rangeAnchorTime = 0;
@@ -695,93 +696,20 @@ FloatingWindow {
             anchors.fill: parent
             spacing: 0
 
-            Item {
+            DankWindowHeader {
+                id: header
                 width: parent.width
-                height: 48
                 z: 10
-
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: windowControls.tryStartMove()
-                    onDoubleClicked: windowControls.tryToggleMaximize()
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: Theme.surfaceContainer
-                    opacity: 0.5
-                }
-
-                Row {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.spacingL
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.spacingM
-
-                    DankActionButton {
-                        circular: false
-                        iconName: "menu"
-                        iconSize: Theme.iconSize - 4
-                        iconColor: Theme.surfaceText
-                        anchors.verticalCenter: parent.verticalCenter
-                        onClicked: window.toggleSidebar()
-                    }
-
-                    DankIcon {
-                        name: "calendar_month"
-                        size: Theme.iconSize
-                        color: Theme.primary
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    StyledText {
-                        text: I18n.tr("Calendar", "main window title bar text")
-                        font.pixelSize: Theme.fontSizeXLarge
-                        color: Theme.surfaceText
-                        font.weight: Font.Medium
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-
-                Row {
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.spacingM
-                    anchors.top: parent.top
-                    anchors.topMargin: Theme.spacingM
-                    spacing: Theme.spacingXS
-
-                    DankActionButton {
-                        visible: windowControls.canMinimize
-                        circular: false
-                        iconName: "minimize"
-                        iconSize: Theme.iconSize - 4
-                        iconColor: Theme.surfaceText
-                        onClicked: windowControls.tryMinimize()
-                    }
-
-                    DankActionButton {
-                        visible: windowControls.supported
-                        circular: false
-                        iconName: window.maximized ? "fullscreen_exit" : "fullscreen"
-                        iconSize: Theme.iconSize - 4
-                        iconColor: Theme.surfaceText
-                        onClicked: windowControls.tryToggleMaximize()
-                    }
-
-                    DankActionButton {
-                        circular: false
-                        iconName: "close"
-                        iconSize: Theme.iconSize - 4
-                        iconColor: Theme.surfaceText
-                        onClicked: window.requestClose()
-                    }
-                }
+                controls: windowControls
+                title: I18n.tr("Calendar", "main window title bar text")
+                iconName: "calendar_month"
+                onCloseRequested: window.requestClose()
             }
 
             Item {
                 id: bodyArea
                 width: parent.width
-                height: parent.height - 48
+                height: parent.height - header.height
                 clip: true
 
                 readonly property real minSidebarWidth: 200
@@ -823,6 +751,7 @@ FloatingWindow {
                 Item {
                     id: sidebarResizer
                     anchors.left: sidebar.right
+                    anchors.leftMargin: -width / 2
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                     width: Theme.spacingS
@@ -834,10 +763,10 @@ FloatingWindow {
                     property real startWidth: 0
 
                     Rectangle {
-                        anchors.right: parent.right
-                        width: 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.outlineWidthFocused : Theme.dividerWidth
                         height: parent.height
-                        color: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.primary : Theme.outlineLight
+                        color: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.primary : Theme.outlineVariant
                     }
 
                     MouseArea {
@@ -880,6 +809,7 @@ FloatingWindow {
 
                     CalendarContent {
                         anchors.fill: parent
+                        menuButtonVisible: true
                         currentView: window.currentView
                         displayDate: window.displayDate
                         selectedDate: window.selectedDate
@@ -889,6 +819,7 @@ FloatingWindow {
                         todayStart: window.todayStart
                         rangeStartTime: window.rangeStartTime
                         rangeEndTime: window.rangeEndTime
+                        onMenuRequested: window.toggleSidebar()
                         onTodayRequested: window.goToToday()
                         onPreviousRequested: window.shiftDisplayDate(-1)
                         onNextRequested: window.shiftDisplayDate(1)
@@ -933,7 +864,6 @@ FloatingWindow {
 
         KeyboardShortcutsOverlay {
             id: helpOverlay
-            anchors.fill: parent
             visible: false
             z: 100
             onDismissed: visible = false

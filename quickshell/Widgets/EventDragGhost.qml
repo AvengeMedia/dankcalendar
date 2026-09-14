@@ -20,7 +20,7 @@ Rectangle {
     y: Math.min(parent.height - height - Theme.spacingS, Math.max(Theme.spacingS, dragPosition.y + 12))
     width: Math.min(220, dragLabel.implicitWidth + Theme.spacingL * 2)
     height: 34
-    radius: Theme.cornerRadiusSmall
+    radius: Theme.cornerRadiusS
     color: Theme.surfaceContainerHigh
     border.color: Theme.primary
     border.width: 2
@@ -37,7 +37,7 @@ Rectangle {
             return root.detail !== "" ? root.draggedEvent.title + " · " + root.detail : root.draggedEvent.title;
         }
         font.pixelSize: Theme.fontSizeSmall
-        font.weight: Font.Medium
+        font.weight: Theme.fontWeightMedium
         color: Theme.surfaceText
         elide: Text.ElideRight
         width: Math.min(196, implicitWidth)

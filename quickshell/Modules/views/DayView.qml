@@ -173,7 +173,8 @@ Item {
             text: I18n.tr("Disable core hours", "core hours warning banner disable action")
             backgroundColor: "transparent"
             textColor: Theme.warning
-            buttonHeight: 28
+            buttonHeight: Theme.buttonHeightXS
+            focusPolicy: Qt.NoFocus
             onClicked: SettingsData.coreHoursEnabled = false
         }
     }
@@ -197,7 +198,7 @@ Item {
                 readonly property bool isSelected: root.isEventSelected(modelData)
                 width: parent.width
                 height: 22
-                radius: 4
+                radius: Theme.cornerRadiusXS
                 clip: true
                 color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                 border.color: isSelected ? Theme.primary : modelData.color
@@ -340,9 +341,9 @@ Item {
                         id: nowDot
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.top
-                        width: 10
-                        height: 10
-                        radius: 5
+                        width: Theme.spacingS + Theme.spacingXXS
+                        height: width
+                        radius: Theme.fullRadius(width, height)
                         color: Theme.error
                     }
 
@@ -374,7 +375,7 @@ Item {
                         y: modelData.startHour * root.hourHeight
                         width: laneWidth
                         height: modelData.durationHours * root.hourHeight - 4
-                        radius: Theme.cornerRadiusSmall
+                        radius: Theme.cornerRadiusS
                         clip: true
                         color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                         border.color: isSelected ? Theme.primary : modelData.color
@@ -394,7 +395,7 @@ Item {
                                 width: 3
                                 height: parent.height - 4
                                 anchors.verticalCenter: parent.verticalCenter
-                                radius: 1.5
+                                radius: Theme.fullRadius(width, height)
                                 color: parent.parent.modelData.color
                             }
 
@@ -405,7 +406,7 @@ Item {
                                 StyledText {
                                     text: parent.parent.parent.modelData.title
                                     font.pixelSize: Theme.fontSizeMedium
-                                    font.weight: Font.Medium
+                                    font.weight: Theme.fontWeightMedium
                                     color: Theme.surfaceText
                                     width: parent.width
                                     wrapMode: Text.NoWrap

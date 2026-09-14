@@ -107,10 +107,8 @@ Item {
         dim: false
 
         background: Rectangle {
-            color: Theme.withAlpha(Theme.surfaceContainerHigh, Theme.popupTransparency)
-            radius: Theme.cornerRadius
-            border.width: 1
-            border.color: Qt.rgba(Theme.outline.r, Theme.outline.g, Theme.outline.b, 0.08)
+            color: Theme.surfaceContainerHigh
+            radius: Theme.cornerRadiusM
         }
 
         contentItem: Column {
@@ -121,7 +119,7 @@ Item {
                 height: root.headerHeight - Theme.spacingXS
                 text: SettingsData.formatDate(root.day, "dddd, MMMM d")
                 font.pixelSize: Theme.fontSizeMedium
-                font.weight: Font.Medium
+                font.weight: Theme.fontWeightMedium
                 color: Theme.surfaceText
                 verticalAlignment: Text.AlignVCenter
             }
@@ -140,8 +138,8 @@ Item {
                     readonly property bool isSelected: root.isEventSelected(modelData)
                     readonly property bool awaitingReply: modelData.myResponse === "needs-action"
                     width: ListView.view.width
-                    height: root.rowHeight - 2
-                    radius: 4
+                    height: root.rowHeight - Theme.groupedListGap
+                    radius: Theme.cornerRadiusXS
                     color: isSelected ? Theme.withAlpha(modelData.color, 0.28) : (rowHover.containsMouse ? Theme.withAlpha(modelData.color, 0.18) : "transparent")
                     border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                     border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
@@ -162,7 +160,7 @@ Item {
                         Rectangle {
                             width: 3
                             height: 22
-                            radius: 1.5
+                            radius: Theme.fullRadius(width, height)
                             color: eventRow.modelData.color
                             anchors.verticalCenter: parent.verticalCenter
                         }

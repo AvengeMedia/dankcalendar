@@ -31,8 +31,6 @@ Singleton {
         VeryHigh
     }
 
-    property int animationSpeed: SettingsData.AnimationSpeed.Short
-    property bool enableRippleEffects: true
     property bool popoutElevationEnabled: true
     property int textRenderType: SettingsData.TextRenderType.Qt
     property int textRenderQuality: SettingsData.TextRenderQuality.Default
@@ -51,6 +49,20 @@ Singleton {
     property alias colorSource: adapter.colorSource
     property alias presetTheme: adapter.presetTheme
     property alias customThemeFile: adapter.customThemeFile
+    // 0 (square) … 100; 50 keeps the Material shape scale
+    property alias radiusStrength: adapter.radiusStrength
+    // base transition length in ms, 0 disables animations
+    property alias animationDuration: adapter.animationDuration
+    property alias reduceMotion: adapter.reduceMotion
+    // 0 smooth, 1 balanced, 2 playful
+    property alias springBounce: adapter.springBounce
+    property alias enableRippleEffects: adapter.enableRippleEffects
+    property alias fontWeight: adapter.fontWeight
+    property alias fontScale: adapter.fontScale
+    property alias focusRingEnabled: adapter.focusRingEnabled
+    property alias focusRingWidth: adapter.focusRingWidth
+    // "primary" | "secondary" | "outline" | "surfaceText"
+    property alias focusRingColor: adapter.focusRingColor
     // "" follows the system language, otherwise a bundled translation code such as "de" or "zh_CN"
     property alias language: adapter.language
     // "" follows the interface language for date and time names, otherwise a locale code
@@ -201,6 +213,16 @@ Singleton {
             property string colorSource: "auto"
             property string presetTheme: "purple"
             property string customThemeFile: ""
+            property int radiusStrength: 50
+            property int animationDuration: 250
+            property bool reduceMotion: false
+            property int springBounce: 1
+            property bool enableRippleEffects: true
+            property int fontWeight: 400
+            property real fontScale: 1.0
+            property bool focusRingEnabled: true
+            property real focusRingWidth: 1.5
+            property string focusRingColor: "primary"
             property string language: ""
             property string timeLocale: ""
             property int firstDayOfWeek: -1

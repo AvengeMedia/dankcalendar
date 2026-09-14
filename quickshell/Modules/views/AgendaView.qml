@@ -127,7 +127,7 @@ Item {
                     StyledText {
                         text: parent.modelData.label
                         font.pixelSize: Theme.fontSizeLarge
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceText
                         width: parent.width
 
@@ -158,8 +158,8 @@ Item {
                             readonly property bool tentativeReply: modelData.myResponse === "tentative"
                             width: root.width
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
-                            color: isSelected ? Theme.primaryBackground : (cardArea.containsMouse ? Theme.surfaceContainerHigh : Theme.surfaceContainer)
-                            radius: Theme.cornerRadius
+                            color: isSelected ? Theme.primaryContainer : (cardArea.containsMouse ? Theme.surfaceContainer : Theme.surfaceContainerLow)
+                            radius: Theme.cornerRadiusM
                             border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                             border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
                             clip: tentativeReply
@@ -183,7 +183,7 @@ Item {
                                     width: 4
                                     height: 44
                                     anchors.verticalCenter: parent.verticalCenter
-                                    radius: 2
+                                    radius: Theme.fullRadius(width, height)
                                     color: card.modelData.color
                                 }
 
@@ -195,7 +195,7 @@ Item {
                                     StyledText {
                                         text: card.modelData.time
                                         font.pixelSize: Theme.fontSizeMedium
-                                        font.weight: Font.Medium
+                                        font.weight: Theme.fontWeightMedium
                                         color: Theme.surfaceText
                                         isMonospace: true
                                         width: parent.width
@@ -218,7 +218,7 @@ Item {
                                     StyledText {
                                         text: card.modelData.title
                                         font.pixelSize: Theme.fontSizeLarge
-                                        font.weight: Font.Medium
+                                        font.weight: Theme.fontWeightMedium
                                         color: Theme.surfaceText
                                         width: parent.width
                                         wrapMode: Text.WordWrap
@@ -268,7 +268,7 @@ Item {
                                         Rectangle {
                                             width: 8
                                             height: 8
-                                            radius: 4
+                                            radius: Theme.fullRadius(width, height)
                                             anchors.verticalCenter: parent.verticalCenter
                                             color: card.modelData.color
                                         }

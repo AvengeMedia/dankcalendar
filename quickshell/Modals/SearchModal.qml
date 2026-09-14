@@ -6,12 +6,17 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
+import qs.DankCommon.Common as DC
 import qs.DankCommon.Widgets
 
-Popup {
+FocusScope {
     id: root
 
     signal eventSelected(var event)
+    signal closed
+
+    property bool opened: false
+    property Item returnFocus: null
 
     property var results: []
     property bool loading: false
@@ -20,10 +25,9 @@ Popup {
     property int selectedIndex: 0
 
     readonly property bool hasQuery: searchInput.text.trim().length > 0
-    readonly property real searchBarH: 56
-    readonly property real rowH: 64
-    readonly property real statusH: 92
-    readonly property real maxResultsH: Math.min(430, (parent ? parent.height : 600) * 0.55)
+    readonly property real rowH: Theme.listItemTwoLineHeight
+    readonly property real statusH: Theme.listItemTwoLineHeight + Theme.spacingL
+    readonly property real maxResultsH: Math.min(Theme.menuMaxHeight, height * 0.55)
 
     readonly property var rows: {
         const now = new Date();
@@ -49,13 +53,39 @@ Popup {
             return 0;
         if (rows.length === 0)
             return statusH;
-        return Math.min(rows.length * rowH + Theme.spacingS, maxResultsH);
+        return Math.min(rows.length * (rowH + Theme.groupedListGap) + Theme.spacingS, maxResultsH);
     }
 
     onRowsChanged: selectedIndex = 0
 
     function show() {
         open();
+    }
+
+    function open() {
+        const host = Overlay.overlay ?? Window.window?.contentItem ?? null;
+        if (host)
+            parent = host;
+        returnFocus = Window.window?.activeFocusItem ?? null;
+        opened = true;
+        searchInput.forceActiveFocus();
+    }
+
+    function close() {
+        if (!opened)
+            return;
+        opened = false;
+        searchDebounce.stop();
+        searchInput.text = "";
+        activeQuery = "";
+        loading = false;
+        errorText = "";
+        results = [];
+        const target = returnFocus;
+        returnFocus = null;
+        if (target)
+            target.forceActiveFocus();
+        closed();
     }
 
     function _dateLabel(ev) {
@@ -141,10 +171,7 @@ Popup {
             return;
         case Qt.Key_Return:
         case Qt.Key_Enter:
-            if (rows.length > 0)
-                _activate(selectedIndex);
-            else
-                _runSearch();
+            _submit();
             event.accepted = true;
             return;
         case Qt.Key_Escape:
@@ -153,6 +180,14 @@ Popup {
             return;
         }
         event.accepted = false;
+    }
+
+    function _submit() {
+        if (rows.length > 0) {
+            _activate(selectedIndex);
+            return;
+        }
+        _runSearch();
     }
 
     function _runSearch() {
@@ -177,34 +212,14 @@ Popup {
         });
     }
 
-    parent: Overlay.overlay
-    x: Math.round((parent.width - width) / 2)
-    y: Math.round(parent.height * 0.12)
-    width: Math.min(600, parent.width - Theme.spacingXL * 2)
-    modal: true
-    padding: Theme.spacingS
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    anchors.fill: parent
+    visible: opened || scrim.opacity > 0
+    enabled: opened
+    focus: false
+    LayoutMirroring.enabled: I18n.isRtl
+    LayoutMirroring.childrenInherit: true
 
-    onOpened: searchInput.forceActiveFocus()
-    onClosed: {
-        searchDebounce.stop();
-        searchInput.text = "";
-        activeQuery = "";
-        loading = false;
-        errorText = "";
-        results = [];
-    }
-
-    Overlay.modal: Rectangle {
-        color: Qt.rgba(0, 0, 0, 0.4)
-    }
-
-    background: Rectangle {
-        color: Theme.surfaceContainer
-        radius: Theme.cornerRadiusLarge
-        border.width: 1
-        border.color: Theme.outlineMedium
-    }
+    Keys.onPressed: event => root._handleKey(event)
 
     Timer {
         id: searchDebounce
@@ -213,107 +228,100 @@ Popup {
         onTriggered: root._runSearch()
     }
 
-    contentItem: Item {
-        implicitHeight: root.searchBarH + resultsContainer.height
+    Rectangle {
+        id: scrim
+        anchors.fill: parent
+        color: Theme.scrimColor
+        opacity: root.opened ? Theme.scrimAlpha : 0
 
-        LayoutMirroring.enabled: I18n.isRtl
-        LayoutMirroring.childrenInherit: true
+        Behavior on opacity {
+            enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
+            DC.DankAnim {
+                duration: Theme.expressiveDurations.expressiveEffects
+                easing.bezierCurve: Theme.expressiveCurves.expressiveEffects
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.close()
+        }
+    }
+
+    Item {
+        id: surface
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round(parent.height * 0.12)
+        width: Math.max(0, Math.min(Theme.dialogMaxWidth, parent.width - Theme.spacingXL * 2))
+        height: Theme.spacingS * 2 + searchInput.height + resultsContainer.height
+        scale: root.opened ? 1 : Theme.popupEnterScale
+        opacity: root.opened ? 1 : 0
+
+        Behavior on scale {
+            enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
+            DC.DankAnim {
+                duration: Theme.expressiveDurations.expressiveDefaultSpatial
+                easing.bezierCurve: Theme.expressiveCurves.expressiveDefaultSpatial
+            }
+        }
+
+        Behavior on opacity {
+            enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
+            DC.DankAnim {
+                duration: Theme.expressiveDurations.expressiveEffects
+                easing.bezierCurve: Theme.expressiveCurves.expressiveEffects
+            }
+        }
+
+        DC.ElevationShadow {
+            anchors.fill: parent
+            level: Theme.elevationLevel3
+            targetRadius: Theme.windowRadius
+            targetColor: card.color
+            shadowEnabled: Theme.elevationEnabled
+        }
 
         Rectangle {
-            id: searchBar
+            id: card
+            anchors.fill: parent
+            radius: Theme.windowRadius
+            color: Theme.surfaceContainerHigh
+
+            MouseArea {
+                anchors.fill: parent
+            }
+        }
+
+        DankSearchField {
+            id: searchInput
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            height: root.searchBarH
-            radius: Theme.cornerRadius
-            color: Theme.surfaceContainerHigh
-
-            Rectangle {
-                id: leadingWell
-                width: 36
-                height: 36
-                radius: height / 2
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.spacingM
-                anchors.verticalCenter: parent.verticalCenter
-                color: searchInput.activeFocus ? Theme.primaryContainer : Theme.surfaceContainerHighest
-
-                Behavior on color {
-                    ColorAnimation {
-                        duration: Theme.shorterDuration
-                        easing.type: Theme.standardEasing
-                    }
-                }
-
-                DankIcon {
-                    anchors.centerIn: parent
-                    name: "search"
-                    size: 20
-                    color: searchInput.activeFocus ? Theme.primary : Theme.surfaceVariantText
-                }
-            }
-
-            DankActionButton {
-                id: clearButton
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.spacingM
-                anchors.verticalCenter: parent.verticalCenter
-                iconName: "close"
-                iconSize: 16
-                visible: searchInput.text.length > 0
-                onClicked: {
-                    searchInput.text = "";
-                    searchInput.forceActiveFocus();
-                }
-            }
-
-            Text {
-                anchors.left: leadingWell.right
-                anchors.leftMargin: Theme.spacingM
-                anchors.right: clearButton.left
-                anchors.rightMargin: Theme.spacingS
-                anchors.verticalCenter: parent.verticalCenter
-                text: I18n.tr("Search events", "search modal input placeholder")
-                font.family: Theme.fontFamily
-                font.pixelSize: 18
-                font.weight: Font.Medium
-                color: Theme.outlineButton
-                visible: searchInput.text.length === 0
-                clip: true
-            }
-
-            TextInput {
-                id: searchInput
-                anchors.left: leadingWell.right
-                anchors.leftMargin: Theme.spacingM
-                anchors.right: clearButton.left
-                anchors.rightMargin: Theme.spacingS
-                anchors.verticalCenter: parent.verticalCenter
-                font.family: Theme.fontFamily
-                font.pixelSize: 18
-                font.weight: Font.Medium
-                color: Theme.surfaceText
-                selectionColor: Theme.primary
-                selectedTextColor: Theme.primaryText
-                clip: true
-                focus: true
-                onTextChanged: searchDebounce.restart()
-                Keys.onPressed: event => root._handleKey(event)
-            }
+            anchors.margins: Theme.spacingS
+            height: Theme.buttonHeightM
+            font.pixelSize: Theme.fontSizeLarge
+            placeholderText: I18n.tr("Search events", "search modal input placeholder")
+            onTextChanged: searchDebounce.restart()
+            onAccepted: root._submit()
+            Keys.onReturnPressed: event => event.accepted = true
+            Keys.onEnterPressed: event => event.accepted = true
         }
 
         Item {
             id: resultsContainer
-            anchors.top: searchBar.bottom
+            anchors.top: searchInput.bottom
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.leftMargin: Theme.spacingS
+            anchors.rightMargin: Theme.spacingS
             height: root.resultsH
             clip: true
 
             Behavior on height {
-                NumberAnimation {
-                    duration: 110
-                    easing.type: Theme.standardEasing
+                enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
+                DC.DankAnim {
+                    duration: Theme.expressiveDurations.expressiveEffects
+                    easing.bezierCurve: Theme.expressiveCurves.expressiveEffects
                 }
             }
 
@@ -323,107 +331,107 @@ Popup {
                 anchors.topMargin: Theme.spacingS
                 clip: true
                 visible: root.rows.length > 0
+                spacing: Theme.groupedListGap
 
                 model: ScriptModel {
                     values: root.rows
                     objectProp: "rowId"
                 }
 
-                delegate: Item {
+                delegate: StyledRect {
                     id: delegateRoot
                     required property var modelData
                     required property int index
+                    readonly property bool selected: index === root.selectedIndex
+                    readonly property color contentColor: selected ? Theme.onPrimaryContainer : Theme.surfaceText
+                    readonly property color supportingColor: selected ? Theme.onPrimaryContainer : Theme.surfaceVariantText
 
                     width: resultsList.width
                     height: root.rowH
+                    radius: Theme.groupedListInnerRadius
+                    topLeftRadius: index === 0 ? Theme.groupedListOuterRadius : radius
+                    topRightRadius: topLeftRadius
+                    bottomLeftRadius: index === root.rows.length - 1 ? Theme.groupedListOuterRadius : radius
+                    bottomRightRadius: bottomLeftRadius
+                    color: selected ? Theme.primaryContainer : Theme.surfaceContainerLow
+
+                    Behavior on color {
+                        enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
+                        DC.DankColorAnim {
+                            duration: Theme.shorterDuration
+                            easing.bezierCurve: Theme.expressiveCurves.standardDecel
+                        }
+                    }
 
                     Rectangle {
-                        anchors.fill: parent
-                        anchors.topMargin: 3
-                        anchors.bottomMargin: 3
-                        radius: Theme.cornerRadius
-                        color: delegateRoot.index === root.selectedIndex ? Theme.primaryPressed : "transparent"
+                        id: iconWell
+                        width: Theme.iconButtonSize
+                        height: Theme.iconButtonSize
+                        radius: Theme.cornerRadiusM
+                        anchors.left: parent.left
+                        anchors.leftMargin: Theme.spacingS
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: Theme.surfaceContainerHighest
 
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: Theme.shorterDuration
-                                easing.type: Theme.standardEasing
-                            }
+                        DankIcon {
+                            anchors.centerIn: parent
+                            name: "event"
+                            size: Theme.iconSize
+                            color: delegateRoot.modelData.event.color
+                        }
+                    }
+
+                    Column {
+                        anchors.left: iconWell.right
+                        anchors.leftMargin: Theme.spacingM
+                        anchors.right: datePill.left
+                        anchors.rightMargin: Theme.spacingM
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: Theme.spacingXXS
+
+                        StyledText {
+                            width: parent.width
+                            text: delegateRoot.modelData.event.title
+                            font.pixelSize: Theme.fontSizeMedium
+                            font.weight: Theme.fontWeightMedium
+                            color: delegateRoot.contentColor
+                            maximumLineCount: 1
+                            elide: Text.ElideRight
                         }
 
-                        Rectangle {
-                            id: iconWell
-                            width: 40
-                            height: 40
-                            radius: Theme.cornerRadius
-                            anchors.left: parent.left
-                            anchors.leftMargin: Theme.spacingS
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: Theme.surfaceContainerHigh
-                            border.width: 1
-                            border.color: Theme.withAlpha(Theme.outline, 0.12)
-
-                            DankIcon {
-                                anchors.centerIn: parent
-                                name: "event"
-                                size: 22
-                                color: delegateRoot.modelData.event.color
-                            }
+                        StyledText {
+                            width: parent.width
+                            text: root._subtitle(delegateRoot.modelData.event)
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: delegateRoot.supportingColor
+                            maximumLineCount: 1
+                            elide: Text.ElideRight
+                            visible: text !== ""
                         }
+                    }
 
-                        Column {
-                            anchors.left: iconWell.right
-                            anchors.leftMargin: Theme.spacingM
-                            anchors.right: datePill.left
-                            anchors.rightMargin: Theme.spacingM
-                            anchors.verticalCenter: parent.verticalCenter
-                            spacing: 2
+                    Rectangle {
+                        id: datePill
+                        width: dateText.implicitWidth + Theme.spacingS * 2
+                        height: Theme.spacingXL
+                        radius: Theme.fullRadius(width, height)
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.spacingS
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: delegateRoot.selected ? Theme.withAlpha(Theme.onPrimaryContainer, Theme.stateLayerFocus) : Theme.surfaceContainerHighest
 
-                            StyledText {
-                                width: parent.width
-                                text: delegateRoot.modelData.event.title
-                                font.pixelSize: Theme.fontSizeMedium
-                                font.weight: Font.Medium
-                                color: Theme.surfaceText
-                                maximumLineCount: 1
-                                elide: Text.ElideRight
-                            }
-
-                            StyledText {
-                                width: parent.width
-                                text: root._subtitle(delegateRoot.modelData.event)
-                                font.pixelSize: Theme.fontSizeSmall
-                                color: Theme.surfaceVariantText
-                                maximumLineCount: 1
-                                elide: Text.ElideRight
-                                visible: text !== ""
-                            }
+                        StyledText {
+                            id: dateText
+                            anchors.centerIn: parent
+                            text: root._dateLabel(delegateRoot.modelData.event)
+                            font.pixelSize: Theme.fontSizeSmall
+                            color: delegateRoot.supportingColor
                         }
+                    }
 
-                        Rectangle {
-                            id: datePill
-                            width: dateText.implicitWidth + Theme.spacingS * 2
-                            height: 22
-                            radius: height / 2
-                            anchors.right: parent.right
-                            anchors.rightMargin: Theme.spacingS
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: Theme.surfaceVariantAlpha
-
-                            StyledText {
-                                id: dateText
-                                anchors.centerIn: parent
-                                text: root._dateLabel(delegateRoot.modelData.event)
-                                font.pixelSize: Theme.fontSizeSmall - 1
-                                color: Theme.surfaceVariantText
-                            }
-                        }
-
-                        StateLayer {
-                            stateColor: Theme.primary
-                            cornerRadius: parent.radius
-                            onClicked: root._activate(delegateRoot.index)
-                        }
+                    StateLayer {
+                        stateColor: delegateRoot.contentColor
+                        onClicked: root._activate(delegateRoot.index)
                     }
                 }
             }
@@ -434,37 +442,37 @@ Popup {
                 visible: root.hasQuery && root.rows.length === 0
 
                 Rectangle {
-                    width: 40
-                    height: 40
-                    radius: Theme.cornerRadius
+                    width: Theme.iconButtonSize
+                    height: Theme.iconButtonSize
+                    radius: Theme.cornerRadiusM
                     anchors.verticalCenter: parent.verticalCenter
-                    color: Theme.surfaceContainerHigh
+                    color: Theme.surfaceContainerHighest
 
                     DankIcon {
                         anchors.centerIn: parent
                         name: root.errorText !== "" ? "error" : root.activeQuery === "" ? "search" : "search_off"
-                        size: 22
+                        size: Theme.iconSize
                         color: Theme.surfaceVariantText
                         visible: !root.loading
                     }
 
                     DankSpinner {
                         anchors.centerIn: parent
-                        size: 22
+                        size: Theme.iconSize
                         visible: root.loading
                     }
                 }
 
                 Column {
                     anchors.verticalCenter: parent.verticalCenter
-                    width: Math.min(420, resultsContainer.width - 88)
-                    spacing: 2
+                    width: Math.min(Theme.fieldDefaultWidth * 2, resultsContainer.width - Theme.iconButtonSize - Theme.spacingM * 4)
+                    spacing: Theme.spacingXXS
 
                     StyledText {
                         width: parent.width
                         text: root._statusTitle()
                         font.pixelSize: Theme.fontSizeMedium
-                        font.weight: Font.Medium
+                        font.weight: Theme.fontWeightMedium
                         color: Theme.surfaceText
                         elide: Text.ElideRight
                     }

@@ -39,85 +39,59 @@ FloatingWindow {
         LayoutMirroring.enabled: I18n.isRtl
         LayoutMirroring.childrenInherit: true
 
+        Keys.onPressed: event => {
+            if (event.key === Qt.Key_Escape) {
+                if (!sidebar.clearHighlight())
+                    settingsModal.hide();
+                event.accepted = true;
+                return;
+            }
+            if (contentScope.activeFocus || !sidebar.visible)
+                return;
+            switch (event.key) {
+            case Qt.Key_Down:
+            case Qt.Key_J:
+                sidebar.moveHighlight(1);
+                break;
+            case Qt.Key_Up:
+            case Qt.Key_K:
+                sidebar.moveHighlight(-1);
+                break;
+            case Qt.Key_Return:
+            case Qt.Key_Enter:
+                if (!sidebar.selectHighlighted())
+                    return;
+                break;
+            default:
+                return;
+            }
+            event.accepted = true;
+        }
+
         Column {
             anchors.fill: parent
             spacing: 0
 
-            Item {
+            DankWindowHeader {
+                id: header
                 width: parent.width
-                height: 48
                 z: 10
+                controls: windowControls
+                title: I18n.tr("Settings", "settings window header title")
+                iconName: "settings"
+                onCloseRequested: settingsModal.hide()
 
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: windowControls.tryStartMove()
-                    onDoubleClicked: windowControls.tryToggleMaximize()
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: Theme.surfaceContainer
-                    opacity: 0.5
-                }
-
-                Row {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.spacingL
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.spacingM
-
-                    DankActionButton {
-                        visible: settingsModal.isCompactMode
-                        circular: false
-                        iconName: "menu"
-                        iconColor: Theme.surfaceText
-                        anchors.verticalCenter: parent.verticalCenter
-                        onClicked: settingsModal.menuVisible = !settingsModal.menuVisible
-                    }
-
-                    DankIcon {
-                        name: "settings"
-                        size: Theme.iconSize
-                        color: Theme.primary
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    StyledText {
-                        text: I18n.tr("Settings", "settings window header title")
-                        font.pixelSize: Theme.fontSizeXLarge
-                        font.weight: Font.Medium
-                        color: Theme.surfaceText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-
-                Row {
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.spacingM
-                    anchors.top: parent.top
-                    anchors.topMargin: Theme.spacingM
-                    spacing: Theme.spacingXS
-
-                    DankActionButton {
-                        visible: windowControls.supported
-                        circular: false
-                        iconName: settingsModal.maximized ? "fullscreen_exit" : "fullscreen"
-                        iconColor: Theme.surfaceText
-                        onClicked: windowControls.tryToggleMaximize()
-                    }
-
-                    DankActionButton {
-                        circular: false
-                        iconName: "close"
-                        iconColor: Theme.surfaceText
-                        onClicked: settingsModal.hide()
-                    }
+                DankActionButton {
+                    visible: settingsModal.isCompactMode
+                    iconName: "menu"
+                    Accessible.name: I18n.tr("Menu", "settings header button that shows the section list on narrow windows")
+                    onClicked: settingsModal.menuVisible = !settingsModal.menuVisible
                 }
             }
 
             Item {
                 width: parent.width
-                height: parent.height - 48
+                height: parent.height - header.height
                 clip: true
 
                 SettingsSidebar {
@@ -135,7 +109,8 @@ FloatingWindow {
                     }
                 }
 
-                Item {
+                FocusScope {
+                    id: contentScope
                     anchors.left: settingsModal.isCompactMode ? (settingsModal.menuVisible ? sidebar.right : parent.left) : sidebar.right
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -151,12 +126,6 @@ FloatingWindow {
                 }
             }
         }
-    }
-
-    Shortcut {
-        sequence: "Escape"
-        enabled: settingsModal.visible
-        onActivated: settingsModal.hide()
     }
 
     FloatingWindowControls {
