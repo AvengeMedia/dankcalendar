@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "5 分前"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT ライセンス</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "アカウントを接続しました"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "アカウントに問題があります。クリックしてオプションを表示"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": ""
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "終日リマインダーの時刻"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "終日リマインダーのタイミング"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: 戻る • F1/I: ファイル情報 • F10: ヘルプ • Esc: 閉じる"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "常にライトテーマを使います。"
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "App 用パスワード"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "バックエンドに接続されていません。"
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "セットアップを開始"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "カレンダー設定"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "カレンダー名"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": ""
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "クライアントシークレット"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "閉じる動作"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": ""
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "色のソース"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "接続済みのカレンダープロバイダーです。"
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "接続中…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "ダーク"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": ""
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "辞退"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": ""
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "近づいている予定をデスクトップ通知します。"
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "ディレクトリ"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": ""
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "予定を編集"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "間隔"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": ""
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "DankMaterialShell の色に従い、使えない場合はプリセットに戻します。"
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "アカウントの変更を確認する頻度です。"
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "client_secret.json をインポート"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "クライアント作成時にダウンロードした client_secret_….json をインポートするか、クライアント ID とシークレットを手動で貼り付けてください。"
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "新しい予定に最初から設定するリマインダーです。"
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "キーボードショートカット"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": ""
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": ""
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": ""
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "場所"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "中"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Microsoft To Do へのアクセスが許可されていません。タスクを同期するには、このアカウントを再接続してください。"
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "毎月"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": ""
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "名前"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "ナビゲーション"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "新しい予定"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "新しいタスク"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "翌日"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": ""
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "翌週"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "個別のリマインダーがない終日予定を通知します。"
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "オフライン"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "順序"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Outlook、Office 365、Exchange Online カレンダーです。"
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "色のソース、パレット、または自分のテーマファイルを選択します。"
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "画像"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": ""
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": ".ics ファイルのディレクトリを指定します。各サブディレクトリまたは .ics ファイルがカレンダーになります。vdirsyncer/khal のレイアウトと互換性があります。ディレクトリがなければ作成されます。"
   },
   "Preset": {
     "Preset": "プリセット"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "前日"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": ""
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "前週"
   },
   "Previous year": {
     "Previous year": ""
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "優先度"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "終了"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": ""
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": ""
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "再接続"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "繰り返しタスクは Google Tasks で管理されます。"
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": ""
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "リマインダーとデスクトップアラートです。"
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": ""
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "このアカウントとそのカレンダー、予定を Dank Calendar から削除します。プロバイダー側からは何も削除されません。"
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "グローバル設定に戻す"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "保存"
   },
   "Saving...": {
     "Saving...": "保存中..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "検索"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "検索中"
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "ファイルを選択"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "設定"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "表示"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "終日リマインダーを表示"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "アカウントが対応している場合、タスクリストとタスク表示を表示します。"
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": ""
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "スヌーズ時間"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "並び替え"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "ログイン時に起動"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "通知テスト"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "そのファイルは有効な JSON ではありません。"
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "テーマ"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "このアカウントは再接続できません。削除して追加し直してください。"
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": ""
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "このヘルプを切り替え"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "予定を検索するには 2 文字以上入力してください。"
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "元に戻す"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "バージョン"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "動画"
   },
   "View": {
     "View": "表示"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "カレンダーごとの表示、名前、削除です。"
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "毎週"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "ウィンドウの閉じるボタンの動作です。"

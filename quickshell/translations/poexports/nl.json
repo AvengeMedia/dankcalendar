@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "5 minuten van tevoren"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT-licentie</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "Account verbonden"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "Accountprobleem — klik voor opties"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": ""
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "Herinneringstijd voor dagafspraken"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "Timing herinnering dagafspraak"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Terug • F1/I: Bestandsinfo • F10: Help • Esc: Sluiten"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "Altijd het lichte thema gebruiken."
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "App-specifiek wachtwoord"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "Backend niet verbonden."
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "Installatie starten"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "Agenda-instellingen"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "Agendanaam"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": ""
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "Client Secret"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "Sluitgedrag"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": "Sectie in- of uitklappen"
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "Kleurbron"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "Verbonden agendaproviders."
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "Verbinden…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "Donker"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": ""
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "Weigeren"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": ""
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "Desktopnotificaties voor aankomende afspraken."
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "Map"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": ""
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "Afspraak bewerken"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "Elke"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": "Zijbalk focussen of verlaten"
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Volg de kleuren van DankMaterialShell, of val terug op een preset."
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "Hoe vaak accounts worden gecontroleerd op wijzigingen."
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "client_secret.json importeren"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Importeer het client_secret_….json-bestand dat je hebt gedownload bij het maken van de client, of plak de Client-ID en Secret handmatig."
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Initiële herinnering ingesteld bij nieuwe afspraken."
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "Sneltoetsen"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": ""
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": ""
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": ""
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "Locatie"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "Gemiddeld"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Toegang tot Microsoft To Do is niet verleend. Verbind dit account opnieuw om taken te synchroniseren."
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "Maandelijks"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": ""
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "Naam"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "Navigatie"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "Nieuwe afspraak"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "Nieuwe taak"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "Volgende dag"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": "Volgende afspraak (volgende week in maandoverzicht)"
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "Volgende week"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "Melding geven voor dagafspraken zonder eigen herinneringen."
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "Offline"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "Volgorde"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Outlook-, Office 365- en Exchange Online-agenda's."
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Kies een kleurbron, palet of eigen themabestand."
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "Afbeeldingen"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": "Speel een geluid af wanneer een herinnering afgaat."
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Wijs naar een map met .ics-bestanden. Elke submap of elk .ics-bestand wordt een agenda — compatibel met vdirsyncer/khal-indelingen. De map wordt aangemaakt als deze nog niet bestaat."
   },
   "Preset": {
     "Preset": "Preset"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "Vorige dag"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "Vorige afspraak (vorige week in maandoverzicht)"
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "Vorige week"
   },
   "Previous year": {
     "Previous year": "Vorig jaar"
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "Prioriteit"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "Afsluiten"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": ""
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": ""
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "Opnieuw verbinden"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Terugkerende taken worden beheerd in Google Tasks."
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": "Herinneringen"
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Herinneringen en desktopmeldingen."
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": "Agenda of account verwijderen"
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Verwijdert dit account en de bijbehorende agenda's en afspraken uit Dank Calendar. Er wordt niets verwijderd bij de provider."
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "Herstellen naar globaal"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "Opslaan"
   },
   "Saving...": {
     "Saving...": "Opslaan..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "Zoeken"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "Zoeken..."
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "Bestand selecteren"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "Instellingen"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "Tonen"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Dagherinneringen tonen"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "Toon takenlijsten en de takenweergave wanneer een account deze aanbiedt."
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": "Certificaatverificatie overslaan"
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Sluimertijd"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "Sorteren op"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "Starten bij inloggen"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "Testnotificatie"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "Dat bestand is geen geldig JSON-bestand."
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "Thema"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Dit account kan niet opnieuw worden verbonden — verwijder het en voeg het opnieuw toe."
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": "Agenda in-/uitschakelen, weergave wijzigen of account synchroniseren"
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "Help in-/uitschakelen"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Typ ten minste 2 tekens om afspraken te zoeken."
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "Ongedaan maken"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "Versie"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "Video's"
   },
   "View": {
     "View": "Weergave"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "Zichtbaarheid, namen en verwijdering per agenda."
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "Wekelijks"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Wat de sluitknop van het venster doet."

@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "5 דקות לפני"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">רישיון MIT</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "החשבון חובר"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "בעיה בחשבון — לחץ/י לאפשרויות"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": "כל האירועים"
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "שעת תזכורת לכל היום"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "תזמון תזכורת לאירוע של כל היום"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: חזרה • F1/I: מידע על הקובץ • F10: עזרה • Esc: סגירה"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "השתמש/י תמיד בערכת הנושא הבהירה."
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "סיסמה ספציפית לאפליקציה"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "ה-Backend אינו מחובר."
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "התחל/י התקנה"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "הגדרות יומן"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "שם היומן"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": "יומן שנבחר מראש לשימוש בעת יצירת אירועים."
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "Client Secret"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "התנהגות סגירה"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": "צמצם/י או הרחב/י קטע"
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "מקור הצבע"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "ספקי יומן מחוברים."
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "מתחבר…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "כהה"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": "שפה ואזור לתאריך ושעה"
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "דחייה"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": "יומן ברירת מחדל"
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "התראות בשולחן העבודה עבור אירועים קרובים."
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "תיקייה"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": "שכפל/י אירועים שנבחרו ליום הבא"
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "ערוך/ערכי אירוע"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "כל"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": "התמקד/י או עזוב/עזבי את סרגל הצד"
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "עקוב/י אחר הצבעים של DankMaterialShell, עם גיבוי להגדרה מוכנה מראש."
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "באיזו תדירות חשבונות נבדקים לשינויים."
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "ייבא/י את client_secret.json"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "ייבא/י את קובץ ה-client_secret_….json שהורדת בעת יצירת הלקוח, או הדבק/י את ה-Client ID וה-Secret ידנית."
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "תזכורת התחלתית המוגדרת לאירועים חדשים."
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "קיצורי מקלדת"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": "שפה"
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": "שפת הממשק."
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": "ההגדרות האזוריות שמשמשות עבור שמות הימים והחודשים, תבנית הזמן ותחילת השבוע."
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "מיקום"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "בינונית"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "לא ניתנה גישה אל Microsoft To Do. התחבר/י מחדש לחשבון זה כדי לסנכרן משימות."
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "חודשי"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": "העברה"
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "שם"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "ניווט"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "אירוע חדש"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "משימה חדשה"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "יום הבא"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": "האירוע הבא (השבוע הבא בתצוגת חודש)"
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "שבוע הבא"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "התראות עבור אירועים של כל היום ללא תזכורות משלהם."
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "לא מקוון"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "סדר"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "יומני Outlook, Office 365 וExchange Online."
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "בחר/י מקור צבע, פלטת צבעים או קובץ ערכת נושא משלך."
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "תמונות"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": "השמע/י צליל כאשר תזכורת מופעלת."
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "הגדר/י נתיב לתיקייה של קובצי ics. כל תת-תיקייה או קובץ ics. הופך ליומן — תואם לפריסות של vdirsyncer/khal. התיקייה תיווצר אם היא לא קיימת."
   },
   "Preset": {
     "Preset": "הגדרה מוכנה מראש"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "יום קודם"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "האירוע הקודם (השבוע הקודם בתצוגת חודש)"
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "שבוע קודם"
   },
   "Previous year": {
     "Previous year": "השנה הקודמת"
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "עדיפות"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "יציאה"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": "לא ניתן לגזור אירועים לקריאה בלבד"
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": "לא ניתן להעביר אירועים לקריאה בלבד"
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "התחבר/י מחדש"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "משימות חוזרות מנוהלות ב-Google Tasks."
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": "תזכורות"
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "תזכורות והתראות בשולחן העבודה."
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": "הסר/י יומן או חשבון"
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "מסיר את החשבון הזה ואת היומנים והאירועים שלו מ-Dank Calendar. שום דבר לא נמחק מהספק."
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "איפוס להגדרות גלובליות"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "שמור/שמרי"
   },
   "Saving...": {
     "Saving...": "שומר..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "חיפוש"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "מחפש"
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "בחר/י קובץ"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "הגדרות"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "הצג/י"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "הצג/י תזכורות לאירועים של כל היום"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "הצג/י רשימות משימות ואת תצוגת המשימות כאשר חשבון מספק אותן."
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": "דלג/י על אימות אישורים"
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "משך זמן לנודניק"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "מיין לפי"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "הפעל/י בעת ההתחברות"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "התראת בדיקה"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "הקובץ הזה אינו בפורמט JSON תקין."
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "ערכת נושא"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "אירועים אלו יימחקו מהיומנים שלהם. בחירות מחזוריות מוחקות רק את המופעים שנבחרו."
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "לא ניתן לחבר חשבון זה מחדש — הסר/י אותו והוסף/י אותו מחדש."
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": "הצג/י או הסתר/י יומן, החלף/י תצוגה או סנכרן/י חשבון"
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "הצג/י או הסתר/י את העזרה"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "הקלד/י לפחות 2 תווים כדי לחפש אירועים."
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "ביטול"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "גירסה"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "סרטונים"
   },
   "View": {
     "View": "תצוגה"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "נראות, שמות, והסרה עבור כל יומן."
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "שבועי"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "מה כפתור הסגירה של החלון עושה."

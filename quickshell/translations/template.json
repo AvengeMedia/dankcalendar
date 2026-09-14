@@ -308,6 +308,13 @@
     "comment": ""
   },
   {
+    "term": "50 uses Material shapes. Lower values reduce rounding; higher values increase it.",
+    "translation": "",
+    "context": "radius strength slider description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>",
     "translation": "",
     "context": "about page license footer link, %2 is the license url",
@@ -350,6 +357,13 @@
     "comment": ""
   },
   {
+    "term": "Account options",
+    "translation": "",
+    "context": "sidebar account row overflow menu button",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Account problem — click for options",
     "translation": "",
     "context": "tooltip on the account warning icon for an unspecified problem",
@@ -387,7 +401,7 @@
   {
     "term": "Add a calendar",
     "translation": "",
-    "context": "event form button to add a calendar when none exist",
+    "context": "event form button to add a calendar when none exist | import dialog button to add a calendar when none can hold events",
     "reference": "",
     "comment": ""
   },
@@ -497,6 +511,13 @@
     "comment": ""
   },
   {
+    "term": "All-day events",
+    "translation": "",
+    "context": "notifications settings section label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "All-day reminder time",
     "translation": "",
     "context": "all-day reminder time setting label",
@@ -511,6 +532,13 @@
     "comment": ""
   },
   {
+    "term": "Already in %1",
+    "translation": "",
+    "context": "import row note naming the calendar that holds this event",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Always use the dark theme.",
     "translation": "",
     "context": "theme mode setting description",
@@ -521,6 +549,13 @@
     "term": "Always use the light theme.",
     "translation": "",
     "context": "theme mode setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "App",
+    "translation": "",
+    "context": "general settings section label",
     "reference": "",
     "comment": ""
   },
@@ -630,6 +665,13 @@
     "comment": ""
   },
   {
+    "term": "Balanced",
+    "translation": "",
+    "context": "spring bounce option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Calendar",
     "translation": "",
     "context": "main window title | main window title bar text",
@@ -644,9 +686,23 @@
     "comment": ""
   },
   {
+    "term": "Calendar file",
+    "translation": "",
+    "context": "import dialog subtitle for a plain iCalendar file",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Calendar name",
     "translation": "",
     "context": "new calendar dialog placeholder for name input | rename calendar dialog placeholder for name input",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Calendar options",
+    "translation": "",
+    "context": "sidebar calendar row overflow menu button",
     "reference": "",
     "comment": ""
   },
@@ -674,7 +730,7 @@
   {
     "term": "Cancel",
     "translation": "",
-    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes",
+    "context": "button to cancel oauth browser step | confirm dialog button to cancel | event form button to cancel editing | import dialog button to close without importing | new calendar dialog button to cancel | per-calendar reminders dialog button to cancel | rename calendar dialog button to cancel | task form button to discard changes",
     "reference": "",
     "comment": ""
   },
@@ -749,6 +805,13 @@
     "comment": ""
   },
   {
+    "term": "Close",
+    "translation": "",
+    "context": "button that closes the enlarged setup screenshot",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Close behavior",
     "translation": "",
     "context": "close behavior setting label",
@@ -766,6 +829,13 @@
     "term": "Collapse or expand a section",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Color",
+    "translation": "",
+    "context": "focus ring color setting label",
     "reference": "",
     "comment": ""
   },
@@ -850,6 +920,13 @@
     "term": "Connected calendar providers.",
     "translation": "",
     "context": "accounts settings section subtitle",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Connected providers",
+    "translation": "",
+    "context": "settings sidebar tab hint",
     "reference": "",
     "comment": ""
   },
@@ -1078,6 +1155,13 @@
     "comment": ""
   },
   {
+    "term": "Date",
+    "translation": "",
+    "context": "go to date input label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Date and time locale",
     "translation": "",
     "context": "date and time locale setting label",
@@ -1113,6 +1197,13 @@
     "comment": ""
   },
   {
+    "term": "Decrease",
+    "translation": "",
+    "context": "slider row step down button",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Default calendar",
     "translation": "",
     "context": "default calendar setting label",
@@ -1143,7 +1234,7 @@
   {
     "term": "Delete",
     "translation": "",
-    "context": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | multi-event action shelf label | task form button to delete the task",
+    "context": "calendar row action tooltip | confirm button for deleting a calendar | delete calendar confirmation button | event details button to delete the event | multi-event action shelf label | task form button to delete the task",
     "reference": "",
     "comment": ""
   },
@@ -1260,6 +1351,13 @@
     "comment": ""
   },
   {
+    "term": "Diagnostics",
+    "translation": "",
+    "context": "notifications settings section label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Directory",
     "translation": "",
     "context": "local calendar directory field label",
@@ -1361,6 +1459,20 @@
     "term": "Duplicate selected events to the next day",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Duration",
+    "translation": "",
+    "context": "animation duration slider label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Edit",
+    "translation": "",
+    "context": "event details button to start editing",
     "reference": "",
     "comment": ""
   },
@@ -1470,6 +1582,13 @@
     "comment": ""
   },
   {
+    "term": "Everything in this file is already on your calendar.",
+    "translation": "",
+    "context": "import dialog status when no event is new",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Evolution",
     "translation": "",
     "context": "evolution account display name field placeholder",
@@ -1508,6 +1627,13 @@
     "term": "Focus or leave the sidebar",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Focus ring",
+    "translation": "",
+    "context": "appearance settings section label | focus ring toggle label",
     "reference": "",
     "comment": ""
   },
@@ -1610,6 +1736,20 @@
     "comment": ""
   },
   {
+    "term": "Import",
+    "translation": "",
+    "context": "import dialog button to import the events",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Import %1 events",
+    "translation": "",
+    "context": "import dialog button naming how many events will be imported",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Import client_secret.json",
     "translation": "",
     "context": "button to import google oauth client json",
@@ -1617,9 +1757,30 @@
     "comment": ""
   },
   {
+    "term": "Import events",
+    "translation": "",
+    "context": "import modal header | import modal window title",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.",
     "translation": "",
     "context": "google credentials step instructions",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Importing...",
+    "translation": "",
+    "context": "import dialog button while the import runs",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Increase",
+    "translation": "",
+    "context": "slider row step up button",
     "reference": "",
     "comment": ""
   },
@@ -1659,6 +1820,13 @@
     "comment": ""
   },
   {
+    "term": "Keyring locked — unlock it to sync",
+    "translation": "",
+    "context": "account status when the system keyring holding the credentials is locked | tooltip on the account warning icon when the system keyring holding the credentials is locked",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Ko-fi",
     "translation": "",
     "context": "about page resource button",
@@ -1669,6 +1837,13 @@
     "term": "Language",
     "translation": "",
     "context": "interface language setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Language and time",
+    "translation": "",
+    "context": "general settings section label",
     "reference": "",
     "comment": ""
   },
@@ -1757,6 +1932,13 @@
     "comment": ""
   },
   {
+    "term": "Locale, views and defaults",
+    "translation": "",
+    "context": "settings sidebar tab hint",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Location",
     "translation": "",
     "context": "event form placeholder for location input",
@@ -1806,6 +1988,34 @@
     "comment": ""
   },
   {
+    "term": "Meeting cancellation",
+    "translation": "",
+    "context": "import dialog subtitle for an iCalendar CANCEL",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Meeting invitation",
+    "translation": "",
+    "context": "import dialog subtitle for an iCalendar REQUEST",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Meeting reply",
+    "translation": "",
+    "context": "import dialog subtitle for an iCalendar REPLY",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Menu",
+    "translation": "",
+    "context": "settings header button that shows the section list on narrow windows",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.",
     "translation": "",
     "context": "account notice when microsoft to do permission is missing",
@@ -1851,6 +2061,13 @@
     "term": "Monthly",
     "translation": "",
     "context": "recurrence dropdown option | task recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Motion",
+    "translation": "",
+    "context": "appearance settings section label",
     "reference": "",
     "comment": ""
   },
@@ -1946,6 +2163,13 @@
     "comment": ""
   },
   {
+    "term": "Names, visibility, removal",
+    "translation": "",
+    "context": "settings sidebar tab hint",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Navigation",
     "translation": "",
     "context": "keyboard shortcuts overlay section header",
@@ -1981,9 +2205,23 @@
     "comment": ""
   },
   {
+    "term": "New events",
+    "translation": "",
+    "context": "general settings section label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "New task",
     "translation": "",
     "context": "header in the create-task dialog | title bar for the create-task dialog",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Next",
+    "translation": "",
+    "context": "toolbar button that moves to the next period",
     "reference": "",
     "comment": ""
   },
@@ -2012,6 +2250,13 @@
     "term": "Next event (next week in month view)",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Next month",
+    "translation": "",
+    "context": "date picker button that shows the next month",
     "reference": "",
     "comment": ""
   },
@@ -2156,6 +2401,13 @@
     "comment": ""
   },
   {
+    "term": "Off",
+    "translation": "",
+    "context": "animation duration slider label at zero",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Offline",
     "translation": "",
     "context": "about page daemon status value",
@@ -2179,7 +2431,7 @@
   {
     "term": "Open",
     "translation": "",
-    "context": "fallback label for guide step link button",
+    "context": "fallback label for guide step link button | import row button to open the event already on the calendar",
     "reference": "",
     "comment": ""
   },
@@ -2215,6 +2467,27 @@
     "term": "Open or create event",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Organized by %1",
+    "translation": "",
+    "context": "import row line naming the meeting organizer",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Outline",
+    "translation": "",
+    "context": "focus ring color option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Outline the control that has keyboard focus.",
+    "translation": "",
+    "context": "focus ring toggle description",
     "reference": "",
     "comment": ""
   },
@@ -2366,9 +2639,23 @@
     "comment": ""
   },
   {
+    "term": "Pick time",
+    "translation": "",
+    "context": "time field button that opens the clock picker",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Play a sound when a reminder fires.",
     "translation": "",
     "context": "notification sound toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Playful",
+    "translation": "",
+    "context": "spring bounce option",
     "reference": "",
     "comment": ""
   },
@@ -2383,6 +2670,13 @@
     "term": "Preset",
     "translation": "",
     "context": "color source button group option for bundled palettes",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Previous",
+    "translation": "",
+    "context": "toolbar button that moves to the previous period",
     "reference": "",
     "comment": ""
   },
@@ -2415,9 +2709,23 @@
     "comment": ""
   },
   {
+    "term": "Previous month",
+    "translation": "",
+    "context": "date picker button that shows the previous month",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Previous year",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Primary",
+    "translation": "",
+    "context": "focus ring color option",
     "reference": "",
     "comment": ""
   },
@@ -2432,6 +2740,13 @@
     "term": "Quit",
     "translation": "",
     "context": "close behavior button group option to quit the app | tray menu item to quit the application",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Radius strength",
+    "translation": "",
+    "context": "global component corner rounding",
     "reference": "",
     "comment": ""
   },
@@ -2457,9 +2772,16 @@
     "comment": ""
   },
   {
+    "term": "Reading file...",
+    "translation": "",
+    "context": "import dialog status while parsing",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Reconnect",
     "translation": "",
-    "context": "account context menu action to re-authorize the account",
+    "context": "account context menu action to re-authorize the account | account row action tooltip",
     "reference": "",
     "comment": ""
   },
@@ -2471,9 +2793,23 @@
     "comment": ""
   },
   {
+    "term": "Reduce motion",
+    "translation": "",
+    "context": "reduce motion toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Reminders",
     "translation": "",
     "context": "calendar row action tooltip",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Reminders and alerts",
+    "translation": "",
+    "context": "settings sidebar tab hint",
     "reference": "",
     "comment": ""
   },
@@ -2523,6 +2859,13 @@
     "term": "Remove calendar or account",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Remove reminder",
+    "translation": "",
+    "context": "event form button that removes one reminder row",
     "reference": "",
     "comment": ""
   },
@@ -2632,6 +2975,13 @@
     "comment": ""
   },
   {
+    "term": "Ripple effects",
+    "translation": "",
+    "context": "ripple effects toggle label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Save",
     "translation": "",
     "context": "event details button to save changes | per-calendar reminders dialog button to save | rename calendar dialog button to save name | task form button to persist the task",
@@ -2642,6 +2992,13 @@
     "term": "Saving...",
     "translation": "",
     "context": "event details save button while saving",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Scale",
+    "translation": "",
+    "context": "font scale slider label",
     "reference": "",
     "comment": ""
   },
@@ -2670,6 +3027,13 @@
     "term": "Searching",
     "translation": "",
     "context": "search status title while search is running",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Secondary",
+    "translation": "",
+    "context": "focus ring color option",
     "reference": "",
     "comment": ""
   },
@@ -2751,6 +3115,13 @@
     "comment": ""
   },
   {
+    "term": "Shape",
+    "translation": "",
+    "context": "appearance settings section label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Show",
     "translation": "",
     "context": "calendar context menu action to show a hidden calendar",
@@ -2775,6 +3146,13 @@
     "term": "Show all-day reminders",
     "translation": "",
     "context": "all-day reminders toggle label | per-calendar all-day reminders override label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show calendar",
+    "translation": "",
+    "context": "calendar row visibility toggle",
     "reference": "",
     "comment": ""
   },
@@ -2870,9 +3248,37 @@
     "comment": ""
   },
   {
+    "term": "Smooth",
+    "translation": "",
+    "context": "spring bounce option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Snooze duration",
     "translation": "",
     "context": "per-calendar snooze override label | snooze duration setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Some calendars couldn't be synced; their events may be missing or out of date.",
+    "translation": "",
+    "context": "account notice when at least one calendar failed to sync",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Spring",
+    "translation": "",
+    "context": "spring bounce setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Square",
+    "translation": "",
+    "context": "radius strength slider label at zero",
     "reference": "",
     "comment": ""
   },
@@ -2956,7 +3362,7 @@
   {
     "term": "Sync now",
     "translation": "",
-    "context": "account context menu action to sync the account",
+    "context": "account context menu action to sync the account | account row action tooltip",
     "reference": "",
     "comment": ""
   },
@@ -3031,6 +3437,13 @@
     "comment": ""
   },
   {
+    "term": "Text color",
+    "translation": "",
+    "context": "focus ring color option",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "That file is not valid JSON.",
     "translation": "",
     "context": "error when imported credentials file is not json",
@@ -3038,9 +3451,23 @@
     "comment": ""
   },
   {
+    "term": "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.",
+    "translation": "",
+    "context": "account notice when a caldav server refuses individual calendar objects",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Theme",
     "translation": "",
-    "context": "theme mode setting label",
+    "context": "appearance settings section label | theme mode setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Theme, shape and motion",
+    "translation": "",
+    "context": "settings sidebar tab hint",
     "reference": "",
     "comment": ""
   },
@@ -3048,6 +3475,13 @@
     "term": "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.",
     "translation": "",
     "context": "confirmation body for deleting multiple events",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Thickness",
+    "translation": "",
+    "context": "focus ring thickness slider label",
     "reference": "",
     "comment": ""
   },
@@ -3101,6 +3535,13 @@
     "comment": ""
   },
   {
+    "term": "Toggle sidebar",
+    "translation": "",
+    "context": "toolbar button that shows or hides the sidebar",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Toggle this help",
     "translation": "",
     "context": "keyboard shortcut description",
@@ -3139,6 +3580,13 @@
     "term": "Type at least 2 characters to search events.",
     "translation": "",
     "context": "search status hint when query is too short",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Typography",
+    "translation": "",
+    "context": "appearance settings section label",
     "reference": "",
     "comment": ""
   },
@@ -3227,9 +3675,23 @@
     "comment": ""
   },
   {
+    "term": "Version and links",
+    "translation": "",
+    "context": "settings sidebar tab hint",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "View",
     "translation": "",
     "context": "keyboard shortcuts overlay section header",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Views",
+    "translation": "",
+    "context": "general settings section label",
     "reference": "",
     "comment": ""
   },
@@ -3279,6 +3741,13 @@
     "term": "Weekly",
     "translation": "",
     "context": "recurrence dropdown option | task recurrence dropdown option",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Weight",
+    "translation": "",
+    "context": "font weight slider label",
     "reference": "",
     "comment": ""
   },

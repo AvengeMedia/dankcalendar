@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "За 5 минут"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Лицензия MIT</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "Аккаунт подключён"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "Проблема с аккаунтом — нажмите для вариантов"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": ""
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "Время напоминания на весь день"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "Время напоминания на весь день"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Назад • F1/I: Сведения • F10: Справка • Esc: Закрыть"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "Всегда использовать светлую тему."
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "Пароль приложения"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "Сервер не подключён."
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "Начать настройку"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "Настройки календаря"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "Название календаря"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": ""
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "Секрет клиента"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "Поведение при закрытии"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": "Свернуть или развернуть раздел"
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "Источник цвета"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "Подключённые провайдеры календарей."
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "Подключение…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "Тёмная"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": ""
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "Отклонить"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": ""
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "Уведомления на рабочем столе о предстоящих событиях."
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "Папка"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": ""
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "Редактировать событие"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "Каждый"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": "Перейти к боковой панели или покинуть её"
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Использовать цвета DankMaterialShell с переходом на пресет при отсутствии."
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "Как часто опрашивать аккаунты на наличие изменений."
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "Импортировать client_secret.json"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Импортируйте скачанный при создании клиента файл client_secret_….json или вставьте ID клиента и секрет вручную."
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Начальное напоминание для новых событий."
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "Сочетания клавиш"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": ""
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": ""
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": ""
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "Местоположение"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "Средний"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Доступ к Microsoft To Do не предоставлен. Переподключите этот аккаунт для синхронизации задач."
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "Ежемесячно"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": ""
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "Имя"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "Навигация"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "Новое событие"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "Новая задача"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "Следующий день"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": "Следующее событие (следующая неделя в режиме месяца)"
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "Следующая неделя"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "Уведомлять о событиях на весь день без собственных напоминаний."
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "Не в сети"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "Порядок"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Календари Outlook, Office 365 и Exchange Online."
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Выберите источник цвета, палитру или собственный файл темы."
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "Изображения"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": "Воспроизводить звук при срабатывании напоминания."
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Укажите папку с файлами .ics. Каждый подкаталог или файл .ics становится календарём — совместимо с vdirsyncer/khal. Папка создаётся, если не существует."
   },
   "Preset": {
     "Preset": "Пресет"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "Предыдущий день"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "Предыдущее событие (предыдущая неделя в режиме месяца)"
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "Предыдущая неделя"
   },
   "Previous year": {
     "Previous year": "Предыдущий год"
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "Приоритет"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "Выход"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": ""
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": ""
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "Переподключить"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Повторяющиеся задачи управляются в Google Задачах."
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": ""
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Напоминания и уведомления на рабочем столе."
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": "Удалить календарь или аккаунт"
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Удаляет этот аккаунт, его календари и события из Dank Calendar. У провайдера ничего не удаляется."
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "Сбросить к глобальным"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "Сохранить"
   },
   "Saving...": {
     "Saving...": "Сохранение..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "Поиск"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "Поиск…"
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "Выбрать файл"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "Настройки"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "Показать"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Показывать напоминания на весь день"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "Показывать списки задач и режим «Задачи», если аккаунт их предоставляет."
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": "Пропустить проверку сертификата"
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Время откладывания"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "Сортировка"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "Запускать при входе"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "Тестовое уведомление"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "Этот файл не является допустимым JSON."
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "Тема"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Этот аккаунт невозможно переподключить — удалите его и добавьте заново."
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": "Переключить календарь, сменить вид или синхронизировать аккаунт"
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "Показать/скрыть справку"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Введите не менее 2 символов для поиска событий."
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "Отменить"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "Версия"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "Видео"
   },
   "View": {
     "View": "Вид"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "Видимость, названия и удаление для каждого календаря."
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "Еженедельно"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Действие кнопки закрытия окна."

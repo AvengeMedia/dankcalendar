@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "5 phút trước"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Giấy phép MIT</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "Đã kết nối tài khoản"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "Sự cố tài khoản — nhấp để có các tùy chọn"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": ""
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "Thời điểm nhắc sự kiện cả ngày"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "Thời điểm nhắc sự kiện cả ngày"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Quay lại • F1/I: Thông tin tệp • F10: Trợ giúp • Esc: Đóng"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "Luôn dùng giao diện sáng."
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "Mật khẩu dành riêng cho ứng dụng"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "Backend chưa kết nối."
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "Bắt đầu thiết lập"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "Cài đặt lịch"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "Tên lịch"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": ""
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "Client Secret"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "Hành vi đóng"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": "Thu gọn hoặc mở rộng một phần"
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "Nguồn màu"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "Các nhà cung cấp lịch đã kết nối."
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "Đang kết nối…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "Tối"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": ""
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "Từ chối"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": ""
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "Thông báo trên màn hình cho các sự kiện sắp tới."
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "Thư mục"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": ""
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "Chỉnh sửa sự kiện"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "Mỗi"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": "Tập trung hoặc rời khỏi thanh bên"
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Theo dõi màu DankMaterialShell, quay lại cài đặt."
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "Tần suất kiểm tra tài khoản để xem có thay đổi."
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "Nhập client_secret.json"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Nhập tệp client_secret_….json đã tải về khi tạo client, hoặc dán Client ID và Secret thủ công."
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Lời nhắc mặc định được đặt khi tạo sự kiện mới."
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "Phím tắt"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": ""
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": ""
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": ""
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "Địa điểm"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "Trung bình"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Quyền truy cập Microsoft To Do không được cấp. Kết nối lại tài khoản này để đồng bộ hóa tác vụ."
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "Hàng tháng"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": ""
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "Tên"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "Điều hướng"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "Sự kiện mới"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "Tác vụ mới"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "Ngày tiếp theo"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": "Sự kiện tiếp theo (tuần sau trong chế độ xem tháng)"
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "Tuần tiếp theo"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "Thông báo cho các sự kiện cả ngày không có lời nhắc riêng."
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "Ngoại tuyến"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "Thứ tự"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Lịch Outlook, Office 365 và Exchange Online."
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Chọn một nguồn màu, bảng màu hoặc tệp chủ đề của riêng bạn."
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "Hình ảnh"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": "Phát âm thanh khi lời nhắc nhở kích hoạt."
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Trỏ đến thư mục chứa các tệp .ics. Mỗi thư mục con hoặc tệp .ics sẽ thành một lịch — tương thích với cấu trúc vdirsyncer/khal. Thư mục được tạo nếu chưa tồn tại."
   },
   "Preset": {
     "Preset": "Cài đặt"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "Ngày trước"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "Sự kiện trước (tuần trước trong chế độ xem tháng)"
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "Tuần trước"
   },
   "Previous year": {
     "Previous year": "Năm trước"
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "Ưu tiên"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "Thoát"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": ""
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": ""
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "Kết nối lại"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Các tác vụ lặp lại được quản lý trong Google Tasks."
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": "Lời nhắc nhở"
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Lời nhắc và cảnh báo trên màn hình."
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": "Xóa lịch hoặc tài khoản"
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Gỡ bỏ tài khoản này cùng lịch và sự kiện khỏi Dank Calendar. Dữ liệu trên nhà cung cấp không bị xóa."
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "Đặt lại về toàn cục"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "Lưu"
   },
   "Saving...": {
     "Saving...": "Đang lưu..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "Tìm kiếm"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "Đang tìm kiếm"
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "Chọn tệp"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "Cài đặt"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "Hiện"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Hiển thị lời nhắc cả ngày"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "Hiển thị danh sách tác vụ và chế độ xem Tác vụ khi tài khoản cung cấp chúng."
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": "Bỏ qua xác minh chứng chỉ"
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Thời gian báo lại"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "Sắp xếp theo"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "Khởi động khi đăng nhập"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "Thông báo thử nghiệm"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "Tệp này không phải JSON hợp lệ."
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "Giao diện"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": ""
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Tài khoản này không thể kết nối lại — hãy gỡ bỏ và thêm lại."
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": "Chuyển đổi lịch, chuyển đổi chế độ xem hoặc đồng bộ hóa tài khoản"
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "Bật/tắt trợ giúp này"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Nhập ít nhất 2 ký tự để tìm kiếm sự kiện."
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "Hoàn tác"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "Phiên bản"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "Video"
   },
   "View": {
     "View": "Chế độ xem"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "Hiển thị, tên và gỡ bỏ theo từng lịch."
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "Hàng tuần"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Nút đóng của cửa sổ có tác dụng gì."

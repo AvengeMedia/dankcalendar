@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "5 minuti prima"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Licenza MIT</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "Account connesso"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "Problema con l’account: clicca per le opzioni"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": "Tutti gli eventi"
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "Orario promemoria per eventi di tutto il giorno"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "Orario promemoria evento di tutto il giorno"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Indietro • F1/I: Info file • F10: Aiuto • Esc: Chiudi"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "Usa sempre il tema chiaro."
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "Password specifica per l'app"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "Backend non connesso."
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "Inizia configurazione"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "Impostazioni Calendario"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "Nome calendario"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": "Calendario preselezionato durante la creazione di eventi."
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "Client Secret"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "Comportamento alla chiusura"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": "Comprimi o espandi una sezione"
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "Origine colore"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "Provider di calendario connessi."
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "Connessione in corso…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "Scuro"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": "Impostazioni locali data e ora"
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "Rifiuta"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": "Calendario predefinito"
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "Notifiche desktop per gli eventi in arrivo."
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "Cartella"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": "Duplica gli eventi selezionati al giorno successivo"
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "Modifica evento"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "Ogni"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": "Sposta il focus sulla barra laterale o esci da essa"
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Segue i colori della DankMaterialShell, con fallback a un preset."
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "Con quale frequenza gli account vengono controllati per rilevare modifiche."
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "Importa client_secret.json"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Importa il file client_secret_….json scaricato durante la creazione del client, oppure inserisci manualmente ID client e segreto."
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Promemoria iniziale impostato sui nuovi eventi."
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "Scorciatoie da tastiera"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": "Lingua"
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": "Lingua dell'interfaccia."
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": "Impostazioni locali usate per nomi di giorni e mesi, formato dell'ora e inizio settimana."
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "Posizione"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "Media"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Accesso a Microsoft To Do non concesso. Riconnetti questo account per sincronizzare le attività."
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "Mensile"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": "Sposta"
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "Nome"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "Navigazione"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "Nuovo evento"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "Nuova attività"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "Giorno successivo"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": "Evento successivo (settimana successiva nella vista mese)"
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "Settimana successiva"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "Notifica per gli eventi di tutto il giorno senza promemoria propri."
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "Offline"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "Ordine"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Calendari Outlook, Office 365 ed Exchange Online."
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Scegli un'origine colore, una tavolozza o il tuo file di tema."
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "Immagini"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": "Riproduce un suono quando scatta un promemoria."
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Specifica una cartella con file .ics.  Ogni sottocartella o file .ics diventa un calendario, compatibile con i layout di vdirsyncer/khal. La cartella viene creata se non esiste."
   },
   "Preset": {
     "Preset": "Preset"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "Giorno precedente"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "Evento precedente (settimana precedente nella vista mese)"
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "Settimana precedente"
   },
   "Previous year": {
     "Previous year": "Anno precedente"
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "Priorità"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "Esci"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": "Gli eventi di sola lettura non possono essere tagliati"
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": "Gli eventi di sola lettura non possono essere spostati"
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "Riconnetti"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Le attività ricorrenti vengono gestite in Google Tasks."
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": "Promemoria"
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Promemoria e avvisi desktop."
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": "Rimuovi calendario o account"
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Rimuove questo account e i relativi calendari ed eventi da Dank Calendar. Non viene eliminato nulla dal provider."
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "Ripristina valori globali"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "Salva"
   },
   "Saving...": {
     "Saving...": "Salvataggio in corso..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "Cerca"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "Ricerca in corso"
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "Seleziona File"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "Impostazioni"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "Mostra"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Mostra promemoria per eventi di tutto il giorno"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "Mostra gli elenchi attività e la vista Attività quando un account li fornisce."
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": "Salta la verifica del certificato"
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Durata posticipazione"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "Ordina Per"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "Avvia all'accesso"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "Notifica di prova"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "Quel file non è un JSON valido."
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "Tema"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "Questi eventi verranno eliminati dai rispettivi calendari. Le selezioni ricorrenti eliminano solo le occorrenze selezionate."
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Questo account non può essere riconnesso: rimuovilo e aggiungilo di nuovo."
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": "Attiva/disattiva calendario, cambia vista o sincronizza account"
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "Mostra/nascondi questo aiuto"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Digita almeno 2 caratteri per cercare eventi."
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "Annulla"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "Versione"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "Video"
   },
   "View": {
     "View": "Vista"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "Visibilità, nomi e rimozione per ciascun calendario."
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "Settimanale"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Cosa fa il pulsante di chiusura della finestra."

@@ -131,6 +131,9 @@
   "5 minutes before": {
     "5 minutes before": "5 минути преди"
   },
+  "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+  },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Лиценз MIT</a>"
   },
@@ -151,6 +154,9 @@
   },
   "Account connected": {
     "Account connected": "Профилът е свързан"
+  },
+  "Account options": {
+    "Account options": ""
   },
   "Account problem — click for options": {
     "Account problem — click for options": "Проблем с профила – щракнете за опции"
@@ -215,11 +221,17 @@
   "All events": {
     "All events": "Всички събития"
   },
+  "All-day events": {
+    "All-day events": ""
+  },
   "All-day reminder time": {
     "All-day reminder time": "Време за напомняне за целодневни събития"
   },
   "All-day reminder timing": {
     "All-day reminder timing": "Време на напомняне за целодневни събития"
+  },
+  "Already in %1": {
+    "Already in %1": ""
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Назад • F1/I: Инфо за файла • F10: Помощ • Esc: Затваряне"
@@ -229,6 +241,9 @@
   },
   "Always use the light theme.": {
     "Always use the light theme.": "Винаги да се използва светлата тема."
+  },
+  "App": {
+    "App": ""
   },
   "App-specific password": {
     "App-specific password": "Парола за конкретно приложение"
@@ -278,6 +293,9 @@
   "Backend not connected.": {
     "Backend not connected.": "Бекендът не е свързан."
   },
+  "Balanced": {
+    "Balanced": ""
+  },
   "Begin setup": {
     "Begin setup": "Започване на настройка"
   },
@@ -287,8 +305,14 @@
   "Calendar Settings": {
     "Calendar Settings": "Настройки на календара"
   },
+  "Calendar file": {
+    "Calendar file": ""
+  },
   "Calendar name": {
     "Calendar name": "Име на календара"
+  },
+  "Calendar options": {
+    "Calendar options": ""
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": "Предварително избран календар при създаване на събития."
@@ -332,6 +356,9 @@
   "Client Secret": {
     "Client Secret": "Client Secret"
   },
+  "Close": {
+    "Close": ""
+  },
   "Close behavior": {
     "Close behavior": "Поведение при затваряне"
   },
@@ -340,6 +367,9 @@
   },
   "Collapse or expand a section": {
     "Collapse or expand a section": "Сгъване или разгъване на раздел"
+  },
+  "Color": {
+    "Color": ""
   },
   "Color source": {
     "Color source": "Източник на цветове"
@@ -379,6 +409,9 @@
   },
   "Connected calendar providers.": {
     "Connected calendar providers.": "Свързани доставчици на календарни услуги."
+  },
+  "Connected providers": {
+    "Connected providers": ""
   },
   "Connecting…": {
     "Connecting…": "Свързване…"
@@ -485,6 +518,9 @@
   "Dark": {
     "Dark": "Тъмна"
   },
+  "Date": {
+    "Date": ""
+  },
   "Date and time locale": {
     "Date and time locale": "Регионални настройки за дата и час"
   },
@@ -499,6 +535,9 @@
   },
   "Decline": {
     "Decline": "Отказване"
+  },
+  "Decrease": {
+    "Decrease": ""
   },
   "Default calendar": {
     "Default calendar": "Календар по подразбиране"
@@ -569,6 +608,9 @@
   "Desktop notifications for upcoming events.": {
     "Desktop notifications for upcoming events.": "Известия на работния плот за предстоящи събития."
   },
+  "Diagnostics": {
+    "Diagnostics": ""
+  },
   "Directory": {
     "Directory": "Директория"
   },
@@ -620,6 +662,12 @@
   "Duplicate selected events to the next day": {
     "Duplicate selected events to the next day": "Дублиране на избраните събития за следващия ден"
   },
+  "Duration": {
+    "Duration": ""
+  },
+  "Edit": {
+    "Edit": ""
+  },
   "Edit event": {
     "Edit event": "Редактиране на събитие"
   },
@@ -668,6 +716,9 @@
   "Every": {
     "Every": "На всеки"
   },
+  "Everything in this file is already on your calendar.": {
+    "Everything in this file is already on your calendar.": ""
+  },
   "Evolution": {
     "Evolution": "Evolution"
   },
@@ -697,6 +748,9 @@
   },
   "Focus or leave the sidebar": {
     "Focus or leave the sidebar": "Фокусиране или напускане на страничната лента"
+  },
+  "Focus ring": {
+    "Focus ring": ""
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Следване на цветовете на DankMaterialShell с резервен вариант към готов шаблон."
@@ -746,11 +800,26 @@
   "How often accounts are polled for changes.": {
     "How often accounts are polled for changes.": "Колко често профилите се проверяват за промени."
   },
+  "Import": {
+    "Import": ""
+  },
+  "Import %1 events": {
+    "Import %1 events": ""
+  },
   "Import client_secret.json": {
     "Import client_secret.json": "Импортиране на client_secret.json"
   },
+  "Import events": {
+    "Import events": ""
+  },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Импортирайте изтегления файл client_secret_….json при създаването на клиента или поставете Client ID и Secret ръчно."
+  },
+  "Importing...": {
+    "Importing...": ""
+  },
+  "Increase": {
+    "Increase": ""
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Първоначално напомняне, задавано за нови събития."
@@ -767,11 +836,17 @@
   "Keyboard shortcuts": {
     "Keyboard shortcuts": "Клавишни комбинации"
   },
+  "Keyring locked — unlock it to sync": {
+    "Keyring locked — unlock it to sync": ""
+  },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
   },
   "Language": {
     "Language": "Език"
+  },
+  "Language and time": {
+    "Language and time": ""
   },
   "Language of the interface.": {
     "Language of the interface.": "Език на интерфейса."
@@ -809,6 +884,9 @@
   "Locale used for day and month names, time format and week start.": {
     "Locale used for day and month names, time format and week start.": "Регионални настройки за имена на дни и месеци, формат на часа и начало на седмицата."
   },
+  "Locale, views and defaults": {
+    "Locale, views and defaults": ""
+  },
   "Location": {
     "Location": "Местоположение"
   },
@@ -829,6 +907,18 @@
   },
   "Medium": {
     "Medium": "Среден"
+  },
+  "Meeting cancellation": {
+    "Meeting cancellation": ""
+  },
+  "Meeting invitation": {
+    "Meeting invitation": ""
+  },
+  "Meeting reply": {
+    "Meeting reply": ""
+  },
+  "Menu": {
+    "Menu": ""
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Достъпът до Microsoft To Do не бе предоставен. Свържете отново този профил, за да синхронизирате задачите."
@@ -856,6 +946,9 @@
   },
   "Monthly": {
     "Monthly": "Ежемесечно"
+  },
+  "Motion": {
+    "Motion": ""
   },
   "Move": {
     "Move": "Преместване"
@@ -905,6 +998,9 @@
   "Name": {
     "Name": "Име"
   },
+  "Names, visibility, removal": {
+    "Names, visibility, removal": ""
+  },
   "Navigation": {
     "Navigation": "Навигация"
   },
@@ -920,8 +1016,14 @@
   "New event": {
     "New event": "Ново събитие"
   },
+  "New events": {
+    "New events": ""
+  },
   "New task": {
     "New task": "Нова задача"
+  },
+  "Next": {
+    "Next": ""
   },
   "Next day": {
     "Next day": "Следващ ден"
@@ -937,6 +1039,9 @@
   },
   "Next event (next week in month view)": {
     "Next event (next week in month view)": "Следващо събитие (следваща седмица в месечния изглед)"
+  },
+  "Next month": {
+    "Next month": ""
   },
   "Next week": {
     "Next week": "Следваща седмица"
@@ -1001,6 +1106,9 @@
   "Notify for all-day events without their own reminders.": {
     "Notify for all-day events without their own reminders.": "Известяване за целодневни събития без собствени напомняния."
   },
+  "Off": {
+    "Off": ""
+  },
   "Offline": {
     "Offline": "Офлайн"
   },
@@ -1030,6 +1138,15 @@
   },
   "Order": {
     "Order": "Подредба"
+  },
+  "Organized by %1": {
+    "Organized by %1": ""
+  },
+  "Outline": {
+    "Outline": ""
+  },
+  "Outline the control that has keyboard focus.": {
+    "Outline the control that has keyboard focus.": ""
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Календари на Outlook, Office 365 и Exchange Online."
@@ -1097,17 +1214,26 @@
   "Pick a color source, palette, or your own theme file.": {
     "Pick a color source, palette, or your own theme file.": "Изберете източник на цветове, палитра или собствен файл с тема."
   },
+  "Pick time": {
+    "Pick time": ""
+  },
   "Pictures": {
     "Pictures": "Снимки"
   },
   "Play a sound when a reminder fires.": {
     "Play a sound when a reminder fires.": "Възпроизвеждане на звук при задействане на напомняне."
   },
+  "Playful": {
+    "Playful": ""
+  },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Посочете директория с .ics файлове. Всяка поддиректория или .ics файл става календар – съвместимо с оформленията на vdirsyncer/khal. Директорията се създава, ако не съществува."
   },
   "Preset": {
     "Preset": "Готов шаблон"
+  },
+  "Previous": {
+    "Previous": ""
   },
   "Previous day": {
     "Previous day": "Предишен ден"
@@ -1124,11 +1250,17 @@
   "Previous event (previous week in month view)": {
     "Previous event (previous week in month view)": "Предишно събитие (предишна седмица в месечния изглед)"
   },
+  "Previous month": {
+    "Previous month": ""
+  },
   "Previous week": {
     "Previous week": "Предишна седмица"
   },
   "Previous year": {
     "Previous year": "Предишна година"
+  },
+  "Primary": {
+    "Primary": ""
   },
   "Priority": {
     "Priority": "Приоритет"
@@ -1139,6 +1271,9 @@
   "Quit": {
     "Quit": "Изход"
   },
+  "Radius strength": {
+    "Radius strength": ""
+  },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": "Събития само за четене не могат да бъдат изрязвани"
   },
@@ -1148,14 +1283,23 @@
   "Read-only events can't be moved": {
     "Read-only events can't be moved": "Събития само за четене не могат да бъдат премествани"
   },
+  "Reading file...": {
+    "Reading file...": ""
+  },
   "Reconnect": {
     "Reconnect": "Повторно свързване"
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Повтарящите се задачи се управляват в Google Tasks."
   },
+  "Reduce motion": {
+    "Reduce motion": ""
+  },
   "Reminders": {
     "Reminders": "Напомняния"
+  },
+  "Reminders and alerts": {
+    "Reminders and alerts": ""
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Напомняния и сигнали на работния плот."
@@ -1177,6 +1321,9 @@
   },
   "Remove calendar or account": {
     "Remove calendar or account": "Премахване на календар или профил"
+  },
+  "Remove reminder": {
+    "Remove reminder": ""
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Премахва този профил, неговите календари и събития от Dank Calendar. Нищо не се изтрива от доставчика."
@@ -1223,11 +1370,17 @@
   "Reset to global": {
     "Reset to global": "Връщане към глобалните"
   },
+  "Ripple effects": {
+    "Ripple effects": ""
+  },
   "Save": {
     "Save": "Запазване"
   },
   "Saving...": {
     "Saving...": "Запазване..."
+  },
+  "Scale": {
+    "Scale": ""
   },
   "Search": {
     "Search": "Търсене"
@@ -1240,6 +1393,9 @@
   },
   "Searching": {
     "Searching": "Търсене"
+  },
+  "Secondary": {
+    "Secondary": ""
   },
   "Select File": {
     "Select File": "Избор на файл"
@@ -1277,6 +1433,9 @@
   "Settings": {
     "Settings": "Настройки"
   },
+  "Shape": {
+    "Shape": ""
+  },
   "Show": {
     "Show": "Показване"
   },
@@ -1288,6 +1447,9 @@
   },
   "Show all-day reminders": {
     "Show all-day reminders": "Показване на напомняния за целодневни събития"
+  },
+  "Show calendar": {
+    "Show calendar": ""
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "Показване на списъците със задачи и изгледа „Задачи“, когато даден профил ги предоставя."
@@ -1331,11 +1493,23 @@
   "Skip certificate verification": {
     "Skip certificate verification": "Пропускане на проверката на сертификата"
   },
+  "Smooth": {
+    "Smooth": ""
+  },
   "Snooze duration": {
     "Snooze duration": "Време за отлагане"
   },
+  "Some calendars couldn't be synced; their events may be missing or out of date.": {
+    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+  },
   "Sort By": {
     "Sort By": "Подреждане по"
+  },
+  "Spring": {
+    "Spring": ""
+  },
+  "Square": {
+    "Square": ""
   },
   "Start at login": {
     "Start at login": "Стартиране при влизане"
@@ -1409,14 +1583,26 @@
   "Test notification": {
     "Test notification": "Тестово известие"
   },
+  "Text color": {
+    "Text color": ""
+  },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "Този файл не е валиден JSON."
+  },
+  "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
   },
   "Theme": {
     "Theme": "Тема"
   },
+  "Theme, shape and motion": {
+    "Theme, shape and motion": ""
+  },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "Тези събития ще бъдат изтрити от техните календари. При повтарящи се събития се изтриват само избраните повторения."
+  },
+  "Thickness": {
+    "Thickness": ""
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Този профил не може да бъде свързан отново – премахнете го и го добавете пак."
@@ -1439,6 +1625,9 @@
   "Toggle calendar, switch view or sync account": {
     "Toggle calendar, switch view or sync account": "Превключване на календар, смяна на изгледа или синхронизиране на профил"
   },
+  "Toggle sidebar": {
+    "Toggle sidebar": ""
+  },
   "Toggle this help": {
     "Toggle this help": "Превключване на тази помощ"
   },
@@ -1459,6 +1648,9 @@
   },
   "Type at least 2 characters to search events.": {
     "Type at least 2 characters to search events.": "Въведете поне 2 знака, за да търсите събития."
+  },
+  "Typography": {
+    "Typography": ""
   },
   "Undo": {
     "Undo": "Отмяна"
@@ -1499,11 +1691,17 @@
   "Version": {
     "Version": "Версия"
   },
+  "Version and links": {
+    "Version and links": ""
+  },
   "Videos": {
     "Videos": "Видеоклипове"
   },
   "View": {
     "View": "Изглед"
+  },
+  "Views": {
+    "Views": ""
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "Видимост, имена и премахване за всеки календар."
@@ -1525,6 +1723,9 @@
   },
   "Weekly": {
     "Weekly": "Ежеседмично"
+  },
+  "Weight": {
+    "Weight": ""
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Действие при щракване върху бутона за затваряне на прозореца."
