@@ -50,6 +50,8 @@ FloatingWindow {
     }
 
     function refreshPreview() {
+        if (!visible || importing)
+            return;
         const generation = ++previewGeneration;
         loading = true;
         previewReady = false;
@@ -66,7 +68,7 @@ FloatingWindow {
             method = result.method || "";
             items = (result.events || []).map(entry => ({
                         "event": DankCalService.eventFromResult(entry.event),
-                        "conflicts": (entry.conflicts || []).map(DankCalService.eventFromResult),
+                        "conflicts": (entry.conflicts || []).map(event => DankCalService.eventFromResult(event)),
                         "previewEnd": entry.previewEnd,
                         "existing": entry.existing ? DankCalService.eventFromResult(entry.existing) : null
                     }));
@@ -257,8 +259,10 @@ FloatingWindow {
                     onValueChanged: value => {
                         const index = importModal.calendarLabels.indexOf(value);
                         if (index >= 0) {
-                            importModal.previewReady = false;
-                            importModal.calendarIndex = index;
+                            if (index !== importModal.calendarIndex) {
+                                importModal.previewReady = false;
+                                importModal.calendarIndex = index;
+                            }
                         }
                     }
                 }
@@ -278,6 +282,14 @@ FloatingWindow {
                         wrapMode: Text.WordWrap
                         visible: importModal.schedulingOnly
                         color: Theme.surfaceVariantText
+                    }
+
+                    StyledText {
+                        width: parent.width
+                        text: I18n.tr("Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.", "import preview explains the data and non-blocking conflicts")
+                        wrapMode: Text.WordWrap
+                        color: Theme.surfaceVariantText
+                        font.pixelSize: Theme.fontSizeSmall
                     }
 
                     Repeater {
@@ -319,6 +331,7 @@ FloatingWindow {
 
                                 StyledText {
                                     width: parent.width
+                                    textFormat: Text.PlainText
                                     text: row.event.title
                                     font.pixelSize: Theme.fontSizeMedium
                                     font.weight: Theme.fontWeightMedium
@@ -336,6 +349,7 @@ FloatingWindow {
 
                                 StyledText {
                                     width: parent.width
+                                    textFormat: Text.PlainText
                                     text: row.event.location
                                     font.pixelSize: Theme.fontSizeSmall
                                     color: Theme.surfaceVariantText
@@ -454,7 +468,6 @@ FloatingWindow {
                     textColor: Theme.primaryText
                     onClicked: {
                         importModal.addCalendarRequested();
-                        importModal.hide();
                     }
                 }
 

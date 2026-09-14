@@ -36,6 +36,7 @@ func TestNormalizeURL(t *testing.T) {
 		ok   bool
 	}{
 		{"webcal://example.com/a.ics", "https://example.com/a.ics", true},
+		{"webcals://example.com/a.ics", "https://example.com/a.ics", true},
 		{"https://example.com/a.ics", "https://example.com/a.ics", true},
 		{"http://example.com/a.ics", "http://example.com/a.ics", true},
 		{"ftp://example.com/a.ics", "", false},

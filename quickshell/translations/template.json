@@ -2,14 +2,14 @@
   {
     "term": "%1 AM",
     "translation": "",
-    "context": "core hours dropdown hour label, morning | morning hour label in time gutter",
+    "context": "morning hour label in time gutter",
     "reference": "",
     "comment": ""
   },
   {
     "term": "%1 PM",
     "translation": "",
-    "context": "afternoon hour label in time gutter | core hours dropdown hour label, afternoon",
+    "context": "afternoon hour label in time gutter",
     "reference": "",
     "comment": ""
   },
@@ -24,6 +24,13 @@
     "term": "%1 events selected",
     "translation": "",
     "context": "event context menu selection summary; %1 is event count",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "%1 overlapping events",
+    "translation": "",
+    "context": "import conflict count",
     "reference": "",
     "comment": ""
   },
@@ -444,6 +451,13 @@
     "term": "Add title",
     "translation": "",
     "context": "event form placeholder for title input | task form placeholder for title input",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Add to calendar",
+    "translation": "",
+    "context": "import destination label",
     "reference": "",
     "comment": ""
   },
@@ -871,6 +885,13 @@
     "term": "Confirm delete",
     "translation": "",
     "context": "event details button to confirm deleting the event | task form button to confirm deletion",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.",
+    "translation": "",
+    "context": "import preview explains the data and non-blocking conflicts",
     "reference": "",
     "comment": ""
   },
@@ -1508,6 +1529,13 @@
     "term": "Enable sync",
     "translation": "",
     "context": "calendar context menu action to resume syncing a calendar",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "End",
+    "translation": "",
+    "context": "event form end date and time label",
     "reference": "",
     "comment": ""
   },
@@ -2317,6 +2345,13 @@
     "comment": ""
   },
   {
+    "term": "No overlapping busy events",
+    "translation": "",
+    "context": "import preview with no time conflicts",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "No task list available",
     "translation": "",
     "context": "task form error when no calendar can hold tasks",
@@ -2467,6 +2502,13 @@
     "term": "Open or create event",
     "translation": "",
     "context": "keyboard shortcut description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Open the existing meeting to handle this reply or cancellation.",
+    "translation": "",
+    "context": "scheduling messages cannot be imported as new events",
     "reference": "",
     "comment": ""
   },
@@ -2782,6 +2824,13 @@
     "term": "Reconnect",
     "translation": "",
     "context": "account context menu action to re-authorize the account | account row action tooltip",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Recurring event · conflicts checked through %1",
+    "translation": "",
+    "context": "bounded recurring import preview",
     "reference": "",
     "comment": ""
   },
@@ -3185,6 +3234,13 @@
     "comment": ""
   },
   {
+    "term": "Showing the first 20 overlaps.",
+    "translation": "",
+    "context": "import conflict list limit",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Sidebar",
     "translation": "",
     "context": "keyboard shortcuts overlay section header",
@@ -3279,6 +3335,13 @@
     "term": "Square",
     "translation": "",
     "context": "radius strength slider label at zero",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Start",
+    "translation": "",
+    "context": "event form start date and time label",
     "reference": "",
     "comment": ""
   },

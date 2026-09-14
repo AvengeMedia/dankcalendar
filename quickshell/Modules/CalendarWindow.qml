@@ -909,7 +909,7 @@ FloatingWindow {
             AccountAddModal {
                 parentWindow: window
                 onVisibleChanged: {
-                    if (!visible)
+                    if (!visible && (!importLoader.item || !importLoader.item.visible))
                         window.calendarOpenFinished();
                 }
             }
