@@ -61,3 +61,16 @@ func TestConflicts(t *testing.T) {
 	}
 	assert.Contains(t, uids, "tomorrow")
 }
+
+func TestAllDayBusyTimesRespectLocalDates(t *testing.T) {
+	loc, err := time.LoadLocation("America/Los_Angeles")
+	require.NoError(t, err)
+	start := time.Date(2026, 3, 8, 0, 0, 0, 0, time.UTC)
+	from, to := busyTimes(start, start.Add(24*time.Hour), true, loc)
+	assert.Equal(t, 23*time.Hour, to.Sub(from))
+	assert.Equal(t, 0, from.Hour())
+	assert.Equal(t, 8, from.Day())
+	timedStart, timedEnd := busyTimes(start, start.Add(time.Hour), false, loc)
+	assert.Equal(t, start, timedStart)
+	assert.Equal(t, start.Add(time.Hour), timedEnd)
+}

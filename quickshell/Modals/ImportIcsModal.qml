@@ -25,7 +25,7 @@ FloatingWindow {
     })
     onTargetCalendarChanged: {
         if (visible && !importing)
-            previewTimer.restart();
+            schedulePreview();
     }
 
     readonly property var writable: DankCalService.writableCalendars()
@@ -47,6 +47,13 @@ FloatingWindow {
         calendarIndex = _defaultCalendarIndex();
         visible = true;
         refreshPreview();
+    }
+
+    function schedulePreview() {
+        ++previewGeneration;
+        previewReady = false;
+        loading = true;
+        previewTimer.restart();
     }
 
     function refreshPreview() {
@@ -183,7 +190,7 @@ FloatingWindow {
         target: DankCalService
         function onEventsUpdated() {
             if (importModal.visible && !importModal.importing)
-                previewTimer.restart();
+                importModal.schedulePreview();
         }
     }
 

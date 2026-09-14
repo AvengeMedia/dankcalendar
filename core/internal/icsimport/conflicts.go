@@ -35,8 +35,9 @@ func Conflicts(ctx context.Context, r *repo.Repo, ev calendar.Event) ([]*ent.Eve
 			return nil, err
 		}
 	}
-	// Include ongoing recurring events whose start precedes the imported event.
-	candidates, _, err := r.ListEvents(ctx, repo.ListEventsParams{Filter: repo.EventFilter{From: &ev.Start, To: &end, IncludeRecurring: true}})
+	// All-day dates are stored at UTC midnight but displayed as local dates.
+	from, to := ev.Start.Add(-24*time.Hour), end.Add(24*time.Hour)
+	candidates, _, err := r.ListEvents(ctx, repo.ListEventsParams{Filter: repo.EventFilter{From: &from, To: &to, IncludeRecurring: true}})
 	if err != nil {
 		return nil, err
 	}
@@ -45,12 +46,21 @@ func Conflicts(ctx context.Context, r *repo.Repo, ev calendar.Event) ([]*ent.Eve
 		if other.UID == ev.UID || other.RecurringID == ev.UID || string(other.Status) == "cancelled" || strings.EqualFold(other.Transparency, "TRANSPARENT") {
 			continue
 		}
+		otherStart, otherEnd := busyTimes(other.Start, other.End, other.AllDay, time.Local)
 		for _, start := range starts {
-			if start.Before(other.End) && other.Start.Before(start.Add(duration)) {
+			ownStart, ownEnd := busyTimes(start, start.Add(duration), ev.AllDay, time.Local)
+			if ownStart.Before(otherEnd) && otherStart.Before(ownEnd) {
 				out = append(out, other)
 				break
 			}
 		}
 	}
 	return out, nil
+}
+
+func busyTimes(start, end time.Time, allDay bool, loc *time.Location) (time.Time, time.Time) {
+	if !allDay {
+		return start, end
+	}
+	return time.Date(start.Year(), start.Month(), start.Day(), 0, 0, 0, 0, loc), time.Date(end.Year(), end.Month(), end.Day(), 0, 0, 0, 0, loc)
 }
