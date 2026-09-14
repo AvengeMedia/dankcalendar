@@ -28,8 +28,7 @@ type Document struct {
 	Events []calendar.Event `json:"events"`
 }
 
-// Parse decodes every VCALENDAR in data. Recurrence exceptions are skipped:
-// they only make sense written alongside their series master.
+// Parse decodes every VCALENDAR in data into importable private copies.
 func Parse(data []byte) (*Document, error) {
 	if len(data) > MaxBytes {
 		return nil, fmt.Errorf("calendar data exceeds %d KiB", MaxBytes>>10)
@@ -64,7 +63,7 @@ func Parse(data []byte) (*Document, error) {
 		tz := icalconv.NewTZResolver(cal, "")
 		for _, comp := range cal.Events() {
 			ev, ok := icalconv.EventFromComponent("", comp.Component, tz)
-			if !ok || ev.RecurringID != "" {
+			if !ok {
 				continue
 			}
 			if ev.Start.IsZero() || ev.End.Before(ev.Start) {
@@ -74,6 +73,7 @@ func Parse(data []byte) (*Document, error) {
 		}
 	}
 
+	doc.Events = detachExceptions(doc.Events)
 	if len(doc.Events) == 0 && doc.Source == "" {
 		return nil, ErrNoEvents
 	}
