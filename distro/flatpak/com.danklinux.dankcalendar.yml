@@ -93,7 +93,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/quickshell-mirror/quickshell.git
-        commit: 4df562dfb2475a9057f0f33a8db75808efad8670
+        tag: v0.3.1
+        commit: 1a4716cde794a59928d9d9fc15f2afc7a95de360
         disable-submodules: true
 
   - name: dankcalendar
