@@ -51,7 +51,7 @@ entgo.io/ent/schema
 entgo.io/ent/schema/edge
 entgo.io/ent/schema/field
 entgo.io/ent/schema/index
-# github.com/AvengeMedia/dankgo v0.0.0-20260827031318-2e04b1617d75
+# github.com/AvengeMedia/dankgo v1.6.1
 ## explicit; go 1.26
 github.com/AvengeMedia/dankgo/boottimer
 github.com/AvengeMedia/dankgo/dbusutil

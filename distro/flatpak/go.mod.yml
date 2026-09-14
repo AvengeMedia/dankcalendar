@@ -8,10 +8,10 @@
   type: archive
   url: https://proxy.golang.org/entgo.io/ent/@v/v0.14.6.zip
 - dest: core/vendor/github.com/AvengeMedia/dankgo
-  sha256: 8dc0710eb7a1c1d9d5564502fe92e637a679293a396306bdaaa6eb32a98d3680
+  sha256: fce6883b675c5fd30653379093e142b4b6562a6031656454d3be9fd68e41165c
   strip-components: 3
   type: archive
-  url: https://proxy.golang.org/github.com/!avenge!media/dankgo/@v/v0.0.0-20260827031318-2e04b1617d75.zip
+  url: https://proxy.golang.org/github.com/!avenge!media/dankgo/@v/v1.6.1.zip
 - dest: core/vendor/github.com/JohannesKaufmann/html-to-markdown/v2
   sha256: 43179c2292c0f8aad30bf4ecfc649c75638b0f185bb031db00ef2887542f7394
   strip-components: 4

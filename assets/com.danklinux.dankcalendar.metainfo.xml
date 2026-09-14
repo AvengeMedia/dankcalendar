@@ -41,6 +41,20 @@
   </screenshots>
 
   <releases>
+    <release version="1.6.1" date="2026-09-08">
+      <description>
+        <ul>
+          <li>flake: bump version to 1.6.1</li>
+          <li>keyring: properly fix #105 and fix #99 (#106)</li>
+          <li>oauthbase: persist tokens only on refresh (#103)</li>
+          <li>qml: keep the compact menu closed when entering compact mode</li>
+          <li>fix(qml): wire qml-common theme backend</li>
+          <li>qml: fix week view drag conflicts and modal reopen after compositor close</li>
+          <li>keyring: treat a locked secret collection as locked, not missing</li>
+          <li>caldav: answer http digest challenges</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.6.0" date="2026-09-03">
       <description>
         <ul>
