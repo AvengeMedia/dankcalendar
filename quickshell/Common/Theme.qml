@@ -386,6 +386,7 @@ Singleton {
     }
     readonly property real scrimAlpha: 0.55
     readonly property color scrimColor: currentThemeData.scrim || "#000000"
+    readonly property real buttonHeightXXS: 28
     readonly property real buttonHeightXS: 32
     readonly property real buttonHeightS: 40
     readonly property real buttonHeightM: 56

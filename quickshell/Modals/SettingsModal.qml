@@ -83,6 +83,7 @@ FloatingWindow {
                 DankActionButton {
                     visible: settingsModal.isCompactMode
                     iconName: "menu"
+                    buttonSize: Theme.buttonHeightXXS
                     Accessible.name: I18n.tr("Menu", "settings header button that shows the section list on narrow windows")
                     onClicked: settingsModal.menuVisible = !settingsModal.menuVisible
                 }

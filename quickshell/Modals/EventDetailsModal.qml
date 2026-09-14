@@ -561,6 +561,7 @@ FloatingWindow {
             DankActionButton {
                 visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id
                 iconName: "edit"
+                buttonSize: Theme.buttonHeightXXS
                 Accessible.name: I18n.tr("Edit", "event details button to start editing")
                 onClicked: eventModal.beginEdit()
             }
@@ -568,7 +569,7 @@ FloatingWindow {
             DankButton {
                 visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete && eventModal.isRecurring
                 text: I18n.tr("Delete occurrence", "event details button to delete only this occurrence of a recurring event")
-                buttonHeight: Theme.buttonHeightXS
+                buttonHeight: Theme.buttonHeightXXS
                 backgroundColor: Theme.errorContainer
                 textColor: Theme.onErrorContainer
                 onClicked: eventModal.removeEvent(true)
@@ -577,7 +578,7 @@ FloatingWindow {
             DankButton {
                 visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && eventModal.confirmDelete
                 text: eventModal.isRecurring ? I18n.tr("Delete series", "event details button to confirm deleting a whole recurring series") : I18n.tr("Confirm delete", "event details button to confirm deleting the event")
-                buttonHeight: Theme.buttonHeightXS
+                buttonHeight: Theme.buttonHeightXXS
                 backgroundColor: eventModal.isRecurring ? "transparent" : Theme.errorContainer
                 textColor: eventModal.isRecurring ? Theme.error : Theme.onErrorContainer
                 onClicked: eventModal.removeEvent()
@@ -586,6 +587,7 @@ FloatingWindow {
             DankActionButton {
                 visible: !eventModal.editMode && !eventModal.event.readOnly && !!eventModal.event.id && !eventModal.confirmDelete
                 iconName: "delete_outline"
+                buttonSize: Theme.buttonHeightXXS
                 iconColor: Theme.error
                 Accessible.name: I18n.tr("Delete", "event details button to delete the event")
                 onClicked: eventModal.removeEvent()

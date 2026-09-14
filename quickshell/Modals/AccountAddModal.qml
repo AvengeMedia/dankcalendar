@@ -278,6 +278,7 @@ FloatingWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 visible: accountModal.selectedProvider !== ""
                 iconName: "arrow_back"
+                buttonSize: Theme.buttonHeightXXS
                 Accessible.name: I18n.tr("Back", "back button in account setup wizard")
                 onClicked: {
                     const fromBrowser = accountModal.wizardStep === accountModal.browserStepIndex;
