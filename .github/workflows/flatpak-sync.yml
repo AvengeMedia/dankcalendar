@@ -4,6 +4,12 @@ on:
   workflow_run:
     workflows: ["Create Release"]
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: release tag to sync, e.g. v1.6.1
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -15,12 +21,13 @@ concurrency:
 jobs:
   sync:
     if: >-
-      github.event.workflow_run.conclusion == 'success' &&
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
       startsWith(github.event.workflow_run.head_branch, 'v') &&
-      !contains(github.event.workflow_run.head_branch, '-')
+      !contains(github.event.workflow_run.head_branch, '-'))
     runs-on: ubuntu-24.04
     env:
-      TAG: ${{ github.event.workflow_run.head_branch }}
+      TAG: ${{ inputs.tag || github.event.workflow_run.head_branch }}
     steps:
       - name: Create GitHub App token
         id: app_token
@@ -46,7 +53,11 @@ jobs:
         run: |
           set -euo pipefail
           python3 scripts/flatpak-sync.py metainfo "$TAG"
-          make flatpak-modules
+          for attempt in 1 2 3; do
+            make flatpak-modules && break
+            [ "$attempt" = 3 ] && exit 1
+            sleep 30
+          done
 
       - name: Commit source updates
         id: source

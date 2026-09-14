@@ -8,7 +8,6 @@ pin <tag> <commit>  point the manifest at the tag, or at a bare commit when
 """
 
 import argparse
-import datetime
 import html
 import pathlib
 import re
@@ -47,8 +46,9 @@ def cmd_metainfo(args):
         print(f"metainfo already has a {version} release entry")
         return
 
+    date = git("log", "-1", "--format=%cs", args.tag).strip()
     entry = (
-        f'    <release version="{version}" date="{datetime.date.today().isoformat()}">\n'
+        f'    <release version="{version}" date="{date}">\n'
         f"      <description>\n{release_notes(args.tag)}\n      </description>\n"
         f"    </release>\n"
     )
