@@ -15,7 +15,12 @@ DESKTOP_ID = "com.danklinux.dankcalendar.desktop"
 
 
 def run(*args, env):
-    return subprocess.run(args, cwd=ROOT, env=env, check=True, capture_output=True, text=True).stdout
+    completed = subprocess.run(args, cwd=ROOT, env=env, capture_output=True, text=True)
+    if completed.returncode:
+        print(completed.stdout, end="")
+        print(completed.stderr, end="")
+        completed.check_returncode()
+    return completed.stdout
 
 
 def check_registration(prefix, env):
