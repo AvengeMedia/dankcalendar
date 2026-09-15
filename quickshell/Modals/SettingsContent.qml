@@ -134,22 +134,6 @@ Item {
         }
     ]
 
-    function coreHourLabel(h) {
-        if (h === 24)
-            return "24:00";
-        if (SettingsData.use24HourTime)
-            return (h < 10 ? "0" + h : h) + ":00";
-        const displayH = h % 12 === 0 ? 12 : h % 12;
-        return h < 12 ? I18n.tr("%1 AM", "core hours dropdown hour label, morning").arg(displayH) : I18n.tr("%1 PM", "core hours dropdown hour label, afternoon").arg(displayH);
-    }
-
-    readonly property var coreHourOptions: Array.from({
-        length: 25
-    }, (_, h) => ({
-                label: root.coreHourLabel(h),
-                value: h
-            }))
-
     readonly property var eventTitleLineOptions: [
         {
             label: I18n.tr("1 line", "event title line count dropdown option"),
@@ -484,28 +468,39 @@ Item {
                     subtitle: I18n.tr("Hour range shown in day and week views.", "core hours range setting description")
                     enabled: SettingsData.coreHoursEnabled
 
-                    DankDropdown {
-                        anchors.verticalCenter: parent.verticalCenter
-                        dropdownWidth: 90
-                        enabled: SettingsData.coreHoursEnabled
-                        options: root.optionLabels(root.coreHourOptions.filter(o => o.value < SettingsData.coreHoursEnd))
-                        currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursStart)
-                        onValueChanged: value => SettingsData.coreHoursStart = root.valueForLabel(root.coreHourOptions, value)
-                    }
+                    body: Grid {
+                        width: parent.width
+                        columns: width >= coreHoursStartField.implicitWidth + coreHoursEndField.implicitWidth + coreHoursSeparator.implicitWidth + spacing * 2 ? 3 : 1
+                        spacing: Theme.spacingM
+                        opacity: enabled ? 1 : SettingsMetrics.disabledOpacity
 
-                    StyledText {
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: I18n.tr("to", "core hours range separator")
-                        color: Theme.surfaceVariantText
-                    }
+                        DankTimeField {
+                            id: coreHoursStartField
+                            width: parent.columns === 1 ? parent.width : (parent.width - coreHoursSeparator.width - parent.spacing * 2) / 2
+                            use24Hour: SettingsData.use24HourTime
+                            maximumMinutes: Math.round(SettingsData.coreHoursEnd * 60) - 1
+                            minutes: SettingsData.coreHoursStart * 60
+                            onTimeSelected: value => SettingsData.coreHoursStart = value / 60
+                        }
 
-                    DankDropdown {
-                        anchors.verticalCenter: parent.verticalCenter
-                        dropdownWidth: 90
-                        enabled: SettingsData.coreHoursEnabled
-                        options: root.optionLabels(root.coreHourOptions.filter(o => o.value > SettingsData.coreHoursStart))
-                        currentValue: root.labelForValue(root.coreHourOptions, SettingsData.coreHoursEnd)
-                        onValueChanged: value => SettingsData.coreHoursEnd = root.valueForLabel(root.coreHourOptions, value)
+                        StyledText {
+                            id: coreHoursSeparator
+                            height: parent.columns === 1 ? implicitHeight : Theme.fieldHeightLarge
+                            verticalAlignment: Text.AlignVCenter
+                            text: I18n.tr("to", "core hours range separator")
+                            color: Theme.surfaceVariantText
+                        }
+
+                        DankTimeField {
+                            id: coreHoursEndField
+                            width: parent.columns === 1 ? parent.width : (parent.width - coreHoursSeparator.width - parent.spacing * 2) / 2
+                            use24Hour: SettingsData.use24HourTime
+                            endOfDay: true
+                            minimumMinutes: Math.round(SettingsData.coreHoursStart * 60) + 1
+                            maximumMinutes: 1440
+                            minutes: SettingsData.coreHoursEnd * 60
+                            onTimeSelected: value => SettingsData.coreHoursEnd = value / 60
+                        }
                     }
                 }
 

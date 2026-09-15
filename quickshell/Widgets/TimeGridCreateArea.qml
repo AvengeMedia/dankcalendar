@@ -6,8 +6,8 @@ MouseArea {
     id: root
 
     required property date day
-    required property int startHour
-    required property int hourCount
+    required property real startHour
+    required property real hourCount
     required property real hourHeight
     property Item flickable: null
     property int slotMinutes: 15
@@ -15,7 +15,7 @@ MouseArea {
     property real autoScrollStep: 6
 
     readonly property real slotHeight: hourHeight * slotMinutes / 60
-    readonly property int slotCount: hourCount * 60 / slotMinutes
+    readonly property int slotCount: Math.ceil(Math.round(hourCount * 60) / slotMinutes)
     readonly property bool selecting: anchorSlot >= 0
     property bool armed: false
     property int anchorSlot: -1
@@ -39,7 +39,8 @@ MouseArea {
 
     function slotTime(slot) {
         const d = new Date(day);
-        d.setHours(startHour, slot * slotMinutes, 0, 0);
+        const minutes = Math.round(startHour * 60 + Math.min(slot * slotMinutes, hourCount * 60));
+        d.setHours(0, minutes, 0, 0);
         return d;
     }
 
@@ -127,7 +128,7 @@ MouseArea {
         x: 2
         width: parent.width - 4
         y: root.fromSlot * root.slotHeight
-        height: (root.toSlot - root.fromSlot) * root.slotHeight - 2
+        height: Math.max(0, Math.min(root.toSlot * root.slotHeight, root.height) - y - 2)
         radius: Theme.cornerRadiusS
         color: Theme.withAlpha(Theme.primary, 0.18)
         border.color: Theme.primary

@@ -133,8 +133,8 @@ Singleton {
 
     readonly property int effectiveFirstDayOfWeek: (firstDayOfWeek >= 0 && firstDayOfWeek <= 6) ? firstDayOfWeek : localeFirstDayOfWeek
     readonly property bool coreHoursValid: coreHoursStart >= 0 && coreHoursEnd <= 24 && coreHoursEnd > coreHoursStart
-    readonly property int effectiveHourStart: (coreHoursEnabled && coreHoursValid) ? coreHoursStart : 0
-    readonly property int effectiveHourEnd: (coreHoursEnabled && coreHoursValid) ? coreHoursEnd : 24
+    readonly property real effectiveHourStart: (coreHoursEnabled && coreHoursValid) ? coreHoursStart : 0
+    readonly property real effectiveHourEnd: (coreHoursEnabled && coreHoursValid) ? coreHoursEnd : 24
     readonly property bool use24HourTime: {
         switch (timeFormat) {
         case "12h":
@@ -229,8 +229,8 @@ Singleton {
             property string timeFormat: "auto"
             property bool use24HourClock: true
             property bool coreHoursEnabled: false
-            property int coreHoursStart: 9
-            property int coreHoursEnd: 17
+            property real coreHoursStart: 9
+            property real coreHoursEnd: 17
             property bool showWeekNumbers: false
             property bool showTasks: true
             property int monthEventTitleLines: 1

@@ -34,9 +34,6 @@ FloatingWindow {
     property var formReminders: []
     property var recurrencePickerItem: null
 
-    // Recurrence is editable on new events and series masters; occurrence
-    // rows (recurringId set) would need per-occurrence semantics we don't
-    // model, so the control is hidden there.
     readonly property bool recurrenceEditable: createMode || !(event.recurringId || "")
     readonly property bool isOccurrence: (event.recurringId || "") !== "" && (event.recurrence || []).length > 0
     readonly property bool isRecurring: (event.recurrence || []).length > 0
@@ -106,9 +103,6 @@ FloatingWindow {
         return new Date(Math.ceil(Date.now() / slot) * slot);
     }
 
-    // Prefill start: an explicit time is honored (ui.newEvent start=...); a
-    // bare day (midnight) gets 10:00, except today, which rounds up to the
-    // next half-hour slot so the prefill is never in the past.
     function _defaultStart(day) {
         if (!day)
             return _nextHalfHour();
@@ -277,9 +271,6 @@ FloatingWindow {
         return labels.join(" · ");
     }
 
-    // locationUrl makes the location row clickable: a URL location opens
-    // directly, conference placeholders open the meeting link, and anything
-    // else opens as a geo: search in the maps app.
     function locationUrl() {
         const loc = (event.location || "").trim();
         if (loc === "")
@@ -359,8 +350,6 @@ FloatingWindow {
         }
         const cal = writable[Math.min(formCalendarIndex, writable.length - 1)];
 
-        // Non-popup reminders (e.g. email) are kept as-is; the editor only
-        // manages popup reminders.
         const reminders = (event.reminders || []).filter(r => !_isPopup(r));
         const seen = [];
         for (let i = 0; i < formReminders.length; i++) {
@@ -472,11 +461,6 @@ FloatingWindow {
         return out;
     }
 
-    // Descriptions arrive as HTML (Google web UI) or markdown/plain text
-    // (Microsoft converted server-side, CalDAV, local). Both paths render
-    // as RichText with About-page style anchors: markdown import strips
-    // inline styles and bakes the palette link blue, so linkColor alone
-    // cannot recolor links.
     function descriptionRichText() {
         const raw = (event.description || "").trim();
         if (descriptionIsHtml)
@@ -1067,119 +1051,121 @@ FloatingWindow {
                 width: parent.width
                 spacing: Theme.spacingM
 
-                DankTextField {
-                    width: parent.width
-                    outlined: true
-                    labelText: I18n.tr("Add title", "event form placeholder for title input")
-                    text: eventModal.formTitle
-                    onTextChanged: eventModal.formTitle = text
-                    Component.onCompleted: forceActiveFocus()
+                FormRow {
+                    iconName: "title"
+
+                    DankTextField {
+                        width: parent.width
+                        height: Theme.fieldHeightLarge
+                        outlined: true
+                        labelText: I18n.tr("Add title", "event form placeholder for title input")
+                        text: eventModal.formTitle
+                        onTextChanged: eventModal.formTitle = text
+                        Component.onCompleted: forceActiveFocus()
+                    }
                 }
 
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
+                FormRow {
+                    iconName: "schedule"
+                    iconHeight: allDayToggle.height
 
-                    DankDatePicker {
-                        width: (parent.width - allDayRow.width - dateDash.width - Theme.spacingM * 3) / 2
-                        firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
-                        selectedDate: eventModal.formStartDate
-                        onDateSelected: value => eventModal.setFormStartDate(value)
+                    DankToggle {
+                        id: allDayToggle
+                        width: parent.width
+                        text: I18n.tr("All day", "event form toggle label for all-day events")
+                        checked: eventModal.formAllDay
+                        onToggled: checked => eventModal.formAllDay = checked
                     }
 
-                    StyledText {
-                        id: dateDash
+                    Grid {
+                        width: parent.width
+                        columns: width < Theme.fontSizeMedium * 24 ? 1 : 2
+                        spacing: Theme.spacingM
 
-                        text: "–"
-                        color: Theme.surfaceVariantText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
+                        Column {
+                            width: (parent.width - parent.spacing * (parent.columns - 1)) / parent.columns
+                            spacing: Theme.spacingS
 
-                    DankDatePicker {
-                        width: (parent.width - allDayRow.width - dateDash.width - Theme.spacingM * 3) / 2
-                        firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
-                        selectedDate: eventModal.formEndDate
-                        onDateSelected: value => eventModal.formEndDate = value
-                    }
+                            StyledText {
+                                width: parent.width
+                                text: I18n.tr("Start", "event form start date and time label")
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.surfaceVariantText
+                            }
 
-                    Row {
-                        id: allDayRow
+                            DankDatePicker {
+                                width: parent.width
+                                dateFormat: "MMM d, yyyy"
+                                firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
+                                selectedDate: eventModal.formStartDate
+                                onDateSelected: value => eventModal.setFormStartDate(value)
+                            }
 
-                        spacing: Theme.spacingS
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        DankToggle {
-                            checked: eventModal.formAllDay
-                            onToggled: checked => eventModal.formAllDay = checked
-                            anchors.verticalCenter: parent.verticalCenter
+                            DankTimeField {
+                                width: parent.width
+                                visible: !eventModal.formAllDay
+                                use24Hour: SettingsData.use24HourTime
+                                minutes: eventModal.formStartMinutes
+                                onTimeSelected: value => {
+                                    const duration = eventModal.formEndMinutes - eventModal.formStartMinutes;
+                                    eventModal.formStartMinutes = value;
+                                    eventModal.formEndMinutes = value + Math.max(duration, 0);
+                                }
+                            }
                         }
 
-                        StyledText {
-                            text: I18n.tr("All day", "event form toggle label for all-day events")
-                            font.pixelSize: Theme.fontSizeMedium
-                            color: Theme.surfaceText
-                            anchors.verticalCenter: parent.verticalCenter
+                        Column {
+                            width: (parent.width - parent.spacing * (parent.columns - 1)) / parent.columns
+                            spacing: Theme.spacingS
+
+                            StyledText {
+                                width: parent.width
+                                text: I18n.tr("End", "event form end date and time label")
+                                font.pixelSize: Theme.fontSizeSmall
+                                color: Theme.surfaceVariantText
+                            }
+
+                            DankDatePicker {
+                                width: parent.width
+                                dateFormat: "MMM d, yyyy"
+                                firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
+                                selectedDate: eventModal.formEndDate
+                                onDateSelected: value => eventModal.formEndDate = value
+                            }
+
+                            DankTimeField {
+                                width: parent.width
+                                visible: !eventModal.formAllDay
+                                use24Hour: SettingsData.use24HourTime
+                                minutes: eventModal.formEndMinutes
+                                onTimeSelected: value => eventModal.formEndMinutes = value
+                            }
                         }
                     }
                 }
 
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
-                    visible: !eventModal.formAllDay
+                FormRow {
+                    iconName: "place"
 
-                    DankTimeField {
-                        width: (parent.width - dash.width - Theme.spacingM * 2) / 2
-                        use24Hour: SettingsData.use24HourTime
-                        minutes: eventModal.formStartMinutes
-                        onTimeSelected: value => {
-                            const duration = eventModal.formEndMinutes - eventModal.formStartMinutes;
-                            eventModal.formStartMinutes = value;
-                            eventModal.formEndMinutes = value + Math.max(duration, 0);
-                        }
-                    }
-
-                    StyledText {
-                        id: dash
-
-                        text: "–"
-                        color: Theme.surfaceVariantText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    DankTimeField {
-                        width: (parent.width - dash.width - Theme.spacingM * 2) / 2
-                        use24Hour: SettingsData.use24HourTime
-                        minutes: eventModal.formEndMinutes
-                        onTimeSelected: value => eventModal.formEndMinutes = value
+                    DankTextField {
+                        width: parent.width
+                        height: Theme.fieldHeightLarge
+                        outlined: true
+                        labelText: I18n.tr("Location", "event form placeholder for location input")
+                        text: eventModal.formLocation
+                        onTextChanged: eventModal.formLocation = text
                     }
                 }
 
-                DankTextField {
-                    width: parent.width
-                    outlined: true
-                    leftIconName: "place"
-                    labelText: I18n.tr("Location", "event form placeholder for location input")
-                    text: eventModal.formLocation
-                    onTextChanged: eventModal.formLocation = text
-                }
-
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
+                FormRow {
+                    iconName: "calendar_month"
                     visible: !(eventModal.createMode && eventModal.noWritableCalendars)
-
-                    DankIcon {
-                        name: "calendar_month"
-                        size: Theme.iconSizeMedium
-                        color: Theme.surfaceVariantText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
 
                     DankDropdown {
                         readonly property var writable: DankCalService.writableCalendars()
 
-                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
+                        width: parent.width
+                        triggerHeight: Theme.fieldHeightLarge
                         enabled: eventModal.createMode
                         opacity: enabled ? 1 : 0.5
                         options: writable.map(c => c.name)
@@ -1195,20 +1181,12 @@ FloatingWindow {
                     }
                 }
 
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
+                FormRow {
+                    iconName: "calendar_add_on"
                     visible: eventModal.createMode && eventModal.noWritableCalendars
 
-                    DankIcon {
-                        name: "calendar_add_on"
-                        size: Theme.iconSizeMedium
-                        color: Theme.surfaceVariantText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
                     Column {
-                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
+                        width: parent.width
                         spacing: Theme.spacingXS
 
                         StyledText {
@@ -1232,21 +1210,12 @@ FloatingWindow {
                     }
                 }
 
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
+                FormRow {
+                    iconName: "repeat"
                     visible: eventModal.recurrenceEditable
 
-                    DankIcon {
-                        name: "repeat"
-                        size: Theme.iconSizeMedium
-                        color: Theme.surfaceVariantText
-                        anchors.top: parent.top
-                        anchors.topMargin: (Theme.iconButtonSize - Theme.iconSizeMedium) / 2
-                    }
-
                     Column {
-                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
+                        width: parent.width
                         spacing: Theme.spacingXS
 
                         DankRecurrencePicker {
@@ -1274,20 +1243,13 @@ FloatingWindow {
                     }
                 }
 
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
+                FormRow {
+                    iconName: "repeat"
+                    iconHeight: Theme.iconButtonSize
                     visible: !eventModal.recurrenceEditable && eventModal.isOccurrence
 
-                    DankIcon {
-                        name: "repeat"
-                        size: Theme.iconSizeMedium
-                        color: Theme.surfaceVariantText
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
                     Column {
-                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
+                        width: parent.width
                         spacing: 0
 
                         StyledText {
@@ -1310,20 +1272,12 @@ FloatingWindow {
                     }
                 }
 
-                Row {
-                    width: parent.width
-                    spacing: Theme.spacingM
-
-                    DankIcon {
-                        name: "notifications"
-                        size: Theme.iconSizeMedium
-                        color: Theme.surfaceVariantText
-                        anchors.top: parent.top
-                        anchors.topMargin: (Theme.iconButtonSize - Theme.iconSizeMedium) / 2
-                    }
+                FormRow {
+                    iconName: "notifications"
+                    iconHeight: eventModal.formReminders.length > 0 ? Theme.fieldHeightLarge : Theme.buttonHeightXS
 
                     Column {
-                        width: parent.width - (Theme.iconSizeMedium) - Theme.spacingM
+                        width: parent.width
                         spacing: Theme.spacingS
 
                         Repeater {
@@ -1342,6 +1296,7 @@ FloatingWindow {
 
                                 DankDropdown {
                                     width: parent.width - removeButton.width - Theme.spacingS
+                                    triggerHeight: Theme.fieldHeightLarge
                                     options: eventModal.reminderOptions.slice(1).map(o => o.label)
                                     currentValue: eventModal.reminderOptionLabel(reminderRow.modelData)
                                     onValueChanged: value => {
@@ -1376,51 +1331,83 @@ FloatingWindow {
                     }
                 }
 
-                StyledRect {
-                    width: parent.width
-                    height: Theme.textEditHeight
-                    color: Theme.surfaceContainerHigh
-                    radius: Theme.cornerRadiusXS
-                    border.width: descArea.activeFocus ? Theme.outlineWidthFocused : Theme.outlineWidth
-                    border.color: descArea.activeFocus ? Theme.primary : Theme.outlineVariant
+                FormRow {
+                    iconName: "notes"
 
-                    DankFlickable {
-                        anchors.fill: parent
-                        anchors.margins: Theme.spacingS
-                        clip: true
-                        contentWidth: width
+                    StyledRect {
+                        width: parent.width
+                        height: Theme.textEditHeight
+                        color: Theme.surfaceContainerHigh
+                        radius: Theme.cornerRadiusXS
+                        border.width: descArea.activeFocus ? Theme.outlineWidthFocused : Theme.outlineWidth
+                        border.color: descArea.activeFocus ? Theme.primary : Theme.outlineVariant
 
-                        TextArea.flickable: TextArea {
-                            id: descArea
+                        DankFlickable {
+                            anchors.fill: parent
+                            anchors.margins: Theme.spacingS
+                            clip: true
+                            contentWidth: width
 
-                            wrapMode: TextEdit.Wrap
-                            background: null
-                            color: Theme.surfaceText
-                            selectionColor: Theme.primarySelected
-                            selectedTextColor: Theme.surfaceText
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeMedium
-                            text: eventModal.formDescription
-                            onTextChanged: eventModal.formDescription = text
-                            Keys.onTabPressed: nextItemInFocusChain(true).forceActiveFocus()
-                            Keys.onBacktabPressed: nextItemInFocusChain(false).forceActiveFocus()
+                            TextArea.flickable: TextArea {
+                                id: descArea
 
-                            Text {
-                                anchors.fill: parent
-                                anchors.leftMargin: descArea.leftPadding
-                                anchors.topMargin: descArea.topPadding
-                                visible: descArea.length === 0 && descArea.preeditText.length === 0
-                                text: I18n.tr("Add description", "event form placeholder for description text area")
-                                color: Theme.surfaceVariantText
+                                wrapMode: TextEdit.Wrap
+                                background: null
+                                color: Theme.surfaceText
+                                selectionColor: Theme.primarySelected
+                                selectedTextColor: Theme.surfaceText
                                 font.family: Theme.fontFamily
                                 font.pixelSize: Theme.fontSizeMedium
-                                wrapMode: Text.Wrap
+                                text: eventModal.formDescription
+                                onTextChanged: eventModal.formDescription = text
+                                Keys.onTabPressed: nextItemInFocusChain(true).forceActiveFocus()
+                                Keys.onBacktabPressed: nextItemInFocusChain(false).forceActiveFocus()
+
+                                Text {
+                                    anchors.fill: parent
+                                    anchors.leftMargin: descArea.leftPadding
+                                    anchors.topMargin: descArea.topPadding
+                                    visible: descArea.length === 0 && descArea.preeditText.length === 0
+                                    text: I18n.tr("Add description", "event form placeholder for description text area")
+                                    color: Theme.surfaceVariantText
+                                    font.family: Theme.fontFamily
+                                    font.pixelSize: Theme.fontSizeMedium
+                                    wrapMode: Text.Wrap
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    component FormRow: Item {
+        id: formRow
+
+        property string iconName: ""
+        property real iconHeight: Theme.fieldHeightLarge
+        default property alias content: formContent.data
+
+        width: parent.width
+        height: Math.max(iconHeight, formContent.implicitHeight)
+
+        data: [
+            DankIcon {
+                anchors.left: parent.left
+                y: (formRow.iconHeight - height) / 2
+                name: formRow.iconName
+                size: Theme.iconSizeMedium
+                color: Theme.surfaceVariantText
+            },
+            Column {
+                id: formContent
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.iconSizeMedium + Theme.spacingM
+                anchors.right: parent.right
+                spacing: Theme.spacingM
+            }
+        ]
     }
 
     component MetaRow: Item {

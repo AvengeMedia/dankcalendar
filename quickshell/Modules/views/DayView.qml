@@ -38,9 +38,10 @@ Item {
             dayFlickable.contentY = Math.max(0, Math.min(dayFlickable.contentHeight - dayFlickable.height, bottom - dayFlickable.height + hourHeight / 2));
     }
 
-    readonly property int startHour: SettingsData.effectiveHourStart
-    readonly property int endHour: SettingsData.effectiveHourEnd
-    readonly property int hourCount: endHour - startHour
+    readonly property real startHour: SettingsData.effectiveHourStart
+    readonly property real endHour: SettingsData.effectiveHourEnd
+    readonly property real hourCount: endHour - startHour
+    readonly property var hourTicks: EventUtils.hourTicks(startHour, endHour)
     readonly property real hourHeight: 56
     readonly property real timeColumnWidth: 72
 
@@ -81,6 +82,10 @@ Item {
     }
 
     function hourLabel(hour) {
+        if (hour === 24)
+            return SettingsData.use24HourTime ? "24:00" : SettingsData.formatTime(new Date(2000, 0, 2));
+        if (hour % 1 !== 0)
+            return SettingsData.formatTime(new Date(2000, 0, 1, 0, Math.round(hour * 60)));
         if (hour === 0)
             return "";
         if (SettingsData.use24HourTime)
@@ -280,14 +285,16 @@ Item {
                 height: parent.height
 
                 Repeater {
-                    model: root.hourCount + 1
+                    model: root.hourTicks.length
 
                     StyledText {
                         required property int index
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.spacingS
-                        y: Math.max(0, index * root.hourHeight - 6)
-                        text: root.hourLabel(root.startHour + index)
+                        readonly property real tickY: (root.hourTicks[index] - root.startHour) * root.hourHeight
+                        visible: index === 0 || (tickY >= height + Theme.spacingXS && (index === root.hourTicks.length - 1 || parent.height - tickY >= height + Theme.spacingXS))
+                        y: Math.max(0, Math.min(parent.height - height, tickY - height / 2))
+                        text: root.hourLabel(root.hourTicks[index])
                         font.pixelSize: 11
                         color: Theme.surfaceVariantText
                         isMonospace: true
@@ -301,11 +308,11 @@ Item {
                 height: parent.height
 
                 Repeater {
-                    model: root.hourCount + 1
+                    model: root.hourTicks.length
 
                     Rectangle {
                         required property int index
-                        y: index * root.hourHeight
+                        y: (root.hourTicks[index] - root.startHour) * root.hourHeight
                         width: parent.width
                         height: 1
                         color: Theme.gridLine

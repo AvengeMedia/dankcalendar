@@ -81,7 +81,7 @@ Item {
         if (gridY < 0 || gridY >= timedGrid.height)
             return;
         const snapped = Math.round((gridY / hourHeight * 60 - dragPointerMinutes) / slotMinutes) * slotMinutes;
-        const maxTop = hourCount * 60 - slotMinutes;
+        const maxTop = Math.max(0, Math.round(hourCount * 60) - slotMinutes);
         dragMinuteOffset = Math.max(-dragBlockMinutes, Math.min(maxTop - dragBlockMinutes, snapped));
         dragOnGrid = true;
     }
@@ -116,9 +116,10 @@ Item {
             weekFlickable.contentY = Math.max(0, Math.min(weekFlickable.contentHeight - weekFlickable.height, bottom - weekFlickable.height + hourHeight / 2));
     }
 
-    readonly property int startHour: SettingsData.effectiveHourStart
-    readonly property int endHour: SettingsData.effectiveHourEnd
-    readonly property int hourCount: endHour - startHour
+    readonly property real startHour: SettingsData.effectiveHourStart
+    readonly property real endHour: SettingsData.effectiveHourEnd
+    readonly property real hourCount: endHour - startHour
+    readonly property var hourTicks: EventUtils.hourTicks(startHour, endHour)
     readonly property real hourHeight: 48
     readonly property real timeColumnWidth: 60
     readonly property real allDayChipHeight: Math.max(18, SettingsData.weekEventTitleLines * 13 + 4)
@@ -193,6 +194,10 @@ Item {
     }
 
     function hourLabel(hour) {
+        if (hour === 24)
+            return SettingsData.use24HourTime ? "24:00" : SettingsData.formatTime(new Date(2000, 0, 2));
+        if (hour % 1 !== 0)
+            return SettingsData.formatTime(new Date(2000, 0, 1, 0, Math.round(hour * 60)));
         if (hour === 0)
             return "";
         if (SettingsData.use24HourTime)
@@ -627,14 +632,16 @@ Item {
                     height: parent.height
 
                     Repeater {
-                        model: root.hourCount + 1
+                        model: root.hourTicks.length
 
                         StyledText {
                             required property int index
                             anchors.right: parent.right
                             anchors.rightMargin: Theme.spacingS
-                            y: Math.max(0, index * root.hourHeight - 6)
-                            text: root.hourLabel(root.startHour + index)
+                            readonly property real tickY: (root.hourTicks[index] - root.startHour) * root.hourHeight
+                            visible: index === 0 || (tickY >= height + Theme.spacingXS && (index === root.hourTicks.length - 1 || parent.height - tickY >= height + Theme.spacingXS))
+                            y: Math.max(0, Math.min(parent.height - height, tickY - height / 2))
+                            text: root.hourLabel(root.hourTicks[index])
                             font.pixelSize: 11
                             color: Theme.surfaceVariantText
                             isMonospace: true
@@ -642,37 +649,22 @@ Item {
                     }
                 }
 
-                Column {
+                Item {
                     anchors.right: parent.right
                     width: parent.width - root.timeColumnWidth
-                    spacing: 0
+                    height: parent.height
 
                     Repeater {
-                        model: root.hourCount
+                        model: root.hourTicks.length
 
                         Rectangle {
+                            required property int index
+                            y: (root.hourTicks[index] - root.startHour) * root.hourHeight
                             width: parent.width
-                            height: root.hourHeight
-                            color: "transparent"
-                            border.color: Theme.outlineLight
-                            border.width: 0
-
-                            Rectangle {
-                                anchors.top: parent.top
-                                width: parent.width
-                                height: 1
-                                color: Theme.gridLine
-                            }
+                            height: 1
+                            color: Theme.gridLine
                         }
                     }
-                }
-
-                Rectangle {
-                    anchors.right: parent.right
-                    width: parent.width - root.timeColumnWidth
-                    y: root.hourCount * root.hourHeight
-                    height: 1
-                    color: Theme.gridLine
                 }
 
                 Item {

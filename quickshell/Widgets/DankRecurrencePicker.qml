@@ -246,6 +246,7 @@ Column {
 
     DankDropdown {
         width: parent.width
+        triggerHeight: Theme.fieldHeightLarge
         options: root.presetOptions.map(o => o.label)
         currentValue: root._optionLabel(root.presetOptions, root.mode)
         onValueChanged: value => {

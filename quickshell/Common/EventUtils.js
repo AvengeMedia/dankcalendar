@@ -12,8 +12,14 @@ function startOfDay(value) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
-// Events with no DTEND/DURATION have zero length (RFC 5545 3.6.1) and still
-// need a slot; clipping alone would drop them.
+function hourTicks(startHour, endHour) {
+    const ticks = [startHour]
+    for (let hour = Math.floor(startHour) + 1; hour < endHour; hour++)
+        ticks.push(hour)
+    ticks.push(endHour)
+    return ticks
+}
+
 function timedSlot(event, day, startHour, endHour) {
     const dayStart = startOfDay(day).getTime()
     const lo = dayStart + startHour * 3600000
@@ -27,7 +33,7 @@ function timedSlot(event, day, startHour, endHour) {
         return null
     return {
         "startHour": (s - dayStart) / 3600000 - startHour,
-        "durationHours": Math.max((e - s) / 3600000, 0.5)
+        "durationHours": Math.min(Math.max((e - s) / 3600000, 0.5), (hi - s) / 3600000)
     }
 }
 

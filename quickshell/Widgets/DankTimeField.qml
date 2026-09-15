@@ -9,6 +9,9 @@ Item {
 
     property int minutes: 600
     property bool use24Hour: false
+    property bool endOfDay: false
+    property int minimumMinutes: 0
+    property int maximumMinutes: 1439
     property string iconName: "schedule"
 
     signal timeSelected(int value)
@@ -19,12 +22,14 @@ Item {
         _commit();
         pickerLoader.active = true;
         const picker = pickerLoader.item;
-        picker.hour = Math.floor(minutes / 60);
+        picker.hour = Math.floor(minutes / 60) % 24;
         picker.minute = minutes % 60;
         picker.open();
     }
 
     function formatMinutes(value) {
+        if (endOfDay && use24Hour && value === 1440)
+            return "24:00";
         const d = new Date(2000, 0, 1, Math.floor(value / 60), value % 60);
         return d.toLocaleTimeString(SettingsData.locale, use24Hour ? "HH:mm" : "h:mm AP");
     }
@@ -59,6 +64,8 @@ Item {
             if (suffix.charAt(0) === "a" && hours === 12)
                 hours = 0;
         }
+        if (endOfDay && hours === 24 && mins === 0 && suffix === "")
+            return 1440;
         if (hours > 23)
             return -1;
         return hours * 60 + mins;
@@ -70,8 +77,18 @@ Item {
 
     function _commit() {
         const parsed = parseTime(input.text);
-        if (parsed >= 0 && parsed !== minutes)
-            timeSelected(parsed);
+        if (parsed < 0) {
+            _syncText();
+            return;
+        }
+        selectTime(parsed);
+    }
+
+    function selectTime(value) {
+        const normalized = endOfDay && value === 0 ? 1440 : value;
+        const bounded = Math.max(minimumMinutes, Math.min(maximumMinutes, normalized));
+        if (bounded !== minutes)
+            timeSelected(bounded);
         _syncText();
     }
 
@@ -80,9 +97,18 @@ Item {
             _syncText();
     }
     onUse24HourChanged: _syncText()
+    onEndOfDayChanged: _syncText()
     Component.onCompleted: _syncText()
 
     height: Theme.fieldHeightLarge
+    implicitWidth: timeMetrics.width + Theme.spacingM + Theme.spacingXS * 2 + pickerButton.width
+
+    TextMetrics {
+        id: timeMetrics
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSizeMedium
+        text: root.formatMinutes(0)
+    }
 
     Rectangle {
         id: field
@@ -183,8 +209,7 @@ Item {
                 focus: true
                 is24Hour: root.use24Hour
                 onAccepted: (hour, minute) => {
-                    root.timeSelected(hour * 60 + minute);
-                    root._syncText();
+                    root.selectTime(hour * 60 + minute);
                     pickerPopup.close();
                 }
                 onRejected: pickerPopup.close()
