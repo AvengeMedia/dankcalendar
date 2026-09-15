@@ -92,6 +92,11 @@ This installs:
 
 Override the prefix with `PREFIX=/usr sudo make install`.
 
+Release archives for Linux and FreeBSD include the same desktop integration.
+After extracting the platform tarball, install its binary and file associations
+with `sudo sh scripts/install-release.sh ./dcal-<os>-<arch>`. Set `PREFIX` to
+install somewhere other than `/usr/local`.
+
 At launch the embedded UI is unpacked read-only into the session runtime dir
 (`$XDG_RUNTIME_DIR/dankcal-shell/`, tmpfs) and verified against the binary on
 every start, so editing the unpacked files has no effect. To run a modified

@@ -14,6 +14,11 @@ Installation updates the desktop database; choosing Dank Calendar as the default
 handler remains a desktop preference. Flatpak exports the same desktop entry and
 forwards selected files through its document portal.
 
+Linux and FreeBSD source installs use `make install`. Their release tarballs ship
+`scripts/install-release.sh`, which installs the binary and the same desktop entry,
+icon, and AppStream metadata. Nix and Flatpak packages install the desktop entry
+as part of their normal package output.
+
 ## Event imports
 
 A normal file opens a preview with a destination calendar picker. Only writable

@@ -64,6 +64,7 @@ pkgs.testers.runNixOSTest {
     machine.succeed("su -- danklinux -c 'command -v dcal'")
     machine.succeed("su -- danklinux -c 'test -f ~/.config/systemd/user/dcal.service'")
     machine.succeed("su -- danklinux -c 'test -L ~/.config/systemd/user/default.target.wants/dcal.service'")
+    machine.succeed("su -- danklinux -c 'test -f ~/.nix-profile/share/applications/com.danklinux.dankcalendar.desktop'")
 
     machine.succeed("su -- danklinux -c 'test -f ~/.config/dankcal/ui-settings.json'")
     settings = json.loads(machine.succeed("su -- danklinux -c 'cat ~/.config/dankcal/ui-settings.json'"))
