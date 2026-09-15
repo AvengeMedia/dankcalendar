@@ -58,7 +58,7 @@
             pname = "dankcalendar";
             src = ./.;
             modRoot = "core";
-            vendorHash = "sha256-YXxsxbmFF64c8690DvLrIipUGIF2/OK5kXDXGAjr1hw=";
+            vendorHash = "sha256-j4x96NF/0NyT61CRbsw+nvjubkZz1kAGPj+5wU6cHuw=";
 
             subPackages = [ "cmd/dcal" ];
 
@@ -94,6 +94,8 @@
             postInstall = ''
               install -Dm644 ${./assets/com.danklinux.dankcalendar.desktop} \
                 $out/share/applications/com.danklinux.dankcalendar.desktop
+              substituteInPlace $out/share/applications/com.danklinux.dankcalendar.desktop \
+                --replace-fail 'Exec=dcal ' 'Exec='$out'/bin/dcal '
               install -Dm644 ${./assets/com.danklinux.dankcalendar.svg} \
                 $out/share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg
 
