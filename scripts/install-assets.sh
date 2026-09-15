@@ -5,6 +5,7 @@ set -eu
 asset_dir=$(CDPATH= cd -- "$(dirname -- "$0")/../assets" && pwd)
 desktop_id=com.danklinux.dankcalendar
 prefix=${PREFIX:-/usr/local}
+dcal_exec=${DCAL_EXEC:-$prefix/bin/dcal}
 staging=${DESTDIR:-}
 data_dir=${DATA_DIR:-$prefix/share}
 applications_dir=${APPLICATIONS_DIR:-$data_dir/applications}
@@ -22,7 +23,7 @@ install_desktop() {
         exit 1
     fi
     mkdir -p "$staging$applications_dir"
-    sed "s|^Exec=dcal |Exec=$prefix/bin/dcal |" \
+    sed "s|^Exec=dcal |Exec=$dcal_exec |" \
         "$asset_dir/$desktop_id.desktop" > "$staging$applications_dir/$desktop_id.desktop"
     chmod 644 "$staging$applications_dir/$desktop_id.desktop"
     if [ -z "$staging" ]; then

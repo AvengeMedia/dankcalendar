@@ -70,7 +70,8 @@ def main():
         (build / "metadata").write_text(
             "[Application]\nname=com.danklinux.dankcalendar\n"
             "runtime=org.kde.Platform/x86_64/6.11\nsdk=org.kde.Sdk/x86_64/6.11\ncommand=dcal\n")
-        run("sh", "scripts/install-assets.sh", env=dict(env, PREFIX="", DATA_DIR="/share", DESTDIR=str(build / "files")))
+        run("sh", "scripts/install-assets.sh", env=dict(
+            env, PREFIX="", DATA_DIR="/share", DESTDIR=str(build / "files"), DCAL_EXEC="dcal"))
         run("flatpak", "build-finish", str(build), "--command=dcal", env=env)
         repository = root / "flatpak-repo"
         run("flatpak", "build-export", "--disable-sandbox", str(repository), str(build), env=env)

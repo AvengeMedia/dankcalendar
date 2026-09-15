@@ -24,6 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Install desktop test tools
-        run: sudo apt-get update && sudo apt-get install -y desktop-file-utils shared-mime-info libglib2.0-bin xdg-utils flatpak
+        run: sudo apt-get update && sudo apt-get install -y desktop-file-utils shared-mime-info libglib2.0-bin librsvg2-common xdg-utils flatpak
       - name: Check desktop installation and file opening
         run: python3 scripts/test-desktop-install.py
