@@ -92,6 +92,11 @@ This installs:
 
 Override the prefix with `PREFIX=/usr sudo make install`.
 
+Release archives for Linux and FreeBSD include the same desktop integration.
+After extracting the platform tarball, install its binary and file associations
+with `sudo sh scripts/install-release.sh ./dcal-<os>-<arch>`. Set `PREFIX` to
+install somewhere other than `/usr/local`.
+
 At launch the embedded UI is unpacked read-only into the session runtime dir
 (`$XDG_RUNTIME_DIR/dankcal-shell/`, tmpfs) and verified against the binary on
 every start, so editing the unpacked files has no effect. To run a modified
@@ -185,6 +190,16 @@ dcal open invite.ics                          # preview in the import dialog
 dcal events import invite.ics --calendar <id> # import from the terminal
 dcal events rsvp <event-id> accept            # reply to an imported invitation
 ```
+
+## Calendar files
+
+Open `.ics` and `.vcs` files with Dank Calendar, or run
+`dcal open invitation.ics appointment.vcs`. Event files show a destination calendar
+picker and a preview of overlapping events before import. Subscription links and
+files carrying a refreshable calendar source open subscription setup instead.
+
+See [calendar file imports](docs/calendar-file-import.md) for supported formats,
+conflict-preview behavior, and legacy compatibility.
 
 ## IPC
 

@@ -31,5 +31,7 @@ pkgs.testers.runNixOSTest {
     machine.succeed("command -v qs")
     machine.succeed("su -- danklinux -c 'dcal --help >/dev/null'")
     machine.succeed("test -f /run/current-system/sw/share/systemd/user/dcal.service")
+    machine.succeed("test -f /run/current-system/sw/share/applications/com.danklinux.dankcalendar.desktop")
+    machine.succeed("grep -q 'text/calendar;text/x-vcalendar;application/ics;' /run/current-system/sw/share/applications/com.danklinux.dankcalendar.desktop")
   '';
 }
