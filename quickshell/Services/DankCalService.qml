@@ -55,6 +55,7 @@ Singleton {
     signal microsoftFlowFailed(string state, string error)
     signal accountAdded(string accountId)
     signal accountRemoved(string accountId)
+    signal addAccountRequested
     signal eventsUpdated
     signal tasksUpdated
     signal windowActionRequested(string action, string view)
@@ -1430,6 +1431,13 @@ Singleton {
         }, callback);
     }
 
+    function offerAccountReAdd(msg) {
+        ToastService.show(msg, {
+            "actionLabel": I18n.tr("Add account", "toast action to re-add an account that failed to reconnect"),
+            "action": () => addAccountRequested()
+        });
+    }
+
     function reconnectAccount(acc, callback) {
         if (!acc)
             return;
@@ -1447,6 +1455,7 @@ Singleton {
             break;
         default:
             lastError = I18n.tr("This account cannot be reconnected — remove it and add it again.", "error when reconnect is unavailable for a provider");
+            offerAccountReAdd(lastError);
             if (callback)
                 callback({
                     "error": lastError
@@ -1454,11 +1463,13 @@ Singleton {
             return;
         }
 
+        const reconnectFailed = I18n.tr("Couldn't reconnect. Add the account again to sign in.", "toast when reconnecting an account fails");
         sendRequest(startMethod, {
             "accountId": acc.id
         }, response => {
             if (response.error) {
                 lastError = response.error;
+                offerAccountReAdd(reconnectFailed);
                 if (callback)
                     callback(response);
                 return;
@@ -1468,10 +1479,12 @@ Singleton {
             sendRequest(completeMethod, {
                 "state": result.state
             }, done => {
-                if (done.error)
+                if (done.error) {
                     lastError = done.error;
-                else
+                    offerAccountReAdd(reconnectFailed);
+                } else {
                     refreshAccounts();
+                }
                 if (callback)
                     callback(done);
             });

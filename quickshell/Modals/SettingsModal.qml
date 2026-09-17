@@ -132,4 +132,9 @@ FloatingWindow {
         id: windowControls
         targetWindow: settingsModal
     }
+
+    Toast {
+        anchors.fill: parent
+        z: 102
+    }
 }

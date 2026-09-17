@@ -91,6 +91,9 @@ FloatingWindow {
         function onEventsUpdated() {
             window.eventsVersion++;
         }
+        function onAddAccountRequested() {
+            window.openAddAccount();
+        }
     }
 
     function shiftDisplayDate(direction) {
