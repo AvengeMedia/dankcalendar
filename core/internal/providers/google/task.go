@@ -105,10 +105,9 @@ func (p *Provider) DeleteTask(ctx context.Context, c cal.Calendar, t cal.Task) e
 	if t.RemoteID == "" {
 		return errors.New("delete google task: missing remote id")
 	}
-	if err := p.quotaGate().wait(ctx, 1); err != nil {
-		return err
-	}
-	err := p.tasksSvc.Tasks.Delete(taskListID(c.RemoteID), t.RemoteID).Context(ctx).Do()
+	_, err := googleCall(ctx, p, false, func() (*struct{}, error) {
+		return nil, p.tasksSvc.Tasks.Delete(taskListID(c.RemoteID), t.RemoteID).Context(ctx).Do()
+	})
 	if err == nil {
 		return nil
 	}

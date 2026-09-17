@@ -31,6 +31,8 @@ type Provider struct {
 	notices   []string
 	quotaOnce sync.Once
 	quota     *quotaGate
+	retryMu   sync.Mutex
+	retryWait time.Duration
 }
 
 func (p *Provider) Notices() []string { return p.notices }
@@ -69,7 +71,7 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 
 	switch {
 	case calErr != nil && taskErr != nil:
-		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(calErr))
+		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(errors.Join(calErr, taskErr)))
 	case calErr != nil && isServiceDisabled(calErr):
 		p.notices = append(p.notices, cal.NoticeCalendarsUnavailable)
 		log.Warnf("account %s: Google Calendar API disabled, syncing tasks only: %v", p.account.ID, calErr)
@@ -352,10 +354,9 @@ func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event
 		return errors.New("delete google event: missing remote id")
 	}
 
-	if err := p.quotaGate().wait(ctx, 1); err != nil {
-		return err
-	}
-	err := p.svc.Events.Delete(c.RemoteID, ev.RemoteID).Context(ctx).Do()
+	_, err := googleCall(ctx, p, false, func() (*struct{}, error) {
+		return nil, p.svc.Events.Delete(c.RemoteID, ev.RemoteID).Context(ctx).Do()
+	})
 	if err == nil {
 		return nil
 	}
