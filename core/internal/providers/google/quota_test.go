@@ -3,17 +3,17 @@ package google
 import (
 	"context"
 	"errors"
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"google.golang.org/api/calendar/v3"
-	"google.golang.org/api/option"
-	gtasks "google.golang.org/api/tasks/v1"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 	"time"
 
+	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/stretchr/testify/require"
+	"google.golang.org/api/calendar/v3"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/option"
+	gtasks "google.golang.org/api/tasks/v1"
 )
 
 func fakeQuota() (*quotaGate, *[]time.Duration) {
@@ -35,22 +35,15 @@ func TestQuotaPacesByCostAndHonorsCooldown(t *testing.T) {
 	q, sleeps := fakeQuota()
 	ctx := context.Background()
 	for _, cost := range []int{4, 2, 1} {
-		if err := q.wait(ctx, cost, nil); err != nil {
-			t.Fatal(err)
-		}
+		require.NoError(t, q.wait(ctx, cost, nil))
 	}
-	if !reflect.DeepEqual(*sleeps, []time.Duration{time.Second, time.Second / 2}) {
-		t.Fatalf("waits %v", *sleeps)
-	}
+	require.Equal(t, []time.Duration{time.Second, time.Second / 2}, *sleeps)
 	q.cooldown(time.Minute, nil)
 	q.cooldown(time.Second, nil)
 	var deferred *deferredRetry
-	if err := q.wait(ctx, 1, nil); !errors.As(err, &deferred) || deferred.RetryAfter() != time.Minute {
-		t.Fatalf("long cooldown was not deferred: %v", err)
-	}
-	if len(*sleeps) != 2 {
-		t.Fatal("long cooldown slept inline")
-	}
+	require.ErrorAs(t, q.wait(ctx, 1, nil), &deferred)
+	require.Equal(t, time.Minute, deferred.RetryAfter())
+	require.Len(t, *sleeps, 2, "long cooldown slept inline")
 }
 
 func TestReadRetryDelay(t *testing.T) {
@@ -75,14 +68,12 @@ func TestReadRetryDelay(t *testing.T) {
 	for _, tt := range cases {
 		t.Run(tt.name, func(t *testing.T) {
 			d, retry := readRetryDelay(tt.err, 0, now)
-			if d != tt.want || retry != tt.retry {
-				t.Fatalf("got %v,%v", d, retry)
-			}
+			require.Equal(t, tt.want, d)
+			require.Equal(t, tt.retry, retry)
 		})
 	}
-	if d, _ := readRetryDelay(&googleapi.Error{Code: 429}, 4, now); d != 16*time.Second {
-		t.Fatalf("backoff %v", d)
-	}
+	d, _ := readRetryDelay(&googleapi.Error{Code: 429}, 4, now)
+	require.Equal(t, 16*time.Second, d)
 }
 
 func TestReadRetriesAreBoundedAndCancellable(t *testing.T) {
@@ -90,17 +81,16 @@ func TestReadRetriesAreBoundedAndCancellable(t *testing.T) {
 	r := &Provider{quota: q}
 	calls := 0
 	_, err := googleCall(context.Background(), r, true, func() (*int, error) { calls++; return nil, &googleapi.Error{Code: 429} })
-	if err == nil || calls < 2 || calls > 3 {
-		t.Fatalf("calls=%d err=%v", calls, err)
-	}
+	require.Error(t, err)
+	require.GreaterOrEqual(t, calls, 2)
+	require.LessOrEqual(t, calls, 3)
 	ctx, cancel := context.WithCancel(context.Background())
 	calls = 0
 	q, _ = fakeQuota()
 	r = &Provider{quota: q}
 	_, err = googleCall(ctx, r, true, func() (*int, error) { calls++; cancel(); return nil, &googleapi.Error{Code: 429} })
-	if !errors.Is(err, context.Canceled) || calls != 1 {
-		t.Fatalf("calls=%d err=%v", calls, err)
-	}
+	require.ErrorIs(t, err, context.Canceled)
+	require.Equal(t, 1, calls)
 }
 
 func TestSyncPagesRetriesOnlyFailedPage(t *testing.T) {
@@ -126,36 +116,23 @@ func TestSyncPagesRetriesOnlyFailedPage(t *testing.T) {
 			}))
 			defer server.Close()
 			svc, err := calendar.NewService(context.Background(), option.WithHTTPClient(server.Client()), option.WithEndpoint(server.URL+"/"))
-			if err != nil {
-				t.Fatal(err)
-			}
+			require.NoError(t, err)
 			ts, err := gtasks.NewService(context.Background(), option.WithHTTPClient(server.Client()), option.WithEndpoint(server.URL+"/"))
-			if err != nil {
-				t.Fatal(err)
-			}
+			require.NoError(t, err)
 			q, _ := fakeQuota()
 			p := &Provider{svc: svc, tasksSvc: ts, quota: q}
 			c := cal.Calendar{RemoteID: "test"}
 			if tasks {
 				result, err := p.syncTasks(context.Background(), c)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if len(result.TaskChanges) != 2 {
-					t.Fatalf("changes %d", len(result.TaskChanges))
-				}
+				require.NoError(t, err)
+				require.Len(t, result.TaskChanges, 2)
 			} else {
 				changes, cursor, err := p.syncPages(context.Background(), c, "old")
-				if err != nil {
-					t.Fatal(err)
-				}
-				if len(changes) != 2 || cursor != "new" {
-					t.Fatalf("changes=%d cursor=%s", len(changes), cursor)
-				}
+				require.NoError(t, err)
+				require.Len(t, changes, 2)
+				require.Equal(t, "new", cursor)
 			}
-			if !reflect.DeepEqual(pages, []string{"", "second", "second"}) {
-				t.Fatalf("pages %v", pages)
-			}
+			require.Equal(t, []string{"", "second", "second"}, pages)
 		})
 	}
 }
@@ -165,9 +142,8 @@ func TestMutationIsNeverRetried(t *testing.T) {
 	p := &Provider{quota: q}
 	calls := 0
 	_, err := googleCall(context.Background(), p, false, func() (*int, error) { calls++; return nil, &googleapi.Error{Code: 429} })
-	if err == nil || calls != 1 {
-		t.Fatalf("calls=%d err=%v", calls, err)
-	}
+	require.Error(t, err)
+	require.Equal(t, 1, calls)
 }
 
 type fixtureSecrets struct{}
@@ -189,48 +165,32 @@ func TestFactoryRebuildSharesBudgetAndLongCooldown(t *testing.T) {
 	t.Cleanup(func() { accountQuotas.Delete(id) })
 	build := func(id string) *Provider {
 		provider, err := (Factory{}).Build(ctx, cal.Account{ID: id, Kind: cal.AccountGoogle}, fixtureSecrets{})
-		if err != nil {
-			t.Fatal(err)
-		}
+		require.NoError(t, err)
 		return provider.(*Provider)
 	}
 	first := build(id)
-	if err := first.waitQuota(ctx); err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, first.waitQuota(ctx))
 	_ = first.Close()
 	second := build(id)
-	if second.quotaGate() != first.quotaGate() {
-		t.Fatal("rebuilt provider lost account gate")
-	}
-	if err := second.waitQuota(ctx); err != nil {
-		t.Fatal(err)
-	}
-	if len(*sleeps) != 1 || (*sleeps)[0] != time.Second/4 {
-		t.Fatalf("pacing not shared: %v", *sleeps)
-	}
+	require.Same(t, first.quotaGate(), second.quotaGate(), "rebuilt provider lost account gate")
+	require.NoError(t, second.waitQuota(ctx))
+	require.Equal(t, []time.Duration{time.Second / 4}, *sleeps, "pacing not shared")
 	calls := 0
 	_, err := googleCall(ctx, second, true, func() (*int, error) {
 		calls++
 		return nil, &googleapi.Error{Code: 429, Header: http.Header{"Retry-After": []string{"3600"}}}
 	})
 	var deferred *deferredRetry
-	if !errors.As(err, &deferred) || deferred.RetryAfter() < time.Hour || calls != 1 {
-		t.Fatalf("not deferred: calls=%d err=%v", calls, err)
-	}
+	require.ErrorAs(t, err, &deferred)
+	require.GreaterOrEqual(t, deferred.RetryAfter(), time.Hour)
+	require.Equal(t, 1, calls)
 	before := len(*sleeps)
 	third := build(id)
-	if err := third.waitQuota(ctx); !errors.As(err, &deferred) {
-		t.Fatalf("cooldown lost: %v", err)
-	}
-	if len(*sleeps) != before {
-		t.Fatal("rebuilt provider slept for long cooldown")
-	}
+	require.ErrorAs(t, third.waitQuota(ctx), &deferred, "cooldown lost")
+	require.Len(t, *sleeps, before, "rebuilt provider slept for long cooldown")
 	otherID := id + "-other"
 	t.Cleanup(func() { accountQuotas.Delete(otherID) })
-	if err := build(otherID).waitQuota(ctx); err != nil {
-		t.Fatalf("other account blocked: %v", err)
-	}
+	require.NoError(t, build(otherID).waitQuota(ctx), "other account blocked")
 }
 
 func TestRetryWaitBudgetSpansPages(t *testing.T) {
@@ -249,20 +209,12 @@ func TestRetryWaitBudgetSpansPages(t *testing.T) {
 		})
 		if err != nil {
 			var d *deferredRetry
-			if !errors.As(err, &d) {
-				t.Fatal(err)
-			}
+			require.ErrorAs(t, err, &d)
 			deferred = true
 			break
 		}
 	}
-	if !deferred {
-		t.Fatal("retry budget reset across pages")
-	}
-	if p.retryWait > maxInlineRetryWait {
-		t.Fatalf("retry wait %v", p.retryWait)
-	}
-	if len(*sleeps) == 0 {
-		t.Fatal("short retry was not exercised")
-	}
+	require.True(t, deferred, "retry budget reset across pages")
+	require.LessOrEqual(t, p.retryWait, maxInlineRetryWait)
+	require.NotEmpty(t, *sleeps, "short retry was not exercised")
 }
