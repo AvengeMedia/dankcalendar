@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"golang.org/x/oauth2"
@@ -24,10 +25,14 @@ import (
 const maxPageSize = 2500
 
 type Provider struct {
-	account  cal.Account
-	svc      *calendar.Service
-	tasksSvc *gtasks.Service
-	notices  []string
+	account   cal.Account
+	svc       *calendar.Service
+	tasksSvc  *gtasks.Service
+	notices   []string
+	quotaOnce sync.Once
+	quota     *quotaGate
+	retryMu   sync.Mutex
+	retryWait time.Duration
 }
 
 func (p *Provider) Notices() []string { return p.notices }
@@ -66,7 +71,7 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 
 	switch {
 	case calErr != nil && taskErr != nil:
-		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(calErr))
+		return nil, fmt.Errorf("list google calendars: %w", classifyAuthErr(errors.Join(calErr, taskErr)))
 	case calErr != nil && isServiceDisabled(calErr):
 		p.notices = append(p.notices, cal.NoticeCalendarsUnavailable)
 		log.Warnf("account %s: Google Calendar API disabled, syncing tasks only: %v", p.account.ID, calErr)
@@ -85,7 +90,7 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 }
 
 func (p *Provider) listEventCalendars(ctx context.Context) ([]cal.Calendar, error) {
-	res, err := p.svc.CalendarList.List().Context(ctx).Do()
+	res, err := googleCall(ctx, p, true, func() (*calendar.CalendarList, error) { return p.svc.CalendarList.List().Context(ctx).Do() })
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +194,7 @@ func (p *Provider) syncPages(ctx context.Context, c cal.Calendar, syncToken stri
 			call = call.PageToken(pageToken)
 		}
 
-		res, err := call.Do()
+		res, err := googleCall(ctx, p, true, func() (*calendar.Events, error) { return call.Do() })
 		if err != nil {
 			return nil, "", fmt.Errorf("sync google events: %w", err)
 		}
@@ -235,7 +240,7 @@ func (p *Provider) ListEvents(ctx context.Context, c cal.Calendar, opts cal.List
 		call = call.Q(opts.Query)
 	}
 
-	res, err := call.Do()
+	res, err := googleCall(ctx, p, true, func() (*calendar.Events, error) { return call.Do() })
 	if err != nil {
 		return nil, fmt.Errorf("list google events: %w", err)
 	}
@@ -248,7 +253,9 @@ func (p *Provider) ListEvents(ctx context.Context, c cal.Calendar, opts cal.List
 }
 
 func (p *Provider) CreateEvent(ctx context.Context, c cal.Calendar, ev *cal.Event) (*cal.Event, error) {
-	created, err := p.svc.Events.Insert(c.RemoteID, toGoogleEvent(ev)).Context(ctx).Do()
+	created, err := googleCall(ctx, p, false, func() (*calendar.Event, error) {
+		return p.svc.Events.Insert(c.RemoteID, toGoogleEvent(ev)).Context(ctx).Do()
+	})
 	if err != nil {
 		return nil, fmt.Errorf("create google event: %w", err)
 	}
@@ -261,7 +268,7 @@ func (p *Provider) ImportEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 	if ev.Organizer != nil {
 		item.Organizer = &calendar.EventOrganizer{Email: ev.Organizer.Email, DisplayName: ev.Organizer.DisplayName}
 	}
-	imported, err := p.svc.Events.Import(c.RemoteID, item).Context(ctx).Do()
+	imported, err := googleCall(ctx, p, false, func() (*calendar.Event, error) { return p.svc.Events.Import(c.RemoteID, item).Context(ctx).Do() })
 	if err != nil {
 		return nil, fmt.Errorf("import google event: %w", err)
 	}
@@ -273,7 +280,9 @@ func (p *Provider) UpdateEvent(ctx context.Context, c cal.Calendar, ev *cal.Even
 		return nil, errors.New("update google event: missing remote id")
 	}
 
-	updated, err := p.svc.Events.Update(c.RemoteID, ev.RemoteID, toGoogleEvent(ev)).Context(ctx).Do()
+	updated, err := googleCall(ctx, p, false, func() (*calendar.Event, error) {
+		return p.svc.Events.Update(c.RemoteID, ev.RemoteID, toGoogleEvent(ev)).Context(ctx).Do()
+	})
 	if err != nil {
 		return nil, fmt.Errorf("update google event: %w", err)
 	}
@@ -309,7 +318,9 @@ func (p *Provider) RespondToEvent(ctx context.Context, c cal.Calendar, ev *cal.E
 		remoteID = googleInstanceID(ev.RemoteID, ev.OriginalStart, ev.AllDay)
 	}
 
-	updated, err := p.svc.Events.Patch(c.RemoteID, remoteID, &calendar.Event{Attendees: attendees}).Context(ctx).Do()
+	updated, err := googleCall(ctx, p, false, func() (*calendar.Event, error) {
+		return p.svc.Events.Patch(c.RemoteID, remoteID, &calendar.Event{Attendees: attendees}).Context(ctx).Do()
+	})
 	if err != nil {
 		return nil, fmt.Errorf("respond google event: %w", err)
 	}
@@ -343,7 +354,9 @@ func (p *Provider) DeleteEvent(ctx context.Context, c cal.Calendar, ev cal.Event
 		return errors.New("delete google event: missing remote id")
 	}
 
-	err := p.svc.Events.Delete(c.RemoteID, ev.RemoteID).Context(ctx).Do()
+	_, err := googleCall(ctx, p, false, func() (*struct{}, error) {
+		return nil, p.svc.Events.Delete(c.RemoteID, ev.RemoteID).Context(ctx).Do()
+	})
 	if err == nil {
 		return nil
 	}
