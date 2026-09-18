@@ -10,6 +10,7 @@ import "StockTheme.js" as StockTheme
 import "../DankCommon/Common/Shape.js" as Shape
 import "../DankCommon/Common/Surface.js" as Surface
 import "../DankCommon/Common/Contrast.js" as Contrast
+import "../DankCommon/Common/Accents.js" as Accents
 
 Singleton {
     id: root
@@ -164,6 +165,7 @@ Singleton {
     readonly property bool tonalPrimaryContainer: Contrast.isTonal(primaryContainer, surfaceText)
     readonly property color selectedContainer: tonalPrimaryContainer ? primaryContainer : Contrast.tintedContainer(surfaceContainerHigh, primary, surfaceText)
     readonly property color accentOnPrimaryContainer: Contrast.ratio(primary, primaryContainer) >= 3 ? primary : onPrimaryContainer
+    readonly property var accents: Accents.derive(primary, isLightMode, currentThemeData.accents ?? null)
     property color surface: currentThemeData.surface
     property color surfaceText: currentThemeData.surfaceText
     property color surfaceVariant: currentThemeData.surfaceVariant
@@ -468,6 +470,10 @@ Singleton {
 
     function isFloatingWindow(item) {
         return Surface.isFloatingWindow(item);
+    }
+
+    function accent(name) {
+        return accents[name] ?? null;
     }
 
     function foregroundColor(baseColor, floatingWindow = false) {

@@ -20,8 +20,8 @@ Singleton {
     readonly property real buttonGroupCompactThreshold: 200
     readonly property real disabledOpacity: 0.38
     readonly property real highlightBlend: 0.2
-    readonly property real activeHintAlpha: 0.8
     readonly property color rowColor: Theme.foregroundColor(Theme.surfaceContainerHigh, true)
+    readonly property color selectedRowColor: Theme.blend(rowColor, Theme.onSurface, Theme.stateLayerDrag)
     readonly property int transitionDuration: Theme.expressiveDurations.expressiveFastSpatial
     readonly property int fadeDuration: Theme.expressiveDurations.expressiveEffects
 }

@@ -8,7 +8,7 @@ Rectangle {
     property string iconName: ""
     property string title: ""
     property string hint: ""
-    property string tone: "primary"
+    property string accent: ""
     property bool active: false
     property bool highlighted: false
     property bool isFirstInGroup: true
@@ -33,18 +33,9 @@ Rectangle {
         }
     }
 
-    readonly property color toneColor: {
-        switch (tone) {
-        case "secondary":
-            return Theme.secondary;
-        case "tertiary":
-            return Theme.tertiary;
-        case "error":
-            return Theme.error;
-        default:
-            return Theme.primary;
-        }
-    }
+    readonly property var accentPair: Theme.accent(accent)
+    readonly property color badgeColor: accentPair?.container ?? Theme.withAlpha(Theme.primary, Theme.tonalTintAlpha)
+    readonly property color glyphColor: accentPair?.onContainer ?? Theme.primary
     readonly property real topRadius: isFirstInGroup ? Theme.groupedListOuterRadius : Theme.groupedListInnerRadius
     readonly property real bottomRadius: isLastInGroup ? Theme.groupedListOuterRadius : Theme.groupedListInnerRadius
 
@@ -56,7 +47,7 @@ Rectangle {
     bottomRightRadius: bottomRadius
     color: {
         if (active)
-            return Theme.selectedContainer;
+            return SettingsMetrics.selectedRowColor;
         if (highlighted)
             return Theme.blend(SettingsMetrics.rowColor, Theme.primary, SettingsMetrics.highlightBlend);
         return SettingsMetrics.rowColor;
@@ -92,7 +83,7 @@ Rectangle {
 
     DankRipple {
         id: ripple
-        rippleColor: root.active ? Theme.onSelectedContainer : Theme.surfaceText
+        rippleColor: Theme.surfaceText
         topLeftRadius: root.topRadius
         topRightRadius: root.topRadius
         bottomLeftRadius: root.bottomRadius
@@ -120,7 +111,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: Theme.spacingL
         anchors.verticalCenter: parent.verticalCenter
-        color: root.active ? Theme.primary : Theme.withAlpha(root.toneColor, Theme.tonalTintAlpha)
+        color: root.badgeColor
 
         Behavior on color {
             enabled: Theme.animationsEnabled
@@ -135,7 +126,7 @@ Rectangle {
             anchors.centerIn: parent
             name: root.iconName
             size: Theme.iconSizeMedium
-            color: root.active ? Theme.onPrimary : root.toneColor
+            color: root.glyphColor
         }
     }
 
@@ -153,7 +144,7 @@ Rectangle {
             text: root.title
             font.pixelSize: Theme.fontSizeMedium
             font.weight: Theme.fontWeightMedium
-            color: root.active ? Theme.onSelectedContainer : Theme.surfaceText
+            color: Theme.surfaceText
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignLeft
         }
@@ -162,7 +153,7 @@ Rectangle {
             width: parent.width
             text: root.hint
             font.pixelSize: Theme.fontSizeSmall
-            color: root.active ? Theme.withAlpha(Theme.onSelectedContainer, SettingsMetrics.activeHintAlpha) : Theme.surfaceVariantText
+            color: Theme.surfaceVariantText
             elide: Text.ElideRight
             visible: root.hint !== ""
             horizontalAlignment: Text.AlignLeft

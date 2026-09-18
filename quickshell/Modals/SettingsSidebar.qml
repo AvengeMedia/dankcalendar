@@ -40,21 +40,21 @@ Item {
 
     readonly property var groups: [[
             {
-                tone: "primary",
+                accent: "blue",
                 index: 0,
                 label: I18n.tr("General", "settings sidebar tab label"),
                 hint: I18n.tr("Locale, views and defaults", "settings sidebar tab hint"),
                 icon: "tune"
             },
             {
-                tone: "primary",
+                accent: "blue",
                 index: 1,
                 label: I18n.tr("Appearance", "settings sidebar tab label"),
                 hint: I18n.tr("Theme, shape and motion", "settings sidebar tab hint"),
                 icon: "palette"
             },
             {
-                tone: "primary",
+                accent: "blue",
                 index: 4,
                 label: I18n.tr("Notifications", "settings sidebar tab label"),
                 hint: I18n.tr("Reminders and alerts", "settings sidebar tab hint"),
@@ -62,14 +62,14 @@ Item {
             }
         ], [
             {
-                tone: "secondary",
+                accent: "green",
                 index: 2,
                 label: I18n.tr("Calendars", "settings sidebar tab label"),
                 hint: I18n.tr("Names, visibility, removal", "settings sidebar tab hint"),
                 icon: "calendar_month"
             },
             {
-                tone: "secondary",
+                accent: "green",
                 index: 3,
                 label: I18n.tr("Accounts", "settings sidebar tab label"),
                 hint: I18n.tr("Connected providers", "settings sidebar tab hint"),
@@ -77,7 +77,7 @@ Item {
             }
         ], [
             {
-                tone: "tertiary",
+                accent: "purple",
                 index: 5,
                 label: I18n.tr("About", "settings sidebar tab label"),
                 hint: I18n.tr("Version and links", "settings sidebar tab hint"),
@@ -127,7 +127,7 @@ Item {
                             iconName: modelData.icon
                             title: modelData.label
                             hint: modelData.hint
-                            tone: modelData.tone
+                            accent: modelData.accent
                             active: root.currentIndex === modelData.index
                             highlighted: root.highlightIndex === modelData.index
                             isFirstInGroup: index === 0
