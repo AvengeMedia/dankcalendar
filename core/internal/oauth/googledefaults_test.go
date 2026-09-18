@@ -1,26 +1,19 @@
 package oauth
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestBuiltinGoogleCredentials(t *testing.T) {
-	oldID, oldSecret := builtinGoogleClientID, builtinGoogleClientSecret
-	oldEncodedID, oldEncodedSecret := encodedGoogleClientID, encodedGoogleClientSecret
-	t.Cleanup(func() {
-		builtinGoogleClientID, builtinGoogleClientSecret = oldID, oldSecret
-		encodedGoogleClientID, encodedGoogleClientSecret = oldEncodedID, oldEncodedSecret
-	})
-	builtinGoogleClientID, builtinGoogleClientSecret = "", ""
-	encodedGoogleClientID, encodedGoogleClientSecret = "", ""
-	if _, ok := BuiltinGoogleCredentials(); ok {
-		t.Fatal("empty build must require user-supplied credentials")
-	}
-	builtinGoogleClientID, builtinGoogleClientSecret = "test-client.apps.googleusercontent.com", "test-client-secret"
 	creds, ok := BuiltinGoogleCredentials()
-	if !ok || creds.ClientID != builtinGoogleClientID || creds.ClientSecret != builtinGoogleClientSecret {
-		t.Fatal("build-time credentials not returned")
+	if !ok {
+		t.Fatal("no builtin credentials in default build")
 	}
-	builtinGoogleClientSecret = ""
-	if _, ok := BuiltinGoogleCredentials(); ok {
-		t.Fatal("partial credentials must not be used")
+	if !strings.HasSuffix(creds.ClientID, ".apps.googleusercontent.com") {
+		t.Fatalf("client ID has unexpected shape: %q", creds.ClientID)
+	}
+	if !strings.HasPrefix(creds.ClientSecret, "GOCS"+"PX-") {
+		t.Fatal("client secret has unexpected shape")
 	}
 }

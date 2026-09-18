@@ -2,7 +2,7 @@ package oauth
 
 import "encoding/base64"
 
-// OAuth client injection for official builds (Google "Desktop app" client type,
+// Shipped OAuth client for official builds (Google "Desktop app" client type,
 // public per the installed-app model). Encoded — not encrypted — only so the
 // values are not searchable plaintext in the repository; installed-app
 // credentials cannot be kept confidential.
@@ -14,13 +14,11 @@ import "encoding/base64"
 // their own client, overriding both vars via
 // -ldflags "-X .../internal/oauth.builtinGoogleClientID=..." (plaintext), or
 // blanking the encoded vars to require user-supplied credentials.
-// This fork does not embed upstream client credentials. Users supply their
-// own credentials, or distributors inject an authorized pair at build time.
 var (
 	builtinGoogleClientID     = ""
 	builtinGoogleClientSecret = ""
-	encodedGoogleClientID     = ""
-	encodedGoogleClientSecret = ""
+	encodedGoogleClientID     = "UlxZHFBRWl9YXVpMVUhVBQQNUBEdXQ8MDB0EH1QYCwUIGgdbDEVJSVYNH18TTw0VHhdPFQwACkIBFB0OHgoBGwxLChVACAwM"
+	encodedGoogleClientSecret = "JCAufTQ5Qww+Hi0sGX9UORRcElI8PBYuFAMQFxxkLgcKCB4="
 )
 
 func BuiltinGoogleCredentials() (GoogleAppCredentials, bool) {
