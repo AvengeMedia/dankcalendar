@@ -355,7 +355,7 @@ Item {
         property bool navSelected: false
 
         width: parent.width
-        color: active ? Theme.primaryContainer : Theme.surfaceContainerLow
+        color: active ? Theme.selectedContainer : Theme.surfaceContainerLow
         radius: Theme.groupedListInnerRadius
         topLeftRadius: firstInGroup ? Theme.groupedListOuterRadius : radius
         topRightRadius: topLeftRadius
@@ -487,7 +487,7 @@ Item {
                     id: viewRow
                     required property int index
                     required property var modelData
-                    readonly property color contentColor: active ? Theme.onPrimaryContainer : Theme.surfaceText
+                    readonly property color contentColor: active ? Theme.onSelectedContainer : Theme.surfaceText
 
                     height: Theme.buttonHeightS
                     firstInGroup: index === 0

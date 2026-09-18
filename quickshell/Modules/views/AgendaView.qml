@@ -158,7 +158,7 @@ Item {
                             readonly property bool tentativeReply: modelData.myResponse === "tentative"
                             width: root.width
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
-                            color: isSelected ? Theme.primaryContainer : (cardArea.containsMouse ? Theme.surfaceContainer : Theme.surfaceContainerLow)
+                            color: isSelected ? Theme.selectedContainer : (cardArea.containsMouse ? Theme.surfaceContainer : Theme.surfaceContainerLow)
                             radius: Theme.cornerRadiusM
                             border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                             border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)

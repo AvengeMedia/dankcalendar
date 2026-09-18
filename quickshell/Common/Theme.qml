@@ -9,6 +9,7 @@ import qs.Services
 import "StockTheme.js" as StockTheme
 import "../DankCommon/Common/Shape.js" as Shape
 import "../DankCommon/Common/Surface.js" as Surface
+import "../DankCommon/Common/Contrast.js" as Contrast
 
 Singleton {
     id: root
@@ -160,6 +161,9 @@ Singleton {
     property color secondaryContainer: currentThemeData.secondaryContainer || blend(surfaceContainerHigh, secondary, 0.35)
     property color tertiary: currentThemeData.tertiary || currentThemeData.secondary
     property color tertiaryContainer: currentThemeData.tertiaryContainer || blend(surfaceContainerHigh, tertiary, 0.35)
+    readonly property bool tonalPrimaryContainer: Contrast.isTonal(primaryContainer, surfaceText)
+    readonly property color selectedContainer: tonalPrimaryContainer ? primaryContainer : Contrast.tintedContainer(surfaceContainerHigh, primary, surfaceText)
+    readonly property color accentOnPrimaryContainer: Contrast.ratio(primary, primaryContainer) >= 3 ? primary : onPrimaryContainer
     property color surface: currentThemeData.surface
     property color surfaceText: currentThemeData.surfaceText
     property color surfaceVariant: currentThemeData.surfaceVariant
@@ -187,6 +191,7 @@ Singleton {
     property color onPrimaryContainer
     property color onSecondaryContainer
     property color onTertiaryContainer
+    property color onSelectedContainer
     property color onError
     property color onErrorContainer
     property color onSurface_12: withAlpha(onSurface, 0.12)
@@ -211,17 +216,17 @@ Singleton {
         Binding {
             target: root
             property: "onPrimaryContainer"
-            value: root.currentThemeData.onPrimaryContainer || root.surfaceText
+            value: root.currentThemeData.onPrimaryContainer || Contrast.readableOn(root.primaryContainer, root.onContainerCandidates)
         },
         Binding {
             target: root
             property: "onSecondaryContainer"
-            value: root.currentThemeData.onSecondaryContainer || root.surfaceText
+            value: root.currentThemeData.onSecondaryContainer || Contrast.readableOn(root.secondaryContainer, root.onContainerCandidates)
         },
         Binding {
             target: root
             property: "onTertiaryContainer"
-            value: root.currentThemeData.onTertiaryContainer || root.surfaceText
+            value: root.currentThemeData.onTertiaryContainer || Contrast.readableOn(root.tertiaryContainer, root.onContainerCandidates)
         },
         Binding {
             target: root
@@ -232,8 +237,14 @@ Singleton {
             target: root
             property: "onErrorContainer"
             value: root.currentThemeData.errorContainerText || root.onSurface
+        },
+        Binding {
+            target: root
+            property: "onSelectedContainer"
+            value: root.tonalPrimaryContainer ? root.onPrimaryContainer : root.surfaceText
         }
     ]
+    readonly property var onContainerCandidates: [surfaceText, surface, contrastLight, contrastDark]
     readonly property real tonalTintAlpha: 0.16
 
     property color error: currentThemeData.error

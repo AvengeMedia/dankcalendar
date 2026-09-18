@@ -343,8 +343,8 @@ FocusScope {
                     required property var modelData
                     required property int index
                     readonly property bool selected: index === root.selectedIndex
-                    readonly property color contentColor: selected ? Theme.onPrimaryContainer : Theme.surfaceText
-                    readonly property color supportingColor: selected ? Theme.onPrimaryContainer : Theme.surfaceVariantText
+                    readonly property color contentColor: selected ? Theme.onSelectedContainer : Theme.surfaceText
+                    readonly property color supportingColor: selected ? Theme.onSelectedContainer : Theme.surfaceVariantText
 
                     width: resultsList.width
                     height: root.rowH
@@ -353,7 +353,7 @@ FocusScope {
                     topRightRadius: topLeftRadius
                     bottomLeftRadius: index === root.rows.length - 1 ? Theme.groupedListOuterRadius : radius
                     bottomRightRadius: bottomLeftRadius
-                    color: selected ? Theme.primaryContainer : Theme.surfaceContainerLow
+                    color: selected ? Theme.selectedContainer : Theme.surfaceContainerLow
 
                     Behavior on color {
                         enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
@@ -418,7 +418,7 @@ FocusScope {
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.spacingS
                         anchors.verticalCenter: parent.verticalCenter
-                        color: delegateRoot.selected ? Theme.withAlpha(Theme.onPrimaryContainer, Theme.stateLayerFocus) : Theme.surfaceContainerHighest
+                        color: delegateRoot.selected ? Theme.withAlpha(Theme.onSelectedContainer, Theme.stateLayerFocus) : Theme.surfaceContainerHighest
 
                         StyledText {
                             id: dateText
