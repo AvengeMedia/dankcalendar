@@ -17,6 +17,7 @@ Singleton {
 
     readonly property string defaultFontFamily: Fonts.sans
     readonly property string defaultMonoFontFamily: Fonts.mono
+    readonly property string defaultDisplayFontFamily: Fonts.display
 
     // "auto" follows the desktop portal color-scheme; no preference falls back to dark
     readonly property bool isLightMode: {
@@ -182,6 +183,10 @@ Singleton {
     property color surfaceContainer: currentThemeData.surfaceContainer
     property color surfaceContainerHigh: currentThemeData.surfaceContainerHigh
     property color surfaceContainerHighest: currentThemeData.surfaceContainerHighest || surfaceContainerHigh
+    readonly property color hostSurface: surface
+    readonly property color cardSurface: surfaceContainer
+    readonly property color chipSurface: surfaceContainerHigh
+    readonly property color chipSurfaceNested: surfaceContainerHighest
     property color inverseSurface: currentThemeData.inverseSurface || surfaceText
     property color inverseOnSurface: currentThemeData.inverseOnSurface || surface
     readonly property color contrastDark: "#000000"
@@ -199,6 +204,7 @@ Singleton {
     property color onSurface_12: withAlpha(onSurface, 0.12)
     property color onSurface_38: withAlpha(onSurface, 0.38)
     property color onSurfaceVariant_30: withAlpha(onSurfaceVariant, 0.3)
+    property color onSurfaceVariant_40: withAlpha(onSurfaceVariant, 0.4)
     readonly property list<QtObject> roleBindings: [
         Binding {
             target: root
@@ -358,6 +364,7 @@ Singleton {
     readonly property real avatarSize: 36
     readonly property real sliderTrackHeight: 16
     readonly property real sliderHandleWidth: 4
+    readonly property real sliderHandleWidthPressed: 2
     readonly property real sliderHandleWidthDesktop: 6
     readonly property real sliderHandleWidthDesktopPressed: 4
     readonly property real sliderHandleHeightDesktop: 32
@@ -418,6 +425,23 @@ Singleton {
     readonly property real fieldHeight: Math.round(fontSizeMedium * 3)
     readonly property real fieldHeightLarge: 48
     readonly property real outlinedFieldLabelLineHeight: 16
+    readonly property real osdHeight: sliderHandleHeight + spacingS * 2
+    readonly property real bottomSheetHandleWidth: 36
+    readonly property real bottomSheetHandleHeight: 4
+    readonly property real launcherTileSize: 120
+    readonly property real launcherImageRatio: 0.75
+    readonly property int launcherMaxVisibleRows: 8
+    readonly property real launcherWidthMicro: 500
+    readonly property real launcherWidthDefault: 620
+    readonly property real launcherWidthWide: 720
+    readonly property real launcherWidthLarge: 860
+    readonly property real launcherHeightDefault: 600
+    readonly property real launcherScreenMargin: 100
+    readonly property color lockScreenContentColor: "#ffffff"
+    readonly property real lockScreenScrimAlpha: 0.4
+    readonly property real lockScreenBlur: 0.8
+    readonly property int lockScreenBlurMax: 32
+    readonly property color screenOffColor: "#000000"
     readonly property real textFieldSpatialStiffness: 800
     readonly property real textFieldSpatialDampingRatio: 1
     readonly property real textFieldFastEffectsStiffness: 3800
@@ -438,6 +462,7 @@ Singleton {
 
     property string fontFamily: defaultFontFamily
     property string monoFontFamily: defaultMonoFontFamily
+    property string displayFontFamily: defaultDisplayFontFamily
     readonly property int fontWeight: SettingsData.fontWeight
     readonly property int fontWeightMedium: shiftedFontWeight(Font.Medium)
     readonly property int fontWeightBold: shiftedFontWeight(Font.Bold)
