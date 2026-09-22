@@ -223,6 +223,12 @@ func eventToGraph(ev *cal.Event) graphEvent {
 	if ev.Location != "" {
 		g.Location = &graphLocation{DisplayName: ev.Location}
 	}
+	switch ev.Transparency {
+	case "transparent":
+		g.ShowAs = "free"
+	case "opaque":
+		g.ShowAs = "busy"
+	}
 
 	start, end := ev.Start.UTC(), ev.End.UTC()
 	if ev.AllDay {

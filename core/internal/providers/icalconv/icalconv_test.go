@@ -380,3 +380,18 @@ func TestBuildEventUnknownZoneStaysUTC(t *testing.T) {
 	require.NoError(t, ical.NewEncoder(&buf).Encode(CalendarFromEvent(src, "uid-1")))
 	assert.Contains(t, buf.String(), "DTSTART:20260507T120000Z")
 }
+
+func TestRoundTripTransparency(t *testing.T) {
+	src := &cal.Event{
+		Summary:      "Focus time",
+		Transparency: "transparent",
+		Start:        time.Date(2026, 5, 7, 14, 0, 0, 0, time.UTC),
+		End:          time.Date(2026, 5, 7, 15, 0, 0, 0, time.UTC),
+	}
+
+	got := roundTrip(t, src, "uid-transp")
+	assert.Equal(t, "transparent", got.Transparency)
+
+	src.Transparency = ""
+	assert.Equal(t, "", roundTrip(t, src, "uid-unset").Transparency, "no TRANSP written when unset")
+}

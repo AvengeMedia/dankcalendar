@@ -210,3 +210,17 @@ func TestEventToGraphAllDayNormalizesToMidnight(t *testing.T) {
 	assert.Equal(t, "2026-05-07T00:00:00", g.Start.DateTime)
 	assert.Equal(t, "2026-05-08T00:00:00", g.End.DateTime, "same-day all-day event should span one full day")
 }
+
+func TestEventToGraphShowAs(t *testing.T) {
+	ev := &cal.Event{
+		Summary: "Focus time",
+		Start:   time.Date(2026, 5, 7, 14, 0, 0, 0, time.UTC),
+		End:     time.Date(2026, 5, 7, 15, 0, 0, 0, time.UTC),
+	}
+
+	assert.Empty(t, eventToGraph(ev).ShowAs, "unset leaves Graph's default")
+	ev.Transparency = "transparent"
+	assert.Equal(t, "free", eventToGraph(ev).ShowAs)
+	ev.Transparency = "opaque"
+	assert.Equal(t, "busy", eventToGraph(ev).ShowAs)
+}

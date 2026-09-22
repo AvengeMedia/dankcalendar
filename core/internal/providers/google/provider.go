@@ -550,10 +550,11 @@ func toGoogleAttendees(attendees []cal.Attendee) []*calendar.EventAttendee {
 
 func toGoogleEvent(ev *cal.Event) *calendar.Event {
 	out := &calendar.Event{
-		Summary:     ev.Summary,
-		Description: ev.Description,
-		Location:    ev.Location,
-		Status:      string(ev.Status),
+		Summary:      ev.Summary,
+		Description:  ev.Description,
+		Location:     ev.Location,
+		Status:       string(ev.Status),
+		Transparency: ev.Transparency,
 	}
 
 	if ev.AllDay {
