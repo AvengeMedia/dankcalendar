@@ -29,7 +29,7 @@ func handleEventsParseIcs(ctx context.Context, w *ConnWriter, req Request, deps 
 	for i := range doc.Events {
 		ev := &doc.Events[i]
 		entry := map[string]any{"event": ev}
-		existing, err := deps.Repo.GetEventByUID(ctx, ev.UID, "")
+		existing, err := deps.Repo.GetEventByUID(ctx, ev.UID, ParamString(req.Params, "calendarId"))
 		switch {
 		case err == nil:
 			entry["existing"] = mapEvent(existing)
@@ -37,9 +37,21 @@ func handleEventsParseIcs(ctx context.Context, w *ConnWriter, req Request, deps 
 			RespondError(w, req.ID, err.Error())
 			return
 		}
+		conflicts, err := icsimport.Conflicts(ctx, deps.Repo, *ev)
+		if err != nil {
+			RespondError(w, req.ID, err.Error())
+			return
+		}
+		entry["conflictCount"] = len(conflicts)
+		overlaps := make([]map[string]any, 0, min(20, len(conflicts)))
+		for _, conflict := range conflicts[:min(20, len(conflicts))] {
+			overlaps = append(overlaps, mapEvent(conflict))
+		}
+		entry["conflicts"] = overlaps
+		entry["previewEnd"] = icsimport.PreviewEnd(*ev)
 		items = append(items, entry)
 	}
-	Respond(w, req.ID, map[string]any{"method": doc.Method, "events": items})
+	Respond(w, req.ID, map[string]any{"method": doc.Method, "source": doc.Source, "events": items})
 }
 
 func handleEventsImportIcs(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
@@ -51,6 +63,14 @@ func handleEventsImportIcs(ctx context.Context, w *ConnWriter, req Request, deps
 	doc, err := parseIcsParam(req.Params)
 	if err != nil {
 		RespondError(w, req.ID, err.Error())
+		return
+	}
+	if doc.Source != "" {
+		RespondError(w, req.ID, "this file is a subscription; add its source as a subscribed calendar")
+		return
+	}
+	if doc.Method == "CANCEL" || doc.Method == "REPLY" {
+		RespondError(w, req.ID, "open the existing meeting to handle this scheduling message")
 		return
 	}
 	selected := selectEvents(doc.Events, ParamStringSlice(req.Params, "uids"))

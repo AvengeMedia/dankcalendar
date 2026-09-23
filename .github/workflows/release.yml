@@ -71,7 +71,11 @@ jobs:
           go build -tags withshell -ldflags "-s -w -X main.Version=${VERSION#v} -X main.Commit=${{ github.sha }} -X main.BuildTime=${BUILD_TIME}" -o "../${BINARY_NAME}" ./cmd/dcal
           cd ..
           gzip -c "${BINARY_NAME}" > "${BINARY_NAME}.gz"
-          tar -czf "${BINARY_NAME}.tar.gz" "${BINARY_NAME}"
+          tar -czf "${BINARY_NAME}.tar.gz" "${BINARY_NAME}" \
+            assets/com.danklinux.dankcalendar.desktop \
+            assets/com.danklinux.dankcalendar.svg \
+            assets/com.danklinux.dankcalendar.metainfo.xml \
+            scripts/install-assets.sh scripts/install-release.sh
           sha256sum "${BINARY_NAME}.gz" > "${BINARY_NAME}.gz.sha256"
           sha256sum "${BINARY_NAME}.tar.gz" > "${BINARY_NAME}.tar.gz.sha256"
 

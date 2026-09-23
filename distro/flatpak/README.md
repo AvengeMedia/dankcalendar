@@ -2,6 +2,8 @@
 
 The build provides `dcal` and the Quickshell runtime.
 It installs the desktop file, metainfo, and icon as `com.danklinux.dankcalendar`.
+The exported desktop file registers ICS/VCS files and webcal/webcals links;
+Flatpak rewrites its `%U` launcher for document-portal file forwarding.
 
 ## Sandbox permissions
 

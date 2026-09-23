@@ -206,3 +206,27 @@ func factoryFor(t *testing.T, kind calendar.AccountKind, provider calendar.Provi
 	factory.EXPECT().Build(mock.Anything, mock.Anything, mock.Anything).Return(provider, nil)
 	return factory
 }
+
+func TestUIOpenSubscriptionFile(t *testing.T) {
+	deps := Deps{Bus: NewEventBus(), Pending: &PendingOpen{}}
+	data := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nSOURCE:https://example.com/feed\r\nEND:VCALENDAR\r\n"
+	resultOf(t, routeAndRead(t, Request{ID: 1, Method: "ui.openIcs", Params: map[string]any{"ics": data}}, deps))
+	resultOf(t, routeAndRead(t, Request{ID: 2, Method: "ui.openIcs", Params: map[string]any{"ics": inviteICS}}, deps))
+	assert.Equal(t, map[string]any{"action": "subscribe", "url": "https://example.com/feed"}, deps.Pending.Take())
+	assert.Equal(t, "importIcs", deps.Pending.Take()["action"])
+	assert.Nil(t, deps.Pending.Take())
+}
+
+func TestPreviewScopesDuplicatesToDestination(t *testing.T) {
+	f := newIcsFixture(t, account.KindLocal, false)
+	ctx := context.Background()
+	_, err := f.repo.UpsertCalendar(ctx, repo.UpsertCalendarInput{ID: "other", AccountID: "acc", RemoteID: "other", Name: "Personal"})
+	require.NoError(t, err)
+	_, err = f.repo.UpsertEvent(ctx, repo.UpsertEventInput{CalendarID: "cal", UID: "inv-1", Summary: "Already here", Start: time.Date(2026, 9, 10, 12, 0, 0, 0, time.UTC), End: time.Date(2026, 9, 10, 13, 0, 0, 0, time.UTC)})
+	require.NoError(t, err)
+	result := resultOf(t, routeAndRead(t, Request{ID: 1, Method: "events.parseIcs", Params: map[string]any{"ics": inviteICS, "calendarId": "other"}}, f.deps))
+	events := resultEvents(t, result)
+	assert.Nil(t, events[0]["existing"])
+	assert.NotNil(t, events[0]["conflicts"])
+	assert.NotNil(t, events[0]["previewEnd"])
+}

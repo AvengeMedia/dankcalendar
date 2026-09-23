@@ -56,8 +56,8 @@ ShellRoot {
         focusRetry.restart();
     }
 
-    property string pendingSubscribeUrl: ""
-    property var pendingImport: null
+    property var pendingCalendarOpens: []
+    property bool calendarOpenActive: false
     property string pendingView: ""
     property var pendingEvent: null
     property var pendingNewEvent: null
@@ -95,34 +95,39 @@ ShellRoot {
     }
 
     function handleSubscribe(url) {
-        pendingSubscribeUrl = url;
+        pendingCalendarOpens = pendingCalendarOpens.concat([{ "url": url }]);
         showAndFocus();
-        applyPendingSubscribe();
-    }
-
-    function applyPendingSubscribe() {
-        if (!windowLoader.item || pendingSubscribeUrl === "")
-            return;
-        windowLoader.item.openSubscribe(pendingSubscribeUrl);
-        pendingSubscribeUrl = "";
+        applyPendingCalendarOpen();
     }
 
     function handleImportIcs(ics, name) {
         if (ics === "")
             return;
-        pendingImport = {
-            "ics": ics,
-            "name": name
-        };
+        pendingCalendarOpens = pendingCalendarOpens.concat([{ "ics": ics, "name": name }]);
         showAndFocus();
-        applyPendingImport();
+        applyPendingCalendarOpen();
     }
 
-    function applyPendingImport() {
-        if (!windowLoader.item || !pendingImport)
+    function applyPendingCalendarOpen() {
+        if (!windowLoader.item || calendarOpenActive || pendingCalendarOpens.length === 0)
             return;
-        windowLoader.item.openImport(pendingImport.ics, pendingImport.name);
-        pendingImport = null;
+        calendarOpenActive = true;
+        const next = pendingCalendarOpens[0];
+        if (next.url)
+            windowLoader.item.openSubscribe(next.url);
+        else
+            windowLoader.item.openImport(next.ics, next.name);
+    }
+
+    Connections {
+        target: windowLoader.item
+        function onCalendarOpenFinished() {
+            if (!root.calendarOpenActive)
+                return;
+            root.pendingCalendarOpens = root.pendingCalendarOpens.slice(1);
+            root.calendarOpenActive = false;
+            Qt.callLater(root.applyPendingCalendarOpen);
+        }
     }
 
     function handleOpenEvent(uid, start) {
@@ -189,8 +194,8 @@ ShellRoot {
         target: windowLoader
         function onItemChanged() {
             root.applyPendingView();
-            root.applyPendingSubscribe();
-            root.applyPendingImport();
+            root.calendarOpenActive = false;
+            root.applyPendingCalendarOpen();
             root.applyPendingEvent();
             root.applyPendingNewEvent();
         }
