@@ -67,12 +67,13 @@ func EventFromComponent(calID string, comp *ical.Component, tz *TZResolver) (cal
 	}
 
 	ev := cal.Event{
-		CalendarID:  calID,
-		UID:         uid,
-		Summary:     propText(comp, ical.PropSummary),
-		Description: propText(comp, ical.PropDescription),
-		Location:    propText(comp, ical.PropLocation),
-		Status:      statusFromComponent(comp),
+		CalendarID:   calID,
+		UID:          uid,
+		Summary:      propText(comp, ical.PropSummary),
+		Description:  propText(comp, ical.PropDescription),
+		Location:     propText(comp, ical.PropLocation),
+		Status:       statusFromComponent(comp),
+		Transparency: transparencyFromComponent(comp),
 	}
 
 	if rid := comp.Props.Get(ical.PropRecurrenceID); rid != nil {
@@ -227,6 +228,23 @@ func attendeeFromProp(prop ical.Prop) cal.Attendee {
 	}
 }
 
+// transparencyFromComponent reads TRANSP as the lower-case value the rest of
+// the app uses; an absent property stays empty, which reads as busy.
+func transparencyFromComponent(comp *ical.Component) string {
+	prop := comp.Props.Get(ical.PropTransparency)
+	if prop == nil {
+		return ""
+	}
+	switch strings.ToUpper(prop.Value) {
+	case "TRANSPARENT":
+		return "transparent"
+	case "OPAQUE":
+		return "opaque"
+	default:
+		return ""
+	}
+}
+
 func statusFromComponent(comp *ical.Component) cal.EventStatus {
 	prop := comp.Props.Get(ical.PropStatus)
 	if prop == nil {
@@ -327,6 +345,10 @@ func BuildEvent(ev *cal.Event, uid string) *ical.Event {
 	}
 	if status := statusValue(ev.Status); status != "" {
 		props.SetText(ical.PropStatus, status)
+	}
+	switch ev.Transparency {
+	case "transparent", "opaque":
+		props.SetText(ical.PropTransparency, strings.ToUpper(ev.Transparency))
 	}
 
 	setEventTimes(props, ev)

@@ -510,6 +510,13 @@ func eventFromParams(base calendar.Event, p map[string]any) (calendar.Event, err
 			base.Status = calendar.EventConfirmed
 		}
 	}
+	if _, ok := p["transparency"]; ok {
+		transparency, err := transparencyFromParam(ParamString(p, "transparency"))
+		if err != nil {
+			return base, err
+		}
+		base.Transparency = transparency
+	}
 
 	if raw, ok := p["reminders"]; ok {
 		rems, err := remindersFromParam(raw)
@@ -542,6 +549,22 @@ func eventFromParams(base calendar.Event, p map[string]any) (calendar.Event, err
 		return base, errors.New("end must not be before start")
 	}
 	return base, nil
+}
+
+// transparencyFromParam reads the iCalendar TRANSP values, or the plainer
+// busy/free. An empty value leaves the field unset, which providers treat
+// as busy.
+func transparencyFromParam(raw string) (string, error) {
+	switch strings.ToLower(strings.TrimSpace(raw)) {
+	case "":
+		return "", nil
+	case "opaque", "busy":
+		return "opaque", nil
+	case "transparent", "free":
+		return "transparent", nil
+	default:
+		return "", fmt.Errorf("transparency must be opaque or transparent, got %q", raw)
+	}
 }
 
 // remindersFromParam parses the wire form: an array of {method?, minutes}

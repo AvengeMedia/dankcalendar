@@ -339,6 +339,7 @@ func eventToDTO(e *ent.Event) models.Event {
 		Location:      e.Location,
 		URL:           e.URL,
 		Status:        string(e.Status),
+		Transparency:  e.Transparency,
 		Start:         e.Start,
 		End:           e.End,
 		AllDay:        e.AllDay,
