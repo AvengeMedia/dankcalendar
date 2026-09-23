@@ -126,10 +126,13 @@ func graphToEvent(g graphEvent) cal.Event {
 		ev.Attendees = append(ev.Attendees, att)
 	}
 
+	// Only free and busy map onto TRANSP. oof, tentative, workingElsewhere
+	// and unknown stay unset so eventToGraph leaves showAs out of a PATCH
+	// instead of flattening them to busy.
 	switch g.ShowAs {
 	case "free":
 		ev.Transparency = "transparent"
-	default:
+	case "busy":
 		ev.Transparency = "opaque"
 	}
 

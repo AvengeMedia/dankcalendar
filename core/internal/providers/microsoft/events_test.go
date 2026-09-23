@@ -146,6 +146,27 @@ func TestGraphToEventDefaults(t *testing.T) {
 	assert.True(t, ev.Start.IsZero())
 }
 
+func TestGraphShowAsRoundTrip(t *testing.T) {
+	tests := []struct {
+		showAs, transparency, sent string
+	}{
+		{"free", "transparent", "free"},
+		{"busy", "opaque", "busy"},
+		{"oof", "", ""},
+		{"tentative", "", ""},
+		{"workingElsewhere", "", ""},
+		{"unknown", "", ""},
+		{"", "", ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.showAs, func(t *testing.T) {
+			ev := graphToEvent(graphEvent{ID: "x", ShowAs: tt.showAs})
+			assert.Equal(t, tt.transparency, ev.Transparency)
+			assert.Equal(t, tt.sent, eventToGraph(&ev).ShowAs, "an edit must not overwrite showAs it cannot represent")
+		})
+	}
+}
+
 func TestParseGraphTime(t *testing.T) {
 	tests := []struct {
 		name string
