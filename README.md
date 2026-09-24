@@ -186,6 +186,53 @@ dcal events import invite.ics --calendar <id> # import from the terminal
 dcal events rsvp <event-id> accept            # reply to an imported invitation
 ```
 
+## Matugen colors
+
+In **Settings → Appearance → Color source**, select **Matugen** to read
+`$XDG_CONFIG_HOME/dankcal/matugen-theme.json` (normally
+`~/.config/dankcal/matugen-theme.json`). DankCalendar reloads this file when
+it changes. Matugen is optional and runs independently of the app.
+
+Copy the included [template](assets/matugen/dankcalendar.json.template) from
+the repository into your Matugen configuration:
+
+```bash
+mkdir -p ~/.config/matugen/templates ~/.config/dankcal
+cp assets/matugen/dankcalendar.json.template ~/.config/matugen/templates/dankcalendar.json.template
+```
+
+Add this entry to `~/.config/matugen/config.toml`:
+
+```toml
+[templates.dankcalendar]
+input_path = "~/.config/matugen/templates/dankcalendar.json.template"
+output_path = "~/.config/dankcal/matugen-theme.json"
+```
+
+If you use a custom `XDG_CONFIG_HOME`, adjust these paths to match it. Then
+generate your colors:
+
+```bash
+matugen image /path/to/wallpaper.png
+```
+
+No reload hook is needed. The template generates both `dark` and `light`
+palettes; DankCalendar's light/dark/automatic setting selects the palette.
+Its [Matugen template syntax](https://github.com/InioX/matugen-themes) maps
+Material colors to the app's existing theme roles.
+
+The theme file is separate from `ui-settings.json`. It accepts either a
+flat object of theme roles or `dark`/`light` objects, with colors encoded as
+`#RRGGBB`. Partial palettes override only the supplied roles; the selected
+preset supplies the remaining colors. Missing, empty, or invalid theme
+files fall back to the preset. Select **Auto** to follow DankMaterialShell
+again, or **Custom** to load a theme from another path.
+
+For **Flatpak**, set the Matugen entry's `output_path` to
+`~/.var/app/com.danklinux.dankcalendar/config/dankcal/matugen-theme.json`
+and create its parent directory first. This writes directly to the app's
+configuration directory without requiring extra sandbox permissions.
+
 ## IPC
 
 The daemon exposes a scriptable IPC surface — handy for keybinds and automation:
