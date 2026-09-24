@@ -45,6 +45,7 @@ Singleton {
     }
 
     readonly property string dmsColorsPath: xdgCacheDir + "/DankMaterialShell/dms-colors.json"
+    readonly property string matugenThemePath: SettingsData.configDir + "/matugen-theme.json"
 
     property var matugenColors: ({})
     property bool colorsLoaded: false
@@ -143,6 +144,21 @@ Singleton {
         return merged;
     }
 
+    function validateMatugenTheme(raw) {
+        if (!raw || typeof raw !== "object" || Array.isArray(raw))
+            throw new Error("Expected a Matugen palette object");
+        const palettes = ("dark" in raw || "light" in raw) ? [raw.dark, raw.light].filter(p => p !== undefined) : [raw];
+        for (const palette of palettes) {
+            if (!palette || typeof palette !== "object" || Array.isArray(palette) || Object.keys(palette).length === 0)
+                throw new Error("Expected a non-empty Matugen palette");
+            for (const value of Object.values(palette)) {
+                if (typeof value !== "string" || !/^#[0-9a-f]{6}$/i.test(value))
+                    throw new Error("Expected Matugen colors in #RRGGBB format");
+            }
+        }
+        return raw;
+    }
+
     readonly property var currentThemeData: {
         const isLight = isLightMode;
         const preset = StockTheme.getPreset(SettingsData.presetTheme, isLight);
@@ -150,6 +166,7 @@ Singleton {
         case "preset":
             return preset;
         case "custom":
+        case "matugen":
             return buildCustomTheme(preset, isLight);
         default:
             return colorsLoaded ? buildDmsTheme(preset) : preset;
@@ -669,6 +686,8 @@ Singleton {
     FileView {
         id: customThemeView
         path: {
+            if (SettingsData.colorSource === "matugen")
+                return root.matugenThemePath;
             const f = SettingsData.customThemeFile;
             if (!f || f === "")
                 return "";
@@ -680,6 +699,11 @@ Singleton {
         watchChanges: true
         printErrors: false
 
+        onPathChanged: {
+            root.customThemeRaw = null;
+            root.customThemeLoaded = false;
+        }
+
         onLoaded: {
             try {
                 const text = customThemeView.text();
@@ -688,7 +712,8 @@ Singleton {
                     root.customThemeLoaded = false;
                     return;
                 }
-                root.customThemeRaw = JSON.parse(text);
+                const raw = JSON.parse(text);
+                root.customThemeRaw = SettingsData.colorSource === "matugen" ? root.validateMatugenTheme(raw) : raw;
                 root.customThemeLoaded = true;
             } catch (e) {
                 root.customThemeRaw = null;
