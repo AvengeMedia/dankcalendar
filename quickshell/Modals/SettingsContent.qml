@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import qs.Common
-import qs.DankCommon.Modals.FileBrowser
+import qs.DankCommon.FileBrowser
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
@@ -579,7 +579,6 @@ Item {
                 themePickerLoader.active = true;
                 const picker = themePickerLoader.item;
                 picker.browserTitle = I18n.tr("Select theme file", "custom theme file picker title");
-                picker.fileExtensions = ["*.json"];
                 picker.open();
             }
 
@@ -880,10 +879,9 @@ Item {
                 active: false
                 sourceComponent: FileBrowserModal {
                     parentModal: root.hostWindow
-                    onFileSelected: path => {
-                        SettingsData.customThemeFile = path;
-                        close();
-                    }
+                    bucket: "theme"
+                    filters: ["*.json"]
+                    onAccepted: paths => SettingsData.customThemeFile = paths[0]
                 }
             }
         }

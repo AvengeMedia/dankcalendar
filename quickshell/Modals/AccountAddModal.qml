@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.Common
-import qs.DankCommon.Modals.FileBrowser
+import qs.DankCommon.FileBrowser
 import qs.Services
 import qs.Widgets
 import qs.DankCommon.Widgets
@@ -164,8 +164,8 @@ FloatingWindow {
         pickerLoader.active = true;
         const picker = pickerLoader.item;
         picker.browserTitle = opts.title || I18n.tr("Select file", "default title for file picker in account add modal");
-        picker.fileExtensions = opts.extensions || ["*.*"];
-        picker.folderMode = !!opts.folderMode;
+        picker.filters = opts.extensions || [];
+        picker.mode = opts.folderMode ? "openFolder" : "open";
         picker.open();
     }
 
@@ -206,12 +206,11 @@ FloatingWindow {
         active: false
         sourceComponent: FileBrowserModal {
             parentModal: accountModal
-            onFileSelected: path => {
+            bucket: "accounts"
+            onAccepted: paths => {
                 const cb = accountModal.pickerCallback;
                 accountModal.pickerCallback = null;
-                close();
-                if (cb)
-                    cb(path);
+                cb?.(paths[0]);
             }
         }
     }

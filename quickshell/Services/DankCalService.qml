@@ -64,6 +64,7 @@ Singleton {
     signal openEventRequested(string uid, string start)
     signal newEventRequested(string start)
     signal colorSchemeUpdate(var data)
+    signal filesEvent(var data)
 
     onFocusDateChanged: _ensureWindow()
 
@@ -178,6 +179,30 @@ Singleton {
         subscribeSocket.send(req);
     }
 
+    function subscribeTopics(topics) {
+        if (!subscribed || topics.length === 0)
+            return;
+        subscribeSocket.send({
+            "id": _nextId(),
+            "method": "subscribe",
+            "params": {
+                "topics": topics
+            }
+        });
+    }
+
+    function unsubscribeTopics(topics) {
+        if (!subscribed || topics.length === 0)
+            return;
+        subscribeSocket.send({
+            "id": _nextId(),
+            "method": "unsubscribe",
+            "params": {
+                "topics": topics
+            }
+        });
+    }
+
     function _nextId() {
         requestCounter++;
         return Date.now() + requestCounter;
@@ -250,6 +275,10 @@ Singleton {
             }
         case "colorScheme":
             colorSchemeUpdate(event.data || {});
+            break;
+        default:
+            if (topic?.startsWith("files:"))
+                filesEvent(event.data || {});
             break;
         }
     }

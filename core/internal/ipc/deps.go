@@ -9,6 +9,7 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
 	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/AvengeMedia/dankgo/files"
 )
 
 type SyncTrigger interface {
@@ -40,4 +41,5 @@ type Deps struct {
 	Version     string
 	ColorScheme *colorscheme.Watcher
 	Opener      URIOpener
+	Files       *files.Service
 }

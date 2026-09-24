@@ -39,5 +39,15 @@ Singleton {
         Quickshell.execDetached(["mkdir", "-p", strip(path)]);
     }
 
+    function resolveIconPath(iconName: string): string {
+        if (!iconName)
+            return "";
+        return Quickshell.iconPath(iconName, true) || "";
+    }
+
+    function copyPathToClipboard(path: string): void {
+        Quickshell.clipboardText = path;
+    }
+
     Component.onCompleted: mkdir(imagecache)
 }

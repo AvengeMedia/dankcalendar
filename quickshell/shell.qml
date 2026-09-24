@@ -23,7 +23,10 @@ ShellRoot {
         DC.Style.theme = Theme;
         DC.Style.settings = SettingsData;
         DC.I18n.backend = I18n;
+        DC.Paths.backend = Paths;
         DC.Log.backend = Log;
+        DC.Host.cache = CacheData;
+        DC.Host.files = FilesService;
     }
 
     function ownToplevel() {
