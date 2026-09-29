@@ -11,6 +11,7 @@ import "../DankCommon/Common/Shape.js" as Shape
 import "../DankCommon/Common/Surface.js" as Surface
 import "../DankCommon/Common/Contrast.js" as Contrast
 import "../DankCommon/Common/Accents.js" as Accents
+import "../DankCommon/Common/Tonal.js" as Tonal
 
 Singleton {
     id: root
@@ -158,14 +159,18 @@ Singleton {
 
     property color primary: currentThemeData.primary
     property color primaryText: currentThemeData.primaryText
-    property color primaryContainer: currentThemeData.primaryContainer || blend(surfaceContainerHigh, primary, 0.45)
+    readonly property real containerTint: currentThemeData.containerTint ?? Tonal.defaultTint(surfaceContainer)
+    property color primaryContainer: currentThemeData.softPrimaryContainer || Tonal.softContainer(primary, surfaceContainer, containerTint)
     property color secondary: currentThemeData.secondary
     property color secondaryContainer: currentThemeData.secondaryContainer || blend(surfaceContainerHigh, secondary, 0.35)
     property color tertiary: currentThemeData.tertiary || currentThemeData.secondary
     property color tertiaryContainer: currentThemeData.tertiaryContainer || blend(surfaceContainerHigh, tertiary, 0.35)
-    readonly property bool tonalPrimaryContainer: Contrast.isTonal(primaryContainer, surfaceText)
-    readonly property color selectedContainer: tonalPrimaryContainer ? primaryContainer : Contrast.tintedContainer(surfaceContainerHigh, primary, surfaceText)
-    readonly property color accentOnPrimaryContainer: Contrast.ratio(primary, primaryContainer) >= 3 ? primary : onPrimaryContainer
+    readonly property real selectedContainerTint: currentThemeData.selectedContainerTint ?? 0.2
+    // DMS exports surfaceContainerHigh as secondary_container when the theme sets none
+    readonly property bool themedSelectedContainer: !!currentThemeData.secondaryContainer && !Qt.colorEqual(secondaryContainer, surfaceContainerHigh) && Contrast.isTonal(secondaryContainer, onSecondaryContainer) && Contrast.isTonal(secondaryContainer, surfaceText)
+    readonly property color selectedContainer: currentThemeData.selectedContainer || (themedSelectedContainer ? secondaryContainer : Contrast.subtleTint(surfaceContainerHigh, primary, surfaceText, selectedContainerTint))
+    readonly property color accentOnSelectedContainer: currentThemeData.accentOnSelectedContainer || (Contrast.ratio(primary, selectedContainer) >= 3 ? primary : onSelectedContainer)
+    readonly property color accentOnPrimaryContainer: currentThemeData.accentOnPrimaryContainer || (Contrast.ratio(primary, primaryContainer) >= 3 ? primary : onPrimaryContainer)
     readonly property var accents: Accents.derive(primary, isLightMode, currentThemeData.accents ?? null)
     property color surface: currentThemeData.surface
     property color surfaceText: currentThemeData.surfaceText
@@ -224,7 +229,14 @@ Singleton {
         Binding {
             target: root
             property: "onPrimaryContainer"
-            value: root.currentThemeData.onPrimaryContainer || Contrast.readableOn(root.primaryContainer, root.onContainerCandidates)
+            value: {
+                const explicit = root.currentThemeData.onPrimaryContainer;
+                if (!explicit)
+                    return Contrast.readableOn(root.primaryContainer, root.onContainerCandidates);
+                if (root.currentThemeData.softPrimaryContainer)
+                    return explicit;
+                return Contrast.readableOn(root.primaryContainer, [Qt.color(explicit)].concat(root.onContainerCandidates));
+            }
         },
         Binding {
             target: root
@@ -249,7 +261,7 @@ Singleton {
         Binding {
             target: root
             property: "onSelectedContainer"
-            value: root.tonalPrimaryContainer ? root.onPrimaryContainer : root.surfaceText
+            value: root.currentThemeData.onSelectedContainer || (root.currentThemeData.selectedContainer ? Contrast.readableOn(root.selectedContainer, root.onContainerCandidates) : root.themedSelectedContainer ? root.onSecondaryContainer : root.surfaceText)
         }
     ]
     readonly property var onContainerCandidates: [surfaceText, surface, contrastLight, contrastDark]
