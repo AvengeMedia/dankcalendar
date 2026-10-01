@@ -55,7 +55,8 @@ Singleton {
     // "auto" | "light" | "dark"
     property alias themeMode: adapter.themeMode
     // "auto" follows DMS dynamic colors when available, falling back to the
-    // chosen preset; "preset" forces a bundled palette; "custom" loads a JSON file
+    // chosen preset; "preset" forces a bundled palette; "custom" loads a JSON file;
+    // "matugen" loads matugen-theme.json from configDir.
     property alias colorSource: adapter.colorSource
     property alias presetTheme: adapter.presetTheme
     property alias customThemeFile: adapter.customThemeFile
