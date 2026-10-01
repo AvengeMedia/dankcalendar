@@ -199,13 +199,16 @@ Item {
             }
 
             Rectangle {
+                id: allDayChip
                 required property var modelData
                 readonly property bool isSelected: root.isEventSelected(modelData)
+                readonly property bool declined: modelData.myResponse === "declined"
                 width: parent.width
                 height: 22
                 radius: Theme.cornerRadiusXS
                 clip: true
-                color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                 border.color: isSelected ? Theme.primary : modelData.color
                 border.width: isSelected ? 2 : 1
 
@@ -222,7 +225,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: modelData.title + "  ·  " + I18n.tr("all day", "suffix on all-day event chip in day view")
                     font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.surfaceText
+                    font.strikeout: allDayChip.declined
+                    color: allDayChip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                     wrapMode: Text.NoWrap
                     maximumLineCount: 1
                     elide: Text.ElideRight
@@ -369,12 +373,14 @@ Item {
                     }
 
                     Rectangle {
+                        id: timedChip
                         required property var modelData
                         readonly property bool isSelected: root.isEventSelected(modelData)
                         onIsSelectedChanged: {
                             if (isSelected)
                                 root.revealHours(modelData.startHour, modelData.durationHours);
                         }
+                        readonly property bool declined: modelData.myResponse === "declined"
                         readonly property real laneGap: 3
                         readonly property real usableWidth: parent.width - 16
                         readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
@@ -384,7 +390,8 @@ Item {
                         height: modelData.durationHours * root.hourHeight - 4
                         radius: Theme.cornerRadiusS
                         clip: true
-                        color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                        opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                         border.color: isSelected ? Theme.primary : modelData.color
                         border.width: isSelected ? 2 : 1
 
@@ -411,10 +418,11 @@ Item {
                                 width: parent.width - 12
 
                                 StyledText {
-                                    text: parent.parent.parent.modelData.title
+                                    text: timedChip.modelData.title
                                     font.pixelSize: Theme.fontSizeMedium
                                     font.weight: Theme.fontWeightMedium
-                                    color: Theme.surfaceText
+                                    font.strikeout: timedChip.declined
+                                    color: timedChip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                     width: parent.width
                                     wrapMode: Text.NoWrap
                                     maximumLineCount: 1

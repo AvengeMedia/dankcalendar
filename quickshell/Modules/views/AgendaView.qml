@@ -156,7 +156,9 @@ Item {
                             }
                             readonly property bool awaitingReply: modelData.myResponse === "needs-action"
                             readonly property bool tentativeReply: modelData.myResponse === "tentative"
+                            readonly property bool declined: modelData.myResponse === "declined"
                             width: root.width
+                            opacity: declined && !isSelected ? Theme.pendingOpacity : 1
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
                             color: isSelected ? Theme.selectedContainer : (cardArea.containsMouse ? Theme.surfaceContainer : Theme.surfaceContainerLow)
                             radius: Theme.cornerRadiusM
@@ -219,7 +221,8 @@ Item {
                                         text: card.modelData.title
                                         font.pixelSize: Theme.fontSizeLarge
                                         font.weight: Theme.fontWeightMedium
-                                        color: Theme.surfaceText
+                                        font.strikeout: card.declined
+                                        color: card.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                         width: parent.width
                                         wrapMode: Text.WordWrap
                                         maximumLineCount: 2
