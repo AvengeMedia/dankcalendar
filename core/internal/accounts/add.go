@@ -2,6 +2,7 @@ package accounts
 
 import (
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -125,7 +126,10 @@ func AddICal(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, in
 		displayName = parsed.Host
 	}
 
-	accountID := truncateID("ical:" + parsed.Host + parsed.Path)
+	accountID, err := icalAccountID(ctx, r, feedURL, parsed)
+	if err != nil {
+		return Result{}, err
+	}
 	settings := map[string]any{"url": feedURL}
 	if feedName != "" {
 		settings["name"] = feedName
@@ -143,6 +147,34 @@ func AddICal(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, in
 		}
 	}
 	return Result{AccountID: accountID, DisplayName: displayName}, nil
+}
+
+// Feeds sharing a prefix longer than the id limit (Outlook, #121) must not
+// collapse into one truncated id, so the full URL is hashed once it no longer fits.
+func icalAccountID(ctx context.Context, r *repo.Repo, feedURL string, parsed *url.URL) (string, error) {
+	existing, err := r.ListAccountsByKind(ctx, account.KindIcal)
+	if err != nil {
+		return "", err
+	}
+	for _, acc := range existing {
+		if acc.Settings["url"] == feedURL {
+			return acc.ID, nil
+		}
+	}
+
+	readable := "ical:" + parsed.Host + parsed.Path
+	if parsed.RawQuery == "" && len(readable) <= maxAccountIDLen {
+		_, err := r.GetAccount(ctx, readable)
+		switch {
+		case repo.IsNotFound(err):
+			return readable, nil
+		case err != nil:
+			return "", err
+		}
+	}
+
+	sum := sha256.Sum256([]byte(feedURL))
+	return truncateID(fmt.Sprintf("ical:%x:%s", sum[:8], parsed.Host)), nil
 }
 
 type LocalInput struct {

@@ -217,9 +217,11 @@ func Delete(ctx context.Context, r *repo.Repo, secrets calendar.SecretStore, acc
 	return r.DeleteAccount(ctx, accountID)
 }
 
+const maxAccountIDLen = 64
+
 func truncateID(id string) string {
-	if len(id) > 64 {
-		return id[:64]
+	if len(id) > maxAccountIDLen {
+		return id[:maxAccountIDLen]
 	}
 	return id
 }

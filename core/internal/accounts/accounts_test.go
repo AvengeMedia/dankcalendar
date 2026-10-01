@@ -4,6 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -133,6 +137,73 @@ func (s *AccountsSuite) TestEnsureIsIdempotent() {
 	all, err := s.repo.ListAccounts(s.ctx)
 	s.Require().NoError(err)
 	s.Len(all, 1)
+}
+
+const icalFeed = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//test//EN\r\nBEGIN:VEVENT\r\nUID:evt-1@test\r\nDTSTART:20260507T140000Z\r\nDTEND:20260507T150000Z\r\nSUMMARY:Hello\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+
+func (s *AccountsSuite) feedServer() string {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		_, _ = w.Write([]byte(icalFeed))
+	}))
+	s.T().Cleanup(server.Close)
+	return server.URL + "/owa/calendar/" + strings.Repeat("a", 60) + "/"
+}
+
+func (s *AccountsSuite) TestAddICalKeepsFeedsWithLongSharedPrefixApart() {
+	prefix := s.feedServer()
+
+	first, err := accounts.AddICal(s.ctx, s.repo, nil, accounts.ICalInput{URL: prefix + "token-one/calendar.ics"})
+	s.Require().NoError(err)
+	second, err := accounts.AddICal(s.ctx, s.repo, nil, accounts.ICalInput{URL: prefix + "token-two/calendar.ics"})
+	s.Require().NoError(err)
+	s.NotEqual(first.AccountID, second.AccountID)
+
+	again, err := accounts.AddICal(s.ctx, s.repo, nil, accounts.ICalInput{URL: prefix + "token-one/calendar.ics"})
+	s.Require().NoError(err)
+	s.Equal(first.AccountID, again.AccountID, "re-adding the same feed must stay idempotent")
+
+	all, err := s.repo.ListAccountsByKind(s.ctx, account.KindIcal)
+	s.Require().NoError(err)
+	s.Len(all, 2)
+	for _, acc := range all {
+		s.LessOrEqual(len(acc.ID), 64)
+		s.Contains([]string{first.AccountID, second.AccountID}, acc.ID)
+	}
+}
+
+func (s *AccountsSuite) TestAddICalReusesLegacyTruncatedID() {
+	feedURL := s.feedServer() + "token-one/calendar.ics"
+	parsed, err := url.Parse(feedURL)
+	s.Require().NoError(err)
+	legacyID := ("ical:" + parsed.Host + parsed.Path)[:64]
+	_, err = s.repo.CreateAccount(s.ctx, repo.CreateAccountInput{
+		ID:          legacyID,
+		Kind:        account.KindIcal,
+		DisplayName: "Legacy",
+		Settings:    map[string]any{"url": feedURL},
+	})
+	s.Require().NoError(err)
+
+	res, err := accounts.AddICal(s.ctx, s.repo, nil, accounts.ICalInput{URL: feedURL})
+	s.Require().NoError(err)
+	s.Equal(legacyID, res.AccountID)
+
+	all, err := s.repo.ListAccountsByKind(s.ctx, account.KindIcal)
+	s.Require().NoError(err)
+	s.Len(all, 1)
+}
+
+func (s *AccountsSuite) TestAddICalShortFeedKeepsReadableID() {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		_, _ = w.Write([]byte(icalFeed))
+	}))
+	s.T().Cleanup(server.Close)
+	parsed, err := url.Parse(server.URL)
+	s.Require().NoError(err)
+
+	res, err := accounts.AddICal(s.ctx, s.repo, nil, accounts.ICalInput{URL: server.URL + "/team.ics"})
+	s.Require().NoError(err)
+	s.Equal("ical:"+parsed.Host+"/team.ics", res.AccountID)
 }
 
 func (s *AccountsSuite) TestDeleteRemovesAccountAndSecrets() {
