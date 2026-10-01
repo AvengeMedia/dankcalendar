@@ -497,6 +497,34 @@ Singleton {
         return calendars.filter(c => !c.syncDisabled && _holdsEvents(c));
     }
 
+    function eventCalendarGroups() {
+        const groups = [];
+        const byAccount = {};
+        const groupFor = accountId => {
+            if (byAccount[accountId])
+                return byAccount[accountId];
+            const group = {
+                "account": accountById(accountId),
+                "calendars": []
+            };
+            byAccount[accountId] = group;
+            groups.push(group);
+            return group;
+        };
+        for (let i = 0; i < accounts.length; i++)
+            groupFor(accounts[i].id);
+        const cals = eventCalendars();
+        for (let i = 0; i < cals.length; i++)
+            groupFor(cals[i].accountId || "").calendars.push(cals[i]);
+        for (let g = 0; g < groups.length; g++)
+            groups[g].calendars = _shownFirst(groups[g].calendars);
+        return groups.filter(group => group.calendars.length > 0);
+    }
+
+    function _shownFirst(cals) {
+        return cals.filter(c => !c.hidden).concat(cals.filter(c => c.hidden));
+    }
+
     function defaultCalendar() {
         const writable = writableCalendars().filter(c => !c.hidden);
         return writable.length > 0 ? writable[0] : null;
