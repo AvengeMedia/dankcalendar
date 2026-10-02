@@ -766,9 +766,11 @@ FloatingWindow {
 
                     Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.outlineWidthFocused : Theme.dividerWidth
+                        width: Theme.outlineWidthFocused
                         height: parent.height
-                        color: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.primary : Theme.outlineVariant
+                        radius: Theme.fullRadius(width, height)
+                        color: Theme.primary
+                        visible: resizeArea.containsMouse || sidebarResizer.dragging
                     }
 
                     MouseArea {
@@ -802,11 +804,16 @@ FloatingWindow {
                     }
                 }
 
-                Item {
+                Rectangle {
                     anchors.left: window.sidebarVisible ? sidebar.right : parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
+                    anchors.leftMargin: window.sidebarVisible ? 0 : Theme.windowInset
+                    anchors.rightMargin: Theme.windowInset
+                    anchors.bottomMargin: Theme.windowInset
+                    radius: Theme.cornerRadiusL
+                    color: Theme.floatingWindowPaneSurface
                     clip: true
 
                     CalendarContent {

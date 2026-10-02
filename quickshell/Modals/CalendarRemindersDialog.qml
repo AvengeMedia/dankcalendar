@@ -231,12 +231,6 @@ DankOverlayDialog {
             enabled: orow.overridden
             opacity: orow.overridden ? 1 : Theme.pendingOpacity
         }
-
-        Rectangle {
-            width: parent.width
-            height: Theme.dividerWidth
-            color: Theme.outlineVariant
-        }
     }
 
     StyledText {

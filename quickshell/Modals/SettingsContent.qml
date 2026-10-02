@@ -279,8 +279,32 @@ Item {
         return options[0].value;
     }
 
+    readonly property var pageTitles: [I18n.tr("General", "general settings section header"), I18n.tr("Appearance", "appearance settings section header"), I18n.tr("Calendars", "calendars settings section header"), I18n.tr("Accounts", "accounts settings section header"), I18n.tr("Notifications", "notifications settings section header"), I18n.tr("About", "settings sidebar tab label")]
+
+    Item {
+        id: pageHeader
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: Math.max(SettingsMetrics.pageHeaderHeight, pageHeading.implicitHeight + Theme.spacingM * 2)
+
+        StyledText {
+            id: pageHeading
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            text: root.pageTitles[root.currentIndex] ?? ""
+            font.pixelSize: Theme.fontSizeXXLarge
+            color: Theme.surfaceText
+            wrapMode: Text.WordWrap
+        }
+    }
+
     Loader {
-        anchors.fill: parent
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: pageHeader.bottom
+        anchors.bottom: parent.bottom
         sourceComponent: {
             switch (root.currentIndex) {
             case 0:
@@ -302,24 +326,12 @@ Item {
     }
 
     component PageHeader: Column {
-        property string title: ""
         property string subtitle: ""
 
         width: parent.width
-        spacing: Theme.spacingXS
-        bottomPadding: Theme.spacingS
+        visible: subtitle !== ""
 
         StyledText {
-            text: parent.title
-            font.pixelSize: Theme.fontSizeXLarge
-            font.weight: Theme.fontWeightMedium
-            color: Theme.surfaceText
-            width: parent.width
-            horizontalAlignment: Text.AlignLeft
-        }
-
-        StyledText {
-            visible: text !== ""
             text: parent.subtitle
             font.pixelSize: Theme.fontSizeMedium
             color: Theme.surfaceVariantText
@@ -345,15 +357,12 @@ Item {
         id: generalPage
         SettingsPage {
             PageHeader {
-                title: I18n.tr("General", "general settings section header")
                 subtitle: I18n.tr("Defaults follow your locale unless overridden.", "general settings section subtitle")
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("App", "general settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("App", "general settings section label")
                 SettingsToggleRow {
                     text: I18n.tr("Start at login", "autostart setting label")
                     description: I18n.tr("Launch Dank Calendar in the background when you log in.", "autostart setting description")
@@ -391,11 +400,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Language and time", "general settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Language and time", "general settings section label")
                 OptionDropdownRow {
                     text: I18n.tr("Language", "interface language setting label")
                     description: I18n.tr("Language of the interface.", "interface language setting description")
@@ -455,11 +462,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Views", "general settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Views", "general settings section label")
                 SettingsToggleRow {
                     text: I18n.tr("Enable core hours", "core hours toggle label")
                     description: I18n.tr("Limit the day and week views to a set hour range.", "core hours toggle description")
@@ -548,11 +553,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("New events", "general settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("New events", "general settings section label")
                 OptionDropdownRow {
                     text: I18n.tr("Default event duration", "default event duration setting label")
                     description: I18n.tr("Length used when creating events.", "default event duration setting description")
@@ -587,15 +590,12 @@ Item {
             }
 
             PageHeader {
-                title: I18n.tr("Appearance", "appearance settings section header")
                 subtitle: I18n.tr("Pick a color source, palette, or your own theme file.", "appearance settings section subtitle")
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Theme", "appearance settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Theme", "appearance settings section label")
                 SettingsButtonGroupRow {
                     text: I18n.tr("Theme", "theme mode setting label")
                     description: {
@@ -743,11 +743,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Shape", "appearance settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Shape", "appearance settings section label")
                 SettingsSliderRow {
                     text: I18n.tr("Radius strength", "global component corner rounding")
                     description: I18n.tr("50 uses Material shapes. Lower values reduce rounding; higher values increase it.", "radius strength slider description")
@@ -760,11 +758,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Typography", "appearance settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Typography", "appearance settings section label")
                 SettingsSliderRow {
                     text: I18n.tr("Weight", "font weight slider label")
                     minimum: Font.Thin
@@ -786,11 +782,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Motion", "appearance settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Motion", "appearance settings section label")
                 SettingsSliderRow {
                     text: I18n.tr("Duration", "animation duration slider label")
                     minimumLabel: I18n.tr("Off", "animation duration slider label at zero")
@@ -825,11 +819,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Focus ring", "appearance settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Focus ring", "appearance settings section label")
                 SettingsToggleRow {
                     text: I18n.tr("Focus ring", "focus ring toggle label")
                     description: I18n.tr("Outline the control that has keyboard focus.", "focus ring toggle description")
@@ -909,7 +901,6 @@ Item {
             property var actionCalendar: null
 
             PageHeader {
-                title: I18n.tr("Calendars", "calendars settings section header")
                 subtitle: I18n.tr("Visibility, names, and removal per calendar.", "calendars settings section subtitle")
             }
 
@@ -968,12 +959,11 @@ Item {
                 horizontalAlignment: Text.AlignLeft
             }
 
-            SettingsSectionLabel {
-                visible: DankCalService.calendars.length > 0
-                text: I18n.tr("Calendars", "calendars settings section header")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                visible: DankCalService.calendars.length > 0
+
+                title: I18n.tr("Calendars", "calendars settings section header")
                 Repeater {
                     model: ScriptModel {
                         values: DankCalService.calendars
@@ -1121,7 +1111,6 @@ Item {
             }
 
             PageHeader {
-                title: I18n.tr("Accounts", "accounts settings section header")
                 subtitle: DankCalService.connected ? I18n.tr("Connected calendar providers.", "accounts settings section subtitle") : I18n.tr("Backend not connected.", "accounts settings section subtitle")
             }
 
@@ -1277,7 +1266,6 @@ Item {
         id: notificationsPage
         SettingsPage {
             PageHeader {
-                title: I18n.tr("Notifications", "notifications settings section header")
                 subtitle: I18n.tr("Reminders and desktop alerts.", "notifications settings section subtitle")
             }
 
@@ -1316,11 +1304,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("All-day events", "notifications settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("All-day events", "notifications settings section label")
                 SettingsToggleRow {
                     text: I18n.tr("Show all-day reminders", "all-day reminders toggle label")
                     description: I18n.tr("Notify for all-day events without their own reminders.", "all-day reminders toggle description")
@@ -1355,11 +1341,9 @@ Item {
                 }
             }
 
-            SettingsSectionLabel {
-                text: I18n.tr("Diagnostics", "notifications settings section label")
-            }
+            SettingsCard {
 
-            SettingsGroup {
+                title: I18n.tr("Diagnostics", "notifications settings section label")
                 SettingsRow {
                     title: I18n.tr("Test notification", "test notification setting label")
                     subtitle: DankCalService.connected ? I18n.tr("Verify desktop notifications are working.", "test notification setting description") : I18n.tr("Backend not connected.", "test notification setting description when backend is unavailable")

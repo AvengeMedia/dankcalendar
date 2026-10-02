@@ -580,7 +580,7 @@ FloatingWindow {
 
         Item {
             width: parent.width
-            height: parent.height - header.height - (footer.visible ? footer.height + Theme.dividerWidth : 0)
+            height: parent.height - header.height - (footer.visible ? footer.height : 0)
 
             Loader {
                 id: contentLoader
@@ -590,18 +590,16 @@ FloatingWindow {
             }
         }
 
-        Rectangle {
-            width: parent.width
-            height: Theme.dividerWidth
-            color: Theme.outlineVariant
-            visible: footer.visible
-        }
-
         Item {
             id: footer
             width: parent.width
             height: Theme.buttonHeightS + Theme.spacingM * 2
             visible: eventModal.editMode
+
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.floatingWindowPaneSurface
+            }
 
             StyledText {
                 anchors.left: parent.left

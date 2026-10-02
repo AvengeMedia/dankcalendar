@@ -335,6 +335,7 @@ Singleton {
     property real spacingXS: 4
     property real spacingS: 8
     property real spacingM: 12
+    readonly property real windowInset: spacingM
     property real spacingL: 16
     property real spacingXL: 24
 
@@ -515,6 +516,7 @@ Singleton {
     readonly property real floatingWindowForegroundAlpha: Surface.foregroundAlpha(floatingWindowForegroundLayers, floatingWindowForegroundTransparency)
     readonly property color floatingWindowSurface: withAlpha(surfaceContainer, floatingWindowTransparency)
     readonly property color floatingWindowNestedSurface: withAlpha(surfaceContainerHigh, floatingWindowForegroundAlpha)
+    readonly property color floatingWindowPaneSurface: withAlpha(surfaceContainer, floatingWindowForegroundAlpha)
     readonly property color floatingWindowFieldColor: floatingWindowNestedSurface
     readonly property color floatingWindowFieldBorderColor: withAlpha(outline, 0.16)
     readonly property color floatingWindowFieldFocusedBorderColor: primary

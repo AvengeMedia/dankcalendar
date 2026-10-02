@@ -87,17 +87,8 @@ Item {
 
     implicitWidth: SettingsMetrics.sidebarWidth
 
-    Rectangle {
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        width: Theme.dividerWidth
-        color: Theme.outlineVariant
-    }
-
     DankFlickable {
         anchors.fill: parent
-        anchors.rightMargin: Theme.dividerWidth
         clip: true
         contentWidth: width
         contentHeight: navColumn.height
@@ -105,7 +96,8 @@ Item {
         Column {
             id: navColumn
             width: parent.width
-            padding: Theme.spacingL
+            padding: SettingsMetrics.paneMargin
+            topPadding: 0
             spacing: SettingsMetrics.sidebarGroupGap
 
             Repeater {

@@ -300,16 +300,7 @@ FloatingWindow {
                 anchors.right: parent.right
                 controls: windowControls
                 title: accountModal.selectedProvider === "" ? I18n.tr("Add account", "account add modal header title") : I18n.tr("Connect %1", "account add header when a provider is selected").arg(accountModal.providerName(accountModal.selectedProvider))
-                showDivider: false
                 onCloseRequested: accountModal.hide()
-            }
-
-            Rectangle {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                height: Theme.dividerWidth
-                color: Theme.outlineVariant
             }
         }
 

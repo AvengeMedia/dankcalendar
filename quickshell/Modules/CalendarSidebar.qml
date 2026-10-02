@@ -484,7 +484,8 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: Theme.spacingM
+        anchors.margins: Theme.windowInset
+        anchors.topMargin: 0
         spacing: Theme.spacingL
 
         DankButton {

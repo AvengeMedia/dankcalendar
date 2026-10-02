@@ -207,16 +207,9 @@ Item {
             }
         }
 
-        Rectangle {
-            id: toolbarDivider
-            width: parent.width
-            height: Theme.dividerWidth
-            color: Theme.outlineVariant
-        }
-
         Item {
             width: parent.width
-            height: parent.height - toolbar.height - toolbarDivider.height
+            height: parent.height - toolbar.height
 
             Loader {
                 id: viewLoader

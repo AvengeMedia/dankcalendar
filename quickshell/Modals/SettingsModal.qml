@@ -111,14 +111,27 @@ FloatingWindow {
 
                 FocusScope {
                     id: contentScope
+
+                    readonly property real paneInset: SettingsMetrics.paneMargin
+
                     anchors.left: settingsModal.isCompactMode ? (settingsModal.menuVisible ? sidebar.right : parent.left) : sidebar.right
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    clip: true
+                    anchors.leftMargin: settingsModal.isCompactMode ? paneInset : 0
+                    anchors.rightMargin: paneInset
+                    anchors.bottomMargin: paneInset
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: SettingsMetrics.paneRadius
+                        color: SettingsMetrics.paneColor
+                    }
 
                     SettingsContent {
                         anchors.fill: parent
+                        anchors.leftMargin: SettingsMetrics.panePadding
+                        anchors.rightMargin: SettingsMetrics.panePadding
                         currentIndex: settingsModal.currentTabIndex
                         hostWindow: settingsModal
                         onAddAccountRequested: settingsModal.addAccountRequested()

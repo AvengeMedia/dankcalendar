@@ -171,7 +171,7 @@ FloatingWindow {
 
         Item {
             width: parent.width
-            height: parent.height - header.height - footer.height - Theme.dividerWidth
+            height: parent.height - header.height - footer.height
 
             DankFlickable {
                 anchors.fill: parent
@@ -302,16 +302,15 @@ FloatingWindow {
             }
         }
 
-        Rectangle {
-            width: parent.width
-            height: Theme.dividerWidth
-            color: Theme.outlineVariant
-        }
-
         Item {
             id: footer
             width: parent.width
             height: Theme.buttonHeightS + Theme.spacingM * 2
+
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.floatingWindowPaneSurface
+            }
 
             StyledText {
                 anchors.left: parent.left
