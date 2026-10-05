@@ -2,7 +2,7 @@ import QtQuick
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -52,7 +52,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            DankButton {
+            DButton {
                 visible: ToastService.actionLabel !== ""
                 text: ToastService.actionLabel
                 buttonHeight: Theme.buttonHeightXS

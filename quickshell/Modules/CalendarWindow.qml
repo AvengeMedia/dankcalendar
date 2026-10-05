@@ -4,7 +4,7 @@ import qs.Common
 import qs.Modals
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 import "../Common/EventUtils.js" as EventUtils
 
 FloatingWindow {
@@ -699,7 +699,7 @@ FloatingWindow {
             anchors.fill: parent
             spacing: 0
 
-            DankWindowHeader {
+            DWindowHeader {
                 id: header
                 width: parent.width
                 z: 10

@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -92,7 +92,7 @@ Item {
         return out;
     }
 
-    DankFlickable {
+    DFlickable {
         id: agendaFlickable
         anchors.fill: parent
         contentWidth: width
@@ -234,7 +234,7 @@ Item {
                                         spacing: Theme.spacingXS
                                         visible: card.modelData.location !== ""
 
-                                        DankIcon {
+                                        DIcon {
                                             id: locationIcon
                                             name: "place"
                                             size: Theme.iconSizeSmall

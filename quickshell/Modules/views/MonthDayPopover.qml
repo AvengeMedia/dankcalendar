@@ -4,7 +4,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -124,7 +124,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            DankListView {
+            DListView {
                 width: parent.width
                 height: popup.height - root.headerHeight - popup.topPadding - popup.bottomPadding
                 clip: true

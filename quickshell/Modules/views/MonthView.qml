@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -132,7 +132,7 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: chipTooltip
     }
 

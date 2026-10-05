@@ -33,7 +33,7 @@ dankcalendar/
 │   ├── Services/       # IPC bridge and shell-side state
 │   ├── Widgets/        # Calendar-specific Dank UI controls
 │   ├── Common/         # Shared resources, themes, and i18n
-│   ├── DankCommon/     # → symlink into the dank-qml-common submodule
+│   ├── DCommon/     # → symlink into the dank-qml-common submodule
 │   └── translations/   # POEditor-managed string catalogs
 ├── dank-qml-common/    # Shared DMS widget library (git submodule)
 ├── core/               # Go backend, daemon, and CLI
@@ -259,7 +259,7 @@ make fmt            # format Go code
 make update-common  # bump the dank-qml-common submodule + nix flake input together
 ```
 
-Shared widgets (`quickshell/DankCommon/`) live in the
+Shared widgets (`quickshell/DCommon/`) live in the
 [dank-qml-common](https://github.com/AvengeMedia/dank-qml-common) submodule —
 edit them in place, they hot-reload like any other QML, but they are committed
 and PR'd in that repo. See CONTRIBUTING for the workflow.

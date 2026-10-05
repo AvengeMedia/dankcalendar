@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 FloatingWindow {
     id: settingsModal
@@ -72,7 +72,7 @@ FloatingWindow {
             anchors.fill: parent
             spacing: 0
 
-            DankWindowHeader {
+            DWindowHeader {
                 id: header
                 width: parent.width
                 z: 10
@@ -80,7 +80,7 @@ FloatingWindow {
                 title: I18n.tr("Settings", "settings window header title")
                 onCloseRequested: settingsModal.hide()
 
-                DankActionButton {
+                DActionButton {
                     visible: settingsModal.isCompactMode
                     iconName: "menu"
                     buttonSize: Theme.buttonHeightXXS

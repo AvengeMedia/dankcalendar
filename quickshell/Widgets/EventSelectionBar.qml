@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -115,7 +115,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingS
 
-            DankIcon {
+            DIcon {
                 name: "select_all"
                 size: Theme.iconSize
                 color: Theme.primary
@@ -152,7 +152,7 @@ Item {
                         anchors.centerIn: parent
                         spacing: 0
 
-                        DankIcon {
+                        DIcon {
                             name: action.modelData.icon
                             size: Theme.iconSizeMedium
                             color: action.contentColor

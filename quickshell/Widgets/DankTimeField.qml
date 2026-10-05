@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -163,7 +163,7 @@ Item {
             }
         }
 
-        DankActionButton {
+        DActionButton {
             id: pickerButton
             anchors.right: parent.right
             anchors.rightMargin: Theme.spacingXS
@@ -204,7 +204,7 @@ Item {
                 }
             }
 
-            contentItem: DankTimePicker {
+            contentItem: DTimePicker {
                 id: timePicker
                 focus: true
                 is24Hour: root.use24Hour

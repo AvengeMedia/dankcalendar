@@ -2,7 +2,7 @@ import QtQuick
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 DankOverlayDialog {
     id: root
@@ -39,7 +39,7 @@ DankOverlayDialog {
     supportingText: account ? I18n.tr("Adds a calendar to \"%1\".", "new calendar dialog subtitle naming the local account").arg(DankCalService.accountLabel(account)) : ""
     onAccepted: submit()
 
-    DankTextField {
+    DTextField {
         id: nameField
         width: parent.width
         outlined: true
@@ -53,13 +53,13 @@ DankOverlayDialog {
     }
 
     actions: [
-        DankButton {
+        DButton {
             text: I18n.tr("Cancel", "new calendar dialog button to cancel")
             backgroundColor: Theme.secondaryContainer
             textColor: Theme.onSecondaryContainer
             onClicked: root.close()
         },
-        DankButton {
+        DButton {
             text: I18n.tr("Create", "new calendar dialog button to create the calendar")
             backgroundColor: Theme.primary
             textColor: Theme.primaryText

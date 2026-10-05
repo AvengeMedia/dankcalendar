@@ -26,7 +26,7 @@ Singleton {
     readonly property bool isRtl: _rtlLanguages.includes(_lang)
 
     readonly property url translationsFolder: Qt.resolvedUrl("../translations/poexports")
-    readonly property url commonTranslationsFolder: Qt.resolvedUrl("../DankCommon/translations/poexports")
+    readonly property url commonTranslationsFolder: Qt.resolvedUrl("../DCommon/translations/poexports")
 
     property var presentLocales: ({
             "en": Qt.locale("en")
@@ -104,9 +104,9 @@ Singleton {
             try {
                 root.commonTranslations = JSON.parse(text());
                 root.commonTranslationsLoaded = true;
-                root.log.info(`Loaded DankCommon translations (${Object.keys(root.commonTranslations).length} contexts)`);
+                root.log.info(`Loaded DCommon translations (${Object.keys(root.commonTranslations).length} contexts)`);
             } catch (e) {
-                root.log.warn("Error parsing DankCommon translations:", e);
+                root.log.warn("Error parsing DCommon translations:", e);
             }
         }
     }

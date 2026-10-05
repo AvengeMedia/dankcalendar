@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Window
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -71,7 +71,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingS
 
-            DankIcon {
+            DIcon {
                 name: root.iconName
                 size: Theme.iconSizeMedium
                 color: popup.visible ? Theme.primary : Theme.surfaceVariantText
@@ -171,7 +171,7 @@ Item {
                 width: parent.width
                 height: Theme.buttonHeightXS
 
-                DankActionButton {
+                DActionButton {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
@@ -187,7 +187,7 @@ Item {
                     font.weight: Theme.fontWeightMedium
                 }
 
-                DankActionButton {
+                DActionButton {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
@@ -197,7 +197,7 @@ Item {
                 }
             }
 
-            DankMonthGrid {
+            DMonthGrid {
                 id: grid
                 width: parent.width
                 height: root.cellSize * 6 + cellGap * 6 + weekdayRowHeight

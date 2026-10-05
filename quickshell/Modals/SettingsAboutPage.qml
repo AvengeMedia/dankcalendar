@@ -4,7 +4,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: aboutPage
@@ -29,7 +29,7 @@ Item {
         return `dankcalendar ${version}`;
     }
 
-    DankFlickable {
+    DFlickable {
         anchors.fill: parent
         clip: true
         contentHeight: mainColumn.height + Theme.spacingXL
@@ -119,7 +119,7 @@ Item {
 
                         property bool compactMode: parent.width < 450
 
-                        DankButton {
+                        DButton {
                             id: docsButton
                             text: resourceButtonsRow.compactMode ? "" : I18n.tr("Docs", "about page resource button")
                             iconName: "menu_book"
@@ -136,7 +136,7 @@ Item {
                             }
                         }
 
-                        DankButton {
+                        DButton {
                             id: githubButton
                             text: resourceButtonsRow.compactMode ? "" : I18n.tr("GitHub", "about page resource button")
                             iconName: "code"
@@ -153,7 +153,7 @@ Item {
                             }
                         }
 
-                        DankButton {
+                        DButton {
                             id: kofiButton
                             text: resourceButtonsRow.compactMode ? "" : I18n.tr("Ko-fi", "about page resource button")
                             iconName: "favorite"
@@ -171,7 +171,7 @@ Item {
                         }
                     }
 
-                    DankTooltipV2 {
+                    DTooltipV2 {
                         id: resourceTooltip
                     }
 
@@ -218,7 +218,7 @@ Item {
                         width: parent.width
                         spacing: Theme.spacingM
 
-                        DankIcon {
+                        DIcon {
                             name: "info"
                             size: Theme.iconSize
                             color: Theme.primary
@@ -271,7 +271,7 @@ Item {
                         width: parent.width
                         spacing: Theme.spacingM
 
-                        DankIcon {
+                        DIcon {
                             name: "dns"
                             size: Theme.iconSize
                             color: Theme.primary

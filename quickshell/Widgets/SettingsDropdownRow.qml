@@ -1,6 +1,6 @@
 import QtQuick
 import qs.Common
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 SettingsRow {
     id: root
@@ -23,7 +23,7 @@ SettingsRow {
     subtitle: description
     onCurrentValueChanged: dropdown.currentValue = currentValue
 
-    DankDropdown {
+    DDropdown {
         id: dropdown
         enabled: root.enabled
         backgroundColor: SettingsMetrics.controlSurface

@@ -4,14 +4,14 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import qs.DankCommon.Common
+import qs.DCommon.Common
 import qs.Services
 import "StockTheme.js" as StockTheme
-import "../DankCommon/Common/Shape.js" as Shape
-import "../DankCommon/Common/Surface.js" as Surface
-import "../DankCommon/Common/Contrast.js" as Contrast
-import "../DankCommon/Common/Accents.js" as Accents
-import "../DankCommon/Common/Tonal.js" as Tonal
+import "../DCommon/Common/Shape.js" as Shape
+import "../DCommon/Common/Surface.js" as Surface
+import "../DCommon/Common/Contrast.js" as Contrast
+import "../DCommon/Common/Accents.js" as Accents
+import "../DCommon/Common/Tonal.js" as Tonal
 
 Singleton {
     id: root

@@ -1,7 +1,7 @@
 import QtQuick
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 DankOverlayDialog {
     id: root
@@ -228,7 +228,7 @@ DankOverlayDialog {
                 Repeater {
                     model: group.modelData.rows
 
-                    DankListRow {
+                    DListRow {
                         id: row
                         required property var modelData
                         required property int index
@@ -259,7 +259,7 @@ DankOverlayDialog {
                             Repeater {
                                 model: row.modelData.keys
 
-                                DankKeycap {
+                                DKeycap {
                                     required property string modelData
                                     text: modelData
                                 }

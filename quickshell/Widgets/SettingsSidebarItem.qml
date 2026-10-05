@@ -1,6 +1,6 @@
 import QtQuick
 import qs.Common
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Rectangle {
     id: root
@@ -81,7 +81,7 @@ Rectangle {
         }
     }
 
-    DankRipple {
+    DRipple {
         id: ripple
         rippleColor: Theme.surfaceText
         topLeftRadius: root.topRadius
@@ -122,7 +122,7 @@ Rectangle {
             }
         }
 
-        DankIcon {
+        DIcon {
             anchors.centerIn: parent
             name: root.iconName
             size: Theme.iconSizeMedium

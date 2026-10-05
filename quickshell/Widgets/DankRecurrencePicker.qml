@@ -2,7 +2,7 @@ import QtQuick
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Column {
     id: root
@@ -244,7 +244,7 @@ Column {
         byDays = days;
     }
 
-    DankDropdown {
+    DDropdown {
         width: parent.width
         triggerHeight: Theme.fieldHeightLarge
         options: root.presetOptions.map(o => o.label)
@@ -273,7 +273,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        DankTextField {
+        DTextField {
             width: root.numberFieldWidth
             text: String(root.interval)
             onTextChanged: {
@@ -287,7 +287,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        DankDropdown {
+        DDropdown {
             width: parent.width - everyLabel.implicitWidth - root.numberFieldWidth - Theme.spacingM * 2
             options: root.unitOptions.map(o => o.label)
             currentValue: root._optionLabel(root.unitOptions, root.customFreq)
@@ -367,7 +367,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        DankDropdown {
+        DDropdown {
             id: endDropdown
             width: (parent.width - endsLabel.implicitWidth - Theme.spacingM * 2) * 0.4
             options: root.endOptions.map(o => o.label)
@@ -384,7 +384,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        DankTextField {
+        DTextField {
             width: root.numberFieldWidth
             visible: root.endMode === "count"
             text: String(root.count)

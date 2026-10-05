@@ -2,7 +2,7 @@ import QtQuick
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 DankOverlayDialog {
     id: root
@@ -216,7 +216,7 @@ DankOverlayDialog {
                     color: orow.overridden ? Theme.primary : Theme.surfaceVariantText
                 }
 
-                DankToggle {
+                DToggle {
                     anchors.verticalCenter: parent.verticalCenter
                     checked: orow.overridden
                     onToggled: checked => orow.overrideChanged(checked)
@@ -247,7 +247,7 @@ DankOverlayDialog {
         overridden: root.ovrEnabled
         onOverrideChanged: on => root.ovrEnabled = on
 
-        DankToggle {
+        DToggle {
             checked: root.ovrEnabled ? root.valEnabled : SettingsData.remindersEnabled
             enabled: root.ovrEnabled
             onToggled: checked => root.valEnabled = checked
@@ -259,7 +259,7 @@ DankOverlayDialog {
         overridden: root.ovrPersist
         onOverrideChanged: on => root.ovrPersist = on
 
-        DankToggle {
+        DToggle {
             checked: root.ovrPersist ? root.valPersist : SettingsData.reminderPersist
             enabled: root.ovrPersist
             onToggled: checked => root.valPersist = checked
@@ -271,7 +271,7 @@ DankOverlayDialog {
         overridden: root.ovrDefault
         onOverrideChanged: on => root.ovrDefault = on
 
-        DankDropdown {
+        DDropdown {
             dropdownWidth: Theme.fieldDefaultWidth
             options: root.optionLabels(root.reminderOptions)
             currentValue: root.labelForValue(root.reminderOptions, root.ovrDefault ? root.valDefault : SettingsData.defaultReminderMinutes)
@@ -284,7 +284,7 @@ DankOverlayDialog {
         overridden: root.ovrSnooze
         onOverrideChanged: on => root.ovrSnooze = on
 
-        DankDropdown {
+        DDropdown {
             dropdownWidth: Theme.fieldDefaultWidth
             options: root.optionLabels(root.snoozeOptions)
             currentValue: root.labelForValue(root.snoozeOptions, root.ovrSnooze ? root.valSnooze : SettingsData.snoozeMinutes)
@@ -297,7 +297,7 @@ DankOverlayDialog {
         overridden: root.ovrAllDay
         onOverrideChanged: on => root.ovrAllDay = on
 
-        DankToggle {
+        DToggle {
             checked: root.ovrAllDay ? root.valAllDay : SettingsData.allDayReminders
             enabled: root.ovrAllDay
             onToggled: checked => root.valAllDay = checked
@@ -317,7 +317,7 @@ DankOverlayDialog {
             width: parent.width
             spacing: Theme.spacingS
 
-            DankDropdown {
+            DDropdown {
                 id: allDayDaysDropdown
                 dropdownWidth: Theme.fieldDefaultWidth
                 options: root.optionLabels(root.allDayDayOptions)
@@ -335,19 +335,19 @@ DankOverlayDialog {
     }
 
     actions: [
-        DankButton {
+        DButton {
             text: I18n.tr("Reset to global", "per-calendar reminders dialog button to clear overrides")
             backgroundColor: "transparent"
             textColor: Theme.primary
             onClicked: root.resetToGlobal()
         },
-        DankButton {
+        DButton {
             text: I18n.tr("Cancel", "per-calendar reminders dialog button to cancel")
             backgroundColor: Theme.secondaryContainer
             textColor: Theme.onSecondaryContainer
             onClicked: root.close()
         },
-        DankButton {
+        DButton {
             text: I18n.tr("Save", "per-calendar reminders dialog button to save")
             backgroundColor: Theme.primary
             textColor: Theme.primaryText

@@ -4,7 +4,7 @@ import qs.Common
 import qs.Modals
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -441,7 +441,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingXS
 
-            DankIcon {
+            DIcon {
                 name: "expand_more"
                 size: Theme.iconSizeSmall
                 color: Theme.surfaceVariantText
@@ -471,11 +471,11 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: calTooltip
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: authTooltip
     }
 
@@ -488,7 +488,7 @@ Item {
         anchors.topMargin: 0
         spacing: Theme.spacingL
 
-        DankButton {
+        DButton {
             width: parent.width
             text: I18n.tr("Create event", "sidebar button to create a new event")
             iconName: "add"
@@ -527,7 +527,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: Theme.spacingM
 
-                        DankIcon {
+                        DIcon {
                             name: viewRow.modelData.icon
                             size: Theme.iconSizeMedium
                             color: viewRow.active ? viewRow.contentColor : Theme.surfaceVariantText
@@ -552,7 +552,7 @@ Item {
         }
     }
 
-    DankFlickable {
+    DFlickable {
         id: scroll
         anchors.top: topSection.bottom
         anchors.topMargin: Theme.spacingL
@@ -693,7 +693,7 @@ Item {
                                         }
                                     }
 
-                                    DankActionButton {
+                                    DActionButton {
                                         id: moreButton
                                         readonly property bool menuOpenHere: calendarMenu.opened && (root.actionCalendar ? root.actionCalendar.id : "") === calRow.modelData.id
                                         anchors.right: parent.right
@@ -844,7 +844,7 @@ Item {
                     }
                 }
 
-                DankButton {
+                DButton {
                     visible: root.tasksExpanded && DankCalService.taskListCalendars().length > 0
                     width: parent.width
                     text: I18n.tr("Add task", "sidebar button to add a task")
@@ -920,7 +920,7 @@ Item {
                                 onClicked: mouse => accRow.openMenu(mouse.x, mouse.y)
                             }
 
-                            DankIcon {
+                            DIcon {
                                 id: authWarning
                                 visible: !accRow.authorized
                                 anchors.right: accMoreButton.left
@@ -948,7 +948,7 @@ Item {
                                 }
                             }
 
-                            DankActionButton {
+                            DActionButton {
                                 id: accMoreButton
                                 readonly property bool menuOpenHere: accountMenu.opened && (root.actionAccount ? root.actionAccount.id : "") === accRow.modelData.id
                                 anchors.right: parent.right
@@ -979,7 +979,7 @@ Item {
                                 anchors.verticalCenter: parent.verticalCenter
                                 spacing: Theme.spacingM
 
-                                DankIcon {
+                                DIcon {
                                     name: root.providerIcon(accRow.flavor)
                                     size: Theme.iconSizeMedium
                                     color: accRow.authorized ? Theme.surfaceVariantText : Theme.error
@@ -1019,7 +1019,7 @@ Item {
                     }
                 }
 
-                DankButton {
+                DButton {
                     visible: root.accountsExpanded
                     width: parent.width
                     text: I18n.tr("Add account", "sidebar button to add a provider account")

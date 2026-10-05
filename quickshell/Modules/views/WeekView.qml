@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 import "../../Common/EventUtils.js" as EventUtils
 
 Item {
@@ -213,7 +213,7 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: chipTooltip
     }
 
@@ -326,7 +326,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.spacingS
 
-                DankIcon {
+                DIcon {
                     name: "warning"
                     size: Theme.iconSizeSmall
                     color: Theme.warning
@@ -341,7 +341,7 @@ Item {
                 }
             }
 
-            DankButton {
+            DButton {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.spacingM
                 anchors.verticalCenter: parent.verticalCenter
@@ -598,7 +598,7 @@ Item {
                             width: root.dayWidth
                             height: parent.height
 
-                            DankIcon {
+                            DIcon {
                                 visible: {
                                     root.eventsVersion;
                                     return root.hiddenInfoFor(parent.d).before;
@@ -614,7 +614,7 @@ Item {
             }
         }
 
-        DankFlickable {
+        DFlickable {
             id: weekFlickable
             width: parent.width
             height: parent.height - 56 - coreHoursWarning.height - hiddenBeforeStrip.height - allDayRow.height
@@ -738,7 +738,7 @@ Item {
                                     onCreateRequested: (start, end) => root.createTimedRequested(start, end)
                                 }
 
-                                DankIcon {
+                                DIcon {
                                     visible: {
                                         root.eventsVersion;
                                         return root.hiddenInfoFor(root.dayAt(dayColumn.index - 1)).after;

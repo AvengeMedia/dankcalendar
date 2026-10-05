@@ -1,10 +1,10 @@
 import QtQuick
 import Quickshell
 import qs.Common
-import qs.DankCommon.FileBrowser
+import qs.DCommon.FileBrowser
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -995,14 +995,14 @@ Item {
                             opacity: calendarRow.modelData.syncDisabled ? SettingsMetrics.disabledOpacity : 1
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             iconName: "edit"
                             tooltipText: I18n.tr("Rename", "calendar row action tooltip")
                             onClicked: calendarRenameDialog.show(calendarRow.modelData)
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             iconName: !!calendarRow.modelData.reminders ? "notifications_active" : "notifications"
                             iconColor: !!calendarRow.modelData.reminders ? Theme.primary : Theme.onSurfaceVariant
@@ -1010,7 +1010,7 @@ Item {
                             onClicked: calendarRemindersDialog.show(calendarRow.modelData)
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: calendarRow.modelData.accountKind !== "local"
                             iconName: calendarRow.modelData.syncDisabled ? "cloud_off" : "cloud"
@@ -1019,7 +1019,7 @@ Item {
                             onClicked: DankCalService.setCalendarSyncDisabled(calendarRow.modelData.id, !calendarRow.modelData.syncDisabled)
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             iconName: "delete_outline"
                             iconColor: Theme.error
@@ -1035,7 +1035,7 @@ Item {
                             }
                         }
 
-                        DankToggle {
+                        DToggle {
                             anchors.verticalCenter: parent.verticalCenter
                             Accessible.name: I18n.tr("Show calendar", "calendar row visibility toggle")
                             checked: !calendarRow.modelData.hidden
@@ -1149,7 +1149,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             color: Theme.withAlpha(accountRow.meta.color, Theme.tonalTintAlpha)
 
-                            DankIcon {
+                            DIcon {
                                 anchors.centerIn: parent
                                 name: accountRow.meta.icon
                                 size: Theme.iconSizeMedium
@@ -1200,7 +1200,7 @@ Item {
                                     }
                                 }
 
-                                DankActionButton {
+                                DActionButton {
                                     anchors.verticalCenter: parent.verticalCenter
                                     buttonSize: Theme.iconSizeMedium
                                     iconSize: Theme.iconSizeSmall
@@ -1211,7 +1211,7 @@ Item {
                             }
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: accountRow.needsReauth
                             iconName: "login"
@@ -1220,14 +1220,14 @@ Item {
                             onClicked: DankCalService.reconnectAccount(accountRow.modelData)
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             iconName: "refresh"
                             tooltipText: I18n.tr("Sync now", "account row action tooltip")
                             onClicked: DankCalService.refreshAccount(accountRow.modelData.id)
                         }
 
-                        DankActionButton {
+                        DActionButton {
                             anchors.verticalCenter: parent.verticalCenter
                             iconName: "delete_outline"
                             iconColor: Theme.error
@@ -1246,7 +1246,7 @@ Item {
                 }
             }
 
-            DankButton {
+            DButton {
                 text: I18n.tr("Add account", "add account button on accounts page")
                 iconName: "add"
                 onClicked: root.addAccountRequested()
@@ -1324,7 +1324,7 @@ Item {
                         width: parent.width
                         spacing: Theme.spacingS
 
-                        DankDropdown {
+                        DDropdown {
                             dropdownWidth: Math.min(Theme.fieldDefaultWidth, parent.width)
                             options: root.optionLabels(root.allDayDayOptions)
                             currentValue: root.labelForValue(root.allDayDayOptions, SettingsData.allDayReminderDaysBefore)
@@ -1348,7 +1348,7 @@ Item {
                     title: I18n.tr("Test notification", "test notification setting label")
                     subtitle: DankCalService.connected ? I18n.tr("Verify desktop notifications are working.", "test notification setting description") : I18n.tr("Backend not connected.", "test notification setting description when backend is unavailable")
 
-                    DankButton {
+                    DButton {
                         anchors.verticalCenter: parent.verticalCenter
                         text: I18n.tr("Send test", "test notification button")
                         enabled: DankCalService.connected

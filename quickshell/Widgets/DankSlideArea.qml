@@ -1,5 +1,5 @@
 import QtQuick
-import "../DankCommon/Widgets/ScrollConstants.js" as Scroll
+import "../DCommon/Widgets/ScrollConstants.js" as Scroll
 
 Item {
     id: root

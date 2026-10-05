@@ -1,7 +1,7 @@
 import QtQuick
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -87,7 +87,7 @@ Item {
 
     implicitWidth: SettingsMetrics.sidebarWidth
 
-    DankFlickable {
+    DFlickable {
         anchors.fill: parent
         clip: true
         contentWidth: width
