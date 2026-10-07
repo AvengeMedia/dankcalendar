@@ -74,6 +74,7 @@ Singleton {
     property alias focusRingWidth: adapter.focusRingWidth
     // "primary" | "secondary" | "outline" | "surfaceText"
     property alias focusRingColor: adapter.focusRingColor
+    property alias windowTitleBars: adapter.windowTitleBars
     // "" follows the system language, otherwise a bundled translation code such as "de" or "zh_CN"
     property alias language: adapter.language
     // "" follows the interface language for date and time names, otherwise a locale code
@@ -234,6 +235,7 @@ Singleton {
             property bool focusRingEnabled: true
             property real focusRingWidth: 1.5
             property string focusRingColor: "primary"
+            property bool windowTitleBars: true
             property string language: ""
             property string timeLocale: ""
             property int firstDayOfWeek: -1

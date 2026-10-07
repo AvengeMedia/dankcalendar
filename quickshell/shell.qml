@@ -1,5 +1,4 @@
 //@ pragma Env QSG_RENDER_LOOP=threaded
-//@ pragma Env QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 //@ pragma Env QT_QUICK_CONTROLS_STYLE=Material
 //@ pragma UseQApplication
 //@ pragma AppId com.danklinux.dankcalendar
@@ -27,6 +26,7 @@ ShellRoot {
         DC.Log.backend = Log;
         DC.Host.cache = CacheData;
         DC.Host.files = FilesService;
+        DC.Host.ownWindowDecorations = Qt.binding(() => SettingsData.windowTitleBars);
     }
 
     function ownToplevel() {

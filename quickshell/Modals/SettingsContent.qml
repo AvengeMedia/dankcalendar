@@ -784,6 +784,17 @@ Item {
 
             SettingsCard {
 
+                title: I18n.tr("Windows", "appearance settings section label")
+                SettingsToggleRow {
+                    text: I18n.tr("Title bars", "window title bars toggle label")
+                    description: I18n.tr("Off lets the compositor decorate windows. Open windows update when reopened.", "window title bars toggle description")
+                    checked: SettingsData.windowTitleBars
+                    onToggled: checked => SettingsData.windowTitleBars = checked
+                }
+            }
+
+            SettingsCard {
+
                 title: I18n.tr("Motion", "appearance settings section label")
                 SettingsSliderRow {
                     text: I18n.tr("Duration", "animation duration slider label")
