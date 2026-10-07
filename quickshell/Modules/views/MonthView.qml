@@ -4,6 +4,7 @@ import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.DCommon.Widgets
+import "../../DCommon/Common/WheelInput.js" as WheelInput
 
 Item {
     id: root
@@ -106,7 +107,7 @@ Item {
                 return;
 
             const delta = event.angleDelta.y;
-            const isTouchpad = event.pixelDelta && event.pixelDelta.y !== 0;
+            const isTouchpad = WheelInput.isTouchpad(event);
 
             if (isTouchpad) {
                 touchpadAccumulator += delta;

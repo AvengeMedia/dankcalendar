@@ -1,5 +1,6 @@
 import QtQuick
 import "../DCommon/Widgets/ScrollConstants.js" as Scroll
+import "../DCommon/Common/WheelInput.js" as WheelInput
 
 Item {
     id: root
@@ -76,7 +77,7 @@ Item {
             const timeDelta = currentTime - lastWheelTime;
             lastWheelTime = currentTime;
 
-            const hasPixel = event.pixelDelta && event.pixelDelta.x !== 0;
+            const hasPixel = WheelInput.isTouchpad(event) && event.pixelDelta.x !== 0;
             const deltaX = event.angleDelta.x;
             const isTraditionalMouse = !hasPixel && Math.abs(deltaX) >= 120 && Math.abs(deltaX) % 120 === 0;
 
