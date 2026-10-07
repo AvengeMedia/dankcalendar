@@ -9,18 +9,25 @@ import (
 	"strings"
 )
 
-// Some servers (mailbox.org, #81) return ETags without the surrounding
-// double-quotes RFC 4918 §15.6 requires, and go-webdav rejects those hard
-// (emersion/go-webdav#165). etagNormalizingTransport quotes non-compliant
-// ETags in response headers and multistatus bodies before the library sees
-// them.
-type etagNormalizingTransport struct {
+// Some servers return properties that go-webdav rejects: mailbox.org (#81)
+// sends ETags without the surrounding double-quotes RFC 4918 §15.6 requires
+// (emersion/go-webdav#165), and thundermail.com emits getlastmodified dates
+// with a single-digit day that http.ParseTime cannot parse (RFC 7231 §3.3.1
+// mandates zero-padding). normalizingTransport repairs non-compliant
+// responses before the library sees them.
+type normalizingTransport struct {
 	base http.RoundTripper
 }
 
 var getETagRe = regexp.MustCompile(`(<(?:[^:<>/\s]+:)?getetag(?:\s[^>]*)?>)([^<]*)(</(?:[^:<>/\s]+:)?getetag\s*>)`)
 
-func (t etagNormalizingTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+var getLastModifiedRe = regexp.MustCompile(`(<(?:[^:<>/\s]+:)?getlastmodified(?:\s[^>]*)?>)([^<]*)(</(?:[^:<>/\s]+:)?getlastmodified\s*>)`)
+
+// nonPaddedDayRe matches a single-digit day-of-month in an HTTP date such as
+// "Mon, 7 Sep 2026 21:52:55 GMT".
+var nonPaddedDayRe = regexp.MustCompile(`(\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),\s)(\d)\s`)
+
+func (t normalizingTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	resp, err := t.base.RoundTrip(req)
 	if err != nil {
 		return nil, err
@@ -40,6 +47,7 @@ func (t etagNormalizingTransport) RoundTrip(req *http.Request) (*http.Response, 
 	}
 
 	body = normalizeETagXML(body)
+	body = normalizeLastModifiedXML(body)
 	resp.Body = io.NopCloser(bytes.NewReader(body))
 	resp.ContentLength = int64(len(body))
 	if resp.Header.Get("Content-Length") != "" {
@@ -66,6 +74,14 @@ func normalizeETagXML(body []byte) []byte {
 		}
 
 		return append(append(sub[1], quoted...), sub[3]...)
+	})
+}
+
+func normalizeLastModifiedXML(body []byte) []byte {
+	return getLastModifiedRe.ReplaceAllFunc(body, func(m []byte) []byte {
+		sub := getLastModifiedRe.FindSubmatch(m)
+		padded := nonPaddedDayRe.ReplaceAll(sub[2], []byte(`${1}0${2} `))
+		return append(append(sub[1], padded...), sub[3]...)
 	})
 }
 
