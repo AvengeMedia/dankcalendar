@@ -645,15 +645,11 @@ Singleton {
     }
 
     function withAlpha(c, a) {
-        if (!c || c.r === undefined)
-            return Qt.rgba(0, 0, 0, 0);
-        return Qt.rgba(c.r, c.g, c.b, a);
+        return Style.withAlpha(c, a);
     }
 
     function blendAlpha(c, a) {
-        if (!c || c.r === undefined)
-            return Qt.rgba(0, 0, 0, 0);
-        return Qt.rgba(c.r, c.g, c.b, c.a * a);
+        return Style.blendAlpha(c, a);
     }
 
     function blend(c1, c2, r) {
