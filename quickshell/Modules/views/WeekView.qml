@@ -504,7 +504,7 @@ Item {
                                         radius: Theme.cornerRadiusXS
                                         clip: true
                                         opacity: declined && !isSelected ? Theme.pendingOpacity : 1
-                                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Qt.alpha(modelData.color, 0.22)
                                         border.color: isSelected ? Theme.primary : modelData.color
                                         border.width: isSelected ? 2 : 1
 
@@ -774,7 +774,7 @@ Item {
                                         radius: Theme.cornerRadiusS
                                         clip: true
                                         opacity: declined && !isSelected ? Theme.pendingOpacity : 1
-                                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Qt.alpha(modelData.color, 0.22)
                                         border.color: isSelected ? Theme.primary : modelData.color
                                         border.width: isSelected ? 2 : 1
 

@@ -142,7 +142,7 @@ Item {
                     height: root.rowHeight - Theme.groupedListGap
                     radius: Theme.cornerRadiusXS
                     opacity: declined && !isSelected ? Theme.pendingOpacity : 1
-                    color: isSelected ? Theme.withAlpha(modelData.color, 0.28) : (rowHover.containsMouse ? Theme.withAlpha(modelData.color, 0.18) : "transparent")
+                    color: isSelected ? Qt.alpha(modelData.color, 0.28) : (rowHover.containsMouse ? Qt.alpha(modelData.color, 0.18) : "transparent")
                     border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                     border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
 

@@ -468,7 +468,7 @@ Item {
                                     radius: Theme.cornerRadiusXS
                                     clip: true
                                     opacity: declined && !isSelected ? Theme.pendingOpacity : 1
-                                    color: awaitingReply || declined ? "transparent" : Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
+                                    color: awaitingReply || declined ? "transparent" : Qt.alpha(modelData.color, isSelected ? 0.32 : 0.18)
                                     border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                                     border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
 
