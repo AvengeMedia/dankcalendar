@@ -1,10 +1,10 @@
 module github.com/AvengeMedia/dankcalendar/core
 
-go 1.26.4
+go 1.27
 
 require (
 	entgo.io/ent v0.14.6
-	github.com/AvengeMedia/dankgo v1.6.3-0.20260923232838-611ba62fa30d
+	github.com/AvengeMedia/dankgo v1.6.3-0.20261009141806-0a6056424f6d
 	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.2
 	github.com/adrg/xdg v0.5.3
 	github.com/caarlos0/env/v11 v11.4.1

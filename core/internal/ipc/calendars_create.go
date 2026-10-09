@@ -14,31 +14,31 @@ func handleCalendarCreate(ctx context.Context, w *ConnWriter, req Request, deps 
 	name := strings.TrimSpace(ParamString(req.Params, "name"))
 	switch {
 	case accountID == "":
-		RespondError(w, req.ID, "accountId is required")
+		w.RespondError(req.ID, "accountId is required")
 		return
 	case name == "":
-		RespondError(w, req.ID, "name is required")
+		w.RespondError(req.ID, "name is required")
 		return
 	}
 
 	acc, err := deps.Repo.GetAccount(ctx, accountID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	if string(acc.Kind) != string(calendar.AccountLocal) {
-		RespondError(w, req.ID, "only local accounts support creating calendars")
+		w.RespondError(req.ID, "only local accounts support creating calendars")
 		return
 	}
 	root, _ := acc.Settings["root"].(string)
 	if root == "" {
-		RespondError(w, req.ID, "local account is missing its directory")
+		w.RespondError(req.ID, "local account is missing its directory")
 		return
 	}
 
 	cal, err := local.CreateCalendar(root, name)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -52,5 +52,5 @@ func handleCalendarCreate(ctx context.Context, w *ConnWriter, req Request, deps 
 	if deps.Bus != nil {
 		deps.Bus.Publish("calendars", map[string]any{"type": "created", "accountId": accountID})
 	}
-	Respond(w, req.ID, map[string]any{"accountId": accountID, "name": cal.Name, "remoteId": cal.RemoteID})
+	w.Respond(req.ID, map[string]any{"accountId": accountID, "name": cal.Name, "remoteId": cal.RemoteID})
 }

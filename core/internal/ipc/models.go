@@ -22,10 +22,6 @@ var (
 	Dial          = dankipc.Dial
 )
 
-func Respond[T any](w *ConnWriter, id int, result T) { dankipc.Respond(w, id, result) }
-
-func RespondError(w *ConnWriter, id int, msg string) { dankipc.RespondError(w, id, msg) }
-
 func FindRunningSocket() (string, error) { return dankipc.FindRunningSocket("dankcal") }
 
 func ParamString(p map[string]any, key string) string { return params.StringOpt(p, key, "") }

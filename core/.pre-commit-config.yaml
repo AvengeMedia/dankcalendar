@@ -1,16 +1,26 @@
 repos:
-  - repo: https://github.com/golangci/golangci-lint
-    rev: v2.10.1
-    hooks:
-      - id: golangci-lint-fmt
-        require_serial: true
-        language_version: system
-      - id: golangci-lint-full
-        language_version: system
-      - id: golangci-lint-config-verify
-        language_version: system
   - repo: local
     hooks:
+      - id: golangci-lint-fmt
+        name: golangci-lint-fmt
+        entry: go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.13.1 fmt
+        language: system
+        types: [go]
+        require_serial: true
+        pass_filenames: false
+      - id: golangci-lint-full
+        name: golangci-lint-full
+        entry: go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.13.1 run --fix
+        language: system
+        types: [go]
+        require_serial: true
+        pass_filenames: false
+      - id: golangci-lint-config-verify
+        name: golangci-lint-config-verify
+        entry: go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.13.1 config verify
+        language: system
+        files: '\.golangci\.(?:yml|yaml|toml|json)'
+        pass_filenames: false
       - id: go-test
         name: go test
         entry: env CGO_ENABLED=0 go test ./...

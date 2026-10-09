@@ -8,10 +8,10 @@ import (
 func Route(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	switch req.Method {
 	case "version":
-		Respond(w, req.ID, map[string]any{"version": deps.Version, "apiVersion": APIVersion})
+		w.Respond(req.ID, map[string]any{"version": deps.Version, "apiVersion": APIVersion})
 		return
 	case "describe":
-		Respond(w, req.ID, map[string]any{"apiVersion": APIVersion, "methods": Methods})
+		w.Respond(req.ID, map[string]any{"apiVersion": APIVersion, "methods": Methods})
 		return
 	}
 
@@ -32,11 +32,11 @@ func Route(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 		HandleSystem(ctx, w, req, deps)
 	case strings.HasPrefix(req.Method, "files."):
 		if deps.Files == nil {
-			RespondError(w, req.ID, "file service unavailable")
+			w.RespondError(req.ID, "file service unavailable")
 			return
 		}
 		deps.Files.Handle(ctx, w, req)
 	default:
-		RespondError(w, req.ID, "unknown method: "+req.Method)
+		w.RespondError(req.ID, "unknown method: "+req.Method)
 	}
 }

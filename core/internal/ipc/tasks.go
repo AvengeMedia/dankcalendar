@@ -29,7 +29,7 @@ func HandleTasks(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	case "tasks.delete":
 		handleTaskDelete(ctx, w, req, deps)
 	default:
-		RespondError(w, req.ID, "unknown tasks method: "+req.Method)
+		w.RespondError(req.ID, "unknown tasks method: "+req.Method)
 	}
 }
 
@@ -51,40 +51,40 @@ func handleTaskList(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 		Offset: ParamInt(req.Params, "offset"),
 	})
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
-	Respond(w, req.ID, map[string]any{"tasks": mapTasks(tasks), "total": total})
+	w.Respond(req.ID, map[string]any{"tasks": mapTasks(tasks), "total": total})
 }
 
 func handleTaskGet(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "id")
 	if id == "" {
-		RespondError(w, req.ID, "id is required")
+		w.RespondError(req.ID, "id is required")
 		return
 	}
 	t, err := deps.Repo.GetTask(ctx, id)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
-	Respond(w, req.ID, mapTask(t))
+	w.Respond(req.ID, mapTask(t))
 }
 
 func handleTaskCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	calendarID := ParamString(req.Params, "calendarId")
 	if calendarID == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 
 	t, err := taskFromParams(calendar.Task{Status: calendar.TaskNeedsAction}, req.Params)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	if t.Summary == "" {
-		RespondError(w, req.ID, "summary is required")
+		w.RespondError(req.ID, "summary is required")
 		return
 	}
 
@@ -101,14 +101,14 @@ func handleTaskCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps
 
 	provider, writer, domCal, err := taskWriterForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	created, err := writer.CreateTask(ctx, domCal, &t)
 	if err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("create task: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("create task: %v", err))
 		return
 	}
 	respondPersistedTask(ctx, w, req, deps, domCal.ID, created)
@@ -122,7 +122,7 @@ func handleTaskUpdate(ctx context.Context, w *ConnWriter, req Request, deps Deps
 
 	t, err := taskFromParams(taskconv.FromEnt(entT), req.Params)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	updateTask(ctx, w, req, deps, calendarID, &t)
@@ -211,22 +211,22 @@ func handleTaskDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps
 
 	provider, writer, domCal, err := taskWriterForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	if err := writer.DeleteTask(ctx, domCal, taskconv.FromEnt(entT)); err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("delete task: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("delete task: %v", err))
 		return
 	}
 	if err := deps.Repo.DeleteTask(ctx, entT.ID); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishTasksChanged(deps, calendarID)
-	Respond(w, req.ID, map[string]any{"deleted": true})
+	w.Respond(req.ID, map[string]any{"deleted": true})
 }
 
 // updateTask runs a domain task through its provider's writer and persists the
@@ -234,14 +234,14 @@ func handleTaskDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps
 func updateTask(ctx context.Context, w *ConnWriter, req Request, deps Deps, calendarID string, t *calendar.Task) {
 	provider, writer, domCal, err := taskWriterForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	updated, err := writer.UpdateTask(ctx, domCal, t)
 	if err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("update task: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("update task: %v", err))
 		return
 	}
 	respondPersistedTask(ctx, w, req, deps, domCal.ID, updated)
@@ -250,11 +250,11 @@ func updateTask(ctx context.Context, w *ConnWriter, req Request, deps Deps, cale
 func respondPersistedTask(ctx context.Context, w *ConnWriter, req Request, deps Deps, calendarID string, t *calendar.Task) {
 	stored, err := deps.Repo.UpsertTask(ctx, taskconv.UpsertInput(calendarID, t))
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	publishTasksChanged(deps, calendarID)
-	Respond(w, req.ID, mapTask(stored))
+	w.Respond(req.ID, mapTask(stored))
 }
 
 // loadTaskCalendar resolves the task and its calendar id, responding with an
@@ -262,16 +262,16 @@ func respondPersistedTask(ctx context.Context, w *ConnWriter, req Request, deps 
 func loadTaskCalendar(ctx context.Context, w *ConnWriter, req Request, deps Deps) (*ent.Task, string, bool) {
 	id := ParamString(req.Params, "id")
 	if id == "" {
-		RespondError(w, req.ID, "id is required")
+		w.RespondError(req.ID, "id is required")
 		return nil, "", false
 	}
 	entT, err := deps.Repo.GetTask(ctx, id)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return nil, "", false
 	}
 	if entT.Edges.Calendar == nil {
-		RespondError(w, req.ID, "task has no calendar")
+		w.RespondError(req.ID, "task has no calendar")
 		return nil, "", false
 	}
 	return entT, entT.Edges.Calendar.ID, true

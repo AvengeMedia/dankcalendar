@@ -19,21 +19,21 @@ import (
 func handleEventCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	calendarID := ParamString(req.Params, "calendarId")
 	if calendarID == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 
 	ev, err := eventFromParams(calendar.Event{Status: calendar.EventConfirmed}, req.Params)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	switch {
 	case ev.Summary == "":
-		RespondError(w, req.ID, "summary is required")
+		w.RespondError(req.ID, "summary is required")
 		return
 	case ev.Start.IsZero() || ev.End.IsZero():
-		RespondError(w, req.ID, "start and end are required (RFC3339)")
+		w.RespondError(req.ID, "start and end are required (RFC3339)")
 		return
 	}
 
@@ -50,55 +50,55 @@ func handleEventCreate(ctx context.Context, w *ConnWriter, req Request, deps Dep
 
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	created, err := provider.CreateEvent(ctx, domCal, &ev)
 	if err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("create event: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("create event: %v", err))
 		return
 	}
 
 	stored, err := persistEvent(ctx, deps, domCal.ID, created)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishEventsChanged(deps, domCal.ID)
-	Respond(w, req.ID, mapEvent(stored))
+	w.Respond(req.ID, mapEvent(stored))
 }
 
 func handleEventUpdate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "id")
 	if id == "" {
-		RespondError(w, req.ID, "id is required")
+		w.RespondError(req.ID, "id is required")
 		return
 	}
 
 	entEv, err := deps.Repo.GetEvent(ctx, id)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	if entEv.Edges.Calendar == nil {
-		RespondError(w, req.ID, "event has no calendar")
+		w.RespondError(req.ID, "event has no calendar")
 		return
 	}
 	calendarID := entEv.Edges.Calendar.ID
 
 	ev, err := eventFromParams(domainEventFromEnt(entEv), req.Params)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" && len(entEv.Recurrence) > 0 {
 		occStart, perr := parseOccurrenceStart(raw, entEv.AllDay)
 		if perr != nil {
-			RespondError(w, req.ID, perr.Error())
+			w.RespondError(req.ID, perr.Error())
 			return
 		}
 		ev = shiftSeriesTimes(ev, entEv.Start, occStart)
@@ -106,41 +106,41 @@ func handleEventUpdate(ctx context.Context, w *ConnWriter, req Request, deps Dep
 
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	updated, err := provider.UpdateEvent(ctx, domCal, &ev)
 	if err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("update event: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("update event: %v", err))
 		return
 	}
 
 	stored, err := persistEvent(ctx, deps, domCal.ID, updated)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishEventsChanged(deps, domCal.ID)
-	Respond(w, req.ID, mapEvent(stored))
+	w.Respond(req.ID, mapEvent(stored))
 }
 
 func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "id")
 	if id == "" {
-		RespondError(w, req.ID, "id is required")
+		w.RespondError(req.ID, "id is required")
 		return
 	}
 
 	entEv, err := deps.Repo.GetEvent(ctx, id)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	if entEv.Edges.Calendar == nil {
-		RespondError(w, req.ID, "event has no calendar")
+		w.RespondError(req.ID, "event has no calendar")
 		return
 	}
 	calendarID := entEv.Edges.Calendar.ID
@@ -148,7 +148,7 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" {
 		occStart, perr := parseOccurrenceStart(raw, entEv.AllDay)
 		if perr != nil {
-			RespondError(w, req.ID, perr.Error())
+			w.RespondError(req.ID, perr.Error())
 			return
 		}
 		deleteEventOccurrence(ctx, w, req, deps, entEv, calendarID, occStart)
@@ -157,22 +157,22 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	if err := provider.DeleteEvent(ctx, domCal, domainEventFromEnt(entEv)); err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("delete event: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("delete event: %v", err))
 		return
 	}
 	if err := deps.Repo.DeleteEvent(ctx, id); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishEventsChanged(deps, calendarID)
-	Respond(w, req.ID, map[string]any{"deleted": true})
+	w.Respond(req.ID, map[string]any{"deleted": true})
 }
 
 // deleteEventOccurrence removes one instance of a recurring series by adding
@@ -180,7 +180,7 @@ func handleEventDelete(ctx context.Context, w *ConnWriter, req Request, deps Dep
 func deleteEventOccurrence(ctx context.Context, w *ConnWriter, req Request, deps Deps, entEv *ent.Event, calendarID string, occStart time.Time) {
 	ev := domainEventFromEnt(entEv)
 	if ev.Recurrence == nil || len(ev.Recurrence.RRule)+len(ev.Recurrence.RDate) == 0 {
-		RespondError(w, req.ID, "event is not recurring")
+		w.RespondError(req.ID, "event is not recurring")
 		return
 	}
 
@@ -188,41 +188,41 @@ func deleteEventOccurrence(ctx context.Context, w *ConnWriter, req Request, deps
 
 	provider, domCal, err := providerForCalendar(ctx, deps, calendarID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 	defer provider.Close()
 
 	updated, err := provider.UpdateEvent(ctx, domCal, &ev)
 	if err != nil {
-		RespondError(w, req.ID, fmt.Sprintf("delete occurrence: %v", err))
+		w.RespondError(req.ID, fmt.Sprintf("delete occurrence: %v", err))
 		return
 	}
 	if _, err := persistEvent(ctx, deps, domCal.ID, updated); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishEventsChanged(deps, calendarID)
-	Respond(w, req.ID, map[string]any{"deleted": true})
+	w.Respond(req.ID, map[string]any{"deleted": true})
 }
 
 func handleEventRSVP(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "id")
 	if id == "" {
-		RespondError(w, req.ID, "id is required")
+		w.RespondError(req.ID, "id is required")
 		return
 	}
 	response := ParamString(req.Params, "response")
 	if response == "" {
-		RespondError(w, req.ID, "response is required (accept|decline|tentative)")
+		w.RespondError(req.ID, "response is required (accept|decline|tentative)")
 		return
 	}
 	var occurrenceStart time.Time
 	if raw := ParamString(req.Params, "occurrenceStart"); raw != "" {
 		parsed, perr := time.Parse(time.RFC3339, raw)
 		if perr != nil {
-			RespondError(w, req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
+			w.RespondError(req.ID, fmt.Sprintf("occurrenceStart must be RFC3339: %v", perr))
 			return
 		}
 		occurrenceStart = parsed
@@ -234,7 +234,7 @@ func handleEventRSVP(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 		Secrets:  deps.Secrets,
 	}, id, response, occurrenceStart)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -242,54 +242,54 @@ func handleEventRSVP(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 
 	stored, err := deps.Repo.GetEvent(ctx, res.EventID)
 	if err != nil {
-		Respond(w, req.ID, map[string]any{"id": res.EventID, "response": res.Response})
+		w.Respond(req.ID, map[string]any{"id": res.EventID, "response": res.Response})
 		return
 	}
-	Respond(w, req.ID, mapEvent(stored))
+	w.Respond(req.ID, mapEvent(stored))
 }
 
 func handleCalendarSetHidden(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "calendarId")
 	if id == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 	if _, ok := req.Params["hidden"]; !ok {
-		RespondError(w, req.ID, "hidden is required")
+		w.RespondError(req.ID, "hidden is required")
 		return
 	}
 
 	if err := deps.Repo.SetCalendarHidden(ctx, id, ParamBool(req.Params, "hidden")); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	if deps.Bus != nil {
 		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
 	}
-	Respond(w, req.ID, map[string]any{"calendarId": id, "hidden": ParamBool(req.Params, "hidden")})
+	w.Respond(req.ID, map[string]any{"calendarId": id, "hidden": ParamBool(req.Params, "hidden")})
 }
 
 func handleCalendarSetSyncDisabled(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "calendarId")
 	if id == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 	if _, ok := req.Params["disabled"]; !ok {
-		RespondError(w, req.ID, "disabled is required")
+		w.RespondError(req.ID, "disabled is required")
 		return
 	}
 
 	cal, err := deps.Repo.GetCalendar(ctx, id)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	disabled := ParamBool(req.Params, "disabled")
 	if err := deps.Repo.SetCalendarSyncDisabled(ctx, id, disabled); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -309,33 +309,33 @@ func handleCalendarSetSyncDisabled(ctx context.Context, w *ConnWriter, req Reque
 		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
 		deps.Bus.Publish("events", map[string]any{"type": "changed", "calendarId": id})
 	}
-	Respond(w, req.ID, map[string]any{"calendarId": id, "syncDisabled": disabled})
+	w.Respond(req.ID, map[string]any{"calendarId": id, "syncDisabled": disabled})
 }
 
 func handleCalendarRename(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "calendarId")
 	if id == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 
 	// Empty name clears the override, falling back to the provider name.
 	name := strings.TrimSpace(ParamString(req.Params, "name"))
 	if err := deps.Repo.SetCalendarNameOverride(ctx, id, name); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	if deps.Bus != nil {
 		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
 	}
-	Respond(w, req.ID, map[string]any{"calendarId": id, "name": name})
+	w.Respond(req.ID, map[string]any{"calendarId": id, "name": name})
 }
 
 func handleCalendarSetReminders(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "calendarId")
 	if id == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 
@@ -343,14 +343,14 @@ func handleCalendarSetReminders(ctx context.Context, w *ConnWriter, req Request,
 	// the calendar to the global reminder settings.
 	override := reminderOverrideFromParam(req.Params["overrides"])
 	if err := deps.Repo.SetCalendarReminders(ctx, id, override); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	if deps.Bus != nil {
 		deps.Bus.Publish("calendars", map[string]any{"type": "changed", "calendarId": id})
 	}
-	Respond(w, req.ID, map[string]any{"calendarId": id})
+	w.Respond(req.ID, map[string]any{"calendarId": id})
 }
 
 // reminderOverrideFromParam reads the override object: only the keys present
@@ -400,12 +400,12 @@ func intFromParam(raw any) (int, bool) {
 func handleCalendarDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	id := ParamString(req.Params, "calendarId")
 	if id == "" {
-		RespondError(w, req.ID, "calendarId is required")
+		w.RespondError(req.ID, "calendarId is required")
 		return
 	}
 
 	if err := deps.Repo.DeleteCalendar(ctx, id); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -413,7 +413,7 @@ func handleCalendarDelete(ctx context.Context, w *ConnWriter, req Request, deps 
 		deps.Bus.Publish("calendars", map[string]any{"type": "deleted", "calendarId": id})
 		deps.Bus.Publish("events", map[string]any{"type": "changed", "calendarId": id})
 	}
-	Respond(w, req.ID, map[string]any{"deleted": true})
+	w.Respond(req.ID, map[string]any{"deleted": true})
 }
 
 func providerForCalendar(ctx context.Context, deps Deps, calendarID string) (calendar.Provider, calendar.Calendar, error) {
