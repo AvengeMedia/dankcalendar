@@ -38,6 +38,9 @@ in
         Description = "DankCalendar";
         PartOf = [ cfg.systemd.target ];
         After = [ cfg.systemd.target ];
+        # With RestartSec=2 the default limit (5 starts per 10s) is never reached, so a persistent failure would restart forever.
+        StartLimitIntervalSec = "60";
+        StartLimitBurst = "5";
       };
 
       Service = {
