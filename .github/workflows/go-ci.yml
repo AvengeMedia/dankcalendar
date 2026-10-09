@@ -50,7 +50,7 @@ jobs:
         run: go vet ./...
 
       - name: Run golangci-lint
-        run: go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.13.1 run
+        run: go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.14.0 run
 
   test:
     name: Test
