@@ -15,7 +15,8 @@ Item {
     readonly property string discordUrl: "https://discord.gg/ppWTpKmPgT"
     readonly property string kofiUrl: "https://ko-fi.com/danklinux"
     readonly property string licenseUrl: githubUrl + "/blob/master/LICENSE"
-    readonly property string version: DankCalService.daemonVersion.replace(/^v/, "")
+    // Only a release number belongs in the headline; dev builds keep their full string in the Backend rows
+    readonly property string version: DankCalService.daemonVersion.match(/^v?(\d+\.\d+(\.\d+)?)$/)?.[1] ?? ""
 
     function host(url) {
         return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
