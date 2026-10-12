@@ -21,7 +21,7 @@ func GoogleAppCreds(ctx context.Context, secrets calendar.SecretStore, accountID
 		if errors.Is(err, keyring.ErrLocked) {
 			return oauth.GoogleAppCredentials{}, fmt.Errorf("keyring is locked for %q: unlock it and retry: %w", accountID, err)
 		}
-		return oauth.GoogleAppCredentials{}, fmt.Errorf("no stored google credentials for %q; remove the account and add it again", accountID)
+		return oauth.GoogleAppCredentials{}, fmt.Errorf("no stored google credentials for %q; add the account again to sign in", accountID)
 	}
 	var creds oauth.GoogleAppCredentials
 	if err := json.Unmarshal(appBytes, &creds); err != nil {
@@ -40,7 +40,7 @@ func MicrosoftAppCreds(ctx context.Context, secrets calendar.SecretStore, accoun
 		if errors.Is(err, keyring.ErrLocked) {
 			return oauth.MicrosoftAppCredentials{}, fmt.Errorf("keyring is locked for %q: unlock it and retry: %w", accountID, err)
 		}
-		return oauth.MicrosoftAppCredentials{}, fmt.Errorf("no stored microsoft credentials for %q; remove the account and add it again", accountID)
+		return oauth.MicrosoftAppCredentials{}, fmt.Errorf("no stored microsoft credentials for %q; add the account again to sign in", accountID)
 	}
 	var creds oauth.MicrosoftAppCredentials
 	if err := json.Unmarshal(appBytes, &creds); err != nil {

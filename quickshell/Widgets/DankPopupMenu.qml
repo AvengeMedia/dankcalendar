@@ -3,7 +3,7 @@ import QtQuick.Controls
 import Quickshell
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Popup {
     id: root
@@ -199,7 +199,7 @@ Popup {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: Theme.spacingM
 
-                        DankIcon {
+                        DIcon {
                             visible: !!menuRow.modelData.icon
                             name: menuRow.modelData.icon || ""
                             size: Theme.iconSizeMedium

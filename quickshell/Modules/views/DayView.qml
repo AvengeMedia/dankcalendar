@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 import "../../Common/EventUtils.js" as EventUtils
 
 Item {
@@ -70,7 +70,7 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: chipTooltip
     }
 
@@ -156,7 +156,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingS
 
-            DankIcon {
+            DIcon {
                 name: "warning"
                 size: Theme.iconSizeSmall
                 color: Theme.warning
@@ -171,7 +171,7 @@ Item {
             }
         }
 
-        DankButton {
+        DButton {
             anchors.right: parent.right
             anchors.rightMargin: Theme.spacingM
             anchors.verticalCenter: parent.verticalCenter
@@ -199,13 +199,16 @@ Item {
             }
 
             Rectangle {
+                id: allDayChip
                 required property var modelData
                 readonly property bool isSelected: root.isEventSelected(modelData)
+                readonly property bool declined: modelData.myResponse === "declined"
                 width: parent.width
                 height: 22
                 radius: Theme.cornerRadiusXS
                 clip: true
-                color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                 border.color: isSelected ? Theme.primary : modelData.color
                 border.width: isSelected ? 2 : 1
 
@@ -222,7 +225,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: modelData.title + "  ·  " + I18n.tr("all day", "suffix on all-day event chip in day view")
                     font.pixelSize: Theme.fontSizeSmall
-                    color: Theme.surfaceText
+                    font.strikeout: allDayChip.declined
+                    color: allDayChip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                     wrapMode: Text.NoWrap
                     maximumLineCount: 1
                     elide: Text.ElideRight
@@ -253,7 +257,7 @@ Item {
         height: root.hiddenInfo.before ? 16 : 0
         visible: root.hiddenInfo.before
 
-        DankIcon {
+        DIcon {
             anchors.centerIn: parent
             name: "keyboard_arrow_up"
             size: Theme.iconSizeSmall
@@ -261,7 +265,7 @@ Item {
         }
     }
 
-    DankFlickable {
+    DFlickable {
         id: dayFlickable
         anchors.top: hiddenBeforeStrip.bottom
         anchors.left: parent.left
@@ -329,7 +333,7 @@ Item {
                     onCreateRequested: (start, end) => root.createTimedRequested(start, end)
                 }
 
-                DankIcon {
+                DIcon {
                     visible: root.hiddenInfo.after
                     anchors.horizontalCenter: parent.horizontalCenter
                     y: root.hourCount * root.hourHeight + 2
@@ -369,12 +373,14 @@ Item {
                     }
 
                     Rectangle {
+                        id: timedChip
                         required property var modelData
                         readonly property bool isSelected: root.isEventSelected(modelData)
                         onIsSelectedChanged: {
                             if (isSelected)
                                 root.revealHours(modelData.startHour, modelData.durationHours);
                         }
+                        readonly property bool declined: modelData.myResponse === "declined"
                         readonly property real laneGap: 3
                         readonly property real usableWidth: parent.width - 16
                         readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
@@ -384,7 +390,8 @@ Item {
                         height: modelData.durationHours * root.hourHeight - 4
                         radius: Theme.cornerRadiusS
                         clip: true
-                        color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                        opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                         border.color: isSelected ? Theme.primary : modelData.color
                         border.width: isSelected ? 2 : 1
 
@@ -411,10 +418,11 @@ Item {
                                 width: parent.width - 12
 
                                 StyledText {
-                                    text: parent.parent.parent.modelData.title
+                                    text: timedChip.modelData.title
                                     font.pixelSize: Theme.fontSizeMedium
                                     font.weight: Theme.fontWeightMedium
-                                    color: Theme.surfaceText
+                                    font.strikeout: timedChip.declined
+                                    color: timedChip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                     width: parent.width
                                     wrapMode: Text.NoWrap
                                     maximumLineCount: 1

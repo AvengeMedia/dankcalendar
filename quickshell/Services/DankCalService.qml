@@ -5,7 +5,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.Common
-import qs.DankCommon.Common
+import qs.DCommon.Common
 import qs.Services
 import "../Common/EventUtils.js" as EventUtils
 
@@ -55,6 +55,7 @@ Singleton {
     signal microsoftFlowFailed(string state, string error)
     signal accountAdded(string accountId)
     signal accountRemoved(string accountId)
+    signal addAccountRequested
     signal eventsUpdated
     signal tasksUpdated
     signal windowActionRequested(string action, string view)
@@ -63,6 +64,7 @@ Singleton {
     signal openEventRequested(string uid, string start)
     signal newEventRequested(string start)
     signal colorSchemeUpdate(var data)
+    signal filesEvent(var data)
 
     onFocusDateChanged: _ensureWindow()
 
@@ -94,7 +96,7 @@ Singleton {
         requestSocket.connected = true;
     }
 
-    DankSocket {
+    DSocket {
         id: requestSocket
         path: root.socketPath
         connected: false
@@ -139,7 +141,7 @@ Singleton {
         }
     }
 
-    DankSocket {
+    DSocket {
         id: subscribeSocket
         path: root.socketPath
         connected: false
@@ -175,6 +177,30 @@ Singleton {
             }
         };
         subscribeSocket.send(req);
+    }
+
+    function subscribeTopics(topics) {
+        if (!subscribed || topics.length === 0)
+            return;
+        subscribeSocket.send({
+            "id": _nextId(),
+            "method": "subscribe",
+            "params": {
+                "topics": topics
+            }
+        });
+    }
+
+    function unsubscribeTopics(topics) {
+        if (!subscribed || topics.length === 0)
+            return;
+        subscribeSocket.send({
+            "id": _nextId(),
+            "method": "unsubscribe",
+            "params": {
+                "topics": topics
+            }
+        });
     }
 
     function _nextId() {
@@ -249,6 +275,10 @@ Singleton {
             }
         case "colorScheme":
             colorSchemeUpdate(event.data || {});
+            break;
+        default:
+            if (topic?.startsWith("files:"))
+                filesEvent(event.data || {});
             break;
         }
     }
@@ -465,6 +495,34 @@ Singleton {
 
     function eventCalendars() {
         return calendars.filter(c => !c.syncDisabled && _holdsEvents(c));
+    }
+
+    function eventCalendarGroups() {
+        const groups = [];
+        const byAccount = {};
+        const groupFor = accountId => {
+            if (byAccount[accountId])
+                return byAccount[accountId];
+            const group = {
+                "account": accountById(accountId),
+                "calendars": []
+            };
+            byAccount[accountId] = group;
+            groups.push(group);
+            return group;
+        };
+        for (let i = 0; i < accounts.length; i++)
+            groupFor(accounts[i].id);
+        const cals = eventCalendars();
+        for (let i = 0; i < cals.length; i++)
+            groupFor(cals[i].accountId || "").calendars.push(cals[i]);
+        for (let g = 0; g < groups.length; g++)
+            groups[g].calendars = _shownFirst(groups[g].calendars);
+        return groups.filter(group => group.calendars.length > 0);
+    }
+
+    function _shownFirst(cals) {
+        return cals.filter(c => !c.hidden).concat(cals.filter(c => c.hidden));
     }
 
     function defaultCalendar() {
@@ -1431,6 +1489,13 @@ Singleton {
         }, callback);
     }
 
+    function offerAccountReAdd(msg) {
+        ToastService.show(msg, {
+            "actionLabel": I18n.tr("Add account", "toast action to re-add an account that failed to reconnect"),
+            "action": () => addAccountRequested()
+        });
+    }
+
     function reconnectAccount(acc, callback) {
         if (!acc)
             return;
@@ -1448,6 +1513,7 @@ Singleton {
             break;
         default:
             lastError = I18n.tr("This account cannot be reconnected — remove it and add it again.", "error when reconnect is unavailable for a provider");
+            offerAccountReAdd(lastError);
             if (callback)
                 callback({
                     "error": lastError
@@ -1455,11 +1521,13 @@ Singleton {
             return;
         }
 
+        const reconnectFailed = I18n.tr("Couldn't reconnect. Add the account again to sign in.", "toast when reconnecting an account fails");
         sendRequest(startMethod, {
             "accountId": acc.id
         }, response => {
             if (response.error) {
                 lastError = response.error;
+                offerAccountReAdd(reconnectFailed);
                 if (callback)
                     callback(response);
                 return;
@@ -1469,10 +1537,12 @@ Singleton {
             sendRequest(completeMethod, {
                 "state": result.state
             }, done => {
-                if (done.error)
+                if (done.error) {
                     lastError = done.error;
-                else
+                    offerAccountReAdd(reconnectFailed);
+                } else {
                     refreshAccounts();
+                }
                 if (callback)
                     callback(done);
             });

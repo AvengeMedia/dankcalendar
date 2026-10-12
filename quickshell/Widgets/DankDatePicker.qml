@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Window
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -13,23 +13,26 @@ Item {
     property string iconName: "today"
     property string dateFormat: "ddd, MMM d, yyyy"
     property bool openUpwards: false
+    property real popupX: 0
 
     signal dateSelected(date value)
 
     readonly property int cellSize: Theme.iconButtonSize
 
-    // updateDirection flips the calendar above the field when it would clip off
-    // the bottom of the window.
-    function updateDirection() {
+    function updatePlacement() {
+        const winW = Window.width;
         const winH = Window.height;
+        const origin = root.mapToItem(null, 0, 0);
+        const preferredX = I18n.isRtl ? root.width - popup.width : 0;
+        const inset = Theme.spacingS;
+        popupX = winW <= 0 ? preferredX : Math.max(inset - origin.x, Math.min(winW - popup.width - origin.x - inset, preferredX));
         if (winH <= 0) {
             openUpwards = false;
             return;
         }
-        const topInWindow = root.mapToItem(null, 0, 0).y;
         const popH = popup.contentItem ? popup.contentItem.implicitHeight + popup.padding * 2 : 0;
-        const spaceBelow = winH - (topInWindow + root.height);
-        openUpwards = spaceBelow < popH + Theme.spacingXS && topInWindow > spaceBelow;
+        const spaceBelow = winH - (origin.y + root.height);
+        openUpwards = spaceBelow < popH + Theme.spacingXS && origin.y > spaceBelow;
     }
 
     height: Theme.fieldHeightLarge
@@ -68,7 +71,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingS
 
-            DankIcon {
+            DIcon {
                 name: root.iconName
                 size: Theme.iconSizeMedium
                 color: popup.visible ? Theme.primary : Theme.surfaceVariantText
@@ -125,13 +128,14 @@ Item {
             close();
         }
 
+        x: root.popupX
         y: root.openUpwards ? -(height + Theme.spacingXS) : (field.height + Theme.spacingXS)
         width: root.cellSize * 7 + Theme.spacingXS * 6 + padding * 2
         padding: Theme.spacingS
         onAboutToShow: {
             displayDate = root.selectedDate;
             cursorDate = root.selectedDate;
-            root.updateDirection();
+            root.updatePlacement();
         }
         onOpened: focusDay(root.selectedDate)
         onClosed: root.forceActiveFocus()
@@ -167,7 +171,7 @@ Item {
                 width: parent.width
                 height: Theme.buttonHeightXS
 
-                DankActionButton {
+                DActionButton {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
@@ -183,7 +187,7 @@ Item {
                     font.weight: Theme.fontWeightMedium
                 }
 
-                DankActionButton {
+                DActionButton {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
@@ -193,7 +197,7 @@ Item {
                 }
             }
 
-            DankMonthGrid {
+            DMonthGrid {
                 id: grid
                 width: parent.width
                 height: root.cellSize * 6 + cellGap * 6 + weekdayRowHeight

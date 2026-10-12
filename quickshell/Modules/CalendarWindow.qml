@@ -4,7 +4,7 @@ import qs.Common
 import qs.Modals
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 import "../Common/EventUtils.js" as EventUtils
 
 FloatingWindow {
@@ -90,6 +90,9 @@ FloatingWindow {
         target: DankCalService
         function onEventsUpdated() {
             window.eventsVersion++;
+        }
+        function onAddAccountRequested() {
+            window.openAddAccount();
         }
     }
 
@@ -698,7 +701,7 @@ FloatingWindow {
             anchors.fill: parent
             spacing: 0
 
-            DankWindowHeader {
+            DWindowHeader {
                 id: header
                 width: parent.width
                 z: 10
@@ -765,9 +768,11 @@ FloatingWindow {
 
                     Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.outlineWidthFocused : Theme.dividerWidth
+                        width: Theme.outlineWidthFocused
                         height: parent.height
-                        color: resizeArea.containsMouse || sidebarResizer.dragging ? Theme.primary : Theme.outlineVariant
+                        radius: Theme.fullRadius(width, height)
+                        color: Theme.primary
+                        visible: resizeArea.containsMouse || sidebarResizer.dragging
                     }
 
                     MouseArea {
@@ -801,11 +806,16 @@ FloatingWindow {
                     }
                 }
 
-                Item {
+                Rectangle {
                     anchors.left: window.sidebarVisible ? sidebar.right : parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
+                    anchors.leftMargin: window.sidebarVisible ? 0 : Theme.windowInset
+                    anchors.rightMargin: Theme.windowInset
+                    anchors.bottomMargin: Theme.windowInset
+                    radius: Theme.cornerRadiusL
+                    color: Theme.floatingWindowPaneSurface
                     clip: true
 
                     CalendarContent {

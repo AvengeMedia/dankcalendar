@@ -33,7 +33,7 @@ dankcalendar/
 │   ├── Services/       # IPC bridge and shell-side state
 │   ├── Widgets/        # Calendar-specific Dank UI controls
 │   ├── Common/         # Shared resources, themes, and i18n
-│   ├── DankCommon/     # → symlink into the dank-qml-common submodule
+│   ├── DCommon/     # → symlink into the dank-qml-common submodule
 │   └── translations/   # POEditor-managed string catalogs
 ├── dank-qml-common/    # Shared DMS widget library (git submodule)
 ├── core/               # Go backend, daemon, and CLI
@@ -201,6 +201,53 @@ files carrying a refreshable calendar source open subscription setup instead.
 See [calendar file imports](docs/calendar-file-import.md) for supported formats,
 conflict-preview behavior, and legacy compatibility.
 
+## Matugen colors
+
+In **Settings → Appearance → Color source**, select **Matugen** to read
+`$XDG_CONFIG_HOME/dankcal/matugen-theme.json` (normally
+`~/.config/dankcal/matugen-theme.json`). DankCalendar reloads this file when
+it changes. Matugen is optional and runs independently of the app.
+
+Copy the included [template](assets/matugen/dankcalendar.json.template) from
+the repository into your Matugen configuration:
+
+```bash
+mkdir -p ~/.config/matugen/templates ~/.config/dankcal
+cp assets/matugen/dankcalendar.json.template ~/.config/matugen/templates/dankcalendar.json.template
+```
+
+Add this entry to `~/.config/matugen/config.toml`:
+
+```toml
+[templates.dankcalendar]
+input_path = "~/.config/matugen/templates/dankcalendar.json.template"
+output_path = "~/.config/dankcal/matugen-theme.json"
+```
+
+If you use a custom `XDG_CONFIG_HOME`, adjust these paths to match it. Then
+generate your colors:
+
+```bash
+matugen image /path/to/wallpaper.png
+```
+
+No reload hook is needed. The template generates both `dark` and `light`
+palettes; DankCalendar's light/dark/automatic setting selects the palette.
+Its [Matugen template syntax](https://github.com/InioX/matugen-themes) maps
+Material colors to the app's existing theme roles.
+
+The theme file is separate from `ui-settings.json`. It accepts either a
+flat object of theme roles or `dark`/`light` objects, with colors encoded as
+`#RRGGBB`. Partial palettes override only the supplied roles; the selected
+preset supplies the remaining colors. Missing, empty, or invalid theme
+files fall back to the preset. Select **Auto** to follow DankMaterialShell
+again, or **Custom** to load a theme from another path.
+
+For **Flatpak**, set the Matugen entry's `output_path` to
+`~/.var/app/com.danklinux.dankcalendar/config/dankcal/matugen-theme.json`
+and create its parent directory first. This writes directly to the app's
+configuration directory without requiring extra sandbox permissions.
+
 ## IPC
 
 The daemon exposes a scriptable IPC surface — handy for keybinds and automation:
@@ -227,7 +274,7 @@ make fmt            # format Go code
 make update-common  # bump the dank-qml-common submodule + nix flake input together
 ```
 
-Shared widgets (`quickshell/DankCommon/`) live in the
+Shared widgets (`quickshell/DCommon/`) live in the
 [dank-qml-common](https://github.com/AvengeMedia/dank-qml-common) submodule —
 edit them in place, they hot-reload like any other QML, but they are committed
 and PR'd in that repo. See CONTRIBUTING for the workflow.

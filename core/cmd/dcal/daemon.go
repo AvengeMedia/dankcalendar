@@ -40,9 +40,11 @@ import (
 	"github.com/AvengeMedia/dankcalendar/core/internal/uriopen"
 	"github.com/AvengeMedia/dankcalendar/core/repo"
 	"github.com/AvengeMedia/dankgo/errdefs/humaerr"
+	"github.com/AvengeMedia/dankgo/files"
 	"github.com/AvengeMedia/dankgo/httpapi"
 	"github.com/AvengeMedia/dankgo/httpapi/middleware"
 	"github.com/AvengeMedia/dankgo/log"
+	dankpaths "github.com/AvengeMedia/dankgo/paths"
 )
 
 var daemonCmd = &cobra.Command{
@@ -59,6 +61,7 @@ type daemonServices struct {
 	reminders   *reminders.Engine
 	invitations *invitations.Engine
 	notifier    *notify.Client
+	files       *files.Service
 	repo        *repo.Repo
 	registry    *calendar.Registry
 	secrets     calendar.SecretStore
@@ -93,6 +96,9 @@ func (s *daemonServices) Close() {
 	}
 	if s.httpSrv != nil {
 		shutdownHTTP(s.httpSrv)
+	}
+	if s.files != nil {
+		s.files.Close()
 	}
 	if s.ipc != nil {
 		s.ipc.Close()
@@ -196,6 +202,8 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 		return nil, err
 	}
 
+	fileService := files.NewService(bus, dankpaths.XDGCacheHome(), nil)
+
 	deps := ipc.Deps{
 		Repo:        r,
 		Registry:    registry,
@@ -209,10 +217,12 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 		Pending:     &ipc.PendingOpen{},
 		Version:     Version,
 		ColorScheme: colorSchemeWatcher,
+		Files:       fileService,
 	}
 	deps.Opener = uriopen.Opener{}
 	ipcSrv, ipcErrCh, err := startIPC(ctx, deps)
 	if err != nil {
+		fileService.Close()
 		shutdownHTTP(httpSrv)
 		r.Close()
 		return nil, err
@@ -230,6 +240,7 @@ func bootDaemonServices(ctx context.Context) (*daemonServices, error) {
 		reminders:   remindersEngine,
 		invitations: invitationsEngine,
 		notifier:    notifier,
+		files:       fileService,
 		repo:        r,
 		registry:    registry,
 		secrets:     secrets,

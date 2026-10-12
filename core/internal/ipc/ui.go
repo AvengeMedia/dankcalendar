@@ -41,35 +41,35 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 		view := strings.TrimSpace(ParamString(req.Params, "view"))
 		if view != "" {
 			if !validUIView(view) {
-				RespondError(w, req.ID, "unknown ui view: "+view)
+				w.RespondError(req.ID, "unknown ui view: "+view)
 				return
 			}
 			payload["view"] = view
 		}
 		deps.Bus.Publish("ui", payload)
-		Respond(w, req.ID, map[string]any{"ok": true})
+		w.Respond(req.ID, map[string]any{"ok": true})
 	case "ui.open":
 		url, err := icsimport.SubscriptionURL(ParamString(req.Params, "url"))
 		if err != nil {
-			RespondError(w, req.ID, err.Error())
+			w.RespondError(req.ID, err.Error())
 			return
 		}
 		publishUI(deps, map[string]any{"action": "subscribe", "url": url})
-		Respond(w, req.ID, map[string]any{"ok": true})
+		w.Respond(req.ID, map[string]any{"ok": true})
 	case "ui.openIcs":
 		ics := ParamString(req.Params, "ics")
 		if strings.TrimSpace(ics) == "" {
-			RespondError(w, req.ID, "ui.openIcs requires ics")
+			w.RespondError(req.ID, "ui.openIcs requires ics")
 			return
 		}
 		doc, err := icsimport.Parse([]byte(ics))
 		if err != nil {
-			RespondError(w, req.ID, err.Error())
+			w.RespondError(req.ID, err.Error())
 			return
 		}
 		if doc.Source != "" {
 			publishUI(deps, map[string]any{"action": "subscribe", "url": doc.Source})
-			Respond(w, req.ID, map[string]any{"ok": true})
+			w.Respond(req.ID, map[string]any{"ok": true})
 			return
 		}
 		payload := map[string]any{"action": "importIcs", "ics": ics}
@@ -77,11 +77,11 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 			payload["name"] = name
 		}
 		publishUI(deps, payload)
-		Respond(w, req.ID, map[string]any{"ok": true})
+		w.Respond(req.ID, map[string]any{"ok": true})
 	case "ui.openEvent":
 		uid := strings.TrimSpace(ParamString(req.Params, "uid"))
 		if uid == "" {
-			RespondError(w, req.ID, "ui.openEvent requires a uid")
+			w.RespondError(req.ID, "ui.openEvent requires a uid")
 			return
 		}
 		payload := map[string]any{"action": "openEvent", "uid": uid}
@@ -89,22 +89,22 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 			payload["start"] = start
 		}
 		publishUI(deps, payload)
-		Respond(w, req.ID, map[string]any{"ok": true})
+		w.Respond(req.ID, map[string]any{"ok": true})
 	case "ui.newEvent":
 		payload := map[string]any{"action": "newEvent"}
 		if start := strings.TrimSpace(ParamString(req.Params, "start")); start != "" {
 			payload["start"] = start
 		}
 		publishUI(deps, payload)
-		Respond(w, req.ID, map[string]any{"ok": true})
+		w.Respond(req.ID, map[string]any{"ok": true})
 	case "ui.quit":
-		Respond(w, req.ID, map[string]any{"ok": true})
+		w.Respond(req.ID, map[string]any{"ok": true})
 		go func() {
 			// Give the response a moment to flush before tearing down.
 			time.Sleep(100 * time.Millisecond)
 			_ = syscall.Kill(os.Getpid(), syscall.SIGTERM)
 		}()
 	default:
-		RespondError(w, req.ID, "unknown ui method: "+req.Method)
+		w.RespondError(req.ID, "unknown ui method: "+req.Method)
 	}
 }

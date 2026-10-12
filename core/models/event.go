@@ -11,6 +11,7 @@ type Event struct {
 	Location      string     `json:"location,omitempty"`
 	URL           string     `json:"url,omitempty"`
 	Status        string     `json:"status,omitempty"`
+	Transparency  string     `json:"transparency,omitempty"`
 	Start         time.Time  `json:"start"`
 	End           time.Time  `json:"end"`
 	AllDay        bool       `json:"allDay"`

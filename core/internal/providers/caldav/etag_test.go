@@ -80,9 +80,48 @@ func TestNormalizeETagXML(t *testing.T) {
 	}
 }
 
+func TestNormalizeLastModifiedXML(t *testing.T) {
+	cases := []struct {
+		name string
+		in   string
+		want string
+	}{
+		{
+			"single-digit day padded",
+			`<d:getlastmodified>Mon, 7 Sep 2026 21:52:55 GMT</d:getlastmodified>`,
+			`<d:getlastmodified>Mon, 07 Sep 2026 21:52:55 GMT</d:getlastmodified>`,
+		},
+		{
+			"single-digit day unpadded weekday",
+			`<getlastmodified>Wed, 1 Jul 2026 12:33:30 GMT</getlastmodified>`,
+			`<getlastmodified>Wed, 01 Jul 2026 12:33:30 GMT</getlastmodified>`,
+		},
+		{
+			"zero-padded day left alone",
+			`<d:getlastmodified>Mon, 07 Sep 2026 21:52:55 GMT</d:getlastmodified>`,
+			`<d:getlastmodified>Mon, 07 Sep 2026 21:52:55 GMT</d:getlastmodified>`,
+		},
+		{
+			"two-digit day left alone",
+			`<d:getlastmodified>Mon, 27 Sep 2026 21:52:55 GMT</d:getlastmodified>`,
+			`<d:getlastmodified>Mon, 27 Sep 2026 21:52:55 GMT</d:getlastmodified>`,
+		},
+		{
+			"other elements untouched",
+			`<d:displayname>Mon, 7 Sep 2026 21:52:55 GMT</d:displayname>`,
+			`<d:displayname>Mon, 7 Sep 2026 21:52:55 GMT</d:displayname>`,
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			assert.Equal(t, tc.want, string(normalizeLastModifiedXML([]byte(tc.in))))
+		})
+	}
+}
+
 // mailbox.org returns getetag values without the quotes RFC 4918 requires
 // (#81); the transport must repair both multistatus bodies and ETag headers.
-func TestETagNormalizingTransport(t *testing.T) {
+func TestNormalizingTransportETag(t *testing.T) {
 	const multistatus = `<?xml version="1.0" encoding="UTF-8"?>
 <d:multistatus xmlns:d="DAV:">
   <d:response>
@@ -105,7 +144,7 @@ func TestETagNormalizingTransport(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client := &http.Client{Transport: etagNormalizingTransport{base: http.DefaultTransport}}
+	client := &http.Client{Transport: normalizingTransport{base: http.DefaultTransport}}
 
 	req, err := http.NewRequest("REPORT", server.URL, nil)
 	require.NoError(t, err)
@@ -124,7 +163,7 @@ func TestETagNormalizingTransport(t *testing.T) {
 
 // Nextcloud returns getetag values with quotes entity encoded; the transport
 // must not modify multistatus bodies if this is the case.
-func TestETagNormalizingTransportEntityEncoded(t *testing.T) {
+func TestNormalizingTransportETagEntityEncoded(t *testing.T) {
 	const multistatus = `<?xml version="1.0" encoding="UTF-8"?>
 <d:multistatus xmlns:d="DAV:">
   <d:response>
@@ -141,7 +180,7 @@ func TestETagNormalizingTransportEntityEncoded(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client := &http.Client{Transport: etagNormalizingTransport{base: http.DefaultTransport}}
+	client := &http.Client{Transport: normalizingTransport{base: http.DefaultTransport}}
 
 	req, err := http.NewRequest("REPORT", server.URL, nil)
 	require.NoError(t, err)
@@ -151,4 +190,35 @@ func TestETagNormalizingTransportEntityEncoded(t *testing.T) {
 	resp.Body.Close()
 	require.NoError(t, err)
 	assert.Contains(t, string(body), `<d:getetag>&quot;1755-372673&quot;</d:getetag>`)
+}
+
+// thundermail.com returns getlastmodified dates with a single-digit day,
+// which http.ParseTime rejects; the transport must zero-pad them.
+func TestNormalizingTransportLastModified(t *testing.T) {
+	const multistatus = `<?xml version="1.0" encoding="UTF-8"?>
+<d:multistatus xmlns:d="DAV:">
+  <d:response>
+    <d:href>/dav/cal/user/calendar/</d:href>
+    <d:propstat>
+      <d:prop><d:getlastmodified>Mon, 7 Sep 2026 21:52:55 GMT</d:getlastmodified></d:prop>
+      <d:status>HTTP/1.1 200 OK</d:status>
+    </d:propstat>
+  </d:response>
+</d:multistatus>`
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		writeMultiStatus(w, multistatus)
+	}))
+	defer server.Close()
+
+	client := &http.Client{Transport: normalizingTransport{base: http.DefaultTransport}}
+
+	req, err := http.NewRequest("REPORT", server.URL, nil)
+	require.NoError(t, err)
+	resp, err := client.Do(req)
+	require.NoError(t, err)
+	body, err := io.ReadAll(resp.Body)
+	resp.Body.Close()
+	require.NoError(t, err)
+	assert.Contains(t, string(body), `<d:getlastmodified>Mon, 07 Sep 2026 21:52:55 GMT</d:getlastmodified>`)
 }

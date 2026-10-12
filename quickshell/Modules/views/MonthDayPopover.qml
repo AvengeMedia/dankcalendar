@@ -4,7 +4,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -124,7 +124,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
             }
 
-            DankListView {
+            DListView {
                 width: parent.width
                 height: popup.height - root.headerHeight - popup.topPadding - popup.bottomPadding
                 clip: true
@@ -137,9 +137,11 @@ Item {
                     required property var modelData
                     readonly property bool isSelected: root.isEventSelected(modelData)
                     readonly property bool awaitingReply: modelData.myResponse === "needs-action"
+                    readonly property bool declined: modelData.myResponse === "declined"
                     width: ListView.view.width
                     height: root.rowHeight - Theme.groupedListGap
                     radius: Theme.cornerRadiusXS
+                    opacity: declined && !isSelected ? Theme.pendingOpacity : 1
                     color: isSelected ? Theme.withAlpha(modelData.color, 0.28) : (rowHover.containsMouse ? Theme.withAlpha(modelData.color, 0.18) : "transparent")
                     border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                     border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
@@ -180,7 +182,8 @@ Item {
                             width: parent.width - 3 - 64 - Theme.spacingS * 2
                             text: eventRow.modelData.title
                             font.pixelSize: Theme.fontSizeSmall
-                            color: Theme.surfaceText
+                            font.strikeout: eventRow.declined
+                            color: eventRow.declined ? Theme.surfaceVariantText : Theme.surfaceText
                             elide: Text.ElideRight
                             maximumLineCount: 1
                         }

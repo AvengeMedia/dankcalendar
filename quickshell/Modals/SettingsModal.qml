@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import qs.Common
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 FloatingWindow {
     id: settingsModal
@@ -72,7 +72,7 @@ FloatingWindow {
             anchors.fill: parent
             spacing: 0
 
-            DankWindowHeader {
+            DWindowHeader {
                 id: header
                 width: parent.width
                 z: 10
@@ -80,7 +80,7 @@ FloatingWindow {
                 title: I18n.tr("Settings", "settings window header title")
                 onCloseRequested: settingsModal.hide()
 
-                DankActionButton {
+                DActionButton {
                     visible: settingsModal.isCompactMode
                     iconName: "menu"
                     buttonSize: Theme.buttonHeightXXS
@@ -111,14 +111,27 @@ FloatingWindow {
 
                 FocusScope {
                     id: contentScope
+
+                    readonly property real paneInset: SettingsMetrics.paneMargin
+
                     anchors.left: settingsModal.isCompactMode ? (settingsModal.menuVisible ? sidebar.right : parent.left) : sidebar.right
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    clip: true
+                    anchors.leftMargin: settingsModal.isCompactMode ? paneInset : 0
+                    anchors.rightMargin: paneInset
+                    anchors.bottomMargin: paneInset
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: SettingsMetrics.paneRadius
+                        color: SettingsMetrics.paneColor
+                    }
 
                     SettingsContent {
                         anchors.fill: parent
+                        anchors.leftMargin: SettingsMetrics.panePadding
+                        anchors.rightMargin: SettingsMetrics.panePadding
                         currentIndex: settingsModal.currentTabIndex
                         hostWindow: settingsModal
                         onAddAccountRequested: settingsModal.addAccountRequested()
@@ -131,5 +144,10 @@ FloatingWindow {
     FloatingWindowControls {
         id: windowControls
         targetWindow: settingsModal
+    }
+
+    Toast {
+        anchors.fill: parent
+        z: 102
     }
 }

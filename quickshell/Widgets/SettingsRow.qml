@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Templates as T
 import qs.Common
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 T.Control {
     id: root
@@ -112,7 +112,7 @@ T.Control {
         }
     }
 
-    DankRipple {
+    DRipple {
         id: ripple
         visible: root.clickable
         rippleColor: Theme.surfaceText
@@ -185,7 +185,7 @@ T.Control {
                     visible: children.length > 0
                 }
 
-                DankIcon {
+                DIcon {
                     id: leadingIcon
                     anchors.verticalCenter: parent.verticalCenter
                     name: root.iconName
@@ -249,7 +249,7 @@ T.Control {
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
-                DankIcon {
+                DIcon {
                     name: "chevron_right"
                     size: Theme.iconSize
                     color: Theme.surfaceVariantText

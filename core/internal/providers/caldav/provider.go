@@ -113,9 +113,10 @@ func discoveryCandidates(endpoint *url.URL) []*url.URL {
 }
 
 // newHTTPClient returns the HTTP client the caldav client is built on,
-// wrapped so redirects keep their method and non-compliant ETags get repaired
-// before go-webdav parses them. Authentication sits innermost so every
-// redirect hop signs its own URI; Baïkal (#98) only accepts Digest.
+// wrapped so redirects keep their method and non-compliant ETags and
+// getlastmodified dates get repaired before go-webdav parses them.
+// Authentication sits innermost so every redirect hop signs its own URI;
+// Baïkal (#98) only accepts Digest.
 // Servers with self-signed certificates opt out of TLS verification via the
 // SettingInsecureSkipVerify account setting.
 func newHTTPClient(account cal.Account, username, password string) *http.Client {
@@ -127,7 +128,7 @@ func newHTTPClient(account cal.Account, username, password string) *http.Client 
 	}
 	auth := &httpauth.Transport{Base: base, Username: username, Password: password}
 	return &http.Client{
-		Transport: etagNormalizingTransport{base: redirectFollowingTransport{base: auth}},
+		Transport: normalizingTransport{base: redirectFollowingTransport{base: auth}},
 		CheckRedirect: func(*http.Request, []*http.Request) error {
 			return http.ErrUseLastResponse
 		},

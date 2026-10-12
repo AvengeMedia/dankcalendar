@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -86,7 +86,7 @@ Item {
         return out;
     }
 
-    DankButton {
+    DButton {
         id: addButton
         anchors.top: parent.top
         anchors.right: parent.right
@@ -100,7 +100,7 @@ Item {
         onClicked: root.createTaskRequested()
     }
 
-    DankFlickable {
+    DFlickable {
         anchors.top: addButton.bottom
         anchors.topMargin: Theme.spacingM
         anchors.left: parent.left
@@ -183,7 +183,7 @@ Item {
                                     border.color: card.modelData.color
                                     border.width: 2
 
-                                    DankIcon {
+                                    DIcon {
                                         anchors.centerIn: parent
                                         name: "check"
                                         size: Theme.iconSizeSmall
@@ -242,7 +242,7 @@ Item {
                                             anchors.verticalCenter: parent.verticalCenter
                                         }
 
-                                        DankIcon {
+                                        DIcon {
                                             visible: card.modelData.recurring
                                             name: "repeat"
                                             size: Theme.fontSizeSmall
@@ -252,7 +252,7 @@ Item {
                                     }
                                 }
 
-                                DankIcon {
+                                DIcon {
                                     id: priorityFlag
                                     anchors.verticalCenter: parent.verticalCenter
                                     name: "flag"

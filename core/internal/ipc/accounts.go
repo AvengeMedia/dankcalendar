@@ -18,9 +18,9 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 	case "accounts.list":
 		handleAccountsList(ctx, w, req, deps)
 	case "accounts.providers":
-		Respond(w, req.ID, accounts.AvailableProviders())
+		w.Respond(req.ID, accounts.AvailableProviders())
 	case "accounts.google.setupGuide":
-		Respond(w, req.ID, accounts.GoogleSetupSteps())
+		w.Respond(req.ID, accounts.GoogleSetupSteps())
 	case "accounts.google.start":
 		handleGoogleStart(ctx, w, req, deps)
 	case "accounts.google.complete":
@@ -30,7 +30,7 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 	case "accounts.google.cancel", "accounts.microsoft.cancel":
 		handleFlowCancel(w, req, deps)
 	case "accounts.microsoft.setupGuide":
-		Respond(w, req.ID, accounts.MicrosoftSetupSteps())
+		w.Respond(req.ID, accounts.MicrosoftSetupSteps())
 	case "accounts.microsoft.start":
 		handleMicrosoftStart(ctx, w, req, deps)
 	case "accounts.microsoft.complete":
@@ -51,16 +51,16 @@ func HandleAccounts(ctx context.Context, w *ConnWriter, req Request, deps Deps) 
 		handleAccountsRefresh(ctx, w, req, deps)
 	case "accounts.changed":
 		publishAccountsChanged(deps, ParamString(req.Params, "accountId"))
-		Respond(w, req.ID, map[string]any{"published": true})
+		w.Respond(req.ID, map[string]any{"published": true})
 	default:
-		RespondError(w, req.ID, "unknown accounts method: "+req.Method)
+		w.RespondError(req.ID, "unknown accounts method: "+req.Method)
 	}
 }
 
 func handleAccountsList(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	items, err := deps.Repo.ListAccounts(ctx)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -70,43 +70,43 @@ func handleAccountsList(ctx context.Context, w *ConnWriter, req Request, deps De
 		out[i]["authorized"] = state != accounts.CredentialsMissing
 		out[i]["keyringLocked"] = state == accounts.CredentialsLocked
 	}
-	Respond(w, req.ID, out)
+	w.Respond(req.ID, out)
 }
 
 func handleGoogleReauth(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	accountID := ParamString(req.Params, "accountId")
 	if accountID == "" {
-		RespondError(w, req.ID, "accountId is required")
+		w.RespondError(req.ID, "accountId is required")
 		return
 	}
 
 	creds, err := accounts.GoogleAppCreds(ctx, deps.Secrets, accountID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	redirect, err := redirectURL(deps.HTTPAddr)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	brokerFlow, err := oauth.StartBrokerFlow(deps.Broker, redirect)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	flow, err := oauth.NewGoogleFlow(creds, brokerFlow)
 	if err != nil {
 		brokerFlow.Close()
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	deps.Flows.Register(flow)
-	Respond(w, req.ID, map[string]any{
+	w.Respond(req.ID, map[string]any{
 		"state":   flow.State(),
 		"authUrl": flow.AuthURL(),
 	})
@@ -139,19 +139,19 @@ func parseGoogleStartParams(p map[string]any) (googleStartParams, error) {
 func handleGoogleStart(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 	params, err := parseGoogleStartParams(req.Params)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	redirect, err := redirectURL(deps.HTTPAddr)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	brokerFlow, err := oauth.StartBrokerFlow(deps.Broker, redirect)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -163,13 +163,13 @@ func handleGoogleStart(_ context.Context, w *ConnWriter, req Request, deps Deps)
 	flow, err := oauth.NewGoogleFlow(creds, brokerFlow)
 	if err != nil {
 		brokerFlow.Close()
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	deps.Flows.Register(flow)
 
-	Respond(w, req.ID, map[string]any{
+	w.Respond(req.ID, map[string]any{
 		"state":   flow.State(),
 		"authUrl": flow.AuthURL(),
 	})
@@ -178,28 +178,28 @@ func handleGoogleStart(_ context.Context, w *ConnWriter, req Request, deps Deps)
 func handleFlowCancel(w *ConnWriter, req Request, deps Deps) {
 	state := ParamString(req.Params, "state")
 	if state == "" {
-		RespondError(w, req.ID, "state is required")
+		w.RespondError(req.ID, "state is required")
 		return
 	}
 	cancelled := deps.Flows.Cancel(state)
-	Respond(w, req.ID, map[string]any{"cancelled": cancelled})
+	w.Respond(req.ID, map[string]any{"cancelled": cancelled})
 }
 
 func handleGoogleComplete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	state := ParamString(req.Params, "state")
 	if state == "" {
-		RespondError(w, req.ID, "state is required")
+		w.RespondError(req.ID, "state is required")
 		return
 	}
 
 	pending, ok := deps.Flows.Take(state)
 	if !ok {
-		RespondError(w, req.ID, "no pending google flow for that state")
+		w.RespondError(req.ID, "no pending google flow for that state")
 		return
 	}
 	flow, ok := pending.(*oauth.GoogleFlow)
 	if !ok {
-		RespondError(w, req.ID, "pending flow for that state is not a google flow")
+		w.RespondError(req.ID, "pending flow for that state is not a google flow")
 		return
 	}
 
@@ -208,18 +208,18 @@ func handleGoogleComplete(ctx context.Context, w *ConnWriter, req Request, deps 
 
 	tok, err := flow.Wait(waitCtx, 5*time.Minute)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	res, err := accounts.FinishGoogle(ctx, deps.Repo, deps.Secrets, flow, tok)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishAccountsChanged(deps, res.AccountID)
-	Respond(w, req.ID, map[string]any{
+	w.Respond(req.ID, map[string]any{
 		"accountId":   res.AccountID,
 		"email":       res.DisplayName,
 		"displayName": res.DisplayName,
@@ -230,22 +230,22 @@ func handleGoogleComplete(ctx context.Context, w *ConnWriter, req Request, deps 
 func handleAccountsDelete(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	accountID := ParamString(req.Params, "accountId")
 	if accountID == "" {
-		RespondError(w, req.ID, "accountId is required")
+		w.RespondError(req.ID, "accountId is required")
 		return
 	}
 
 	if err := accounts.Delete(ctx, deps.Repo, deps.Secrets, accountID); err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
 	publishAccountsChanged(deps, accountID)
-	Respond(w, req.ID, map[string]any{"deleted": true})
+	w.Respond(req.ID, map[string]any{"deleted": true})
 }
 
 func handleAccountsRefresh(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	if deps.Sync == nil {
-		RespondError(w, req.ID, "sync engine not available")
+		w.RespondError(req.ID, "sync engine not available")
 		return
 	}
 
@@ -256,13 +256,13 @@ func handleAccountsRefresh(ctx context.Context, w *ConnWriter, req Request, deps
 				log.Warnf("manual sync all: %v", err)
 			}
 		}()
-		Respond(w, req.ID, map[string]any{"started": true, "all": true})
+		w.Respond(req.ID, map[string]any{"started": true, "all": true})
 		return
 	}
 
 	acc, err := deps.Repo.GetAccount(ctx, accountID)
 	if err != nil {
-		RespondError(w, req.ID, err.Error())
+		w.RespondError(req.ID, err.Error())
 		return
 	}
 
@@ -272,7 +272,7 @@ func handleAccountsRefresh(ctx context.Context, w *ConnWriter, req Request, deps
 		}
 	}()
 
-	Respond(w, req.ID, map[string]any{"started": true})
+	w.Respond(req.ID, map[string]any{"started": true})
 }
 
 func redirectURL(httpAddr string) (string, error) {

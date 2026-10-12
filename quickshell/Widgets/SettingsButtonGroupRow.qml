@@ -1,6 +1,6 @@
 import QtQuick
 import qs.Common
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 SettingsRow {
     id: root
@@ -35,7 +35,7 @@ SettingsRow {
         visible: root.compact
     }
 
-    DankButtonGroup {
+    DButtonGroup {
         id: buttonGroup
         parent: root.compact ? bodyHost : trailingHost
         x: root.compact ? (parent.width - width) / 2 : 0

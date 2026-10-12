@@ -291,6 +291,7 @@ func logSyncError(accountID string, err error) {
 
 func (e *Engine) SyncAccount(ctx context.Context, acc *ent.Account) error {
 	retryAfter, err := e.syncAccount(ctx, acc)
+	retryAfter = max(retryAfter, deferredRetryAfter(err))
 	e.recordAuthState(ctx, acc, err)
 	if e.recordKeyringLocked(acc.ID, errors.Is(err, keyring.ErrLocked)) {
 		retryAfter = keyringLockedRetry
@@ -355,6 +356,7 @@ func (e *Engine) syncAccount(ctx context.Context, acc *ent.Account) (time.Durati
 		if err != nil {
 			log.Warnf("sync calendar %q: %v", rc.RemoteID, err)
 			calendarFailed = true
+			retryAfter = max(retryAfter, deferredRetryAfter(err))
 			continue
 		}
 		if ra > retryAfter {
@@ -609,3 +611,13 @@ func accountToDomain(a *ent.Account) calendar.Account {
 }
 
 var _ = entaccount.IDEQ
+
+// Providers can defer a retry without sleeping on the serial account loop.
+// errors.As keeps the hint visible through contextual error wrapping.
+func deferredRetryAfter(err error) time.Duration {
+	var hint interface{ RetryAfter() time.Duration }
+	if errors.As(err, &hint) {
+		return hint.RetryAfter()
+	}
+	return 0
+}

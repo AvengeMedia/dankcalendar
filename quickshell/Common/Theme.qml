@@ -4,17 +4,21 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import qs.DankCommon.Common
+import qs.DCommon.Common
 import qs.Services
 import "StockTheme.js" as StockTheme
-import "../DankCommon/Common/Shape.js" as Shape
-import "../DankCommon/Common/Surface.js" as Surface
+import "../DCommon/Common/Shape.js" as Shape
+import "../DCommon/Common/Surface.js" as Surface
+import "../DCommon/Common/Contrast.js" as Contrast
+import "../DCommon/Common/Accents.js" as Accents
+import "../DCommon/Common/Tonal.js" as Tonal
 
 Singleton {
     id: root
 
     readonly property string defaultFontFamily: Fonts.sans
     readonly property string defaultMonoFontFamily: Fonts.mono
+    readonly property string defaultDisplayFontFamily: Fonts.display
 
     // "auto" follows the desktop portal color-scheme; no preference falls back to dark
     readonly property bool isLightMode: {
@@ -42,6 +46,7 @@ Singleton {
     }
 
     readonly property string dmsColorsPath: xdgCacheDir + "/DankMaterialShell/dms-colors.json"
+    readonly property string matugenThemePath: SettingsData.configDir + "/matugen-theme.json"
 
     property var matugenColors: ({})
     property bool colorsLoaded: false
@@ -140,6 +145,21 @@ Singleton {
         return merged;
     }
 
+    function validateMatugenTheme(raw) {
+        if (!raw || typeof raw !== "object" || Array.isArray(raw))
+            throw new Error("Expected a Matugen palette object");
+        const palettes = ("dark" in raw || "light" in raw) ? [raw.dark, raw.light].filter(p => p !== undefined) : [raw];
+        for (const palette of palettes) {
+            if (!palette || typeof palette !== "object" || Array.isArray(palette) || Object.keys(palette).length === 0)
+                throw new Error("Expected a non-empty Matugen palette");
+            for (const value of Object.values(palette)) {
+                if (typeof value !== "string" || !/^#[0-9a-f]{6}$/i.test(value))
+                    throw new Error("Expected Matugen colors in #RRGGBB format");
+            }
+        }
+        return raw;
+    }
+
     readonly property var currentThemeData: {
         const isLight = isLightMode;
         const preset = StockTheme.getPreset(SettingsData.presetTheme, isLight);
@@ -147,6 +167,7 @@ Singleton {
         case "preset":
             return preset;
         case "custom":
+        case "matugen":
             return buildCustomTheme(preset, isLight);
         default:
             return colorsLoaded ? buildDmsTheme(preset) : preset;
@@ -155,11 +176,19 @@ Singleton {
 
     property color primary: currentThemeData.primary
     property color primaryText: currentThemeData.primaryText
-    property color primaryContainer: currentThemeData.primaryContainer || blend(surfaceContainerHigh, primary, 0.45)
+    readonly property real containerTint: currentThemeData.containerTint ?? Tonal.defaultTint(surfaceContainer)
+    property color primaryContainer: currentThemeData.softPrimaryContainer || Tonal.softContainer(primary, surfaceContainer, containerTint)
     property color secondary: currentThemeData.secondary
     property color secondaryContainer: currentThemeData.secondaryContainer || blend(surfaceContainerHigh, secondary, 0.35)
     property color tertiary: currentThemeData.tertiary || currentThemeData.secondary
     property color tertiaryContainer: currentThemeData.tertiaryContainer || blend(surfaceContainerHigh, tertiary, 0.35)
+    readonly property real selectedContainerTint: currentThemeData.selectedContainerTint ?? 0.2
+    // DMS exports surfaceContainerHigh as secondary_container when the theme sets none
+    readonly property bool themedSelectedContainer: !!currentThemeData.secondaryContainer && !Qt.colorEqual(secondaryContainer, surfaceContainerHigh) && Contrast.isTonal(secondaryContainer, onSecondaryContainer) && Contrast.isTonal(secondaryContainer, surfaceText)
+    readonly property color selectedContainer: currentThemeData.selectedContainer || (themedSelectedContainer ? secondaryContainer : Contrast.subtleTint(surfaceContainerHigh, primary, surfaceText, selectedContainerTint))
+    readonly property color accentOnSelectedContainer: currentThemeData.accentOnSelectedContainer || (Contrast.ratio(primary, selectedContainer) >= 3 ? primary : onSelectedContainer)
+    readonly property color accentOnPrimaryContainer: currentThemeData.accentOnPrimaryContainer || (Contrast.ratio(primary, primaryContainer) >= 3 ? primary : onPrimaryContainer)
+    readonly property var accents: Accents.derive(primary, isLightMode, currentThemeData.accents ?? null)
     property color surface: currentThemeData.surface
     property color surfaceText: currentThemeData.surfaceText
     property color surfaceVariant: currentThemeData.surfaceVariant
@@ -176,6 +205,10 @@ Singleton {
     property color surfaceContainer: currentThemeData.surfaceContainer
     property color surfaceContainerHigh: currentThemeData.surfaceContainerHigh
     property color surfaceContainerHighest: currentThemeData.surfaceContainerHighest || surfaceContainerHigh
+    readonly property color hostSurface: surface
+    readonly property color cardSurface: surfaceContainer
+    readonly property color chipSurface: surfaceContainerHigh
+    readonly property color chipSurfaceNested: surfaceContainerHighest
     property color inverseSurface: currentThemeData.inverseSurface || surfaceText
     property color inverseOnSurface: currentThemeData.inverseOnSurface || surface
     readonly property color contrastDark: "#000000"
@@ -187,11 +220,13 @@ Singleton {
     property color onPrimaryContainer
     property color onSecondaryContainer
     property color onTertiaryContainer
+    property color onSelectedContainer
     property color onError
     property color onErrorContainer
     property color onSurface_12: withAlpha(onSurface, 0.12)
     property color onSurface_38: withAlpha(onSurface, 0.38)
     property color onSurfaceVariant_30: withAlpha(onSurfaceVariant, 0.3)
+    property color onSurfaceVariant_40: withAlpha(onSurfaceVariant, 0.4)
     readonly property list<QtObject> roleBindings: [
         Binding {
             target: root
@@ -211,17 +246,24 @@ Singleton {
         Binding {
             target: root
             property: "onPrimaryContainer"
-            value: root.currentThemeData.onPrimaryContainer || root.surfaceText
+            value: {
+                const explicit = root.currentThemeData.onPrimaryContainer;
+                if (!explicit)
+                    return Contrast.readableOn(root.primaryContainer, root.onContainerCandidates);
+                if (root.currentThemeData.softPrimaryContainer)
+                    return explicit;
+                return Contrast.readableOn(root.primaryContainer, [Qt.color(explicit)].concat(root.onContainerCandidates));
+            }
         },
         Binding {
             target: root
             property: "onSecondaryContainer"
-            value: root.currentThemeData.onSecondaryContainer || root.surfaceText
+            value: root.currentThemeData.onSecondaryContainer || Contrast.readableOn(root.secondaryContainer, root.onContainerCandidates)
         },
         Binding {
             target: root
             property: "onTertiaryContainer"
-            value: root.currentThemeData.onTertiaryContainer || root.surfaceText
+            value: root.currentThemeData.onTertiaryContainer || Contrast.readableOn(root.tertiaryContainer, root.onContainerCandidates)
         },
         Binding {
             target: root
@@ -232,8 +274,14 @@ Singleton {
             target: root
             property: "onErrorContainer"
             value: root.currentThemeData.errorContainerText || root.onSurface
+        },
+        Binding {
+            target: root
+            property: "onSelectedContainer"
+            value: root.currentThemeData.onSelectedContainer || (root.currentThemeData.selectedContainer ? Contrast.readableOn(root.selectedContainer, root.onContainerCandidates) : root.themedSelectedContainer ? root.onSecondaryContainer : root.surfaceText)
         }
     ]
+    readonly property var onContainerCandidates: [surfaceText, surface, contrastLight, contrastDark]
     readonly property real tonalTintAlpha: 0.16
 
     property color error: currentThemeData.error
@@ -287,6 +335,7 @@ Singleton {
     property real spacingXS: 4
     property real spacingS: 8
     property real spacingM: 12
+    readonly property real windowInset: spacingM
     property real spacingL: 16
     property real spacingXL: 24
 
@@ -345,6 +394,7 @@ Singleton {
     readonly property real avatarSize: 36
     readonly property real sliderTrackHeight: 16
     readonly property real sliderHandleWidth: 4
+    readonly property real sliderHandleWidthPressed: 2
     readonly property real sliderHandleWidthDesktop: 6
     readonly property real sliderHandleWidthDesktopPressed: 4
     readonly property real sliderHandleHeightDesktop: 32
@@ -405,6 +455,23 @@ Singleton {
     readonly property real fieldHeight: Math.round(fontSizeMedium * 3)
     readonly property real fieldHeightLarge: 48
     readonly property real outlinedFieldLabelLineHeight: 16
+    readonly property real osdHeight: sliderHandleHeight + spacingS * 2
+    readonly property real bottomSheetHandleWidth: 36
+    readonly property real bottomSheetHandleHeight: 4
+    readonly property real launcherTileSize: 120
+    readonly property real launcherImageRatio: 0.75
+    readonly property int launcherMaxVisibleRows: 8
+    readonly property real launcherWidthMicro: 500
+    readonly property real launcherWidthDefault: 620
+    readonly property real launcherWidthWide: 720
+    readonly property real launcherWidthLarge: 860
+    readonly property real launcherHeightDefault: 600
+    readonly property real launcherScreenMargin: 100
+    readonly property color lockScreenContentColor: "#ffffff"
+    readonly property real lockScreenScrimAlpha: 0.4
+    readonly property real lockScreenBlur: 0.8
+    readonly property int lockScreenBlurMax: 32
+    readonly property color screenOffColor: "#000000"
     readonly property real textFieldSpatialStiffness: 800
     readonly property real textFieldSpatialDampingRatio: 1
     readonly property real textFieldFastEffectsStiffness: 3800
@@ -425,6 +492,7 @@ Singleton {
 
     property string fontFamily: defaultFontFamily
     property string monoFontFamily: defaultMonoFontFamily
+    property string displayFontFamily: defaultDisplayFontFamily
     readonly property int fontWeight: SettingsData.fontWeight
     readonly property int fontWeightMedium: shiftedFontWeight(Font.Medium)
     readonly property int fontWeightBold: shiftedFontWeight(Font.Bold)
@@ -448,6 +516,7 @@ Singleton {
     readonly property real floatingWindowForegroundAlpha: Surface.foregroundAlpha(floatingWindowForegroundLayers, floatingWindowForegroundTransparency)
     readonly property color floatingWindowSurface: withAlpha(surfaceContainer, floatingWindowTransparency)
     readonly property color floatingWindowNestedSurface: withAlpha(surfaceContainerHigh, floatingWindowForegroundAlpha)
+    readonly property color floatingWindowPaneSurface: withAlpha(surfaceContainer, floatingWindowForegroundAlpha)
     readonly property color floatingWindowFieldColor: floatingWindowNestedSurface
     readonly property color floatingWindowFieldBorderColor: withAlpha(outline, 0.16)
     readonly property color floatingWindowFieldFocusedBorderColor: primary
@@ -457,6 +526,10 @@ Singleton {
 
     function isFloatingWindow(item) {
         return Surface.isFloatingWindow(item);
+    }
+
+    function accent(name) {
+        return accents[name] ?? null;
     }
 
     function foregroundColor(baseColor, floatingWindow = false) {
@@ -572,15 +645,11 @@ Singleton {
     }
 
     function withAlpha(c, a) {
-        if (!c || c.r === undefined)
-            return Qt.rgba(0, 0, 0, 0);
-        return Qt.rgba(c.r, c.g, c.b, a);
+        return Style.withAlpha(c, a);
     }
 
     function blendAlpha(c, a) {
-        if (!c || c.r === undefined)
-            return Qt.rgba(0, 0, 0, 0);
-        return Qt.rgba(c.r, c.g, c.b, c.a * a);
+        return Style.blendAlpha(c, a);
     }
 
     function blend(c1, c2, r) {
@@ -627,6 +696,8 @@ Singleton {
     FileView {
         id: customThemeView
         path: {
+            if (SettingsData.colorSource === "matugen")
+                return root.matugenThemePath;
             const f = SettingsData.customThemeFile;
             if (!f || f === "")
                 return "";
@@ -638,6 +709,11 @@ Singleton {
         watchChanges: true
         printErrors: false
 
+        onPathChanged: {
+            root.customThemeRaw = null;
+            root.customThemeLoaded = false;
+        }
+
         onLoaded: {
             try {
                 const text = customThemeView.text();
@@ -646,7 +722,8 @@ Singleton {
                     root.customThemeLoaded = false;
                     return;
                 }
-                root.customThemeRaw = JSON.parse(text);
+                const raw = JSON.parse(text);
+                root.customThemeRaw = SettingsData.colorSource === "matugen" ? root.validateMatugenTheme(raw) : raw;
                 root.customThemeLoaded = true;
             } catch (e) {
                 root.customThemeRaw = null;

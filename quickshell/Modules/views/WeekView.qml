@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 import "../../Common/EventUtils.js" as EventUtils
 
 Item {
@@ -213,7 +213,7 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: chipTooltip
     }
 
@@ -326,7 +326,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.spacingS
 
-                DankIcon {
+                DIcon {
                     name: "warning"
                     size: Theme.iconSizeSmall
                     color: Theme.warning
@@ -341,7 +341,7 @@ Item {
                 }
             }
 
-            DankButton {
+            DButton {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.spacingM
                 anchors.verticalCenter: parent.verticalCenter
@@ -495,13 +495,16 @@ Item {
                                     }
 
                                     Rectangle {
+                                        id: allDayChip
                                         required property var modelData
                                         readonly property bool isSelected: root.isEventSelected(modelData)
+                                        readonly property bool declined: modelData.myResponse === "declined"
                                         width: parent.width
                                         height: root.allDayChipHeight
                                         radius: Theme.cornerRadiusXS
                                         clip: true
-                                        color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                                        opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                                         border.color: isSelected ? Theme.primary : modelData.color
                                         border.width: isSelected ? 2 : 1
 
@@ -518,7 +521,8 @@ Item {
                                             anchors.verticalCenter: parent.verticalCenter
                                             text: modelData.title
                                             font.pixelSize: 10
-                                            color: Theme.surfaceText
+                                            font.strikeout: allDayChip.declined
+                                            color: allDayChip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                             wrapMode: Text.WordWrap
                                             maximumLineCount: SettingsData.weekEventTitleLines
                                             elide: Text.ElideRight
@@ -594,7 +598,7 @@ Item {
                             width: root.dayWidth
                             height: parent.height
 
-                            DankIcon {
+                            DIcon {
                                 visible: {
                                     root.eventsVersion;
                                     return root.hiddenInfoFor(parent.d).before;
@@ -610,7 +614,7 @@ Item {
             }
         }
 
-        DankFlickable {
+        DFlickable {
             id: weekFlickable
             width: parent.width
             height: parent.height - 56 - coreHoursWarning.height - hiddenBeforeStrip.height - allDayRow.height
@@ -734,7 +738,7 @@ Item {
                                     onCreateRequested: (start, end) => root.createTimedRequested(start, end)
                                 }
 
-                                DankIcon {
+                                DIcon {
                                     visible: {
                                         root.eventsVersion;
                                         return root.hiddenInfoFor(root.dayAt(dayColumn.index - 1)).after;
@@ -752,12 +756,14 @@ Item {
                                     }
 
                                     Rectangle {
+                                        id: timedChip
                                         required property var modelData
                                         readonly property bool isSelected: root.isEventSelected(modelData)
                                         onIsSelectedChanged: {
                                             if (isSelected)
                                                 root.revealHours(modelData.startHour, modelData.durationHours);
                                         }
+                                        readonly property bool declined: modelData.myResponse === "declined"
                                         readonly property real laneGap: 2
                                         readonly property real usableWidth: parent.width - 8
                                         readonly property real laneWidth: (usableWidth - (modelData.columns - 1) * laneGap) / modelData.columns
@@ -767,7 +773,8 @@ Item {
                                         height: modelData.durationHours * root.hourHeight - 2
                                         radius: Theme.cornerRadiusS
                                         clip: true
-                                        color: modelData.myResponse === "needs-action" ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
+                                        opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                                        color: modelData.myResponse === "needs-action" || declined ? "transparent" : Theme.withAlpha(modelData.color, 0.22)
                                         border.color: isSelected ? Theme.primary : modelData.color
                                         border.width: isSelected ? 2 : 1
 
@@ -785,7 +792,8 @@ Item {
                                                 text: modelData.title
                                                 font.pixelSize: 11
                                                 font.weight: Theme.fontWeightMedium
-                                                color: Theme.surfaceText
+                                                font.strikeout: timedChip.declined
+                                                color: timedChip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                                 width: parent.width
                                                 wrapMode: Text.WordWrap
                                                 maximumLineCount: Math.min(SettingsData.weekEventTitleLines, Math.max(1, Math.floor(parent.height / 14)))

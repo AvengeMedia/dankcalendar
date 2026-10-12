@@ -16,11 +16,14 @@ func NewServer(deps Deps) *Server {
 	cfg := dankipc.Config{
 		AppName:                "dankcal",
 		APIVersion:             APIVersion,
-		Capabilities:           []string{"accounts", "calendars", "events", "reminders", "subscribe", "ui", "system"},
+		Capabilities:           []string{"accounts", "calendars", "events", "reminders", "subscribe", "ui", "system", "files"},
 		DefaultSubscribeTopics: []string{"accounts", "calendars", "events", "tasks", "sync"},
 		Bus:                    deps.Bus,
 		OnSubscribe: func(topics []string, _ *Subscriber) {
 			publishPending(deps, topics)
+			if deps.Files != nil {
+				deps.Files.Attach(topics)
+			}
 		},
 	}
 

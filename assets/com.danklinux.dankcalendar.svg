@@ -1,3 +1,4 @@
+<!-- calendar glyph from Material Symbols Rounded, Apache License 2.0, https://github.com/google/material-design-icons -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
@@ -5,22 +6,13 @@
       <stop offset="1" stop-color="#D0BCFF"/>
     </linearGradient>
   </defs>
-  <rect x="6" y="10" width="52" height="48" rx="11" fill="url(#body)"/>
-  <path d="M6 21 h52 v2 H6 z M6 21 a11 11 0 0 1 11-11 h30 a11 11 0 0 1 11 11" fill="#553C9A"/>
-  <rect x="17" y="4" width="5" height="13" rx="2.5" fill="#E9DFFF"/>
-  <rect x="42" y="4" width="5" height="13" rx="2.5" fill="#E9DFFF"/>
-  <g fill="#9F7AEA">
-    <rect x="12" y="27" width="7" height="7" rx="2"/>
-    <rect x="23" y="27" width="7" height="7" rx="2"/>
-    <rect x="34" y="27" width="7" height="7" rx="2"/>
-    <rect x="45" y="27" width="7" height="7" rx="2"/>
-    <rect x="12" y="37" width="7" height="7" rx="2"/>
-    <rect x="23" y="37" width="7" height="7" rx="2"/>
-    <rect x="45" y="37" width="7" height="7" rx="2"/>
-    <rect x="12" y="47" width="7" height="7" rx="2"/>
-    <rect x="23" y="47" width="7" height="7" rx="2"/>
-    <rect x="34" y="47" width="7" height="7" rx="2"/>
-    <rect x="45" y="47" width="7" height="7" rx="2"/>
+  <g transform="translate(0 64) scale(0.0666667)">
+    <rect x="180" y="-570" width="600" height="430" fill="url(#body)"/>
+    <path d="M180-80q-24 0-42-18t-18-42v-620q0-24 18-42t42-18h65v-28q0-13.6 9.2-22.8 9.2-9.2 22.8-9.2 14.02 0 23.51 9.2Q310-861.6 310-848v28h340v-28q0-13.6 9.2-22.8 9.2-9.2 22.8-9.2 14.03 0 23.51 9.2Q715-861.6 715-848v28h65q24 0 42 18t18 42v620q0 24-18 42t-42 18H180Zm0-60h600v-430H180v430Z" fill="#553C9A"/>
+    <g fill="#9F7AEA">
+      <circle cx="320" cy="-440" r="40"/><circle cx="480" cy="-440" r="40"/><circle cx="640" cy="-440" r="40"/>
+      <circle cx="320" cy="-280" r="40"/><circle cx="640" cy="-280" r="40"/>
+    </g>
+    <circle cx="480" cy="-280" r="40" fill="#44337A"/>
   </g>
-  <rect x="34" y="37" width="7" height="7" rx="2" fill="#44337A"/>
 </svg>

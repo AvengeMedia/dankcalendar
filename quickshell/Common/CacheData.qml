@@ -8,8 +8,6 @@ Singleton {
     id: root
 
     property var fileBrowserSettings: ({})
-    property string wallpaperLastPath: ""
-    property string profileLastPath: ""
 
     function saveCache() {
     }

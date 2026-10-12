@@ -34,6 +34,16 @@ Singleton {
     property bool popoutElevationEnabled: true
     property int textRenderType: SettingsData.TextRenderType.Qt
     property int textRenderQuality: SettingsData.TextRenderQuality.Default
+    property int animationSpeed: SettingsData.AnimationSpeed.Short
+    property bool blurBorderEnabled: true
+    property real blurBorderOpacity: 0.35
+    property string blurBorderColor: "outline"
+    property string blurBorderCustomColor: "#ffffff"
+    property bool powerActionConfirm: true
+    property real powerActionHoldDuration: 0.5
+    property var powerMenuActions: ["reboot", "logout", "poweroff", "lock", "suspend", "restart"]
+    property string powerMenuDefaultAction: "logout"
+    property bool powerMenuGridLayout: false
 
     readonly property string configDir: {
         const xdg = Quickshell.env("XDG_CONFIG_HOME");
@@ -45,7 +55,8 @@ Singleton {
     // "auto" | "light" | "dark"
     property alias themeMode: adapter.themeMode
     // "auto" follows DMS dynamic colors when available, falling back to the
-    // chosen preset; "preset" forces a bundled palette; "custom" loads a JSON file
+    // chosen preset; "preset" forces a bundled palette; "custom" loads a JSON file;
+    // "matugen" loads matugen-theme.json from configDir.
     property alias colorSource: adapter.colorSource
     property alias presetTheme: adapter.presetTheme
     property alias customThemeFile: adapter.customThemeFile
@@ -63,6 +74,7 @@ Singleton {
     property alias focusRingWidth: adapter.focusRingWidth
     // "primary" | "secondary" | "outline" | "surfaceText"
     property alias focusRingColor: adapter.focusRingColor
+    property alias windowTitleBars: adapter.windowTitleBars
     // "" follows the system language, otherwise a bundled translation code such as "de" or "zh_CN"
     property alias language: adapter.language
     // "" follows the interface language for date and time names, otherwise a locale code
@@ -223,6 +235,7 @@ Singleton {
             property bool focusRingEnabled: true
             property real focusRingWidth: 1.5
             property string focusRingColor: "primary"
+            property bool windowTitleBars: true
             property string language: ""
             property string timeLocale: ""
             property int firstDayOfWeek: -1

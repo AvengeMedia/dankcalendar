@@ -174,3 +174,36 @@ func TestParseOccurrenceStart(t *testing.T) {
 	_, err = parseOccurrenceStart("yesterday", false)
 	require.Error(t, err)
 }
+
+func TestEventFromParamsTransparency(t *testing.T) {
+	base := calendar.Event{
+		Summary: "focus time",
+		Start:   time.Date(2026, 7, 6, 9, 0, 0, 0, time.UTC),
+		End:     time.Date(2026, 7, 6, 10, 0, 0, 0, time.UTC),
+	}
+
+	for raw, want := range map[string]string{"transparent": "transparent", "free": "transparent", "OPAQUE": "opaque", "busy": "opaque"} {
+		ev, err := eventFromParams(base, map[string]any{"transparency": raw})
+		require.NoError(t, err, raw)
+		assert.Equal(t, want, ev.Transparency, raw)
+	}
+
+	t.Run("absent leaves the field alone", func(t *testing.T) {
+		base.Transparency = "transparent"
+		ev, err := eventFromParams(base, map[string]any{"summary": "renamed"})
+		require.NoError(t, err)
+		assert.Equal(t, "transparent", ev.Transparency)
+	})
+
+	t.Run("empty unsets it", func(t *testing.T) {
+		base.Transparency = "transparent"
+		ev, err := eventFromParams(base, map[string]any{"transparency": ""})
+		require.NoError(t, err)
+		assert.Equal(t, "", ev.Transparency)
+	})
+
+	t.Run("other values are refused", func(t *testing.T) {
+		_, err := eventFromParams(base, map[string]any{"transparency": "maybe"})
+		require.Error(t, err)
+	})
+}

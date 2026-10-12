@@ -3,7 +3,8 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
+import "../../DCommon/Common/WheelInput.js" as WheelInput
 
 Item {
     id: root
@@ -106,7 +107,7 @@ Item {
                 return;
 
             const delta = event.angleDelta.y;
-            const isTouchpad = event.pixelDelta && event.pixelDelta.y !== 0;
+            const isTouchpad = WheelInput.isTouchpad(event);
 
             if (isTouchpad) {
                 touchpadAccumulator += delta;
@@ -132,7 +133,7 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: chipTooltip
     }
 
@@ -457,14 +458,17 @@ Item {
                                 }
 
                                 Rectangle {
+                                    id: chip
                                     required property var modelData
                                     readonly property bool isSelected: root.isEventSelected(modelData)
                                     readonly property bool awaitingReply: modelData.myResponse === "needs-action"
+                                    readonly property bool declined: modelData.myResponse === "declined"
                                     width: parent.width
                                     height: root.eventChipHeight
                                     radius: Theme.cornerRadiusXS
                                     clip: true
-                                    color: awaitingReply ? "transparent" : Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
+                                    opacity: declined && !isSelected ? Theme.pendingOpacity : 1
+                                    color: awaitingReply || declined ? "transparent" : Theme.withAlpha(modelData.color, isSelected ? 0.32 : 0.18)
                                     border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                                     border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
 
@@ -491,9 +495,10 @@ Item {
 
                                         StyledText {
                                             anchors.verticalCenter: parent.verticalCenter
-                                            text: parent.parent.modelData.title
+                                            text: chip.modelData.title
                                             font.pixelSize: 11
-                                            color: Theme.surfaceText
+                                            font.strikeout: chip.declined
+                                            color: chip.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                             wrapMode: Text.WordWrap
                                             maximumLineCount: SettingsData.monthEventTitleLines
                                             elide: Text.ElideRight

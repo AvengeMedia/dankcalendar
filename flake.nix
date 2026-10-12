@@ -58,7 +58,7 @@
             pname = "dankcalendar";
             src = ./.;
             modRoot = "core";
-            vendorHash = "sha256-j4x96NF/0NyT61CRbsw+nvjubkZz1kAGPj+5wU6cHuw=";
+            vendorHash = "sha256-eV6E8YdnkQvhaSF3s1JptmiqM6cOEe/0ynLwPkXVc2s=";
 
             subPackages = [ "cmd/dcal" ];
 
@@ -66,14 +66,14 @@
 
             # Mirror `make -C core sync-shell`: bake the quickshell UI into
             # the binary, minus dev-only files. The flake src excludes
-            # submodule content, so the DankCommon symlink is replaced with
+            # submodule content, so the DCommon symlink is replaced with
             # the pinned dank-qml-common input.
             postPatch = ''
               rm -rf core/internal/shellembed/dist
               cp -r quickshell core/internal/shellembed/dist
-              rm -f core/internal/shellembed/dist/DankCommon
-              cp -r ${dank-qml-common}/DankCommon core/internal/shellembed/dist/DankCommon
-              chmod -R u+w core/internal/shellembed/dist/DankCommon
+              rm -f core/internal/shellembed/dist/DCommon
+              cp -r ${dank-qml-common}/DCommon core/internal/shellembed/dist/DCommon
+              chmod -R u+w core/internal/shellembed/dist/DCommon
               rm -rf core/internal/shellembed/dist/scripts \
                 core/internal/shellembed/dist/.claude
               rm -f core/internal/shellembed/dist/.qmlls.ini \

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Common
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Popup {
     id: root
@@ -38,7 +38,7 @@ Popup {
         }
     }
 
-    contentItem: DankDialog {
+    contentItem: DDialog {
         id: dialog
         embedded: false
         opened: false

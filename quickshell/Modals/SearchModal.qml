@@ -6,8 +6,8 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Common as DC
-import qs.DankCommon.Widgets
+import qs.DCommon.Common as DC
+import qs.DCommon.Widgets
 
 FocusScope {
     id: root
@@ -236,7 +236,7 @@ FocusScope {
 
         Behavior on opacity {
             enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
-            DC.DankAnim {
+            DC.DAnim {
                 duration: Theme.expressiveDurations.expressiveEffects
                 easing.bezierCurve: Theme.expressiveCurves.expressiveEffects
             }
@@ -259,7 +259,7 @@ FocusScope {
 
         Behavior on scale {
             enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
-            DC.DankAnim {
+            DC.DAnim {
                 duration: Theme.expressiveDurations.expressiveDefaultSpatial
                 easing.bezierCurve: Theme.expressiveCurves.expressiveDefaultSpatial
             }
@@ -267,7 +267,7 @@ FocusScope {
 
         Behavior on opacity {
             enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
-            DC.DankAnim {
+            DC.DAnim {
                 duration: Theme.expressiveDurations.expressiveEffects
                 easing.bezierCurve: Theme.expressiveCurves.expressiveEffects
             }
@@ -292,7 +292,7 @@ FocusScope {
             }
         }
 
-        DankSearchField {
+        DSearchField {
             id: searchInput
             anchors.top: parent.top
             anchors.left: parent.left
@@ -319,13 +319,13 @@ FocusScope {
 
             Behavior on height {
                 enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
-                DC.DankAnim {
+                DC.DAnim {
                     duration: Theme.expressiveDurations.expressiveEffects
                     easing.bezierCurve: Theme.expressiveCurves.expressiveEffects
                 }
             }
 
-            DankListView {
+            DListView {
                 id: resultsList
                 anchors.fill: parent
                 anchors.topMargin: Theme.spacingS
@@ -343,8 +343,8 @@ FocusScope {
                     required property var modelData
                     required property int index
                     readonly property bool selected: index === root.selectedIndex
-                    readonly property color contentColor: selected ? Theme.onPrimaryContainer : Theme.surfaceText
-                    readonly property color supportingColor: selected ? Theme.onPrimaryContainer : Theme.surfaceVariantText
+                    readonly property color contentColor: selected ? Theme.onSelectedContainer : Theme.surfaceText
+                    readonly property color supportingColor: selected ? Theme.onSelectedContainer : Theme.surfaceVariantText
 
                     width: resultsList.width
                     height: root.rowH
@@ -353,11 +353,11 @@ FocusScope {
                     topRightRadius: topLeftRadius
                     bottomLeftRadius: index === root.rows.length - 1 ? Theme.groupedListOuterRadius : radius
                     bottomRightRadius: bottomLeftRadius
-                    color: selected ? Theme.primaryContainer : Theme.surfaceContainerLow
+                    color: selected ? Theme.selectedContainer : Theme.surfaceContainerLow
 
                     Behavior on color {
                         enabled: !SettingsData.reduceMotion && Theme.currentAnimationBaseDuration > 0
-                        DC.DankColorAnim {
+                        DC.DColorAnim {
                             duration: Theme.shorterDuration
                             easing.bezierCurve: Theme.expressiveCurves.standardDecel
                         }
@@ -373,7 +373,7 @@ FocusScope {
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.surfaceContainerHighest
 
-                        DankIcon {
+                        DIcon {
                             anchors.centerIn: parent
                             name: "event"
                             size: Theme.iconSize
@@ -418,7 +418,7 @@ FocusScope {
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.spacingS
                         anchors.verticalCenter: parent.verticalCenter
-                        color: delegateRoot.selected ? Theme.withAlpha(Theme.onPrimaryContainer, Theme.stateLayerFocus) : Theme.surfaceContainerHighest
+                        color: delegateRoot.selected ? Theme.withAlpha(Theme.onSelectedContainer, Theme.stateLayerFocus) : Theme.surfaceContainerHighest
 
                         StyledText {
                             id: dateText
@@ -448,7 +448,7 @@ FocusScope {
                     anchors.verticalCenter: parent.verticalCenter
                     color: Theme.surfaceContainerHighest
 
-                    DankIcon {
+                    DIcon {
                         anchors.centerIn: parent
                         name: root.errorText !== "" ? "error" : root.activeQuery === "" ? "search" : "search_off"
                         size: Theme.iconSize
@@ -456,7 +456,7 @@ FocusScope {
                         visible: !root.loading
                     }
 
-                    DankSpinner {
+                    DSpinner {
                         anchors.centerIn: parent
                         size: Theme.iconSize
                         visible: root.loading

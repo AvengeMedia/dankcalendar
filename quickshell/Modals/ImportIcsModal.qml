@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 FloatingWindow {
     id: importModal
@@ -211,7 +211,7 @@ FloatingWindow {
         LayoutMirroring.enabled: I18n.isRtl
         LayoutMirroring.childrenInherit: true
 
-        DankWindowHeader {
+        DWindowHeader {
             id: header
             width: parent.width
             z: 10
@@ -222,9 +222,9 @@ FloatingWindow {
 
         Item {
             width: parent.width
-            height: parent.height - header.height - footer.height - Theme.dividerWidth
+            height: parent.height - header.height - footer.height
 
-            DankFlickable {
+            DFlickable {
                 anchors.fill: parent
                 anchors.margins: Theme.spacingL
                 clip: true
@@ -258,22 +258,22 @@ FloatingWindow {
                         font.pixelSize: Theme.fontSizeSmall
                         color: Theme.surfaceVariantText
                     }
-                DankDropdown {
-                    width: parent.width
-                    visible: !importModal.noWritableCalendars
-                    enabled: !importModal.importing
-                    options: importModal.calendarLabels
-                    currentValue: importModal.calendarLabels[importModal.calendarIndex] || ""
-                    onValueChanged: value => {
-                        const index = importModal.calendarLabels.indexOf(value);
-                        if (index >= 0) {
-                            if (index !== importModal.calendarIndex) {
-                                importModal.previewReady = false;
-                                importModal.calendarIndex = index;
+                    DDropdown {
+                        width: parent.width
+                        visible: !importModal.noWritableCalendars
+                        enabled: !importModal.importing
+                        options: importModal.calendarLabels
+                        currentValue: importModal.calendarLabels[importModal.calendarIndex] || ""
+                        onValueChanged: value => {
+                            const index = importModal.calendarLabels.indexOf(value);
+                            if (index >= 0) {
+                                if (index !== importModal.calendarIndex) {
+                                    importModal.previewReady = false;
+                                    importModal.calendarIndex = index;
+                                }
                             }
                         }
                     }
-                }
 
                     StyledText {
                         width: parent.width
@@ -426,7 +426,7 @@ FloatingWindow {
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
 
-                                    DankButton {
+                                    DButton {
                                         text: I18n.tr("Open", "import row button to open the event already on the calendar")
                                         buttonHeight: Theme.buttonHeightXS
                                         backgroundColor: Theme.secondaryContainer
@@ -442,16 +442,15 @@ FloatingWindow {
             }
         }
 
-        Rectangle {
-            width: parent.width
-            height: Theme.dividerWidth
-            color: Theme.outlineVariant
-        }
-
         Item {
             id: footer
             width: parent.width
             height: Theme.buttonHeightS + Theme.spacingM * 2
+
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.floatingWindowPaneSurface
+            }
 
             Row {
                 id: actions
@@ -461,14 +460,14 @@ FloatingWindow {
                 spacing: Theme.spacingS
 
 
-                DankButton {
+                DButton {
                     text: I18n.tr("Cancel", "import dialog button to close without importing")
                     backgroundColor: "transparent"
                     textColor: Theme.primary
                     onClicked: importModal.hide()
                 }
 
-                DankButton {
+                DButton {
                     visible: importModal.noWritableCalendars
                     text: I18n.tr("Add a calendar", "import dialog button to add a calendar when none can hold events")
                     iconName: "add"
@@ -479,7 +478,7 @@ FloatingWindow {
                     }
                 }
 
-                DankButton {
+                DButton {
                     visible: !importModal.noWritableCalendars
                     text: importModal.importLabel()
                     iconName: "check"

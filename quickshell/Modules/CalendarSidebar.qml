@@ -4,7 +4,7 @@ import qs.Common
 import qs.Modals
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -77,13 +77,16 @@ Item {
             section: "calendars"
         });
         if (calendarsExpanded) {
-            const cals = DankCalService.eventCalendars();
-            for (let i = 0; i < cals.length; i++)
-                items.push({
-                    type: "calendar",
-                    key: "cal:" + cals[i].id,
-                    data: cals[i]
-                });
+            const groups = DankCalService.eventCalendarGroups();
+            for (let g = 0; g < groups.length; g++) {
+                const cals = groups[g].calendars;
+                for (let i = 0; i < cals.length; i++)
+                    items.push({
+                        type: "calendar",
+                        key: "cal:" + cals[i].id,
+                        data: cals[i]
+                    });
+            }
         }
         if (SettingsData.showTasks && DankCalService.hasTaskLists()) {
             items.push({
@@ -119,6 +122,16 @@ Item {
     }
 
     readonly property string navSelectedKey: keyboardActive && navIndex >= 0 && navIndex < navItems.length ? navItems[navIndex].key : ""
+    property string navFollowKey: ""
+
+    onNavItemsChanged: {
+        if (navFollowKey === "")
+            return;
+        const index = navItems.findIndex(item => item.key === navFollowKey);
+        navFollowKey = "";
+        if (index >= 0)
+            navIndex = index;
+    }
 
     onKeyboardActiveChanged: {
         if (keyboardActive && (navIndex < 0 || navIndex >= navItems.length))
@@ -199,6 +212,7 @@ Item {
             setSectionExpanded(item.section, !isSectionExpanded(item.section));
             return;
         case "calendar":
+            navFollowKey = item.key;
             DankCalService.setCalendarHidden(item.data.id, !item.data.hidden);
             return;
         case "task":
@@ -336,6 +350,17 @@ Item {
         return DankCalService.providerLabel(flavor);
     }
 
+    function calendarGroupLabel(group) {
+        const acc = group.account;
+        if (!acc)
+            return group.calendars[0].accountName || I18n.tr("Local calendar", "fallback tooltip for a calendar without an account");
+        const provider = providerLabel(DankCalService.accountFlavor(acc));
+        const label = DankCalService.accountLabel(acc);
+        if (!label || label === provider)
+            return provider;
+        return provider + " · " + label;
+    }
+
     component NavRing: Rectangle {
         anchors.fill: parent
         color: "transparent"
@@ -355,7 +380,7 @@ Item {
         property bool navSelected: false
 
         width: parent.width
-        color: active ? Theme.primaryContainer : Theme.surfaceContainerLow
+        color: active ? Theme.selectedContainer : Theme.surfaceContainerLow
         radius: Theme.groupedListInnerRadius
         topLeftRadius: firstInGroup ? Theme.groupedListOuterRadius : radius
         topRightRadius: topLeftRadius
@@ -416,7 +441,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingXS
 
-            DankIcon {
+            DIcon {
                 name: "expand_more"
                 size: Theme.iconSizeSmall
                 color: Theme.surfaceVariantText
@@ -446,11 +471,11 @@ Item {
         }
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: calTooltip
     }
 
-    DankTooltipV2 {
+    DTooltipV2 {
         id: authTooltip
     }
 
@@ -459,10 +484,11 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: Theme.spacingM
+        anchors.margins: Theme.windowInset
+        anchors.topMargin: 0
         spacing: Theme.spacingL
 
-        DankButton {
+        DButton {
             width: parent.width
             text: I18n.tr("Create event", "sidebar button to create a new event")
             iconName: "add"
@@ -487,7 +513,7 @@ Item {
                     id: viewRow
                     required property int index
                     required property var modelData
-                    readonly property color contentColor: active ? Theme.onPrimaryContainer : Theme.surfaceText
+                    readonly property color contentColor: active ? Theme.onSelectedContainer : Theme.surfaceText
 
                     height: Theme.buttonHeightS
                     firstInGroup: index === 0
@@ -501,7 +527,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: Theme.spacingM
 
-                        DankIcon {
+                        DIcon {
                             name: viewRow.modelData.icon
                             size: Theme.iconSizeMedium
                             color: viewRow.active ? viewRow.contentColor : Theme.surfaceVariantText
@@ -526,7 +552,7 @@ Item {
         }
     }
 
-    DankFlickable {
+    DFlickable {
         id: scroll
         anchors.top: topSection.bottom
         anchors.topMargin: Theme.spacingL
@@ -558,7 +584,7 @@ Item {
 
                 Column {
                     width: parent.width
-                    spacing: Theme.groupedListGap
+                    spacing: Theme.spacingS
                     visible: root.calendarsExpanded
 
                     PlaceholderRow {
@@ -567,107 +593,128 @@ Item {
                     }
 
                     Repeater {
-                        id: calendarRepeater
+                        id: calendarGroupRepeater
                         model: ScriptModel {
-                            values: DankCalService.eventCalendars()
+                            values: DankCalService.eventCalendarGroups()
                         }
 
-                        GroupRow {
-                            id: calRow
-                            required property int index
+                        Column {
+                            id: calendarGroup
                             required property var modelData
-                            readonly property string accountTooltip: {
-                                const acc = DankCalService.accountById(modelData.accountId);
-                                if (!acc)
-                                    return modelData.accountName || I18n.tr("Local calendar", "fallback tooltip for a calendar without an account");
-                                const provider = root.providerLabel(DankCalService.accountFlavor(acc));
-                                const label = DankCalService.accountLabel(acc);
-                                if (!label || label === provider)
-                                    return provider;
-                                return provider + " · " + label;
-                            }
-                            readonly property string rowTooltip: modelData.name + "  —  " + accountTooltip
-                            onNavSelectedChanged: {
-                                if (navSelected)
-                                    root.revealNav(calRow);
-                            }
-                            height: Theme.buttonHeightS
-                            firstInGroup: index === 0
-                            lastInGroup: index === calendarRepeater.count - 1
-                            navSelected: root.navSelectedKey === "cal:" + modelData.id
+                            readonly property string label: root.calendarGroupLabel(modelData)
+                            width: parent.width
+                            spacing: Theme.groupedListGap
 
-                            function openMenu(x, y) {
-                                root.actionCalendar = modelData;
-                                calendarMenu.show(calRow, x, y);
+                            StyledText {
+                                visible: calendarGroupRepeater.count > 1
+                                width: parent.width
+                                height: Theme.buttonHeightXS
+                                leftPadding: Theme.spacingM
+                                rightPadding: Theme.spacingM
+                                verticalAlignment: Text.AlignVCenter
+                                horizontalAlignment: Text.AlignLeft
+                                text: calendarGroup.label
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: Theme.fontWeightMedium
+                                color: Theme.surfaceVariantText
+                                elide: Text.ElideRight
                             }
 
-                            Row {
-                                anchors.left: parent.left
-                                anchors.right: moreButton.left
-                                anchors.leftMargin: Theme.spacingM
-                                anchors.verticalCenter: parent.verticalCenter
-                                spacing: Theme.spacingM
-
-                                Rectangle {
-                                    width: Theme.iconSizeSmall
-                                    height: Theme.iconSizeSmall
-                                    radius: Theme.cornerRadiusXS
-                                    color: calRow.modelData.hidden ? "transparent" : calRow.modelData.color
-                                    border.color: calRow.modelData.color
-                                    border.width: Theme.outlineWidthFocused
-                                    anchors.verticalCenter: parent.verticalCenter
+                            Repeater {
+                                id: calendarRepeater
+                                model: ScriptModel {
+                                    values: calendarGroup.modelData.calendars
                                 }
 
-                                StyledText {
-                                    text: calRow.modelData.name
-                                    font.pixelSize: Theme.fontSizeMedium
-                                    color: Theme.surfaceText
-                                    opacity: calRow.modelData.hidden ? Theme.pendingOpacity : 1.0
-                                    width: parent.width - Theme.iconSizeSmall - Theme.spacingM
-                                    wrapMode: Text.NoWrap
-                                    maximumLineCount: 1
-                                    elide: Text.ElideRight
-                                    anchors.verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            StateLayer {
-                                id: calRowState
-                                stateColor: Theme.surfaceText
-                                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                                onEntered: calTooltip.show(calRow.rowTooltip, calRow)
-                                onExited: calTooltip.hide()
-                                onClicked: mouse => {
-                                    calTooltip.hide();
-                                    if (mouse.button === Qt.RightButton) {
-                                        calRow.openMenu(mouse.x, mouse.y);
-                                        return;
+                                GroupRow {
+                                    id: calRow
+                                    required property int index
+                                    required property var modelData
+                                    readonly property string accountTooltip: calendarGroup.label
+                                    readonly property string rowTooltip: modelData.name + "  —  " + accountTooltip
+                                    onNavSelectedChanged: {
+                                        if (navSelected)
+                                            root.revealNav(calRow);
                                     }
-                                    calendarMenu.close();
-                                    DankCalService.setCalendarHidden(calRow.modelData.id, !calRow.modelData.hidden);
-                                }
-                            }
+                                    height: Theme.buttonHeightS
+                                    firstInGroup: index === 0
+                                    lastInGroup: index === calendarRepeater.count - 1
+                                    navSelected: root.navSelectedKey === "cal:" + modelData.id
 
-                            DankActionButton {
-                                id: moreButton
-                                readonly property bool menuOpenHere: calendarMenu.opened && (root.actionCalendar ? root.actionCalendar.id : "") === calRow.modelData.id
-                                anchors.right: parent.right
-                                anchors.rightMargin: Theme.spacingXS
-                                anchors.verticalCenter: parent.verticalCenter
-                                buttonSize: Theme.buttonHeightXS
-                                iconName: "more_horiz"
-                                iconSize: Theme.iconSizeSmall
-                                iconColor: Theme.surfaceVariantText
-                                focusPolicy: Qt.NoFocus
-                                Accessible.name: I18n.tr("Calendar options", "sidebar calendar row overflow menu button")
-                                opacity: calRowState.containsMouse || hovered || menuOpenHere ? 1 : 0
-                                visible: opacity > 0
-                                onClicked: {
-                                    if (menuOpenHere) {
-                                        calendarMenu.close();
-                                        return;
+                                    function openMenu(x, y) {
+                                        root.actionCalendar = modelData;
+                                        calendarMenu.show(calRow, x, y);
                                     }
-                                    calRow.openMenu(calRow.width - calendarMenu.width, calRow.height);
+
+                                    Row {
+                                        anchors.left: parent.left
+                                        anchors.right: moreButton.left
+                                        anchors.leftMargin: Theme.spacingM
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        spacing: Theme.spacingM
+
+                                        Rectangle {
+                                            width: Theme.iconSizeSmall
+                                            height: Theme.iconSizeSmall
+                                            radius: Theme.cornerRadiusXS
+                                            color: calRow.modelData.hidden ? "transparent" : calRow.modelData.color
+                                            border.color: calRow.modelData.color
+                                            border.width: Theme.outlineWidthFocused
+                                            anchors.verticalCenter: parent.verticalCenter
+                                        }
+
+                                        StyledText {
+                                            text: calRow.modelData.name
+                                            font.pixelSize: Theme.fontSizeMedium
+                                            color: Theme.surfaceText
+                                            opacity: calRow.modelData.hidden ? Theme.pendingOpacity : 1.0
+                                            width: parent.width - Theme.iconSizeSmall - Theme.spacingM
+                                            wrapMode: Text.NoWrap
+                                            maximumLineCount: 1
+                                            elide: Text.ElideRight
+                                            anchors.verticalCenter: parent.verticalCenter
+                                        }
+                                    }
+
+                                    StateLayer {
+                                        id: calRowState
+                                        stateColor: Theme.surfaceText
+                                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                        onEntered: calTooltip.show(calRow.rowTooltip, calRow)
+                                        onExited: calTooltip.hide()
+                                        onClicked: mouse => {
+                                            calTooltip.hide();
+                                            if (mouse.button === Qt.RightButton) {
+                                                calRow.openMenu(mouse.x, mouse.y);
+                                                return;
+                                            }
+                                            calendarMenu.close();
+                                            DankCalService.setCalendarHidden(calRow.modelData.id, !calRow.modelData.hidden);
+                                        }
+                                    }
+
+                                    DActionButton {
+                                        id: moreButton
+                                        readonly property bool menuOpenHere: calendarMenu.opened && (root.actionCalendar ? root.actionCalendar.id : "") === calRow.modelData.id
+                                        anchors.right: parent.right
+                                        anchors.rightMargin: Theme.spacingXS
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        buttonSize: Theme.buttonHeightXS
+                                        iconName: "more_horiz"
+                                        iconSize: Theme.iconSizeSmall
+                                        iconColor: Theme.surfaceVariantText
+                                        focusPolicy: Qt.NoFocus
+                                        Accessible.name: I18n.tr("Calendar options", "sidebar calendar row overflow menu button")
+                                        opacity: calRowState.containsMouse || hovered || menuOpenHere ? 1 : 0
+                                        visible: opacity > 0
+                                        onClicked: {
+                                            if (menuOpenHere) {
+                                                calendarMenu.close();
+                                                return;
+                                            }
+                                            calRow.openMenu(calRow.width - calendarMenu.width, calRow.height);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -797,7 +844,7 @@ Item {
                     }
                 }
 
-                DankButton {
+                DButton {
                     visible: root.tasksExpanded && DankCalService.taskListCalendars().length > 0
                     width: parent.width
                     text: I18n.tr("Add task", "sidebar button to add a task")
@@ -873,7 +920,7 @@ Item {
                                 onClicked: mouse => accRow.openMenu(mouse.x, mouse.y)
                             }
 
-                            DankIcon {
+                            DIcon {
                                 id: authWarning
                                 visible: !accRow.authorized
                                 anchors.right: accMoreButton.left
@@ -901,7 +948,7 @@ Item {
                                 }
                             }
 
-                            DankActionButton {
+                            DActionButton {
                                 id: accMoreButton
                                 readonly property bool menuOpenHere: accountMenu.opened && (root.actionAccount ? root.actionAccount.id : "") === accRow.modelData.id
                                 anchors.right: parent.right
@@ -932,7 +979,7 @@ Item {
                                 anchors.verticalCenter: parent.verticalCenter
                                 spacing: Theme.spacingM
 
-                                DankIcon {
+                                DIcon {
                                     name: root.providerIcon(accRow.flavor)
                                     size: Theme.iconSizeMedium
                                     color: accRow.authorized ? Theme.surfaceVariantText : Theme.error
@@ -972,7 +1019,7 @@ Item {
                     }
                 }
 
-                DankButton {
+                DButton {
                     visible: root.accountsExpanded
                     width: parent.width
                     text: I18n.tr("Add account", "sidebar button to add a provider account")

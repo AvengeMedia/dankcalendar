@@ -3,7 +3,7 @@ import Quickshell
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 Item {
     id: root
@@ -92,7 +92,7 @@ Item {
         return out;
     }
 
-    DankFlickable {
+    DFlickable {
         id: agendaFlickable
         anchors.fill: parent
         contentWidth: width
@@ -156,9 +156,11 @@ Item {
                             }
                             readonly property bool awaitingReply: modelData.myResponse === "needs-action"
                             readonly property bool tentativeReply: modelData.myResponse === "tentative"
+                            readonly property bool declined: modelData.myResponse === "declined"
                             width: root.width
+                            opacity: declined && !isSelected ? Theme.pendingOpacity : 1
                             height: Math.max(76, contentRow.implicitHeight + Theme.spacingM * 2)
-                            color: isSelected ? Theme.primaryContainer : (cardArea.containsMouse ? Theme.surfaceContainer : Theme.surfaceContainerLow)
+                            color: isSelected ? Theme.selectedContainer : (cardArea.containsMouse ? Theme.surfaceContainer : Theme.surfaceContainerLow)
                             radius: Theme.cornerRadiusM
                             border.color: isSelected ? Theme.primary : (awaitingReply ? modelData.color : "transparent")
                             border.width: isSelected ? 2 : (awaitingReply ? 1 : 0)
@@ -219,7 +221,8 @@ Item {
                                         text: card.modelData.title
                                         font.pixelSize: Theme.fontSizeLarge
                                         font.weight: Theme.fontWeightMedium
-                                        color: Theme.surfaceText
+                                        font.strikeout: card.declined
+                                        color: card.declined ? Theme.surfaceVariantText : Theme.surfaceText
                                         width: parent.width
                                         wrapMode: Text.WordWrap
                                         maximumLineCount: 2
@@ -231,7 +234,7 @@ Item {
                                         spacing: Theme.spacingXS
                                         visible: card.modelData.location !== ""
 
-                                        DankIcon {
+                                        DIcon {
                                             id: locationIcon
                                             name: "place"
                                             size: Theme.iconSizeSmall

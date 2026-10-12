@@ -1,13 +1,13 @@
 import QtQuick
 import qs.Common
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
-DankFlickable {
+DFlickable {
     id: root
 
     default property alias content: column.data
     property alias spacing: column.spacing
-    property int contentMaxWidth: SettingsMetrics.contentMaxWidth
+    property real contentMaxWidth: SettingsMetrics.contentMaxWidth
 
     anchors.fill: parent
     clip: true
@@ -16,8 +16,8 @@ DankFlickable {
 
     Column {
         id: column
-        topPadding: Theme.spacingL
-        width: Math.min(root.contentMaxWidth, parent.width - Theme.spacingL * 2)
+        topPadding: Theme.spacingXS
+        width: Math.min(root.contentMaxWidth, parent.width)
         bottomPadding: SettingsMetrics.pagePaddingV
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: Theme.spacingL

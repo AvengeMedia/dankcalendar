@@ -4,7 +4,7 @@ import QtQuick
 import qs.Common
 import qs.Services
 import qs.Widgets
-import qs.DankCommon.Widgets
+import qs.DCommon.Widgets
 
 DankOverlayDialog {
     id: root
@@ -85,7 +85,7 @@ DankOverlayDialog {
     title: I18n.tr("Go to date", "go to date dialog title")
     onAccepted: submitInput()
 
-    DankTextField {
+    DTextField {
         id: dateInput
         width: parent.width
         outlined: true
@@ -115,14 +115,14 @@ DankOverlayDialog {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingXS
 
-            DankActionButton {
+            DActionButton {
                 iconName: I18n.isRtl ? "keyboard_double_arrow_right" : "keyboard_double_arrow_left"
                 iconSize: Theme.iconSizeSmall
                 Accessible.name: I18n.tr("Previous year", "keyboard shortcut description")
                 onClicked: root.shiftYear(-1)
             }
 
-            DankActionButton {
+            DActionButton {
                 iconName: I18n.isRtl ? "chevron_right" : "chevron_left"
                 Accessible.name: I18n.tr("Previous day, week or month", "keyboard shortcut description")
                 onClicked: root.shiftMonth(-1)
@@ -142,13 +142,13 @@ DankOverlayDialog {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.spacingXS
 
-            DankActionButton {
+            DActionButton {
                 iconName: I18n.isRtl ? "chevron_left" : "chevron_right"
                 Accessible.name: I18n.tr("Next day, week or month", "keyboard shortcut description")
                 onClicked: root.shiftMonth(1)
             }
 
-            DankActionButton {
+            DActionButton {
                 iconName: I18n.isRtl ? "keyboard_double_arrow_left" : "keyboard_double_arrow_right"
                 iconSize: Theme.iconSizeSmall
                 Accessible.name: I18n.tr("Next year", "keyboard shortcut description")
@@ -157,7 +157,7 @@ DankOverlayDialog {
         }
     }
 
-    DankMonthGrid {
+    DMonthGrid {
         id: grid
         width: parent.width
         height: weekdayRowHeight + (Theme.buttonHeightS + cellGap) * rows

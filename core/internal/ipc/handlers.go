@@ -15,10 +15,10 @@ func HandleCalendars(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 	case "calendars.list":
 		calendars, err := deps.Repo.ListCalendars(ctx)
 		if err != nil {
-			RespondError(w, req.ID, err.Error())
+			w.RespondError(req.ID, err.Error())
 			return
 		}
-		Respond(w, req.ID, mapCalendars(calendars))
+		w.Respond(req.ID, mapCalendars(calendars))
 	case "calendars.create":
 		handleCalendarCreate(ctx, w, req, deps)
 	case "calendars.setHidden":
@@ -32,7 +32,7 @@ func HandleCalendars(ctx context.Context, w *ConnWriter, req Request, deps Deps)
 	case "calendars.delete":
 		handleCalendarDelete(ctx, w, req, deps)
 	default:
-		RespondError(w, req.ID, "unknown calendars method: "+req.Method)
+		w.RespondError(req.ID, "unknown calendars method: "+req.Method)
 	}
 }
 
@@ -60,19 +60,19 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 			Offset: ParamInt(req.Params, "offset"),
 		})
 		if err != nil {
-			RespondError(w, req.ID, err.Error())
+			w.RespondError(req.ID, err.Error())
 			return
 		}
-		Respond(w, req.ID, map[string]any{"events": mapEvents(events), "total": total})
+		w.Respond(req.ID, map[string]any{"events": mapEvents(events), "total": total})
 	case "events.get":
 		uid := ParamString(req.Params, "uid")
 		if uid == "" {
-			RespondError(w, req.ID, "events.get requires a uid")
+			w.RespondError(req.ID, "events.get requires a uid")
 			return
 		}
 		e, err := deps.Repo.GetEventByUID(ctx, uid, ParamString(req.Params, "calendarId"))
 		if err != nil {
-			RespondError(w, req.ID, err.Error())
+			w.RespondError(req.ID, err.Error())
 			return
 		}
 		if start := ParamString(req.Params, "start"); start != "" && len(e.Recurrence) > 0 {
@@ -81,7 +81,7 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 				e.Start = t
 			}
 		}
-		Respond(w, req.ID, mapEvent(e))
+		w.Respond(req.ID, mapEvent(e))
 	case "events.create":
 		handleEventCreate(ctx, w, req, deps)
 	case "events.update":
@@ -95,7 +95,7 @@ func HandleEvents(ctx context.Context, w *ConnWriter, req Request, deps Deps) {
 	case "events.importIcs":
 		handleEventsImportIcs(ctx, w, req, deps)
 	default:
-		RespondError(w, req.ID, "unknown events method: "+req.Method)
+		w.RespondError(req.ID, "unknown events method: "+req.Method)
 	}
 }
 
