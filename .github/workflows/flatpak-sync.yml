@@ -28,6 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       TAG: ${{ inputs.tag || github.event.workflow_run.head_branch }}
+      METAINFO: assets/com.danklinux.dankcalendar.metainfo.xml
     steps:
       - name: Create GitHub App token
         id: app_token
@@ -39,10 +40,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: master
           fetch-depth: 0
           fetch-tags: true
           token: ${{ steps.app_token.outputs.token }}
+
+      - name: Switch to the release branch
+        id: release
+        run: |
+          set -euo pipefail
+          if [[ ! "$TAG" =~ ^v([0-9]+)\.([0-9]+)\.[0-9]+$ ]]; then
+            echo "::error::tag must be vX.Y.Z (got '$TAG')"; exit 1
+          fi
+          branch="stable-${BASH_REMATCH[1]}.${BASH_REMATCH[2]}"
+          git rev-parse -q --verify "refs/remotes/origin/${branch}" >/dev/null ||
+            { echo "::error::no ${branch} branch; pin-release cuts it at the X.Y.0 tag"; exit 1; }
+          git switch -C "$branch" "origin/${branch}"
+          git config user.name "dms-ci[bot]"
+          git config user.email "dms-ci[bot]@users.noreply.github.com"
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Go
         uses: actions/setup-go@v6
@@ -61,23 +76,25 @@ jobs:
 
       - name: Commit source updates
         id: source
+        env:
+          BRANCH: ${{ steps.release.outputs.branch }}
         run: |
           set -euo pipefail
-          git config user.name "dms-ci[bot]"
-          git config user.email "dms-ci[bot]@users.noreply.github.com"
-          git add assets/com.danklinux.dankcalendar.metainfo.xml distro/flatpak/go.mod.yml distro/flatpak/modules.txt
+          git add "$METAINFO" distro/flatpak/go.mod.yml distro/flatpak/modules.txt
           if git diff --cached --quiet; then
             echo "pin=$(git rev-parse "${TAG}^{commit}")" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "flatpak: sync metainfo and module manifests for ${TAG}"
-          if ! git push origin HEAD:master; then
-            git pull --rebase origin master
-            git push origin HEAD:master
+          if ! git push origin "HEAD:${BRANCH}"; then
+            git pull --rebase origin "$BRANCH"
+            git push origin "HEAD:${BRANCH}"
           fi
           echo "pin=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Pin manifest
+        env:
+          BRANCH: ${{ steps.release.outputs.branch }}
         run: |
           set -euo pipefail
           python3 scripts/flatpak-sync.py pin "$TAG" "${{ steps.source.outputs.pin }}"
@@ -87,6 +104,23 @@ jobs:
             exit 0
           fi
           git commit -m "flatpak: pin manifest to ${TAG}"
+          if ! git push origin "HEAD:${BRANCH}"; then
+            git pull --rebase origin "$BRANCH"
+            git push origin "HEAD:${BRANCH}"
+          fi
+
+      - name: Record the release on master
+        run: |
+          set -euo pipefail
+          git worktree add -B master _master origin/master
+          cd _master
+          python3 scripts/flatpak-sync.py metainfo "$TAG"
+          git add "$METAINFO"
+          if git diff --cached --quiet; then
+            echo "master already lists ${TAG}"
+            exit 0
+          fi
+          git commit -m "flatpak: add ${TAG} release entry"
           if ! git push origin HEAD:master; then
             git pull --rebase origin master
             git push origin HEAD:master
@@ -104,6 +138,10 @@ jobs:
           version="${TAG#v}"
           branch="release/${TAG}"
 
+          if ! gh repo view "flathub/${APP_ID}" > /dev/null 2>&1; then
+            echo "flathub/${APP_ID} does not exist yet; skipping the Flathub PR" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           git clone --depth 1 \
             "https://x-access-token:${GH_TOKEN}@github.com/flathub/${APP_ID}.git" _flathub
           cp "distro/flatpak/${APP_ID}.yml" distro/flatpak/go.mod.yml distro/flatpak/modules.txt _flathub/
