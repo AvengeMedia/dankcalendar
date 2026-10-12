@@ -29,10 +29,9 @@ func Conflicts(ctx context.Context, r *repo.Repo, ev calendar.Event) ([]*ent.Eve
 	starts := []time.Time{ev.Start}
 	if ev.Recurrence != nil {
 		rec := ev.Recurrence
-		var err error
-		starts, err = recurrence.Expand(recurrence.Series{Start: ev.Start, AllDay: ev.AllDay, TimeZone: ev.StartTimeZone, RRule: rec.RRule, RDate: rec.RDate, ExDate: rec.ExDate}, ev.Start, end)
-		if err != nil {
-			return nil, err
+		// Match the repository fallback for series that cannot be expanded.
+		if expanded, err := recurrence.Expand(recurrence.Series{Start: ev.Start, AllDay: ev.AllDay, TimeZone: ev.StartTimeZone, RRule: rec.RRule, RDate: rec.RDate, ExDate: rec.ExDate}, ev.Start, end); err == nil {
+			starts = expanded
 		}
 	}
 	// All-day dates are stored at UTC midnight but displayed as local dates.
