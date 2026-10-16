@@ -23,18 +23,18 @@ const MaxBytes = 256 << 10
 var ErrNoEvents = errors.New("no importable events found")
 
 type Document struct {
+	Source string           `json:"source,omitempty"`
 	Method string           `json:"method,omitempty"`
 	Events []calendar.Event `json:"events"`
 }
 
-// Parse decodes every VCALENDAR in data. Recurrence exceptions are skipped:
-// they only make sense written alongside their series master.
+// Parse decodes every VCALENDAR in data into importable private copies.
 func Parse(data []byte) (*Document, error) {
 	if len(data) > MaxBytes {
 		return nil, fmt.Errorf("calendar data exceeds %d KiB", MaxBytes>>10)
 	}
 
-	dec := ical.NewDecoder(bytes.NewReader(data))
+	dec := ical.NewDecoder(bytes.NewReader(calendarData(data)))
 	doc := &Document{}
 	for {
 		cal, err := dec.Decode()
@@ -44,20 +44,37 @@ func Parse(data []byte) (*Document, error) {
 		if err != nil {
 			return nil, fmt.Errorf("parse icalendar: %w", err)
 		}
+		if err := normalizeVCalendar(cal); err != nil {
+			return nil, err
+		}
 		if doc.Method == "" {
 			doc.Method = methodOf(cal)
+		}
+		source, err := sourceOf(cal)
+		if err != nil {
+			return nil, err
+		}
+		if source != "" {
+			if doc.Source != "" && doc.Source != source {
+				return nil, fmt.Errorf("file contains multiple subscription sources")
+			}
+			doc.Source = source
 		}
 		tz := icalconv.NewTZResolver(cal, "")
 		for _, comp := range cal.Events() {
 			ev, ok := icalconv.EventFromComponent("", comp.Component, tz)
-			if !ok || ev.RecurringID != "" {
+			if !ok {
 				continue
+			}
+			if ev.Start.IsZero() || ev.End.Before(ev.Start) {
+				return nil, fmt.Errorf("event %q has invalid start or end", ev.Summary)
 			}
 			doc.Events = append(doc.Events, ev)
 		}
 	}
 
-	if len(doc.Events) == 0 {
+	doc.Events = detachExceptions(doc.Events)
+	if len(doc.Events) == 0 && doc.Source == "" {
 		return nil, ErrNoEvents
 	}
 	return doc, nil

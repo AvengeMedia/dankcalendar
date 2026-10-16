@@ -1,0 +1,29 @@
+name: Desktop integration
+
+on:
+  pull_request:
+    paths:
+      - "assets/**"
+      - "scripts/install-*.sh"
+      - "scripts/test-desktop-install.py"
+      - "Makefile"
+      - ".github/workflows/desktop-ci.yml"
+      - ".github/workflows/release.yml"
+  push:
+    paths:
+      - "assets/**"
+      - "scripts/install-*.sh"
+      - "scripts/test-desktop-install.py"
+      - "Makefile"
+      - ".github/workflows/desktop-ci.yml"
+      - ".github/workflows/release.yml"
+
+jobs:
+  desktop:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install desktop test tools
+        run: sudo apt-get update && sudo apt-get install -y desktop-file-utils shared-mime-info libglib2.0-bin librsvg2-common xdg-utils flatpak
+      - name: Check desktop installation and file opening
+        run: python3 scripts/test-desktop-install.py

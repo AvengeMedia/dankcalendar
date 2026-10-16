@@ -19,6 +19,8 @@
 
   <provides>
     <mediatype>text/calendar</mediatype>
+    <mediatype>text/x-vcalendar</mediatype>
+    <mediatype>application/ics</mediatype>
   </provides>
 
   <url type="homepage">https://danklinux.com</url>

@@ -2,6 +2,7 @@ package ipc
 
 import (
 	"context"
+	"strings"
 	"testing"
 	"time"
 
@@ -92,6 +93,45 @@ func TestEventsParseIcsMatchesSyncedEvents(t *testing.T) {
 	assert.Equal(t, "cal", existing["calendarId"])
 
 	assert.Nil(t, events[1]["existing"])
+}
+
+func TestEventsParseIcsUnexpandableRecurrence(t *testing.T) {
+	for _, tc := range []struct {
+		name       string
+		recurrence string
+	}{
+		{"exdate only", "EXDATE:20260911T120000Z"},
+		{"unsupported frequency", "RRULE:FREQ=VENDOR"},
+		{"invalid interval", "RRULE:FREQ=DAILY;INTERVAL=-1"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			f := newIcsFixture(t, account.KindCaldav, false)
+			start := time.Date(2026, 9, 10, 12, 30, 0, 0, time.UTC)
+			_, err := f.repo.UpsertEvent(context.Background(), repo.UpsertEventInput{
+				CalendarID: "cal", UID: "busy", Start: start, End: start.Add(time.Hour),
+			})
+			require.NoError(t, err)
+			ics := strings.Replace(inviteICS, "UID:inv-1\r\n", "UID:inv-1\r\n"+tc.recurrence+"\r\n", 1)
+			params := map[string]any{"ics": ics, "calendarId": "cal"}
+			preview := resultOf(t, routeAndRead(t, Request{ID: 1, Method: "events.parseIcs", Params: params}, f.deps))
+			events := resultEvents(t, preview)
+			require.Len(t, events, 2)
+			assert.NotNil(t, events[0]["event"].(map[string]any)["recurrence"])
+			assert.Equal(t, float64(1), events[0]["conflictCount"])
+			assert.Equal(t, "busy", events[0]["conflicts"].([]any)[0].(map[string]any)["uid"])
+			assert.Equal(t, float64(0), events[1]["conflictCount"])
+
+			provider := mocks.NewMockProvider(t)
+			provider.EXPECT().Close().Return(nil).Maybe()
+			provider.EXPECT().CreateEvent(mock.Anything, mock.Anything, mock.Anything).
+				RunAndReturn(func(_ context.Context, _ calendar.Calendar, ev *calendar.Event) (*calendar.Event, error) {
+					return ev, nil
+				}).Twice()
+			f.register(t, calendar.AccountCalDAV, provider)
+			imported := resultOf(t, routeAndRead(t, Request{ID: 2, Method: "events.importIcs", Params: params}, f.deps))
+			assert.Equal(t, float64(2), imported["imported"])
+		})
+	}
 }
 
 func TestEventsParseIcsRejectsBadInput(t *testing.T) {
@@ -205,4 +245,28 @@ func factoryFor(t *testing.T, kind calendar.AccountKind, provider calendar.Provi
 	factory.EXPECT().Kind().Return(kind)
 	factory.EXPECT().Build(mock.Anything, mock.Anything, mock.Anything).Return(provider, nil)
 	return factory
+}
+
+func TestUIOpenSubscriptionFile(t *testing.T) {
+	deps := Deps{Bus: NewEventBus(), Pending: &PendingOpen{}}
+	data := "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nSOURCE:https://example.com/feed\r\nEND:VCALENDAR\r\n"
+	resultOf(t, routeAndRead(t, Request{ID: 1, Method: "ui.openIcs", Params: map[string]any{"ics": data}}, deps))
+	resultOf(t, routeAndRead(t, Request{ID: 2, Method: "ui.openIcs", Params: map[string]any{"ics": inviteICS}}, deps))
+	assert.Equal(t, map[string]any{"action": "subscribe", "url": "https://example.com/feed"}, deps.Pending.Take())
+	assert.Equal(t, "importIcs", deps.Pending.Take()["action"])
+	assert.Nil(t, deps.Pending.Take())
+}
+
+func TestPreviewScopesDuplicatesToDestination(t *testing.T) {
+	f := newIcsFixture(t, account.KindLocal, false)
+	ctx := context.Background()
+	_, err := f.repo.UpsertCalendar(ctx, repo.UpsertCalendarInput{ID: "other", AccountID: "acc", RemoteID: "other", Name: "Personal"})
+	require.NoError(t, err)
+	_, err = f.repo.UpsertEvent(ctx, repo.UpsertEventInput{CalendarID: "cal", UID: "inv-1", Summary: "Already here", Start: time.Date(2026, 9, 10, 12, 0, 0, 0, time.UTC), End: time.Date(2026, 9, 10, 13, 0, 0, 0, time.UTC)})
+	require.NoError(t, err)
+	result := resultOf(t, routeAndRead(t, Request{ID: 1, Method: "events.parseIcs", Params: map[string]any{"ics": inviteICS, "calendarId": "other"}}, f.deps))
+	events := resultEvents(t, result)
+	assert.Nil(t, events[0]["existing"])
+	assert.NotNil(t, events[0]["conflicts"])
+	assert.NotNil(t, events[0]["previewEnd"])
 }

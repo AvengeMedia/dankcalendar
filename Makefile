@@ -31,6 +31,7 @@ SHELL_DIR=quickshell
 SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
 DESKTOP_ID=com.danklinux.dankcalendar
+ASSET_INSTALL=PREFIX="$(PREFIX)" DESTDIR="$(DESTDIR)" DATA_DIR="$(DATA_DIR)" APPLICATIONS_DIR="$(APPLICATIONS_DIR)" ICON_DIR="$(ICON_DIR)" METAINFO_DIR="$(METAINFO_DIR)" sh scripts/install-assets.sh
 
 .PHONY: all build dev run clean test fmt vet migrate migrate-checksum update-common i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd flatpak-build flatpak-run flatpak-lint flatpak-modules help
 
@@ -115,18 +116,13 @@ install-bin:
 	@install -D -m 755 $(BUILD_DIR)/$(BINARY_NAME) $(DESTDIR)$(INSTALL_DIR)/$(BINARY_NAME)
 
 install-icon:
-	@echo "Installing icon..."
-	@install -D -m 644 $(ASSETS_DIR)/$(ICON_NAME).svg $(DESTDIR)$(ICON_DIR)/$(ICON_NAME).svg
-	@test -n "$(DESTDIR)" || gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
+	@$(ASSET_INSTALL) icon
 
 install-desktop:
-	@echo "Installing desktop entry..."
-	@install -D -m 644 $(ASSETS_DIR)/$(DESKTOP_ID).desktop $(DESTDIR)$(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
-	@test -n "$(DESTDIR)" || update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
+	@$(ASSET_INSTALL) desktop
 
 install-metainfo:
-	@echo "Installing AppStream metainfo..."
-	@install -D -m 644 $(ASSETS_DIR)/$(DESKTOP_ID).metainfo.xml $(DESTDIR)$(METAINFO_DIR)/$(DESKTOP_ID).metainfo.xml
+	@$(ASSET_INSTALL) metainfo
 
 install-systemd:
 	@echo "Installing systemd user service to $(SYSTEMD_USER_DIR)..."

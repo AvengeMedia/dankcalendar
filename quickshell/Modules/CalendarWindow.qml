@@ -307,6 +307,8 @@ FloatingWindow {
         accountLoader.item.show();
     }
 
+    signal calendarOpenFinished
+
     function openSubscribe(url) {
         accountLoader.active = true;
         accountLoader.item.showIcal(url);
@@ -916,6 +918,10 @@ FloatingWindow {
         sourceComponent: Component {
             AccountAddModal {
                 parentWindow: window
+                onVisibleChanged: {
+                    if (!visible && (!importLoader.item || !importLoader.item.visible))
+                        window.calendarOpenFinished();
+                }
             }
         }
     }
@@ -926,6 +932,10 @@ FloatingWindow {
         sourceComponent: Component {
             ImportIcsModal {
                 parentWindow: window
+                onVisibleChanged: {
+                    if (!visible)
+                        window.calendarOpenFinished();
+                }
                 onOpenEventRequested: event => window.openEventDetails(event)
                 onAddCalendarRequested: window.openAddAccount()
             }

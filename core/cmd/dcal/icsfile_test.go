@@ -55,3 +55,16 @@ func TestReadICSFile(t *testing.T) {
 	_, err = readICSFile(filepath.Join(dir, "missing.ics"))
 	assert.Error(t, err)
 }
+
+func TestOpenCalendarParams(t *testing.T) {
+	for _, arg := range []string{"file://remote/tmp/invite.ics", "file:///tmp/a.ics?x=1", "javascript:alert(1)", "mailto:test@example.com"} {
+		_, _, err := openCalendarParams(arg)
+		assert.Error(t, err, arg)
+	}
+	method, params, err := openCalendarParams("webcals://example.com/feed")
+	require.NoError(t, err)
+	assert.Equal(t, "ui.open", method)
+	assert.Equal(t, "webcals://example.com/feed", params["url"])
+	_, err = readICSFile(t.TempDir())
+	assert.ErrorContains(t, err, "regular file")
+}

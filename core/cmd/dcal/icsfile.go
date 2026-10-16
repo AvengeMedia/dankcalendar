@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/url"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/icsimport"
 )
@@ -16,6 +19,9 @@ func icsFilePath(arg string) (string, bool) {
 	case err != nil, u.Scheme == "":
 		return arg, true
 	case u.Scheme == "file":
+		if u.Host != "" && u.Host != "localhost" || u.RawQuery != "" || u.Fragment != "" {
+			return "", true
+		}
 		return u.Path, true
 	default:
 		return "", false
@@ -27,10 +33,18 @@ func readICSFile(path string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	if !info.Mode().IsRegular() {
+		return "", fmt.Errorf("%s: calendar input must be a regular file", path)
+	}
 	if info.Size() > icsimport.MaxBytes {
 		return "", fmt.Errorf("%s: file exceeds %d KiB", path, icsimport.MaxBytes>>10)
 	}
-	data, err := os.ReadFile(path)
+	file, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	data, err := io.ReadAll(io.LimitReader(file, icsimport.MaxBytes+1))
 	if err != nil {
 		return "", err
 	}
@@ -38,4 +52,20 @@ func readICSFile(path string) (string, error) {
 		return "", fmt.Errorf("%s: %w", path, err)
 	}
 	return string(data), nil
+}
+
+func openCalendarParams(arg string) (string, map[string]any, error) {
+	path, isFile := icsFilePath(arg)
+	if !isFile {
+		url, err := icsimport.SubscriptionURL(arg)
+		return "ui.open", map[string]any{"url": url}, err
+	}
+	if strings.TrimSpace(path) == "" {
+		return "", nil, fmt.Errorf("invalid local calendar file URL")
+	}
+	data, err := readICSFile(path)
+	if err != nil {
+		return "", nil, err
+	}
+	return "ui.openIcs", map[string]any{"ics": data, "name": filepath.Base(path)}, nil
 }

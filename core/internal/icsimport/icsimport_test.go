@@ -78,16 +78,19 @@ func TestParseConcatenatedCalendarsAndUnixNewlines(t *testing.T) {
 	assert.Equal(t, "meeting-43@example.com", doc.Events[1].UID)
 }
 
-func TestParseSkipsRecurrenceExceptions(t *testing.T) {
+func TestParseDetachesRecurrenceExceptions(t *testing.T) {
 	exception := strings.Replace(invitation, "DTSTAMP:", "RECURRENCE-ID;TZID=Europe/Berlin:20260910T140000\r\nDTSTAMP:", 1)
 
-	_, err := Parse([]byte(exception))
-	assert.ErrorIs(t, err, ErrNoEvents)
-
-	doc, err := Parse([]byte(invitation + exception))
+	standalone, err := Parse([]byte(exception))
 	require.NoError(t, err)
-	require.Len(t, doc.Events, 1)
-	assert.Empty(t, doc.Events[0].RecurringID)
+	require.Len(t, standalone.Events, 1)
+	assert.Empty(t, standalone.Events[0].RecurringID)
+
+	doc, err := Parse([]byte(strings.Replace(invitation, "DTSTAMP:", "RRULE:FREQ=WEEKLY\r\nDTSTAMP:", 1) + exception))
+	require.NoError(t, err)
+	require.Len(t, doc.Events, 2)
+	assert.Equal(t, []string{"20260910T120000Z"}, doc.Events[0].Recurrence.ExDate)
+	assert.Empty(t, doc.Events[1].RecurringID)
 }
 
 func TestParseRejectsBadInput(t *testing.T) {
