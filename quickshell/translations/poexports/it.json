@@ -11,6 +11,9 @@
   "%1 events selected": {
     "%1 events selected": "%1 eventi selezionati"
   },
+  "%1 overlapping events": {
+    "%1 overlapping events": ""
+  },
   "%1 selected": {
     "%1 selected": "%1 selezionati"
   },
@@ -70,6 +73,9 @@
   },
   "1 minute": {
     "1 minute": "1 minuto"
+  },
+  "1 overlapping event": {
+    "1 overlapping event": ""
   },
   "1 week before": {
     "1 week before": "1 settimana prima"
@@ -132,7 +138,7 @@
     "5 minutes before": "5 minuti prima"
   },
   "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
-    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": "Il valore 50 usa le forme Material. Valori più bassi riducono l'arrotondamento; valori più alti lo aumentano."
   },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">Licenza MIT</a>"
@@ -156,7 +162,7 @@
     "Account connected": "Account connesso"
   },
   "Account options": {
-    "Account options": ""
+    "Account options": "Opzioni account"
   },
   "Account problem — click for options": {
     "Account problem — click for options": "Problema con l’account: clicca per le opzioni"
@@ -194,6 +200,9 @@
   "Add title": {
     "Add title": "Aggiungi titolo"
   },
+  "Add to calendar": {
+    "Add to calendar": ""
+  },
   "Adding…": {
     "Adding…": "Aggiunta in corso…"
   },
@@ -222,7 +231,7 @@
     "All events": "Tutti gli eventi"
   },
   "All-day events": {
-    "All-day events": ""
+    "All-day events": "Eventi di tutto il giorno"
   },
   "All-day reminder time": {
     "All-day reminder time": "Orario promemoria per eventi di tutto il giorno"
@@ -231,7 +240,7 @@
     "All-day reminder timing": "Orario promemoria evento di tutto il giorno"
   },
   "Already in %1": {
-    "Already in %1": ""
+    "Already in %1": "Già in %1"
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: Indietro • F1/I: Info file • F10: Aiuto • Esc: Chiudi"
@@ -243,7 +252,7 @@
     "Always use the light theme.": "Usa sempre il tema chiaro."
   },
   "App": {
-    "App": ""
+    "App": "App"
   },
   "App-specific password": {
     "App-specific password": "Password specifica per l'app"
@@ -294,7 +303,7 @@
     "Backend not connected.": "Backend non connesso."
   },
   "Balanced": {
-    "Balanced": ""
+    "Balanced": "Bilanciata"
   },
   "Begin setup": {
     "Begin setup": "Inizia configurazione"
@@ -306,13 +315,13 @@
     "Calendar Settings": "Impostazioni Calendario"
   },
   "Calendar file": {
-    "Calendar file": ""
+    "Calendar file": "File del calendario"
   },
   "Calendar name": {
     "Calendar name": "Nome calendario"
   },
   "Calendar options": {
-    "Calendar options": ""
+    "Calendar options": "Opzioni del calendario"
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": "Calendario preselezionato durante la creazione di eventi."
@@ -357,7 +366,7 @@
     "Client Secret": "Client Secret"
   },
   "Close": {
-    "Close": ""
+    "Close": "Chiudi"
   },
   "Close behavior": {
     "Close behavior": "Comportamento alla chiusura"
@@ -369,7 +378,7 @@
     "Collapse or expand a section": "Comprimi o espandi una sezione"
   },
   "Color": {
-    "Color": ""
+    "Color": "Colore"
   },
   "Color source": {
     "Color source": "Origine colore"
@@ -380,6 +389,9 @@
   "Coming soon": {
     "Coming soon": "In arrivo"
   },
+  "Community": {
+    "Community": ""
+  },
   "Completed": {
     "Completed": "Completate"
   },
@@ -388,6 +400,9 @@
   },
   "Confirm delete": {
     "Confirm delete": "Conferma l'eliminazione"
+  },
+  "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.": {
+    "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.": ""
   },
   "Connect": {
     "Connect": "Connetti"
@@ -411,7 +426,7 @@
     "Connected calendar providers.": "Provider di calendario connessi."
   },
   "Connected providers": {
-    "Connected providers": ""
+    "Connected providers": "Provider connessi"
   },
   "Connecting…": {
     "Connecting…": "Connessione in corso…"
@@ -454,6 +469,9 @@
   },
   "Could not read that file.": {
     "Could not read that file.": "Impossibile leggere quel file."
+  },
+  "Couldn't reconnect. Add the account again to sign in.": {
+    "Couldn't reconnect. Add the account again to sign in.": ""
   },
   "Couldn't update task": {
     "Couldn't update task": "Impossibile aggiornare l’attività"
@@ -519,7 +537,7 @@
     "Dark": "Scuro"
   },
   "Date": {
-    "Date": ""
+    "Date": "Data"
   },
   "Date and time locale": {
     "Date and time locale": "Impostazioni locali data e ora"
@@ -537,7 +555,7 @@
     "Decline": "Rifiuta"
   },
   "Decrease": {
-    "Decrease": ""
+    "Decrease": "Riduci"
   },
   "Default calendar": {
     "Default calendar": "Calendario predefinito"
@@ -609,7 +627,7 @@
     "Desktop notifications for upcoming events.": "Notifiche desktop per gli eventi in arrivo."
   },
   "Diagnostics": {
-    "Diagnostics": ""
+    "Diagnostics": "Diagnostica"
   },
   "Directory": {
     "Directory": "Cartella"
@@ -663,10 +681,10 @@
     "Duplicate selected events to the next day": "Duplica gli eventi selezionati al giorno successivo"
   },
   "Duration": {
-    "Duration": ""
+    "Duration": "Durata"
   },
   "Edit": {
-    "Edit": ""
+    "Edit": "Modifica"
   },
   "Edit event": {
     "Edit event": "Modifica evento"
@@ -682,6 +700,9 @@
   },
   "Enable sync": {
     "Enable sync": "Attiva sincronizzazione"
+  },
+  "End": {
+    "End": ""
   },
   "Ends": {
     "Ends": "Termina"
@@ -717,7 +738,7 @@
     "Every": "Ogni"
   },
   "Everything in this file is already on your calendar.": {
-    "Everything in this file is already on your calendar.": ""
+    "Everything in this file is already on your calendar.": "Tutto ciò che è in questo file è già sul tuo calendario."
   },
   "Evolution": {
     "Evolution": "Evolution"
@@ -750,10 +771,13 @@
     "Focus or leave the sidebar": "Sposta il focus sulla barra laterale o esci da essa"
   },
   "Focus ring": {
-    "Focus ring": ""
+    "Focus ring": "Anello di focus"
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "Segue i colori della DankMaterialShell, con fallback a un preset."
+  },
+  "Follow colors generated by Matugen.": {
+    "Follow colors generated by Matugen.": ""
   },
   "Follow language": {
     "Follow language": "Segui lingua"
@@ -801,25 +825,25 @@
     "How often accounts are polled for changes.": "Con quale frequenza gli account vengono controllati per rilevare modifiche."
   },
   "Import": {
-    "Import": ""
+    "Import": "Importa"
   },
   "Import %1 events": {
-    "Import %1 events": ""
+    "Import %1 events": "Importa %1 eventi"
   },
   "Import client_secret.json": {
     "Import client_secret.json": "Importa client_secret.json"
   },
   "Import events": {
-    "Import events": ""
+    "Import events": "Importa eventi"
   },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "Importa il file client_secret_….json scaricato durante la creazione del client, oppure inserisci manualmente ID client e segreto."
   },
   "Importing...": {
-    "Importing...": ""
+    "Importing...": "Importazione..."
   },
   "Increase": {
-    "Increase": ""
+    "Increase": "Aumenta"
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "Promemoria iniziale impostato sui nuovi eventi."
@@ -837,7 +861,7 @@
     "Keyboard shortcuts": "Scorciatoie da tastiera"
   },
   "Keyring locked — unlock it to sync": {
-    "Keyring locked — unlock it to sync": ""
+    "Keyring locked — unlock it to sync": "Portachiavi bloccato — sbloccalo per sincronizzare"
   },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
@@ -846,7 +870,7 @@
     "Language": "Lingua"
   },
   "Language and time": {
-    "Language and time": ""
+    "Language and time": "Lingua e ora"
   },
   "Language of the interface.": {
     "Language of the interface.": "Lingua dell'interfaccia."
@@ -885,7 +909,7 @@
     "Locale used for day and month names, time format and week start.": "Impostazioni locali usate per nomi di giorni e mesi, formato dell'ora e inizio settimana."
   },
   "Locale, views and defaults": {
-    "Locale, views and defaults": ""
+    "Locale, views and defaults": "Impostazioni locali, viste e valori predefiniti"
   },
   "Location": {
     "Location": "Posizione"
@@ -895,6 +919,12 @@
   },
   "Marked as not done": {
     "Marked as not done": "Segnata come non completata"
+  },
+  "Matugen": {
+    "Matugen": ""
+  },
+  "Matugen theme missing or invalid — using the %1 preset.": {
+    "Matugen theme missing or invalid — using the %1 preset.": ""
   },
   "Maximum title lines per event in month view.": {
     "Maximum title lines per event in month view.": "Numero massimo di righe del titolo per evento nella vista mensile."
@@ -909,16 +939,16 @@
     "Medium": "Media"
   },
   "Meeting cancellation": {
-    "Meeting cancellation": ""
+    "Meeting cancellation": "Annullamento della riunione"
   },
   "Meeting invitation": {
-    "Meeting invitation": ""
+    "Meeting invitation": "Invito alla riunione"
   },
   "Meeting reply": {
-    "Meeting reply": ""
+    "Meeting reply": "Risposta alla riunione"
   },
   "Menu": {
-    "Menu": ""
+    "Menu": "Menù"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "Accesso a Microsoft To Do non concesso. Riconnetti questo account per sincronizzare le attività."
@@ -948,7 +978,7 @@
     "Monthly": "Mensile"
   },
   "Motion": {
-    "Motion": ""
+    "Motion": "Movimento"
   },
   "Move": {
     "Move": "Sposta"
@@ -999,7 +1029,7 @@
     "Name": "Nome"
   },
   "Names, visibility, removal": {
-    "Names, visibility, removal": ""
+    "Names, visibility, removal": "Nomi, visibilità, rimozione"
   },
   "Navigation": {
     "Navigation": "Navigazione"
@@ -1017,13 +1047,13 @@
     "New event": "Nuovo evento"
   },
   "New events": {
-    "New events": ""
+    "New events": "Nuovi eventi"
   },
   "New task": {
     "New task": "Nuova attività"
   },
   "Next": {
-    "Next": ""
+    "Next": "Successivo"
   },
   "Next day": {
     "Next day": "Giorno successivo"
@@ -1041,7 +1071,7 @@
     "Next event (next week in month view)": "Evento successivo (settimana successiva nella vista mese)"
   },
   "Next month": {
-    "Next month": ""
+    "Next month": "Mese successivo"
   },
   "Next week": {
     "Next week": "Settimana successiva"
@@ -1069,6 +1099,9 @@
   },
   "No matching events": {
     "No matching events": "Nessun evento corrispondente"
+  },
+  "No overlapping busy events": {
+    "No overlapping busy events": ""
   },
   "No task list available": {
     "No task list available": "Nessun elenco attività disponibile"
@@ -1107,7 +1140,10 @@
     "Notify for all-day events without their own reminders.": "Notifica per gli eventi di tutto il giorno senza promemoria propri."
   },
   "Off": {
-    "Off": ""
+    "Off": "Disattivata"
+  },
+  "Off lets the compositor decorate windows. Open windows update when reopened.": {
+    "Off lets the compositor decorate windows. Open windows update when reopened.": ""
   },
   "Offline": {
     "Offline": "Offline"
@@ -1136,17 +1172,20 @@
   "Open or create event": {
     "Open or create event": "Apri o crea evento"
   },
+  "Open the existing meeting to handle this reply or cancellation.": {
+    "Open the existing meeting to handle this reply or cancellation.": ""
+  },
   "Order": {
     "Order": "Ordine"
   },
   "Organized by %1": {
-    "Organized by %1": ""
+    "Organized by %1": "Organizzata da %1"
   },
   "Outline": {
-    "Outline": ""
+    "Outline": "Contorno"
   },
   "Outline the control that has keyboard focus.": {
-    "Outline the control that has keyboard focus.": ""
+    "Outline the control that has keyboard focus.": "Delimita il controllo che ha il focus della tastiera."
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "Calendari Outlook, Office 365 ed Exchange Online."
@@ -1215,7 +1254,7 @@
     "Pick a color source, palette, or your own theme file.": "Scegli un'origine colore, una tavolozza o il tuo file di tema."
   },
   "Pick time": {
-    "Pick time": ""
+    "Pick time": "Scegli l'ora"
   },
   "Pictures": {
     "Pictures": "Immagini"
@@ -1224,7 +1263,7 @@
     "Play a sound when a reminder fires.": "Riproduce un suono quando scatta un promemoria."
   },
   "Playful": {
-    "Playful": ""
+    "Playful": "Giocosa"
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "Specifica una cartella con file .ics.  Ogni sottocartella o file .ics diventa un calendario, compatibile con i layout di vdirsyncer/khal. La cartella viene creata se non esiste."
@@ -1233,7 +1272,7 @@
     "Preset": "Preset"
   },
   "Previous": {
-    "Previous": ""
+    "Previous": "Precedente"
   },
   "Previous day": {
     "Previous day": "Giorno precedente"
@@ -1251,7 +1290,7 @@
     "Previous event (previous week in month view)": "Evento precedente (settimana precedente nella vista mese)"
   },
   "Previous month": {
-    "Previous month": ""
+    "Previous month": "Mese precedente"
   },
   "Previous week": {
     "Previous week": "Settimana precedente"
@@ -1260,7 +1299,7 @@
     "Previous year": "Anno precedente"
   },
   "Primary": {
-    "Primary": ""
+    "Primary": "Primario"
   },
   "Priority": {
     "Priority": "Priorità"
@@ -1272,7 +1311,7 @@
     "Quit": "Esci"
   },
   "Radius strength": {
-    "Radius strength": ""
+    "Radius strength": "Intensità dell'arrotondamento"
   },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": "Gli eventi di sola lettura non possono essere tagliati"
@@ -1284,22 +1323,25 @@
     "Read-only events can't be moved": "Gli eventi di sola lettura non possono essere spostati"
   },
   "Reading file...": {
-    "Reading file...": ""
+    "Reading file...": "Lettura del file..."
   },
   "Reconnect": {
     "Reconnect": "Riconnetti"
+  },
+  "Recurring event · conflicts checked through %1": {
+    "Recurring event · conflicts checked through %1": ""
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "Le attività ricorrenti vengono gestite in Google Tasks."
   },
   "Reduce motion": {
-    "Reduce motion": ""
+    "Reduce motion": "Riduci movimento"
   },
   "Reminders": {
     "Reminders": "Promemoria"
   },
   "Reminders and alerts": {
-    "Reminders and alerts": ""
+    "Reminders and alerts": "Promemoria e avvisi"
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "Promemoria e avvisi desktop."
@@ -1323,7 +1365,7 @@
     "Remove calendar or account": "Rimuovi calendario o account"
   },
   "Remove reminder": {
-    "Remove reminder": ""
+    "Remove reminder": "Rimuovi promemoria"
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "Rimuove questo account e i relativi calendari ed eventi da Dank Calendar. Non viene eliminato nulla dal provider."
@@ -1371,7 +1413,7 @@
     "Reset to global": "Ripristina valori globali"
   },
   "Ripple effects": {
-    "Ripple effects": ""
+    "Ripple effects": "Effetti di increspatura"
   },
   "Save": {
     "Save": "Salva"
@@ -1380,7 +1422,7 @@
     "Saving...": "Salvataggio in corso..."
   },
   "Scale": {
-    "Scale": ""
+    "Scale": "Scala"
   },
   "Search": {
     "Search": "Cerca"
@@ -1395,7 +1437,7 @@
     "Searching": "Ricerca in corso"
   },
   "Secondary": {
-    "Secondary": ""
+    "Secondary": "Secondario"
   },
   "Select File": {
     "Select File": "Seleziona File"
@@ -1434,7 +1476,7 @@
     "Settings": "Impostazioni"
   },
   "Shape": {
-    "Shape": ""
+    "Shape": "Forma"
   },
   "Show": {
     "Show": "Mostra"
@@ -1449,7 +1491,7 @@
     "Show all-day reminders": "Mostra promemoria per eventi di tutto il giorno"
   },
   "Show calendar": {
-    "Show calendar": ""
+    "Show calendar": "Mostra il calendario"
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "Mostra gli elenchi attività e la vista Attività quando un account li fornisce."
@@ -1462,6 +1504,9 @@
   },
   "Show week numbers": {
     "Show week numbers": "Mostra numeri di settimana"
+  },
+  "Showing the first 20 overlaps.": {
+    "Showing the first 20 overlaps.": ""
   },
   "Sidebar": {
     "Sidebar": "Barra laterale"
@@ -1494,22 +1539,25 @@
     "Skip certificate verification": "Salta la verifica del certificato"
   },
   "Smooth": {
-    "Smooth": ""
+    "Smooth": "Fluida"
   },
   "Snooze duration": {
     "Snooze duration": "Durata posticipazione"
   },
   "Some calendars couldn't be synced; their events may be missing or out of date.": {
-    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+    "Some calendars couldn't be synced; their events may be missing or out of date.": "Impossibile sincronizzare alcuni calendari; i relativi eventi potrebbero mancare o non essere aggiornati."
   },
   "Sort By": {
     "Sort By": "Ordina Per"
   },
   "Spring": {
-    "Spring": ""
+    "Spring": "Molla"
   },
   "Square": {
-    "Square": ""
+    "Square": "Quadrato"
+  },
+  "Start": {
+    "Start": ""
   },
   "Start at login": {
     "Start at login": "Avvia all'accesso"
@@ -1540,6 +1588,9 @@
   },
   "Subscribing…": {
     "Subscribing…": "Iscrizione…"
+  },
+  "Support Dank Linux": {
+    "Support Dank Linux": ""
   },
   "Sync interval": {
     "Sync interval": "Intervallo di sincronizzazione"
@@ -1584,25 +1635,25 @@
     "Test notification": "Notifica di prova"
   },
   "Text color": {
-    "Text color": ""
+    "Text color": "Colore testo"
   },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "Quel file non è un JSON valido."
   },
   "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
-    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": "Il server ha rifiutato di restituire alcuni eventi o attività, che sono stati ignorati; il resto del calendario è in sincronizzazione."
   },
   "Theme": {
     "Theme": "Tema"
   },
   "Theme, shape and motion": {
-    "Theme, shape and motion": ""
+    "Theme, shape and motion": "Tema, forma e movimento"
   },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "Questi eventi verranno eliminati dai rispettivi calendari. Le selezioni ricorrenti eliminano solo le occorrenze selezionate."
   },
   "Thickness": {
-    "Thickness": ""
+    "Thickness": "Spessore"
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "Questo account non può essere riconnesso: rimuovilo e aggiungilo di nuovo."
@@ -1616,6 +1667,9 @@
   "Time format": {
     "Time format": "Formato ora"
   },
+  "Title bars": {
+    "Title bars": ""
+  },
   "Title is required": {
     "Title is required": "Il titolo è obbligatorio"
   },
@@ -1626,7 +1680,7 @@
     "Toggle calendar, switch view or sync account": "Attiva/disattiva calendario, cambia vista o sincronizza account"
   },
   "Toggle sidebar": {
-    "Toggle sidebar": ""
+    "Toggle sidebar": "Mostra/nascondi barra laterale"
   },
   "Toggle this help": {
     "Toggle this help": "Mostra/nascondi questo aiuto"
@@ -1650,7 +1704,7 @@
     "Type at least 2 characters to search events.": "Digita almeno 2 caratteri per cercare eventi."
   },
   "Typography": {
-    "Typography": ""
+    "Typography": "Tipografia"
   },
   "Undo": {
     "Undo": "Annulla"
@@ -1685,6 +1739,9 @@
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": "Utilizzando i colori dinamici della DankMaterialShell."
   },
+  "Using Matugen colors.": {
+    "Using Matugen colors.": ""
+  },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "Verifica che le notifiche desktop funzionino."
   },
@@ -1692,7 +1749,7 @@
     "Version": "Versione"
   },
   "Version and links": {
-    "Version and links": ""
+    "Version and links": "Versione e collegamenti"
   },
   "Videos": {
     "Videos": "Video"
@@ -1701,7 +1758,7 @@
     "View": "Vista"
   },
   "Views": {
-    "Views": ""
+    "Views": "Viste"
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "Visibilità, nomi e rimozione per ciascun calendario."
@@ -1725,13 +1782,16 @@
     "Weekly": "Settimanale"
   },
   "Weight": {
-    "Weight": ""
+    "Weight": "Peso"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "Cosa fa il pulsante di chiusura della finestra."
   },
   "When all-day event reminders fire.": {
     "When all-day event reminders fire.": "Quando vengono attivati i promemoria per eventi di tutto il giorno."
+  },
+  "Windows": {
+    "Windows": ""
   },
   "Yearly": {
     "Yearly": "Annuale"
@@ -1819,17 +1879,5 @@
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· %1 invitati · %2 accettati"
-  },
-  "color source button group option for Matugen": {
-    "Matugen": "Matugen"
-  },
-  "color source description for Matugen": {
-    "Follow colors generated by Matugen.": "Segui i colori generati da Matugen."
-  },
-  "Matugen color source status when loaded": {
-    "Using Matugen colors.": "Sono in uso i colori di Matugen."
-  },
-  "Matugen color source fallback status": {
-    "Matugen theme missing or invalid — using the %1 preset.": "Tema Matugen mancante o non valido — viene usato il preset %1."
   }
 }

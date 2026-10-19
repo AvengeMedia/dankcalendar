@@ -352,7 +352,7 @@
   {
     "term": "About",
     "translation": "",
-    "context": "about page project section header | settings sidebar tab label",
+    "context": "settings sidebar tab label",
     "reference": "",
     "comment": ""
   },
@@ -422,7 +422,7 @@
   {
     "term": "Add account",
     "translation": "",
-    "context": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account",
+    "context": "account add modal header title | account add modal window title | add account button on accounts page | sidebar button to add a provider account | toast action to re-add an account that failed to reconnect",
     "reference": "",
     "comment": ""
   },
@@ -695,7 +695,7 @@
   {
     "term": "Calendar",
     "translation": "",
-    "context": "main window title | main window title bar text",
+    "context": "about page hero, app name | main window title | main window title bar text",
     "reference": "",
     "comment": ""
   },
@@ -875,6 +875,13 @@
     "comment": ""
   },
   {
+    "term": "Community",
+    "translation": "",
+    "context": "about page card title, chat and community links",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Completed",
     "translation": "",
     "context": "task form toggle label for marking a task done | tasks view section header for finished tasks",
@@ -1046,6 +1053,13 @@
     "term": "Could not read that file.",
     "translation": "",
     "context": "error when credentials file cannot be read",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Couldn't reconnect. Add the account again to sign in.",
+    "translation": "",
+    "context": "toast when reconnecting an account fails",
     "reference": "",
     "comment": ""
   },
@@ -1869,13 +1883,6 @@
     "comment": ""
   },
   {
-    "term": "Ko-fi",
-    "translation": "",
-    "context": "about page resource button",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "Language",
     "translation": "",
     "context": "interface language setting label",
@@ -2471,6 +2478,13 @@
     "comment": ""
   },
   {
+    "term": "Off lets the compositor decorate windows. Open windows update when reopened.",
+    "translation": "",
+    "context": "window title bars toggle description",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Offline",
     "translation": "",
     "context": "about page daemon status value",
@@ -2593,13 +2607,6 @@
     "term": "Palette: %1",
     "translation": "",
     "context": "selected preset palette name",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Part of the Dank Linux suite.",
-    "translation": "",
-    "context": "app tagline on about page",
     "reference": "",
     "comment": ""
   },
@@ -3437,6 +3444,13 @@
     "comment": ""
   },
   {
+    "term": "Support Dank Linux",
+    "translation": "",
+    "context": "about page hero button, opens the Ko-fi donation page",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Sync interval",
     "translation": "",
     "context": "sync interval setting label",
@@ -3601,6 +3615,13 @@
     "term": "Time format",
     "translation": "",
     "context": "time format setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Title bars",
+    "translation": "",
+    "context": "window title bars toggle label",
     "reference": "",
     "comment": ""
   },
@@ -3860,6 +3881,13 @@
     "term": "When all-day event reminders fire.",
     "translation": "",
     "context": "all-day reminder time setting description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Windows",
+    "translation": "",
+    "context": "appearance settings section label",
     "reference": "",
     "comment": ""
   },

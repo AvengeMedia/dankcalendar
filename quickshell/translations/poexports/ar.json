@@ -11,6 +11,9 @@
   "%1 events selected": {
     "%1 events selected": "تم تحديد %1 من الأحداث"
   },
+  "%1 overlapping events": {
+    "%1 overlapping events": ""
+  },
   "%1 selected": {
     "%1 selected": "تم تحديد %1"
   },
@@ -70,6 +73,9 @@
   },
   "1 minute": {
     "1 minute": "1 دقيقة"
+  },
+  "1 overlapping event": {
+    "1 overlapping event": ""
   },
   "1 week before": {
     "1 week before": "قبل اسبوع"
@@ -132,7 +138,7 @@
     "5 minutes before": "قبل ٥ دقائق"
   },
   "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": {
-    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": ""
+    "50 uses Material shapes. Lower values reduce rounding; higher values increase it.": "تستخدم 50 أشكال Material. القيم المنخفضة تقلل التقريب؛ القيم الأعلى تزيده."
   },
   "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": {
     "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">MIT License</a>": "<a href=\"%2\" style=\"text-decoration:none; color:%1;\">رخصة MIT</a>"
@@ -156,7 +162,7 @@
     "Account connected": "تم ربط الحساب"
   },
   "Account options": {
-    "Account options": ""
+    "Account options": "خيارات الحساب"
   },
   "Account problem — click for options": {
     "Account problem — click for options": "مشكلة في الحساب — اضغط للخيارات"
@@ -194,6 +200,9 @@
   "Add title": {
     "Add title": "إضافة عنوان"
   },
+  "Add to calendar": {
+    "Add to calendar": ""
+  },
   "Adding…": {
     "Adding…": "جاري الإضافة…"
   },
@@ -222,7 +231,7 @@
     "All events": "كل الأحداث"
   },
   "All-day events": {
-    "All-day events": ""
+    "All-day events": "أحداث طوال اليوم"
   },
   "All-day reminder time": {
     "All-day reminder time": "وقت تذكير الأحداث طوال اليوم"
@@ -231,7 +240,7 @@
     "All-day reminder timing": "توقيت تذكيرات طوال اليوم"
   },
   "Already in %1": {
-    "Already in %1": ""
+    "Already in %1": "موجود بالفعل في %1"
   },
   "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": {
     "Alt+←/Backspace: Back • F1/I: File Info • F10: Help • Esc: Close": "Alt+←/Backspace: عودة • F1/I: معلومات الملف • F10: مساعدة • Esc: إغلاق"
@@ -243,7 +252,7 @@
     "Always use the light theme.": "استخدام المظهر الفاتح دائماً."
   },
   "App": {
-    "App": ""
+    "App": "تطبيق"
   },
   "App-specific password": {
     "App-specific password": "كلمة مرور خاصة بالتطبيق"
@@ -294,7 +303,7 @@
     "Backend not connected.": "النظام الخلفي غير متصل."
   },
   "Balanced": {
-    "Balanced": ""
+    "Balanced": "متوازن"
   },
   "Begin setup": {
     "Begin setup": "بدء الإعداد"
@@ -306,13 +315,13 @@
     "Calendar Settings": "إعدادات التقويم"
   },
   "Calendar file": {
-    "Calendar file": ""
+    "Calendar file": "ملف التقويم"
   },
   "Calendar name": {
     "Calendar name": "اسم التقويم"
   },
   "Calendar options": {
-    "Calendar options": ""
+    "Calendar options": "خيارات التقويم"
   },
   "Calendar preselected when creating events.": {
     "Calendar preselected when creating events.": "التقويم المحدد مسبقًا عند إنشاء الأحداث."
@@ -357,7 +366,7 @@
     "Client Secret": "سر العميل"
   },
   "Close": {
-    "Close": ""
+    "Close": "إغلاق"
   },
   "Close behavior": {
     "Close behavior": "سلوك الإغلاق"
@@ -369,7 +378,7 @@
     "Collapse or expand a section": "إغلاق القسم أو توسيعه"
   },
   "Color": {
-    "Color": ""
+    "Color": "اللون"
   },
   "Color source": {
     "Color source": "مصدر اللون"
@@ -380,6 +389,9 @@
   "Coming soon": {
     "Coming soon": "قريباً"
   },
+  "Community": {
+    "Community": ""
+  },
   "Completed": {
     "Completed": "مكتملة"
   },
@@ -388,6 +400,9 @@
   },
   "Confirm delete": {
     "Confirm delete": "تأكيد الحذف"
+  },
+  "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.": {
+    "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.": ""
   },
   "Connect": {
     "Connect": "ربط"
@@ -411,7 +426,7 @@
     "Connected calendar providers.": "مزودو التقويم المتصلون."
   },
   "Connected providers": {
-    "Connected providers": ""
+    "Connected providers": "المزودون المتصلون"
   },
   "Connecting…": {
     "Connecting…": "جاري الاتصال…"
@@ -454,6 +469,9 @@
   },
   "Could not read that file.": {
     "Could not read that file.": "تعذر قراءة هذا الملف."
+  },
+  "Couldn't reconnect. Add the account again to sign in.": {
+    "Couldn't reconnect. Add the account again to sign in.": ""
   },
   "Couldn't update task": {
     "Couldn't update task": "تعذر تحديث المهمة"
@@ -519,7 +537,7 @@
     "Dark": "داكن"
   },
   "Date": {
-    "Date": ""
+    "Date": "التاريخ"
   },
   "Date and time locale": {
     "Date and time locale": "إعدادات التاريخ والوقت المحلية"
@@ -537,7 +555,7 @@
     "Decline": "رفض"
   },
   "Decrease": {
-    "Decrease": ""
+    "Decrease": "نقصان"
   },
   "Default calendar": {
     "Default calendar": "التقويم الافتراضي"
@@ -609,7 +627,7 @@
     "Desktop notifications for upcoming events.": "إشعارات سطح المكتب للأحداث القادمة."
   },
   "Diagnostics": {
-    "Diagnostics": ""
+    "Diagnostics": "التشخيص"
   },
   "Directory": {
     "Directory": "المجلد"
@@ -663,10 +681,10 @@
     "Duplicate selected events to the next day": "تكرار الأحداث المحددة لليوم التالي"
   },
   "Duration": {
-    "Duration": ""
+    "Duration": "المدة"
   },
   "Edit": {
-    "Edit": ""
+    "Edit": "تعديل"
   },
   "Edit event": {
     "Edit event": "تعديل الحدث"
@@ -682,6 +700,9 @@
   },
   "Enable sync": {
     "Enable sync": "تفعيل المزامنة"
+  },
+  "End": {
+    "End": ""
   },
   "Ends": {
     "Ends": "ينتهي"
@@ -717,7 +738,7 @@
     "Every": "كل"
   },
   "Everything in this file is already on your calendar.": {
-    "Everything in this file is already on your calendar.": ""
+    "Everything in this file is already on your calendar.": "كل شيء في هذا الملف موجود بالفعل في تقويمك."
   },
   "Evolution": {
     "Evolution": "إيفولوشن"
@@ -750,10 +771,13 @@
     "Focus or leave the sidebar": "التركيز على الشريط الجانبي أو مغادرته"
   },
   "Focus ring": {
-    "Focus ring": ""
+    "Focus ring": "حلقة التركيز"
   },
   "Follow DankMaterialShell colors, falling back to a preset.": {
     "Follow DankMaterialShell colors, falling back to a preset.": "اتبع ألوان DankMaterialShell، مع العودة إلى إعداد مسبق في حال عدم توفرها."
+  },
+  "Follow colors generated by Matugen.": {
+    "Follow colors generated by Matugen.": ""
   },
   "Follow language": {
     "Follow language": "اتبع اللغة"
@@ -801,25 +825,25 @@
     "How often accounts are polled for changes.": "معدل فحص الحسابات بحثًا عن تغييرات."
   },
   "Import": {
-    "Import": ""
+    "Import": "استيراد"
   },
   "Import %1 events": {
-    "Import %1 events": ""
+    "Import %1 events": "استيراد %1 أحداث"
   },
   "Import client_secret.json": {
     "Import client_secret.json": "استيراد client_secret.json"
   },
   "Import events": {
-    "Import events": ""
+    "Import events": "استيراد الأحداث"
   },
   "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": {
     "Import the client_secret_….json you downloaded when creating the client, or paste the Client ID and Secret manually.": "استيراد ملف client_secret_….json الذي قمت بتنزيله عند إنشاء العميل، أو لصق معرف العميل والسر يدويًا."
   },
   "Importing...": {
-    "Importing...": ""
+    "Importing...": "جاري الاستيراد..."
   },
   "Increase": {
-    "Increase": ""
+    "Increase": "زيادة"
   },
   "Initial reminder set on new events.": {
     "Initial reminder set on new events.": "التنبيه الأولي المعين للأحداث الجديدة."
@@ -837,7 +861,7 @@
     "Keyboard shortcuts": "اختصارات لوحة المفاتيح"
   },
   "Keyring locked — unlock it to sync": {
-    "Keyring locked — unlock it to sync": ""
+    "Keyring locked — unlock it to sync": "الKeyring مقفلة - قم بإلغاء قفلها للمزامنة"
   },
   "Ko-fi": {
     "Ko-fi": "Ko-fi"
@@ -846,7 +870,7 @@
     "Language": "اللغة"
   },
   "Language and time": {
-    "Language and time": ""
+    "Language and time": "اللغة والوقت"
   },
   "Language of the interface.": {
     "Language of the interface.": "لغة الواجهة."
@@ -885,7 +909,7 @@
     "Locale used for day and month names, time format and week start.": "الإعدادات المحلية المستخدمة لأسماء الأيام والشهور، وتنسيق الوقت، وبداية الأسبوع."
   },
   "Locale, views and defaults": {
-    "Locale, views and defaults": ""
+    "Locale, views and defaults": "اللغة، وطرق العرض، والإعدادات الافتراضية"
   },
   "Location": {
     "Location": "الموقع"
@@ -895,6 +919,12 @@
   },
   "Marked as not done": {
     "Marked as not done": "تَمّ تعيينها كغير منجزة"
+  },
+  "Matugen": {
+    "Matugen": ""
+  },
+  "Matugen theme missing or invalid — using the %1 preset.": {
+    "Matugen theme missing or invalid — using the %1 preset.": ""
   },
   "Maximum title lines per event in month view.": {
     "Maximum title lines per event in month view.": "الحد الأقصى لأسطر العنوان لكل حدث في عرض الشهر."
@@ -909,16 +939,16 @@
     "Medium": "متوسطة"
   },
   "Meeting cancellation": {
-    "Meeting cancellation": ""
+    "Meeting cancellation": "إلغاء الاجتماع"
   },
   "Meeting invitation": {
-    "Meeting invitation": ""
+    "Meeting invitation": "دعوة اجتماع"
   },
   "Meeting reply": {
-    "Meeting reply": ""
+    "Meeting reply": "رد على الاجتماع"
   },
   "Menu": {
-    "Menu": ""
+    "Menu": "قائمة"
   },
   "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": {
     "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.": "لم يتم منح صلاحية الوصول إلى Microsoft To Do. أعد الاتصال بهذا الحساب لمزامنة المهام."
@@ -948,7 +978,7 @@
     "Monthly": "شهريًا"
   },
   "Motion": {
-    "Motion": ""
+    "Motion": "الحركة"
   },
   "Move": {
     "Move": "نقل"
@@ -999,7 +1029,7 @@
     "Name": "الاسم"
   },
   "Names, visibility, removal": {
-    "Names, visibility, removal": ""
+    "Names, visibility, removal": "الأسماء، الرؤية، الإزالة"
   },
   "Navigation": {
     "Navigation": "التنقل"
@@ -1017,13 +1047,13 @@
     "New event": "حدث جديد"
   },
   "New events": {
-    "New events": ""
+    "New events": "أحداث جديدة"
   },
   "New task": {
     "New task": "مهمة جديدة"
   },
   "Next": {
-    "Next": ""
+    "Next": "التالي"
   },
   "Next day": {
     "Next day": "اليوم التالي"
@@ -1041,7 +1071,7 @@
     "Next event (next week in month view)": "الحدث التالي (الأسبوع التالي في عرض الشهر)"
   },
   "Next month": {
-    "Next month": ""
+    "Next month": "الشهر التالي"
   },
   "Next week": {
     "Next week": "الأسبوع التالي"
@@ -1069,6 +1099,9 @@
   },
   "No matching events": {
     "No matching events": "لا توجد أحداث مطابقة"
+  },
+  "No overlapping busy events": {
+    "No overlapping busy events": ""
   },
   "No task list available": {
     "No task list available": "لا توجد قائمة مهام متاحة"
@@ -1107,7 +1140,10 @@
     "Notify for all-day events without their own reminders.": "الإعلام بالمناسبات التي تستمر طوال اليوم وليس لها تنبيهات خاصة."
   },
   "Off": {
-    "Off": ""
+    "Off": "إيقاف"
+  },
+  "Off lets the compositor decorate windows. Open windows update when reopened.": {
+    "Off lets the compositor decorate windows. Open windows update when reopened.": ""
   },
   "Offline": {
     "Offline": "غير متصل"
@@ -1136,17 +1172,20 @@
   "Open or create event": {
     "Open or create event": "فتح الحدث أو إنشاؤه"
   },
+  "Open the existing meeting to handle this reply or cancellation.": {
+    "Open the existing meeting to handle this reply or cancellation.": ""
+  },
   "Order": {
     "Order": "ترتيب"
   },
   "Organized by %1": {
-    "Organized by %1": ""
+    "Organized by %1": "منظم بواسطة %1"
   },
   "Outline": {
-    "Outline": ""
+    "Outline": "مخطط"
   },
   "Outline the control that has keyboard focus.": {
-    "Outline the control that has keyboard focus.": ""
+    "Outline the control that has keyboard focus.": "حدد العنصر الذي يحتوي على تركيز لوحة المفاتيح."
   },
   "Outlook, Office 365 and Exchange Online calendars.": {
     "Outlook, Office 365 and Exchange Online calendars.": "تقاويم Outlook وOffice 365 وExchange Online."
@@ -1215,7 +1254,7 @@
     "Pick a color source, palette, or your own theme file.": "اختر مصدر الألوان، أو لوحة ألوان، أو ملف المظهر الخاص بك."
   },
   "Pick time": {
-    "Pick time": ""
+    "Pick time": "اختر الوقت"
   },
   "Pictures": {
     "Pictures": "الصور"
@@ -1224,7 +1263,7 @@
     "Play a sound when a reminder fires.": "تشغيل صوت عند ظهور التذكير."
   },
   "Playful": {
-    "Playful": ""
+    "Playful": "مرح"
   },
   "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": {
     "Point at a directory of .ics files. Each subdirectory or .ics file becomes a calendar — compatible with vdirsyncer/khal layouts. The directory is created if it doesn't exist.": "حدد مسار دليل يحتوي على ملفات ‎.ics. سيصبح كل دليل فرعي أو ملف ‎.ics تقویمًا — وهو متوافق مع مخططات vdirsyncer/khal. سيتم إنشاء الدليل إذا لم يكن موجودًا."
@@ -1233,7 +1272,7 @@
     "Preset": "إعداد مسبق"
   },
   "Previous": {
-    "Previous": ""
+    "Previous": "السابق"
   },
   "Previous day": {
     "Previous day": "اليوم السابق"
@@ -1251,7 +1290,7 @@
     "Previous event (previous week in month view)": "الحدث السابق (الأسبوع السابق في عرض الشهر)"
   },
   "Previous month": {
-    "Previous month": ""
+    "Previous month": "الشهر السابق"
   },
   "Previous week": {
     "Previous week": "الأسبوع السابق"
@@ -1260,7 +1299,7 @@
     "Previous year": "السنة السابقة"
   },
   "Primary": {
-    "Primary": ""
+    "Primary": "أساسي"
   },
   "Priority": {
     "Priority": "أولوية"
@@ -1272,7 +1311,7 @@
     "Quit": "إنهاء"
   },
   "Radius strength": {
-    "Radius strength": ""
+    "Radius strength": "قوة نصف القطر"
   },
   "Read-only events can't be cut": {
     "Read-only events can't be cut": "لا يمكن قص الأحداث للقراءة فقط"
@@ -1284,22 +1323,25 @@
     "Read-only events can't be moved": "لا يمكن نقل الأحداث للقراءة فقط"
   },
   "Reading file...": {
-    "Reading file...": ""
+    "Reading file...": "جاري قراءة الملف..."
   },
   "Reconnect": {
     "Reconnect": "إعادة الاتصال"
+  },
+  "Recurring event · conflicts checked through %1": {
+    "Recurring event · conflicts checked through %1": ""
   },
   "Recurring tasks are managed in Google Tasks.": {
     "Recurring tasks are managed in Google Tasks.": "يتم إدارة المهام المتكررة في مهام Google."
   },
   "Reduce motion": {
-    "Reduce motion": ""
+    "Reduce motion": "تقليل الحركة"
   },
   "Reminders": {
     "Reminders": "التذكيرات"
   },
   "Reminders and alerts": {
-    "Reminders and alerts": ""
+    "Reminders and alerts": "التذكيرات والتنبيهات"
   },
   "Reminders and desktop alerts.": {
     "Reminders and desktop alerts.": "التذكيرات وتنبيهات سطح المكتب."
@@ -1323,7 +1365,7 @@
     "Remove calendar or account": "إزالة التقويم أو الحساب"
   },
   "Remove reminder": {
-    "Remove reminder": ""
+    "Remove reminder": "إزالة التذكير"
   },
   "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": {
     "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.": "يؤدي هذا إلى إزالة هذا الحساب والتقاويم والأحداث الخاصة به من Dank Calendar. لن يتم حذف أي شيء من موفر الخدمة."
@@ -1371,7 +1413,7 @@
     "Reset to global": "إعادة التعيين إلى الوضع العام"
   },
   "Ripple effects": {
-    "Ripple effects": ""
+    "Ripple effects": "تأثيرات التموج"
   },
   "Save": {
     "Save": "حفظ"
@@ -1380,7 +1422,7 @@
     "Saving...": "جاري الحفظ..."
   },
   "Scale": {
-    "Scale": ""
+    "Scale": "مقياس"
   },
   "Search": {
     "Search": "بحث"
@@ -1395,7 +1437,7 @@
     "Searching": "جاري البحث"
   },
   "Secondary": {
-    "Secondary": ""
+    "Secondary": "ثانوي"
   },
   "Select File": {
     "Select File": "اختيار ملف"
@@ -1434,7 +1476,7 @@
     "Settings": "الإعدادات"
   },
   "Shape": {
-    "Shape": ""
+    "Shape": "شكل"
   },
   "Show": {
     "Show": "عرض"
@@ -1449,7 +1491,7 @@
     "Show all-day reminders": "عرض التذكيرات طوال اليوم"
   },
   "Show calendar": {
-    "Show calendar": ""
+    "Show calendar": "إظهار التقويم"
   },
   "Show task lists and the Tasks view when an account provides them.": {
     "Show task lists and the Tasks view when an account provides them.": "إظهار قوائم المهام وعرض المهام عندما يوفرها أحد الحسابات."
@@ -1462,6 +1504,9 @@
   },
   "Show week numbers": {
     "Show week numbers": "عرض أرقام الأسابيع"
+  },
+  "Showing the first 20 overlaps.": {
+    "Showing the first 20 overlaps.": ""
   },
   "Sidebar": {
     "Sidebar": "الشريط الجانبي"
@@ -1494,22 +1539,25 @@
     "Skip certificate verification": "تخطي التحقق من الشهادة"
   },
   "Smooth": {
-    "Smooth": ""
+    "Smooth": "ناعم"
   },
   "Snooze duration": {
     "Snooze duration": "مدة الغفو"
   },
   "Some calendars couldn't be synced; their events may be missing or out of date.": {
-    "Some calendars couldn't be synced; their events may be missing or out of date.": ""
+    "Some calendars couldn't be synced; their events may be missing or out of date.": "لم يتمكن من مزامنة بعض التقويمات؛ قد تكون أحداثها مفقودة أو قديمة."
   },
   "Sort By": {
     "Sort By": "فرز حسب"
   },
   "Spring": {
-    "Spring": ""
+    "Spring": "نابض"
   },
   "Square": {
-    "Square": ""
+    "Square": "مربع"
+  },
+  "Start": {
+    "Start": ""
   },
   "Start at login": {
     "Start at login": "البدء عند تسجيل الدخول"
@@ -1540,6 +1588,9 @@
   },
   "Subscribing…": {
     "Subscribing…": "جاري الاشتراك…"
+  },
+  "Support Dank Linux": {
+    "Support Dank Linux": ""
   },
   "Sync interval": {
     "Sync interval": "معدل المزامنة"
@@ -1584,25 +1635,25 @@
     "Test notification": "إشعار تجريبي"
   },
   "Text color": {
-    "Text color": ""
+    "Text color": "لون النص"
   },
   "That file is not valid JSON.": {
     "That file is not valid JSON.": "هذا الملف ليس بصيغة JSON صالحة."
   },
   "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": {
-    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": ""
+    "The server refused to return some events or tasks, so they were skipped; the rest of the calendar is syncing.": "رفض الخادم إرجاع بعض الأحداث أو المهام، لذا تم تخطيها؛ تتم مزامنة بقية التقويم."
   },
   "Theme": {
     "Theme": "المظهر"
   },
   "Theme, shape and motion": {
-    "Theme, shape and motion": ""
+    "Theme, shape and motion": "السمة، والشكل، والحركة"
   },
   "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": {
     "These events will be deleted from their calendars. Recurring selections delete only the selected occurrences.": "سيتم حذف هذه الأحداث من تقاويمها. عمليات الحذف للتحديدات المتكررة تحذف فقط التكرارات المحددة."
   },
   "Thickness": {
-    "Thickness": ""
+    "Thickness": "السماكة"
   },
   "This account cannot be reconnected — remove it and add it again.": {
     "This account cannot be reconnected — remove it and add it again.": "لا يمكن إعادة الاتصال بهذا الحساب — قم بإزالته وإضافته مجددًا."
@@ -1616,6 +1667,9 @@
   "Time format": {
     "Time format": "تنسيق الوقت"
   },
+  "Title bars": {
+    "Title bars": ""
+  },
   "Title is required": {
     "Title is required": "العنوان مطلوب"
   },
@@ -1626,7 +1680,7 @@
     "Toggle calendar, switch view or sync account": "تبديل التقويم، أو تغيير العرض، أو مزامنة الحساب"
   },
   "Toggle sidebar": {
-    "Toggle sidebar": ""
+    "Toggle sidebar": "تبديل الشريط الجانبي"
   },
   "Toggle this help": {
     "Toggle this help": "إظهار/إخفاء هذه المساعدة"
@@ -1650,7 +1704,7 @@
     "Type at least 2 characters to search events.": "اكتب حرفين على الأقل للبحث عن الأحداث."
   },
   "Typography": {
-    "Typography": ""
+    "Typography": "الطباعة"
   },
   "Undo": {
     "Undo": "تراجع"
@@ -1685,6 +1739,9 @@
   "Using DankMaterialShell dynamic colors.": {
     "Using DankMaterialShell dynamic colors.": "يتم استخدام ألوان DankMaterialShell الديناميكية."
   },
+  "Using Matugen colors.": {
+    "Using Matugen colors.": ""
+  },
   "Verify desktop notifications are working.": {
     "Verify desktop notifications are working.": "تحقق من أن إشعارات سطح المكتب تعمل."
   },
@@ -1692,7 +1749,7 @@
     "Version": "الإصدار"
   },
   "Version and links": {
-    "Version and links": ""
+    "Version and links": "الإصدار والروابط"
   },
   "Videos": {
     "Videos": "الفيديوهات"
@@ -1701,7 +1758,7 @@
     "View": "عرض"
   },
   "Views": {
-    "Views": ""
+    "Views": "طرق العرض"
   },
   "Visibility, names, and removal per calendar.": {
     "Visibility, names, and removal per calendar.": "الرؤية، والأسماء، والإزالة لكل تقويم."
@@ -1725,13 +1782,16 @@
     "Weekly": "أسبوعيًا"
   },
   "Weight": {
-    "Weight": ""
+    "Weight": "الوزن"
   },
   "What the window's close button does.": {
     "What the window's close button does.": "وظيفة زر إغلاق النافذة."
   },
   "When all-day event reminders fire.": {
     "When all-day event reminders fire.": "وقت انطلاق تذكيرات الأحداث الممتدة طوال اليوم."
+  },
+  "Windows": {
+    "Windows": ""
   },
   "Yearly": {
     "Yearly": "سنويًا"
@@ -1819,17 +1879,5 @@
   },
   "· %1 invited · %2 accepted": {
     "· %1 invited · %2 accepted": "· تمت دعوة %1 · قبل %2"
-  },
-  "color source button group option for Matugen": {
-    "Matugen": "Matugen"
-  },
-  "color source description for Matugen": {
-    "Follow colors generated by Matugen.": "اتبع الألوان التي ينشئها Matugen."
-  },
-  "Matugen color source status when loaded": {
-    "Using Matugen colors.": "يتم استخدام ألوان Matugen."
-  },
-  "Matugen color source fallback status": {
-    "Matugen theme missing or invalid — using the %1 preset.": "سمة Matugen مفقودة أو غير صالحة — يتم استخدام الإعداد المسبق %1."
   }
 }
