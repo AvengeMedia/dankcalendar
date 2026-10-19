@@ -63,6 +63,7 @@ func (p *Provider) Account() cal.Account  { return p.account }
 // Google APIs. Either may be disabled in the user's Cloud project, so a
 // "service disabled" failure on one degrades to a soft notice while the other
 // still syncs; only when both are unreachable does the account fail outright.
+// A quota-limited Tasks API likewise skips only the task lists for that cycle.
 func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 	p.notices = nil
 
@@ -81,6 +82,12 @@ func (p *Provider) ListCalendars(ctx context.Context) ([]cal.Calendar, error) {
 	case taskErr != nil && isOptionalServiceUnavailable(taskErr):
 		p.notices = append(p.notices, cal.NoticeTasksUnavailable)
 		log.Warnf("account %s: Google Tasks unavailable, syncing calendars only: %v", p.account.ID, taskErr)
+		return cals, nil
+	case taskErr != nil && quotaLimited(taskErr):
+		// Tasks has its own quota, per project with the built-in client, so
+		// running out of it must not stop events. Stored task lists stay as
+		// they are until a later cycle lists them again.
+		log.Warnf("account %s: Google Tasks quota-limited, syncing calendars only: %v", p.account.ID, taskErr)
 		return cals, nil
 	case taskErr != nil:
 		return nil, fmt.Errorf("list google task lists: %w", classifyAuthErr(taskErr))

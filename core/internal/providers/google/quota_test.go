@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -144,6 +145,31 @@ func TestMutationIsNeverRetried(t *testing.T) {
 	_, err := googleCall(context.Background(), p, false, func() (*int, error) { calls++; return nil, &googleapi.Error{Code: 429} })
 	require.Error(t, err)
 	require.Equal(t, 1, calls)
+}
+
+func TestListCalendarsSurvivesTasksQuota(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		if strings.HasSuffix(r.URL.Path, "/users/@me/lists") {
+			w.WriteHeader(http.StatusTooManyRequests)
+			_, _ = w.Write([]byte(`{"error":{"code":429,"errors":[{"reason":"rateLimitExceeded"}]}}`))
+			return
+		}
+		_, _ = w.Write([]byte(`{"items":[{"id":"primary","summary":"Primary","accessRole":"owner"}]}`))
+	}))
+	defer server.Close()
+	svc, err := calendar.NewService(context.Background(), option.WithHTTPClient(server.Client()), option.WithEndpoint(server.URL+"/"))
+	require.NoError(t, err)
+	ts, err := gtasks.NewService(context.Background(), option.WithHTTPClient(server.Client()), option.WithEndpoint(server.URL+"/"))
+	require.NoError(t, err)
+	q, _ := fakeQuota()
+	p := &Provider{svc: svc, tasksSvc: ts, quota: q}
+
+	cals, err := p.ListCalendars(context.Background())
+	require.NoError(t, err)
+	require.Len(t, cals, 1)
+	require.Equal(t, "primary", cals[0].RemoteID)
+	require.Empty(t, p.notices)
 }
 
 type fixtureSecrets struct{}
