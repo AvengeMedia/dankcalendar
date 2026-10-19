@@ -15,8 +15,7 @@ Item {
     readonly property string discordUrl: "https://discord.gg/ppWTpKmPgT"
     readonly property string kofiUrl: "https://ko-fi.com/danklinux"
     readonly property string licenseUrl: githubUrl + "/blob/master/LICENSE"
-    // Only a release number belongs in the headline; dev builds keep their full string in the Backend rows
-    readonly property string version: DankCalService.daemonVersion.match(/^v?(\d+\.\d+(\.\d+)?)$/)?.[1] ?? ""
+    readonly property string version: DankCalService.daemonVersion.match(/^v?(\d+\.\d+)/)?.[1] ?? ""
 
     function host(url) {
         return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -25,8 +24,7 @@ Item {
     SettingsPage {
         DHeroCard {
             brand: I18n.tr("Calendar", "about page hero, app name")
-            accent: root.version
-            caption: I18n.tr("Part of the Dank Linux suite.", "app tagline on about page")
+            caption: root.version ? `dcal ${root.version}` : "dcal"
 
             DButton {
                 anchors.horizontalCenter: parent.horizontalCenter

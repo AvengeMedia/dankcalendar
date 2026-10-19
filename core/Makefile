@@ -12,7 +12,7 @@ FISHCOMP_DIR=$(PREFIX)/share/fish/vendor_completions.d
 
 GO=go
 
-BASE_VERSION=$(shell git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.0")
+BASE_VERSION=$(or $(shell git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//'),0.0.0)
 COMMIT_COUNT=$(shell git rev-list --count HEAD 2>/dev/null || echo "0")
 COMMIT_HASH=$(shell git rev-parse --short=8 HEAD 2>/dev/null || echo "unknown")
 VERSION?=$(BASE_VERSION)+git$(COMMIT_COUNT).$(COMMIT_HASH)
