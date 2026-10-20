@@ -1,7 +1,7 @@
 # Dux Calendar Flatpak
 
 The build provides `dcal` and the Quickshell runtime.
-It installs the desktop file, metainfo, and icon as `dev.duxlabs.calendar`.
+It installs the desktop file, metainfo, and icon as `com.danklinux.dankcalendar`.
 The exported desktop file registers ICS/VCS files and webcal/webcals links;
 Flatpak rewrites its `%U` launcher for document-portal file forwarding.
 
@@ -17,14 +17,14 @@ Dynamic theme colors from Dux Shell live in the host cache, outside
 the sandbox. To enable theme sync, grant read-only access:
 
 ```bash
-flatpak override --user --filesystem=xdg-cache/dms:ro dev.duxlabs.calendar
+flatpak override --user --filesystem=xdg-cache/dms:ro com.danklinux.dankcalendar
 ```
 
 Local ICS calendar directories and custom theme files also live outside the
 sandbox and need an explicit per-directory grant, e.g.:
 
 ```bash
-flatpak override --user --filesystem=~/calendars dev.duxlabs.calendar
+flatpak override --user --filesystem=~/calendars com.danklinux.dankcalendar
 ```
 
 or the equivalent in Flatseal.
@@ -38,11 +38,11 @@ flatpak run org.flatpak.Builder \
   --force-clean --user --install --repo=repo \
   --mirror-screenshots-url=https://dl.flathub.org/media \
   --compose-url-policy=full \
-  builddir distro/flatpak/dev.duxlabs.calendar.yml
+  builddir distro/flatpak/com.danklinux.dankcalendar.yml
 ```
 
 ```bash
-flatpak run dev.duxlabs.calendar
+flatpak run com.danklinux.dankcalendar
 ```
 
 To rebuild cached modules & tools:
@@ -52,22 +52,22 @@ flatpak run org.flatpak.Builder \
   --force-clean --disable-cache --user --install --repo=repo \
   --mirror-screenshots-url=https://dl.flathub.org/media \
   --compose-url-policy=full \
-  builddir distro/flatpak/dev.duxlabs.calendar.yml
+  builddir distro/flatpak/com.danklinux.dankcalendar.yml
 ```
 
 ## Uninstall
 
-Flatpak stores app data under `~/.var/app/dev.duxlabs.calendar/` separately from a native `make install`.
+Flatpak stores app data under `~/.var/app/com.danklinux.dankcalendar/` separately from a native `make install`.
 
 ```bash
-flatpak uninstall --delete-data dev.duxlabs.calendar
+flatpak uninstall --delete-data com.danklinux.dankcalendar
 ```
 
 ## Lint
 
 ```bash
 flatpak run --command=flatpak-builder-lint org.flatpak.Builder \
-  manifest distro/flatpak/dev.duxlabs.calendar.yml
+  manifest distro/flatpak/com.danklinux.dankcalendar.yml
 ```
 
 ```bash

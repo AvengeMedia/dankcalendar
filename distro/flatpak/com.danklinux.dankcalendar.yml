@@ -1,9 +1,7 @@
-id: dev.duxlabs.calendar
+id: com.danklinux.dankcalendar
 runtime: org.kde.Platform
 runtime-version: '6.11'
 sdk: org.kde.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.golang
 command: dcal
 
 finish-args:
@@ -25,7 +23,6 @@ cleanup:
   - /share/icons/hicolor/scalable/apps/org.quickshell.svg
 
 build-options:
-  append-path: /usr/lib/sdk/golang/bin
   env:
     GOTOOLCHAIN: local
 
@@ -102,24 +99,44 @@ modules:
     build-commands:
       - make -C core sync-shell
       - >-
-        go build -C core -mod=vendor -tags withshell
+        PATH=$PWD/go/bin:$PATH go build -C core -mod=vendor -tags withshell
         -ldflags=-s\ -w\ -X\ main.Version=1.6.1\ -X\ main.Commit=effdb208
         -o dcal ./cmd/dcal
       - install -Dm755 core/dcal /app/bin/dcal
       - >-
         install -Dm644 assets/dev.duxlabs.calendar.desktop
-        /app/share/applications/dev.duxlabs.calendar.desktop
+        /app/share/applications/com.danklinux.dankcalendar.desktop
+      - >-
+        sed -i 's/^Icon=dev\.duxlabs\.calendar$/Icon=com.danklinux.dankcalendar/'
+        /app/share/applications/com.danklinux.dankcalendar.desktop
       - >-
         install -Dm644 assets/dev.duxlabs.calendar.metainfo.xml
-        /app/share/metainfo/dev.duxlabs.calendar.metainfo.xml
+        /app/share/metainfo/com.danklinux.dankcalendar.metainfo.xml
+      - >-
+        sed -i -e '/<replaces>/,/<\/replaces>/d'
+        -e '/<provides>/,/<\/provides>/{/<id>com\.danklinux\.dankcalendar<\/id>/d}'
+        -e 's/dev\.duxlabs\.calendar/com.danklinux.dankcalendar/g'
+        /app/share/metainfo/com.danklinux.dankcalendar.metainfo.xml
       - >-
         install -Dm644 assets/dev.duxlabs.calendar.svg
-        /app/share/icons/hicolor/scalable/apps/dev.duxlabs.calendar.svg
+        /app/share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg
       - >-
         install -Dm644 LICENSE
-        /app/share/licenses/dev.duxlabs.calendar/LICENSE
+        /app/share/licenses/com.danklinux.dankcalendar/LICENSE
     sources:
       - type: git
         url: https://github.com/duxlabs-dev/dux-calendar.git
         commit: effdb208b544874573c327759f9ae74e8233ffaa
       - go.mod.yml
+      - type: archive
+        url: https://go.dev/dl/go1.27.3.linux-amd64.tar.gz
+        sha256: 65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40
+        dest: go
+        only-arches:
+          - x86_64
+      - type: archive
+        url: https://go.dev/dl/go1.27.3.linux-arm64.tar.gz
+        sha256: a06e99309dbcbdca1a8ccd2282c3ee146e55930886e26b4f1193269587165f49
+        dest: go
+        only-arches:
+          - aarch64
