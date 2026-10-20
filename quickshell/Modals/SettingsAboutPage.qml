@@ -13,7 +13,7 @@ Item {
     readonly property string githubUrl: "https://github.com/duxlabs-dev/dux-calendar"
     readonly property string docsUrl: "https://duxlabs.dev/docs"
     readonly property string discordUrl: "https://discord.gg/ppWTpKmPgT"
-    readonly property string kofiUrl: "https://ko-fi.com/danklinux"
+    readonly property string kofiUrl: "https://ko-fi.com/duxlabs"
     readonly property string licenseUrl: githubUrl + "/blob/master/LICENSE"
     readonly property string version: DankCalService.daemonVersion.match(/^v?(\d+\.\d+)/)?.[1] ?? ""
 
