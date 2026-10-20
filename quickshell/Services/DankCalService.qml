@@ -1765,6 +1765,13 @@ Singleton {
         });
     }
 
+    function restart() {
+        sendRequest("ui.restart", null, response => {
+            if (response.error)
+                lastError = response.error;
+        });
+    }
+
     function quit() {
         if (connected) {
             sendRequest("ui.quit", null, null);

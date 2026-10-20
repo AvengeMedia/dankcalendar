@@ -40,8 +40,13 @@ func TestLoadFrom(t *testing.T) {
 			want:    func(d UISettings) UISettings { return d },
 		},
 		{
+			name:    "non-positive ui scale falls back to default",
+			content: `{"uiScale": 0}`,
+			want:    func(d UISettings) UISettings { return d },
+		},
+		{
 			name:    "full file",
-			content: `{"use24HourClock": false, "remindersEnabled": true, "reminderPersist": false, "allDayReminders": true, "allDayReminderTime": "18:30", "allDayReminderDaysBefore": 1, "defaultReminderMinutes": -1, "snoozeMinutes": 30, "syncIntervalMinutes": 15}`,
+			content: `{"use24HourClock": false, "remindersEnabled": true, "reminderPersist": false, "allDayReminders": true, "allDayReminderTime": "18:30", "allDayReminderDaysBefore": 1, "defaultReminderMinutes": -1, "snoozeMinutes": 30, "syncIntervalMinutes": 15, "uiScale": 1.25}`,
 			want: func(d UISettings) UISettings {
 				return UISettings{
 					Use24HourClock:           false,
@@ -53,6 +58,7 @@ func TestLoadFrom(t *testing.T) {
 					DefaultReminderMinutes:   -1,
 					SnoozeMinutes:            30,
 					SyncIntervalMinutes:      15,
+					UIScale:                  1.25,
 				}
 			},
 		},

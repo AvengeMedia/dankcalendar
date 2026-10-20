@@ -70,6 +70,10 @@ Singleton {
     property alias enableRippleEffects: adapter.enableRippleEffects
     property alias fontWeight: adapter.fontWeight
     property alias fontScale: adapter.fontScale
+    property alias uiScale: adapter.uiScale
+    readonly property real effectiveUiScale: parseFloat(Quickshell.env("QT_SCALE_FACTOR")) || 1
+    // dcal sets DANKCAL_UI_SCALE only when uiScale is in control
+    readonly property bool uiScaleFromEnv: !!Quickshell.env("QT_SCALE_FACTOR") && !Quickshell.env("DANKCAL_UI_SCALE")
     property alias focusRingEnabled: adapter.focusRingEnabled
     property alias focusRingWidth: adapter.focusRingWidth
     // "primary" | "secondary" | "outline" | "surfaceText"
@@ -233,6 +237,7 @@ Singleton {
             property bool enableRippleEffects: true
             property int fontWeight: 400
             property real fontScale: 1.0
+            property real uiScale: 1.0
             property bool focusRingEnabled: true
             property real focusRingWidth: 1.5
             property string focusRingColor: "primary"

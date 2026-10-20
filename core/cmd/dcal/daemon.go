@@ -263,6 +263,10 @@ func runDaemon(_ *cobra.Command, _ []string) error {
 
 	log.Infof("dcal daemon ready (ipc=%s http=%s)", svc.SocketPath(), svc.httpAddr)
 
+	// No UI supervisor to restart here; unhandled SIGUSR1 from ui.restart
+	// would terminate the daemon.
+	signal.Ignore(syscall.SIGUSR1)
+
 	signalCh := make(chan os.Signal, 1)
 	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM)
 

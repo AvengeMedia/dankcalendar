@@ -95,6 +95,7 @@ var Methods = []MethodSpec{
 	{Name: "ui.hide", Group: "ui", Desc: "Hide the calendar window"},
 	{Name: "ui.toggle", Group: "ui", Desc: "Toggle the calendar window", Params: []ParamSpec{opt("view", "month|week|day|agenda")}},
 	{Name: "ui.quit", Group: "ui", Desc: "Quit the running daemon"},
+	{Name: "ui.restart", Group: "ui", Desc: "Restart the running daemon and reopen the window"},
 
 	{Name: "system.autostart.get", Group: "system", Desc: "Report autostart status"},
 	{Name: "system.autostart.set", Group: "system", Desc: "Enable or disable autostart", Params: []ParamSpec{req("enabled", "true|false")}},

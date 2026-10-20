@@ -27,3 +27,13 @@ func DatabasePath() (string, error) {
 func SocketDir() string { return app.SocketDir() }
 
 func SocketPath() string { return app.SocketPath() }
+
+// ShowAfterRestartPath marks a restart requested from the UI, so the next
+// launch shows the window even when the service starts with --hidden.
+func ShowAfterRestartPath() (string, error) {
+	dir, err := StateDir()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(dir, "show-after-restart"), nil
+}
