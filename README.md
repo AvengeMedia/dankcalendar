@@ -33,9 +33,9 @@ dankcalendar/
 │   ├── Services/       # IPC bridge and shell-side state
 │   ├── Widgets/        # Calendar-specific Dank UI controls
 │   ├── Common/         # Shared resources, themes, and i18n
-│   ├── DCommon/     # → symlink into the dank-qml-common submodule
+│   ├── DCommon/     # → symlink into the dux-qml-common submodule
 │   └── translations/   # POEditor-managed string catalogs
-├── dank-qml-common/    # Shared DMS widget library (git submodule)
+├── dux-qml-common/    # Shared DMS widget library (git submodule)
 ├── core/               # Go backend, daemon, and CLI
 │   ├── cmd/dcal/       # dcal CLI and daemon entrypoint
 │   ├── internal/       # Providers, sync engine, reminders, IPC, OAuth
@@ -82,7 +82,7 @@ sudo make install
 ```
 
 Already cloned without submodules? Run `git submodule update --init` first —
-the shared widget library ([dank-qml-common](https://github.com/duxlabs-dev/dux-qml-common))
+the shared widget library ([dux-qml-common](https://github.com/duxlabs-dev/dux-qml-common))
 is vendored as a submodule and the build fails without it.
 
 This installs:
@@ -271,11 +271,11 @@ git submodule update --init   # once after clone (or clone with --recurse-submod
 make run            # build and run against the in-repo quickshell config
 make test           # run the Go test suite
 make fmt            # format Go code
-make update-common  # bump the dank-qml-common submodule + nix flake input together
+make update-common  # bump the dux-qml-common submodule + nix flake input together
 ```
 
 Shared widgets (`quickshell/DCommon/`) live in the
-[dank-qml-common](https://github.com/duxlabs-dev/dux-qml-common) submodule —
+[dux-qml-common](https://github.com/duxlabs-dev/dux-qml-common) submodule —
 edit them in place, they hot-reload like any other QML, but they are committed
 and PR'd in that repo. See CONTRIBUTING for the workflow.
 

@@ -6,7 +6,7 @@ To contribute fork this repository, make your changes, and open a pull request.
 
 ## Setup
 
-Clone with submodules — the shared widget library ([dank-qml-common](https://github.com/duxlabs-dev/dux-qml-common)) is vendored at `dank-qml-common/` and symlinked into `quickshell/DCommon`:
+Clone with submodules — the shared widget library ([dux-qml-common](https://github.com/duxlabs-dev/dux-qml-common)) is vendored at `dux-qml-common/` and symlinked into `quickshell/DCommon`:
 
 ```bash
 git clone --recurse-submodules https://github.com/duxlabs-dev/dux-calendar.git
@@ -22,12 +22,12 @@ prek install
 
 The hooks run `gofmt -s`, `go vet`, `go mod tidy`, and the Go test suite for changes under `core/`, plus generic whitespace/YAML checks.
 
-## Shared widgets (dank-qml-common)
+## Shared widgets (dux-qml-common)
 
-Everything under `quickshell/DCommon/` (core widgets, the file browser, scroll physics) is shared across the DMS suite and lives in the `dank-qml-common` submodule. It is a normal git worktree:
+Everything under `quickshell/DCommon/` (core widgets, the file browser, scroll physics) is shared across the DMS suite and lives in the `dux-qml-common` submodule. It is a normal git worktree:
 
-1. Edit files under `dank-qml-common/` (or through the `quickshell/DCommon` symlink — same files) and test in the running app; hot reload works as usual. For isolated widget work, the library is its own runnable config with a gallery: `qs -c dank-qml-common`.
-2. Commit and PR those changes in the `dank-qml-common` repo: `cd dank-qml-common && git switch -c my-change`, push, open the PR there.
+1. Edit files under `dux-qml-common/` (or through the `quickshell/DCommon` symlink — same files) and test in the running app; hot reload works as usual. For isolated widget work, the library is its own runnable config with a gallery: `qs -c dux-qml-common`.
+2. Commit and PR those changes in the `dux-qml-common` repo: `cd dux-qml-common && git switch -c my-change`, push, open the PR there.
 3. Once merged, bump the pointer here: `make update-common` (updates the submodule and the nix flake input together), then commit alongside any dankcalendar-side changes. If you only bump the submodule, CI syncs `flake.lock` to it automatically on master.
 
 Shared widgets read app-provided singletons (`Theme`, `SettingsData`, ...) through a documented contract — see the dux-qml-common README. If your change needs a new contract property, add it to the library's stub singletons in the same PR, then to `quickshell/Common/` here when you bump.
