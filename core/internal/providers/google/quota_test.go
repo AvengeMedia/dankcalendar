@@ -121,7 +121,7 @@ func TestSyncPagesRetriesOnlyFailedPage(t *testing.T) {
 			ts, err := gtasks.NewService(context.Background(), option.WithHTTPClient(server.Client()), option.WithEndpoint(server.URL+"/"))
 			require.NoError(t, err)
 			q, _ := fakeQuota()
-			p := &Provider{svc: svc, tasksSvc: ts, quota: q}
+			p := &Provider{svc: svc, tasksSvc: ts, quota: q, tasksQuota: q}
 			c := cal.Calendar{RemoteID: "test"}
 			if tasks {
 				result, err := p.syncTasks(context.Background(), c)
@@ -155,6 +155,10 @@ func TestListCalendarsSurvivesTasksQuota(t *testing.T) {
 			_, _ = w.Write([]byte(`{"error":{"code":429,"errors":[{"reason":"rateLimitExceeded"}]}}`))
 			return
 		}
+		if strings.HasSuffix(r.URL.Path, "/events") {
+			_, _ = w.Write([]byte(`{"nextSyncToken":"s","items":[]}`))
+			return
+		}
 		_, _ = w.Write([]byte(`{"items":[{"id":"primary","summary":"Primary","accessRole":"owner"}]}`))
 	}))
 	defer server.Close()
@@ -163,13 +167,19 @@ func TestListCalendarsSurvivesTasksQuota(t *testing.T) {
 	ts, err := gtasks.NewService(context.Background(), option.WithHTTPClient(server.Client()), option.WithEndpoint(server.URL+"/"))
 	require.NoError(t, err)
 	q, _ := fakeQuota()
-	p := &Provider{svc: svc, tasksSvc: ts, quota: q}
+	tq, _ := fakeQuota()
+	p := &Provider{svc: svc, tasksSvc: ts, quota: q, tasksQuota: tq}
 
 	cals, err := p.ListCalendars(context.Background())
 	require.NoError(t, err)
 	require.Len(t, cals, 1)
 	require.Equal(t, "primary", cals[0].RemoteID)
 	require.Empty(t, p.notices)
+
+	// The Tasks 429 must not leave a cooldown on the gate events use.
+	_, cursor, err := p.syncPages(context.Background(), cals[0], "")
+	require.NoError(t, err)
+	require.Equal(t, "s", cursor)
 }
 
 type fixtureSecrets struct{}
@@ -195,11 +205,11 @@ func TestFactoryRebuildSharesBudgetAndLongCooldown(t *testing.T) {
 		return provider.(*Provider)
 	}
 	first := build(id)
-	require.NoError(t, first.waitQuota(ctx))
+	require.NoError(t, first.waitQuota(ctx, first.quotaGate()))
 	_ = first.Close()
 	second := build(id)
 	require.Same(t, first.quotaGate(), second.quotaGate(), "rebuilt provider lost account gate")
-	require.NoError(t, second.waitQuota(ctx))
+	require.NoError(t, second.waitQuota(ctx, second.quotaGate()))
 	require.Equal(t, []time.Duration{time.Second / 4}, *sleeps, "pacing not shared")
 	calls := 0
 	_, err := googleCall(ctx, second, true, func() (*int, error) {
@@ -212,11 +222,14 @@ func TestFactoryRebuildSharesBudgetAndLongCooldown(t *testing.T) {
 	require.Equal(t, 1, calls)
 	before := len(*sleeps)
 	third := build(id)
-	require.ErrorAs(t, third.waitQuota(ctx), &deferred, "cooldown lost")
+	require.ErrorAs(t, third.waitQuota(ctx, third.quotaGate()), &deferred, "cooldown lost")
 	require.Len(t, *sleeps, before, "rebuilt provider slept for long cooldown")
+	t.Cleanup(func() { tasksQuotas.Delete(id) })
+	require.NoError(t, third.waitQuota(ctx, third.tasksQuotaGate()), "calendar cooldown blocked tasks")
 	otherID := id + "-other"
 	t.Cleanup(func() { accountQuotas.Delete(otherID) })
-	require.NoError(t, build(otherID).waitQuota(ctx), "other account blocked")
+	other := build(otherID)
+	require.NoError(t, other.waitQuota(ctx, other.quotaGate()), "other account blocked")
 }
 
 func TestRetryWaitBudgetSpansPages(t *testing.T) {

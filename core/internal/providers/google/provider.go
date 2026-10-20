@@ -25,14 +25,16 @@ import (
 const maxPageSize = 2500
 
 type Provider struct {
-	account   cal.Account
-	svc       *calendar.Service
-	tasksSvc  *gtasks.Service
-	notices   []string
-	quotaOnce sync.Once
-	quota     *quotaGate
-	retryMu   sync.Mutex
-	retryWait time.Duration
+	account        cal.Account
+	svc            *calendar.Service
+	tasksSvc       *gtasks.Service
+	notices        []string
+	quotaOnce      sync.Once
+	quota          *quotaGate
+	tasksQuotaOnce sync.Once
+	tasksQuota     *quotaGate
+	retryMu        sync.Mutex
+	retryWait      time.Duration
 }
 
 func (p *Provider) Notices() []string { return p.notices }

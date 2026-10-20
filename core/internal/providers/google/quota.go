@@ -15,7 +15,8 @@ import (
 
 // Google Calendar currently allows 600 requests/minute per user/project.
 // Pace each account at 240/minute, with headroom for another desktop.
-// Calendar and Tasks share this conservative local gate.
+// Calendar and Tasks are metered separately by Google, so each gets its own
+// gate at this pace: a Tasks quota error must not stall event sync.
 // https://developers.google.com/workspace/calendar/api/guides/quota
 const quotaUnitsPerSecond = 4
 const maxReadRetries = 5
@@ -24,13 +25,16 @@ const maxInlineRetryWait = 5 * time.Second
 
 // Providers are short-lived (sync, IPC and RSVP each build their own). Keep
 // account budgets and server cooldowns for the lifetime of this process.
-var accountQuotas sync.Map // account ID -> *quotaGate
+var (
+	accountQuotas sync.Map // account ID -> *quotaGate (Calendar API)
+	tasksQuotas   sync.Map // account ID -> *quotaGate (Tasks API)
+)
 
-func accountQuota(id string) *quotaGate {
+func accountQuota(gates *sync.Map, id string) *quotaGate {
 	if id == "" {
 		return newQuotaGate()
 	}
-	value, _ := accountQuotas.LoadOrStore(id, newQuotaGate())
+	value, _ := gates.LoadOrStore(id, newQuotaGate())
 	return value.(*quotaGate)
 }
 
@@ -152,12 +156,19 @@ func readRetryDelay(err error, attempt int, now time.Time) (time.Duration, bool)
 	return delay, true
 }
 
+func googleCall[T any](ctx context.Context, p *Provider, read bool, call func() (*T, error)) (*T, error) {
+	return quotaCall(ctx, p, p.quotaGate(), read, call)
+}
+
+func tasksCall[T any](ctx context.Context, p *Provider, read bool, call func() (*T, error)) (*T, error) {
+	return quotaCall(ctx, p, p.tasksQuotaGate(), read, call)
+}
+
 // Retry only reads, preserving pages already fetched in the current cycle.
 // Mutations are paced but not replayed: inserts must not create duplicates.
-func googleCall[T any](ctx context.Context, p *Provider, read bool, call func() (*T, error)) (*T, error) {
-	q := p.quotaGate()
+func quotaCall[T any](ctx context.Context, p *Provider, q *quotaGate, read bool, call func() (*T, error)) (*T, error) {
 	for attempt := 0; ; attempt++ {
-		if err := p.waitQuota(ctx); err != nil {
+		if err := p.waitQuota(ctx, q); err != nil {
 			return nil, err
 		}
 		result, err := call()
@@ -180,16 +191,25 @@ func googleCall[T any](ctx context.Context, p *Provider, read bool, call func() 
 func (p *Provider) quotaGate() *quotaGate {
 	p.quotaOnce.Do(func() {
 		if p.quota == nil {
-			p.quota = accountQuota(p.account.ID)
+			p.quota = accountQuota(&accountQuotas, p.account.ID)
 		}
 	})
 	return p.quota
 }
 
+func (p *Provider) tasksQuotaGate() *quotaGate {
+	p.tasksQuotaOnce.Do(func() {
+		if p.tasksQuota == nil {
+			p.tasksQuota = accountQuota(&tasksQuotas, p.account.ID)
+		}
+	})
+	return p.tasksQuota
+}
+
 // One provider spans an entire sync cycle (all calendars and pages). Limit
 // cumulative inline retry sleep for that cycle, not separately for each page.
-func (p *Provider) waitQuota(ctx context.Context) error {
-	return p.quotaGate().wait(ctx, 1, func(delay time.Duration) bool {
+func (p *Provider) waitQuota(ctx context.Context, q *quotaGate) error {
+	return q.wait(ctx, 1, func(delay time.Duration) bool {
 		p.retryMu.Lock()
 		defer p.retryMu.Unlock()
 		if delay > maxInlineRetryWait-p.retryWait {
