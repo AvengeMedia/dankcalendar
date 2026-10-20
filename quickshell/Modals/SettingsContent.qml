@@ -527,6 +527,13 @@ Item {
                     onToggled: checked => SettingsData.showTasks = checked
                 }
 
+                SettingsToggleRow {
+                    text: I18n.tr("Merge duplicate events", "merge duplicate events setting label")
+                    description: I18n.tr("Show an event that appears in several calendars once, with dots for the other calendars.", "merge duplicate events setting description")
+                    checked: SettingsData.mergeDuplicateEvents
+                    onToggled: checked => SettingsData.mergeDuplicateEvents = checked
+                }
+
                 OptionDropdownRow {
                     text: I18n.tr("Month event title lines", "month event title line count setting label")
                     description: I18n.tr("Maximum title lines per event in month view.", "month event title line count setting description")

@@ -705,6 +705,13 @@ FloatingWindow {
                 }
 
                 MetaRow {
+                    iconName: "layers"
+                    primary: (eventModal.event.mergedFrom || []).map(other => other.calendar).join(", ")
+                    secondary: I18n.tr("Also in these calendars", "event details row listing other calendars a merged duplicate event appears in")
+                    visible: primary !== ""
+                }
+
+                MetaRow {
                     iconName: "place"
                     primary: eventModal.event.location || ""
                     accent: link ? Theme.primary : Theme.surfaceVariantText

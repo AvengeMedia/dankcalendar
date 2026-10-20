@@ -560,6 +560,13 @@
     "comment": ""
   },
   {
+    "term": "Also in these calendars",
+    "translation": "",
+    "context": "event details row listing other calendars a merged duplicate event appears in",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Always use the dark theme.",
     "translation": "",
     "context": "theme mode setting description",
@@ -2079,6 +2086,13 @@
     "comment": ""
   },
   {
+    "term": "Merge duplicate events",
+    "translation": "",
+    "context": "merge duplicate events setting label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Microsoft To Do access wasn't granted. Reconnect this account to sync tasks.",
     "translation": "",
     "context": "account notice when microsoft to do permission is missing",
@@ -3230,6 +3244,13 @@
     "term": "Show all-day reminders",
     "translation": "",
     "context": "all-day reminders toggle label | per-calendar all-day reminders override label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Show an event that appears in several calendars once, with dots for the other calendars.",
+    "translation": "",
+    "context": "merge duplicate events setting description",
     "reference": "",
     "comment": ""
   },

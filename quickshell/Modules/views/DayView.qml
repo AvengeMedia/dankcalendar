@@ -75,7 +75,7 @@ Item {
     }
 
     function eventTooltip(ev) {
-        const suffix = (ev.location ? " · " + ev.location : "") + (ev.calendar ? " · " + ev.calendar : "");
+        const suffix = (ev.location ? " · " + ev.location : "") + (ev.calendar ? " · " + DankCalService.calendarNames(ev) : "");
         if (ev.allDay)
             return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + suffix;
         return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + suffix;
@@ -215,6 +215,10 @@ Item {
                 TentativeHatch {
                     visible: parent.modelData.myResponse === "tentative"
                     stripeColor: parent.modelData.color
+                }
+
+                MergedEventDots {
+                    event: parent.modelData
                 }
 
                 StyledText {
@@ -398,6 +402,10 @@ Item {
                         TentativeHatch {
                             visible: parent.modelData.myResponse === "tentative"
                             stripeColor: parent.modelData.color
+                        }
+
+                        MergedEventDots {
+                            event: parent.modelData
                         }
 
                         Row {

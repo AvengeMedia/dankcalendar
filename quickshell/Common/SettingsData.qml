@@ -90,6 +90,7 @@ Singleton {
     property alias showTasks: adapter.showTasks
     property alias monthEventTitleLines: adapter.monthEventTitleLines
     property alias monthShowAllEvents: adapter.monthShowAllEvents
+    property alias mergeDuplicateEvents: adapter.mergeDuplicateEvents
     property alias weekEventTitleLines: adapter.weekEventTitleLines
     property alias defaultEventDurationMinutes: adapter.defaultEventDurationMinutes
     // -1 = no reminder
@@ -248,6 +249,7 @@ Singleton {
             property bool showTasks: true
             property int monthEventTitleLines: 1
             property bool monthShowAllEvents: false
+            property bool mergeDuplicateEvents: false
             property int weekEventTitleLines: 1
             property int defaultEventDurationMinutes: 30
             property int defaultReminderMinutes: 10
