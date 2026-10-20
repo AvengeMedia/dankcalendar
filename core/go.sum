@@ -53,6 +53,8 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dustin/go-humanize v1.1.0 h1:dbKTrvD0klcbBV/h4AWJdMuZogJACoMlvWIWZ5b2xWg=
 github.com/dustin/go-humanize v1.1.0/go.mod h1:hc1CvRkJMsgxqjmjMQF3QNRAZBwY8AXBAzKYoSX9sFI=
+github.com/duxlabs-dev/dux-go v1.6.3-0.20261020163124-e2ca52bdf500 h1:y02m7QgoX4rwauY9HePIPGCRDJ/fMirBmgj78IkeUsc=
+github.com/duxlabs-dev/dux-go v1.6.3-0.20261020163124-e2ca52bdf500/go.mod h1:b+hBqIgOVAmlFKJ+33SY2pH4kJjXpifNeioPMxwC4Nk=
 github.com/dvsekhvalnov/jose2go v1.11.0 h1:9pnsV1/CLWFYSxMilqtiY1Fb4JZOxfDk/q0/CQiUMYw=
 github.com/dvsekhvalnov/jose2go v1.11.0/go.mod h1:QsHjhyTlD/lAVqn/NSbVZmSCGeDehTB/mPZadG+mhXU=
 github.com/emersion/go-ical v0.0.0-20250609112844-439c63cef608 h1:5XWaET4YAcppq3l1/Yh2ay5VmQjUdq6qhJuucdGbmOY=

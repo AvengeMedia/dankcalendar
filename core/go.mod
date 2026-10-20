@@ -4,11 +4,11 @@ go 1.27
 
 require (
 	entgo.io/ent v0.14.6
-	github.com/duxlabs-dev/dux-go v0.0.0-00010101000000-000000000000
 	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.2
 	github.com/adrg/xdg v0.5.3
 	github.com/caarlos0/env/v11 v11.4.1
 	github.com/danielgtaylor/huma/v2 v2.39.1
+	github.com/duxlabs-dev/dux-go v1.6.3-0.20261020163124-e2ca52bdf500
 	github.com/dvsekhvalnov/jose2go v1.11.0
 	github.com/emersion/go-ical v0.0.0-20250609112844-439c63cef608
 	github.com/emersion/go-webdav v0.7.1-0.20260628102823-c16f8a9a132c
