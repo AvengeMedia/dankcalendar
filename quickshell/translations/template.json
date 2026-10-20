@@ -616,6 +616,13 @@
     "comment": ""
   },
   {
+    "term": "Apply and restart",
+    "translation": "",
+    "context": "interface zoom restart button",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Approve access in your browser. The window will return here automatically when %1 sends us back the authorization code.",
     "translation": "",
     "context": "browser step body while waiting for oauth",
@@ -688,7 +695,7 @@
   {
     "term": "Backend not connected.",
     "translation": "",
-    "context": "accounts settings section subtitle | calendars page empty state | test notification setting description when backend is unavailable",
+    "context": "accounts settings section subtitle | calendars page empty state | interface zoom pending restart description when backend is unavailable | test notification setting description when backend is unavailable",
     "reference": "",
     "comment": ""
   },
@@ -1179,6 +1186,13 @@
     "term": "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.",
     "translation": "",
     "context": "about page project description with embedded links",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dank Calendar will close and reopen with the new zoom.",
+    "translation": "",
+    "context": "interface zoom pending restart description",
     "reference": "",
     "comment": ""
   },
@@ -3073,6 +3087,13 @@
     "comment": ""
   },
   {
+    "term": "Restart required",
+    "translation": "",
+    "context": "interface zoom pending restart label",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Ripple effects",
     "translation": "",
     "context": "ripple effects toggle label",
@@ -3096,7 +3117,14 @@
   {
     "term": "Scale",
     "translation": "",
-    "context": "font scale slider label",
+    "context": "font scale slider label | interface zoom slider label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Scales the whole app. Takes effect after a restart.",
+    "translation": "",
+    "context": "interface zoom slider description",
     "reference": "",
     "comment": ""
   },
@@ -3202,6 +3230,13 @@
     "term": "Server URL",
     "translation": "",
     "context": "caldav server url field label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Set by QT_SCALE_FACTOR.",
+    "translation": "",
+    "context": "interface zoom slider description when the environment overrides it",
     "reference": "",
     "comment": ""
   },
@@ -3944,6 +3979,13 @@
     "term": "Your response",
     "translation": "",
     "context": "event details RSVP section label",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Zoom",
+    "translation": "",
+    "context": "appearance settings section label",
     "reference": "",
     "comment": ""
   },

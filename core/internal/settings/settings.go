@@ -31,6 +31,8 @@ type UISettings struct {
 	// SyncIntervalMinutes is how often the daemon polls each account. Zero falls
 	// back to the built-in default; the engine floors it at one minute.
 	SyncIntervalMinutes int `json:"syncIntervalMinutes"`
+	// UIScale becomes QT_SCALE_FACTOR, which Qt reads only at startup.
+	UIScale float64 `json:"uiScale"`
 }
 
 // Clock formats t honoring the resolved 12/24-hour preference.
@@ -116,6 +118,7 @@ func Defaults() UISettings {
 		SnoozeMinutes:            5,
 		NotificationSounds:       false,
 		SyncIntervalMinutes:      30,
+		UIScale:                  1,
 	}
 }
 
@@ -141,6 +144,9 @@ func loadFrom(path string) UISettings {
 	}
 	if out.SnoozeMinutes <= 0 {
 		out.SnoozeMinutes = Defaults().SnoozeMinutes
+	}
+	if out.UIScale <= 0 {
+		out.UIScale = Defaults().UIScale
 	}
 	return out
 }

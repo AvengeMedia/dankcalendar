@@ -656,15 +656,16 @@ Singleton {
         return Qt.rgba(c1.r * (1 - r) + c2.r * r, c1.g * (1 - r) + c2.g * r, c1.b * (1 - r) + c2.b * r, c1.a * (1 - r) + c2.a * r);
     }
 
+    // a tiled parent keeps its on-screen size under zoom, so the cap undoes the zoom
     function modalWidth(parentWin, scr, preferred) {
         const screenCap = scr ? scr.width - 80 : 1200;
-        const parentCap = parentWin && parentWin.width > 0 ? parentWin.width * 0.8 : screenCap;
+        const parentCap = parentWin && parentWin.width > 0 ? parentWin.width * 0.8 * SettingsData.effectiveUiScale : screenCap;
         return Math.round(Math.min(preferred, screenCap, parentCap));
     }
 
     function modalHeight(parentWin, scr, natural) {
         const screenCap = scr ? scr.height - 80 : 900;
-        const parentCap = parentWin && parentWin.height > 0 ? parentWin.height * 0.8 : screenCap;
+        const parentCap = parentWin && parentWin.height > 0 ? parentWin.height * 0.8 * SettingsData.effectiveUiScale : screenCap;
         return Math.round(Math.min(natural, screenCap, parentCap));
     }
 

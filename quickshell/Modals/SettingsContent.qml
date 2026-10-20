@@ -767,6 +767,37 @@ Item {
 
             SettingsCard {
 
+                title: I18n.tr("Zoom", "appearance settings section label")
+                SettingsSliderRow {
+                    text: I18n.tr("Scale", "interface zoom slider label")
+                    description: SettingsData.uiScaleFromEnv ? I18n.tr("Set by QT_SCALE_FACTOR.", "interface zoom slider description when the environment overrides it") : I18n.tr("Scales the whole app. Takes effect after a restart.", "interface zoom slider description")
+                    enabled: !SettingsData.uiScaleFromEnv
+                    minimum: 75
+                    maximum: 200
+                    step: 5
+                    unit: "%"
+                    value: Math.round((SettingsData.uiScaleFromEnv ? SettingsData.effectiveUiScale : SettingsData.uiScale) * 100)
+                    onSliderValueChanged: newValue => SettingsData.uiScale = newValue / 100
+                }
+
+                SettingsRow {
+                    visible: !SettingsData.uiScaleFromEnv && Math.round(SettingsData.uiScale * 100) !== Math.round(SettingsData.effectiveUiScale * 100)
+                    title: I18n.tr("Restart required", "interface zoom pending restart label")
+                    subtitle: DankCalService.connected ? I18n.tr("Dank Calendar will close and reopen with the new zoom.", "interface zoom pending restart description") : I18n.tr("Backend not connected.", "interface zoom pending restart description when backend is unavailable")
+
+                    DButton {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: I18n.tr("Apply and restart", "interface zoom restart button")
+                        enabled: DankCalService.connected
+                        backgroundColor: Theme.secondaryContainer
+                        textColor: Theme.onSecondaryContainer
+                        onClicked: DankCalService.restart()
+                    }
+                }
+            }
+
+            SettingsCard {
+
                 title: I18n.tr("Typography", "appearance settings section label")
                 SettingsSliderRow {
                     text: I18n.tr("Weight", "font weight slider label")

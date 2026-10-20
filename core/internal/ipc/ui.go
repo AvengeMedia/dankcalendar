@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/AvengeMedia/dankcalendar/core/internal/icsimport"
+	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
 )
 
 var uiViews = []string{"month", "week", "day", "agenda"}
@@ -103,6 +104,22 @@ func HandleUI(_ context.Context, w *ConnWriter, req Request, deps Deps) {
 			// Give the response a moment to flush before tearing down.
 			time.Sleep(100 * time.Millisecond)
 			_ = syscall.Kill(os.Getpid(), syscall.SIGTERM)
+		}()
+	case "ui.restart":
+		path, err := paths.ShowAfterRestartPath()
+		if err != nil {
+			w.RespondError(req.ID, "ui.restart: "+err.Error())
+			return
+		}
+		if err := os.WriteFile(path, nil, 0o600); err != nil {
+			w.RespondError(req.ID, "ui.restart: "+err.Error())
+			return
+		}
+		w.Respond(req.ID, map[string]any{"ok": true})
+		go func() {
+			time.Sleep(100 * time.Millisecond)
+			// The UI supervisor handles SIGUSR1 as a restart.
+			_ = syscall.Kill(os.Getpid(), syscall.SIGUSR1)
 		}()
 	default:
 		w.RespondError(req.ID, "unknown ui method: "+req.Method)
