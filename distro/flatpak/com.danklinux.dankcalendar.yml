@@ -100,7 +100,7 @@ modules:
       - make -C core sync-shell
       - >-
         PATH=$PWD/go/bin:$PATH go build -C core -mod=vendor -tags withshell
-        -ldflags=-s\ -w\ -X\ main.Version=1.6.1\ -X\ main.Commit=effdb208
+        -ldflags=-s\ -w\ -X\ main.Version=2.0.0\ -X\ main.Commit=c4287aa1
         -o dcal ./cmd/dcal
       - install -Dm755 core/dcal /app/bin/dcal
       - >-
@@ -126,7 +126,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/duxlabs-dev/dux-calendar.git
-        commit: effdb208b544874573c327759f9ae74e8233ffaa
+        commit: c4287aa18d4c89cc49c0067566325fb6c9884d33
       - go.mod.yml
       - type: archive
         url: https://go.dev/dl/go1.27.3.linux-amd64.tar.gz
