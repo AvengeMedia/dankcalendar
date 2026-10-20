@@ -48,6 +48,22 @@
   </screenshots>
 
   <releases>
+    <release version="2.0.0" date="2026-10-20">
+      <description>
+        <ul>
+          <li>submodule: dank-qml-common is now dux-qml-common</li>
+          <li>docs: ko-fi moved to duxlabs</li>
+          <li>deps: dux-go</li>
+          <li>bump qml-common</li>
+          <li>branding: rebrand to dux</li>
+          <li>show private events without a title as Busy (#132)</li>
+          <li>settings: add interface zoom with apply and restart (#134)</li>
+          <li>merge duplicate events across calendars (#133)</li>
+          <li>bump qml-common</li>
+          <li>bump qml-common</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.6.1" date="2026-09-08">
       <description>
         <ul>
