@@ -146,8 +146,8 @@ Item {
 
     function eventTooltip(ev) {
         if (ev.allDay)
-            return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + (ev.calendar ? " · " + ev.calendar : "");
-        return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + (ev.calendar ? " · " + ev.calendar : "");
+            return ev.title + " · " + I18n.tr("All day", "all-day marker in event tooltip") + (ev.calendar ? " · " + DankCalService.calendarNames(ev) : "");
+        return ev.title + " · " + SettingsData.formatTime(ev.start) + " – " + SettingsData.formatTime(ev.end) + (ev.calendar ? " · " + DankCalService.calendarNames(ev) : "");
     }
 
     readonly property int firstDayOfWeek: SettingsData.effectiveFirstDayOfWeek
@@ -475,6 +475,10 @@ Item {
                                     TentativeHatch {
                                         visible: parent.modelData.myResponse === "tentative"
                                         stripeColor: parent.modelData.color
+                                    }
+
+                                    MergedEventDots {
+                                        event: parent.modelData
                                     }
 
                                     Row {

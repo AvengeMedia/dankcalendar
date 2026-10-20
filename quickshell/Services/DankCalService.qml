@@ -68,6 +68,13 @@ Singleton {
 
     onFocusDateChanged: _ensureWindow()
 
+    Connections {
+        target: SettingsData
+        function onMergeDuplicateEventsChanged() {
+            root.eventsUpdated();
+        }
+    }
+
     Component.onCompleted: {
         if (socketPath && socketPath.length > 0) {
             socketProbe.running = true;
@@ -708,6 +715,10 @@ Singleton {
         return out;
     }
 
+    function calendarNames(ev) {
+        return [ev.calendar].concat((ev.mergedFrom || []).map(other => other.calendar)).filter(name => name).join(", ");
+    }
+
     function _hiddenCalendarIds() {
         const hidden = {};
         for (let i = 0; i < calendars.length; i++) {
@@ -733,7 +744,7 @@ Singleton {
                 return a.allDay ? -1 : 1;
             return a.start - b.start;
         });
-        return out;
+        return _mergeDuplicateEvents(out);
     }
 
     function eventsForDay(day) {
@@ -750,13 +761,88 @@ Singleton {
 
     function visibleEvents() {
         const hidden = _hiddenCalendarIds();
-        return events.filter(ev => !hidden[ev.calendarId] && ev.status !== "cancelled").map(ev => decorateEvent(ev)).sort((left, right) => {
+        return _mergeDuplicateEvents(events.filter(ev => !hidden[ev.calendarId] && ev.status !== "cancelled").map(ev => decorateEvent(ev)).sort((left, right) => {
             const startDelta = left.start.getTime() - right.start.getTime();
             if (startDelta !== 0)
                 return startDelta;
             if (left.allDay !== right.allDay)
                 return left.allDay ? -1 : 1;
             return eventKey(left).localeCompare(eventKey(right));
+        }));
+    }
+
+    // Google reuses the event id across attendee calendars, but invitations
+    // from other providers get a per-calendar id, so title and time serve as
+    // a fallback key.
+    function _duplicateKeys(ev) {
+        const start = ev.start.getTime();
+        const keys = ["title|" + ev.title + "|" + start + "|" + ev.end.getTime() + "|" + ev.allDay];
+        if (ev.uid)
+            keys.unshift("uid|" + ev.uid + "|" + start);
+        return keys;
+    }
+
+    function _duplicateRank(ev, calendarOrder) {
+        return [ev.readOnly ? 1 : 0, ev.canRespond ? 0 : 1, -_detailScore(ev), calendarOrder[ev.calendarId] ?? calendars.length];
+    }
+
+    // Copies from private calendars arrive stripped of everything but the
+    // time; the merged card must not pick one over a colleague's full copy.
+    function _detailScore(ev) {
+        return [(ev.attendees || []).length > 0, ev.description !== "", ev.location !== "", ev.meetingUrl !== ""].filter(Boolean).length;
+    }
+
+    function _mergeDuplicateEvents(list) {
+        if (!SettingsData.mergeDuplicateEvents)
+            return list;
+        const groups = [];
+        const byKey = {};
+        for (const ev of list) {
+            const keys = _duplicateKeys(ev);
+            let group = null;
+            for (const key of keys) {
+                const candidate = byKey[key];
+                if (candidate && !candidate.calendarIds[ev.calendarId]) {
+                    group = candidate;
+                    break;
+                }
+            }
+            if (!group) {
+                group = {
+                    "members": [],
+                    "calendarIds": {}
+                };
+                groups.push(group);
+            }
+            group.members.push(ev);
+            group.calendarIds[ev.calendarId] = true;
+            for (const key of keys) {
+                if (!byKey[key])
+                    byKey[key] = group;
+            }
+        }
+        const calendarOrder = {};
+        for (let i = 0; i < calendars.length; i++)
+            calendarOrder[calendars[i].id] = i;
+        return groups.map(group => {
+            if (group.members.length === 1)
+                return group.members[0];
+            const ranked = group.members.slice().sort((left, right) => {
+                const l = _duplicateRank(left, calendarOrder);
+                const r = _duplicateRank(right, calendarOrder);
+                for (let i = 0; i < l.length; i++) {
+                    if (l[i] !== r[i])
+                        return l[i] - r[i];
+                }
+                return 0;
+            });
+            const primary = Object.assign({}, ranked[0]);
+            primary.mergedFrom = ranked.slice(1).map(ev => ({
+                        "calendarId": ev.calendarId,
+                        "calendar": ev.calendar,
+                        "color": ev.color
+                    }));
+            return primary;
         });
     }
 
@@ -841,7 +927,7 @@ Singleton {
                 out.push(decorateEvent(ev));
             }
             callback({
-                "events": out
+                "events": _mergeDuplicateEvents(out)
             });
         });
     }

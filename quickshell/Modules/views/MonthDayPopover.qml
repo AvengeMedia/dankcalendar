@@ -151,6 +151,10 @@ Item {
                         stripeColor: eventRow.modelData.color
                     }
 
+                    MergedEventDots {
+                        event: eventRow.modelData
+                    }
+
                     Row {
                         anchors.left: parent.left
                         anchors.right: parent.right

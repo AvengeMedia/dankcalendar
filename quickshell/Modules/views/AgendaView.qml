@@ -172,6 +172,11 @@ Item {
                                 opacity: 0.15
                             }
 
+                            MergedEventDots {
+                                event: card.modelData
+                                margin: Theme.spacingS
+                            }
+
                             Row {
                                 id: contentRow
                                 anchors.left: parent.left
