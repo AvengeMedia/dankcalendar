@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
 	// required by schema hooks.
-	_ "github.com/AvengeMedia/dankcalendar/core/ent/runtime"
+	_ "github.com/duxlabs-dev/dux-calendar/core/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/AvengeMedia/dankcalendar/core/ent/migrate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/migrate"
 )
 
 type (

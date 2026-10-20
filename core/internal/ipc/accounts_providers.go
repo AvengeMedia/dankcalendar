@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/accounts"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 func handleMicrosoftStart(_ context.Context, w *ConnWriter, req Request, deps Deps) {

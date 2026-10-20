@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/icsimport"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/icsimport"
 )
 
 // icsFilePath reports whether arg names a local file (a plain path or a

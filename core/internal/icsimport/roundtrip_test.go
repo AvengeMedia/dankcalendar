@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/local"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

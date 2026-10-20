@@ -9,19 +9,19 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent/migrate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/migrate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
-	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
-	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
-	"github.com/AvengeMedia/dankcalendar/core/ent/task"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/invitationstate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/reminderstate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/secret"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/task"
 
 	stdsql "database/sql"
 )

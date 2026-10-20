@@ -7,7 +7,7 @@ import (
 
 	ical "github.com/emersion/go-ical"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 // ApplyParticipation stamps email's PARTSTAT for ev inside doc, leaving every

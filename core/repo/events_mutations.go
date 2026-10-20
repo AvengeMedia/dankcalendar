@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
 )
 
 type UpsertEventInput struct {

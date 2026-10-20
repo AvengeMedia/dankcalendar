@@ -3,7 +3,7 @@ package ipc
 import (
 	"context"
 
-	dankipc "github.com/AvengeMedia/dankgo/ipc"
+	dankipc "github.com/duxlabs-dev/dux-go/ipc"
 )
 
 type Server = dankipc.Server

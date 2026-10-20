@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
 )
 
 // Event is the model entity for the Event schema.

@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/recurrence"
-	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
-	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/recurrence"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/taskconv"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/tzcache"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 func HandleTasks(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

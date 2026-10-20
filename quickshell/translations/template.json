@@ -924,7 +924,7 @@
     "comment": ""
   },
   {
-    "term": "Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.",
+    "term": "Conflicts use events currently synced to Dux Calendar. You can still import an overlapping event.",
     "translation": "",
     "context": "import preview explains the data and non-blocking conflicts",
     "reference": "",
@@ -1186,34 +1186,6 @@
     "term": "Daily",
     "translation": "",
     "context": "recurrence dropdown option | task recurrence dropdown option",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Dank Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.",
-    "translation": "",
-    "context": "about page project description with embedded links",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Dank Calendar will close and reopen with the new zoom.",
-    "translation": "",
-    "context": "interface zoom pending restart description",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "Dank Linux Discord",
-    "translation": "",
-    "context": "about page community icon tooltip",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "DankMaterialShell not detected — using the %1 preset.",
-    "translation": "",
-    "context": "auto color source status when DMS is missing",
     "reference": "",
     "comment": ""
   },
@@ -1540,6 +1512,27 @@
     "comment": ""
   },
   {
+    "term": "Dux Calendar is a calendar for the modern Linux desktop with a <a href=\"https://m3.material.io/\" style=\"text-decoration:none; color:%1;\">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href=\"https://quickshell.org\" style=\"text-decoration:none; color:%1;\">Quickshell</a>, a QT6 framework for building desktop shells, and <a href=\"https://go.dev\" style=\"text-decoration:none; color:%1;\">Go</a>, a statically typed, compiled programming language.",
+    "translation": "",
+    "context": "about page project description with embedded links",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dux Calendar will close and reopen with the new zoom.",
+    "translation": "",
+    "context": "interface zoom pending restart description",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "Dux Shell not detected — using the %1 preset.",
+    "translation": "",
+    "context": "auto color source status when DMS is missing",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Edit",
     "translation": "",
     "context": "event details button to start editing",
@@ -1715,7 +1708,7 @@
     "comment": ""
   },
   {
-    "term": "Follow DankMaterialShell colors, falling back to a preset.",
+    "term": "Follow Dux Shell colors, falling back to a preset.",
     "translation": "",
     "context": "color source description for auto",
     "reference": "",
@@ -1932,7 +1925,7 @@
     "comment": ""
   },
   {
-    "term": "Launch Dank Calendar in the background when you log in.",
+    "term": "Launch Dux Calendar in the background when you log in.",
     "translation": "",
     "context": "autostart setting description",
     "reference": "",
@@ -2989,14 +2982,14 @@
     "comment": ""
   },
   {
-    "term": "Removes this account and its calendars and events from Dank Calendar. Nothing is deleted from the provider.",
+    "term": "Removes this account and its calendars and events from Dux Calendar. Nothing is deleted from the provider.",
     "translation": "",
     "context": "confirm dialog body for removing an account | remove account confirmation message",
     "reference": "",
     "comment": ""
   },
   {
-    "term": "Removes this calendar and its events from Dank Calendar. If the provider still offers it, it will come back on the next sync.",
+    "term": "Removes this calendar and its events from Dux Calendar. If the provider still offers it, it will come back on the next sync.",
     "translation": "",
     "context": "confirm dialog body for deleting a calendar | delete calendar confirmation message",
     "reference": "",
@@ -3269,7 +3262,7 @@
     "comment": ""
   },
   {
-    "term": "Show Dank Calendar in the system tray.",
+    "term": "Show Dux Calendar in the system tray.",
     "translation": "",
     "context": "tray icon toggle description",
     "reference": "",
@@ -3353,14 +3346,14 @@
     "comment": ""
   },
   {
-    "term": "Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.",
+    "term": "Sign in with Google in your browser and you're done — no setup needed. Dux Calendar syncs your calendars, events, and tasks.",
     "translation": "",
     "context": "google one-click sign-in intro text",
     "reference": "",
     "comment": ""
   },
   {
-    "term": "Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.",
+    "term": "Sign in with Microsoft in your browser and you're done — no setup needed. Dux Calendar syncs your Outlook calendars, events, and tasks.",
     "translation": "",
     "context": "microsoft one-click sign-in intro text",
     "reference": "",
@@ -3507,7 +3500,7 @@
     "comment": ""
   },
   {
-    "term": "Support Dank Linux",
+    "term": "Support Dux Labs",
     "translation": "",
     "context": "about page hero button, opens the Ko-fi donation page",
     "reference": "",
@@ -3535,7 +3528,7 @@
     "comment": ""
   },
   {
-    "term": "Synced as \"%1\". The name only changes in Dank Calendar.",
+    "term": "Synced as \"%1\". The name only changes in Dux Calendar.",
     "translation": "",
     "context": "rename calendar dialog note showing provider name",
     "reference": "",
@@ -3829,7 +3822,7 @@
     "comment": ""
   },
   {
-    "term": "Using DankMaterialShell dynamic colors.",
+    "term": "Using Dux Shell dynamic colors.",
     "translation": "",
     "context": "auto color source status when DMS is active",
     "reference": "",

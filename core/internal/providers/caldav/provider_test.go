@@ -15,8 +15,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/mocks"
 )
 
 const principalXML = `<?xml version="1.0" encoding="UTF-8"?>

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

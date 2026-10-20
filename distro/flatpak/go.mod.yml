@@ -7,7 +7,7 @@
   strip-components: 2
   type: archive
   url: https://proxy.golang.org/entgo.io/ent/@v/v0.14.6.zip
-- dest: core/vendor/github.com/AvengeMedia/dankgo
+- dest: core/vendor/github.com/duxlabs-dev/dux-go
   sha256: fce6883b675c5fd30653379093e142b4b6562a6031656454d3be9fd68e41165c
   strip-components: 3
   type: archive

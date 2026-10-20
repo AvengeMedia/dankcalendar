@@ -1,7 +1,7 @@
 .pragma library
 
 // Semantic colors are shared across every preset; presets only carry the
-// Material tonal palette, mirroring DankMaterialShell's stock themes.
+// Material tonal palette, mirroring Dux Shell's stock themes.
 const SEMANTIC_DARK = {
     error: "#F2B8B5",
     warning: "#FF9800",

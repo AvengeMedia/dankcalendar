@@ -3,13 +3,13 @@ package ipc
 import (
 	"context"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/colorscheme"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/files"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/colorscheme"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/reminders"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/files"
 )
 
 type SyncTrigger interface {

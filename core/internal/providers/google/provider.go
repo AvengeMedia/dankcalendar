@@ -15,11 +15,11 @@ import (
 	"google.golang.org/api/option"
 	gtasks "google.golang.org/api/tasks/v1"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
-	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
-	"github.com/AvengeMedia/dankgo/log"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/oauthbase"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/tzcache"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 const maxPageSize = 2500

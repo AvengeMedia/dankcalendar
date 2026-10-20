@@ -1,7 +1,7 @@
 //@ pragma Env QSG_RENDER_LOOP=threaded
 //@ pragma Env QT_QUICK_CONTROLS_STYLE=Material
 //@ pragma UseQApplication
-//@ pragma AppId com.danklinux.dankcalendar
+//@ pragma AppId dev.duxlabs.calendar
 
 import QtQuick
 import Quickshell
@@ -35,7 +35,7 @@ ShellRoot {
             return null;
 
         for (const t of toplevels.values) {
-            if (t.appId === "com.danklinux.dankcalendar")
+            if (t.appId === "dev.duxlabs.calendar")
                 return t;
         }
         return null;

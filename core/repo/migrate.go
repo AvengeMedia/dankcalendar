@@ -9,7 +9,7 @@ import (
 
 	"github.com/pressly/goose/v3"
 
-	entmigrate "github.com/AvengeMedia/dankcalendar/core/ent/migrate"
+	entmigrate "github.com/duxlabs-dev/dux-calendar/core/ent/migrate"
 )
 
 const migrationsDir = "migrations"

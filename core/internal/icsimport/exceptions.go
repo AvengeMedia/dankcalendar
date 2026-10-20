@@ -3,7 +3,7 @@ package icsimport
 import (
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 // Providers have different exception-write APIs. A private import preserves

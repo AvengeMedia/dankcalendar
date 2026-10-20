@@ -7,7 +7,7 @@ import (
 
 	ical "github.com/emersion/go-ical"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 // CalendarFromTask wraps a single task in its own VCALENDAR, as written to a

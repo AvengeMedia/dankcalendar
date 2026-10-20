@@ -7,16 +7,16 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
-	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/caldav"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/evolution"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/google"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/ical"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/local"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/microsoft"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/sync"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 var syncCmd = &cobra.Command{

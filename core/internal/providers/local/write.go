@@ -12,8 +12,8 @@ import (
 	ical "github.com/emersion/go-ical"
 	"github.com/google/uuid"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/icalconv"
 )
 
 // emptyCalendar is written when a file calendar loses its last event: the file

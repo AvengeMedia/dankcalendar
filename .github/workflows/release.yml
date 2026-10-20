@@ -72,9 +72,9 @@ jobs:
           cd ..
           gzip -c "${BINARY_NAME}" > "${BINARY_NAME}.gz"
           tar -czf "${BINARY_NAME}.tar.gz" "${BINARY_NAME}" \
-            assets/com.danklinux.dankcalendar.desktop \
-            assets/com.danklinux.dankcalendar.svg \
-            assets/com.danklinux.dankcalendar.metainfo.xml \
+            assets/dev.duxlabs.calendar.desktop \
+            assets/dev.duxlabs.calendar.svg \
+            assets/dev.duxlabs.calendar.metainfo.xml \
             scripts/install-assets.sh scripts/install-release.sh
           sha256sum "${BINARY_NAME}.gz" > "${BINARY_NAME}.gz.sha256"
           sha256sum "${BINARY_NAME}.tar.gz" > "${BINARY_NAME}.tar.gz.sha256"
@@ -201,4 +201,4 @@ jobs:
           VERSION_NUM=${VERSION#v}
           gh release upload "$VERSION" "dankcalendar-${VERSION_NUM}.tar.gz" --clobber
 
-          gh release upload "$VERSION" "assets/com.danklinux.dankcalendar.svg" --clobber
+          gh release upload "$VERSION" "assets/dev.duxlabs.calendar.svg" --clobber

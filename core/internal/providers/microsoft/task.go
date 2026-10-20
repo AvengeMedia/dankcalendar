@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 // todoListPrefix namespaces To Do list remote ids so they cannot collide with

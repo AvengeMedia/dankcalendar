@@ -11,12 +11,12 @@ import (
 
 	"github.com/godbus/dbus/v5"
 
-	"github.com/AvengeMedia/dankgo/log"
-	"github.com/AvengeMedia/dankgo/portal"
+	"github.com/duxlabs-dev/dux-go/log"
+	"github.com/duxlabs-dev/dux-go/portal"
 )
 
 const (
-	credentialDescription = "Dank Calendar credential"
+	credentialDescription = "Dux Calendar credential"
 
 	secretServiceBus    = "org.freedesktop.secrets"
 	secretServicePath   = "/org/freedesktop/secrets"

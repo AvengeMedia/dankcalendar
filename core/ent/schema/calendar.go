@@ -9,7 +9,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
 )
 
 type Calendar struct {

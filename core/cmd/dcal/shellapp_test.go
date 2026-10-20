@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
 )
 
 func TestUIEnv(t *testing.T) {

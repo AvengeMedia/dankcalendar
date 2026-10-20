@@ -14,8 +14,8 @@ import re
 import subprocess
 import sys
 
-METAINFO = pathlib.Path("assets/com.danklinux.dankcalendar.metainfo.xml")
-MANIFEST = pathlib.Path("distro/flatpak/com.danklinux.dankcalendar.yml")
+METAINFO = pathlib.Path("assets/dev.duxlabs.calendar.metainfo.xml")
+MANIFEST = pathlib.Path("distro/flatpak/dev.duxlabs.calendar.yml")
 SKIP_SUBJECT = re.compile(r"^(nix|flake|i18n|flatpak|ci|chore|build)[(:]", re.I)
 RELEASE_LINE = re.compile(r'^ *<release version="([^"]+)"', re.M)
 
@@ -75,7 +75,7 @@ def cmd_pin(args):
     text = re.sub(r"main\.Commit=\w+", f"main.Commit={args.commit[:8]}", text)
 
     source = re.compile(
-        r"(url: https://github\.com/AvengeMedia/dankcalendar\.git\n)(\s*)(?:tag: \S+\n\s*)?commit: \S+"
+        r"(url: https://github\.com/duxlabs-dev/dux-calendar\.git\n)(\s*)(?:tag: \S+\n\s*)?commit: \S+"
     )
     m = source.search(text)
     if m is None:

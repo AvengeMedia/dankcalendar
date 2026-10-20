@@ -11,10 +11,10 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
-	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/predicate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/secret"
 )
 
 // AccountUpdate is the builder for updating Account entities.

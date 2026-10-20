@@ -8,7 +8,7 @@ import (
 	"io/fs"
 	"path"
 
-	"github.com/AvengeMedia/dankgo/shellapp/shellfs"
+	"github.com/duxlabs-dev/dux-go/shellapp/shellfs"
 )
 
 const (

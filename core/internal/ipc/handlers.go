@@ -5,9 +5,9 @@ import (
 	"slices"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 func HandleCalendars(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

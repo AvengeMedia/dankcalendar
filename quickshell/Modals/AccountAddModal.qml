@@ -669,7 +669,7 @@ FloatingWindow {
             width: parent.width
 
             StyledText {
-                text: accountModal.isMicrosoft ? I18n.tr("Sign in with Microsoft in your browser and you're done — no setup needed. Dank Calendar syncs your Outlook calendars, events, and tasks.", "microsoft one-click sign-in intro text") : I18n.tr("Sign in with Google in your browser and you're done — no setup needed. Dank Calendar syncs your calendars, events, and tasks.", "google one-click sign-in intro text")
+                text: accountModal.isMicrosoft ? I18n.tr("Sign in with Microsoft in your browser and you're done — no setup needed. Dux Calendar syncs your Outlook calendars, events, and tasks.", "microsoft one-click sign-in intro text") : I18n.tr("Sign in with Google in your browser and you're done — no setup needed. Dux Calendar syncs your calendars, events, and tasks.", "google one-click sign-in intro text")
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.surfaceText
                 width: parent.width

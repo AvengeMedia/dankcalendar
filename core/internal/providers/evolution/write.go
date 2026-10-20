@@ -10,9 +10,9 @@ import (
 	ical "github.com/emersion/go-ical"
 	"github.com/google/uuid"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution/eds"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/evolution/eds"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/icalconv"
 )
 
 var errReadOnly = errors.New("calendar is read-only in evolution data server")

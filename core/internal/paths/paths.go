@@ -3,7 +3,7 @@ package paths
 import (
 	"path/filepath"
 
-	dankpaths "github.com/AvengeMedia/dankgo/paths"
+	dankpaths "github.com/duxlabs-dev/dux-go/paths"
 )
 
 var app = dankpaths.New("dankcal")

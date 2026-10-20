@@ -6,9 +6,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 func TestListEventsExpandsRecurring(t *testing.T) {

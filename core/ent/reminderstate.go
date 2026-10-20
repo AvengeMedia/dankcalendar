@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/reminderstate"
 )
 
 // ReminderState is the model entity for the ReminderState schema.

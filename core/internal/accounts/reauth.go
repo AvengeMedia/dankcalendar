@@ -6,11 +6,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/keyring"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/google"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/microsoft"
 )
 
 // GoogleAppCreds loads the OAuth client an account was added with, so a re-auth

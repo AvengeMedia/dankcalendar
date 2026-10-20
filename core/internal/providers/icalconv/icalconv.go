@@ -9,7 +9,7 @@ import (
 
 	ical "github.com/emersion/go-ical"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 const prodID = "-//dankcalendar//dankcalendar//EN"

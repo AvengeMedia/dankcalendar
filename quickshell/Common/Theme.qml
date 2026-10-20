@@ -45,7 +45,8 @@ Singleton {
         return Paths.strip(Paths.home) + "/.cache";
     }
 
-    readonly property string dmsColorsPath: xdgCacheDir + "/DankMaterialShell/dms-colors.json"
+    property bool useLegacyDmsCache: false
+    readonly property string dmsColorsPath: xdgCacheDir + (useLegacyDmsCache ? "/DankMaterialShell" : "/dms") + "/dms-colors.json"
     readonly property string matugenThemePath: SettingsData.configDir + "/matugen-theme.json"
 
     property var matugenColors: ({})
@@ -690,6 +691,10 @@ Singleton {
         onFileChanged: dmsColorsView.reload()
 
         onLoadFailed: function (error) {
+            if (!root.useLegacyDmsCache) {
+                root.useLegacyDmsCache = true;
+                return;
+            }
             root.colorsLoaded = false;
         }
     }

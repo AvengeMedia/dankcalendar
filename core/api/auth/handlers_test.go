@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	auth_handler "github.com/AvengeMedia/dankcalendar/core/api/auth"
+	auth_handler "github.com/duxlabs-dev/dux-calendar/core/api/auth"
 )
 
 func TestCallbackHandler(t *testing.T) {

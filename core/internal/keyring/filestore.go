@@ -10,7 +10,7 @@ import (
 	jose "github.com/dvsekhvalnov/jose2go"
 	"github.com/mtibben/percent"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
 )
 
 // fileStore keeps the on-disk format of the 99designs/keyring file backend —

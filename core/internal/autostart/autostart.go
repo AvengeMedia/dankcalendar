@@ -10,11 +10,12 @@ import (
 	"github.com/adrg/xdg"
 	"github.com/godbus/dbus/v5"
 
-	"github.com/AvengeMedia/dankgo/portal"
+	"github.com/duxlabs-dev/dux-go/portal"
 )
 
 const (
-	entryName = "com.danklinux.dankcalendar.desktop"
+	entryName       = "dev.duxlabs.calendar.desktop"
+	legacyEntryName = "com.danklinux.dankcalendar.desktop"
 
 	portalBusName    = "org.freedesktop.portal.Desktop"
 	portalObjectPath = "/org/freedesktop/portal/desktop"
@@ -28,6 +29,15 @@ func EntryPath() string {
 	return filepath.Join(xdg.ConfigHome, "autostart", entryName)
 }
 
+func legacyEntryPath() string {
+	return filepath.Join(xdg.ConfigHome, "autostart", legacyEntryName)
+}
+
+func isFile(path string) bool {
+	info, err := os.Stat(path)
+	return err == nil && !info.IsDir()
+}
+
 // The Background portal has no state query, so a sandbox-local marker records
 // whether autostart was granted.
 func flatpakMarkerPath() string {
@@ -37,10 +47,10 @@ func flatpakMarkerPath() string {
 func desktopEntry(exec string) string {
 	return fmt.Sprintf(`[Desktop Entry]
 Type=Application
-Name=Dank Calendar
-Comment=Dank Calendar background service
+Name=Dux Calendar
+Comment=Dux Calendar background service
 Exec=%s
-Icon=com.danklinux.dankcalendar
+Icon=dev.duxlabs.calendar
 Terminal=false
 X-GNOME-Autostart-enabled=true
 `, exec)
@@ -51,8 +61,7 @@ func Enabled() bool {
 		info, err := os.Stat(flatpakMarkerPath())
 		return err == nil && !info.IsDir()
 	}
-	info, err := os.Stat(EntryPath())
-	return err == nil && !info.IsDir()
+	return isFile(EntryPath()) || isFile(legacyEntryPath())
 }
 
 func Enable() error {
@@ -81,12 +90,21 @@ func enableHost() error {
 	}
 
 	exec := exe + " " + strings.Join(daemonArgs, " ")
-	return os.WriteFile(path, []byte(desktopEntry(exec)), 0o644)
+	if err := os.WriteFile(path, []byte(desktopEntry(exec)), 0o644); err != nil {
+		return err
+	}
+	return removeIfExists(legacyEntryPath())
 }
 
 func disableHost() error {
-	err := os.Remove(EntryPath())
-	if err != nil && !os.IsNotExist(err) {
+	if err := removeIfExists(EntryPath()); err != nil {
+		return err
+	}
+	return removeIfExists(legacyEntryPath())
+}
+
+func removeIfExists(path string) error {
+	if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
 		return err
 	}
 	return nil
@@ -137,7 +155,7 @@ func requestBackground(autostart bool) error {
 
 	options := map[string]dbus.Variant{
 		"handle_token": dbus.MakeVariant(token),
-		"reason":       dbus.MakeVariant("Start Dank Calendar in the background at login."),
+		"reason":       dbus.MakeVariant("Start Dux Calendar in the background at login."),
 		"autostart":    dbus.MakeVariant(autostart),
 		"commandline":  dbus.MakeVariant(append([]string{"dcal"}, daemonArgs...)),
 	}

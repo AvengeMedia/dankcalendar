@@ -5,15 +5,15 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	dankkeyring "github.com/duxlabs-dev/dux-calendar/core/internal/keyring"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/caldav"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/google"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/ical"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/microsoft"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 // migrateLegacyLoginKeyring is a one-time fix for installs that stored

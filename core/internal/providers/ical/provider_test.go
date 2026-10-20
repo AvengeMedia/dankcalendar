@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 const sampleFeed = `BEGIN:VCALENDAR

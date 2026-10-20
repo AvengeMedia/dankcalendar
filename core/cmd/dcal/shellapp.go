@@ -5,15 +5,15 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/internal/shellembed"
-	"github.com/AvengeMedia/dankgo/shellapp"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/shellembed"
+	"github.com/duxlabs-dev/dux-go/shellapp"
 )
 
 var shellApp = shellapp.New(shellapp.Config{
 	ID:       "dankcal",
-	QSAppID:  "com.danklinux.dankcalendar",
+	QSAppID:  "dev.duxlabs.calendar",
 	Version:  Version,
 	Embedded: embeddedShell{},
 	Boot:     bootBackend,

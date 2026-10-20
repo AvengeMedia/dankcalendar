@@ -17,10 +17,10 @@ import (
 	"github.com/emersion/go-webdav/caldav"
 	"github.com/google/uuid"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/httpauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
-	"github.com/AvengeMedia/dankgo/log"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/httpauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/icalconv"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 type Provider struct {

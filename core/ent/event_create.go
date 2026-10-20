@@ -12,8 +12,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
 )
 
 // EventCreate is the builder for creating a Event entity.

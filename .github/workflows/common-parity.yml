@@ -38,7 +38,7 @@ jobs:
           submodule_rev=$(git ls-tree HEAD dank-qml-common --object-only)
           flake_rev=$(python3 -c "import json; print(json.load(open('flake.lock'))['nodes']['dank-qml-common']['locked']['rev'])")
           [ "$submodule_rev" = "$flake_rev" ] && { echo "flake.lock already matches $submodule_rev"; exit 0; }
-          nix flake lock --override-input dank-qml-common "github:AvengeMedia/dank-qml-common/$submodule_rev"
+          nix flake lock --override-input dank-qml-common "github:duxlabs-dev/dux-qml-common/$submodule_rev"
 
       - name: Commit and push flake.lock update
         env:

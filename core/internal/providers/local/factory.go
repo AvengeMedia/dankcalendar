@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 type Factory struct{}

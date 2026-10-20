@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/AvengeMedia/dankgo/log"
 	"github.com/caarlos0/env/v11"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 type Config struct {

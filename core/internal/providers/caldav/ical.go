@@ -4,8 +4,8 @@ import (
 	ical "github.com/emersion/go-ical"
 	"github.com/emersion/go-webdav/caldav"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/icalconv"
 )
 
 func eventsFromObject(c cal.Calendar, obj caldav.CalendarObject) []cal.Event {

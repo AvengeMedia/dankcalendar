@@ -15,16 +15,16 @@ import (
 	googleoauth2 "google.golang.org/api/oauth2/v2"
 	"google.golang.org/api/option"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	caldavprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
-	icalprovider "github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	caldavprovider "github.com/duxlabs-dev/dux-calendar/core/internal/providers/caldav"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/evolution"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/google"
+	icalprovider "github.com/duxlabs-dev/dux-calendar/core/internal/providers/ical"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/local"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/microsoft"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 type Result struct {

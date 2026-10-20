@@ -11,7 +11,7 @@ import time
 from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
-DESKTOP_ID = "com.danklinux.dankcalendar.desktop"
+DESKTOP_ID = "dev.duxlabs.calendar.desktop"
 
 
 def run(*args, env):
@@ -34,8 +34,8 @@ def check_registration(prefix, env):
     for mime in ("text/calendar", "text/x-vcalendar", "application/ics",
                  "x-scheme-handler/webcal", "x-scheme-handler/webcals"):
         assert DESKTOP_ID in cache["MIME Cache"][mime].split(";"), mime
-    assert (prefix / "share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg").is_file()
-    assert (prefix / "share/metainfo/com.danklinux.dankcalendar.metainfo.xml").is_file()
+    assert (prefix / "share/icons/hicolor/scalable/apps/dev.duxlabs.calendar.svg").is_file()
+    assert (prefix / "share/metainfo/dev.duxlabs.calendar.metainfo.xml").is_file()
     return desktop
 
 
@@ -68,7 +68,7 @@ def main():
         (build / "files/bin/dcal").write_text("#!/bin/sh\nexit 0\n")
         (build / "files/bin/dcal").chmod(0o755)
         (build / "metadata").write_text(
-            "[Application]\nname=com.danklinux.dankcalendar\n"
+            "[Application]\nname=dev.duxlabs.calendar\n"
             "runtime=org.kde.Platform/x86_64/6.11\nsdk=org.kde.Sdk/x86_64/6.11\ncommand=dcal\n")
         run("sh", "scripts/install-assets.sh", env=dict(
             env, PREFIX="", DATA_DIR="/share", DESTDIR=str(build / "files"), DCAL_EXEC="dcal"))
@@ -77,7 +77,7 @@ def main():
         run("flatpak", "build-export", "--disable-sandbox", str(repository), str(build), env=env)
         flatpak_env = dict(env, XDG_DATA_HOME=str(root / "flatpak-data"))
         run("flatpak", "install", "--user", "--no-deps", "--noninteractive", "--assumeyes",
-            str(repository), "com.danklinux.dankcalendar", env=flatpak_env)
+            str(repository), "dev.duxlabs.calendar", env=flatpak_env)
         exported = root / "flatpak-data/flatpak/exports/share/applications" / DESKTOP_ID
         settings = configparser.ConfigParser(interpolation=None)
         settings.read(exported)

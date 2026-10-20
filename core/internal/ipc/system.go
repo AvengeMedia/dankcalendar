@@ -3,7 +3,7 @@ package ipc
 import (
 	"context"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/autostart"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/autostart"
 )
 
 func HandleSystem(_ context.Context, w *ConnWriter, req Request, deps Deps) {

@@ -1,6 +1,6 @@
 # Translations
 
-Dank Calendar uses the same translation pipeline as DankMaterialShell: strings
+Dux Calendar uses the same translation pipeline as Dux Shell: strings
 are wrapped in `I18n.tr(term, context)` in QML, extracted to a
 POEditor-compatible `en.json`, and translated exports are dropped into
 `poexports/` as `<locale>.json` key-value files.
@@ -34,7 +34,7 @@ template for translators). Run it after adding or changing strings.
 
 ## POEditor sync
 
-This repo has its own POEditor project, separate from DankMaterialShell. Set
+This repo has its own POEditor project, separate from Dux Shell. Set
 your own credentials (distinct env var names so the two projects don't clash):
 
 ```sh

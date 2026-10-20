@@ -10,14 +10,14 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
-	enginesync "github.com/AvengeMedia/dankcalendar/core/internal/sync"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/mocks"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
+	enginesync "github.com/duxlabs-dev/dux-calendar/core/internal/sync"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 // fakeSender records notifications instead of touching D-Bus.

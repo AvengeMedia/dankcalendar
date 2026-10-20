@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 var (

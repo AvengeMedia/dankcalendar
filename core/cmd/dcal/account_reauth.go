@@ -6,11 +6,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/AvengeMedia/dankcalendar/core/config"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/config"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/accounts"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 var accountReauthCmd = &cobra.Command{

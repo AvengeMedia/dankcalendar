@@ -8,15 +8,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	entaccount "github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
-	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
-	"github.com/AvengeMedia/dankcalendar/core/internal/taskconv"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	entaccount "github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/eventconv"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/keyring"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/taskconv"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 type Notifier func(topic string, data any)
@@ -415,7 +415,7 @@ func (e *Engine) recordAuthState(ctx context.Context, acc *ent.Account, syncErr 
 
 	if needsReauth && e.sender != nil {
 		if _, err := e.sender.Send(notify.Notification{
-			Summary: "Dank Calendar",
+			Summary: "Dux Calendar",
 			Body:    fmt.Sprintf("%s needs to sign in again to keep syncing.", acc.DisplayName),
 			Urgency: notify.UrgencyNormal,
 		}); err != nil {

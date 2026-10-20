@@ -14,7 +14,7 @@ in
   options.programs.dank-calendar.settings = lib.mkOption {
     type = jsonFormat.type;
     default = { };
-    description = "Dank Calendar UI settings written to ~/.config/dankcal/ui-settings.json.";
+    description = "Dux Calendar UI settings written to ~/.config/dankcal/ui-settings.json.";
     example = lib.literalExpression ''
       {
         remindersEnabled = true;
@@ -35,7 +35,7 @@ in
 
     systemd.user.services.dcal = lib.mkIf cfg.systemd.enable {
       Unit = {
-        Description = "DankCalendar";
+        Description = "Dux Calendar";
         PartOf = [ cfg.systemd.target ];
         After = [ cfg.systemd.target ];
         # With RestartSec=2 the default limit (5 starts per 10s) is never reached, so a persistent failure would restart forever.

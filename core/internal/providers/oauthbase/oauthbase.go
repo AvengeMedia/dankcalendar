@@ -10,8 +10,8 @@ import (
 
 	"golang.org/x/oauth2"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
 )
 
 // LoadTokenSource reads the account's stored app credentials and OAuth token and

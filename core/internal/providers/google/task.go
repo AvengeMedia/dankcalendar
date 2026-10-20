@@ -11,7 +11,7 @@ import (
 	"google.golang.org/api/googleapi"
 	gtasks "google.golang.org/api/tasks/v1"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 // taskListPrefix namespaces task-list remote ids so they cannot collide with

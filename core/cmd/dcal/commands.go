@@ -8,8 +8,8 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:     "dcal",
-	Short:   "Dank Calendar CLI",
-	Long:    "Dank Calendar — local, Google, Microsoft, CalDAV, and iCloud calendars in one standalone app.",
+	Short:   "Dux Calendar CLI",
+	Long:    "Dux Calendar — local, Google, Microsoft, CalDAV, and iCloud calendars in one standalone app.",
 	Args:    cobra.NoArgs,
 	PreRunE: shellApp.ResolveConfig,
 	RunE: func(_ *cobra.Command, _ []string) error {

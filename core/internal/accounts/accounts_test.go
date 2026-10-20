@@ -14,13 +14,13 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
-	"github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/accounts"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/keyring"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/mocks"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/google"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 func TestFlavor(t *testing.T) {

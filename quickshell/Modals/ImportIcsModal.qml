@@ -294,7 +294,7 @@ FloatingWindow {
 
                     StyledText {
                         width: parent.width
-                        text: I18n.tr("Conflicts use events currently synced to DankCalendar. You can still import an overlapping event.", "import preview explains the data and non-blocking conflicts")
+                        text: I18n.tr("Conflicts use events currently synced to Dux Calendar. You can still import an overlapping event.", "import preview explains the data and non-blocking conflicts")
                         wrapMode: Text.WordWrap
                         color: Theme.surfaceVariantText
                         font.pixelSize: Theme.fontSizeSmall

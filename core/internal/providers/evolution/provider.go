@@ -14,10 +14,10 @@ import (
 
 	ical "github.com/emersion/go-ical"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution/eds"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/evolution/eds"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/icalconv"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 type Provider struct {

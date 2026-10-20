@@ -3,11 +3,11 @@ package repo
 import (
 	"context"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
-	"github.com/AvengeMedia/dankcalendar/core/ent/task"
-	"github.com/AvengeMedia/dankgo/errdefs"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/predicate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/task"
+	"github.com/duxlabs-dev/dux-go/errdefs"
 )
 
 type TaskFilter struct {

@@ -12,14 +12,14 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/AvengeMedia/dankcalendar/core/config"
-	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
-	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/config"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/accounts"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/ipc"
+	dankkeyring "github.com/duxlabs-dev/dux-calendar/core/internal/keyring"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 var accountCmd = &cobra.Command{
@@ -194,7 +194,7 @@ var accountSetupCmd = &cobra.Command{
 			_, builtin = oauth.BuiltinMicrosoftCredentials()
 		}
 		if builtin {
-			fmt.Printf("Dank Calendar ships with a built-in %s client — `dcal account add %s` just works.\n", accounts.ProviderName(args[0]), args[0])
+			fmt.Printf("Dux Calendar ships with a built-in %s client — `dcal account add %s` just works.\n", accounts.ProviderName(args[0]), args[0])
 			fmt.Println("Follow these steps only if you want to use your own OAuth client.")
 			fmt.Println()
 		}

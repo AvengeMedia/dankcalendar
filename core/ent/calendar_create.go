@@ -12,11 +12,11 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/ent/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/ent/task"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/task"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
 )
 
 // CalendarCreate is the builder for creating a Calendar entity.

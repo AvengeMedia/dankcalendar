@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/invitationstate"
 )
 
 // ListInvitationStates returns the notify-once records for invitations whose

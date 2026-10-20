@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/icsimport"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/icsimport"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 func parseIcsParam(params map[string]any) (*icsimport.Document, error) {

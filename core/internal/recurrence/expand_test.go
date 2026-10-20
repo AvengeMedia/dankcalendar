@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/recurrence"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/recurrence"
 )
 
 func TestExpandDailyRule(t *testing.T) {

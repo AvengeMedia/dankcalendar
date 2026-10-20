@@ -7,7 +7,7 @@ import "encoding/base64"
 // values are not searchable plaintext in the repository; installed-app
 // credentials cannot be kept confidential.
 //
-// These credentials identify the upstream DankCalendar application.
+// These credentials identify the upstream Dux Calendar application.
 // Distribution packages built from this repository may ship them unchanged;
 // forks, rebranded builds, and unrelated applications are not authorized to
 // use them (see "OAuth client credentials" in the README) and must register

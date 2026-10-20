@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 func TestAttendeeToMap(t *testing.T) {

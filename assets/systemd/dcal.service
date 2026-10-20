@@ -1,6 +1,6 @@
 [Unit]
-Description=Dank Calendar
-Documentation=https://github.com/AvengeMedia/dankcalendar
+Description=Dux Calendar
+Documentation=https://github.com/duxlabs-dev/dux-calendar
 After=graphical-session.target
 PartOf=graphical-session.target
 # With RestartSec=2 the default limit (5 starts per 10s) is never reached, so a persistent failure would restart forever.

@@ -3,7 +3,7 @@ package accounts
 import (
 	"testing"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
 )
 
 func TestResolveMicrosoftClientExplicitWins(t *testing.T) {

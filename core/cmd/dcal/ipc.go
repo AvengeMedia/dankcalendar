@@ -9,7 +9,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/ipc"
 )
 
 var ipcCmd = &cobra.Command{

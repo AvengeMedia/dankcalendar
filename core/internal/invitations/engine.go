@@ -16,14 +16,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	entevent "github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
-	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	entevent "github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/rsvp"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 const (

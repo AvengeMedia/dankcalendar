@@ -16,8 +16,8 @@ import (
 
 	ical "github.com/emersion/go-ical"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/httpauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/icalconv"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/httpauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/icalconv"
 )
 
 const (

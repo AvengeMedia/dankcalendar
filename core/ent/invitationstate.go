@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/AvengeMedia/dankcalendar/core/ent/invitationstate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/invitationstate"
 )
 
 // InvitationState is the model entity for the InvitationState schema.

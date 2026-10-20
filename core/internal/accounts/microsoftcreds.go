@@ -3,8 +3,8 @@ package accounts
 import (
 	"errors"
 
-	"github.com/AvengeMedia/dankcalendar/core/config"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/config"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
 )
 
 // ResolveMicrosoftClient rejects client secrets — desktop apps are public

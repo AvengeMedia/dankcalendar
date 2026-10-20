@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
 )
 
 func TestBrokerDeliversToRegisteredState(t *testing.T) {

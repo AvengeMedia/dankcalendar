@@ -13,9 +13,9 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/oauth2"
 
-	"github.com/AvengeMedia/dankcalendar/core/config"
-	"github.com/AvengeMedia/dankcalendar/core/internal/accounts"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/config"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/accounts"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
 )
 
 var accountAddCmd = &cobra.Command{
@@ -353,7 +353,7 @@ func readGoogleCredentialsFile(path string) (oauth.GoogleAppCredentials, error) 
 func waitForBrowserAuth(ctx context.Context, authURL, redirectURL string, wait func(context.Context, time.Duration) (*oauth2.Token, error)) (*oauth2.Token, error) {
 	openBrowser(authURL)
 	infof("")
-	infof("Open the following URL in your browser to authorize Dank Calendar:")
+	infof("Open the following URL in your browser to authorize Dux Calendar:")
 	infof("")
 	infof("    %s", authURL)
 	infof("")

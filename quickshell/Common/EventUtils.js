@@ -1,6 +1,6 @@
 .pragma library
 
-var clipboardProductId = "-//Dank Calendar//Event Clipboard 1.0//EN"
+var clipboardProductId = "-//Dux Calendar//Event Clipboard 1.0//EN"
 var clipboardDataPrefix = "X-DANKCALENDAR-EVENT:"
 
 function eventKey(event) {

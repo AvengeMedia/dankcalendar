@@ -22,7 +22,7 @@ import (
 	"entgo.io/ent/dialect/sql/schema"
 	"modernc.org/sqlite"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent/migrate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/migrate"
 
 	_ "ariga.io/atlas/sql/sqlite"
 )

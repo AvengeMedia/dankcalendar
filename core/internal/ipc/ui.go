@@ -7,8 +7,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/icsimport"
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/icsimport"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
 )
 
 var uiViews = []string{"month", "week", "day", "agenda"}

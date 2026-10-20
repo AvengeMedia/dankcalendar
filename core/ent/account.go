@@ -10,7 +10,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
 )
 
 // Account is the model entity for the Account schema.

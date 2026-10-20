@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/AvengeMedia/dankcalendar/core/utils"
+	"github.com/duxlabs-dev/dux-calendar/core/utils"
 )
 
 func TestGetIPAddress(t *testing.T) {

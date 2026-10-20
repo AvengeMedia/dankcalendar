@@ -24,14 +24,14 @@ Item {
     // time, so rename before the icon first becomes visible.
     Component.onCompleted: {
         Qt.application.name = "dank-calendar";
-        Qt.application.displayName = "Dank Calendar";
+        Qt.application.displayName = "Dux Calendar";
         tray.visible = true;
     }
 
     Platform.SystemTrayIcon {
         id: tray
         visible: false
-        tooltip: "Dank Calendar"
+        tooltip: "Dux Calendar"
         icon.source: Qt.resolvedUrl("../assets/dankcalendar-tray.svg")
 
         onActivated: reason => {

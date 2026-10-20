@@ -10,13 +10,13 @@ import (
 
 	"github.com/godbus/dbus/v5"
 
-	"github.com/AvengeMedia/dankgo/portal"
+	"github.com/duxlabs-dev/dux-go/portal"
 )
 
 const (
-	appName = "Dank Calendar"
+	appName = "Dux Calendar"
 	// desktopEntry must match the installed .desktop file and icon basename.
-	desktopEntry = "com.danklinux.dankcalendar"
+	desktopEntry = "dev.duxlabs.calendar"
 
 	portalBusName    = "org.freedesktop.portal.Desktop"
 	portalObjectPath = "/org/freedesktop/portal/desktop"

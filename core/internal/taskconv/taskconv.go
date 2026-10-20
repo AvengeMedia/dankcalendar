@@ -4,10 +4,10 @@
 package taskconv
 
 import (
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	enttask "github.com/AvengeMedia/dankcalendar/core/ent/task"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	enttask "github.com/duxlabs-dev/dux-calendar/core/ent/task"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 // FromEnt hydrates the full domain task from a stored row.

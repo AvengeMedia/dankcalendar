@@ -70,7 +70,7 @@ AGENTS-temp.md
 niri-colors.generated.kdl
 ghostty-colors.generated.conf
 
-# Notepad files (should be in ~/.local/state/DankMaterialShell/)
+# Notepad files (should be in ~/.local/state/dms/)
 untitled-*.txt
 file:*
 notepad-files/

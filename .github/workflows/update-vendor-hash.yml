@@ -1,4 +1,4 @@
-# SOURCE: https://github.com/AvengeMedia/DankMaterialShell/blob/ddf943846fb437cb255d6de66e6acfe3a07dad2f/.github/workflows/update-vendor-hash.yml
+# SOURCE: https://github.com/duxlabs-dev/dux-shell/blob/ddf943846fb437cb255d6de66e6acfe3a07dad2f/.github/workflows/update-vendor-hash.yml
 
 name: Update Vendor Hash
 

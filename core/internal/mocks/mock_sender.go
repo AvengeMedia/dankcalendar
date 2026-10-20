@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
 	mock "github.com/stretchr/testify/mock"
 )
 

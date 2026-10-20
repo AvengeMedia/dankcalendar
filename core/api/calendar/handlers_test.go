@@ -12,13 +12,13 @@ import (
 	"github.com/danielgtaylor/huma/v2/humatest"
 	"github.com/stretchr/testify/suite"
 
-	calendar_handler "github.com/AvengeMedia/dankcalendar/core/api/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/api/server"
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/models"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/errdefs/humaerr"
+	calendar_handler "github.com/duxlabs-dev/dux-calendar/core/api/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/api/server"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/models"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/errdefs/humaerr"
 )
 
 type HandlersSuite struct {

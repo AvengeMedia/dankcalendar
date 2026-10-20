@@ -7,7 +7,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 	mock "github.com/stretchr/testify/mock"
 )
 

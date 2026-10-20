@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/AvengeMedia/dankcalendar/core/config"
+	"github.com/duxlabs-dev/dux-calendar/core/config"
 )
 
 var configEnvVars = []string{

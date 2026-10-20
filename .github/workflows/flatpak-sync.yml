@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       TAG: ${{ inputs.tag || github.event.workflow_run.head_branch }}
-      METAINFO: assets/com.danklinux.dankcalendar.metainfo.xml
+      METAINFO: assets/dev.duxlabs.calendar.metainfo.xml
     steps:
       - name: Create GitHub App token
         id: app_token
@@ -98,7 +98,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 scripts/flatpak-sync.py pin "$TAG" "${{ steps.source.outputs.pin }}"
-          git add distro/flatpak/com.danklinux.dankcalendar.yml
+          git add distro/flatpak/dev.duxlabs.calendar.yml
           if git diff --cached --quiet; then
             echo "manifest already pinned"
             exit 0
@@ -132,7 +132,7 @@ jobs:
       - name: Open Flathub PR
         env:
           GH_TOKEN: ${{ secrets.FLATHUB_TOKEN }}
-          APP_ID: com.danklinux.dankcalendar
+          APP_ID: dev.duxlabs.calendar
         run: |
           set -euo pipefail
           version="${TAG#v}"

@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
 )
 
 func setXDGHome(t *testing.T, root string) {

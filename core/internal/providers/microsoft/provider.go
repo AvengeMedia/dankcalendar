@@ -15,10 +15,10 @@ import (
 
 	"golang.org/x/oauth2"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/oauthbase"
-	"github.com/AvengeMedia/dankgo/log"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/oauthbase"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 const (

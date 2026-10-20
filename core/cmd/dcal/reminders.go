@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
-	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/ipc"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/reminders"
 )
 
 var remindersLimit int

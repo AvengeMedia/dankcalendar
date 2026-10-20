@@ -9,14 +9,14 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/account"
-	"github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/ent/task"
-	"github.com/AvengeMedia/dankcalendar/core/internal/mocks"
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/account"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/task"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/mocks"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 var t0 = time.Date(2026, 6, 12, 12, 0, 0, 0, time.UTC)

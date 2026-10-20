@@ -3,7 +3,7 @@ package auth_handler
 import (
 	"net/http"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
 )
 
 type CallbackBroker = oauth.CallbackBroker

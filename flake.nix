@@ -1,10 +1,10 @@
 {
-  description = "DankCalendar";
+  description = "Dux Calendar";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     dank-qml-common = {
-      url = "github:AvengeMedia/dank-qml-common";
+      url = "github:duxlabs-dev/dux-qml-common";
       flake = false;
     };
   };
@@ -92,12 +92,12 @@
             ];
 
             postInstall = ''
-              install -Dm644 ${./assets/com.danklinux.dankcalendar.desktop} \
-                $out/share/applications/com.danklinux.dankcalendar.desktop
-              substituteInPlace $out/share/applications/com.danklinux.dankcalendar.desktop \
+              install -Dm644 ${./assets/dev.duxlabs.calendar.desktop} \
+                $out/share/applications/dev.duxlabs.calendar.desktop
+              substituteInPlace $out/share/applications/dev.duxlabs.calendar.desktop \
                 --replace-fail 'Exec=dcal ' 'Exec='$out'/bin/dcal '
-              install -Dm644 ${./assets/com.danklinux.dankcalendar.svg} \
-                $out/share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg
+              install -Dm644 ${./assets/dev.duxlabs.calendar.svg} \
+                $out/share/icons/hicolor/scalable/apps/dev.duxlabs.calendar.svg
 
               install -Dm644 ${./assets/systemd/dcal.service} \
                 $out/lib/systemd/user/dcal.service
@@ -111,8 +111,8 @@
             '';
 
             meta = {
-              description = "Local, Google, Microsoft, and CalDAV calendars for the dank desktop";
-              homepage = "https://github.com/AvengeMedia/dankcalendar";
+              description = "Local, Google, Microsoft, and CalDAV calendars for the Dux desktop";
+              homepage = "https://github.com/duxlabs-dev/dux-calendar";
               license = pkgs.lib.licenses.mit;
               mainProgram = "dcal";
               platforms = pkgs.lib.platforms.linux;

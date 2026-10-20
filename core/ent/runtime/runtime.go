@@ -2,7 +2,7 @@
 
 package runtime
 
-// The schema-stitching logic is generated in github.com/AvengeMedia/dankcalendar/core/ent/runtime.go
+// The schema-stitching logic is generated in github.com/duxlabs-dev/dux-calendar/core/ent/runtime.go
 
 const (
 	Version = "v0.14.6"                                         // Version of ent codegen.

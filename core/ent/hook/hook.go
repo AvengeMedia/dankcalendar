@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
 )
 
 // The AccountFunc type is an adapter to allow the use of ordinary

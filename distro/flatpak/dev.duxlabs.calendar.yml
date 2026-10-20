@@ -1,4 +1,4 @@
-id: com.danklinux.dankcalendar
+id: dev.duxlabs.calendar
 runtime: org.kde.Platform
 runtime-version: '6.11'
 sdk: org.kde.Sdk
@@ -67,7 +67,7 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/app
-      - -DDISTRIBUTOR=DankCalendar Flatpak
+      - -DDISTRIBUTOR=Dux Calendar Flatpak
       - -DUSE_JEMALLOC=OFF
       - -DCRASH_HANDLER=OFF
       - -DBUILD_TESTING=OFF
@@ -107,19 +107,19 @@ modules:
         -o dcal ./cmd/dcal
       - install -Dm755 core/dcal /app/bin/dcal
       - >-
-        install -Dm644 assets/com.danklinux.dankcalendar.desktop
-        /app/share/applications/com.danklinux.dankcalendar.desktop
+        install -Dm644 assets/dev.duxlabs.calendar.desktop
+        /app/share/applications/dev.duxlabs.calendar.desktop
       - >-
-        install -Dm644 assets/com.danklinux.dankcalendar.metainfo.xml
-        /app/share/metainfo/com.danklinux.dankcalendar.metainfo.xml
+        install -Dm644 assets/dev.duxlabs.calendar.metainfo.xml
+        /app/share/metainfo/dev.duxlabs.calendar.metainfo.xml
       - >-
-        install -Dm644 assets/com.danklinux.dankcalendar.svg
-        /app/share/icons/hicolor/scalable/apps/com.danklinux.dankcalendar.svg
+        install -Dm644 assets/dev.duxlabs.calendar.svg
+        /app/share/icons/hicolor/scalable/apps/dev.duxlabs.calendar.svg
       - >-
         install -Dm644 LICENSE
-        /app/share/licenses/com.danklinux.dankcalendar/LICENSE
+        /app/share/licenses/dev.duxlabs.calendar/LICENSE
     sources:
       - type: git
-        url: https://github.com/AvengeMedia/dankcalendar.git
+        url: https://github.com/duxlabs-dev/dux-calendar.git
         commit: effdb208b544874573c327759f9ae74e8233ffaa
       - go.mod.yml

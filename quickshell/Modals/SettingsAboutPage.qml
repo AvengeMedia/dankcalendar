@@ -10,8 +10,8 @@ Item {
     LayoutMirroring.enabled: I18n.isRtl
     LayoutMirroring.childrenInherit: true
 
-    readonly property string githubUrl: "https://github.com/AvengeMedia/dankcalendar"
-    readonly property string docsUrl: "https://danklinux.com/docs"
+    readonly property string githubUrl: "https://github.com/duxlabs-dev/dux-calendar"
+    readonly property string docsUrl: "https://duxlabs.dev/docs"
     readonly property string discordUrl: "https://discord.gg/ppWTpKmPgT"
     readonly property string kofiUrl: "https://ko-fi.com/danklinux"
     readonly property string licenseUrl: githubUrl + "/blob/master/LICENSE"
@@ -28,7 +28,7 @@ Item {
 
             DButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: I18n.tr("Support Dank Linux", "about page hero button, opens the Ko-fi donation page")
+                text: I18n.tr("Support Dux Labs", "about page hero button, opens the Ko-fi donation page")
                 iconName: "favorite"
                 backgroundColor: Theme.primary
                 textColor: Theme.onPrimary
@@ -39,7 +39,7 @@ Item {
         SettingsCard {
             SettingsRow {
                 body: StyledText {
-                    text: I18n.tr('Dank Calendar is a calendar for the modern Linux desktop with a <a href="https://m3.material.io/" style="text-decoration:none; color:%1;">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href="https://quickshell.org" style="text-decoration:none; color:%1;">Quickshell</a>, a QT6 framework for building desktop shells, and <a href="https://go.dev" style="text-decoration:none; color:%1;">Go</a>, a statically typed, compiled programming language.', 'about page project description with embedded links').arg(Theme.primary)
+                    text: I18n.tr('Dux Calendar is a calendar for the modern Linux desktop with a <a href="https://m3.material.io/" style="text-decoration:none; color:%1;">material 3 inspired</a> design, plus a hackable CLI and socket API for integrations.<br /><br/>It is built with <a href="https://quickshell.org" style="text-decoration:none; color:%1;">Quickshell</a>, a QT6 framework for building desktop shells, and <a href="https://go.dev" style="text-decoration:none; color:%1;">Go</a>, a statically typed, compiled programming language.', 'about page project description with embedded links').arg(Theme.primary)
                     textFormat: Text.RichText
                     font.pixelSize: Theme.fontSizeMedium
                     linkColor: Theme.primary
@@ -75,7 +75,7 @@ Item {
             title: I18n.tr("Community", "about page card title, chat and community links")
 
             SettingsLinkRow {
-                title: I18n.tr("Dank Linux Discord", "about page community icon tooltip")
+                title: "niri/dux Discord"
                 subtitle: root.host(root.discordUrl)
                 url: root.discordUrl
                 leading: Image {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 )
 
 type SecretStore struct {

@@ -4,9 +4,9 @@ import (
 	"context"
 	"strings"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/local"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 func handleCalendarCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

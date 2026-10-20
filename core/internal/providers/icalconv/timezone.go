@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/tzcache"
 	ical "github.com/emersion/go-ical"
 	"github.com/teambition/rrule-go"
 )

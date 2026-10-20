@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/ent/reminderstate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/reminderstate"
 )
 
 func (r *Repo) ListReminderStates(ctx context.Context, from, to time.Time) ([]*ent.ReminderState, error) {

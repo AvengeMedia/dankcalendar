@@ -1,4 +1,4 @@
-# Root Makefile for Dank Calendar
+# Root Makefile for Dux Calendar
 # Orchestrates the Go core build and local installation of the
 # binary (with the quickshell UI embedded), icon, desktop entry,
 # and systemd unit.
@@ -7,7 +7,7 @@ BINARY_NAME=dcal
 # Quickshell config dir name (kept as dankcal for config-path compatibility).
 SHELL_NAME=dankcal
 # Icon name matches the desktop AppId so sandboxed and native installs agree.
-ICON_NAME=com.danklinux.dankcalendar
+ICON_NAME=dev.duxlabs.calendar
 CORE_DIR=core
 BUILD_DIR=$(CORE_DIR)/bin
 PREFIX ?= /usr/local
@@ -30,7 +30,7 @@ SHELL_DIR=quickshell
 # embedded in the binary since the single-binary distribution change.
 SHELL_INSTALL_DIR=$(DATA_DIR)/quickshell/$(SHELL_NAME)
 ASSETS_DIR=assets
-DESKTOP_ID=com.danklinux.dankcalendar
+DESKTOP_ID=dev.duxlabs.calendar
 ASSET_INSTALL=PREFIX="$(PREFIX)" DESTDIR="$(DESTDIR)" DATA_DIR="$(DATA_DIR)" APPLICATIONS_DIR="$(APPLICATIONS_DIR)" ICON_DIR="$(ICON_DIR)" METAINFO_DIR="$(METAINFO_DIR)" sh scripts/install-assets.sh
 
 .PHONY: all build dev run clean test fmt vet migrate migrate-checksum update-common i18n-extract i18n-local i18n-test i18n-push i18n-sync i18n-check install install-bin install-icon install-desktop install-systemd uninstall uninstall-bin uninstall-shell uninstall-icon uninstall-desktop uninstall-systemd flatpak-build flatpak-run flatpak-lint flatpak-modules help
@@ -134,7 +134,7 @@ install-systemd:
 install: install-bin install-icon install-desktop install-metainfo
 	@echo ""
 	@echo "Installation complete."
-	@echo "Launch with 'dcal show' or the Dank Calendar desktop entry."
+	@echo "Launch with 'dcal show' or the Dux Calendar desktop entry."
 	@echo "Optional: 'make install-systemd' then 'systemctl --user enable --now dcal'."
 
 uninstall-bin:
@@ -144,11 +144,11 @@ uninstall-shell:
 	@rm -rf $(DESTDIR)$(SHELL_INSTALL_DIR)
 
 uninstall-icon:
-	@rm -f $(DESTDIR)$(ICON_DIR)/$(ICON_NAME).svg
+	@rm -f $(DESTDIR)$(ICON_DIR)/$(ICON_NAME).svg $(DESTDIR)$(ICON_DIR)/com.danklinux.dankcalendar.svg
 	@test -n "$(DESTDIR)" || gtk-update-icon-cache -q $(DATA_DIR)/icons/hicolor 2>/dev/null || true
 
 uninstall-desktop:
-	@rm -f $(DESTDIR)$(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop
+	@rm -f $(DESTDIR)$(APPLICATIONS_DIR)/$(DESKTOP_ID).desktop $(DESTDIR)$(APPLICATIONS_DIR)/com.danklinux.dankcalendar.desktop
 	@test -n "$(DESTDIR)" || update-desktop-database -q $(APPLICATIONS_DIR) 2>/dev/null || true
 
 uninstall-systemd:

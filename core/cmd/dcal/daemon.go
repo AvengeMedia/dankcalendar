@@ -15,36 +15,36 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/spf13/cobra"
 
-	auth_handler "github.com/AvengeMedia/dankcalendar/core/api/auth"
-	calendar_handler "github.com/AvengeMedia/dankcalendar/core/api/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/api/server"
-	"github.com/AvengeMedia/dankcalendar/core/config"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/colorscheme"
-	"github.com/AvengeMedia/dankcalendar/core/internal/invitations"
-	"github.com/AvengeMedia/dankcalendar/core/internal/ipc"
-	dankkeyring "github.com/AvengeMedia/dankcalendar/core/internal/keyring"
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
-	"github.com/AvengeMedia/dankcalendar/core/internal/oauth"
-	"github.com/AvengeMedia/dankcalendar/core/internal/paths"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/caldav"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/evolution"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/google"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/ical"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/local"
-	"github.com/AvengeMedia/dankcalendar/core/internal/providers/microsoft"
-	"github.com/AvengeMedia/dankcalendar/core/internal/reminders"
-	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/internal/sync"
-	"github.com/AvengeMedia/dankcalendar/core/internal/uriopen"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/errdefs/humaerr"
-	"github.com/AvengeMedia/dankgo/files"
-	"github.com/AvengeMedia/dankgo/httpapi"
-	"github.com/AvengeMedia/dankgo/httpapi/middleware"
-	"github.com/AvengeMedia/dankgo/log"
-	dankpaths "github.com/AvengeMedia/dankgo/paths"
+	auth_handler "github.com/duxlabs-dev/dux-calendar/core/api/auth"
+	calendar_handler "github.com/duxlabs-dev/dux-calendar/core/api/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/api/server"
+	"github.com/duxlabs-dev/dux-calendar/core/config"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/colorscheme"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/invitations"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/ipc"
+	dankkeyring "github.com/duxlabs-dev/dux-calendar/core/internal/keyring"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/oauth"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/paths"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/caldav"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/evolution"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/google"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/ical"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/local"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/providers/microsoft"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/reminders"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/rsvp"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/sync"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/uriopen"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/errdefs/humaerr"
+	"github.com/duxlabs-dev/dux-go/files"
+	"github.com/duxlabs-dev/dux-go/httpapi"
+	"github.com/duxlabs-dev/dux-go/httpapi/middleware"
+	"github.com/duxlabs-dev/dux-go/log"
+	dankpaths "github.com/duxlabs-dev/dux-go/paths"
 )
 
 var daemonCmd = &cobra.Command{
@@ -330,14 +330,14 @@ func startHTTP(ctx context.Context, cfg *config.Config, r *repo.Repo, registry *
 
 		huma.NewError = humaerr.HumaErrorFunc
 
-		humaCfg := httpapi.NewHumaConfig("Dank Calendar API", Version)
+		humaCfg := httpapi.NewHumaConfig("Dux Calendar API", Version)
 		humaCfg.DocsPath = ""
 		api := humachi.New(rt, humaCfg)
 
 		mw := middleware.NewMiddleware(api)
 		api.UseMiddleware(mw.Recoverer)
 
-		rt.Get("/docs", httpapi.DocsHandler("Dank Calendar API"))
+		rt.Get("/docs", httpapi.DocsHandler("Dux Calendar API"))
 
 		srvImpl := &server.Server{
 			Cfg:      cfg,

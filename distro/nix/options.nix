@@ -9,10 +9,10 @@ let
 in
 {
   options.programs.dank-calendar = {
-    enable = lib.mkEnableOption "DankCalendar";
+    enable = lib.mkEnableOption "Dux Calendar";
 
     package = lib.mkPackageOption dcalPkgs "dankcalendar" {
-      extraDescription = "The DankCalendar package to use (defaults to be built from source)";
+      extraDescription = "The Dux Calendar package to use (defaults to be built from source)";
     };
 
     quickshell = {
@@ -22,7 +22,7 @@ in
     };
 
     systemd = {
-      enable = lib.mkEnableOption "DankCalendar systemd startup";
+      enable = lib.mkEnableOption "Dux Calendar systemd startup";
 
       target = lib.mkOption {
         type = types.str;

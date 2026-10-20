@@ -1,8 +1,8 @@
 package ipc
 
 import (
-	dankipc "github.com/AvengeMedia/dankgo/ipc"
-	"github.com/AvengeMedia/dankgo/ipc/params"
+	dankipc "github.com/duxlabs-dev/dux-go/ipc"
+	"github.com/duxlabs-dev/dux-go/ipc/params"
 )
 
 const APIVersion = 1

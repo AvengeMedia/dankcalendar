@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	cal "github.com/AvengeMedia/dankcalendar/core/internal/calendar"
+	cal "github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/api/calendar/v3"
 	"google.golang.org/api/googleapi"

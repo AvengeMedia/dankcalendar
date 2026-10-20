@@ -1,6 +1,6 @@
 # Opening calendar files
 
-Open an `.ics` or `.vcs` file with Dank Calendar in your file manager, or run:
+Open an `.ics` or `.vcs` file with Dux Calendar in your file manager, or run:
 
 ```sh
 dcal open invitation.ics appointment.vcs
@@ -10,7 +10,7 @@ dcal open webcals://example.com/calendar.ics
 
 The installed desktop entry advertises `text/calendar`, `text/x-vcalendar`,
 `application/ics`, `webcal`, and `webcals`. It accepts multiple URLs with `%U`.
-Installation updates the desktop database; choosing Dank Calendar as the default
+Installation updates the desktop database; choosing Dux Calendar as the default
 handler remains a desktop preference. Flatpak exports the same desktop entry and
 forwards selected files through its document portal.
 
@@ -88,6 +88,6 @@ Use a temporary local account and calendars; no network account is needed.
    setup appears. The same metadata in `METHOD:REQUEST` must show event import.
 7. Check an empty file, malformed data, a directory, an oversized file, and a
    remote-host `file://` URL. Confirm an error and no calendar mutation.
-8. In native and Flatpak installs, choose **Open With → Dank Calendar** on files
+8. In native and Flatpak installs, choose **Open With → Dux Calendar** on files
    with spaces in their names. For Flatpak, verify the exported desktop entry
    forwards file URLs and does not require general home-directory access.

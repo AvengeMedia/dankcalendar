@@ -7,13 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
-	"github.com/AvengeMedia/dankcalendar/core/internal/rsvp"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/internal/tzcache"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/eventconv"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/rsvp"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/tzcache"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 func handleEventCreate(ctx context.Context, w *ConnWriter, req Request, deps Deps) {

@@ -16,14 +16,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	entevent "github.com/AvengeMedia/dankcalendar/core/ent/event"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/notify"
-	"github.com/AvengeMedia/dankcalendar/core/internal/settings"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
-	"github.com/AvengeMedia/dankgo/boottimer"
-	"github.com/AvengeMedia/dankgo/log"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	entevent "github.com/duxlabs-dev/dux-calendar/core/ent/event"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/notify"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/settings"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
+	"github.com/duxlabs-dev/dux-go/boottimer"
+	"github.com/duxlabs-dev/dux-go/log"
 )
 
 const (
@@ -402,7 +402,7 @@ func (e *Engine) SendTest() error {
 	// notification servers may deduplicate matching notifications.
 	s := e.settings()
 	n := notify.Notification{
-		Summary:  "Dank Calendar",
+		Summary:  "Dux Calendar",
 		Body:     fmt.Sprintf("Test reminder — notifications are working. Sent at %s.", e.now().Format("15:04:05")),
 		Resident: s.ReminderPersist,
 		Urgency:  notify.UrgencyNormal,

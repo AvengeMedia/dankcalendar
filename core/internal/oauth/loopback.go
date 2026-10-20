@@ -96,7 +96,7 @@ func (f *LoopbackFlow) handleCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, `<!doctype html><html><head><title>Dank Calendar</title></head><body style="font-family:sans-serif;text-align:center;padding-top:80px"><h1>Authorization successful</h1><p>You can close this window and return to the terminal.</p></body></html>`)
+	fmt.Fprint(w, `<!doctype html><html><head><title>Dux Calendar</title></head><body style="font-family:sans-serif;text-align:center;padding-top:80px"><h1>Authorization successful</h1><p>You can close this window and return to the terminal.</p></body></html>`)
 	f.resultCh <- CallbackResult{Code: code, State: state}
 }
 

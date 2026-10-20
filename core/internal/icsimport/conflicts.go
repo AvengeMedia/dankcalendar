@@ -5,10 +5,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/ent"
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/recurrence"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/ent"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/recurrence"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 // Recurring imports preview a year from the first occurrence; an infinite

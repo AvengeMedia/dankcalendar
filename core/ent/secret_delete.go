@@ -8,8 +8,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/AvengeMedia/dankcalendar/core/ent/predicate"
-	"github.com/AvengeMedia/dankcalendar/core/ent/secret"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/predicate"
+	"github.com/duxlabs-dev/dux-calendar/core/ent/secret"
 )
 
 // SecretDelete is the builder for deleting a Secret entity.

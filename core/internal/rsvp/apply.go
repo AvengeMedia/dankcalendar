@@ -10,9 +10,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/AvengeMedia/dankcalendar/core/internal/calendar"
-	"github.com/AvengeMedia/dankcalendar/core/internal/eventconv"
-	"github.com/AvengeMedia/dankcalendar/core/repo"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/calendar"
+	"github.com/duxlabs-dev/dux-calendar/core/internal/eventconv"
+	"github.com/duxlabs-dev/dux-calendar/core/repo"
 )
 
 type Stores struct {

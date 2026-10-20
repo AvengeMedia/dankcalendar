@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>com.danklinux.dankcalendar</id>
-  <launchable type="desktop-id">com.danklinux.dankcalendar.desktop</launchable>
-  <name>DankCalendar</name>
-  <summary>Calendar from the Dank Linux Suite</summary>
+  <id>dev.duxlabs.calendar</id>
+  <launchable type="desktop-id">dev.duxlabs.calendar.desktop</launchable>
+  <name>Dux Calendar</name>
+  <summary>Calendar from the Dux Labs Suite</summary>
 
 <description>
-  <p>Dank Calendar is a standalone calendar app for the modern Linux desktop with a Material Design 3 inspired UI. It brings your Local, Google, Microsoft, CalDAV, and iCloud calendars together in one place. It runs as a lightweight daemon with a tray icon, keeps your accounts in sync, and reminds you about events.</p>
-  <p>It's one of the first to be built with <em>Quickshell</em>, Qt6, and Go. You can optionally pair it with <em>DankMaterialShell (DMS)</em> for a more integrated and streamlined experience.</p>
+  <p>Dux Calendar is a standalone calendar app for the modern Linux desktop with a Material Design 3 inspired UI. It brings your Local, Google, Microsoft, CalDAV, and iCloud calendars together in one place. It runs as a lightweight daemon with a tray icon, keeps your accounts in sync, and reminds you about events.</p>
+  <p>It's one of the first to be built with <em>Quickshell</em>, Qt6, and Go. You can optionally pair it with <em>Dux Shell (DMS)</em> for a more integrated and streamlined experience.</p>
 </description>
 
-  <developer id="com.danklinux">
-    <name>Dank Linux</name>
+  <developer id="dev.duxlabs">
+    <name>Dux Labs</name>
   </developer>
 
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MIT</project_license>
 
   <provides>
+    <id>com.danklinux.dankcalendar</id>
     <mediatype>text/calendar</mediatype>
     <mediatype>text/x-vcalendar</mediatype>
     <mediatype>application/ics</mediatype>
   </provides>
 
-  <url type="homepage">https://danklinux.com</url>
-  <url type="bugtracker">https://github.com/AvengeMedia/dankcalendar/issues</url>
-  <url type="vcs-browser">https://github.com/AvengeMedia/dankcalendar</url>
+  <replaces>
+    <id>com.danklinux.dankcalendar</id>
+  </replaces>
+
+  <url type="homepage">https://duxlabs.dev</url>
+  <url type="bugtracker">https://github.com/duxlabs-dev/dux-calendar/issues</url>
+  <url type="vcs-browser">https://github.com/duxlabs-dev/dux-calendar</url>
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/AvengeMedia/dankcalendar/master/assets/screenshots/01_dankcalendar_main.png</image>
+      <image>https://raw.githubusercontent.com/duxlabs-dev/dux-calendar/master/assets/screenshots/01_dankcalendar_main.png</image>
       <caption>Month view with calendar sidebar</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/AvengeMedia/dankcalendar/master/assets/screenshots/02_dankcalendar_about.png</image>
+      <image>https://raw.githubusercontent.com/duxlabs-dev/dux-calendar/master/assets/screenshots/02_dankcalendar_about.png</image>
       <caption>About and settings</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/AvengeMedia/dankcalendar/master/assets/screenshots/03_dankcalendar_themes.png</image>
+      <image>https://raw.githubusercontent.com/duxlabs-dev/dux-calendar/master/assets/screenshots/03_dankcalendar_themes.png</image>
       <caption>Theme selection</caption>
     </screenshot>
   </screenshots>

@@ -51,22 +51,22 @@ entgo.io/ent/schema
 entgo.io/ent/schema/edge
 entgo.io/ent/schema/field
 entgo.io/ent/schema/index
-# github.com/AvengeMedia/dankgo v1.6.1
+# github.com/duxlabs-dev/dux-go v1.6.1
 ## explicit; go 1.26
-github.com/AvengeMedia/dankgo/boottimer
-github.com/AvengeMedia/dankgo/dbusutil
-github.com/AvengeMedia/dankgo/errdefs
-github.com/AvengeMedia/dankgo/errdefs/humaerr
-github.com/AvengeMedia/dankgo/httpapi
-github.com/AvengeMedia/dankgo/httpapi/middleware
-github.com/AvengeMedia/dankgo/ipc
-github.com/AvengeMedia/dankgo/ipc/params
-github.com/AvengeMedia/dankgo/log
-github.com/AvengeMedia/dankgo/netutil
-github.com/AvengeMedia/dankgo/paths
-github.com/AvengeMedia/dankgo/portal
-github.com/AvengeMedia/dankgo/shellapp
-github.com/AvengeMedia/dankgo/shellapp/shellfs
+github.com/duxlabs-dev/dux-go/boottimer
+github.com/duxlabs-dev/dux-go/dbusutil
+github.com/duxlabs-dev/dux-go/errdefs
+github.com/duxlabs-dev/dux-go/errdefs/humaerr
+github.com/duxlabs-dev/dux-go/httpapi
+github.com/duxlabs-dev/dux-go/httpapi/middleware
+github.com/duxlabs-dev/dux-go/ipc
+github.com/duxlabs-dev/dux-go/ipc/params
+github.com/duxlabs-dev/dux-go/log
+github.com/duxlabs-dev/dux-go/netutil
+github.com/duxlabs-dev/dux-go/paths
+github.com/duxlabs-dev/dux-go/portal
+github.com/duxlabs-dev/dux-go/shellapp
+github.com/duxlabs-dev/dux-go/shellapp/shellfs
 # github.com/JohannesKaufmann/dom v0.3.1
 ## explicit; go 1.25.0
 github.com/JohannesKaufmann/dom

@@ -6,10 +6,10 @@ To contribute fork this repository, make your changes, and open a pull request.
 
 ## Setup
 
-Clone with submodules — the shared widget library ([dank-qml-common](https://github.com/AvengeMedia/dank-qml-common)) is vendored at `dank-qml-common/` and symlinked into `quickshell/DCommon`:
+Clone with submodules — the shared widget library ([dank-qml-common](https://github.com/duxlabs-dev/dux-qml-common)) is vendored at `dank-qml-common/` and symlinked into `quickshell/DCommon`:
 
 ```bash
-git clone --recurse-submodules https://github.com/AvengeMedia/dankcalendar.git
+git clone --recurse-submodules https://github.com/duxlabs-dev/dux-calendar.git
 # or, in an existing clone:
 git submodule update --init
 ```
@@ -30,7 +30,7 @@ Everything under `quickshell/DCommon/` (core widgets, the file browser, scroll p
 2. Commit and PR those changes in the `dank-qml-common` repo: `cd dank-qml-common && git switch -c my-change`, push, open the PR there.
 3. Once merged, bump the pointer here: `make update-common` (updates the submodule and the nix flake input together), then commit alongside any dankcalendar-side changes. If you only bump the submodule, CI syncs `flake.lock` to it automatically on master.
 
-Shared widgets read app-provided singletons (`Theme`, `SettingsData`, ...) through a documented contract — see the dank-qml-common README. If your change needs a new contract property, add it to the library's stub singletons in the same PR, then to `quickshell/Common/` here when you bump.
+Shared widgets read app-provided singletons (`Theme`, `SettingsData`, ...) through a documented contract — see the dux-qml-common README. If your change needs a new contract property, add it to the library's stub singletons in the same PR, then to `quickshell/Common/` here when you bump.
 
 ## VSCode Setup
 
@@ -117,7 +117,7 @@ After adding or changing strings, regenerate the translation template from the r
 make i18n-extract
 ```
 
-Strings inside `quickshell/DCommon/` are owned by the dank-qml-common repo and synced through the DMS POEditor project, not this one — extraction here deliberately skips them. At runtime `I18n` merges both catalogs (app terms win), with the shared translations shipping inside the submodule at `DCommon/translations/poexports/`.
+Strings inside `quickshell/DCommon/` are owned by the dux-qml-common repo and synced through the DMS POEditor project, not this one — extraction here deliberately skips them. At runtime `I18n` merges both catalogs (app terms win), with the shared translations shipping inside the submodule at `DCommon/translations/poexports/`.
 
 ### GO (`core` directory)
 
