@@ -55,8 +55,8 @@ jobs:
           git rev-parse -q --verify "refs/remotes/origin/${branch}" >/dev/null ||
             { echo "::error::no ${branch} branch; pin-release cuts it at the X.Y.0 tag"; exit 1; }
           git switch -C "$branch" "origin/${branch}"
-          git config user.name "dms-ci[bot]"
-          git config user.email "dms-ci[bot]@users.noreply.github.com"
+          git config user.name "dux-ci[bot]"
+          git config user.email "344434142+dux-ci[bot]@users.noreply.github.com"
           echo "branch=${branch}" >> "$GITHUB_OUTPUT"
 
       - name: Set up Go
@@ -152,8 +152,8 @@ jobs:
             exit 0
           fi
 
-          git config user.name "dms-ci[bot]"
-          git config user.email "dms-ci[bot]@users.noreply.github.com"
+          git config user.name "dux-ci[bot]"
+          git config user.email "344434142+dux-ci[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git commit -am "Update to ${version}"
           git push -f origin "$branch"
