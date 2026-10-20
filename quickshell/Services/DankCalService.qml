@@ -653,6 +653,14 @@ Singleton {
         return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
     }
 
+    // Google withholds the summary of private events on calendars shared
+    // with free/busy access; show them as busy like Google Calendar does.
+    function untitledEventTitle(visibility) {
+        if (visibility === "private" || visibility === "confidential")
+            return I18n.tr("Busy", "fallback title for a private event whose details are hidden");
+        return I18n.tr("(untitled)", "event details fallback title when event has no title");
+    }
+
     function _normalizeEvent(e) {
         const allDay = !!e.allDay;
         const start = allDay ? _dayBoundary(e.start) : new Date(e.start);
@@ -667,7 +675,7 @@ Singleton {
             "id": e.id,
             "uid": e.uid || "",
             "calendarId": e.calendarId || "",
-            "title": e.summary || "(untitled)",
+            "title": e.summary || untitledEventTitle(e.visibility),
             "description": e.description || "",
             "location": e.location || "",
             "url": e.url || "",
@@ -680,7 +688,8 @@ Singleton {
             "recurringId": e.recurringId || "",
             "attendees": e.attendees || [],
             "organizer": e.organizer || null,
-            "reminders": e.reminders || []
+            "reminders": e.reminders || [],
+            "visibility": e.visibility || ""
         };
     }
 

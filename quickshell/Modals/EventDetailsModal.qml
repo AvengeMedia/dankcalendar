@@ -670,7 +670,7 @@ FloatingWindow {
                 spacing: Theme.spacingXS
 
                 StyledText {
-                    text: eventModal.event.title || I18n.tr("(untitled)", "event details fallback title when event has no title")
+                    text: eventModal.event.title || DankCalService.untitledEventTitle(eventModal.event.visibility)
                     font.pixelSize: Theme.fontSizeXXLarge
                     font.weight: Theme.fontWeightMedium
                     color: Theme.surfaceText

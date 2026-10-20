@@ -176,6 +176,7 @@ func mapEvent(e *ent.Event) map[string]any {
 		"allDay":      e.AllDay,
 		"status":      string(e.Status),
 		"recurringId": e.RecurringID,
+		"visibility":  e.Visibility,
 	}
 	if cal := e.Edges.Calendar; cal != nil {
 		entry["calendarId"] = cal.ID

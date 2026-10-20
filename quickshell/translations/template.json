@@ -707,6 +707,13 @@
     "comment": ""
   },
   {
+    "term": "Busy",
+    "translation": "",
+    "context": "fallback title for a private event whose details are hidden",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "Calendar",
     "translation": "",
     "context": "about page hero, app name | main window title | main window title bar text",
