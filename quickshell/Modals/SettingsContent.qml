@@ -5,6 +5,7 @@ import qs.DCommon.FileBrowser
 import qs.Services
 import qs.Widgets
 import qs.DCommon.Widgets
+import qs.DCommon.Common as DC
 
 Item {
     id: root
@@ -27,6 +28,21 @@ Item {
         },
         {
             label: I18n.tr("Custom", "color source button group option for a custom theme file"),
+            value: "custom"
+        }
+    ]
+
+    readonly property var fontSourceOptions: [
+        {
+            label: I18n.tr("Auto", "font source button group option following DMS"),
+            value: "auto"
+        },
+        {
+            label: I18n.tr("System", "font source button group option for the Qt system font"),
+            value: "system"
+        },
+        {
+            label: I18n.tr("Custom", "font source button group option for app-chosen fonts"),
             value: "custom"
         }
     ]
@@ -339,6 +355,20 @@ Item {
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignLeft
         }
+    }
+
+    component FontFamilyRow: SettingsDropdownRow {
+        property string family: ""
+        property string defaultFamily: Theme.defaultFontFamily
+        readonly property string defaultLabel: I18n.tr("Default", "font family dropdown option for the bundled font")
+
+        signal familyPicked(string name)
+
+        enableFuzzySearch: true
+        options: [defaultLabel]
+        currentValue: family || defaultLabel
+        onValueChanged: value => familyPicked(value === defaultLabel ? "" : value)
+        Component.onCompleted: Qt.callLater(() => options = [defaultLabel].concat(DC.Fonts.selectableFamilies(defaultFamily)))
     }
 
     component OptionDropdownRow: SettingsDropdownRow {
@@ -799,7 +829,49 @@ Item {
             SettingsCard {
 
                 title: I18n.tr("Typography", "appearance settings section label")
+                SettingsButtonGroupRow {
+                    text: I18n.tr("Font source", "font source setting label")
+                    model: root.optionLabels(root.fontSourceOptions)
+                    currentIndex: Math.max(0, root.fontSourceOptions.findIndex(o => o.value === SettingsData.fontSource))
+                    onSelectionChanged: (index, selected) => {
+                        if (!selected)
+                            return;
+                        SettingsData.fontSource = root.fontSourceOptions[index].value;
+                    }
+                }
+
+                SettingsRow {
+                    visible: SettingsData.fontSource === "auto" && !Theme.typography.followingDms
+                    iconName: "info"
+                    iconColor: Theme.surfaceVariantText
+                    title: I18n.tr("Dux Shell not detected, using %1.", "auto font source status when DMS is missing").arg(Theme.fontFamily)
+                }
+
+                FontFamilyRow {
+                    visible: !Theme.typography.followingDms && SettingsData.fontSource !== "system"
+                    text: I18n.tr("Family", "font family dropdown label")
+                    family: SettingsData.fontFamily
+                    onFamilyPicked: name => SettingsData.fontFamily = name
+                }
+
+                FontFamilyRow {
+                    visible: !Theme.typography.followingDms && SettingsData.fontSource !== "system"
+                    text: I18n.tr("Monospace family", "monospace font family dropdown label")
+                    defaultFamily: Theme.defaultMonoFontFamily
+                    family: SettingsData.monoFontFamily
+                    onFamilyPicked: name => SettingsData.monoFontFamily = name
+                }
+
+                FontFamilyRow {
+                    visible: !Theme.typography.followingDms && SettingsData.fontSource !== "system"
+                    text: I18n.tr("Display family", "display font family dropdown label")
+                    defaultFamily: Theme.defaultDisplayFontFamily
+                    family: SettingsData.displayFontFamily
+                    onFamilyPicked: name => SettingsData.displayFontFamily = name
+                }
+
                 SettingsSliderRow {
+                    visible: !Theme.typography.followingDms
                     text: I18n.tr("Weight", "font weight slider label")
                     minimum: Font.Thin
                     maximum: Font.Black
@@ -811,6 +883,7 @@ Item {
                 }
 
                 SettingsSliderRow {
+                    visible: !Theme.typography.followingDms
                     text: I18n.tr("Scale", "font scale slider label")
                     minimum: 75
                     maximum: 150
