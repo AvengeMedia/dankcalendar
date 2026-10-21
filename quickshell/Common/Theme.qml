@@ -47,6 +47,7 @@ Singleton {
 
     property bool useLegacyDmsCache: false
     readonly property string dmsColorsPath: xdgCacheDir + (useLegacyDmsCache ? "/DankMaterialShell" : "/dms") + "/dms-colors.json"
+    readonly property string dmsTypographyPath: xdgCacheDir + "/dms/dms-typography.json"
     readonly property string matugenThemePath: SettingsData.configDir + "/matugen-theme.json"
 
     property var matugenColors: ({})
@@ -340,7 +341,16 @@ Singleton {
     property real spacingL: 16
     property real spacingXL: 24
 
-    readonly property real fontScale: SettingsData.fontScale
+    readonly property FontSource typography: FontSource {
+        source: SettingsData.fontSource
+        dmsPath: root.dmsTypographyPath
+        family: SettingsData.fontFamily
+        monoFamily: SettingsData.monoFontFamily
+        displayFamily: SettingsData.displayFontFamily
+        weight: SettingsData.fontWeight
+        scale: SettingsData.fontScale
+    }
+    readonly property real fontScale: typography.fontScale
     property real fontSizeSmall: Math.round(fontScale * 12)
     property real fontSizeMedium: Math.round(fontScale * 14)
     property real fontSizeLarge: Math.round(fontScale * 16)
@@ -491,10 +501,10 @@ Singleton {
     readonly property real chipIconSize: 18
     readonly property real buttonGroupExpandRatio: 0.15
 
-    property string fontFamily: defaultFontFamily
-    property string monoFontFamily: defaultMonoFontFamily
-    property string displayFontFamily: defaultDisplayFontFamily
-    readonly property int fontWeight: SettingsData.fontWeight
+    readonly property string fontFamily: typography.fontFamily
+    readonly property string monoFontFamily: typography.monoFontFamily
+    readonly property string displayFontFamily: typography.displayFontFamily
+    readonly property int fontWeight: typography.fontWeight
     readonly property int fontWeightMedium: shiftedFontWeight(Font.Medium)
     readonly property int fontWeightBold: shiftedFontWeight(Font.Bold)
 
